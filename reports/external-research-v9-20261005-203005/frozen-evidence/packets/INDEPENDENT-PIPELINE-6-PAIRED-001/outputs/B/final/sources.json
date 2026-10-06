@@ -1,0 +1,116 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "captured_on": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": {"upstream_version": "nbformat documentation identifies version 5.11", "reference": "latest (mutable)", "capture_sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503"},
+      "exact_locator": "Format description: top-level structure; code cells; code-cell outputs (source, outputs, execution_count and output forms).",
+      "capture": {"capture_id": "10a203dfc0ed47a7a14cf84144e49075", "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503"},
+      "applicability": "Primary format specification evidence for portable notebook structure. The format fields do not themselves provide a complete execution history, data identity, dependency graph, runtime sandbox, or reproducibility guarantee. Latest-doc URL is mutable; captured response hash identifies the reviewed bytes."
+    },
+    {
+      "id": "S2",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": {"upstream_version": "NBClient documentation identifies v0.11", "reference": "latest (mutable)", "capture_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a"},
+      "exact_locator": "Executing notebooks: NotebookClient execution, sequential cell execution, timeout/error handling, execution hooks and saved notebook outputs.",
+      "capture": {"capture_id": "7700d09a2a574fe885dac0d8e8241a31", "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a"},
+      "applicability": "Primary documentation for a candidate clean-replay client and lifecycle hooks. API docs/examples do not establish an OS security boundary, product-level provenance, or behavior of a particular installed release."
+    },
+    {
+      "id": "S3",
+      "url": "https://jupyter-client.readthedocs.io/en/latest/messaging.html",
+      "pin": {"upstream_version": "Jupyter Client documentation v8.10.0; message spec 5.5", "reference": "latest (mutable)", "capture_sha256": "5e2f704fbf10ca644d597cd28bca4f03c85d0f5cf094029cd2dbfcc6bc44bd69"},
+      "exact_locator": "Messaging in Jupyter: message header/parent_header, sessions, execute requests, shell/IOPub/control channels, kernel status and restart/session identity.",
+      "capture": {"capture_id": "8595ec68f6574903bfa4c18c5d05b78c", "sha256": "5e2f704fbf10ca644d597cd28bca4f03c85d0f5cf094029cd2dbfcc6bc44bd69"},
+      "applicability": "Protocol evidence for correlating requests, kernel sessions and replies. Protocol correlation does not infer Python variable dependencies or prove that a cell output is reproducible."
+    },
+    {
+      "id": "S4",
+      "url": "https://duckdb.org/docs/lts/data/csv/auto_detection",
+      "pin": {"upstream_version": "DuckDB documentation labels this LTS line 1.4", "reference": "lts (rolling within LTS docs)", "capture_sha256": "441b2a16f5e106dd2db3904d717f5785e26542c25990a0a6fc11b6f4ad63f7cf"},
+      "exact_locator": "CSV auto detection: dialect/type/header sniffing, detection scope, explicit reader options and overrides.",
+      "capture": {"capture_id": "eb73781e3a694d749ee2cc2cc92297aa", "sha256": "441b2a16f5e106dd2db3904d717f5785e26542c25990a0a6fc11b6f4ad63f7cf"},
+      "applicability": "Primary DuckDB documentation supporting editable CSV sniff suggestions and explicit settings. Inference is not a full-data validation guarantee; documentation page is a moving LTS reference, so a shipped engine patch must be separately pinned and tested."
+    },
+    {
+      "id": "S5",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "pin": {"upstream_version": "DuckDB documentation current line 1.5 at capture", "reference": "current (mutable)", "capture_sha256": "9773d0ae56463735d96992df510fd528d185ae73d233eb9a4cde099387467768"},
+      "exact_locator": "CSV overview: reading CSV, auto-detection, explicit types and read_csv options.",
+      "capture": {"capture_id": "e5325d7e564c43648ee3af57fa945e33", "sha256": "9773d0ae56463735d96992df510fd528d185ae73d233eb9a4cde099387467768"},
+      "applicability": "Primary reader documentation used for proposed import workflow and parser-contract choices. It is not evidence of the team's target workload performance or all malformed-input behavior."
+    },
+    {
+      "id": "S6",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads",
+      "pin": {"upstream_version": "DuckDB documentation current line 1.5 at capture", "reference": "current (mutable)", "capture_sha256": "4adf35a222f7fc99481b32c3880ab88a8962d2f80c64d5da9d1f16b2f8cbd321"},
+      "exact_locator": "Workload tuning: preserve_insertion_order setting and memory/order trade-off; explicit query ordering guidance.",
+      "capture": {"capture_id": "bff69bd6f6f743d1aec2fdf4eee1d276", "sha256": "4adf35a222f7fc99481b32c3880ab88a8962d2f80c64d5da9d1f16b2f8cbd321"},
+      "applicability": "Primary engine guidance motivating explicit ordering and workload-specific memory validation. It does not demonstrate that a 5 GB workload fits 16 GB RAM or that every global operation spills successfully."
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/14464",
+      "pin": {"upstream_version": "DuckDB PR #14464, merged 2024-11-06", "merge_commit": "0ccf3c25ccbb25fb90616e77b38f6d138f82950d"},
+      "exact_locator": "PR title/body and merge metadata: unquoted CSV escape parsing failure description, reproducer and linked issue #14440.",
+      "capture": {"capture_id": "6a66d4a7206340549a8e168726bb045a", "sha256": "5cc6267cf67ce51e597ed5b9315f19c09f6e8e81dbfdf148d547d605c7e3c492"},
+      "applicability": "Primary defect/fix report. The linked issue endpoint returned 404 in this research, so the PR body is the inspected failure description; original issue triage/context remains unavailable."
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/14464/files",
+      "pin": {"upstream_version": "DuckDB PR #14464 changed files at merge commit 0ccf3c25ccbb25fb90616e77b38f6d138f82950d"},
+      "exact_locator": "CSV scanner change and added tests: test/sql/copy/csv/unquoted_escape/basic.test; 32k_rows.test; human_eval.test; identical quote/escape and mixed cases.",
+      "capture": {"capture_id": "27f38b37415b4ada9c98d9a82894cd51", "sha256": "6e48a2dc813d8975a1202c98a3f419a00757b23f57f752892be001d828f8b3ed"},
+      "applicability": "Primary patch and regression-test evidence. Added tests show coverage intended by the PR; this catalog does not claim to have run them independently or reviewed every current branch."
+    },
+    {
+      "id": "S9",
+      "url": "https://api.github.com/repos/duckdb/duckdb/compare/v1.2.0...0ccf3c25ccbb25fb90616e77b38f6d138f82950d",
+      "pin": {"upstream_version": "DuckDB tag v1.2.0 compared with PR merge commit 0ccf3c25ccbb25fb90616e77b38f6d138f82950d", "observed_compare_status": "behind; ahead_by 0"},
+      "exact_locator": "GitHub compare summary and merge-base ancestry for v1.2.0 versus PR merge commit.",
+      "capture": {"capture_id": "b820db5e69c04381955ea3babf8ce4e4", "sha256": "e2b1b3829ded8136b875a11cbcc3da7b02aac93242a0e155d49534f65a3d601a"},
+      "applicability": "Supports that the PR merge commit is in v1.2.0 ancestry (the PR commit is behind the tag, with zero commits ahead). It does not prove behavior on all platform builds or identify the first affected/fixed release."
+    },
+    {
+      "id": "S10",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": {"upstream_version": "SQLite official atomic commit documentation, captured 2026-10-06", "reference": "unversioned page", "capture_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"},
+      "exact_locator": "Atomic commit and rollback in rollback-journal mode; journal invalidation/deletion commit point; filesystem and hardware flush assumptions.",
+      "capture": {"capture_id": "dd1339e9037f4907895c972c7a4bbbf1", "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"},
+      "applicability": "Primary explanation of one SQLite journaling mode and its assumptions. The page explicitly does not describe WAL-mode atomic commit; it is not a guarantee for this proposed application filesystem workflow."
+    },
+    {
+      "id": "S11",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": {"upstream_version": "SQLite official WAL documentation, captured 2026-10-06", "reference": "unversioned page", "capture_sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"},
+      "exact_locator": "Write-Ahead Logging: reader/writer behavior, one-writer limit, same-host restriction, WAL/SHM sidecars and checkpointing.",
+      "capture": {"capture_id": "e8961ede397247e8915dde1efd01d7d4", "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e"},
+      "applicability": "Primary SQLite WAL operational guidance supporting a rebuildable local-index decision and close/checkpoint before exchange. SQLite docs do not qualify arbitrary sync/network filesystems for the proposed project."
+    },
+    {
+      "id": "S12",
+      "url": "https://raw.githubusercontent.com/containers/bubblewrap/main/README.md",
+      "pin": {"upstream_version": "containers/bubblewrap main branch README; mutable ref; exact upstream commit was not established", "capture_sha256": "0c1dc12c6d94017c45e220fc0e5b679f24c0f09494bdd4bc7157d8abcd75c001"},
+      "exact_locator": "README: Bubblewrap overview, caller-defined sandbox policy and namespace/mount mechanisms.",
+      "capture": {"capture_id": "168c2b532b6449d9af3a306234ef5f66", "sha256": "0c1dc12c6d94017c45e220fc0e5b679f24c0f09494bdd4bc7157d8abcd75c001"},
+      "applicability": "Primary project documentation supports treating Bubblewrap as a low-level constructor, not a complete policy. Main is mutable and no binary/version was qualified; exact implementation pin and host security validation remain critical open work."
+    },
+    {
+      "id": "S13",
+      "url": "https://docs.astral.sh/uv/concepts/projects/sync/",
+      "pin": {"upstream_version": "uv current project sync documentation captured 2026-10-06; exact tool release not established by inspected passage", "reference": "current (mutable)", "capture_sha256": "4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf"},
+      "exact_locator": "Project locking/syncing: lockfile generation/checking, lockfile-based environment sync, project environment.",
+      "capture": {"capture_id": "890d51393be44ddba025f1e2fd50be98", "sha256": "4bd4a89338543bf671bd036a52bc666a295986c7c72ea175d95d1c2ac228e0cf"},
+      "applicability": "Primary candidate tool documentation for exact project locks and sync. Locking does not by itself pin OS libraries, available wheel artifacts, kernel configuration or source files; actual uv version and cross-platform recreation must be tested."
+    }
+  ],
+  "source_limits": [
+    "Documentation URLs on latest/current/LTS and the Bubblewrap main branch are mutable. Capture IDs and response SHA-256 values identify the reviewed responses, not a qualified product binary.",
+    "The standalone DuckDB issue #14440 endpoint returned HTTP 404; PR #14464 body, changed files and release compare were available and are catalogued. No issue body is inferred.",
+    "Versioned Jupyter documentation requests for nbformat 5.10.4 and Jupyter Client 8.9.0 returned 404 and were not used as evidence."
+  ]
+}

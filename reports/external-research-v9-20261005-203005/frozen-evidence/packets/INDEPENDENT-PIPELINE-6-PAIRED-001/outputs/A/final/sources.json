@@ -1,0 +1,176 @@
+{
+  "schema": "er9.research.sources.v1",
+  "captured_on": "2026-10-06",
+  "pin_policy": "Public HTML/API captures are identified by exact response-body SHA-256 plus capture ID; moving documentation URLs are not treated as immutable release tags. Where applicable, immutable Git tag, commit hash, or exact requested release URL is also recorded.",
+  "sources": [
+    {
+      "source_id": "S1",
+      "project": "nbclient",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "Captured response SHA-256 b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a; docs identify nbclient 0.11 at capture, latest URL is moving.",
+      "locator": ["Using the Python API interface", "Execution arguments (traitlets)", "Hooks", "Handling errors and exceptions", "CLI"],
+      "capture_identity": {"capture_id": "756df64e2e95420699835642070b01f9", "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a", "bytes": 36686, "complete": true},
+      "applicability": "Execution precedent for a client that runs a notebook with an execution context, per-cell timeouts, hooks and errors; exact API behavior must be checked against the package version eventually pinned.",
+      "limitations": "Documentation does not prove deployed integration, kernel isolation, reproducibility, or compatibility with an unspecified Jupyter/ipykernel matrix."
+    },
+    {
+      "source_id": "S2",
+      "project": "nbformat",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": "Captured response SHA-256 f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503; docs identify nbformat 5.11 at capture, latest URL is moving.",
+      "locator": ["Top-level structure", "Code cells", "Code cell outputs"],
+      "capture_identity": {"capture_id": "0e466d7f586f4e38ac06bd1622881858", "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503", "bytes": 51110, "complete": true},
+      "applicability": "Supports the distinction between notebook document fields, saved cell outputs/execution_count, optional metadata and runtime semantics.",
+      "limitations": "Format description is not a runtime, provenance specification or guarantee that stored output matches current source/data."
+    },
+    {
+      "source_id": "S3",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/clients/python/overview",
+      "pin": "Captured response SHA-256 4385a5685ad57c370b169451b2960f999a89dda10c66d5b0747af7057c32a3b9; docs showed 1.5 current and 1.4 LTS on 2026-10-06; moving URL.",
+      "locator": ["Python API overview", "Connecting to DuckDB", "Executing SQL", "Fetching results", "Python package/CLI overview as presented on captured page"],
+      "capture_identity": {"capture_id": "36800645a0e54c408c2e3335a3c4c687", "sha256": "4385a5685ad57c370b169451b2960f999a89dda10c66d5b0747af7057c32a3b9", "bytes": 378485, "complete": true},
+      "applicability": "Supports using the embedded Python client as the Python-facing SQL/data engine; combined Python/CLI version identity is an explicit product requirement.",
+      "limitations": "Current docs are not an exact release contract or a tested Python/CLI compatibility matrix."
+    },
+    {
+      "source_id": "S4",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/clients/python/relational_api",
+      "pin": "Captured response SHA-256 e73c350929a679a2510e1de3bcbab96de20c5937b023a5a6553b1b16e7667571; docs showed 1.5 current and 1.4 LTS on 2026-10-06; moving URL.",
+      "locator": ["Relational API overview", "Lazy evaluation", "Query execution/result methods"],
+      "capture_identity": {"capture_id": "7dd76254c8e54f64884caf3fbdbfebb0", "sha256": "e73c350929a679a2510e1de3bcbab96de20c5937b023a5a6553b1b16e7667571", "bytes_observed": 524288, "complete": false, "truncated": true},
+      "applicability": "Visible page description documents a symbolic SQL relation that remains lazy until execution and illustrates a billion-row relation without immediately fetching all data.",
+      "limitations": "Capture was truncated at 524,288 bytes. Only the visible metadata/description is relied on; this does not establish memory bounds for any particular query or result conversion."
+    },
+    {
+      "source_id": "S5",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": "Captured response SHA-256 b85b4ca7021523c3b79069d3ada242d524cc79cb19fcb8a413039d9bd0074069; docs showed 1.5 current and 1.4 LTS on 2026-10-06; moving URL.",
+      "locator": ["Sample Size", "Type Detection", "Overriding Type Detection", "Header Detection", "Dates and Timestamps", "Sniff CSV"],
+      "capture_identity": {"capture_id": "d3379d74172c40b98a840f709919fc65", "sha256": "b85b4ca7021523c3b79069d3ada242d524cc79cb19fcb8a413039d9bd0074069", "bytes": 372286, "complete": true},
+      "applicability": "Documents CSV dialect/type/header inference and override mechanisms, default 20,480-row type sample, seekable versus non-seekable sampling differences, and ambiguity of date parsing.",
+      "limitations": "A sampled inference is not a whole-file validation result; behavior may change by DuckDB release/options."
+    },
+    {
+      "source_id": "S6",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/sql/dialect/order_preservation",
+      "pin": "Captured response SHA-256 1be5123e7546383cb5866dae884972c6b2450b3e5ec07da2d5d8d94ea7eda415; docs showed 1.5 current and 1.4 LTS on 2026-10-06; moving URL.",
+      "locator": ["Order Preservation", "Operations that preserve order", "Operations that do not preserve order"],
+      "capture_identity": {"capture_id": "a631c7f6e27d4025abbb75dcbc2a9a08", "sha256": "1be5123e7546383cb5866dae884972c6b2450b3e5ec07da2d5d8d94ea7eda415", "bytes": 356213, "complete": true},
+      "applicability": "DuckDB documents order preservation for some operations and the conditions/exceptions; supports explicit ORDER BY for durable result ordering.",
+      "limitations": "Not a promise that every SQL plan or output ordering is stable. Proposal's strict export ordering is a product rule."
+    },
+    {
+      "source_id": "S7",
+      "project": "Jupyter Server",
+      "url": "https://jupyter-server.readthedocs.io/en/latest/operators/security.html",
+      "pin": "Captured response SHA-256 b6f2c13e1d7c752450c2027092fa0f8e70e4dcc0115d836686b9035475f516e0; docs version 2.22 in page metadata, latest URL moving.",
+      "locator": ["Security in the Jupyter Server", "Authentication and Authorization"],
+      "capture_identity": {"capture_id": "24fde0cbe04b45f9b2da544d4ee33bee", "sha256": "b6f2c13e1d7c752450c2027092fa0f8e70e4dcc0115d836686b9035475f516e0", "bytes": 79569, "complete": true},
+      "applicability": "The docs state that access to Jupyter Server means access to run arbitrary code and describe token authentication being enabled by default.",
+      "limitations": "Authentication is not filesystem/network/resource isolation and does not secure arbitrary notebook execution from the host."
+    },
+    {
+      "source_id": "S8",
+      "project": "uv",
+      "url": "https://docs.astral.sh/uv/concepts/projects/layout/",
+      "pin": "Captured response SHA-256 1703b8423762b9b3fe33c22c4269a96dfb8168a1224a42695313606d7c49b920; page dateModified 2026-07-21, docs URL moving.",
+      "locator": ["The pyproject.toml", "The lockfile", "Relationship to pylock.toml"],
+      "capture_identity": {"capture_id": "95d0c6f0d65b4e8db1afbd8ad139522d", "sha256": "1703b8423762b9b3fe33c22c4269a96dfb8168a1224a42695313606d7c49b920", "bytes": 72980, "complete": true},
+      "applicability": "Supports a local Python project declaration and lockfile as environment setup inputs.",
+      "limitations": "A Python lock does not pin the operating system, OCI runtime, host libraries, external services or all sources of nondeterminism."
+    },
+    {
+      "source_id": "S9",
+      "project": "DuckDB",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/14177",
+      "pin": "Captured issue JSON SHA-256 679241a4449057ecf1293c4ee4faeab4eeabd1a5f549ecaf77313190b15e600e; issue #14177; reported version 1.1.1; issue created 2024-09-30, closed 2024-10-07.",
+      "locator": ["Issue title/body: CSV reader will delete valid records when erroneous newlines are present", "What happens?", "To Reproduce", "DuckDB Version"],
+      "capture_identity": {"capture_id": "68447cd3507f4d79aadc61403493f7f2", "sha256": "679241a4449057ecf1293c4ee4faeab4eeabd1a5f549ecaf77313190b15e600e", "bytes": 6438, "complete": true},
+      "applicability": "Reporter describes valid-row data loss with malformed newlines and ignore_errors=True on 1.1.1; says ignore_errors=False or store_rejects avoided data loss in that reported case. Issue labels include reproduced.",
+      "limitations": "One reporter's fixture, macOS 14.6.1 ARM64 and DuckDB 1.1.1. Does not establish all-platform behavior or general parser semantics."
+    },
+    {
+      "source_id": "S10",
+      "project": "DuckDB",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/14177/comments",
+      "pin": "Captured comments JSON SHA-256 42986b0d531729dca4b87db911e80b581de3b3c06c46ab8481bfab66739bb193; issue #14177 comment response.",
+      "locator": ["Maintainer comment noting reproduction and pushed fix on 2024-10-01", "Reporter follow-up about upgrade impact"],
+      "capture_identity": {"capture_id": "103119ecd9f746968dce897a98fd3edd", "sha256": "42986b0d531729dca4b87db911e80b581de3b3c06c46ab8481bfab66739bb193", "complete": true},
+      "applicability": "Supports that the reported issue was reproduced by a maintainer and a fix was pushed; corroborates reported practical impact.",
+      "limitations": "A comment alone does not prove the commit, regression test or release; those are separately pinned as S11–S15."
+    },
+    {
+      "source_id": "S11",
+      "project": "DuckDB",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/14177/events",
+      "pin": "Captured events JSON SHA-256 acbd44b596800200566d0fa5850a6954e983f66e33f274092f2ba90db3f09ce1; event references commit 123b82b9053c4843559035b6723c867b2618b2d9.",
+      "locator": ["Cross-reference/commit event for fix PR #14184 and commit 123b82b9053c4843559035b6723c867b2618b2d9"],
+      "capture_identity": {"capture_id": "37607e3436864aa68699474c2a981530", "sha256": "acbd44b596800200566d0fa5850a6954e983f66e33f274092f2ba90db3f09ce1", "complete": true},
+      "applicability": "Connects the issue closure with a concrete code change reference.",
+      "limitations": "An issue event is not evidence that the change shipped in a release."
+    },
+    {
+      "source_id": "S12",
+      "project": "DuckDB",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/123b82b9053c4843559035b6723c867b2618b2d9",
+      "pin": "Git commit 123b82b9053c4843559035b6723c867b2618b2d9; captured commit JSON SHA-256 8e979a837465a086c69a85442418aba525d92c41e557319984e38e5f89a42ae0.",
+      "locator": ["Commit message [CSV Reader] Also use figure-out-line code when ignoring errors; changed CSV scanner; added data/csv/auto/14177.csv and test/sql/copy/csv/auto/test_14177.test"],
+      "capture_identity": {"capture_id": "1b976364977243b3b6a117e720245162", "sha256": "8e979a837465a086c69a85442418aba525d92c41e557319984e38e5f89a42ae0", "complete": true},
+      "applicability": "The source diff includes the scanner change and regression SQL test expecting a count of five for the fixture.",
+      "limitations": "Source diff is not a local execution result and the test covers one fixture/path."
+    },
+    {
+      "source_id": "S13",
+      "project": "DuckDB",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.1/test/sql/copy/csv/auto/test_14177.test",
+      "pin": "Immutable tag v1.1.1; captured exact HTTP 404 response, SHA-256 d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed.",
+      "locator": ["Requested regression test path test/sql/copy/csv/auto/test_14177.test; file absent at v1.1.1 tag"],
+      "capture_identity": {"capture_id": "e814a0d5b3634190973ebb14f9ba54b6", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "complete": true, "http_status": 404},
+      "applicability": "Negative tag check for test presence; relevant because issue names 1.1.1 as affected.",
+      "limitations": "A missing file at this path does not prove no equivalent coverage existed elsewhere in the tag."
+    },
+    {
+      "source_id": "S14",
+      "project": "DuckDB",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.1.2/test/sql/copy/csv/auto/test_14177.test",
+      "pin": "Immutable tag v1.1.2; captured test file SHA-256 8aa16a458b622e9975fcbee40c8f3e94c23b1175c0f1d46b12f5ec21450a119f.",
+      "locator": ["test/sql/copy/csv/auto/test_14177.test; fixture read with buffer_size=80 and ignore_errors=true; expected count 5"],
+      "capture_identity": {"capture_id": "4ecaba5b223c4afb8e24128628fcbc78", "sha256": "8aa16a458b622e9975fcbee40c8f3e94c23b1175c0f1d46b12f5ec21450a119f", "complete": true, "http_status": 200},
+      "applicability": "Confirms the regression test source is present in the v1.1.2 tag with expected row count.",
+      "limitations": "Presence of test source does not independently establish test execution or all affected cases."
+    },
+    {
+      "source_id": "S15",
+      "project": "DuckDB",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.1.2",
+      "pin": "Immutable release tag v1.1.2; captured release JSON SHA-256 a805d5719e1d8c6ff7ada7af9192c5e0ae6e53b2de4c25de43ff19e8ea1fe191; release date 2024-10-14.",
+      "locator": ["Release title/type Bugfix Release", "Release changes include PR #14184"],
+      "capture_identity": {"capture_id": "744030dc73664a2f82e0f0722783d638", "sha256": "a805d5719e1d8c6ff7ada7af9192c5e0ae6e53b2de4c25de43ff19e8ea1fe191", "complete": true},
+      "applicability": "Establishes that the fix PR is listed in the v1.1.2 bugfix release; together with S14, traces the regression test into that release line.",
+      "limitations": "Release notes and source presence do not prove an independently executed test or fix behavior for every build/platform."
+    },
+    {
+      "source_id": "S16",
+      "project": "DuckDB",
+      "url": "https://duckdb.org/docs/current/guides/troubleshooting/oom_errors",
+      "pin": "Captured response SHA-256 177cfdad9f1ad349b7547acaf83c464b8ecb4f2419ce0c347b5a59c93e2ef5e6; docs showed 1.5 current and 1.4 LTS on 2026-10-06; moving URL.",
+      "locator": ["Out of Memory Errors", "Blocking operators", "Workload-specific limitations"],
+      "capture_identity": {"capture_id": "27641ed0124d4348a06a366d3025b135", "sha256": "177cfdad9f1ad349b7547acaf83c464b8ecb4f2419ce0c347b5a59c93e2ef5e6", "bytes": 353514, "complete": true},
+      "applicability": "DuckDB documentation describes out-of-core execution and remaining OOM cases involving blocking operators/workloads or insufficient memory.",
+      "limitations": "No performance data for the target 5 GB input or workstation is supplied by this source."
+    }
+  ],
+  "quarantined_not_used": [
+    {
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+CSV+schema+regression+is%3Aissue&per_page=5",
+      "capture_id": "bd400534a2714b29b671d1ab824c4dcc",
+      "sha256_prefix_only_as_preserved_in_research_notes": "8f47ba6e…",
+      "eligibility": "quarantined; not read further, quoted, cited or used",
+      "limitation": "The response surfaced task-shaped candidate-like issue results; source-separation rules exclude their contents. Capture ID is recorded; exact full-body digest was not retained in the research notes."
+    }
+  ]
+}

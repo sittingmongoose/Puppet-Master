@@ -25,10 +25,10 @@
     }
   ],
   "diagnostic_reports": "evaluation/diagnostics/INDEX.md",
-  "completed_matched_comparisons_scope": "Independent full scientific comparison credit, not operational native completion",
+  "completed_matched_comparisons_scope": "Clean causallyeligible independentcomparison credit, not operational or scopedscientific outcome views",
   "operational_completion_snapshot": {
     "matched_pairs": 2,
-    "whole_pipelines": 5,
+    "whole_pipelines": 6,
     "pair_ids": [
       "I-06-LUNA-CLOCK-FRESH-R001",
       "I-07-LUNA-CLOCK-FRESH-R001"
@@ -39,6 +39,24 @@
     },
     "source_quality": "Separate independent assessment/pending; prior missingpartner snapshots unchanged",
     "paired_projection": "operational-completion-026/COMPLETE_MATCHED_NATIVE_PAIRS_001.json",
-    "single_projection": "operational-completion-026/FIRST_COMPLETE_NATIVE_PIPELINE_001.json"
-  }
+    "single_projection": "operational-completion-026/FIRST_COMPLETE_NATIVE_PIPELINE_001.json",
+    "later_confirmation_single_projection": "operational-completion-027/C03_COMPLETE_NATIVE_PIPELINE_001.json"
+  },
+  "scientific_current_pair_views": [
+    {
+      "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+      "control": "FAIL",
+      "treatment": "FAIL",
+      "report": "evaluation/independent-pipeline-6/final-report.md",
+      "causal_winner": null
+    },
+    {
+      "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+      "control": "FAIL",
+      "treatment": "PASS_FULL12_RESEARCH_PROPOSAL",
+      "provenance": "HOLD priorreceiptbytes/inferencepayload",
+      "report": "evaluation/independent-pipeline-7/FINAL.json",
+      "causal_winner": null
+    }
+  ]
 }

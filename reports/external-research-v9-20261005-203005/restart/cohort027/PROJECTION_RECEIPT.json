@@ -1,0 +1,72 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T062649.620709Z/BACKUP_RECEIPT.json",
+    "sha256": "b6823f36141e2a3c27855a2e774bbca0bc074f9f9336e814743da7db4eb8574a"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 49,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T06:26:49.620709+00:00",
+  "scope": "Accounting015 dated usage and genuine targeted64 native entry; DEC015 all5 WARM positive activation, no completed pipeline/science or extra target credit.",
+  "source_observed_utc": "2026-10-06T06:22:10.475808+00:00",
+  "sources": [
+    {
+      "bytes": 7242,
+      "path": "accounting/cohort-015/KEEPER_RECEIPT.json",
+      "sha256": "bca72f3657512a244fec7f4ba3712418d12996207e566c27d01a4e16f818be1a"
+    },
+    {
+      "bytes": 2497,
+      "path": "accounting/cohort-015/PUBLIC_SELECTION.json",
+      "sha256": "b7ac2042c9383b3655fbaa9480a8e30207656613850d23fabc252c8a5cee0bca"
+    },
+    {
+      "bytes": 549,
+      "path": "accounting/cohort-015/NATIVE_ENTRY_PUBLIC_SELECTION.json",
+      "sha256": "8b400c8882958ccd677244448182b688af6661c6f038f53226dc8f66512da3db"
+    },
+    {
+      "bytes": 190257,
+      "path": "accounting/cohort-015/NATIVE_ENTRY_QUALIFIER.json",
+      "sha256": "8394ad0030aa58dca6f4d5ae869b09eb4d10d82715753794318d5d7f926466b1"
+    },
+    {
+      "bytes": 1232,
+      "path": "ops/dispatcher/DEC015_IMPORT_001/PRELAUNCH.json",
+      "sha256": "aa6ac82d27ad6b5035d64f2f4b2db2b805f7d7e3297051de9b4ff608d33c6791"
+    },
+    {
+      "bytes": 76648,
+      "path": "ops/dispatcher/DEC015_FIVE_POSITIVE_NATIVE_ACTIVATIONS_001.json",
+      "sha256": "0e6f61713b65fbf22ee922c611fb7771472401828cd7e156288cfe384c3afe1c"
+    },
+    {
+      "bytes": 521,
+      "path": "accounting/cohort-015/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "a7a086538ba4ad08d56466bcbd4b3319baeb9e5c9bb6cd8069dfba0294c5a913"
+    },
+    {
+      "bytes": 2038,
+      "path": "accounting/cohort-015/CLOSURE.json",
+      "sha256": "224ae970c856a978a9c7674b842a14d15c8af687d708b2e9461190086df7e26b"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 185093,
+      "path": "state/current.json",
+      "sha256": "368a70844ab5a3533aa0b0a15a8bb45a328b69a01d003de4c1fd551a9c300298"
+    },
+    {
+      "bytes": 185093,
+      "path": "state/campaign.json",
+      "sha256": "368a70844ab5a3533aa0b0a15a8bb45a328b69a01d003de4c1fd551a9c300298"
+    },
+    {
+      "bytes": 26217,
+      "path": "CURRENT.md",
+      "sha256": "d289389d0a5a92087b9cbc134ba21cb6eede7b6ef088615ee845ea49f0f4c15f"
+    }
+  ]
+}

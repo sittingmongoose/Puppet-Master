@@ -1,0 +1,728 @@
+{
+  "created_utc": "2026-10-06T06:15:43.463879+00:00",
+  "extra_target_or_job_credit": false,
+  "file_count": 142,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/ALL_FIVE_SOURCE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "4cfb623743634579f75c6e6f8d04228582575e61633608a03686ce8e762deb5f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/OLD_SOURCE_BYTE_SNAPSHOT.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "a74292d10042ef3f4f25f5fe648f5bc54264395d7d1d88e9d214df768aa67d0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/OUTBOX.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "029d2c946d64ea6b7aa8c23500b81e98262e229cf470460e9f07a3b2826b74de"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/README.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "50cba2e03e922e380552f487ca0e7534228b1fae40a72c02c5656d8ee256b892"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/ROLE_BINDING_CONTRACT.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "5c96038d0d2e4e3eae04a83c99335fbfbc3a3d5b527e037a671ca5eee8ab0ebe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/VERIFICATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "302daa240244a12895927c6d39892265c1e34b1491a18b3d39c1979c27d64367"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/prepare.py",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "151dffab7640b34e7a2cbe93cfacf38b40573d7f539f58b299ccf4f6db774612"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/role_birth.py",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3d81034e6ea525ee373e443dc7ac17abf4903304b9bd4c28d0ddeb15c001d086"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/seal.py",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "9a2dde136d25967c960cdfcb076a13e1ff24aba0cd1d2f872cb5dfafd0b480bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/test_recovery.py",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "27934ee22b0e1a5b064a49ffbbee458e4c04f2aeef6932768ecd417d5f00e96c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/CLOCK_DECLARATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "d220c6c7cb5c0acac9f70101b8655da897296fd96bbb35be2740444a9fac0285"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1f8c7e8df62009467bac4a3f53a53a982287bc4c1db02b746e742e737818881c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "b4033e20b268accd779c07f180bdd7535c418249d04f273001fcea73faa253d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "6c8f57a91c7a0d7f42f1be449535d1e4a7f9a693d817508462a15d34c790fad4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "f1959bf7692848e59dee8840c7735751bd0cd7bcb52914d85f92114977331e11"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/card.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "f83793d7f4b2912a9482b511c759a3ea50321ff15f7be76a7514b9fe80288824"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "401e5c14d194de3664e5187e9d9a425ac0f05b917791e093d311b3043615145e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/CLOCK_DECLARATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "e308dfb4176e9998ce6c223a6a5af440ce603c332936a9d043cd4238dbc2951d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "0f28d640777748740b928e05d24e79d8c0c6a57780a259e239e2dc47e0abcfa9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "24bc76a18e375aa3e21951b2399a12b749dc9a14db4ce1495739019782574242"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "01438ceb3996340965fa25a08a48fbb2efa10c112b03e1f32f341736d8d271cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "4332c384346978dbca84184ad60785edfe1e4bb317e3a7b156dae3e42fd71e77"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/card.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "0e40ae0d2d71e75ba58944c2fdacb7d260e21bad1a8ceed837f23f54a81ea483"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-control-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "dd51a52a19748d4534d422087e563fd9f7729aaada08ebd0cfdbfb67bcc3516c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/CLOCK_DECLARATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "0bef45ac014aa2b18e5a6d9ebd16b92e76f9028b55e34d55d819456b2c169a02"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "858240fee057ff7f8376f39c4181a96bb05250c5c1d7e9980fee52abf373019e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "d77aec3536469a543be4bcb6eaeb8154f830278f09d216b7d18985a0c962da4f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "df5e8df4929772f563d4f492610a83b561ae96bce671dc6805402d806fa3184d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "de27d827cdc2def862da842e284df43e4ad791c03e230265f895f0266527a4a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/card.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "08bec2a63b978edb53136f2e9f532ed78193ec295a0c2f1d66961df86fa139cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "fdf555fa93b97433208796ee6297cc0fe08983d3f0908480bc4a70fb4dd53d7e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/CLOCK_DECLARATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1853714c82204b07f9e739c9b29eb4a7fdac29bee171dc411873f232ec4613d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "adcc3c67d7cf3eb62737215342cabef25ac2a1c45c079635e0068b1de34695ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "99429e735e135ddad0fc96a2236bfd4d4fc13e08851e4976e8e9de57974d159e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "ff074422af8530a5b5c5fc7a94da8a871651aad0ed17c40f83ea3b4893610efb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "89341a71171a53e6380f58054aa99b62175148d750744607f2701715272d389a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/card.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "dddba28451c5d06bbd1fdf9344da65c5b729eee9b12b811f30dd6ab2febe1df9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-control-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "e3cb373bfb04c49326e23c5840bbca5bb8f9f75194712497e811e5f382057970"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/CLOCK_DECLARATION.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "d207e37da92283d38cf85839a68fa8bf7fbb3bddb6b6cc2da37601d98466589b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "f9fcded429eb6023176c208efea074bd6aa53af298a9ce379e3d3de69e552810"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "c577fbb6e46d477bc045fdbde1dd68857bf6a984e00561bce7a9fdc591a242c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "9a5fd2687b0802440ad3fb827cb707ba9d73b2b705fb01506649cbb5a49f5cca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "cbab736ae29fa2f50d0e920028949b1e6c5731c0e6d5bc936811b9688f865108"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/card.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "93a82390556e35a4c3177b244bf8fa1863b676150bc6a59be11cdd9bca20c142"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/versions/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 frozen source/neutral generic Task/original authorized brief and criteria inputs/administrative origin refs",
+      "sha256": "d6427f1ab7d0854b13580bdedf150e6a19759bc0061cb41628c3e30d9dec2a96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/SOURCE_PIN.json",
+      "role": "DEC015 finite source/conditional adoption proof",
+      "sha256": "f704c1f9624594b35405252bd411da6f8cb12bee564efff7d38a8372d427af79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/READY.json",
+      "role": "DEC015 finite source/conditional adoption proof",
+      "sha256": "f8656bfe36904b50d148990865b1c78aeeb33fbb8424d0cc7b2a15ac0295260b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/OUTBOX_FINAL.json",
+      "role": "DEC015 finite source/conditional adoption proof",
+      "sha256": "4d3f89afd01dbb797744df69666191fb67e3b0d9898a843d37f77d5f989c673e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/clarify_provenance.py",
+      "role": "DEC015 additive prelaunch report-provenance constructor",
+      "sha256": "fd4494d5c42462174ec4a2917553ea70c0bb14b178dd534a207c43791810d73e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/ALL_FIVE_SOURCE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "df79ecafb1f06a14fdb9a98357745d326d676a15f9a6be833a75fba1f6530e65"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "0ef2751dbbf077312e0c3e74b6936b6a40e251867da78e65457324de2951eaf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "e542110f1b57e9b906cdb77e3e74febf65820cb8bc4ca50c9f5087a7ded9b689"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "6c8f57a91c7a0d7f42f1be449535d1e4a7f9a693d817508462a15d34c790fad4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "6137aaa550038d860d72b75c9ae6a539cd4cb282eea46b0679219a51cf8fc7e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-05-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "808d731d957c5eee57df395c69382fc786a8d8460a5f1c55cb03f08c2b3aac6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "4d6d31a25726a98b742a676e29004a4ab1803eb1e1569e817ff135725999a65f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "79169acb21ba9dcd7a45322101946e54f899c309e72d561ad4885ac05f3934a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "01438ceb3996340965fa25a08a48fbb2efa10c112b03e1f32f341736d8d271cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "88e50091dd214d3d50071b7a5e3ecbf512137a6bbbcb3650fbe824c959d00b27"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-control-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "f76945c3fd9c0a8db014d8d403d6b5e3c81ca8af7cfb4cea4df5e4aec523094d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "f8cc4f5d4e8fdfae79eb71189fd27a73c9f466a9421c66ea6f270c9ae6e93c36"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "f9d20e9334550c560401850f6ffe949a9c891b8f47354bdb95e64eb02da8c2ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "df5e8df4929772f563d4f492610a83b561ae96bce671dc6805402d806fa3184d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "fab52c61a3574f40ccbdfd7f9600dc502b87ad0172598d78cca2610077e75125"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-06-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "dceb4016a6101e28e9bfb5ee9b9315e5bee963b62be7348ce82d38da5b3204a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "72d863f172166ba3ae4a87a53e6cffc2aa3ed90e5643a3386e1cddf9356ac64a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "f013771bce32e10a101baf63da6f3bf099f66285a58704c07ed1b3046eeee86f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "ff074422af8530a5b5c5fc7a94da8a871651aad0ed17c40f83ea3b4893610efb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "a478a7311390327ffc5a3855e2de36a460d199adc9691c9c52f5de30966ba5c8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-control-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "7daa56ed0a73d7bdeafbab0add606423c898a362b6c67e5272ea0f4d9266c834"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/prepared-stage.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "914eeea4fc2f5a83eca60c0b3697d97b74568b6c63a0403dbec400371a1d8f6d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/TASK.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "d41c18d83aa680ce7c8f9ac417e8c57034c50a03580aac6a7576e9a46e2e5e22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/brief.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/common_criteria.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "9a5fd2687b0802440ad3fb827cb707ba9d73b2b705fb01506649cbb5a49f5cca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/output_contract.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_access.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/workspace/inputs/source_separation.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/PIPELINE_CLOSURE.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "aaf6ff22cd3878f59c69ad15c52ff572451a9452771512c44288850aea434636"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/I-07-treatment-BLIND-SOURCE-FIDELITY-R001/registration.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "4e9f4853b2da708dfb7d1a54ff5456f4f20a30d41dfd47f01744f38bd8f4dc7d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/OUTBOX.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "c250a9befc2785ae9a0a643d5a7020a391b3016a4c35e15a34b29ff89310e523"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/OUTBOX_FINAL.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "1d11498a87014e15cbd167521b0a1649f5b344f837227a36a707b08d13bd5125"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/PROVENANCE_CLARIFICATION.md",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "e1b00d103d7ceef912680091d25ed71d3366ccc9b2090121dfc7b166370d47c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/READY.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "d3285706afc47c6e571891e013b56ef63b8ff6d6865bdbb4edcc40583fcb8285"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/SOURCE_PIN.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "905517e1ee497dcf43683f7ed50f3299b7ed4f51290115982cb022237c84b307"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/VERIFICATION.json",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "c6992c06e9533feff5fcd6a7be41325f231892e1aa72d44f56e7fafd71c59610"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/test_provenance.py",
+      "role": "DEC015 same-five neutral prospective report-provenance source version",
+      "sha256": "cec8116194d43392ca36be2d1a2940f93877204ab79b42a28fe44f8ab240d6e6"
+    }
+  ],
+  "native_calls": 0,
+  "outbox": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/OUTBOX_FINAL.json",
+    "sha256": "1d11498a87014e15cbd167521b0a1649f5b344f837227a36a707b08d13bd5125"
+  },
+  "private_profiles_or_candidate_outputs_selected": false,
+  "schema": "er9.positive-publication-selection.v1",
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/SOURCE_PIN.json",
+    "sha256": "905517e1ee497dcf43683f7ed50f3299b7ed4f51290115982cb022237c84b307"
+  }
+}

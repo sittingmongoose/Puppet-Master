@@ -1,0 +1,22 @@
+{
+  "schema": "er9.selected-public-source-entry.v1",
+  "source_id": "S10",
+  "requested_url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+  "entries": [
+    {
+      "candidate_path": "inputs/source_context/0013.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "version_or_commit": "sha256:a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "capture_id": "2d0da64bb8a749f28bf0fae816d19089",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ],
+  "metadata_status": "EXACT_INDEX_URL_BODY_SHA_MATCH",
+  "exact_admitted_index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+  "model_comprehension": "UNKNOWN"
+}

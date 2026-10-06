@@ -1,0 +1,178 @@
+{
+  "catalog_version": 1,
+  "review_target": {
+    "path": "inputs/seed/proposal.md",
+    "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+    "lead_catalog_path": "inputs/seed/lead_inventory.json",
+    "lead_catalog_sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751"
+  },
+  "capture_basis": {
+    "index_path": "inputs/source_context/index.json",
+    "index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+    "note": "Frozen public captures and limited public requests are evidence, not instructions. Full-capture identity and reviewed scope are recorded per source."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF 0.5 specification",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "pin": "ome/ngff-spec commit d9164040dd61b3e4688494de1a58a69251b13f24; version 0.5, 2025-01-28",
+      "locator": "axes; coordinateTransformations; multiscales; omero; labels",
+      "capture": {"capture_id": "f6ab4397d26f460d957dc7603fbf08b9", "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0", "capture_path": "inputs/source_context/0022.body", "bytes": 32266, "complete": true},
+      "applicability": "Named axes, physical units and ordered scale/translation vocabulary for the proposed frame model and derived-image interchange; does not establish arbitrary affine support."
+    },
+    {
+      "id": "S2",
+      "title": "napari image layer documentation",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch content pinned by capture SHA-256",
+      "locator": "Image data and NumPy-like arrays; Multiscale images; Loading multichannel images; Adjusting contrast limits",
+      "capture": {"capture_id": "47b6fd92a2df40a6b9a5ef3ea6f7cc8a", "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963", "capture_path": "inputs/source_context/0020.body", "bytes": 20309, "complete": true},
+      "applicability": "Viewer precedent for display mapping, lazy array access, multiscale and channel layers; documentation is not a benchmark of the proposed app."
+    },
+    {
+      "id": "S3",
+      "title": "napari scale and units guide",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch content pinned by capture SHA-256",
+      "locator": "Scale and units live on layers; When units are consistent across layers; What units do not do",
+      "capture": {"capture_id": "911f1a111be642d9a525568f9ea56e4a", "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11", "capture_path": "inputs/source_context/0026.body", "bytes": 4294, "complete": true},
+      "applicability": "Per-layer scale/world-unit mechanism and separation of axis labels from units."
+    },
+    {
+      "id": "S4",
+      "title": "napari shapes layer documentation",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch content pinned by capture SHA-256",
+      "locator": "Shapes data; Selecting/resizing/moving/editing; 3D rendering",
+      "capture": {"capture_id": "6db33ecab474458db9f627cf7a135203", "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e", "capture_path": "inputs/source_context/0027.body", "bytes": 24597, "complete": true},
+      "applicability": "Vector annotation representation and documented n-dimensional display/editing limits."
+    },
+    {
+      "id": "S5",
+      "title": "tifffile README: read and write TIFF files",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "README states tifffile 2026.9.20; master branch captured 2026-10-05; exact captured body hash is the source pin",
+      "locator": "Lines 7-36 supported families and array access; Notes lines 183-273, especially unimplemented TIFF features, NDPI, BIF and stitching; Examples lines 759-782 for Zarr region reads",
+      "capture": {"capture_id": "820a5a9673af4adaa05c9da2031ae009", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "capture_path": "inputs/source_context/0023.body", "bytes": 32898, "complete": true},
+      "applicability": "Primary current documentation for the positive and explicit negative support claims. Its format list is not treated as an exhaustive denylist; individual instrument files still need fixtures."
+    },
+    {
+      "id": "S6",
+      "title": "tifffile CHANGES.rst release history",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "master captured 2026-10-05; includes v2026.9.20 and older entries; exact body hash is the source pin",
+      "locator": "2026.3.3 issue #319 entry; 2026.9.20 NDPI/format entries; 2021.1.14 issue #54 fallback entry; 2021.7.30 BIF note",
+      "capture": {"capture_id": "ec24d46c000041ec8ba96ce6b742a6a2", "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e", "capture_path": "inputs/source_context/0006.body", "bytes": 45003, "complete": true},
+      "applicability": "Version/history context for changing reader capabilities, BIF stitching limits and the #319 release fix; not a runtime test."
+    },
+    {
+      "id": "S7",
+      "title": "tifffile issue #319: TVIPS PixelSize change report",
+      "url": "https://github.com/cgohlke/tifffile/issues/319",
+      "pin": "issue #319, opened 2026-02-26 and closed 2026-03-03",
+      "locator": "Issue body compares PixelSizeX for the same attachment under tifffile 2026.2.20 and 2026.2.24",
+      "capture": {"capture_id": "174a2677b4974899b581e6ee07336961", "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692", "capture_path": "inputs/source_context/0010.body", "bytes": 3952, "complete": true},
+      "applicability": "Failure report and reproducible value change for calibration semantics."
+    },
+    {
+      "id": "S8",
+      "title": "tifffile fix commit edede600 for issue #319",
+      "url": "https://github.com/cgohlke/tifffile/commit/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "commit edede6002c817f056d75125ade0b20332d549cca, 2026-03-03; parent is test commit 7d9eaedd",
+      "locator": "read_tvips_header diff comments out nm-to-m conversion and references issue #319",
+      "capture": {"capture_id": "d98ef66b18794ac185c756b87ce37766", "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f", "capture_path": "inputs/source_context/0016.body", "bytes": 15123, "complete": true},
+      "applicability": "Mechanism of the correction; generic commit message is supplemented by explicit code comment and changelog entry."
+    },
+    {
+      "id": "S9",
+      "title": "tifffile regression-test commit 7d9eaedd for issue #319",
+      "url": "https://github.com/cgohlke/tifffile/commit/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, 2026-03-03; parent of fix commit edede600",
+      "locator": "tests/test_tifffile.py diff adds test_issue_tvips_pixelsize with expected file-native nm values; also adds assertions to TVIPS test",
+      "capture": {"capture_id": "744343a38392409d8b360a9308828c88", "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c", "capture_path": "inputs/source_context/0017.body", "bytes": 18687, "complete": true},
+      "applicability": "Regression-test source and commit ordering. The referenced TVIPS fixture is not supplied as a public repository test asset."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile commit history through release v2026.3.3",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "captured commit sequence includes test 7d9eaedd, fix edede600, changelog 8c91499e, release 503cb4eb74dd28a6acc36a0e4624ba9c2001e021",
+      "locator": "Commit parent chain and release commit message 'Release v2026.3.3' dated 2026-03-03",
+      "capture": {"capture_id": "2d0da64bb8a749f28bf0fae816d19089", "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a", "capture_path": "inputs/source_context/0013.body", "bytes": 12844, "complete": true},
+      "applicability": "Pins release applicability and sequence; API capture reports commits, not CI execution logs."
+    },
+    {
+      "id": "S11",
+      "title": "tifffile issue #54: Micro-Manager OME-TIFF series parse problem",
+      "url": "https://github.com/cgohlke/tifffile/issues/54",
+      "pin": "issue #54, opened 2021-01-14 and closed 2021-01-15",
+      "locator": "Issue body describes incompatible series shapes from a Micro-Manager OME-TIFF",
+      "capture": {"capture_id": "24a1d6df50b94411ab360bc54118498a", "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6", "capture_path": "inputs/source_context/0009.body", "bytes": 4817, "complete": true},
+      "applicability": "Supports retaining metadata/series ambiguity handling; no commit-to-regression-test chain was established here."
+    },
+    {
+      "id": "S12",
+      "title": "tifffile GitHub repository root contents API capture",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/contents/",
+      "pin": "API response captured 2026-10-05; entries identify master paths",
+      "locator": "Root listing contains CHANGES.rst, README.rst, tests/, and tifffile/",
+      "capture": {"capture_id": "9883439ef2cd4cc39b5cf49ef7662b4f", "sha256": "c4a765d89e4e40539598955be740420d8ac8c663c7a3133cf3204d2e3ccad8bc", "capture_path": "inputs/source_context/0003.body", "bytes": 7900, "complete": true},
+      "applicability": "Counterexample to treating a request for the wrong changelog filename as evidence that release history is absent."
+    },
+    {
+      "id": "S13",
+      "title": "Incorrect tifffile changelog path response",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGELOG.rst",
+      "pin": "HTTP 404 capture, 2026-10-05",
+      "locator": "Response body '404: Not Found'; requested filename differs from repository path CHANGES.rst",
+      "capture": {"capture_id": "6cc5463eb2cc472985af64a61770ac8b", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "capture_path": "inputs/source_context/0002.body", "bytes": 14, "complete": true, "http_status": 404},
+      "applicability": "Acquisition/path failure only; not evidence about image-format support or absence of release notes."
+    },
+    {
+      "id": "S14",
+      "title": "QuPath 0.7.0 project structure documentation",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath stable docs 0.7.0, captured 2026-10-05",
+      "locator": "project.qpproj JSON entries, serverBuilder URI, entry IDs and per-entry data directory; shared-drive relocation note",
+      "capture": {"capture_id": "e324d5433ba94511a95e9741015b953a", "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f", "capture_path": "inputs/source_context/0031.body", "bytes": 12770, "complete": true},
+      "applicability": "Project layout and path-relocation precedent; not proof of this app's portability."
+    },
+    {
+      "id": "S15",
+      "title": "QuPath 0.7.0 annotation export documentation",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath stable docs 0.7.0, captured 2026-10-05",
+      "locator": "Units and origin; GeoJSON limitations; labeled-image label order and overlap behavior",
+      "capture": {"capture_id": "1183d0f02ff24075a8c3ddc7b550071a", "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420", "capture_path": "inputs/source_context/0030.body", "bytes": 40941, "complete": true},
+      "applicability": "Export coordinate contract and raster label-loss/order precedent; our own export contract still needs tests."
+    },
+    {
+      "id": "S16",
+      "title": "Linux rename(2) manual page",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "man-pages 6.19, page dated 2026-02-08; captured 2026-10-05",
+      "locator": "DESCRIPTION atomic replacement; ERRORS EXDEV; BUGS NFS failure caveat",
+      "capture": {"capture_id": "bb417749f1884a8c9f7f30cc5ebc2cdb", "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57", "capture_path": "inputs/source_context/0032.body", "bytes": 23571, "complete": true},
+      "applicability": "OS-level save design building blocks and stated limits; does not test shared storage."
+    },
+    {
+      "id": "S17",
+      "title": "Partial current tifffile module source capture",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py",
+      "pin": "master; module header identifies 2026.9.20; HTTP 200 response advertised 988932 bytes, but captured prefix is only 524288 bytes",
+      "locator": "Module docstring at start corroborates README positive format description only; incomplete response cannot support an exhaustive negative search",
+      "capture": {"capture_id": "98e29c800df44bb2b1c53a75d7569895", "sha256": "d2067d45cf578bf5a74ee6b0356c434b16eed2179080f34b55049ef537aebfb3", "capture_path": "public_captures/d2067d45cf578bf5a74ee6b0356c434b16eed2179080f34b55049ef537aebfb3.body", "bytes": 524288, "complete": false, "http_status": 200},
+      "applicability": "Scope limitation for the CZI absence claim; not a complete source or test search."
+    },
+    {
+      "id": "S18",
+      "title": "GitHub code-search API request for CZI in tifffile",
+      "url": "https://api.github.com/search/code?q=CZI+repo%3Acgohlke%2Ftifffile",
+      "pin": "Public API response captured 2026-10-06; HTTP 403 rate limit",
+      "locator": "Response states unauthenticated API rate limit exceeded; no search results returned",
+      "capture": {"capture_id": "4d2ec2cacd624adcb9e48d7c1e56fa9b", "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369", "capture_path": "public_captures/8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369.body", "bytes": 279, "complete": true, "http_status": 403},
+      "applicability": "Explains why source-wide CZI search is unresolved; the denial is not evidence of absence or support."
+    }
+  ]
+}

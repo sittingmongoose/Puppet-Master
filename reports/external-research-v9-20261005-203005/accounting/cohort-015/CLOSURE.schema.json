@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accountant_helper_provider_usage": {
+      "type": "string"
+    },
+    "billing_dollars": {
+      "type": "string"
+    },
+    "campaign_complete": {
+      "type": "boolean"
+    },
+    "clock_reset": {
+      "type": "boolean"
+    },
+    "closed_monotonic_ns": {
+      "type": "number"
+    },
+    "closed_utc": {
+      "type": "string"
+    },
+    "later_closure_pointer_notices_and_final_assistant_delivery": {
+      "type": "string"
+    },
+    "later_ops_DEC015_five_activations": {
+      "type": "string"
+    },
+    "native_entry_qualifier_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "new_candidate_Goals_or_provider_invocations_by_accounting": {
+      "type": "boolean"
+    },
+    "owner_acknowledgments": {
+      "type": "string"
+    },
+    "primary_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "publisher026_elapsed_helper_model_provider_usage_billing": {
+      "type": "string"
+    },
+    "publisher026_neutral_metadata_verification_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "report_ready_elapsed_seconds_subset": {
+      "type": "number"
+    },
+    "required_primary_and_qualifier_notice_tool_returns_observed": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "start_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "whole_limit_seconds": {
+      "type": "number"
+    },
+    "whole_through_primary_and_native_entry_qualifier_root_foreman_publisher_keeper_ops_notices_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "start_pin",
+    "closed_utc",
+    "closed_monotonic_ns",
+    "whole_through_primary_and_native_entry_qualifier_root_foreman_publisher_keeper_ops_notices_seconds",
+    "whole_limit_seconds",
+    "clock_reset",
+    "required_primary_and_qualifier_notice_tool_returns_observed",
+    "owner_acknowledgments",
+    "report_ready_elapsed_seconds_subset",
+    "primary_selection_pin",
+    "native_entry_qualifier_selection_pin",
+    "publisher026_neutral_metadata_verification_pin",
+    "publisher026_elapsed_helper_model_provider_usage_billing",
+    "later_closure_pointer_notices_and_final_assistant_delivery",
+    "new_candidate_Goals_or_provider_invocations_by_accounting",
+    "accountant_helper_provider_usage",
+    "billing_dollars",
+    "campaign_complete",
+    "later_ops_DEC015_five_activations",
+    "scope"
+  ],
+  "type": "object"
+}

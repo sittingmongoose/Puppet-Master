@@ -1,0 +1,22 @@
+{
+  "schema": "er9.selected-public-source-entry.v1",
+  "source_id": "S12",
+  "requested_url": "https://api.github.com/repos/cgohlke/tifffile/contents/",
+  "entries": [
+    {
+      "candidate_path": "inputs/source_context/0003.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/contents/",
+      "version_or_commit": "sha256:c4a765d89e4e40539598955be740420d8ac8c663c7a3133cf3204d2e3ccad8bc",
+      "sha256": "c4a765d89e4e40539598955be740420d8ac8c663c7a3133cf3204d2e3ccad8bc",
+      "capture_id": "9883439ef2cd4cc39b5cf49ef7662b4f",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ],
+  "metadata_status": "EXACT_INDEX_URL_BODY_SHA_MATCH",
+  "exact_admitted_index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+  "model_comprehension": "UNKNOWN"
+}

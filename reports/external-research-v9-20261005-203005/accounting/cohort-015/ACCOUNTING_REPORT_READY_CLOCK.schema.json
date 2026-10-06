@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "billing_dollars": {
+      "type": "string"
+    },
+    "clock_reset": {
+      "type": "boolean"
+    },
+    "final_required_handoff_elapsed_seconds": {
+      "type": "string"
+    },
+    "provider_usage": {
+      "type": "string"
+    },
+    "report_ready_elapsed_seconds": {
+      "type": "number"
+    },
+    "report_ready_monotonic_ns": {
+      "type": "number"
+    },
+    "report_ready_utc": {
+      "type": "string"
+    },
+    "required_outgoing_notices_follow_this_checkpoint": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "start_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "whole_authorized_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "start_pin",
+    "report_ready_utc",
+    "report_ready_monotonic_ns",
+    "report_ready_elapsed_seconds",
+    "whole_authorized_seconds",
+    "clock_reset",
+    "required_outgoing_notices_follow_this_checkpoint",
+    "final_required_handoff_elapsed_seconds",
+    "provider_usage",
+    "billing_dollars",
+    "scope"
+  ],
+  "type": "object"
+}

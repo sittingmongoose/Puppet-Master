@@ -1,0 +1,94 @@
+{
+  "schema": "er9.leads.v1",
+  "generated_at": "2026-10-06",
+  "leads": [
+    {
+      "id": "L1",
+      "topic": "OME-NGFF 0.4 multiscales and label groups",
+      "status": "optional/deferred opportunity",
+      "description": "Prototype precomputed multiscale caches for repeat viewing and NGFF label output for exchangeable masks. These can reuse a documented multidimensional storage convention, but should be adopted only after verifying the exact version-2 Zarr output, axes/units, and independent-reader round trip.",
+      "source_ids": ["S1", "S2", "S3"],
+      "decision_gate": "Interoperability and workflow benefit outweigh duplicate storage/preprocessing cost for real group fixtures."
+    },
+    {
+      "id": "L2",
+      "topic": "Bio-Formats as a selective second reader",
+      "status": "optional/deferred alternative",
+      "description": "For a high-value instrument format outside the tested tifffile boundary, assess Bio-Formats v8.4.0 and its per-format pixel/metadata/export capabilities. Add only named formats with fixtures and an owned compatibility test; do not equate the format table with universal support.",
+      "source_ids": ["S4", "S9"],
+      "decision_gate": "One or more instruments need it and exact sample, metadata, codec and failure behavior pass the team's corpus."
+    },
+    {
+      "id": "L3",
+      "topic": "Alternative image access path without canonical conversion",
+      "status": "supported alternative to evaluate",
+      "description": "Keep original TIFFs as read-only canonical data and use tifffile-backed access; write chunked NGFF only for masks, optional caches or explicit exports. This reduces mandatory conversion and duplicate source storage while leaving large-file access granularity to be measured.",
+      "source_ids": ["S2", "S4"],
+      "decision_gate": "Compare source-backed navigation and memory on target fixtures with selective NGFF derivatives."
+    },
+    {
+      "id": "L4",
+      "topic": "Viewer ownership alternative",
+      "status": "optional/deferred architecture alternative",
+      "description": "If napari's pinned API, packaging or layer semantics do not support the required project contract, evaluate a small Qt/VisPy canvas while keeping the image identity, coordinate, annotation and provenance model. This increases the amount of slice navigation and interaction behavior the team owns.",
+      "source_ids": ["S6", "S8", "S12", "S13"],
+      "decision_gate": "Prototype packaging, pinned-version interaction tests, and project integration before choosing custom viewer ownership."
+    },
+    {
+      "id": "L5",
+      "topic": "3 GB bounded-access and responsiveness qualification",
+      "status": "unresolved critical dependency",
+      "description": "Neither the TIFF release notes nor Zarr slicing documentation qualify full-stack memory, latency or cancellation. Decoder segment size, compression, storage and chunk geometry may dominate requested tile size. Do not claim the target until it passes representative target-machine tests.",
+      "source_ids": ["S2", "S4", "S6"],
+      "decision_gate": "Measure peak RSS, access granularity, cache ceiling, navigation/edit latency and cancellation on the actual supported corpus and 8-core/16 GB host; otherwise narrow the support boundary or select an alternate reader strategy."
+    },
+    {
+      "id": "L6",
+      "topic": "Project durability and shared-storage semantics",
+      "status": "unresolved critical dependency",
+      "description": "SQLite transaction guarantees assume platform/storage behavior; WAL is not intended for network filesystems. The exact shared storage and failure semantics used by the six researchers are not yet qualified.",
+      "source_ids": ["S10", "S11"],
+      "decision_gate": "Test local recovery plus closed-snapshot copy, relink and interrupted publication on the actual supported shared storage; choose a snapshot/backup protocol and document its verified boundary."
+    },
+    {
+      "id": "L7",
+      "topic": "General affine and export interoperability",
+      "status": "unresolved critical dependency",
+      "description": "The project contract proposes a general index-to-world affine, while NGFF 0.4 documents scale/translation transformations. Rotated/sheared or otherwise nonseparable geometry may not have a faithful standard representation in the chosen overlay export.",
+      "source_ids": ["S1"],
+      "decision_gate": "Test actual instrument geometry. Preserve full geometry in project and sidecar; until an interoperable representation is demonstrated, export only index-space with explicit transform sidecar or refuse unsupported physical-space export."
+    },
+    {
+      "id": "L8",
+      "topic": "Coordinate convention and viewer regression coverage",
+      "status": "unresolved critical dependency",
+      "description": "The pixel-center index convention is a proposed product choice and was not verified against the selected reader, napari layer coordinates or raster export. The documented napari slice-highlight issue also shows that display selection/hover behavior merits version-pinned regression coverage.",
+      "source_ids": ["S5", "S6", "S8", "S12", "S13"],
+      "decision_gate": "Use independent known-fiducial and pixel-edge fixtures and the #9247 selected/hovered off-slice scenario against the exact packaged application."
+    },
+    {
+      "id": "L9",
+      "topic": "Shared live collaboration and cloud services",
+      "status": "later option, outside minimum",
+      "description": "The brief needs ordinary bundle exchange. Simultaneous editing or cloud synchronization would add concurrency, conflict resolution, identity and recovery requirements; keep closed project snapshots as the first exchange workflow.",
+      "source_ids": ["S10", "S11"],
+      "decision_gate": "Revisit only if file-bundle exchange fails a demonstrated group workflow need and a concurrency model can be specified and tested."
+    },
+    {
+      "id": "L10",
+      "topic": "Automatic segmentation and registration",
+      "status": "later option, outside minimum",
+      "description": "Could be considered as separate derived operations with model/software version, input identity, parameters and explicit output provenance; neither belongs to the minimum manual annotation workflow nor should imply a validated clinical result.",
+      "source_ids": [],
+      "decision_gate": "Require a separately justified research use, reproducible operation record and validation plan before introduction."
+    },
+    {
+      "id": "L11",
+      "topic": "Instrument-specific source fixtures and exact dependency environment",
+      "status": "unresolved critical dependency",
+      "description": "The actual microscope formats/codecs, axis conventions, storage layouts and workstation operating systems have not been supplied or tested. Pinning napari, tifffile, Zarr, codecs and SQLite runtime is a prerequisite for reproducible behavior.",
+      "source_ids": ["S3", "S4", "S6", "S9"],
+      "decision_gate": "Collect representative non-destructive fixtures from researchers; select and pin the minimal environment and document exact accepted cases before first useful release."
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "schema": "er9.research.leads.v1",
+  "purpose": "Unresolved implementation questions and optional follow-up research. These entries are leads, not supporting evidence or settled product requirements.",
+  "leads": [
+    {
+      "lead_id": "L1",
+      "kind": "critical implementation dependency",
+      "topic": "A tested Jupyter execution and environment matrix",
+      "state": "unresolved; no runtime matrix executed",
+      "why_it_matters": "JupyterLab/Server, nbformat, nbclient, ipykernel, Python, DuckDB Python and DuckDB CLI versions must work together in both interactive and fresh-kernel replay. Docs/API examples do not qualify an actual combination.",
+      "next_step": "Pick OS/Python targets, pin exact versions and hashes in a project lock/build, then test notebook open, interactive execution, nbclient replay, error capture, interrupt, cancellation and reopen from a clean machine.",
+      "bounded_fallback": "Support one explicitly tested Python environment and static viewing when it is unavailable; do not imply arbitrary kernel support.",
+      "related_sources": ["S1", "S2", "S3", "S7", "S8"]
+    },
+    {
+      "lead_id": "L2",
+      "kind": "critical implementation dependency",
+      "topic": "Untrusted notebook execution confinement across platforms",
+      "state": "design proposed; not implemented or adversarially tested",
+      "why_it_matters": "Jupyter Server access permits arbitrary code. A rootless OCI worker, read-only inputs, disabled network, resource limits and termination policy need platform-specific validation. Container isolation is defense-in-depth and can disrupt ordinary interactive file access.",
+      "next_step": "Prototype Linux rootless worker first; threat-model mounts, runtime sockets, symlinks/path traversal, extension installation, process descendants, disk exhaustion, output validation and cancellation. Evaluate macOS/Windows runtime/mount behavior separately.",
+      "bounded_fallback": "Disable clean replay if a supported confined runtime is absent; if offering trusted local execution, label its access and guarantees explicitly.",
+      "related_sources": ["S7"]
+    },
+    {
+      "lead_id": "L3",
+      "kind": "critical implementation dependency",
+      "topic": "Full content identity cost for external large datasets",
+      "state": "design choice proposed; cost unmeasured",
+      "why_it_matters": "A full SHA-256 is stronger than path/size/mtime but can reread multi-gigabyte sources and delay run startup; weak metadata cannot verify unchanged bytes.",
+      "next_step": "Measure streaming digest throughput and cancellation on local/removable/network storage; consider cached digest keyed by stable file identity only as an optimization, then revalidate before a run.",
+      "bounded_fallback": "Label inputs weak/unverified until the content hash is complete; prohibit a verified-current claim when content identity is unknown.",
+      "related_sources": ["S5", "S9"]
+    },
+    {
+      "lead_id": "L4",
+      "kind": "critical implementation dependency",
+      "topic": "Atomic commit and locking on ordinary folders and network filesystems",
+      "state": "recovery protocol proposed; filesystem behavior unverified",
+      "why_it_matters": "Rename durability, lock semantics and concurrent writers vary across platforms, sync folders and network mounts. A portable project exchange promise needs explicit filesystem support boundaries.",
+      "next_step": "Fault-inject save interruption around staging, fsync, rename and pointer update; test writer races and recovery on supported filesystems and reject unvalidated network write targets.",
+      "bounded_fallback": "Support read-only inspection on unverified mounts and create conflict copies on stale manifest hashes.",
+      "related_sources": []
+    },
+    {
+      "lead_id": "L5",
+      "kind": "critical performance dependency",
+      "topic": "5 GB input on an 8-core/16 GB workstation",
+      "state": "target only; no performance check executed",
+      "why_it_matters": "Lazy scans and out-of-core query execution do not make every join, sort, pivot, aggregation or Python conversion fit memory. Temp disk and OS cache behavior matter.",
+      "next_step": "Run reproducible projection/filter, bounded preview, result export and blocking-operator benchmarks over generated data while measuring peak RSS, temp usage and elapsed time; publish workload-specific results.",
+      "bounded_fallback": "Disable or require explicit budgets for operations known to materialize large results; never promise that 5 GB always fits.",
+      "related_sources": ["S4", "S16"]
+    },
+    {
+      "lead_id": "L6",
+      "kind": "optional alternative investigation",
+      "topic": "Polars lazy/streaming transforms with DuckDB SQL kept separate",
+      "state": "not investigated in this research",
+      "why_it_matters": "Could be useful if the analysts want a Python dataframe API or a tested scan mode DuckDB does not meet for their actual transforms, but a second engine complicates SQL parity, cache keys, order and output comparison.",
+      "next_step": "Benchmark the same declared fixture/workloads and compare conversion behavior, lazy boundaries, spill behavior, schema evolution, Python materialization and how the SQL colleague can reproduce outputs.",
+      "bounded_fallback": "Do not introduce a second engine without a named workload demonstrating a benefit.",
+      "related_sources": []
+    },
+    {
+      "lead_id": "L7",
+      "kind": "optional opportunity",
+      "topic": "Schema and lineage change review",
+      "state": "product opportunity proposed; not built",
+      "why_it_matters": "A visual dependency view from declared datasets and transforms to output artifacts can make stale results explainable and surface changed fields or reject counts. Arbitrary notebook dependencies remain unknowable in general.",
+      "next_step": "Prototype lineage only for declared transform nodes first; show source/contract/code hash diffs and list notebook outputs as unverified unless their inputs are declared.",
+      "bounded_fallback": "Use conservative whole-notebook invalidation when dependency edges cannot be proven.",
+      "related_sources": ["S5", "S9", "S12"]
+    },
+    {
+      "lead_id": "L8",
+      "kind": "optional standard/interchange follow-up",
+      "topic": "Notebook document interchange versus execution specification",
+      "state": "basic nbformat docs reviewed; cross-implementation portability untested",
+      "why_it_matters": "Standard `.ipynb` makes projects inspectable and exchangeable, but optional metadata and output attachments do not define a portable kernel, execution environment or provenance event model.",
+      "next_step": "Test a minimal notebook saved/opened by two current Jupyter front ends and a non-Jupyter viewer; check cell IDs, MIME outputs, widgets and unknown metadata retention against chosen nbformat pins.",
+      "bounded_fallback": "Use `.ipynb` for document interchange and keep run manifests as a separate versioned project record.",
+      "related_sources": ["S1", "S2"]
+    }
+  ]
+}

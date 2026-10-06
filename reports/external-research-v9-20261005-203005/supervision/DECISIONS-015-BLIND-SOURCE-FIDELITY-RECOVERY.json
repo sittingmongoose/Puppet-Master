@@ -1,0 +1,56 @@
+{
+  "decision_id": "DEC015",
+  "created_utc": "2026-10-06T05:49:35.710760+00:00",
+  "authorization": "User explicitly authorizes native candidate critique/repair, ordinary repairs and prospective retests without another Go",
+  "status": "PREDECLARED_FINITE_WARM_RECOVERY_SOURCE_PACKAGE_PENDING",
+  "scope": {
+    "eligible_arms": [
+      "I05 treatment",
+      "I06 control",
+      "I06 treatment",
+      "I07 control",
+      "I07 treatment"
+    ],
+    "selection": "ALL five positively operationally complete current DEC012 pipelines at fixed earlier operational milestone, regardless of source grades; no quality-selected subset",
+    "eligibility_proofs": [
+      {
+        "path": "ops/dispatcher/FIRST_COMPLETE_NATIVE_PIPELINE_001.json",
+        "sha256": "2dbb32613111fbc5d619c5f0c930887a6c563f2c3866b132e43bbb14495948d2"
+      },
+      {
+        "path": "ops/dispatcher/COMPLETE_MATCHED_NATIVE_PAIRS_001.json",
+        "sha256": "e6ca72b7aeca244d4534a629334fc8bdc3ee1a6795621f5f52534b017616bef7"
+      }
+    ],
+    "new_native_roles": 5,
+    "role": "One combined generic independent native critique and source-fidelity repair Goal per eligible arm",
+    "actual_family": "GPT-6 Luna Max in fresh standalone Codex threads, never collaboration subagents",
+    "allocation_seconds_per_new_role": 1500,
+    "automatic_further_repeat": false
+  },
+  "purpose": "Recover source-correct complete sandbox proposals through genuine candidate work. A checked source defect in the first full-output independent review warrants ordinary repair; no defect details or evaluator answer is supplied to candidates. Four other eligible arms have not yet been source graded at this decision.",
+  "candidate_task": "Using only this authenticated current arm proposal/catalogs, authentic same-arm predecessors and exact original actual brief/frozen common criteria/source access/source separation, independently audit every factual, numerical, compatibility and witness claim against primary sources and real bounded witness evidence. Critique and repair wrong, unsupported, incomplete or inconsistent claims while preserving supported content, useful unknowns, exact required tokens and scope. Produce the four complete required final artifacts plus a critic/recovery report distinguishing checks, changes and remaining unknowns. No hidden answers, guessed execution or source claims.",
+  "forbidden_candidate_inputs": [
+    "independent evaluator reports, critiques, grades or findings",
+    "this private supervisory reason or cited evaluator result",
+    "old failed outputs or historical v8/ER9 proposals beyond predeclared current authenticated same-arm inputs",
+    "other-arm or other-case candidate content",
+    "Sol-authored research, correction, numerical value, proposed solution or hidden answer"
+  ],
+  "source_and_clock": [
+    "Close actual Luna1.5 runtime/tools/combined-native writer/validator/config/Task/input-source constructors for all five new roles before ANY new recovery Goal",
+    "Use authenticated current same-arm complete four-role final plus new authentic predecessor lineage; source access and common criteria unchanged",
+    "Fix actual new original action/lifecycle clocks/profile/config/input hashes at each new role birth before its genuine native Goal; do not reset or extend old allocations",
+    "Every new stage uses genuine native /goal; source engineers make zero candidate/model/Goal calls",
+    "Respect real account/host capacity and sibling occupancy, no user-imposed Luna thread cap, no substitutions or purchases"
+  ],
+  "evaluation_and_counts": [
+    "Original source grades, original pipeline outputs, scientific comparisons, failures and costs remain immutable",
+    "Recovered outputs are separately versioned WARM derivative proposals, never additional fresh integrated/confirmation pipelines or new matched comparison target credit",
+    "New critique/repair costs and failures retained in full, never best-of selection or replacement of original negative result",
+    "Independent source assessments use exact original actual briefs and frozen criteria, with fresh reservation/source clock; no invented rubric",
+    "No matched winner, method superiority, affordable result or canon adoption inferred from a recovered derivative",
+    "One finite five-role cohort; no further campaign or automatic repeated repairs. Later distinct concrete defects require a separately bounded prospective scope."
+  ],
+  "custody": "Source constructor owner prepares only a new isolated lab directory; ops sole controller and native admission; source evaluators and publisher remain independent. Existing targeted/integrated/confirmation queue continues."
+}

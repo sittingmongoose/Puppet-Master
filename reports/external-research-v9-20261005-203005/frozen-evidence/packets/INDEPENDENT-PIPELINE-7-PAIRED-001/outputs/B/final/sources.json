@@ -1,0 +1,148 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "stage": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "sources": [
+    {
+      "id": "O1",
+      "title": "OME-NGFF 0.5 specification",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "pin": "OME-NGFF version 0.5; versioned specification URL",
+      "locator": "§2.1 axes; §2.3 coordinateTransformations; §2.4 multiscales (2–5 dimensions and per-level scale/translation restriction); §2.6 labels (integer label images)",
+      "capture": {
+        "capture_id": "5eb1ebb4daed43eba84057edef3a4ded",
+        "capture_path": "public_captures/a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b.body",
+        "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+        "bytes": 158591,
+        "captured_utc": "2026-10-06T04:57:08.782859+00:00"
+      },
+      "applicability": "Primary standard for new OME-Zarr v0.5 multiscale data and interoperable integer masks. Does not supply the app's full project, vector annotation, undo or provenance model. Per-level multiscale transforms are limited to scale/translation."
+    },
+    {
+      "id": "O2",
+      "title": "OME-NGFF 0.4 specification",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF version 0.4; versioned specification URL",
+      "locator": "§2 On-disk (or in-cloud) layout; lines describe hierarchical OME-Zarr using Zarr specification v2 and image/optional-label organization",
+      "capture": {
+        "capture_id": "2707400744274534be5ba67963b0fab9",
+        "capture_path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "bytes": 163120,
+        "captured_utc": "2026-10-06T04:57:48.634705+00:00"
+      },
+      "applicability": "Used only to establish that v0.4 is a distinct Zarr v2 generation; an adapter/conversion path must be version-aware. No claim that this proposal has tested v0.4 interoperability."
+    },
+    {
+      "id": "T1",
+      "title": "tifffile README and API examples v2026.9.15",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.15/README.rst",
+      "pin": "Git tag v2026.9.15; release commit 561d5c2cbad0271e1d695188928ea14a3a977752",
+      "locator": "Read and write TIFF files; Requirements; Notes on supported subset; examples for return_as='zarr', tile reads, Dask chunks, memmap limitations and OME-TIFF writing",
+      "capture": {
+        "capture_id": "1b923647923e42d8bae9a71179d886c2",
+        "capture_path": "public_captures/c03d271b3b9fb6b8fe1de2138e565d3c48a3622c7919d1fc33a438486b807075.body",
+        "sha256": "c03d271b3b9fb6b8fe1de2138e565d3c48a3622c7919d1fc33a438486b807075",
+        "bytes": 32364,
+        "captured_utc": "2026-10-06T05:00:46.113561+00:00"
+      },
+      "applicability": "Independent TIFF parsing/array-access precedent. Shows a bounded-access mechanism for compatible tiled TIFFs and limits/optional codec dependencies; documentation examples do not prove this application's 3 GB memory or latency target."
+    },
+    {
+      "id": "T2",
+      "title": "tifffile issue #334: MMStack string z-step regression",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/334",
+      "pin": "Issue #334, opened and closed 2026-09-15; body records affected releases through 2026.9.9",
+      "locator": "Issue body: versions, Micro-Manager 1.4 string metadata, minimal reproduction, traceback and cause",
+      "capture": {
+        "capture_id": "6fa1494f89e24bf1b3f318567140dafa",
+        "capture_path": "public_captures/e5572e592f26d01ab6dc8c5efa095c50586e585c409b4fd2622eb059841693ad.body",
+        "sha256": "e5572e592f26d01ab6dc8c5efa095c50586e585c409b4fd2622eb059841693ad",
+        "bytes": 6799,
+        "captured_utc": "2026-10-06T05:05:35.815538+00:00"
+      },
+      "applicability": "Concrete reported failure for a specific archival MMStack metadata convention. Issue report is not itself proof of repair or test execution; those are separately sourced under T3."
+    },
+    {
+      "id": "T3",
+      "title": "tifffile fix/test comparison and maintainer release confirmation",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/compare/7cdc204d14cd4c50d1238e8061826f4ae4793407...561d5c2cbad0271e1d695188928ea14a3a977752",
+      "pin": "Base v2026.9.9 commit 7cdc204d14cd4c50d1238e8061826f4ae4793407; code fix commit 6e0a02f10fc763abd94aee0a0ab8225b4b8860a9; regression test commit ed361c575930474938b5552c6745fbf2fa513cee; head release v2026.9.15 commit 561d5c2cbad0271e1d695188928ea14a3a977752. Maintainer comment: https://github.com/cgohlke/tifffile/issues/334#issuecomment-5684544571",
+      "locator": "Comparison commits/files patch: tifffile/tifffile.py guarded numeric coercion; tests/test_tifffile.py test_read_mmstack_zstep_str; CHANGES.rst repair note. Issue comment states fixed in v2026.9.15.",
+      "capture": {
+        "capture_id": "4cff0395e42948ac930663b53fa0a424",
+        "capture_path": "public_captures/5bebaa9dc23ee8f64ef4608d1a322c78e99b69a6134bf30e491d8fa9e727d19c.body",
+        "sha256": "5bebaa9dc23ee8f64ef4608d1a322c78e99b69a6134bf30e491d8fa9e727d19c",
+        "bytes": 29636,
+        "captured_utc": "2026-10-06T04:58:49.496235+00:00"
+      },
+      "related_capture": {
+        "capture_id": "8c2cf16dc04f44bb8d44eb1c18d8673d",
+        "url": "https://api.github.com/repos/cgohlke/tifffile/issues/334/comments",
+        "sha256": "dffcfba382e32c8a8a87f25ea973875502672b8f144a1313cfb36d0050f5ab3d",
+        "bytes": 3306,
+        "captured_utc": "2026-10-06T04:58:30.670733+00:00"
+      },
+      "applicability": "Establishes a code change, added regression test and named release containing them. No CI/test-run receipt was captured; applicability is to the cited release and case, not every MMStack."
+    },
+    {
+      "id": "N1",
+      "title": "napari Layer implementation v0.5.6",
+      "url": "https://raw.githubusercontent.com/napari/napari/42a6b9eb4ed1e8c4dc688ea0bee67364bf570875/napari/layers/base/base.py",
+      "pin": "napari v0.5.6 tag resolves to commit 42a6b9eb4ed1e8c4dc688ea0bee67364bf570875 (release record dated 2025-01-21/22)",
+      "locator": "Layer class docstring (axis_labels, units, affine, cache applicability); __init__ transform chain (tile2data, data2physical, physical2world, world2grid); Dask configuration",
+      "capture": {
+        "capture_id": "54194e62e5b54ffeb8a582b27c10a955",
+        "capture_path": "public_captures/bb7ad93d6b0b51db9785c91ed73f71510532cf0673bf517200b5d3f44717dd2d.body",
+        "sha256": "bb7ad93d6b0b51db9785c91ed73f71510532cf0673bf517200b5d3f44717dd2d",
+        "bytes": 85807,
+        "captured_utc": "2026-10-06T04:59:45.392107+00:00"
+      },
+      "applicability": "Independent viewer/layer precedent for dimension labels, units, transforms and slicing. Does not prove project persistence, identity, error behavior or performance for this proposed app."
+    },
+    {
+      "id": "N2",
+      "title": "napari v0.5.6 release record",
+      "url": "https://api.github.com/repos/napari/napari/git/tags/5e03fc00ca9e10226b20463c6e06cf1961085f0e",
+      "pin": "Annotated tag v0.5.6 -> commit 42a6b9eb4ed1e8c4dc688ea0bee67364bf570875",
+      "locator": "Release message: Qt/VisPy viewer description; Shapes performance enhancement requires optional compiled backend and an advanced-setting toggle",
+      "capture": {
+        "capture_id": "fa2a9a9e295d43cfa184c97658847fdd",
+        "capture_path": "public_captures/0dbd2dfbae28a1431ccfd4ece403d446c23b6eb5479064cacbfb5dd0af2575ba.body",
+        "sha256": "0dbd2dfbae28a1431ccfd4ece403d446c23b6eb5479064cacbfb5dd0af2575ba",
+        "bytes": 30428,
+        "captured_utc": "2026-10-06T04:59:32.463514+00:00"
+      },
+      "applicability": "Release record verifies source pin and conditions of one performance path; not a benchmark of the proposed workstation/application."
+    },
+    {
+      "id": "D1",
+      "title": "SQLite Atomic Commit In SQLite",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "pin": "SQLite primary documentation captured 2026-10-06; capture hash pins the observed page bytes (page has no versioned URL)",
+      "locator": "§1 Introduction; §§3–4 single-file commit and rollback; §9 things that can go wrong; filesystem/flush assumptions",
+      "capture": {
+        "capture_id": "5b002cd01c9a4c849a2d0d95ced745b5",
+        "capture_path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "bytes": 77968,
+        "captured_utc": "2026-10-06T05:05:02.304466+00:00"
+      },
+      "applicability": "Supports the transactional recovery approach with stated hardware/filesystem assumptions. Does not guarantee application asset-directory promotion or every network filesystem."
+    },
+    {
+      "id": "D2",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://sqlite.org/wal.html",
+      "pin": "SQLite primary documentation captured 2026-10-06; capture hash pins the observed page bytes (page has no versioned URL)",
+      "locator": "§1 advantages/disadvantages; §§2–4 WAL, concurrency, sidecar-file persistence; explicit network-filesystem restriction",
+      "capture": {
+        "capture_id": "0471506ba9b840ae99dfeb3c52afafe0",
+        "capture_path": "public_captures/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e.body",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "bytes": 42143,
+        "captured_utc": "2026-10-06T05:05:07.763837+00:00"
+      },
+      "applicability": "Motivates local editable working copies and closed bundle exchange; documentation explicitly says WAL does not work over a network filesystem and sidecars must remain with database."
+    }
+  ]
+}

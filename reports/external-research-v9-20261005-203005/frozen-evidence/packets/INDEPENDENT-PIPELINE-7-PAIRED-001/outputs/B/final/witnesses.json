@@ -1,0 +1,63 @@
+{
+  "schema": "er9.witness-inventory.v1",
+  "stage": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated numerical component check",
+      "purpose": "Discriminate the proposed ZYX-index to physical XYZ coordinate rule and a display-only window mapping.",
+      "code": "import json\n\n# Proposed convention: voxel centers use integer indices in stored ZYX order;\n# spatial output is physical XYZ with origin at the center of index (0, 0, 0).\nvoxel_zyx = (2, 10, 20)\nspacing_xyz = (0.5, 0.5, 2.5)\norigin_xyz = (100.0, 200.0, 300.0)\nx, y, z = voxel_zyx[2], voxel_zyx[1], voxel_zyx[0]\nphysical_xyz = tuple(o + i * s for o, i, s in zip(origin_xyz, (x, y, z), spacing_xyz))\nback_xyz = tuple((p - o) / s for p, o, s in zip(physical_xyz, origin_xyz, spacing_xyz))\nback_zyx = (back_xyz[2], back_xyz[1], back_xyz[0])\nassert physical_xyz == (110.0, 205.0, 305.0)\nassert back_zyx == (2.0, 10.0, 20.0)\n\n# Proposed display mapping: clamp, linearly map [0, 100] to 8-bit preview.\nraw_samples = (0, 25, 100)\nwindow = (0, 100)\ndef display_map(v):\n    clipped = min(max(v, window[0]), window[1])\n    return round((clipped - window[0]) * 255 / (window[1] - window[0]))\npreview = tuple(display_map(v) for v in raw_samples)\nassert preview == (0, 64, 255)\nassert raw_samples == (0, 25, 100)\nprint(json.dumps({\"voxel_zyx\": voxel_zyx, \"physical_xyz\": physical_xyz, \"round_trip_zyx\": back_zyx, \"raw_samples_after_mapping\": raw_samples, \"preview_u8\": preview}, separators=(',', ':'))) ",
+      "input": "No data argument; numeric input constants are embedded in code: ZYX=(2,10,20), spacing XYZ=(0.5,0.5,2.5), origin XYZ=(100,200,300), samples=(0,25,100), window=(0,100).",
+      "expected_behavior": "Physical result XYZ=(110,205,305), inverse ZYX=(2,10,20), preview uint8=(0,64,255), and original sample tuple remains (0,25,100).",
+      "receipt": {
+        "execution_id": "exec-ins_50ww",
+        "code_sha256": "c9f25117d1f362795ab55114dad9591528f1eb14102b32db079067c2efbf393e",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "stdout": "{\"voxel_zyx\":[2,10,20],\"physical_xyz\":[110.0,205.0,305.0],\"round_trip_zyx\":[2.0,10.0,20.0],\"raw_samples_after_mapping\":[0,25,100],\"preview_u8\":[0,64,255]}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "elapsed_seconds": 0.2879627049987903,
+        "stdout_sha256": "7a363fbdde312402a6811475fe3a0d0c48b9ea45cb2f80b0b1582603835ec0e4",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "scope_limits": "Candidate-executed standard-library arithmetic only. It validates this example/formula and tuple immutability in the snippet; it does not exercise or prove behavior of napari, TIFF, Zarr, SQLite, persistence, export or a full application."
+    },
+    {
+      "id": "V1",
+      "status": "proposed/UNEXECUTED",
+      "kind": "3 GB bounded-access workstation benchmark",
+      "input": "Representative 3 GB tiled/compressed OME-TIFF and adverse strip/page TIFF from at least two instrument families; target 8-core/16 GB workstation, CPU-only baseline and optional-GPU comparison.",
+      "procedure": "Read metadata, navigate randomized slices/tiles, adjust channels/window, annotate, cancel cold reads; record peak RSS, cache bytes, read amplification, p50/p95 latency, cancel-to-idle and progress.",
+      "expected_behavior": "No second full-size in-memory array; configured cache remains within 512 MiB; pilot targets warm p95 slice request under 250 ms with responsive progress/cancel. Targets remain provisional pending lab measurement.",
+      "scope_limits": "Not run; no selected component documentation or isolated check establishes these application-level targets."
+    },
+    {
+      "id": "V2",
+      "status": "proposed/UNEXECUTED",
+      "kind": "source immutability and import/reopen/export fixtures",
+      "input": "2D and 3D integer/float images with named TCZYX axes, nonzero origin, anisotropic spacing, multiple resolutions, missing/ambiguous metadata, plain TIFF, OME-TIFF and OME-Zarr 0.4/0.5.",
+      "procedure": "Hash source before/after display edits and annotation; save/close/reopen; export a coordinate table, integer label image and direct crop; compare values, axes, units and coordinates using a second reader.",
+      "expected_behavior": "Display-only operations leave source byte hash and raw samples unchanged; corrections retain raw metadata; crop preserves selected samples/dtype and records shifted origin; exports identify their source/geometry and declared omissions.",
+      "scope_limits": "Not run; requires an application, fixture corpus, filesystem and independent readers."
+    },
+    {
+      "id": "V3",
+      "status": "proposed/UNEXECUTED",
+      "kind": "save, crash recovery and shared-bundle fault injection",
+      "input": "Local project with existing annotations/assets plus operations interrupted during import chunk write, asset promotion, SQLite commit, bundle snapshot, export and READY-manifest publication; local filesystem and target shared-storage systems.",
+      "procedure": "Terminate at each operation boundary, reopen/validate checksums and SQLite integrity, and copy a bundle while publication is incomplete.",
+      "expected_behavior": "Reopen selects the last committed generation; incomplete assets/exports are ignored or identified for salvage; no manifest points to a missing/unverified asset; a bundle is accepted only after READY manifest and hashes verify.",
+      "scope_limits": "Not run; atomic rename, flush and lock behavior must be checked on each supported filesystem."
+    },
+    {
+      "id": "V4",
+      "status": "proposed/UNEXECUTED",
+      "kind": "coordinate transform, relocation, undo and accessibility acceptance",
+      "input": "Known landmarks in non-unit anisotropic 3D data, reordered axes, nonzero origin, resampled derivative, copied project on another workstation, plus keyboard-only and screen-reader tasks.",
+      "procedure": "Round-trip source index→physical→export→reopened index; verify derivative has a distinct content ID and lineage; test same-hash relocation and same-name/different-hash rejection; exercise vector/mask undo across save/reopen and keyboard access to corrections/errors/export.",
+      "expected_behavior": "Coordinates and masks align within the declared sampling tolerance; changed source is not rebound; undo/redo is exact; all required actions are keyboard operable and error/metadata text is legible and announced.",
+      "scope_limits": "Not run; product-level integration and human accessibility review required."
+    }
+  ]
+}

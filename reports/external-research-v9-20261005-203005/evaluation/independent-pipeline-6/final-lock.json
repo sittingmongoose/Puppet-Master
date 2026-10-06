@@ -1,0 +1,114 @@
+{
+  "all_artifacts_read_only": true,
+  "artifacts": {
+    "final-assessment.json": {
+      "bytes": 22293,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/final-assessment.json",
+      "sha256": "1a3d8b120df25921a384887ddac4dc8f1b89f9a2d9eacf74bab7fd1052567898"
+    },
+    "final-report.md": {
+      "bytes": 3981,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/final-report.md",
+      "sha256": "ab1c695b47cf209b8e4a121bf47df95328ac261a927096458016ba2b8c12d272"
+    },
+    "neutral-cost-clock.json": {
+      "bytes": 10751,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/neutral-cost-clock.json",
+      "sha256": "8deb761196944a719e86ec9f969f22c119580f244e0007ce47f3cebc4eb256c9"
+    },
+    "phase1-input-pins.json": {
+      "bytes": 53313,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-input-pins.json",
+      "sha256": "5fb5c5669d336bb8602dd1a8cde8d4ade9f5a53cc7354e39c15f7c62f4d6a58c"
+    },
+    "phase1-judgment.json": {
+      "bytes": 30351,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-judgment.json",
+      "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd"
+    },
+    "phase1-lock.json": {
+      "bytes": 2395,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-lock.json",
+      "sha256": "a0cb00a1d459dc5ff3c4a09162e3867283fec7a6fc6cfdf205d9b095a472dcf1"
+    },
+    "phase1-report.md": {
+      "bytes": 8244,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-report.md",
+      "sha256": "5fd7316bce82fc1a1878e2fd84d9564600c73465cb81a914b5849e47bf3256e1"
+    },
+    "phase2-checking-start.json": {
+      "bytes": 1355,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-checking-start.json",
+      "sha256": "43bd98024f57a9a14cbd31eadaf187a678154b53ee70ca3f1ec7da7eb7e12fe4"
+    },
+    "phase2-key-consistency.json": {
+      "bytes": 6748,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key-consistency.json",
+      "sha256": "305431271639c43e9bba5c10f6107c8b0c10ef2b80abdffe09cda5a7daf6baa1"
+    },
+    "phase2-key.json": {
+      "bytes": 75164,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key.json",
+      "sha256": "e8477f6f892196d5bef1f3c50c61a3484532fc7448a105178e72f9213644dc5e"
+    }
+  },
+  "clock": {
+    "actual_phase2_checking_start_monotonic_ns": 97644001568488,
+    "actual_phase2_checking_start_utc": "2026-10-06T06:13:45.144517+00:00",
+    "clock_reset": false,
+    "handoffs": "Required scientific and neutral cost/clock handoffs follow inside same original deadlines; final post-handoff closure recorded separately.",
+    "key_wait_charged_to_phase2_seconds": 121.603766486,
+    "phase1_freeze_monotonic_ns": 97522397802002,
+    "phase1_freeze_utc": "2026-10-06T06:11:43.540778+00:00",
+    "phase1_source_elapsed_seconds": 910.784239432,
+    "phase2_deadline_monotonic_ns": 98122397802002,
+    "phase2_elapsed_inclusive_from_freeze_seconds": 493.394883722,
+    "phase2_literal_limit_seconds": 600,
+    "report_sealed_monotonic_ns": 98015792685724,
+    "report_sealed_utc": "2026-10-06T06:19:56.935696+00:00",
+    "source_start_monotonic_ns": 96611613562570,
+    "source_start_utc": "2026-10-06T05:56:32.756541+00:00",
+    "whole_deadline_monotonic_ns": 98411613562570,
+    "whole_elapsed_inclusive_from_source_start_seconds": 1404.179123154,
+    "whole_limit_seconds": 1800
+  },
+  "evaluation_id": "independent-pipeline-6",
+  "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+  "phase1_integrity_unchanged": true,
+  "phase2_evidence": [
+    {
+      "bytes": 75164,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key.json",
+      "sha256": "e8477f6f892196d5bef1f3c50c61a3484532fc7448a105178e72f9213644dc5e"
+    },
+    {
+      "bytes": 1355,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-checking-start.json",
+      "sha256": "43bd98024f57a9a14cbd31eadaf187a678154b53ee70ca3f1ec7da7eb7e12fe4"
+    },
+    {
+      "bytes": 6748,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key-consistency.json",
+      "sha256": "305431271639c43e9bba5c10f6107c8b0c10ef2b80abdffe09cda5a7daf6baa1"
+    },
+    {
+      "bytes": 12356,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_FINAL_PAIR_RESOURCE_EXECUTION_001.json",
+      "sha256": "d346e246b1fdfbad37b323e0134c6a87251276719a8fd2dde01c42b786059c98"
+    },
+    {
+      "bytes": 56690,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_FINAL_PAIR_RUNTIME_001.json",
+      "sha256": "2476bdb531fefc4607f0728a1891b033cc9b99fd8d9e130409c8871d0f470ea9"
+    },
+    {
+      "bytes": 55900,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_PIPELINE_ROLE_LIFECYCLE_001.json",
+      "sha256": "ad85d4cf3b1ee0e5459a8502e52019fcbff46ca7bed25879551594e261dc6648"
+    }
+  ],
+  "required_handoffs": "Pending immediately, inside original literal phase2 and whole deadlines; no ACK wait",
+  "schema": "er9.independent-final-artifact-lock.v1",
+  "sealed_monotonic_ns": 98015792685724,
+  "sealed_utc": "2026-10-06T06:19:56.935696+00:00"
+}

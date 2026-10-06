@@ -1,0 +1,22 @@
+{
+  "schema": "er9.selected-public-source-entry.v1",
+  "source_id": "S13",
+  "requested_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGELOG.rst",
+  "entries": [
+    {
+      "candidate_path": "inputs/source_context/0002.body",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGELOG.rst",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "6cc5463eb2cc472985af64a61770ac8b",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ],
+  "metadata_status": "EXACT_INDEX_URL_BODY_SHA_MATCH",
+  "exact_admitted_index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+  "model_comprehension": "UNKNOWN"
+}

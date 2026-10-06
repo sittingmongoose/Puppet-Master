@@ -1,0 +1,54 @@
+{
+  "P1_all_108_files_reverified_unchanged": true,
+  "P2_inclusive_elapsed_seconds_at_final_write": 589.528698089,
+  "actual_role_counts": {
+    "control": 3,
+    "treatment": 2
+  },
+  "clean_matched_causal_winner": "NOT_ESTABLISHED",
+  "clock_reset": false,
+  "effective_source_outcomes": {
+    "control_A": "FAIL",
+    "treatment_B": "PASS_FULL_RESEARCH_PROPOSAL"
+  },
+  "evaluation_id": "independent-pipeline-7",
+  "full_pipeline_qualification": {
+    "control": "FAIL_CURRENT_FINAL_REPRODUCIBILITY",
+    "treatment": "SOURCE_FINAL_PASS; HOLD_FULL_PROVENANCE_QUALIFICATION_WITH_EXPLICIT_LIMITS"
+  },
+  "handoffs_due_within_original_deadline": true,
+  "human_report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/report.md",
+    "sha256": "51a54865b69032238fbe83b6dc541f0c2fd94837bf4ff51d0f2931723e687576"
+  },
+  "literal_P2_deadline_monotonic_ns": 97993283174393,
+  "method_cost_winner": "NOT_ESTABLISHED",
+  "money": "UNKNOWN",
+  "native_completion": "OBSERVED_COMPLETE_5_CURRENT_ROLES",
+  "opaque_goal_id": "UNKNOWN",
+  "operational_delivery": "COMPLETE_CURRENT_PAIRED_FINAL_ARTIFACTS; ALL_CURRENT_OWNED_SCOPES_QUIET",
+  "original_allocated_total_seconds": {
+    "control": 2700,
+    "treatment": 2700
+  },
+  "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+  "phase1_assessment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/assessment.json",
+    "sha256": "7aa606aa66c740d86844acc92078343fbb0a3406613bfc5d85f26c367a07560e"
+  },
+  "phase2_provenance_addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/provenance_crosscheck_addendum.json",
+    "sha256": "285688909c2fd0110d91c3075369aa24297d9e6ec2c8220927990a6f00eff9c6"
+  },
+  "physical_provider": "UNKNOWN",
+  "receipt_hash_boundary": "NOW_SOURCE_ORDER_EXPLAINED_AND_EXACT_BINDINGS_MATCH; prior receipt byte retention UNKNOWN, no invented replay",
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/report.json",
+    "sha256": "7d9069f628adf29e86d523fcdb1333ce6e6b1a9ef0bc4395fdea0f88384fb701"
+  },
+  "schema": "er9.independent-final-receipt.v1",
+  "source_seconds": 774.664498284,
+  "whole_elapsed_seconds_at_final_write": 1364.193196373,
+  "written_monotonic_ns": 97982811872482,
+  "written_utc": "2026-10-06T06:19:23.969276+00:00"
+}

@@ -1,0 +1,86 @@
+{
+  "witness_catalog_version": 1,
+  "stage_id": "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+  "execution_summary": {
+    "executed_by_candidate_in_this_goal": [],
+    "executed_only_by_evaluator": [],
+    "note": "No image reader or application check was executed in this Goal. Public documentation and frozen source captures are not execution receipts."
+  },
+  "prior_seed_records_not_rerun": [
+    {"id": "W1", "seed_title": "float32/float64 and JSON coordinate demonstration", "seed_record": "inputs/seed/witness_catalog.json", "status": "seed-reported executed; code/input not available in this diagnostic receipt stream; not adopted as current execution evidence"},
+    {"id": "W2", "seed_title": "affine transform composition order arithmetic", "seed_record": "inputs/seed/witness_catalog.json", "status": "seed-reported executed; code/input not available in this diagnostic receipt stream; not adopted as current execution evidence"},
+    {"id": "W3", "seed_title": "local temp-and-replace/hash demonstration", "seed_record": "inputs/seed/witness_catalog.json", "status": "seed-reported executed; code/input not available in this diagnostic receipt stream; not adopted as current execution evidence"}
+  ],
+  "finding_classes": [
+    {"class": "source absence assertion", "example": "tifffile does not read CZI", "assessment": "unresolved: README omission and incomplete code search do not establish a universal negative", "sources": ["S5", "S17", "S18"]},
+    {"class": "ordinary missing input", "example": "a nonexistent local path or the captured request for CHANGELOG.rst", "assessment": "missing path/resource, not unsupported image format", "sources": ["S12", "S13"]},
+    {"class": "legitimate unsupported-input proposal", "example": "structurally valid TIFF using OJPEG, an explicitly unimplemented feature", "assessment": "valid proposed test case; no fixture or execution receipt supplied", "sources": ["S5"]},
+    {"class": "true negative", "example": "tifffile 2026.9.20 explicitly documents OJPEG as unimplemented", "assessment": "supported at the named library/version/feature scope", "sources": ["S5"]},
+    {"class": "supported positive", "example": "tifffile documents NDPI reading and BIF individual-tile decoding", "assessment": "supported positive with performance caveats and no BIF stitching", "sources": ["S5", "S6"]}
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "D1",
+      "title": "Missing, unsupported, malformed, and supported input discriminator",
+      "status": "UNEXECUTED",
+      "plan": "Use four distinct cases: nonexistent path; valid OJPEG TIFF; malformed TIFF bytes; known supported tiled TIFF. Verify the OJPEG fixture is structurally a TIFF and carries the OJPEG compression tag before import. Run through the application import service, not a library-only helper.",
+      "expected": "MissingInput; UnsupportedFeature(OJPEG); MalformedInput; and successful supported import respectively. The first three leave the existing project generation and original bytes unchanged. Preserve reason and progress/cancel state in each error record.",
+      "limits": "No OJPEG fixture or app implementation is supplied here. tifffile documentation justifies the feature boundary, not the expected exception type or full app behavior.",
+      "source_ids": ["S5"]
+    },
+    {
+      "id": "D2",
+      "title": "Reader support matrix on pinned package and lab fixtures",
+      "status": "UNEXECUTED",
+      "plan": "Pin the selected tifffile/imagecodecs/Zarr dependencies; run metadata-only and bounded-region reads against representative lab TIFF/OME-TIFF files and known NDPI/BIF examples. Test a separate BIF stitching expectation. Record file identities, source dimensions/axes, calibration and operation outcome.",
+      "expected": "Only explicitly admitted combinations import. NDPI/BIF library capabilities are not confused with app v1 inclusion; BIF stitching is reported unavailable until separately implemented.",
+      "limits": "The public README is not a guarantee for local vendor variants. No lab files or package installs/runs were available in this Goal.",
+      "source_ids": ["S5", "S6"]
+    },
+    {
+      "id": "D3",
+      "title": "3 GB bounded access, progress, and cancellation",
+      "status": "UNEXECUTED",
+      "plan": "On the 8-core/16 GB target, read viewport tiles from a 3 GB representative source under cold and warm cache; measure p95 tile latency, peak RSS, bytes decoded, cancel latency, and UI responsiveness.",
+      "expected": "No second full source-sized resident copy; progress advances and cancellation stops queued work. Proposed starting thresholds: p95 below 100 ms, peak RSS below 4 GB, cancellation below 250 ms.",
+      "limits": "Thresholds are proposed engineering acceptance values, not measured facts. Requires real source files and app/runtime implementation.",
+      "source_ids": ["S2", "S5"]
+    },
+    {
+      "id": "D4",
+      "title": "Coordinate, calibration, and export round trip",
+      "status": "UNEXECUTED",
+      "plan": "Use asymmetric x/y/z scales, nonzero origin, one orientation change, and a point/polygon on an identified plane/time. Export a table and small raster with manifest; re-import the table and compare pixel/world coordinates and source hash.",
+      "expected": "Named axes and declared center/origin convention reproduce stored binary64 coordinates; applied operations and omitted metadata appear in the manifest; display-only window/level changes source hash not at all and do not alter sample bytes.",
+      "limits": "Arithmetic fixture does not establish behavior until run through actual importer, annotation editor, and exporter. No execution receipt exists.",
+      "source_ids": ["S1", "S3", "S15"]
+    },
+    {
+      "id": "D5",
+      "title": "Interrupted save/export and shared-storage recovery",
+      "status": "UNEXECUTED",
+      "plan": "Interrupt writes before and after generation publication, validate reopen from previous/current generation, then repeat on the lab's actual SMB/NFS share and across a mount boundary.",
+      "expected": "Only a validated generation is authoritative; previous good project remains readable; partial export is not mistaken for complete; recovery report names orphan files and hash state.",
+      "limits": "Local rename behavior does not establish NFS/SMB durability; system and filesystem-specific tests required.",
+      "source_ids": ["S14", "S16"]
+    },
+    {
+      "id": "D6",
+      "title": "Instrument calibration regression fixtures across reader upgrades",
+      "status": "UNEXECUTED",
+      "plan": "For each instrument, pin a small representative image plus expected native metadata/value-unit pairs. Run the same assertions through the workspace import adapter before approving any reader version update.",
+      "expected": "Any changed unit or value fails loudly or requires a recorded correction. Include a TVIPS-style regression test modeled on the tifffile #319 test structure.",
+      "limits": "The upstream issue test uses a private fixture; this plan requires lab-owned or otherwise legally reusable fixtures. It does not assert the upstream suite was rerun.",
+      "source_ids": ["S7", "S8", "S9", "S10"]
+    },
+    {
+      "id": "D7",
+      "title": "Cross-workstation reopen and source relocation",
+      "status": "UNEXECUTED",
+      "plan": "Move a reference project to a second workstation/path and separately move a portable copy. Verify resolver behavior, hash mismatch handling, annotations, metadata, and view state.",
+      "expected": "Portable copies open by project-relative location; reference paths prompt for resolution; changed source hash never silently rebinds existing annotations.",
+      "limits": "Requires two machines or equivalent filesystem/path environments; not proven by project JSON structure documentation.",
+      "source_ids": ["S14"]
+    }
+  ]
+}

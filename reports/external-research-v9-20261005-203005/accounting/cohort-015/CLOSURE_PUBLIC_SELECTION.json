@@ -1,0 +1,14 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-015/CLOSURE.json",
+      "sha256": "224ae970c856a978a9c7674b842a14d15c8af687d708b2e9461190086df7e26b"
+    },
+    {
+      "path": "accounting/cohort-015/CLOSURE.schema.json",
+      "sha256": "77fb38cb577f1d77a21084d86ffa503b6e37770d30824f4676b111c1187f022c"
+    }
+  ],
+  "exclusion": "Exact neutral closure companion only;015 primary/native qualifier immutable; unlisted/raw/semantic bodies excluded.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

@@ -1,0 +1,40 @@
+{
+  "all_final_artifact_hashes_lengths_readonly_verified": true,
+  "clock_reset": false,
+  "closed_after_required_handoffs_monotonic_ns": 98100925358773,
+  "closed_after_required_handoffs_utc": "2026-10-06T06:21:22.068370+00:00",
+  "evaluation_id": "independent-pipeline-6",
+  "final_assessment_sha256": "1a3d8b120df25921a384887ddac4dc8f1b89f9a2d9eacf74bab7fd1052567898",
+  "final_lock_sha256": "66ffa148b8a32d4e65ddaf17e2ab70286a3745b79317548ccbf951901a854ac9",
+  "final_report_sha256": "ab1c695b47cf209b8e4a121bf47df95328ac261a927096458016ba2b8c12d272",
+  "mailbox_finish_check": "no unread mail",
+  "neutral_cost_clock_sha256": "8deb761196944a719e86ec9f969f22c119580f244e0007ce47f3cebc4eb256c9",
+  "no_extra_source_depth_or_candidate_feedback_or_goal_run_retest": true,
+  "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+  "pending_status_qualification": "Supersedes only the pre-handoff pending-receipt state in final-assessment/final-lock, not their scientific content or immutable hashes.",
+  "phase1_judgment_sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd",
+  "phase1_lock_sha256": "a0cb00a1d459dc5ff3c4a09162e3867283fec7a6fc6cfdf205d9b095a472dcf1",
+  "phase1_scientific_judgment_unchanged": true,
+  "phase1_source_elapsed_seconds": 910.784239432,
+  "phase2_deadline_monotonic_ns": 98122397802002,
+  "phase2_elapsed_inclusive_after_required_handoffs_seconds": 578.527556771,
+  "phase2_limit_seconds": 600,
+  "required_handoffs": {
+    "ack_wait": false,
+    "neutral_cost_clock_sent": [
+      "/root/cost_accounting",
+      "/root/frozen_exports"
+    ],
+    "route_qualification": "Direct cost route returned no error; no actual denial inferred. Root receives this closure pointer as an additional neutral route.",
+    "scientific_positive_reports_sent": [
+      "/root",
+      "/root/publisher"
+    ],
+    "tool_calls_returned_error": false
+  },
+  "schema": "er9.independent-evaluation-completion-receipt.v1",
+  "status": "COMPLETE",
+  "whole_deadline_monotonic_ns": 98411613562570,
+  "whole_elapsed_inclusive_after_required_handoffs_seconds": 1489.311796203,
+  "whole_limit_seconds": 1800
+}

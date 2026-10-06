@@ -1,0 +1,258 @@
+{
+  "schema": "er9.sources.v1",
+  "generated_at": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "name": "OME-NGFF 0.4 specification report",
+      "source_type": "public standard/specification report",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF 0.4 final report; retrieved 2026-10-06",
+      "locator": "§3.1 axes; §3.3 coordinate transformations; §3.4 multiscales; §3.5 omero display metadata; §§3.6–3.7 labels and image-labels",
+      "capture": {
+        "capture_id": "aeec0018083348ef9f13b37b67fb92d2",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "bytes": 163120,
+        "complete": true,
+        "received_utc": "2026-10-06T04:54:52.289999+00:00"
+      },
+      "applicability": "Axis names/types/units, array-axis correspondence, scale and translation transform order, multiscale layout and label representation inform the project/interchange contract.",
+      "limits": "The 0.4 report permits scale and translation coordinate transforms, not a general arbitrary affine; transitional fields and the report status do not promise compatibility with every implementation. Label groups address raster labels, not all vector/project semantics."
+    },
+    {
+      "id": "S2",
+      "name": "Zarr-Python arrays user guide",
+      "source_type": "public project documentation",
+      "url": "https://zarr.readthedocs.io/en/stable/user-guide/arrays/",
+      "pin": "Stable documentation captured alongside Zarr-Python v3.4.0 release on 2026-10-06; version inferred from contemporaneous stable release/docs state",
+      "locator": "User guide sections on chunked arrays, indexing/slicing, persistent stores, and reading/writing arrays; exact page headings: Basic indexing; Chunking; Persistent arrays",
+      "capture": {
+        "capture_id": "ebab17b202ee44bdac52fa05e01bd6cf",
+        "sha256": "95d7aa489e883c31c9ae951f0ce2fbcdcfacbb592f90575c0626f206fbfd19b5",
+        "bytes": 221945,
+        "complete": true
+      },
+      "applicability": "Documents chunk subdivision and requested slicing into NumPy arrays; supports the bounded-region access design and persistent chunk-store option.",
+      "limits": "A slicing API does not establish actual decoder granularity, memory use or latency for a source format or integrated viewer. A full slice can materialize the complete array. The stable URL can move; use the recorded release and recapture before implementation lock."
+    },
+    {
+      "id": "S3",
+      "name": "Zarr-Python v3 migration guide",
+      "source_type": "public project documentation",
+      "url": "https://zarr.readthedocs.io/en/stable/user-guide/v3_migration/",
+      "pin": "Stable documentation captured alongside Zarr-Python v3.4.0 release on 2026-10-06",
+      "locator": "Sections on supported Zarr formats, default format for new arrays, zarr_format/default_zarr_format creation arguments, and API changes",
+      "capture": {
+        "capture_id": "47f2e6eded6741caa17742663fa85467",
+        "sha256": "488ee3fcaf923e1a956a4e9b3f9c1c04165cb682abd1b75e251813b164396061",
+        "bytes": 81375,
+        "complete": true
+      },
+      "applicability": "Zarr-Python 3 supports Zarr format v2 and v3; new arrays default to v3, while explicit zarr_format=2 or default_zarr_format=2 selects v2. Relevant to NGFF 0.4 implementation compatibility and pinning.",
+      "limits": "Migration guidance does not prove a particular OME-NGFF writer/reader combination interoperates. Validate the chosen library versions and artifact."
+    },
+    {
+      "id": "S4",
+      "name": "tifffile v2026.9.20 release",
+      "source_type": "public project release notes",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/tags/v2026.9.20",
+      "pin": "tifffile v2026.9.20, published 2026-09-21",
+      "locator": "Release body sections describing read-as-array or Zarr-array/group access and supported TIFF storage/series structures; release note fix for LSM >4GB offset unwrapping",
+      "capture": {
+        "capture_id": "9fe370de72814716b539911e656e5265",
+        "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3",
+        "bytes": 6722,
+        "complete": true
+      },
+      "applicability": "A candidate TIFF reader mechanism; notes reads from strips, tiles, pages/IFDs, SubIFDs, higher-order series and pyramid levels, with format/codec-specific capabilities.",
+      "limits": "Release notes and format list do not qualify every format/codec or prove lazy end-to-end access, bounded memory, or the proposed 3 GB target. The noted LSM fix is not used as an issue-to-test history because that chain was not independently established here."
+    },
+    {
+      "id": "S5",
+      "name": "napari issue 9247",
+      "source_type": "public issue report",
+      "url": "https://api.github.com/repos/napari/napari/issues/9247",
+      "pin": "napari issue #9247; report against 0.8.x and merge-base 60889a1b as stated in issue",
+      "locator": "Issue #9247 body and reproduction: selected/hovered Shapes outline remains visible on another slice although shape is off-slice; issue closure links PR #9059",
+      "capture": {
+        "capture_id": "9d5bf877770045018ad929efa520b61c",
+        "sha256": "676ced03563ed4876e2cd6c27091ecf94530378112642318ae4b1b71180e80af",
+        "complete": true,
+        "note": "Issue record extracted from a GitHub API search response; response also contained unrelated issues, which were not used."
+      },
+      "applicability": "Documents a reproducible slice-dependent annotation display defect and contextual versions.",
+      "limits": "An issue report records observed behavior, not proof of a fix, regression test execution or occurrence in this proposed application."
+    },
+    {
+      "id": "S6",
+      "name": "napari v0.9.0 release",
+      "source_type": "public project release notes",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.0",
+      "pin": "napari v0.9.0, released 2026-08-25",
+      "locator": "Release notes describing multidimensional viewer stack, xarray scale/unit handling, float status coordinates, 2D multiscale chunk-aware loading and Zarr/Dask lazy multiscale; release classification as Macro under EffVer",
+      "capture": {
+        "capture_id": "8e44f457af444b899a6dd6a96f2b972e",
+        "sha256": "9202855d87e5de3a040d5034329e5715c44467a463d32afada8d080c7f78c1d6",
+        "bytes": 56389,
+        "complete": true
+      },
+      "applicability": "Supports considering napari as an existing multidimensional viewer/layer component and motivates exact version pinning.",
+      "limits": "Release notes do not demonstrate this proposal's import, project persistence, 3 GB memory, latency, coordinate round-trip or export behavior. Macro release may include API changes."
+    },
+    {
+      "id": "S7",
+      "name": "napari PR 9059",
+      "source_type": "public pull request record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059",
+      "pin": "PR #9059, merged 2026-08-12; merge commit de87bdd0be61a3f63e643865553277ab22a04ac8; milestone 0.9.0",
+      "locator": "PR #9059 metadata and merge status",
+      "capture": {
+        "capture_id": "92161da74e67486387f96d068a8be805",
+        "sha256": "2e088fb915cb68b127eade74212cae70e25b0f208029cde2f94a8ed442b0f250",
+        "complete": true
+      },
+      "applicability": "Establishes PR merge date, merge commit and release milestone for the slice-highlight change.",
+      "limits": "The PR header alone is not evidence of the implementation or regression test; see S8."
+    },
+    {
+      "id": "S8",
+      "name": "napari PR 9059 changed files and tests",
+      "source_type": "public pull request code diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+      "pin": "PR #9059 merged as de87bdd0be61a3f63e643865553277ab22a04ac8",
+      "locator": "Diff in src/napari/layers/shapes/shapes.py and tests src/napari/layers/shapes/_tests/test_shapes.py and test_shapes_selection.py; test_outline_not_drawn_off_slice; selection and hover coverage",
+      "capture": {
+        "capture_id": "82500313d3cb4d40b812284ee9492ed7",
+        "sha256": "eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+        "complete": true
+      },
+      "applicability": "Diff shows `_selected_data_in_view`/in-view filtering of selected and hovered shape IDs and addition of explicit off-slice outline and selection/hover tests.",
+      "limits": "Shows tests were added, not their execution or coverage of every possible state. It concerns napari's in-memory layer behavior, not project persistence or physical coordinates."
+    },
+    {
+      "id": "S9",
+      "name": "Bio-Formats 8.4.0 supported formats",
+      "source_type": "public project documentation",
+      "url": "https://docs.openmicroscopy.org/bio-formats/8.4.0/supported-formats.html",
+      "pin": "Bio-Formats v8.4.0 documentation; requested URL redirects to bio-formats.readthedocs.io/en/v8.4.0/supported-formats.html",
+      "locator": "Per-format support table and ratings for pixels, metadata, openness, presence, utility, export, license, multi-image and pyramid properties",
+      "capture": {
+        "capture_id": "aa0adf6f1f1541859290b5d79f1a08e7",
+        "sha256": "e4ecb960f32d4c35b3735ecabd951b374898b674dbc71cb89d1318a3347a69de",
+        "bytes": 156867,
+        "complete": true
+      },
+      "applicability": "A bounded alternative reader for selected instrument formats after corpus-based testing; table is useful for identifying format-specific capabilities.",
+      "limits": "Broad format listing is not universal compatibility evidence and does not establish Python integration, memory or performance for the proposed application."
+    },
+    {
+      "id": "S10",
+      "name": "SQLite Atomic Commit in SQLite",
+      "source_type": "public database documentation",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "pin": "SQLite online documentation, last modified 2026-09-11; captured 2026-10-06",
+      "locator": "Atomic commit/rollback behavior and assumptions about OS, filesystem, hardware flush and power failure; article focuses on rollback-journal mode",
+      "capture": {
+        "capture_id": "417b6bcc5af04b7fa0bb1e1d258eb0af",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "bytes": 77968,
+        "complete": true
+      },
+      "applicability": "Supports transactional grouping of project edits and explains assumptions behind durable commit.",
+      "limits": "SQLite's documented atomicity depends on the stated platform and storage assumptions; it is not a guarantee for arbitrary shared storage or hardware. WAL behavior is addressed separately in S11."
+    },
+    {
+      "id": "S11",
+      "name": "SQLite Write-Ahead Logging",
+      "source_type": "public database documentation",
+      "url": "https://sqlite.org/wal.html",
+      "pin": "SQLite online WAL documentation captured 2026-10-06",
+      "locator": "WAL concurrency requirements; explicit network filesystem limitation; WAL/SHM files and checkpoint/close behavior",
+      "capture": {
+        "capture_id": "a2e3578de2d2469da9ded9b7a44ede42",
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "bytes": 42143,
+        "complete": true
+      },
+      "applicability": "Supports local working database and closed snapshot exchange; warns that a WAL database's related files can be persistent state and WAL mode does not work over a network filesystem.",
+      "limits": "Does not establish behavior on the group's particular SMB/shared storage or application recovery implementation; that must be tested."
+    },
+    {
+      "id": "S12",
+      "name": "napari PR 9399 follow-up integration repair",
+      "source_type": "public pull request record and patch",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9399",
+      "pin": "PR #9399, merged 2026-08-12 at 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6; milestone 0.9.0",
+      "locator": "PR body explicitly attributes breakage to incomplete/hasty merge of #9059 and updated-main/name changes; merged status/commit",
+      "capture": {
+        "capture_id": "b6ef55376b8b4acd935e40e371000c21",
+        "sha256": "93444588641a78ea44a6c9e5c5234926204e92115e27c7c9ab5d8336cff8cc3d",
+        "complete": true
+      },
+      "applicability": "Supplies the public maintainer-authored explanation of a concrete integration break and its follow-up repair timing.",
+      "limits": "PR narrative is attributed evidence; see S13 for exact patch. It does not say the follow-up added a new behavioral regression test."
+    },
+    {
+      "id": "S13",
+      "name": "napari PR 9399 patch",
+      "source_type": "public pull request code diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9399/files",
+      "pin": "PR #9399 commit 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+      "locator": "Patch in Shapes implementation and corresponding test renaming `_indices_view` to `_view_indices`",
+      "capture": {
+        "capture_id": "0e1d4866e842491fb725fbf6d9f851bd",
+        "sha256": "671309b12c10d1046c26de74180e2fe128a6ef00cc595908fc076750d9773a70",
+        "complete": true
+      },
+      "applicability": "Confirms exact identifier/API correction in both code and test following the incomplete merge.",
+      "limits": "Integration/name repair only; it is not an additional test of the reported off-slice behavior."
+    },
+    {
+      "id": "S14",
+      "name": "napari v0.9.0 tag ancestry comparison",
+      "source_type": "public repository compare endpoint",
+      "url": "https://api.github.com/repos/napari/napari/compare/de87bdd0be61a3f63e643865553277ab22a04ac8...908b3ed80ccbe73a3393f0207aafc6d7a45e116a",
+      "pin": "Compare merge commit de87bdd0be61a3f63e643865553277ab22a04ac8 to v0.9.0 tag target 908b3ed80ccbe73a3393f0207aafc6d7a45e116a",
+      "locator": "Initial comparison fields: status ahead, ahead_by 32, behind_by 0; first listed commit is follow-up 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+      "capture": {
+        "capture_id": "75ef409e6be94000a4df3bfe49219f5a",
+        "sha256": "7b6ddff3560d2d5cc0f1bf04bb6ce5547132b505e727a888afd9023298030336",
+        "bytes": 524288,
+        "complete": false,
+        "note": "Capture response was truncated at the tool's 524288-byte cap; only initial compare summary/first commit were used."
+      },
+      "applicability": "The observed ancestry comparison supports that PR #9059's merge is an ancestor of the v0.9.0 tag and that the follow-up is in the intervening release history.",
+      "limits": "Truncated response; not a full diff or complete commit listing. The exact tag target is separately captured by S15."
+    },
+    {
+      "id": "S15",
+      "name": "napari v0.9.0 Git tag ref",
+      "source_type": "public repository tag reference",
+      "url": "https://api.github.com/repos/napari/napari/git/ref/tags/v0.9.0",
+      "pin": "Tag v0.9.0 resolves to commit 908b3ed80ccbe73a3393f0207aafc6d7a45e116a",
+      "locator": "Git ref object target for refs/tags/v0.9.0",
+      "capture": {
+        "capture_id": "006f2b6248654010ab42a946f76bf420",
+        "sha256": "34f0a4bd8d3758d40b8904b42b06a9506788a8085c32ffb1702f2496d9011f74",
+        "complete": true
+      },
+      "applicability": "Identifies the release tag target used in S14 ancestry comparison.",
+      "limits": "A tag ref alone does not prove ancestry; interpreted with the captured comparison S14 and release S6."
+    },
+    {
+      "id": "S16",
+      "name": "napari PR 9059 merge commit",
+      "source_type": "public commit record",
+      "url": "https://api.github.com/repos/napari/napari/commits/de87bdd0be61a3f63e643865553277ab22a04ac8",
+      "pin": "Merge commit de87bdd0be61a3f63e643865553277ab22a04ac8",
+      "locator": "Commit metadata and changed-file list for Shapes implementation and tests",
+      "capture": {
+        "capture_id": "5f8d0a62e6d04100a4df3bfe49219f5a",
+        "sha256": "31c67f599abbb4d6faa335bbb17e1c0b00ce6365f8d6b07888bda5d4a1f38e1a",
+        "complete": true
+      },
+      "applicability": "Independent commit record for the merge commit's changed files; corroborates the implementation/test change location.",
+      "limits": "Commit record does not establish test execution or semantics beyond its captured patch metadata."
+    }
+  ]
+}

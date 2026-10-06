@@ -1,0 +1,62 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-015/attempts.safe.json",
+      "sha256": "ad76cb01701eb6e340ab171edd25c5977f9b3c5238ff7b03e221c8425b4929ed"
+    },
+    {
+      "path": "accounting/cohort-015/snapshot.safe.json",
+      "sha256": "4fa8fcb36f4a148b5c512d392b00a36b1426ea4acacd76839c069d6f3f87adad"
+    },
+    {
+      "path": "accounting/cohort-015/attempts.safe.schema.json",
+      "sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c"
+    },
+    {
+      "path": "accounting/cohort-015/snapshot.safe.schema.json",
+      "sha256": "f3c96d093ee8dc98c119c8d263528121dd379fafcee01346d157167bbeca45c4"
+    },
+    {
+      "path": "accounting/cohort-015/COST_SNAPSHOT.md",
+      "sha256": "67a7817e844d444edc0763d63b1bbb3807ff662ab440023636845a6d85574215"
+    },
+    {
+      "path": "accounting/cohort-015/evaluator-clocks.safe.json",
+      "sha256": "67749d72d66f6801f8c7983f77e2edd3250ab0ecd2b5b6444b8286b127db8557"
+    },
+    {
+      "path": "accounting/cohort-015/evaluator-clocks.safe.schema.json",
+      "sha256": "5ea1446568848529688359f08efaaaf0ecab80d93d0ba48ed14e5dd5bfbf692b"
+    },
+    {
+      "path": "accounting/cohort-015/VERIFICATION.json",
+      "sha256": "f7d7019535326f2736361c716e63acdf98f7a897ea9212a853e225bcb7fabb86"
+    },
+    {
+      "path": "accounting/cohort-015/finite-tail.safe.json",
+      "sha256": "1371885690d4d1a6671d662184db54d6d6d18d9a30960b3bc2885593a1a77c0a"
+    },
+    {
+      "path": "accounting/cohort-015/finite-tail.safe.schema.json",
+      "sha256": "9426ff04907083b44090f8d5d7655e257ecba3e430a183eb612e3c048ffe5f6c"
+    },
+    {
+      "path": "accounting/cohort-015/KEEPER_RECEIPT.json",
+      "sha256": "bca72f3657512a244fec7f4ba3712418d12996207e566c27d01a4e16f818be1a"
+    },
+    {
+      "path": "accounting/cohort-015/KEEPER_RECEIPT.schema.json",
+      "sha256": "3545f2d149dde74bb3c41ff26115f7ffa0f279a0e4e24fa1596200b9838db9e4"
+    },
+    {
+      "path": "accounting/cohort-015/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "sha256": "88ee80a5a3331f6ff2c867dec70d5b9cd2c3d162aeb7e9b58abd50c0bffee89a"
+    },
+    {
+      "path": "accounting/cohort-015/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "sha256": "1b512ddb71445d4d0945d434c041cd45f131f5857267be40c108e5e88e554cd2"
+    }
+  ],
+  "exclusion": "Only positively selected safe projections; no capture bytes, scripts, unlisted receipts, semantic bodies, evaluator judgments or private state.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

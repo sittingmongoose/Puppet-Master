@@ -1,0 +1,89 @@
+{
+  "schema": "er9.witnesses.v1",
+  "generated_at": "2026-10-06",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated component arithmetic check",
+      "purpose": "Discriminate the proposed NGFF scale-then-translation coordinate composition from translation-then-scale and check inverse index recovery.",
+      "source_ids": ["S1"],
+      "code": "import json\n\nindex = [2.0, 3.0]  # axes [Y, X]\nscale = [0.5, 0.25]\ntranslation = [10.0, 20.0]\n\nphysical = [i * s + t for i, s, t in zip(index, scale, translation)]\nround_trip = [(p - t) / s for p, s, t in zip(physical, scale, translation)]\nwrong_order = [(i + t) * s for i, s, t in zip(index, scale, translation)]\n\nprint(json.dumps({\"physical_YX\": physical, \"round_trip_index_YX\": round_trip, \"translation_then_scale_YX\": wrong_order}, sort_keys=True))",
+      "input": {
+        "index_YX": [2.0, 3.0],
+        "scale_YX": [0.5, 0.25],
+        "translation_YX": [10.0, 20.0]
+      },
+      "expected_behavior": "For scale followed by translation, physical coordinates are [11.0, 20.75], inverse returns [2.0, 3.0], and applying translation before scale discriminates as [6.0, 5.75].",
+      "stdout": "{\"physical_YX\": [11.0, 20.75], \"round_trip_index_YX\": [2.0, 3.0], \"translation_then_scale_YX\": [6.0, 5.75]}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "execution_receipt": {
+        "execution_id": "exec-ozlvdxvm",
+        "code_sha256": "e33e1f9dccf68da59c324cadfb34f3d08a3efc77aa59272836b1415a29d78a1",
+        "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+        "runtime_seconds": 0.365,
+        "environment": "pm_execution isolated standard-library Python; fresh empty filesystem; no network, credentials, project or evaluator files"
+      },
+      "scope_limits": [
+        "Checks candidate-authored scalar arithmetic only; it does not run an NGFF parser/writer or verify an external library's transform implementation.",
+        "Does not check pixel-center conventions, axis normalization, arbitrary affine transforms, serialization, input metadata, viewer behavior, masks or application save/reopen.",
+        "Does not establish full-application behavior or 3 GB access, memory, responsiveness or recovery."
+      ]
+    },
+    {
+      "id": "P1",
+      "status": "proposed/UNEXECUTED",
+      "kind": "target-machine bounded-access and responsiveness qualification",
+      "purpose": "Measure peak RSS, source bytes and decoder access granularity, cache ceiling, cold/warm navigation latency, annotation update latency and cancel response for 3 GB fixtures on the 8-core/16 GB target; include TIFF layouts/codecs at the intended support boundary.",
+      "source_ids": ["S2", "S4", "S6"],
+      "acceptance_to_define": "The team must set numerical latency/RSS thresholds before qualification. Test representative and worst observed segment/chunk decode cases. No measurements have been run.",
+      "scope_limits": ["Would qualify only tested machine, software pins, fixtures and input layouts; not universal format performance."]
+    },
+    {
+      "id": "P2",
+      "status": "proposed/UNEXECUTED",
+      "kind": "coordinate, axis and annotation round-trip",
+      "purpose": "Use synthetic known fiducials and fixtures with axis permutations, nonzero origin, anisotropic scale and known units; verify named index to physical mapping, pixel-center convention, table sidecar, slice/volume scope, T/C selectors, mask rasterization, source relink and close/reopen.",
+      "source_ids": ["S1", "S6"],
+      "acceptance_to_define": "Compare exact expected coordinates and masks with an independent reader; test non-separable orientation separately and require an explicit sidecar or a blocked standard export.",
+      "scope_limits": ["No application implementation or interoperability run exists yet."]
+    },
+    {
+      "id": "P3",
+      "status": "proposed/UNEXECUTED",
+      "kind": "napari slice-highlight regression on pinned environment",
+      "purpose": "Reproduce issue #9247 and exercise selected and hovered Shapes whose geometry is outside the current slice against the exact packaged napari build; include selection retention across slices.",
+      "source_ids": ["S5", "S6", "S8", "S12", "S13", "S14", "S15"],
+      "acceptance_to_define": "Confirm the packaged source includes the fix and follow-up and execute the tests in the chosen environment. The public PR diff is evidence tests were added, not that this candidate ran them.",
+      "scope_limits": ["Tests viewer display interaction only; does not establish project persistence or exported coordinate correctness."]
+    },
+    {
+      "id": "P4",
+      "status": "proposed/UNEXECUTED",
+      "kind": "interrupted import/save/export and exchange recovery",
+      "purpose": "Inject cancellation or interruption while copying/hashing, committing annotations, snapshotting a project and publishing an export; reopen the previous known-good generation and verify the partial operation is detectable and recoverable on local disk and the supported shared-storage filesystem.",
+      "source_ids": ["S10", "S11"],
+      "acceptance_to_define": "Verify real platform/filesystem durability, rename, locking, backup and WAL-close behavior. Keep a live editable database local and exchange closed verified snapshots.",
+      "scope_limits": ["Documentation describes SQLite behavior and constraints but no project recovery implementation exists to test."]
+    },
+    {
+      "id": "P5",
+      "status": "proposed/UNEXECUTED",
+      "kind": "interchange and provenance validation",
+      "purpose": "Create Zarr format 2 NGFF 0.4 image/label examples with supported axes, verify with an independent NGFF reader, reopen project on a second machine after relocation, export CSV plus sidecar and a small crop, confirm input SHA-256 unchanged and enumerate preserved and omitted metadata.",
+      "source_ids": ["S1", "S3", "S9"],
+      "acceptance_to_define": "Test chosen exact package pins and actual source fixtures; check scale/translation order, axis order, units, label values and explicit rejection for non-separable transforms unsupported by the standard export.",
+      "scope_limits": ["No artifact or application export behavior has been executed in this research stage."]
+    },
+    {
+      "id": "P6",
+      "status": "proposed/UNEXECUTED",
+      "kind": "keyboard and metadata/error accessibility review",
+      "purpose": "Test keyboard-only project creation, channel/slice/time navigation, drawing, selection, undo/redo and recovery from errors; review focus order, labels, contrast and warnings that do not rely on color alone.",
+      "source_ids": ["S6"],
+      "acceptance_to_define": "Define task-based checks with researchers and record failures; no accessibility behavior is established by the cited release note.",
+      "scope_limits": ["No application UI exists in this stage."]
+    }
+  ]
+}

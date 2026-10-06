@@ -1,0 +1,141 @@
+{
+  "schema": "er9.actual-complete-native-pipeline.v1",
+  "observed_utc": "2026-10-06T06:06:06.335520+00:00",
+  "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+  "arm": "treatment",
+  "source_slot": "C-03",
+  "native_family": "Z",
+  "full_pipeline_operational_complete": true,
+  "fully_completed_matched_pair": false,
+  "quality": "PENDING_INDEPENDENT_SOURCE_EVALUATION",
+  "capsule_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/C03_COMPLETE_NATIVE_PIPELINE_CAPSULES_001.json",
+    "sha256": "b9a5bcd437b9ab11ab4b2a15cf93b8b9babb89caede80311dc2c1297f0644ab6"
+  },
+  "rows": [
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "stage": "research",
+      "elapsed_seconds": 1072.769733463996,
+      "native_goal_starts": 1,
+      "direct_native_goal_status": "complete",
+      "operational_complete": true,
+      "native_quiescent": true,
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "14fc5c21cde345a1324b13e3a3a1064c76cc2fdb186b4fe02104986bf41601b7"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "65c04fec683590e169c1fb99e13fd8befe4c4b101952a9b2498639a08bfd2719"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+        "sha256": "537855e45170a2280d8dd05ae18cf31c3493dddb9748cc03dac57965c8380680"
+      },
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "88c29369e652453eb79ae87f47aea5813578868f50bde9e56f3a4dc1bedaf54d"
+      },
+      "artifacts": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "e62752d23fda66f2265e367c6e236c809938728e0b7d69922e54023d9e22072e",
+          "bytes": 6772
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "f06b57195212c88541221cd008e05378a8ede76d7f6803c41e47355289d8a3dc",
+          "bytes": 35478
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "d1a337696147f18ac724c71c4a07a12d4d27101cf668d4b892cb275bb8f2233e",
+          "bytes": 16450
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "1a94a3e015d729126f2715c8eb76434ea0eb738149a3a4dd6cb1773cdb836d94",
+          "bytes": 4521
+        }
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+      "stage": "critic_final",
+      "elapsed_seconds": 1241.3121575999976,
+      "native_goal_starts": 1,
+      "direct_native_goal_status": "complete",
+      "operational_complete": true,
+      "native_quiescent": true,
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "2dee8ae658ca77bb05c044a90578150bbb89730542c920a45b7f6d2d1f9840fb"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/native/receipt.json",
+        "sha256": "bc1f7330f9950bf71e2a32680566e032478765a85cf48e35bf30cbfbf152669c"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/stage.json",
+        "sha256": "e1c09d2159f20209246b739e8baade15d9501ceca1c6fcdf6d66d926db920368"
+      },
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "45037461a307ca899d82121fff273d5f9b020da402a4cf0465823b9780be585c"
+      },
+      "artifacts": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "41e5a996f1307aea6ff05aeb472d42ec7f2cc45a1f6d87fb0c6a2654f79bf70b",
+          "bytes": 6820
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final/DELIVERY_MANIFEST.json",
+          "relative_path": "final/DELIVERY_MANIFEST.json",
+          "sha256": "290e98a24aebe75bfac52edf6f5595931021d5378725eaff91d9aafdb9aaf2c7",
+          "bytes": 2201
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final/leads.json",
+          "relative_path": "final/leads.json",
+          "sha256": "326a0e38a0576e0f48dc0b9c23b6ee5ec83b92907db59e4d49c873166138f575",
+          "bytes": 6773
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final/proposal.md",
+          "relative_path": "final/proposal.md",
+          "sha256": "97751c969f7d422b8ab8cdd5a1339e1bc4c8be29b6e51e3db99a1dc0989171f1",
+          "bytes": 34970
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final/sources.json",
+          "relative_path": "final/sources.json",
+          "sha256": "3984b8f6cdc742b17b134dfe44c7fc5469d03bdd174de78ab9a87ba26f994378",
+          "bytes": 19292
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final/witnesses.json",
+          "relative_path": "final/witnesses.json",
+          "sha256": "ddbcfaa2972a0e401c74b93f86128b0f7d7f47bbaa576a4d1d5f92e0b25c732a",
+          "bytes": 9237
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/frozen-output/final_bundle.json",
+          "relative_path": "final_bundle.json",
+          "sha256": "cc59f0ab348881063a45ddaa2731d3525ab2c751c374694e622103409cfd6f3c",
+          "bytes": 72643
+        }
+      ]
+    }
+  ],
+  "source_sha256": "b4d9a8b931db6575311493f8e2c6d84d10e217ac7f276efa545b6bb1c0a2f70f",
+  "raw_references_selected": false
+}

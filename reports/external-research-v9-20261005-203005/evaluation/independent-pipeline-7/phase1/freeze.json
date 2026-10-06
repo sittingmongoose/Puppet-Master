@@ -1,0 +1,35 @@
+{
+  "actual_checking_start": "PENDING_DISTINCT_NO_RESET",
+  "evaluation_id": "independent-pipeline-7",
+  "event": "P1_FREEZE",
+  "judgment": {
+    "phase1/assessment.json": "7aa606aa66c740d86844acc92078343fbb0a3406613bfc5d85f26c367a07560e",
+    "phase1/judgment.md": "17a8b58bc18fc3428ccf05c2abfa7d4ea5821ba19e16475dd3bcec48bbdaf2eb",
+    "phase1/source_claims.json": "c1759e96ab45d4ab50f9ad0bfabf86527fd696895cd1502a85752b3fdec4de58",
+    "reservation.json": "4a351c914c388a6ad3a33036f48dd7e3bfa7e91b7ad037b7bceffd8b43fa2ae7",
+    "source_start.json": "3bfbbdfba03f74dc7fed4e29c4f8d4bb4b79c6523e24f4bbb6e632cbd4c4bdc8"
+  },
+  "money": "UNKNOWN",
+  "monotonic_ns": 97393283174393,
+  "opaque_goal_id": "UNKNOWN",
+  "outcomes": {
+    "A": "FAIL",
+    "B": "PASS"
+  },
+  "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+  "phase2_anchor": "THIS_P1_FREEZE_INCLUDING_KEY_WAIT_CHECKS_REPORTS_HANDOFFS",
+  "phase2_deadline_monotonic_ns": 97993283174393,
+  "phase2_literal_inclusive_seconds_limit": 600,
+  "physical_provider": "UNKNOWN",
+  "pinlock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/pinlock.json",
+    "sha256": "edbd944e8197b390e3349f823fc8feea3b864ce7a9c1c479f8bb2c99699a9fe0"
+  },
+  "private_key_runtime_history_cost_access_before_freeze": false,
+  "schema": "er9.independent-phase1-freeze.v1",
+  "source_elapsed_seconds": 774.664498284,
+  "source_seconds_limit": 1200,
+  "source_within_limit": true,
+  "utc": "2026-10-06T06:09:34.426185+00:00",
+  "whole_deadline_monotonic_ns": 98418618676109
+}

@@ -1,0 +1,35 @@
+{
+  "accountant_helper_provider_usage": "UNKNOWN",
+  "billing_dollars": "UNKNOWN",
+  "campaign_complete": false,
+  "clock_reset": false,
+  "closed_monotonic_ns": 98247925931691,
+  "closed_utc": "2026-10-06T06:23:49.069075+00:00",
+  "later_closure_pointer_notices_and_final_assistant_delivery": "UNKNOWN_OUTSIDE_THIS_RECEIPT_MEASUREMENT",
+  "later_ops_DEC015_five_activations": "OUTSIDE_PRIMARY015_CUTOFF_RETAIN_FOR_NEXT_SNAPSHOT_NOT_RETROACTIVE_CHARGE",
+  "native_entry_qualifier_selection_pin": {
+    "path": "accounting/cohort-015/NATIVE_ENTRY_PUBLIC_SELECTION.json",
+    "sha256": "8b400c8882958ccd677244448182b688af6661c6f038f53226dc8f66512da3db"
+  },
+  "new_candidate_Goals_or_provider_invocations_by_accounting": false,
+  "owner_acknowledgments": "UNKNOWN_NOT_WAITED_FOR",
+  "primary_selection_pin": {
+    "path": "accounting/cohort-015/PUBLIC_SELECTION.json",
+    "sha256": "b7ac2042c9383b3655fbaa9480a8e30207656613850d23fabc252c8a5cee0bca"
+  },
+  "publisher026_elapsed_helper_model_provider_usage_billing": "UNKNOWN_NOT_EXPOSED_BY_NEUTRAL_VERIFICATION_RECEIPT",
+  "publisher026_neutral_metadata_verification_pin": {
+    "path": "ops/publication/cohort026-verification.json",
+    "sha256": "e75913a375e75128770132e1c7ce87183a3cb18db115f959aebf53c0c5691c3d"
+  },
+  "report_ready_elapsed_seconds_subset": 427.564335587,
+  "required_primary_and_qualifier_notice_tool_returns_observed": true,
+  "schema": "er9.accounting.required-notice-closure.v1",
+  "scope": "Own bounded accounting work includes counting qualifier and required notices. Report-ready checkpoint and all source-clock slices overlap enclosing work clocks and are not added. No candidate inference charge/quality/whole comparison success or campaign stop inferred.",
+  "start_pin": {
+    "path": "accounting/cohort-015/START.json",
+    "sha256": "23e2918693ea8c381b3b359035db6325998eb543ae356c5ba1ded051134c880e"
+  },
+  "whole_limit_seconds": 1800,
+  "whole_through_primary_and_native_entry_qualifier_root_foreman_publisher_keeper_ops_notices_seconds": 696.377126495
+}

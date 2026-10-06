@@ -1,12 +1,12 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "operational-pipeline-milestone-and-finished-targets-026",
-  "publication_snapshot_at": "2026-10-06T05:53:20.385801+00:00",
+  "cohort": "full-proposal-assessments-and-warm-repair-activations-027",
+  "publication_snapshot_at": "2026-10-06T06:33:19.897385+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
   "failed_research_stages": 2,
-  "whole_pipelines_completed": 5,
+  "whole_pipelines_completed": 6,
   "matched_comparisons_completed": 0,
   "actual_research_families": [
     "GLM"
@@ -37,7 +37,7 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-014/snapshot.safe.json",
+  "campaign_accounting_snapshot": "accounting/cohort-015/snapshot.safe.json",
   "accounting_snapshot_is_live_or_final": false,
   "independent_I02_research_verdicts": [
     "FAIL_SCREEN",
@@ -63,7 +63,7 @@
   "research_stage_count_scope": "Four original I01/I02 published artifact sets plus one R001 available research set; missing R001 partner is a separate attempted stage. Not full campaign attempts/occupancy.",
   "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
   "I01_scored_stages_observed_in_phase2": 4,
-  "accounting_snapshot_scope": "Own05:09:54\u201355capture198attempts180Goals556585752known+7usageUNKNOWN/0unknownstarts; oldcutoffs/nestedclocks/rootcounterseparate",
+  "accounting_snapshot_scope": "Own06:12:46\u201347capture224attempts206Goals596728355known+18usageUNKNOWN; not finalbilling/currentoccupancy",
   "DEC006_import_scope": {
     "neutral_locators": 622,
     "unique_contents": 405,
@@ -207,11 +207,14 @@
   "latest_workload_metadata": "consolidation/workload-003/WORKLOAD_SCOREBOARD.json",
   "whole_pipeline_completion_scope": "Operational native allrole/artifact/quiet/release only; scientificquality separate",
   "operational_matched_pairs_completed": 2,
-  "matched_comparisons_scope": "Independent fullscientific comparison credit, not operational completion",
+  "matched_comparisons_scope": "Clean causallyeligible independentcomparison credit; two operationalpairs and scientificoutcomeviews separate",
   "TD13_review": "BothINCOMPLETE/fullscienceUNASSESSED/source-maplimited/authenticityunlocated",
   "TD14_review": "Apartialsupportedtargeted/currentquartet/Goalcomplete; BmissingpausedUNASSESSED/nocausalwinner",
   "P5_scientific_freeze": "LocalizedmoderateW2FAIL/otherpartnermissing atP1; no latercompletefile substitution",
   "confirmation_clock_engineering": "Conditional4lockedpairs22roles240neutral locators, not deployment or sourcePASS",
   "P5_final": "Treatment3rolesoperationalcomplete/scientificlocalizedFAIL; controlmissingfinalpausedUNASSESSED; no scientificwinner; partialblinding/nestedexposure/proofenrichment uncertainty disclosed",
-  "TD15_final": "BothdeliveryINCOMPLETE/treatmentmissingUNASSESSED/controlconditionalnonfinalPARTIAL/absentS15S20UNASSESSED/no execution or pipelinecredit"
+  "TD15_final": "BothdeliveryINCOMPLETE/treatmentmissingUNASSESSED/controlconditionalnonfinalPARTIAL/absentS15S20UNASSESSED/no execution or pipelinecredit",
+  "P6_final": "BothfullproposalsFAIL/all sixnativeGoalscomplete/quiet operational separate",
+  "P7_final": "ControlFAIL/treatmentfull12proposalPASS/sourcebindingsnow explained/priorreceiptbytes+payloadunverified/provenanceHOLD/no cleanwinner",
+  "DEC015_provenance": "Five samecandidateGoal WARM repairs/fivepositiveGoalactivations/1500 each/null; not independentSol or extra targetcredit"
 }

@@ -1,0 +1,476 @@
+{
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_brief_obligations": 12,
+    "target_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "alias_map": {
+    "A": "control",
+    "B": "treatment"
+  },
+  "clock": {
+    "actual_phase2_checking_start_monotonic_ns": 97644001568488,
+    "actual_phase2_checking_start_utc": "2026-10-06T06:13:45.144517+00:00",
+    "clock_reset": false,
+    "handoffs": "Required scientific and neutral cost/clock handoffs follow inside same original deadlines; final post-handoff closure recorded separately.",
+    "key_wait_charged_to_phase2_seconds": 121.603766486,
+    "phase1_freeze_monotonic_ns": 97522397802002,
+    "phase1_freeze_utc": "2026-10-06T06:11:43.540778+00:00",
+    "phase1_source_elapsed_seconds": 910.784239432,
+    "phase2_deadline_monotonic_ns": 98122397802002,
+    "phase2_elapsed_inclusive_from_freeze_seconds": 493.394883722,
+    "phase2_literal_limit_seconds": 600,
+    "report_sealed_monotonic_ns": 98015792685724,
+    "report_sealed_utc": "2026-10-06T06:19:56.935696+00:00",
+    "source_start_monotonic_ns": 96611613562570,
+    "source_start_utc": "2026-10-06T05:56:32.756541+00:00",
+    "whole_deadline_monotonic_ns": 98411613562570,
+    "whole_elapsed_inclusive_from_source_start_seconds": 1404.179123154,
+    "whole_limit_seconds": 1800
+  },
+  "evaluation_id": "independent-pipeline-6",
+  "operational_outcome": {
+    "actual_selected_current_role_count": 6,
+    "all_six_elapsed_within_original_role_deadline": true,
+    "all_six_native_goal_first_active_last_complete": true,
+    "all_six_native_status_complete_before_cleanup_and_final": true,
+    "all_six_operational_complete": true,
+    "all_six_original_quiet_flags_private_descendants_and_owned_scopes_true": true,
+    "both_current_critique_input_source_path_and_stage_pins_match_locked_admission": true,
+    "both_current_final_four_content_roles_match_locked_bytes": true,
+    "control_role_count": 3,
+    "inference_boundary": "Native completion, content delivery, quiet/released state, source quality and matched causal winner are separate.",
+    "registry_permits_released": true,
+    "treatment_role_count": 3
+  },
+  "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+  "phase1_artifact_integrity_after_phase2": [
+    {
+      "name": "phase1-input-pins.json",
+      "read_only": true,
+      "sha256": "5fb5c5669d336bb8602dd1a8cde8d4ade9f5a53cc7354e39c15f7c62f4d6a58c",
+      "unchanged": true
+    },
+    {
+      "name": "phase1-judgment.json",
+      "read_only": true,
+      "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd",
+      "unchanged": true
+    },
+    {
+      "name": "phase1-report.md",
+      "read_only": true,
+      "sha256": "5fd7316bce82fc1a1878e2fd84d9564600c73465cb81a914b5849e47bf3256e1",
+      "unchanged": true
+    },
+    {
+      "name": "reservation.json",
+      "read_only": true,
+      "sha256": "7b852e88a1af6d4bfe1e87528d0bb4c0b23694eab2edfa3c6ae4169163f1842a",
+      "unchanged": true
+    },
+    {
+      "name": "source-start.json",
+      "read_only": true,
+      "sha256": "7cfab36e95805d20730298c5cb41969474629446120ee1f15b47abbd264f4db4",
+      "unchanged": true
+    }
+  ],
+  "phase1_judgment": {
+    "bytes": 30351,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-judgment.json",
+    "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd"
+  },
+  "phase1_lock": {
+    "bytes": 2395,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-lock.json",
+    "sha256": "a0cb00a1d459dc5ff3c4a09162e3867283fec7a6fc6cfdf205d9b095a472dcf1"
+  },
+  "phase1_report": {
+    "bytes": 8244,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-report.md",
+    "sha256": "5fd7316bce82fc1a1878e2fd84d9564600c73465cb81a914b5849e47bf3256e1"
+  },
+  "phase1_source_judgment_unchanged": true,
+  "phase2_evidence": [
+    {
+      "bytes": 75164,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key.json",
+      "sha256": "e8477f6f892196d5bef1f3c50c61a3484532fc7448a105178e72f9213644dc5e"
+    },
+    {
+      "bytes": 1355,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-checking-start.json",
+      "sha256": "43bd98024f57a9a14cbd31eadaf187a678154b53ee70ca3f1ec7da7eb7e12fe4"
+    },
+    {
+      "bytes": 6748,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-key-consistency.json",
+      "sha256": "305431271639c43e9bba5c10f6107c8b0c10ef2b80abdffe09cda5a7daf6baa1"
+    },
+    {
+      "bytes": 12356,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_FINAL_PAIR_RESOURCE_EXECUTION_001.json",
+      "sha256": "d346e246b1fdfbad37b323e0134c6a87251276719a8fd2dde01c42b786059c98"
+    },
+    {
+      "bytes": 56690,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_FINAL_PAIR_RUNTIME_001.json",
+      "sha256": "2476bdb531fefc4607f0728a1891b033cc9b99fd8d9e130409c8871d0f470ea9"
+    },
+    {
+      "bytes": 55900,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase2-inputs/P6_CURRENT_PIPELINE_ROLE_LIFECYCLE_001.json",
+      "sha256": "ad85d4cf3b1ee0e5459a8502e52019fcbff46ca7bed25879551594e261dc6648"
+    }
+  ],
+  "runtime_qualifications": {
+    "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+    "aggregate_memory_profile": {
+      "all_six_memory_max_bytes": 2415919104,
+      "fit": "UNKNOWN; no global scalability or product-security qualification",
+      "observed_oom": false,
+      "swap_max_bytes": 0
+    },
+    "billing_money": "UNKNOWN",
+    "current_final_host_tail": "Both native Goals were complete before cleanup; each native turn ended interrupted, and host/helper service projections show exit255/failed while original cgroups are empty/absent. These terminal labels are recorded, not substituted for semantic failure or proof of extra model turns.",
+    "evaluator_native_usage": "UNKNOWN",
+    "evaluator_physical_provider": "UNKNOWN",
+    "native_http_attempts": "UNKNOWN where unexposed; no hard model-response cap inferred",
+    "older_candidate_lineages": "EXCLUDED; no older I06/current-key substitution or prior evaluator-grade read",
+    "opaque_native_goal_record_ids": "UNKNOWN_NOT_EXPOSED; session/thread targets distinct",
+    "physical_provider_attestation": "UNKNOWN",
+    "proof_receipt_namespace": "Current proof reader/launch seal hashes match. Embedded pre-enrichment native receipt SHA and enriched final native result SHA are distinct namespaces. Exact source-order enrichment/pre-embedding retained bytes remain UNKNOWN and were not reconstructed.",
+    "science_after_key": "No additional source-depth review, candidate feedback or change to Phase1 grade."
+  },
+  "schema": "er9.independent-current-paired-final-assessment.v1",
+  "scientific_outcome": {
+    "A": "FAIL",
+    "B": "FAIL",
+    "matched_causal_winner": "UNASSESSED_NOT_ESTABLISHED",
+    "qualification": "Phase1 complete proposal/criteria/source judgment remains immutable; operational labels do not qualify science. Two FAIL outcomes do not imply equal quality.",
+    "winning_arm": "NO_WINNER_CLAIM"
+  },
+  "selected_current_roles": [
+    {
+      "actual_elapsed_seconds": 1012.843428121,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "control",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 1006,
+      "direct_goal_tokensUsed": 474142,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": false,
+      "freeze_sha256": "b9fec2b2549d5e134eea2ac5ce54996cd4115d977c696436891faf2b7de57399",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "29b5a83b9896bc42f952e139af8ddd951dbc41c8bd32f0e0ed5828c4a92e8f17",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 5125888,
+          "inputTokens": 5555146,
+          "outputTokens": 44884,
+          "reasoningOutputTokens": 21032,
+          "totalTokens": 5600030
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 371499008,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 92775432268019,
+      "original_deadline_seconds": 1200,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 93975432268019,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "897a38699a35a625268ad22c517c40d81d665dc12af9d63f62fe878dd03cc66b",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "3994215dcc63f6f9b5fd1b4312f7c60d64d75fd3e5ca505751c8a45ae2055ff9",
+      "stage": "research",
+      "stage_sha256": "dac18a17059bd2b5c21bfb2046a491acbb552c1c76aaa7e4e70ddf6ebd2c6539"
+    },
+    {
+      "actual_elapsed_seconds": 735.097311197,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "control",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 729,
+      "direct_goal_tokensUsed": 301692,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+      "freeze_sha256": "edf2e7cafc79fc1fcf0e457e4d96f8e6b625d6e38010899b869b238b136f1789",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "9c67c24b082a6eeaee73c40896ce08004822a9e1348dbc84d232e209e27d0638",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 3855360,
+          "inputTokens": 4121711,
+          "outputTokens": 35341,
+          "reasoningOutputTokens": 23868,
+          "totalTokens": 4157052
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 372260864,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 93800024742410,
+      "original_deadline_seconds": 900,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 94700024742410,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "262f469269f10220de636a36eca84cd04f95214a2b469ad161ad1c531bd30f22",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "1a28da80f7c48027163b5394fe886fe05f27251a4422696958df06e1fc502e32",
+      "stage": "critique",
+      "stage_sha256": "17db4b7f740a656b595b1a7d013638c5cd097f9449e86b55e1cb053ea729eab9"
+    },
+    {
+      "actual_elapsed_seconds": 577.353265884,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "control",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 571,
+      "direct_goal_tokensUsed": 227604,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+      "freeze_sha256": "04946134dd098224d528b550cd94b5a9f34a48ec29a38bbabbcf8ee40ab54922",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "18b81a40a90ce75276835f98d13781ff394a7487e5e88a8d142de959210c5030",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 1493504,
+          "inputTokens": 1692691,
+          "outputTokens": 28417,
+          "reasoningOutputTokens": 15155,
+          "totalTokens": 1721108
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 371986432,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 94568573396013,
+      "original_deadline_seconds": 600,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 95168573396013,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "5b6d5ab6666b1d015910b70116be6e7b5ea38b6159a8073fa7c2b1e5107acf99",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "3598486692af48dcf1d4a8c0b6d8d99efcb4f483e2533340755c916947a1dd49",
+      "stage": "revision",
+      "stage_sha256": "7b6fe1b00bef8e1c39aa185b16f592751429cca36e97e1885719380d23848892"
+    },
+    {
+      "actual_elapsed_seconds": 989.329915163,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "treatment",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 983,
+      "direct_goal_tokensUsed": 366534,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": false,
+      "freeze_sha256": "f4c700fc4762acd21fc036f18fe3eb8731f6b98ddc42998e3883df37bcadc550",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "3608339414f9d93479bfc748283f716f4dc8d217d0f8e76db03fa6006567ab9f",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 4146176,
+          "inputTokens": 4470728,
+          "outputTokens": 41982,
+          "reasoningOutputTokens": 23150,
+          "totalTokens": 4512710
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 372391936,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 92844126814237,
+      "original_deadline_seconds": 1200,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 94044126814237,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "0394f8e666fef897f9dbdec9dbd9ee43803299dd31243cc0e86d0b7c36c9cee7",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "8c8e5058b85a729365e72542edd0b9900710a045f316f021d419b41c1fce0ec1",
+      "stage": "research",
+      "stage_sha256": "ead12b54659164c91c858f1eb4b876eb09e874284e877fff470c474370aa3f59"
+    },
+    {
+      "actual_elapsed_seconds": 552.878365242,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "treatment",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 546,
+      "direct_goal_tokensUsed": 334613,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+      "freeze_sha256": "21eb8265ca465bd19c2e87ea8b97911605e276c7e72a7a8bc9a19cafa72cae4b",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "19ba03d8a475e929b02c735e44550bcb3c573775d0aac9be5397dca546ef20fa",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 3689728,
+          "inputTokens": 4002817,
+          "outputTokens": 21524,
+          "reasoningOutputTokens": 13866,
+          "totalTokens": 4024341
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 373100544,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 93857418366951,
+      "original_deadline_seconds": 900,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 94757418366951,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "49699bc24ee7dc0888fce1f653723d9ab076296bc83a4763723fed00831da851",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "3dbd54ad464007334c4b52ac511d9ee880527dda66ded3d57d1cfc2ddb913aad",
+      "stage": "critique",
+      "stage_sha256": "ead2d9dec2815c59267eeb829610135a561fb8647ba61358b2793a50b32a9184"
+    },
+    {
+      "actual_elapsed_seconds": 584.809452947,
+      "actual_elapsed_within_original_deadline": true,
+      "aggregate_memory_max_bytes": 2415919104,
+      "all_original_quiet_flags_and_owned_scopes_true": true,
+      "arm": "treatment",
+      "deadline_arithmetic_matches": true,
+      "direct_goal_timeUsedSeconds": 578,
+      "direct_goal_tokensUsed": 161122,
+      "first_direct_goal_status": "active",
+      "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+      "freeze_sha256": "7dcd924e22d71e11840a8406dd2707bf7a20aa9ddfefbb0e21adb336a59194a7",
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+      "last_direct_goal_status": "complete",
+      "memory_swap_max_bytes": 0,
+      "money": "UNKNOWN",
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_sha256": "d4154673fa9f2e1258772865b1fcc4f816fbbc019bebabec77670542b6338351",
+      "native_usage_positive_fields": {
+        "usage_totals": {
+          "cachedInputTokens": 1110528,
+          "inputTokens": 1255130,
+          "outputTokens": 16520,
+          "reasoningOutputTokens": 8061,
+          "totalTokens": 1271650
+        }
+      },
+      "observed_identity": {
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna"
+      },
+      "observed_memory_peak_bytes": 373256192,
+      "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+      "operational_complete_original": true,
+      "original_birth_monotonic_ns": 94437578773006,
+      "original_deadline_seconds": 600,
+      "original_registry_status": "COMPLETED",
+      "original_total_stop_monotonic_ns": 95037578773006,
+      "physical_provider": "UNKNOWN",
+      "private_slice_release_sha256": "41f7c1a68b97316f7b450aa3e6ea4abe6b9efcced21b7acccce65bd9b45807f6",
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "registry_permit_release_confirmed": true,
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "ba21508718c2d4e9e65938bbdbbee82ebd38dc63640ed8f2d1f1e407ac6ee479",
+      "stage": "revision",
+      "stage_sha256": "b91fcb3c4adf2a42a8f3602aeed2de0afe16bfe4d2cee5f64e0f8cd28ac8f39e"
+    }
+  ],
+  "status": "ASSESSMENT_COMPLETE_PENDING_REQUIRED_HANDOFFS"
+}

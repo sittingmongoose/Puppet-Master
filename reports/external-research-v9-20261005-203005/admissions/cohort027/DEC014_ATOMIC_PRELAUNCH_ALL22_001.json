@@ -1,0 +1,333 @@
+{
+  "schema": "er9.dec014-atomic-prelaunch-check.v1",
+  "observed_utc": "2026-10-06T06:05:34.047096+00:00",
+  "outbox_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/OUTBOX_FINAL.json",
+    "sha256": "27a7dfdd1083920e311b1fd52ece11ec2b7c3629f001051ccf6b0817302bb8dc"
+  },
+  "old22": [
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "51629fc2e59b6822002a5d1b81a1f995e0bbb3e4753456823d7c8b8e359352a6"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "ee4e7435d3b96384faa711c26f4754a465a59c151e3eec874ab85209c2c5e24c"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-01-resource-r002-bundle-control-critique-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-01-resource-r002-bundle-control-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "378ce44d5fd899124ce836eb334cd522bb9c8aaf1719ff5dbcbe1493ee64ff07"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "d089599208c446775f3aada9cb058463ad3baa86e30c871da9b7527fa0787e09"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-01-resource-r002-bundle-treatment-critique-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-01-resource-r002-bundle-treatment-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "d80560c0d1fe618916db875c09906b8d1d3e7665e6b9a0d4dcc49f18c4f28fe7"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "f0089e3f33fa213eab3dae9318345dec3291ff75c706268e0bb704441ceb197a"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-02-resource-r002-bundle-control-critique-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-02-resource-r002-bundle-control-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "449a30581b16f78dbf43c7a94323ee58b3b6059f418ce6215348c1b7fdc14c7d"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "1b4693375b1c052e16244c26fe9927dc2832e531b038b9ef1daed47d975ea757"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-02-resource-r002-bundle-treatment-critique-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-02-resource-r002-bundle-treatment-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "17c8ae87ed2309fb0b3754c92830aba91ffecf9e80ba03c99475368e61ea0e47"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "646ca31851733a12d5b338bad999246566a29cfabcecd29f3443619b0a6bffbf"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-03-resource-r002-bundle-control-critique-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-03-resource-r002-bundle-control-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "14fc5c21cde345a1324b13e3a3a1064c76cc2fdb186b4fe02104986bf41601b7"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "88c29369e652453eb79ae87f47aea5813578868f50bde9e56f3a4dc1bedaf54d"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "2dee8ae658ca77bb05c044a90578150bbb89730542c920a45b7f6d2d1f9840fb"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "45037461a307ca899d82121fff273d5f9b020da402a4cf0465823b9780be585c"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "98178556faa398f1a2afb8559733ba9554fb8de7c5c97705d152520bf161d88b"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "d57f7528ad0a550931835498e9b4cd645faf7e98767076ba02e85d312e4c4565"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/OUTPUT_FREEZE.json",
+        "sha256": "e570f0ccda0f8d6d3bacbd038a6cbe461375f4009314e18e1b95b2a549e6ceaa"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "254e3dc428ea4957449b01a3491f5c05689dd4748f7df30934ff6e2934b62cc4"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-04-resource-r002-bundle-control-revision-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "d62c8e4f3511d724cd4cc8e2aa9e9195721115c96f03c69b63558c12dab64f9d"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "abc075590e5ee6e85e07a42a1806a690e844255d51e1dbc1f557eded1abb5a6f"
+      },
+      "owned_quiet": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "no_actor_intent": true,
+      "allocation_and_native_receipts_absent": true,
+      "exact_unit": "er9-203005-c-04-resource-r002-bundle-treatment-critic_final-a001.service",
+      "unit_observation": [
+        "not-found",
+        "inactive",
+        "0"
+      ]
+    }
+  ],
+  "new22": [
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+  ],
+  "blockers": [],
+  "passed": true,
+  "native_calls": 0
+}

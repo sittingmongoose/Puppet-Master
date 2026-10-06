@@ -1,0 +1,3636 @@
+{
+  "created_utc": "2026-10-06T06:22:33.005572+00:00",
+  "finite_tail_primary_pin": {
+    "path": "accounting/cohort-015/finite-tail.safe.json",
+    "sha256": "1371885690d4d1a6671d662184db54d6d6d18d9a30960b3bc2885593a1a77c0a"
+  },
+  "per_logical_arm_table": [
+    {
+      "arm": "control",
+      "logical_slot": "D-V01-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V01-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muvx7wl4_abcce071-64db-4f0a-a861-2c01a65123d6",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_c15605ac-a8de-48d3-92ec-776f94d9289f",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V01-A-control-diagnostic-a001/native/receipt.json",
+              "sha256": "19db3b0509e9acbd805b46afcecaef7041c9d748cce5eb9474dd212b4d451b4d"
+            }
+          },
+          "target_role_job_id": "D-V01-A-control-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V01-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V01-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muvx0zd1_ae692b74-ca90-4eeb-86b2-16edfebd0c70",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_24cddee6-d999-4f38-b029-02d4a8f92d1e",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V01-A-treatment-diagnostic-a001/native/receipt.json",
+              "sha256": "8eb3ddd1aafd66ffac4c7403ea616cad3aa5e7c6e25fcbf05a00074af4d11278"
+            }
+          },
+          "target_role_job_id": "D-V01-A-treatment-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V01-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V01-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ecf-e7db-7ea0-9d79-0a8c8fe8a8bd",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V01-B-control-diagnostic-a001-resource-v13-a002/native/result.json",
+              "sha256": "116f7a4a56c4ef10e8ee3c5e06d98e4b849d74ad2a36e3cf24d3a65c11203d7d"
+            }
+          },
+          "target_role_job_id": "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V01-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V01-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ed6-9511-7602-9dfa-0b7b5fc9d49b",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V01-B-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+              "sha256": "c8e6507dcd7229ee7cb094b6601931f64cdfba64845f653c4bd779d7ee39ca60"
+            }
+          },
+          "target_role_job_id": "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V02-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V02-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1c-6b6f-7f12-a15e-6ad66a3f4bd5",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+              "sha256": "2cf4d0f53bda52a908f6054a67d9154dc6bcf7cf8ca41762a45a5378a1d7891e"
+            }
+          },
+          "target_role_job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V02-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V02-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1c-717c-7cd0-ae53-fcad9b1885c4",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+              "sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136"
+            }
+          },
+          "target_role_job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V02-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V02-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1c-a8e8-7371-84a5-b3fe68ba9b82",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "4ff9c569381a0c220de584ea8f39d294cc1d9fcb7e8a9efcd888edbd625b1d03"
+            }
+          },
+          "target_role_job_id": "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V02-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V02-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1c-af61-7343-b803-e22f7eb247f9",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9"
+            }
+          },
+          "target_role_job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V03-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V03-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1c-e5e2-7b91-a3e6-32c77016dcf4",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "1f15f88609a10ca750f27a463c880dfbbb46ed5acc451213ee5360627aa02801"
+            }
+          },
+          "target_role_job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V03-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V03-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f1f-ceaa-7e81-afe7-315cf156f54a",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "04e7e682a05619e686616c1b08691a7439d1b0b1fb87fbb5c946bcd04a1773ce"
+            }
+          },
+          "target_role_job_id": "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V03-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V03-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f22-6fcf-7032-948a-5757dce0a450",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55"
+            }
+          },
+          "target_role_job_id": "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V03-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V03-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f24-4890-7090-bbf3-160b9d604e06",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d"
+            }
+          },
+          "target_role_job_id": "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V04-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V04-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ed8-fed5-74a0-9355-9c10817f7c7d",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V04-A-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+              "sha256": "bc4e9bdb4b8ad5f6f4ad2b657422be3a7b00f1dd31f8b73e329b167e2173095f"
+            }
+          },
+          "target_role_job_id": "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V04-A-control-compare_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V04-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V04-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ed9-3a60-7950-bddc-f08b4da3964e",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V04-A-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+              "sha256": "265825a58ededa4f3b2cafe346fde71abeaebab2ed00678c5f64a2b6640bd64f"
+            }
+          },
+          "target_role_job_id": "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V04-A-treatment-compare_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V04-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V04-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ed9-ab2c-76d1-938a-5f66e246cac4",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V04-B-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+              "sha256": "54c873823d04ac16e42f598e6762dab50866cd7ce209228b473f8dc8ce5196f9"
+            }
+          },
+          "target_role_job_id": "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V04-B-control-compare_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V04-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V04-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10eda-715f-7152-ab3a-06d40a10c5ca",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V04-B-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+              "sha256": "8f1564c94276759a3f6cedd0ae2df57d9655678f6cb0708232c7081d7c9aaa73"
+            }
+          },
+          "target_role_job_id": "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V04-B-treatment-compare_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V05-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fc2-0a4e-75d0-ad95-e77d26bdf88c",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+              "sha256": "6b251a20d67ea77feaedfc21ed774026b6dd673853908177342de7c28ea5fd81"
+            }
+          },
+          "target_role_job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V05-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fc2-125c-7e91-8ae3-ca93cbb742e0",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+              "sha256": "b35e3698866da13b7eb385fd37bf09f918e8d2fda9abc539a312663a42969d12"
+            }
+          },
+          "target_role_job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fc7-af9f-7fa1-9b55-66719f552481",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+              "sha256": "fa708d5e748797cbe4f69f0ef9d96c137a973febf11a34c6c9fc2a14d95368b1"
+            }
+          },
+          "target_role_job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V05-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V05-B-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8b-253b-7763-9098-cc87220abed2",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+              "sha256": "f0320828b6e5e069650f03e6d54d87bdabc90414d3a5e48a3ba4c2ca376167e5"
+            }
+          },
+          "target_role_job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V05-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V05-B-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8b-2b24-7c12-891f-6115b2fad60a",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+              "sha256": "7f996f85f51b8db2f6c320869eb672c0f9d5da4ac4dc5535c056f30c585977a5"
+            }
+          },
+          "target_role_job_id": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fa9-27d6-7993-9227-3c31010624bb",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+              "sha256": "e0d01a67d823458e8910aba6ceb2d651598f945be3860f41431afffd201a7eba"
+            }
+          },
+          "target_role_job_id": "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V06-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V06-A-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f84-0663-7782-a2b4-30ba5abdf23e",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "77db3a3c91f0cfa169a4d4f84b5228100347174432b681ac81fd97c34f12fe81"
+            }
+          },
+          "target_role_job_id": "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V06-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V06-A-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f84-4806-7773-8779-479a996703b0",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "f7bc81d4c1c233727166fc81f2f85b3beeda7634c3fb2c359ceb864c93bfbd41"
+            }
+          },
+          "target_role_job_id": "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V06-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f85-2703-7c41-a87a-17f8d594eef7",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "d417093e247448dbe38a3113dbd94e9365b595aae228c7551b227bf3cdeb1123"
+            }
+          },
+          "target_role_job_id": "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V06-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f85-6183-73e1-9c17-38165e423d61",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "97a5cea3aeb26ec8c08bd1528379e86f0efd9686dcff2c7d74ef42d47a864dd7"
+            }
+          },
+          "target_role_job_id": "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V07-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V07-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f25-81db-7a73-b7bb-d4bf1e567b95",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+              "sha256": "69452f45f312df8ab8cd33f592f775d8c70c8494cd2ce293014efbc0458fd08a"
+            }
+          },
+          "target_role_job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V07-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V07-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f25-881f-7dd2-9adc-d61b06790dff",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+              "sha256": "b2e5403beafe172ed22706268fab6f3d46df2b83f369000e288cd9dea1893142"
+            }
+          },
+          "target_role_job_id": "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V07-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V07-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f25-d170-7361-8281-b553ac9d4760",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66"
+            }
+          },
+          "target_role_job_id": "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V07-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V07-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f25-d7ee-7251-9331-ec369d6a381a",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db"
+            }
+          },
+          "target_role_job_id": "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V08-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V08-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e7a-82fb-7781-b98b-fd639ff0e2ab",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V08-A-control-critic-a001/native/result.json",
+              "sha256": "f4fcf7fad216e536e498121ae572a58b249bb746f14538f94ad1f3e154e79bad"
+            }
+          },
+          "target_role_job_id": "D-V08-A-control-critic-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V08-A-control-final_author-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V08-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V08-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e7a-894b-7ed3-8987-ea6daff289ae",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/native/result.json",
+              "sha256": "c991d7336a6ef3406ac9788ac3254d20e70929fa7ccbbb34e24c490eff3e296a"
+            }
+          },
+          "target_role_job_id": "D-V08-A-treatment-critic_and_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V08-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V08-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muvwtt9y_5c7c99de-9d47-4e94-b58d-10be20e47854",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_1422012f-e62e-4810-a73b-bfb8f1a428a5",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V08-B-control-critic-a001/native/receipt.json",
+              "sha256": "e2ecf5b815d110df3f485de9866449c5cab6886f8adce81d64c732a0f6131aef"
+            }
+          },
+          "target_role_job_id": "D-V08-B-control-critic-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V08-B-control-final_author-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V08-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V08-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muvwgwf4_97b0c94f-3af8-46f2-b249-5e293653b584",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_23e6458c-efc7-4d6d-889d-9e1cdc7d8bc8",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V08-B-treatment-critic_and_final-a001/native/receipt.json",
+              "sha256": "e69cdcb52a413f106848e2e757252e198b8e8208be5ad9b483092e98c1311a13"
+            }
+          },
+          "target_role_job_id": "D-V08-B-treatment-critic_and_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V09-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V09-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V09-A-control-resolve_final-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ef9-49e6-7333-b069-149b6470309d",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/native/result.json",
+              "sha256": "7861a3cedd96729c3221814692a5b453fa0cf5a4794a6c90992242e93609fd28"
+            }
+          },
+          "target_role_job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V09-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V09-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e7a-f723-7d42-b1fb-e03ce262ff76",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-A-treatment-implementation_critic-a001/native/result.json",
+              "sha256": "e48a00702dbc3f10e5be255d9ae3529c90327063b801489759f4385774e7014a"
+            }
+          },
+          "target_role_job_id": "D-V09-A-treatment-implementation_critic-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V09-A-treatment-resolve_final-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ef9-4f52-7263-9a52-5c07ae656c31",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/native/result.json",
+              "sha256": "be0763411a52f14f7a593a651330403ca64f416242d0537ca7a4872ded25eca4"
+            }
+          },
+          "target_role_job_id": "D-V09-A-RESOURCE-R001-treatment-source_critic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V09-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V09-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10eda-aa39-70e2-a9d5-7a48b6cf2399",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-B-control-whole_critic-a001-resource-v13-a002/native/result.json",
+              "sha256": "19f3ea3c21894c0022c82c676d0fc6d6bee7e8e9877338367cfb046f40740c2d"
+            }
+          },
+          "target_role_job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V09-B-control-resolve_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V09-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V09-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10edd-4b43-77b1-ba92-34b2b93b6681",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-B-treatment-source_critic-a001-resource-v13-a002/native/result.json",
+              "sha256": "d1393a1e4017bf4df94d225d9f838b94447b655d36f00eec3145640425346bc2"
+            }
+          },
+          "target_role_job_id": "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10ecc-9fce-7202-a5dd-7169bb0a7a88",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V09-B-treatment-implementation_critic-a001-resource-v13-a002/native/result.json",
+              "sha256": "ee4d31808d6e7172e8225b5c6d4de6d0eb19b693fde314aa2e2a20cb905cd655"
+            }
+          },
+          "target_role_job_id": "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "D-V09-B-treatment-resolve_final-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V10-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V10-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f2e-eeea-7972-a3d4-72ff1599e972",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "592fe18d1c7e73f700df43c0bd1a00a1b204de21a6b3c6db7afe57ac6bc1ccec"
+            }
+          },
+          "target_role_job_id": "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V10-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V10-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f2e-f53a-7612-888e-9a3efcf4be3d",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "591875a3a7bc9b4088abe9935e71aeb526320b60fc66d6c45badd6b67e99f2cb"
+            }
+          },
+          "target_role_job_id": "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V10-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V10-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f30-3b33-7ac1-9f16-196fee1dce82",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "00fc3042b5345e780e341d2b60c3ef77d9561686f4ef02a923a3fd6e2913a42b"
+            }
+          },
+          "target_role_job_id": "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V10-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V10-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f32-0f14-7310-869d-ff7d50d264cf",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "c58917b9c0ade39039b61c47045c3d9663f892c7e280d06f6df9013f9461f146"
+            }
+          },
+          "target_role_job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V11-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V11-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f33-c1aa-77e2-83d4-21b0f139ef22",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "e5a219cb346a0c1a0e0cbb3d9e354be3f146f3d93756e0113cee22816b56218a"
+            }
+          },
+          "target_role_job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V11-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V11-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f37-a43f-7cb2-b960-a8f2f603c908",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "74a0aa3fd540d9f738d9ff3d442d741937984f47fab72a8cc8df4da1784f4ace"
+            }
+          },
+          "target_role_job_id": "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V11-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V11-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3a-ac2f-78f0-b8fd-e585da00b8b3",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "2a6205d3ed35e9648d4e6adaf4699f1609fc99498e66428d3ecc66a24ed8168b"
+            }
+          },
+          "target_role_job_id": "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V11-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V11-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3b-24b9-7902-9d7e-d4e1907fae7e",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "17b4f762c525945ad9f8de91f263fc050c3041564ca0e56fe213c39bcf9c6ed4"
+            }
+          },
+          "target_role_job_id": "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V12-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V12-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3c-aaf8-73c1-b2cf-ac8182a3bd39",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "9fa2ca4210bbb80e8c69df489a8b371caf64ff2446f837db25d57d36adfd4f5e"
+            }
+          },
+          "target_role_job_id": "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V12-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V12-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3c-ef2b-7de3-8928-b4b6b617c307",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "9dac32ba9b1c70345865e1f6996752d80f69453d980866b5a3221cda08f8f0af"
+            }
+          },
+          "target_role_job_id": "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V12-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V12-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3e-0340-72d2-8258-23326cd0e868",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "372364b139bfe319d103a51b62891fc96931cec60919e6399a8780fd4450e197"
+            }
+          },
+          "target_role_job_id": "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V12-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V12-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f3f-3de9-7082-94bb-aae2f72df8fe",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+              "sha256": "193f8dbebe23ba700fe036581615577ce732d57429276a24d22d3bec46231205"
+            }
+          },
+          "target_role_job_id": "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V13-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V13-A-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f88-70fc-73c1-b838-0a9f919cfb17",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "982d6436ee3d2b015d77b91c7a875d0895f57ddfdd196a1017b526ecab8c0251"
+            }
+          },
+          "target_role_job_id": "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V13-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V13-A-DEFERRED-R001-CLOCK-R002",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8c-c037-7a32-bb3f-e5c856789b29",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+              "sha256": "6901b8a77f037c51a876e6be804cf96aeff53865f4f7404fc2404b5a60a5d547"
+            }
+          },
+          "target_role_job_id": "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V13-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V13-B-DEFERRED-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f4b-a59d-7451-b1cf-25d69a2dd950",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+              "sha256": "e9ad3fd96f7ec626f7b6f248d09498aa1c416519d75b11e6c0ce4fc1941136cb"
+            }
+          },
+          "target_role_job_id": "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V13-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V13-B-DEFERRED-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f4b-e0d4-7b13-bb04-db3e6f741097",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/native/result.json",
+              "sha256": "2d139dc0767ad1cd18dddbe6345d5c5d5ddce7772a3490a4493a7e6879222600"
+            }
+          },
+          "target_role_job_id": "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V14-A",
+      "original_route_unavailable_reference_only": true,
+      "original_unavailable_arm_native_activation": "UNKNOWN_NOT_EXPOSED_IN_ALLOWED_METADATA",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V14-A-LUNA-R1",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e0e-9c33-79d2-8c8d-a3536e4f04fc",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-control-diagnostic-a002/native/result.json",
+              "sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657"
+            }
+          },
+          "target_role_job_id": "D-V14-A-LUNA-R1-control-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V14-A",
+      "original_route_unavailable_reference_only": true,
+      "original_unavailable_arm_native_activation": "UNKNOWN_NOT_EXPOSED_IN_ALLOWED_METADATA",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V14-A-LUNA-R1",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e0e-a372-7ec2-bf07-7919221e5a76",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-treatment-diagnostic-a002/native/result.json",
+              "sha256": "f20ae3d3091601a86e30cf99cba78cf02f227f5ddf72e8e6d9a538e5a0f53609"
+            }
+          },
+          "target_role_job_id": "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V14-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V14-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e0e-e878-7fc0-b003-758692e41da3",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V14-B-control-diagnostic-a002/native/result.json",
+              "sha256": "93dbb51ddd92202eda6cea0c4f4d077ad9b1b813c2cd1fcf602058085bc9f16b"
+            }
+          },
+          "target_role_job_id": "D-V14-B-control-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V14-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V14-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e0e-ed8a-72b0-a2fb-a761051d820b",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V14-B-treatment-diagnostic-a002/native/result.json",
+              "sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13"
+            }
+          },
+          "target_role_job_id": "D-V14-B-treatment-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V15-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V15-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e0f-6382-7701-ac04-d2c73d7dbf74",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/native/result.json",
+              "sha256": "529dd260b032e4bc5e925bf2ec55dea815bba529458e36d391c8ff4bbfab78ca"
+            }
+          },
+          "target_role_job_id": "D-V15-A-control-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V15-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V15-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e12-58f3-7750-86dd-8d7ce4327ce2",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/native/result.json",
+              "sha256": "01f55b1420c5208c345ab3698a8e12ee46b12696be55e5c8adbc170602dac474"
+            }
+          },
+          "target_role_job_id": "D-V15-A-treatment-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V15-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V15-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e1c-46b0-76b0-b2d0-1e5900f9179a",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+              "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+            }
+          },
+          "target_role_job_id": "D-V15-B-control-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V15-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V15-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e1c-4bf8-71c0-b43a-dfa859c42d91",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+              "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+            }
+          },
+          "target_role_job_id": "D-V15-B-treatment-diagnostic-a002"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V16-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V16-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e93-ae79-79f3-b50d-a2d1d5ae335b",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V16-A-control-diagnostic-a001/native/result.json",
+              "sha256": "09a3d353b40aef0353d2e1f95fb2c66ff6eca53371643954a3db427a2df7c18a"
+            }
+          },
+          "target_role_job_id": "D-V16-A-control-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V16-A",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V16-A",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e9c-21f2-7a23-80ed-3e26cdc617ce",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/native/result.json",
+              "sha256": "a3496415df9842049345fc300059a227a141c81ae724bea1547bbeba8448befd"
+            }
+          },
+          "target_role_job_id": "D-V16-A-treatment-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "D-V16-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V16-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e9c-807b-7553-a465-61c750703359",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V16-B-control-diagnostic-a001/native/result.json",
+              "sha256": "495fcab36eb0fedb7c46f53c6b35c2745ce5d6cafd0f3f9eacba5c1ecb3804c9"
+            }
+          },
+          "target_role_job_id": "D-V16-B-control-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "D-V16-B",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "D-V16-B",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10e9c-b288-7fc0-89df-d7e517e72245",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/D-V16-B-treatment-diagnostic-a001/native/result.json",
+              "sha256": "6fe863b4d3ab045acc6ec8419c68e6b2abc8ecabc82e144a76dd59ee0c79cfba"
+            }
+          },
+          "target_role_job_id": "D-V16-B-treatment-diagnostic-a001"
+        }
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-01",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-01-FRESH-DELIVERY-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw6dgfw_b137d125-855a-4ce0-93b5-208007a15c5f",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_137596e6-8377-4e16-90d2-353b3d9daa40",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-control-research-a001/native/receipt.json",
+              "sha256": "040bd8b9d18525aaa7dbfdcec87a9f602c64945cc5cabf11ce9d1f0092875294"
+            }
+          },
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-control-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-01",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-01-FRESH-DELIVERY-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw5o13u_7cc66c51-3dc8-4b15-999b-10cfa33374e4",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_a95adf13-6a25-4c31-aa0b-b2983abc9cfb",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-treatment-research-a001/native/receipt.json",
+              "sha256": "e3941db4ab43b4a72e99fd73a4c8ff4b0cb7faf2c55b07087488f7492e4a41fb"
+            }
+          },
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-treatment-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-02",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw730eu_5f29892b-9d2e-4598-8c21-592bc4ebb899",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_acc69be2-b583-47b8-897f-272c96384518",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "da549671832b91a6beabab54eff70c5e2174bcbd87cef267e4066f6c58d36b5f"
+            }
+          },
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw7ohgm_dd5430ae-1e4f-4920-8c4c-77c8908e0d86",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_c96c3cf3-1267-4389-91c5-983413088a7c",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "a8cb228e18d6609de41d3bdf1598a14ff9c82a02a06db8f829ed09d306ba2706"
+            }
+          },
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-02",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw6qqds_f5990684-dc5b-46b5-9bef-bbe156ede86c",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_f9232760-1440-4611-9ffd-e6a0d11edf70",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "dffd0fccd9b4e52f57e21fcc9174e5b7847aa1c89951910c406569636ea08a54"
+            }
+          },
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw78tuy_b6c55204-9049-48b5-81f2-2052adabb3db",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_d4cf149b-30d0-4332-a6b0-43ab91da6bee",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "9d880ecfe2ac36f55c14d238f51de1c3eab6dbfca8e681e0fbf9dbda7e2041d7"
+            }
+          },
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-03",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw8fdpk_99886f43-41c1-4c2a-98e2-b991ce51d5ad",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_d884fd9e-8e30-48a8-99a0-98de59a73a45",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "66a7cc407859d0fd4f46d9fcc4757884c4411693cf99e20e6f02006e7683f445"
+            }
+          },
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw8wyad_1952e70d-e8a4-4fa9-9dde-15f5e8079004",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_45add6d4-b832-4bdd-9868-7e980cb7962f",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "b8dad3fd980a38761905e869772279c5ed18a6037d8c26819764c0d8b925e70c"
+            }
+          },
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-03",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw7y5pp_29b0d719-5925-4d89-b473-69e4d1b8e354",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_929d2e5c-b14c-4fc4-8a04-ed0b634c38ff",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "e53f38f4bea22582197d564821df45f4a784ebeb691f8f202612c4560b2cd41b"
+            }
+          },
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw8g072_a450703c-c3c5-47cb-9ddc-f50d4637231e",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_9960d396-93ad-45a4-a4f7-1a7b62574b5f",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "22a792074938e05f1dc6fff5bb57b20bd3b3be5f971b6f62d5768e6fc23a9dec"
+            }
+          },
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw8usdp_26906207-32da-4fc3-8bb3-f7348d7f25b7",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_aa2661c3-4a0a-4980-a1a5-afd0c3c83355",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "356c45c4b868d297efba7d7c7dbcbacda2352f51e2b33d21154b249f18c21a05"
+            }
+          },
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-04",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw9uzp6_2fcecd4a-46f7-4ca8-8b9b-e288359c7b6c",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_ba4721e4-cb74-4a25-8e9a-ba1186b1bc6d",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "aa7570779df7c810d49ed64b13da3e0fb5796af1d83c715ce3d730ee3b755259"
+            }
+          },
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-04",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "GLM",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "target_muw9qkwu_e5a63572-8128-47ec-a4db-80ecb7545f64",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_SAVED_RECEIPT",
+            "selector": "/goal_activated",
+            "session_or_thread_locator": "sess_3e34b676-ab47-4140-901d-854b4382c19a",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+              "sha256": "8a67c3a5eee97f4ba1ae591c0e0afce8a803ada111d6da1ae090042d800819b5"
+            }
+          },
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-05",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8e-4059-7132-b157-5d5ad00c463b",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+              "sha256": "4439fb11c024d6074b388a690008072b7506ddd705716d81f2c33e69f4f89cae"
+            }
+          },
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f97-b089-77b0-84a3-88f924ec5d23",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+              "sha256": "fd5bd33d43543b3b871c49e25c4c61728b49ee84d1449ca78b0801ab05f27f9e"
+            }
+          },
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-05",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8e-46ef-7832-9a85-72b4738054fd",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+              "sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff"
+            }
+          },
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f9e-b855-71f3-a1e9-7ea966742625",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+              "sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e"
+            }
+          },
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-06",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8e-89e0-7cd0-b4ce-3afb4dd41fd6",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+              "sha256": "29b5a83b9896bc42f952e139af8ddd951dbc41c8bd32f0e0ed5828c4a92e8f17"
+            }
+          },
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f9e-2a10-7423-a41b-a49ac224c426",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+              "sha256": "9c67c24b082a6eeaee73c40896ce08004822a9e1348dbc84d232e209e27d0638"
+            }
+          },
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-06",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f8f-937c-7f50-a305-9dd4a82e9c92",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+              "sha256": "3608339414f9d93479bfc748283f716f4dc8d217d0f8e76db03fa6006567ab9f"
+            }
+          },
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f9f-0a7c-77a2-b16a-ccbcde8bf7b8",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+              "sha256": "19ba03d8a475e929b02c735e44550bcb3c573775d0aac9be5397dca546ef20fa"
+            }
+          },
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-07",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f90-13c3-7ed1-ac84-ccaae903f66d",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+              "sha256": "26bed9341d848ea2b1876484431a5372b271f6025c0ef86c7f8b08f31a582978"
+            }
+          },
+          "target_role_job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fa1-f135-7573-816c-921056c5d800",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+              "sha256": "42ac637d226d87a3f77b9ddd433a18929f881f2745f17bbd6955c11b4b4ff98e"
+            }
+          },
+          "target_role_job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-07",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f92-35bb-7e23-a41e-65b6ba2c785e",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+              "sha256": "d7c0537f66081dacc541f1cedd1d3218b5d8f9d29764296469f2f17b4a80c97b"
+            }
+          },
+          "target_role_job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-08",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-08-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f94-8f07-7c61-8248-3c5f952e27d4",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+              "sha256": "0a90774a6b262a2face40bf17d8a24156c8fd012e87fd2a9bbfa62720f97c233"
+            }
+          },
+          "target_role_job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10fa2-ebfc-7fe0-8f16-518ec67d5367",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+              "sha256": "37ac1e326bc91abdfe655916bdc57200ab614443742d0ade13c26353342cd4b5"
+            }
+          },
+          "target_role_job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-08",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": true,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-08-LUNA-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": true,
+          "native_start_class": "POSITIVE_GENUINE_NATIVE_TARGET_ROLE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": {
+            "family": "Luna",
+            "observed_value": true,
+            "opaque_distinct_native_Goal_ID": "UNKNOWN_WHERE_NOT_EXPOSED",
+            "proof_basis": "POSITIVE_NATIVE_GOAL_ACTIVATION_OBSERVED_SAVED_RECEIPT",
+            "selector": "/metrics/activation/native_activation_observed",
+            "session_or_thread_locator": "01a10f95-d09f-7142-ae3f-a3dee41b162c",
+            "source_pin": {
+              "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+              "sha256": "44c495e6c6c702399633fa20a1944bd46c447a8b8f9f1078126729ebf7152b76"
+            }
+          },
+          "target_role_job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-09",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-09",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-10",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-10",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-11",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-11",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "I-12",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "I-12",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+        }
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "C-01",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "C-01",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "C-02",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "C-02",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "C-03",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "C-03",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "logical_slot": "C-04",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+        }
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "logical_slot": "C-04",
+      "original_route_unavailable_reference_only": false,
+      "original_unavailable_arm_native_activation": "NOT_APPLICABLE_TO_SELECTED_ROUTE",
+      "positive_target_native_entered": false,
+      "rule": "Entered requires positive saved native activation of an exact adopted target-role job; operator attempt counts, submitted/unsubmitted cards, imports/donors, provider notifications and final artifact availability alone do not establish it.",
+      "selected_pair_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001",
+      "selected_target_roles": [
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+        },
+        {
+          "candidate_cost_added_by_qualifier": false,
+          "count_as_native_entered": false,
+          "native_start_class": "UNKNOWN_OR_NOT_ENTERED_NO_POSITIVE_RECEIPT_IN_SELECTED_CAPTURE",
+          "not_donor_or_import_count": true,
+          "positive_native_activation_proof": null,
+          "target_role_job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+        }
+      ],
+      "track": "C"
+    }
+  ],
+  "primary015_selection_pin": {
+    "path": "accounting/cohort-015/PUBLIC_SELECTION.json",
+    "sha256": "b7ac2042c9383b3655fbaa9480a8e30207656613850d23fabc252c8a5cee0bca"
+  },
+  "same_source_windows_as_primary015": {
+    "accepted_selection_observation_utc": "2026-10-06T06:15:37.147418+00:00",
+    "assessment_snapshot_utc": "2026-10-06T05:44:13.992083+00:00",
+    "finite_registry_window": {
+      "end": "2026-10-06T06:12:58.210054+00:00",
+      "start": "2026-10-06T06:12:58.041397+00:00"
+    },
+    "usage_capture": {
+      "end": "2026-10-06T06:12:47.560235+00:00",
+      "start": "2026-10-06T06:12:46.824520+00:00"
+    }
+  },
+  "schema": "er9.accounting.native-entry-qualifier.v1",
+  "scope": "Additive independent exactreceipt check of primary finite-tail entered-arm terminology, no primary mutation. Targeted64 are genuine native entries of selected current target roles, not merely pre-native card attempts or donor starts. Original unavailableMuse/source arms remain separately scoped UNKNOWN when original native proof unexposed. No extra costs, pipeline/quality/cache/source uptake, billingzero or campaigncompletion inference.",
+  "summary": {
+    "A": {
+      "logical_arms": 64,
+      "positive_target_native_entered_arms": 64,
+      "positive_target_native_role_receipts": 68,
+      "remaining_without_positive_saved_target_receipt": 0
+    },
+    "B": {
+      "logical_arms": 24,
+      "positive_target_native_entered_arms": 16,
+      "positive_target_native_role_receipts": 27,
+      "remaining_without_positive_saved_target_receipt": 8
+    },
+    "C": {
+      "logical_arms": 8,
+      "positive_target_native_entered_arms": 0,
+      "positive_target_native_role_receipts": 0,
+      "remaining_without_positive_saved_target_receipt": 8
+    }
+  }
+}

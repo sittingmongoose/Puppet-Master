@@ -1,0 +1,79 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "checks": [
+    {
+      "witness_id": "W1",
+      "label": "executed by candidate",
+      "name": "Synthetic row-contract probe, initial exploratory attempt",
+      "status": "executed; Unicode preservation criterion not met by this script",
+      "justified_expected_behavior": "A candidate-authored component check should preserve source row ordinals, reject an invalid integer conversion without dropping it silently, distinguish a missing property from explicit null, preserve Unicode in projected values, serialize deterministically, and detect changed input identity. The initial script projected city out of the accepted output, so the stdout reports unicode_preserved=false. This is retained as an unsuccessful exploratory attempt; it is not a pass.",
+      "code": "import json, hashlib\nsource = data[\"source_text\"]\noriginal_digest = hashlib.sha256(source.encode(\"utf-8\")).hexdigest()\nrecords = [json.loads(line) for line in source.splitlines()]\naccepted = []\nrejected = []\nfor ordinal, row in enumerate(records, 1):\n    raw_amount = row.get(\"amount\")\n    try:\n        amount = int(raw_amount)\n    except (TypeError, ValueError):\n        rejected.append({\"ordinal\": ordinal, \"raw_amount\": raw_amount, \"reason\": \"amount is not an integer\"})\n        continue\n    accepted.append({\"ordinal\": ordinal, \"amount\": amount, \"note_present\": \"note\" in row, \"note\": row.get(\"note\")})\ncanonical = json.dumps(accepted, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\nreplay = json.dumps(accepted, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\nassert canonical == replay\nassert accepted[0][\"note_present\"] and accepted[0][\"note\"] is None\nassert not accepted[1][\"note_present\"]\nassert len(rejected) == 1 and rejected[0][\"ordinal\"] == 3\nassert hashlib.sha256(source.encode(\"utf-8\")).hexdigest() == original_digest\nchanged_digest = hashlib.sha256((source + \"\\n\").encode(\"utf-8\")).hexdigest()\nassert changed_digest != original_digest\nprint(json.dumps({\"accepted\": len(accepted), \"rejected\": len(rejected), \"explicit_null_distinguished_from_missing\": True, \"unicode_preserved\": \"東京\" in canonical, \"repeat_serialization_equal\": True, \"source_digest_unchanged\": True, \"changed_source_digest_detected\": True}, sort_keys=True))",
+      "input": {"source_text": "{\"id\":\"r1\",\"amount\":\"12\",\"note\":null,\"city\":\"東京\"}\n{\"id\":\"r2\",\"amount\":\"7\",\"city\":\"München\"}\n{\"id\":\"r3\",\"amount\":\"bad\",\"note\":\"keep raw elsewhere\"}\n"},
+      "receipt": {
+        "execution_id": "exec-6og3og_l",
+        "code_sha256": "f7d2fe7f850dd2895fc51b034b8f1106dc8542d022f0d05cf47b516cb94aeb59",
+        "data_sha256": "ea18027446c450810c844719fc519455bbc8fa432df7dae0f0b6bc4e506f156a",
+        "stdout": "{\"accepted\": 2, \"changed_source_digest_detected\": true, \"explicit_null_distinguished_from_missing\": true, \"rejected\": 1, \"repeat_serialization_equal\": true, \"source_digest_unchanged\": true, \"unicode_preserved\": false}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "elapsed_seconds": 0.3739185579906916,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"},
+        "limitation": "The initial script did not include city in accepted rows, so unicode_preserved=false. It did not falsify the proposed contract; it showed this witness code failed to test that condition."
+      }
+    },
+    {
+      "witness_id": "W2",
+      "label": "executed by candidate",
+      "name": "Synthetic row-contract probe, corrected projection",
+      "status": "passed its listed assertions in isolated Python component execution",
+      "justified_expected_behavior": "The same three-row NDJSON text should produce two accepted integer rows and one explicit reject with source ordinal 3; explicit null and missing note must remain distinguishable; Unicode city strings remain in output; repeat canonical serialization matches; source text digest remains unchanged and a changed input digest differs.",
+      "code": "import json, hashlib\nsource = data[\"source_text\"]\noriginal_digest = hashlib.sha256(source.encode(\"utf-8\")).hexdigest()\nrecords = [json.loads(line) for line in source.splitlines()]\naccepted = []\nrejected = []\nfor ordinal, row in enumerate(records, 1):\n    raw_amount = row.get(\"amount\")\n    try:\n        amount = int(raw_amount)\n    except (TypeError, ValueError):\n        rejected.append({\"ordinal\": ordinal, \"raw_amount\": raw_amount, \"reason\": \"amount is not an integer\"})\n        continue\n    accepted.append({\n        \"ordinal\": ordinal,\n        \"amount\": amount,\n        \"city\": row.get(\"city\"),\n        \"note_present\": \"note\" in row,\n        \"note\": row.get(\"note\")\n    })\ncanonical = json.dumps(accepted, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\nreplay = json.dumps(accepted, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\"))\nassert canonical == replay\nassert accepted[0][\"note_present\"] and accepted[0][\"note\"] is None\nassert not accepted[1][\"note_present\"]\nassert len(rejected) == 1 and rejected[0][\"ordinal\"] == 3\nassert \"東京\" in canonical and \"München\" in canonical\nassert hashlib.sha256(source.encode(\"utf-8\")).hexdigest() == original_digest\nchanged_digest = hashlib.sha256((source + \"\\n\").encode(\"utf-8\")).hexdigest()\nassert changed_digest != original_digest\nprint(json.dumps({\"accepted\": len(accepted), \"rejected\": len(rejected), \"explicit_null_distinguished_from_missing\": True, \"unicode_preserved\": True, \"repeat_serialization_equal\": True, \"source_digest_unchanged\": True, \"changed_source_digest_detected\": True}, sort_keys=True))",
+      "input": {"source_text": "{\"id\":\"r1\",\"amount\":\"12\",\"note\":null,\"city\":\"東京\"}\n{\"id\":\"r2\",\"amount\":\"7\",\"city\":\"München\"}\n{\"id\":\"r3\",\"amount\":\"bad\",\"note\":\"keep raw elsewhere\"}\n"},
+      "receipt": {
+        "execution_id": "exec-i6w70v1f",
+        "code_sha256": "7513fb8fb2c138869a708e3c56c72a6e0d59866319eb20495774053a14277243",
+        "data_sha256": "ea18027446c450810c844719fc519455bbc8fa432df7dae0f0b6bc4e506f156a",
+        "stdout": "{\"accepted\": 2, \"changed_source_digest_detected\": true, \"explicit_null_distinguished_from_missing\": true, \"rejected\": 1, \"repeat_serialization_equal\": true, \"source_digest_unchanged\": true, \"unicode_preserved\": true}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+        "elapsed_seconds": 0.37294566399941687,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"},
+        "limitation": "Isolated stdlib component check only; does not test DuckDB, notebook execution, full data conversion, project writes, 5 GB scale, or product isolation behavior. Standard-library code used no network and only in-memory synthetic text."
+      }
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "check_id": "P1",
+      "label": "proposed/UNEXECUTED",
+      "check": "At the selected DuckDB version, replay the v1.1.1/v1.1.2 malformed-newline regression fixture where source/license permits; verify counts and reject accounting under fail/quarantine modes. Add malformed/Unicode/multiline variants. Acceptance: no record disappearance is hidden, and accepted plus rejected logical row accounting reconciles for the declared fixture.",
+      "scope_limit": "Does not prove every CSV parser case or other versions/platforms."
+    },
+    {
+      "check_id": "P2",
+      "label": "proposed/UNEXECUTED",
+      "check": "Exercise notebook displayed order, out-of-order kernel execution, restart, edits, clean replay, exception, interrupt, timeout and cancellation. Acceptance: only a completed replay associated with matching source/environment/data hashes can become current.",
+      "scope_limit": "A product integration test; not covered by W1/W2."
+    },
+    {
+      "check_id": "P3",
+      "label": "proposed/UNEXECUTED",
+      "check": "On an ordinary 8-core/16 GB machine, generate and scan a 5 GB CSV through DuckDB projection/filter and bounded preview; separately measure full export and blocking sort/group with bounded temp disk and RSS recording.",
+      "scope_limit": "Target performance to measure; no result or threshold is established by current research."
+    },
+    {
+      "check_id": "P4",
+      "label": "proposed/UNEXECUTED",
+      "check": "Test rootless OCI permissions/network/filesystem limits, worker cancellation, output validation, resource exhaustion and source read-only behavior on supported operating systems.",
+      "scope_limit": "Security review and adversarial testing remain required; container use alone is not an isolation proof."
+    },
+    {
+      "check_id": "P5",
+      "label": "proposed/UNEXECUTED",
+      "check": "Kill project save at every commit boundary; test recovery and lock/conflict behavior on local, removable and named network filesystems.",
+      "scope_limit": "Filesystem-specific behavior; only tested configurations can be supported."
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "er9.selected-public-source-entry.v1",
+  "source_id": "S16",
+  "requested_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+  "entries": [
+    {
+      "candidate_path": "inputs/source_context/0032.body",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version_or_commit": "sha256:8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "capture_id": "bb417749f1884a8c9f7f30cc5ebc2cdb",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ],
+  "metadata_status": "EXACT_INDEX_URL_BODY_SHA_MATCH",
+  "exact_admitted_index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+  "model_comprehension": "UNKNOWN"
+}

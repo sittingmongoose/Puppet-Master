@@ -1,0 +1,629 @@
+{
+  "A": {
+    "case_outcome": "FAIL",
+    "decisive_defect_ids": [
+      "E1",
+      "E3"
+    ],
+    "final_content_roles_present": 4,
+    "minor_defect_ids": [
+      "E4",
+      "E5"
+    ],
+    "missing_content_roles": [],
+    "scientific_full_pipeline_quality": "FAIL_CURRENT_DESIGN_OBLIGATIONS",
+    "source_quality": "FAIL"
+  },
+  "B": {
+    "case_outcome": "FAIL",
+    "decisive_defect_ids": [
+      "E1",
+      "E2",
+      "E3"
+    ],
+    "final_content_roles_present": 4,
+    "minor_defect_ids": [],
+    "missing_content_roles": [],
+    "scientific_full_pipeline_quality": "FAIL_CURRENT_DESIGN_OBLIGATIONS",
+    "source_quality": "FAIL"
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_brief_obligations": 12,
+    "target_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "blinding": {
+    "critique_source_role": "Current same-arm candidate-authored scientific preservation input, not an evaluator key/grade.",
+    "private_key_read_before_freeze": false,
+    "raw_delivery_role_manifest_read": false,
+    "runtime_status_history_cost_read_before_freeze": false,
+    "sibling_or_old_I06_or_prior_evaluator_grade_read": false,
+    "unavoidable_hints": [
+      "Parent assignment names Luna and current operational selection timing.",
+      "Exact actual launched tasks expose control/treatment stage labels, linking A/control and B/treatment; no perfect blinding claim.",
+      "Current supporting catalog stage labels and execution IDs are inherent scientific source selectors."
+    ]
+  },
+  "candidate_code_executed_by_evaluator": false,
+  "case_id": "DEV-B-v1",
+  "common_dimensions": [
+    {
+      "A": "MATERIAL_DEFECT",
+      "B": "MATERIAL_DEFECT",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q1",
+      "name": "Required question and plan-obligation coverage",
+      "reason": "E1 affects required provenance; B also lacks clear execution permissions (E2)."
+    },
+    {
+      "A": "SUPPORTED_WITH_MINOR_DEFECT",
+      "B": "MATERIAL_DEFECT",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q2",
+      "name": "Correct source interpretation/version/conditions/applicability",
+      "reason": "Primary mechanisms and bounded parser chains checked; A E4 is minor; B SQL fallback does not preserve the source security condition (E2)."
+    },
+    {
+      "A": "MATERIAL_DEFECT",
+      "B": "MATERIAL_DEFECT",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q3",
+      "name": "Justified inference/component choice/plan consequences",
+      "reason": "Coherent component choices; the required source-at-read identity assumption is not protected (E1)."
+    },
+    {
+      "A": "SUPPORTED",
+      "B": "SUPPORTED",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q4",
+      "name": "Verified useful discovery/alternatives/failures/breadth",
+      "reason": "Jupyter and DuckDB precedents and independently useful failure chains verified; B adds messaging, SQLite operational and Bubblewrap mechanisms. Counts alone earn no credit."
+    },
+    {
+      "A": "SUPPORTED_WITH_MINOR_DEFECT",
+      "B": "SUPPORTED",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q5",
+      "name": "Executed witnesses/proposed validation scope",
+      "reason": "Actual synthetic code/input/results checked statically; all application, parser-engine, scale, crash and sandbox qualification remains UNEXECUTED. A E5 formatting mismatch does not alter semantics."
+    },
+    {
+      "A": "MATERIAL_DEFECT",
+      "B": "MATERIAL_DEFECT",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q6",
+      "name": "Semantic preservation/no new consequential errors",
+      "reason": "Actual critiques admitted; E1 remains and finals describe critiques as absent. B loses supported explicit policy and introduces an insufficient SQL fallback (E2/E3)."
+    },
+    {
+      "A": "MATERIAL_DEFECT",
+      "B": "MATERIAL_DEFECT",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q7",
+      "name": "Honest uncertainty/scope/critical dependencies",
+      "reason": "Many runtime/performance/OS dependencies are disclosed honestly; E1 is an undisclosed design-critical condition and B fallback lacks safe applicability (E2)."
+    },
+    {
+      "A": "SUPPORTED_WITH_MINOR_DEFECT",
+      "B": "SUPPORTED",
+      "assessment_coverage": "COMPLETE",
+      "id": "Q8",
+      "name": "Reproducible final delivery/economics separately",
+      "reason": "Four actual final content roles byte-pinned. A E5 leaves catalog exact-code hash wording inconsistent. Native status/history/cost/provider/Goal held or UNKNOWN until P2; no quality credit from delivery."
+    }
+  ],
+  "common_important_checks": [
+    {
+      "A": "PASS_BOUNDED_CLAIMS",
+      "B": "PASS_BOUNDED_CLAIMS",
+      "id": "B-P1",
+      "reason": "Two useful independent precedents and narrow real failure/fix/test/release-source chains verified; no local DuckDB execution inferred."
+    },
+    {
+      "A": "FAIL",
+      "B": "FAIL",
+      "defect_ids": [
+        "E1",
+        "E2"
+      ],
+      "id": "B-P2",
+      "reason": "E1 affects both current provenance contracts. E2 additionally affects B execution and SQL fallback applicability."
+    },
+    {
+      "A": "PASS_BOUNDED_CLAIMS_WITH_MINOR_PIN_DEFECT",
+      "B": "PASS_BOUNDED_CLAIMS",
+      "defect_ids": [
+        "E5"
+      ],
+      "id": "B-P3",
+      "reason": "All three claimed actual candidate executions have matching actual input/stream/exit evidence; W1 initial Unicode failure honestly retained, W2 corrected narrow assertions and B W1 narrow assertions supported. No retest."
+    },
+    {
+      "A": "FAIL",
+      "B": "FAIL",
+      "defect_ids": [
+        "E1",
+        "E2",
+        "E3",
+        "E4",
+        "E5"
+      ],
+      "id": "B-P4",
+      "reason": "Current admitted critiques exist; consequential repair gap persists and B loses concrete boundary conditions; useful findings and honestly proposed work still preserved."
+    },
+    {
+      "A": "PASS_PLAN_COVERAGE_WITH_PROVENANCE_DEFECT",
+      "B": "FAIL",
+      "defect_ids": [
+        "E1",
+        "E2"
+      ],
+      "id": "B-P5",
+      "reason": "Core workflow/portability/resource/usability/opportunity lane represented in both. B lacks actual permission policy; empirical implementation checks unexecuted in both."
+    }
+  ],
+  "comparison": "Two FAIL outcomes do not imply equal quality. A retains clearer explicit worker policy; B has additional useful protocol/persistence/security mechanisms. No weighted score, ranking, treatment effect or causal winner is inferred.",
+  "defects": [
+    {
+      "aliases": [
+        "A",
+        "B"
+      ],
+      "checks": [
+        "B-P2",
+        "B-P4"
+      ],
+      "evidence": [
+        {
+          "bytes": 20072,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/A/proposal.md",
+          "sha256": "13b5e1b8a3edd17324e290cf8c2658b3883c7f83f19f65d37a1f25d607e88208"
+        },
+        {
+          "bytes": 17137,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/B/proposal.md",
+          "sha256": "5164b2a92302c0f6c8edacf3f7d2aadbcaf39d37cbfd649605ddeeaf6f855a19"
+        },
+        {
+          "bytes": 18715,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/A/current-predecessor-critique-review.md",
+          "sha256": "7e2f069927e049d3d1f3eaec12eb4917137f3302c1afb906e5c55ac602b6cc69"
+        },
+        {
+          "bytes": 23504,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/B/current-predecessor-critique-review.md",
+          "sha256": "91724bff08f5e5fd493866a71982a5ce4a51ddbb9dffd59044f5f282b2bc92c7"
+        }
+      ],
+      "finding": "Both final designs reference source data in place, hash it for strong identity, and allow Current after a successful replay with matching recorded fingerprints, but provide no stable source snapshot/read-view or mutation-race policy. Read-only worker access does not prevent another host process from changing the external file. The manifest can therefore identify bytes other than those actually consumed.",
+      "id": "E1",
+      "independent_static_counterexample": [
+        "Hash declared source bytes X and record h(X).",
+        "External writer changes the referenced source to Y after hashing and before the worker reads it.",
+        "The replay consumes Y and creates result R(Y).",
+        "The writer restores X before a later fingerprint comparison.",
+        "All recorded/compared source fingerprints can equal h(X), while the output came from Y. Neither final supplies a mechanism excluding or detecting this trace."
+      ],
+      "kind": "unsupported critical source-identity dependency",
+      "obligations": [
+        "B03",
+        "B04",
+        "B05",
+        "B12"
+      ],
+      "qualification": "Evaluator reasoning over the proposed protocol, not an observed product execution, benchmark, or retest. Both critics also raised the gap; the evaluator independently checked the current contracts rather than adopting a finding ID as proof.",
+      "severity": "CONSEQUENTIAL"
+    },
+    {
+      "aliases": [
+        "B"
+      ],
+      "checks": [
+        "B-P2",
+        "B-P4",
+        "B-P5"
+      ],
+      "evidence": [
+        {
+          "bytes": 17137,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/B/proposal.md",
+          "sha256": "5164b2a92302c0f6c8edacf3f7d2aadbcaf39d37cbfd649605ddeeaf6f855a19"
+        },
+        {
+          "bytes": 22487,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/B/current-predecessor-research-proposal.md",
+          "sha256": "0663101c1306d46aae665458088220d2883e0f89695bee253301349226b821ea"
+        },
+        {
+          "bytes": 374108,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/supplemental/B-C12.body",
+          "sha256": "5ef1726bae6b349967a7c35499d8fc3d748fa08e82986a2691c0c25e93502baf"
+        },
+        {
+          "bytes": 10687,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/B/168c2b532b6449d9af3a306234ef5f66.body",
+          "sha256": "0c1dc12c6d94017c45e220fc0e5b679f24c0f09494bdd4bc7157d8abcd75c001"
+        }
+      ],
+      "finding": "B replaces its predecessor's explicit read-only runtime/input, separate writable temp/output, host home/credential/socket exclusions, network-default-deny, and resource-limit policy with a least-privilege process phrase plus an audit list. The final does not select clear filesystem/network/resource permissions. Its sandbox-unqualified fallback permits declarative/SQL transforms without defining a restricted declarative language or a qualified SQL boundary, while the chosen optional SQL path accepts DuckDB scripts/calls. Arbitrary DuckDB SQL is itself untrusted code.",
+      "id": "E2",
+      "kind": "execution-boundary omission and loss of supported conditions",
+      "obligations": [
+        "B07",
+        "B10",
+        "B12"
+      ],
+      "qualification": "No deployed escape or security incident claimed. A concrete proposed permission policy is required by this brief even when implementation qualification remains future work. Merely disabling unsupported platforms does not define the supported Linux policy.",
+      "severity": "CONSEQUENTIAL"
+    },
+    {
+      "admission_facets": [
+        {
+          "actual_exact_input_pin_verified": true,
+          "alias": "A",
+          "bytes": 18715,
+          "candidate_input_relative_location_namespace": "inputs/prior/<current-samearm-critique-producer>/critique/review.md",
+          "current_final_stage_sha256": "7b6fe1b00bef8e1c39aa185b16f592751429cca36e97e1885719380d23848892",
+          "exact_original_input_relative_location_sha256": "52ab904e192eacf03e920f3f958c62f4e618b958bd15b9985f42c0f5b4b959e4",
+          "origin_identity_runtime_fields": "HELD_P2; no actor/model/Goal/status/session/job/nativeproof fields released",
+          "qualification": "neutral namespace hides producer job label; exactinput/pathhash verification is mechanical admission provenance only, not sourcequality/preservationgrade",
+          "source_byte_sha256": "7e2f069927e049d3d1f3eaec12eb4917137f3302c1afb906e5c55ac602b6cc69",
+          "source_role": "current samearm predecessor critique authoredreview"
+        },
+        {
+          "actual_exact_input_pin_verified": true,
+          "alias": "B",
+          "bytes": 23504,
+          "candidate_input_relative_location_namespace": "inputs/prior/<current-samearm-critique-producer>/critique/review.md",
+          "current_final_stage_sha256": "b91fcb3c4adf2a42a8f3602aeed2de0afe16bfe4d2cee5f64e0f8cd28ac8f39e",
+          "exact_original_input_relative_location_sha256": "e9e1898be187dff3afc6303ae328c7b4b391a4ee82a9af1f054261f90b0561fd",
+          "origin_identity_runtime_fields": "HELD_P2; no actor/model/Goal/status/session/job/nativeproof fields released",
+          "qualification": "neutral namespace hides producer job label; exactinput/pathhash verification is mechanical admission provenance only, not sourcequality/preservationgrade",
+          "source_byte_sha256": "91724bff08f5e5fd493866a71982a5ce4a51ddbb9dffd59044f5f282b2bc92c7",
+          "source_role": "current samearm predecessor critique authoredreview"
+        }
+      ],
+      "aliases": [
+        "A",
+        "B"
+      ],
+      "checks": [
+        "B-P4"
+      ],
+      "evidence": [
+        {
+          "bytes": 20072,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/A/proposal.md",
+          "sha256": "13b5e1b8a3edd17324e290cf8c2658b3883c7f83f19f65d37a1f25d607e88208"
+        },
+        {
+          "bytes": 17137,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/B/proposal.md",
+          "sha256": "5164b2a92302c0f6c8edacf3f7d2aadbcaf39d37cbfd649605ddeeaf6f855a19"
+        },
+        {
+          "bytes": 18715,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/A/current-predecessor-critique-review.md",
+          "sha256": "7e2f069927e049d3d1f3eaec12eb4917137f3302c1afb906e5c55ac602b6cc69"
+        },
+        {
+          "bytes": 23504,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/B/current-predecessor-critique-review.md",
+          "sha256": "91724bff08f5e5fd493866a71982a5ce4a51ddbb9dffd59044f5f282b2bc92c7"
+        },
+        {
+          "bytes": 4386,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/supplemental-source-manifest.json",
+          "sha256": "a1f23810a7d25c10c34a93c7ba89919a148fa6722f170c34f0e9f94aaca6a4d6"
+        }
+      ],
+      "finding": "Both finals treat critique as absent and state they cannot resolve critic-specific findings. Positive current-final input-pin facets bind an actual same-arm critique/review.md to each final. The critiques are present scientific preservation inputs, although a compatible-role adoption manifest may omit review as a final content selector. Both finals leave the independently verified source-identity gap open; B also loses its existing explicit permission policy.",
+      "id": "E3",
+      "kind": "incorrect admitted-input inventory and unresolved repair",
+      "obligations": [
+        "B12"
+      ],
+      "qualification": "Mechanical input admission does not prove model comprehension. No intent, native completion, provider identity, or grade is inferred from input presence.",
+      "severity": "CONSEQUENTIAL"
+    },
+    {
+      "aliases": [
+        "A"
+      ],
+      "checks": [
+        "B-P1",
+        "B-P4"
+      ],
+      "evidence": [
+        {
+          "bytes": 15747,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/A/sources.json",
+          "sha256": "2a9db470504c7ada3ad6675c356f716e89055d4b81fb194f40d7f24e79e21627"
+        },
+        {
+          "bytes": 26897,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/A/744030dc73664a2f82e0f0722783d638.body",
+          "sha256": "a805d5719e1d8c6ff7ada7af9192c5e0ae6e53b2de4c25de43ff19e8ea1fe191"
+        }
+      ],
+      "finding": "A adopted source catalog labels the v1.1.1/v1.1.2 tags and release as immutable. The captured v1.1.2 release JSON reports immutable=false. The exact captured response and immutable fix commit still support the narrow issue/fix/test/release-line claims; this does not falsify that chain.",
+      "id": "E4",
+      "kind": "source-pin wording",
+      "obligations": [
+        "B09",
+        "B12"
+      ],
+      "qualification": "A capture SHA pins the reviewed bytes, not future contents of a mutable tag URL. This minor defect is not the reason for the whole-case failure.",
+      "severity": "MINOR_NONCONSEQUENTIAL"
+    },
+    {
+      "aliases": [
+        "A"
+      ],
+      "checks": [
+        "B-P3",
+        "B-P4"
+      ],
+      "evidence": [
+        {
+          "bytes": 1291,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/static-witness-digests.json",
+          "sha256": "fbc05d5ed98ee7f8c03deb6d07ed8c1aeb5e31dd6bf5679af1c3158dc8527123"
+        },
+        {
+          "bytes": 9526,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/outputs/A/witnesses.json",
+          "sha256": "6bef6c5420f245bdbc85fac255072bfc18e76f25704a5397a520704f4a1ac098"
+        },
+        {
+          "bytes": 1504,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-inputs/selected/A/exec-6og3og_l/0-code.py",
+          "sha256": "f7d2fe7f850dd2895fc51b034b8f1106dc8542d022f0d05cf47b516cb94aeb59"
+        }
+      ],
+      "finding": "A W1 catalog code is reformatted to a one-line accepted.append dictionary, while its code_sha256 is the actual multiline submitted code hash. Catalog code SHA is 3700455f9808ed431a73de14cf021a5abf365e144d1606a9142df2806b16ff2b; actual submitted/claimed receipt SHA is f7d2fe7f850dd2895fc51b034b8f1106dc8542d022f0d05cf47b516cb94aeb59. Static diff shows formatting only. Actual input/stdout/stderr/exit support the honestly retained unsuccessful Unicode check. W2 and B W1 catalog code digests match actual submitted code exactly.",
+      "id": "E5",
+      "kind": "catalog byte identity",
+      "obligations": [
+        "B11",
+        "B12"
+      ],
+      "qualification": "Not a fabricated execution and not a semantic difference. No candidate code was executed or retested by this evaluator.",
+      "severity": "MINOR_NONCONSEQUENTIAL"
+    }
+  ],
+  "evaluation_id": "independent-pipeline-6",
+  "goal_run_retest_or_candidate_feedback": false,
+  "matched_causal_winner": "UNASSESSED_NOT_ESTABLISHED",
+  "money": "UNKNOWN",
+  "native_completion": "HELD_FOR_PHASE2",
+  "not_credited": [
+    "Full notebook/product runtime correctness.",
+    "DuckDB regression execution or shipped-binary behavior.",
+    "5 GB performance, OS sandbox qualification or crash recovery execution.",
+    "True deterministic replay, complete dynamic dependencies or actual source snapshot stability.",
+    "Native Goal completion, provider/model identity, cost, opaque Goal IDs or causal method efficacy from content/presence alone."
+  ],
+  "obligations": [
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q7"
+      ],
+      "id": "B01",
+      "reason": "Both cover create/import/preview/author/interactive/clean replay/save/reopen/export and Python plus bounded DuckDB SQL.",
+      "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "id": "B02",
+      "reason": "Both state schema/conversion/null/missing/Unicode/timestamp/error contracts and retain originals; malformed data fail or explicit quarantine. B physical-record wording is less precise than an explicit logical-parser ordinal but is not assumed to mean text lines.",
+      "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained"
+    },
+    {
+      "A_obligation_coverage": "PARTIAL",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5",
+        "Q7"
+      ],
+      "id": "B03",
+      "reason": "Document order, event order, kernel state and saved provenance are distinguished; E1 leaves the claimed replay input association unsupported.",
+      "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay"
+    },
+    {
+      "A_obligation_coverage": "PARTIAL",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "id": "B04",
+      "reason": "Current/stale/failed/unverified and restart/interruption policies are useful; E1 permits false Current against recorded data identity.",
+      "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution"
+    },
+    {
+      "A_obligation_coverage": "PARTIAL",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7",
+        "Q8"
+      ],
+      "id": "B05",
+      "reason": "Portable project/environment/events/output manifest is defined; E1 leaves source identity at actual read time unresolved.",
+      "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "id": "B06",
+      "reason": "Both explicitly keep 5 GB/8-core/16 GB unverified, distinguish eligible scan/batch paths and global bounds, and discuss cache/truncation/order/cancel/locking/save recovery.",
+      "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "id": "B07",
+      "reason": "A proposes explicit rootless worker access/network/resource limits and usable feedback. B retains feedback and platform gating but omits its concrete permission policy (E2). Neither is empirically qualified.",
+      "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "id": "B08",
+      "reason": "Verified Jupyter document/client/runtime protocol and separate DuckDB engine precedents supply independently useful mechanisms; composition/provenance is expressly application work.",
+      "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5"
+      ],
+      "id": "B09",
+      "reason": "A #14177 -> immutable fix 123b82... -> five-row regression source -> v1.1.2 release line verified. B PR #14464 failure -> merge/scanner/tests -> v1.2.0 ancestry/test source verified. Both qualify execution/build/all-platform limits.",
+      "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q4",
+        "Q7"
+      ],
+      "id": "B10",
+      "reason": "Useful opportunities and plausible alternatives remain visible. B SQL-only fallback when the sandbox is unqualified lacks a qualified boundary or restricted language (E2). Adoption remains optional.",
+      "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements"
+    },
+    {
+      "A_obligation_coverage": "COMPLETE",
+      "B_obligation_coverage": "COMPLETE",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q2",
+        "Q5",
+        "Q7",
+        "Q8"
+      ],
+      "id": "B11",
+      "reason": "Actual candidate code/input/streams/exit support A W1/W2 and B W1 within narrow stdlib synthetic scope. Proposed validation is honestly UNEXECUTED. E5 is formatting-only traceability debt; no full runtime/replay/cache implementation is credited.",
+      "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest"
+    },
+    {
+      "A_obligation_coverage": "PARTIAL",
+      "B_obligation_coverage": "PARTIAL",
+      "assessment_coverage": "COMPLETE",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "id": "B12",
+      "reason": "Standalone finals preserve much useful content and repair citations, but E3 misstates critique admission and E1 remains unresolved. A tag pin wording and W1 formatting identity persist; B drops explicit boundary conditions (E2).",
+      "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads"
+    }
+  ],
+  "opaque_native_goal_id": "UNKNOWN",
+  "operational_delivery": "Exact four roles per arm pinned; quiet-proxy evidence received. No native completion inference.",
+  "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+  "phase1_freeze_anchor": "phase1-lock.json freeze_utc/freeze_monotonic_ns; immutable; P2 includes key wait/checks/report/handoffs and cannot reset",
+  "physical_provider": "UNKNOWN",
+  "positive_preservation": [
+    "Notebook document/runtime/provenance distinction.",
+    "Sample-only preview and explicit parser/schema/conversion/null/missing contracts.",
+    "Visible reject accounting, source immutability intent, bounded results and ordering caveats.",
+    "Useful Jupyter/DuckDB mechanisms and bounded real parser failure chains.",
+    "Portable manifests, last-committed-generation recovery, one-writer/concurrency conditions.",
+    "Honest narrow synthetic scope and proposed application/scale/security validation.",
+    "Useful opportunity and plausible optional alternatives; no obligation to adopt every external feature."
+  ],
+  "protocol_version": "ER9-independent-output-v1",
+  "requested_assignment": {
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "review_mode": "Full current final/criteria document assessment plus matched consequential defect analysis; no empirical product qualification.",
+  "schema": "er9.independent-current-paired-phase1-judgment.v1",
+  "scope": "Actual current designated full proposal plus three supporting roles in each arm, exact task/full brief/common criteria, current scientific preservation inputs, primary captures and actual claimed synthetic execution evidence.",
+  "source_start": {
+    "dispatch_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-6-PAIRED-001/dispatch.json",
+    "evaluation_id": "independent-pipeline-6",
+    "expected_dispatch_sha256": "a4e0e78ad87f73bd67d266902bcdef6cecb104381b3cd78c6fc13db1fbf80b2a",
+    "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+    "phase1_source_deadline_monotonic_ns": 97811613562570,
+    "phase1_source_limit_seconds": 1200,
+    "phase2_anchor": "immutable_phase1_freeze",
+    "phase2_includes": [
+      "key_wait",
+      "checks",
+      "report",
+      "handoffs"
+    ],
+    "phase2_limit_seconds": 600,
+    "schema": "er9.independent-evaluation-source-start.v1",
+    "source_start_monotonic_ns": 96611613562570,
+    "source_start_utc": "2026-10-06T05:56:32.756541+00:00",
+    "source_state": "SOURCE_STARTED",
+    "whole_deadline_monotonic_ns": 98411613562570,
+    "whole_limit_seconds": 1800
+  },
+  "target_scope_checks": {
+    "assessment": "NOT_APPLICABLE",
+    "reason": "Integrated full-brief unit; no invented three-target rubric."
+  },
+  "winner": "NO_WINNER_CLAIM"
+}

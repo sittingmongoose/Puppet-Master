@@ -1,0 +1,42 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "kind": "isolated component check",
+      "question": "Do simple candidate-authored data-contract assertions retain Unicode, missing versus null, malformed-record ordinal/raw text and source-sensitive invalidation?",
+      "expected_behavior": "Exit 0; accepted=2, rejected=1 at ordinal 3, raw rejected record retained, Unicode α and null/missing distinct, stable in-memory source digest, changed source key differs.",
+      "code": "import hashlib, json\nfrom datetime import datetime\n\nraw_lines = [\n    '{\"id\":\"α\",\"ts\":\"2026-01-02T03:04:05Z\",\"note\":null}',\n    '{\"id\":\"β\",\"ts\":\"2026-01-03T03:04:05Z\"}',\n    '{\"id\":\"γ\",\"ts\":\"not-a-time\",\"note\":\"bad\"}'\n]\nsource_bytes = (\"\\n\".join(raw_lines) + \"\\n\").encode(\"utf-8\")\nsource_hash = hashlib.sha256(source_bytes).hexdigest()\naccepted, rejects = [], []\nfor ordinal, raw in enumerate(raw_lines, 1):\n    obj = json.loads(raw)\n    try:\n        stamp = datetime.fromisoformat(obj[\"ts\"].replace(\"Z\", \"+00:00\"))\n        accepted.append((ordinal, obj[\"id\"], stamp.isoformat(), \"missing\" if \"note\" not in obj else (\"null\" if obj[\"note\"] is None else \"value\")))\n    except (KeyError, ValueError) as exc:\n        rejects.append((ordinal, raw, type(exc).__name__))\nassert accepted[0][1] == \"α\" and accepted[0][3] == \"null\"\nassert accepted[1][1] == \"β\" and accepted[1][3] == \"missing\"\nassert len(accepted) == 2 and len(rejects) == 1 and rejects[0][0] == 3 and \"not-a-time\" in rejects[0][1]\nassert hashlib.sha256(source_bytes).hexdigest() == source_hash\nassert hashlib.sha256((source_hash + \"|contract-v1\").encode()).digest() != hashlib.sha256((\"changed|contract-v1\").encode()).digest()\nprint(\"accepted=2 rejected=1 ordinal=3 retained=true unicode=α null-vs-missing=distinct source-bytes-stable=true source-key-change=invalidates\")",
+      "input": {
+        "raw_lines_embedded_in_code": [
+          "{\"id\":\"α\",\"ts\":\"2026-01-02T03:04:05Z\",\"note\":null}",
+          "{\"id\":\"β\",\"ts\":\"2026-01-03T03:04:05Z\"}",
+          "{\"id\":\"γ\",\"ts\":\"not-a-time\",\"note\":\"bad\"}"
+        ],
+        "runner_data_argument": {"fixture": "candidate-authored synthetic NDJSON records, embedded in code"}
+      },
+      "receipt": {
+        "execution_id": "exec-wem_cf08",
+        "execution_label": "executed by candidate",
+        "completed_utc": "2026-10-06T05:26:22.801441+00:00",
+        "code_sha256": "3b1c6f34569f8b3c6516efc67d3ac19feaae451c39b5c4b87e7b6021ec0f66cd",
+        "data_sha256": "835a74ad8fa10d87592066709d59cb28c9ba58b3ebe5bcb5ede9570d96739b57",
+        "exit_code": 0,
+        "stdout": "accepted=2 rejected=1 ordinal=3 retained=true unicode=α null-vs-missing=distinct source-bytes-stable=true source-key-change=invalidates\n",
+        "stderr": "",
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"},
+        "resource_placement": "Admitted execution receipt reports component in isolated sandbox, matched limits and cleanup confirmation; receipt did not establish semantic correctness."
+      },
+      "scope_and_limits": "Tiny standard-library in-memory synthetic check only. The runner data argument is a descriptive marker; test records are embedded in code. Does not exercise real file immutability, DuckDB, CSV/NDJSON/Parquet readers, notebook replay, the proposed product sandbox, 5-GB input, application behavior, or cross-machine replay."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "PV1", "status": "proposed/UNEXECUTED", "check": "Parser/schema corpus across CSV, NDJSON and Parquet, including PR #14464 cases and exact qualified engine builds."},
+    {"id": "PV2", "status": "proposed/UNEXECUTED", "check": "8-core/16-GB measurement on 5-GB generated input: RSS, wall time, spill disk, streaming and global-operation limits."},
+    {"id": "PV3", "status": "proposed/UNEXECUTED", "check": "Replay provenance, invalidation, restart, cancellation, failure states, lock/source changes and cross-machine exchange."},
+    {"id": "PV4", "status": "proposed/UNEXECUTED", "check": "Per-OS sandbox boundary, filesystem/network/resource permissions and host escape audit."},
+    {"id": "PV5", "status": "proposed/UNEXECUTED", "check": "Crash-recovery and accessibility review for saves, errors, status, progress, cancellation and truncated outputs."}
+  ]
+}

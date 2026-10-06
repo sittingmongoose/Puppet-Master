@@ -1,0 +1,634 @@
+{
+  "blinding": {
+    "perfect_blinding": false,
+    "prior_I07_outputs_evaluations_statuses_searched": false,
+    "runtime_key_history_economics_access_before_lock": false,
+    "unavoidable_hints": [
+      "Root assignment included combined critic_final versus separate roles",
+      "Exact launched tasks name revision and critic_final and stage identities",
+      "B current proposal header and adopted catalog stage labels contain treatment/research labels"
+    ]
+  },
+  "common_dimensions": {
+    "A": [
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q1",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Required question and plan-obligation coverage"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "dimension_id": "Q2",
+        "judgment": "SUPPORTED_WITH_CITATION_DEFECT",
+        "name": "Correct source interpretation, version, conditions, normative force and applicability"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q3",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Justified inference, component choice and plan consequences"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q4",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Verified useful discovery, alternatives, failures and breadth"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA002"
+        ],
+        "dimension_id": "Q5",
+        "judgment": "SUPPORTED_WITH_MINOR_PIN_DEFECT",
+        "name": "Correctness and scope of executed witnesses and proposed validation"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "dimension_id": "Q6",
+        "judgment": "FAIL_REPRODUCIBILITY",
+        "name": "Supported semantic preservation and no new consequential errors"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q7",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Honest uncertainty, scope/refusal and critical dependencies"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "dimension_id": "Q8",
+        "judgment": "FAIL_REPRODUCIBILITY",
+        "name": "Reproducible final delivery; economics and execution evidence reported separately"
+      }
+    ],
+    "B": [
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q1",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Required question and plan-obligation coverage"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q2",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Correct source interpretation, version, conditions, normative force and applicability"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q3",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Justified inference, component choice and plan consequences"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q4",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Verified useful discovery, alternatives, failures and breadth"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q5",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Correctness and scope of executed witnesses and proposed validation"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q6",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Supported semantic preservation and no new consequential errors"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q7",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Honest uncertainty, scope/refusal and critical dependencies"
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "dimension_id": "Q8",
+        "judgment": "SUPPORTED_AT_RESEARCH_PLAN_SCOPE",
+        "name": "Reproducible final delivery; economics and execution evidence reported separately"
+      }
+    ]
+  },
+  "common_important_checks": {
+    "A": [
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P1",
+        "outcome": "PASS_SUBSTANCE_WITH_DA001_BINDING_DEFECT",
+        "reason": "Two independent precedents and the actual issue/fix/test/release chain verified; exact evidence is available but final keys for chain support are mismapped."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P2",
+        "outcome": "PASS_SUBSTANCE_WITH_DA001_BINDING_DEFECT",
+        "reason": "NGFF/version/coordinate and SQLite limits supported; product choices and untested stack gates are honest. Current final SQLite evidence IDs are wrong."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P3",
+        "outcome": "PASS_SCOPE_WITH_MINOR_DA002",
+        "reason": "Actual W1 inputs/code/streams/exit support only independently checked arithmetic; no parser/app test claimed. Code SHA typo remains."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P4",
+        "outcome": "FAIL",
+        "reason": "Substantive corrections are retained, but rekeyed prose plus unchanged adopted catalog introduces false source bindings and leaves supplemental release/version evidence outside final catalog."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P5",
+        "outcome": "PASS_SUBSTANCE",
+        "reason": "Minimum workflow, portability/recovery/resources/usability and optional opportunity/alternative coverage are present; no adoption or performance obligation invented."
+      }
+    ],
+    "B": [
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P1",
+        "outcome": "PASS",
+        "reason": "Independent tifffile/napari mechanisms and actual #334 fix/test/release chain established with pinned primary source and limits."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P2",
+        "outcome": "PASS",
+        "reason": "NGFF 0.5/v3 versus 0.4/v2, affine/per-level restrictions, parser fallback/abs(Z), viewer conditions and SQLite limits supported. Chosen design dependencies gated."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P3",
+        "outcome": "PASS",
+        "reason": "Actual W1 code/input/results and isolated receipt support only the stated arithmetic; all full-app validation remains UNEXECUTED."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P4",
+        "outcome": "PASS",
+        "reason": "Preserved supported current research content and limits, corrected precision and consequential calibration/source-mutation gaps without asserting application completion."
+      },
+      {
+        "assessment": "COMPLETE",
+        "check_id": "A-P5",
+        "outcome": "PASS",
+        "reason": "Full workflow, scope, responsive/recovery/portable/accessibility targets and optional opportunity/alternative lane covered."
+      }
+    ]
+  },
+  "comparison_boundary": "The A/B current-file judgments differ. This is a single independent final-output review under actual unequal revision versus combined critic_final allocation; do not convert it into three Goals each, a canonical best-of result, native completion, cost superiority or a clean causal method win.",
+  "coverage": {
+    "A": [
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A01",
+        "reason": "Complete create/import/inspect/navigation/annotate/undo/save/reopen/relocate/table-overlay-derived-crop workflow; read-only originals; tested single-file/series scope and actionable staged failure.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A02",
+        "reason": "Named axes/raw reversible order, full affine, origin/orientation/handedness/unit, geometry revision, pixel-center choice, independent T/C selectors, plane/volume/acquisition and complete mask geometry/source linkage. Physical unknown remains index-only. Tests remain proposed.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A03",
+        "reason": "Display state never mutates original samples as a product contract. Transform/resample creates new hashed asset with mapping/interpolation; source-frame annotations only mapped by explicit copy. Exports disclose losses.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A04",
+        "reason": "TIFF and chunk mechanisms investigated, cache/workers and cancellation bounded as proposed targets. 3 GB full hash is explicit I/O; no full application performance promise.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A05",
+        "reason": "Content hash identity, provisional identity, external hints/relink, portable-copy trade-off, metadata corrections/history, local rollback-journal and staged generation recovery. Underlying SQLite facts independently supported; citation binding defect DA001 affects delivery.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A06",
+        "reason": "Reusable versioned styles, command/delta undo, keyboard actions and readable non-color-only status/errors are explicit.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A07",
+        "reason": "napari viewer and tifffile reader are independently useful implementation precedents. NGFF/Zarr adds storage/coordinate boundary. Actual primary mechanisms and pins verified; integrated stack is gated.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A08",
+        "reason": "Issue #9247, #9059 code/test, #9399 integration rename and exact 0.9.0 tag implementation/test independently verified. No test execution or app behavior claimed. Final citation keys are wrong (DA001).",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA001"
+        ],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A09",
+        "reason": "Optional NGFF labels/pyramids and storage cost, TIFF canonical access, selective Bio-Formats and custom canvas alternatives are useful and optional. Bio-Formats qualification supported; final citation key wrong (DA001).",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A10",
+        "reason": "Coherent narrow component hypothesis with real lab corpus, codec/memory, pixel-center/rasterization, dependency and share-durability gates; failure preserves sources and narrows/defer support.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [
+          "DA002"
+        ],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A11",
+        "reason": "Actual candidate W1 code/input/stdout/exit supports independently checked scale/translation arithmetic only. All integration/resource/export checks UNEXECUTED. Catalog code SHA malformed (DA002); execution itself is established.",
+        "required": true
+      },
+      {
+        "assessment": "PARTIAL",
+        "defect_ids": [
+          "DA001"
+        ],
+        "judgment": "FAIL",
+        "obligation_id": "A12",
+        "reason": "Substantive critic corrections and useful content preserved, but standalone final source IDs now point to unrelated adopted catalog entries; exact tag/versioned supplemental evidence is not integrated into final catalog. Reproducibility fails DA001.",
+        "required": true
+      }
+    ],
+    "B": [
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A01",
+        "reason": "Complete workflow with immutable originals, selected series, staged import, navigation, points/polygons/masks, save/reopen/relink and table/label/crop/PNG export with independent inspection.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A02",
+        "reason": "Explicit storage-order mapping, float64 homogeneous XYZ physical affine, index-center choice, units/origin/orientation/geometry revision, time/channel fields and frame/slice/volume/acquisition scopes. Unknown/irregular geometry is index-only or deferred.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A03",
+        "reason": "Display is view state; recorded transform/resample creates new data ID. Crop, table/sidecar, masks and flattened PNG preserve different declared semantics.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A04",
+        "reason": "Tiled TIFF Zarr read mechanism, cache/workers/priority/cancel, oversized decode/layout risks and hardware targets are qualified; 3 GB/RSS/latency gates remain UNEXECUTED.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A05",
+        "reason": "Full hash/series/geometry identity; provisional hashes block final export/rebinding; change detectors qualified as races, not identity; local DB and staged assets, closed READY/hash handoff and portability choices specified.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A06",
+        "reason": "Explicit reusable styles, undo command/mask deltas, keyboard/focus and screen-reader acceptance, legible non-color-only feedback.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A07",
+        "reason": "Tifffile access/parser and napari viewer/layer code are two independent implementation mechanisms; NGFF provides separate versioned interchange. Exact primary pins/conditions verified.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A08",
+        "reason": "Tifffile #334 -> guarded coercion commit -> fixture-dependent regression test -> 2026.9.15 release independently verified. Raw-string retention, abs(Z), parse-error fallback and test non-execution correctly qualified.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A09",
+        "reason": "NGFF labels/direct tile access are useful optional opportunities; custom canvas and reference-only route are plausible bounded alternatives. Later adapters/cloud/segmentation remain leads.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A10",
+        "reason": "Coherent Qt/napari adapter plus tifffile, NGFF 0.5/Zarr v3, sidecar+SQLite design. Exact dependency compatibility, corpus/calibration, codecs, pixel-center, interoperability and filesystem behavior are explicit implementation gates, not facts.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A11",
+        "reason": "Actual candidate W1 arithmetic code/input/stdout/exit verified; independently justified axis permutation/affine inverse/display mapping expectations match. It proves only the snippet, with all app/format/storage/performance checks UNEXECUTED.",
+        "required": true
+      },
+      {
+        "assessment": "COMPLETE",
+        "defect_ids": [],
+        "judgment": "SATISFIED_AT_RESEARCH_PLAN_SCOPE",
+        "obligation_id": "A12",
+        "reason": "Compared with admitted same-arm research, preserves support boundaries, independent precedents, issue-chain conditions, workflow/exports/optional leads while correcting SQLite sidecar precision and adding raw/malformed calibration and abs(Z), source mutation/identity and geometry safeguards. Citation IDs match adopted catalogs; no consequential new error found.",
+        "required": true
+      }
+    ]
+  },
+  "current_final_pins": {
+    "A": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/outputs/A/final/proposal.md",
+      "sha256": "4ffacac466d090e427126905ddd826d43929e2def3de896d402d7b3fe1efe709"
+    },
+    "B": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/outputs/B/final/proposal.md",
+      "sha256": "d7dec63147f2cd7d84ca1c706675d4182b9aa7e4885082f5b10d509faac8cd88"
+    }
+  },
+  "defects": [
+    {
+      "affected_obligations": [
+        "A05",
+        "A08",
+        "A09",
+        "A12"
+      ],
+      "arm": "A",
+      "consequence": "The proposal tells a reader to use napari patches/ancestry as SQLite evidence and Bio-Formats/SQLite as exact napari-tag code/test evidence. Correct underlying facts elsewhere do not repair these current final bindings. This is one defect identity, not one defect per citation.",
+      "dimensions": [
+        "Q2",
+        "Q6",
+        "Q8"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/outputs/A/final/proposal.md",
+          "sha256": "4ffacac466d090e427126905ddd826d43929e2def3de896d402d7b3fe1efe709"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/outputs/A/final/sources.json",
+          "sha256": "fe46e1c59a72e5a645ce3c1356ff48ac115e5293b043e319f96de0304165cd5a"
+        }
+      ],
+      "examples": [
+        {
+          "available_correct_id": "S10",
+          "catalog_actual": "napari PR 9399 patch",
+          "cited_ids": [
+            "S13"
+          ],
+          "proposal_claim": "SQLite atomicity/storage assumptions",
+          "proposal_lines": [
+            15
+          ]
+        },
+        {
+          "available_correct_id": "S11",
+          "catalog_actual": "napari ancestry compare",
+          "cited_ids": [
+            "S14"
+          ],
+          "proposal_claim": "WAL persistent state/network filesystem constraint",
+          "proposal_lines": [
+            15
+          ]
+        },
+        {
+          "available_correct_ids": [
+            "S7",
+            "S8"
+          ],
+          "catalog_actual": "napari v0.9.0 release",
+          "cited_ids": [
+            "S6"
+          ],
+          "proposal_claim": "PR 9059 fix and regression test",
+          "proposal_lines": [
+            21
+          ]
+        },
+        {
+          "available_correct_ids": [
+            "S12",
+            "S13"
+          ],
+          "catalog_actual": "PR 9059 record/diff",
+          "cited_ids": [
+            "S7",
+            "S8"
+          ],
+          "proposal_claim": "PR 9399 follow-up rename",
+          "proposal_lines": [
+            21
+          ]
+        },
+        {
+          "additional_exact_tag_body_requested": true,
+          "available_correct_ids": [
+            "S14",
+            "S15"
+          ],
+          "catalog_actual": "Bio-Formats and SQLite pages",
+          "cited_ids": [
+            "S9",
+            "S10",
+            "S11"
+          ],
+          "proposal_claim": "v0.9.0 exact code/test presence",
+          "proposal_lines": [
+            21
+          ]
+        },
+        {
+          "available_correct_id": "S9",
+          "catalog_actual": "napari tag ref",
+          "cited_ids": [
+            "S15"
+          ],
+          "proposal_claim": "Bio-Formats 8.4.0 bounded alternative",
+          "proposal_lines": [
+            23
+          ]
+        }
+      ],
+      "id": "DA001",
+      "kind": "proposal-to-adopted-source-catalog citation-key mismatch",
+      "preserve": "Keep supported workflow, coordinate, mask, recovery, resource limits, independent precedents, issue chain and optional leads; the defect does not falsify those underlying mechanisms.",
+      "severity": "MAJOR",
+      "status": "CONFIRMED"
+    },
+    {
+      "actual_sha256": "e33e1f9dcccf68da59c324cadfb34f3d08a3efc77aa59272836b1415a29d78a1",
+      "affected_obligations": [
+        "A11",
+        "A12"
+      ],
+      "arm": "A",
+      "claimed_length": 63,
+      "claimed_sha256": "e33e1f9dccf68da59c324cadfb34f3d08a3efc77aa59272836b1415a29d78a1",
+      "consequence": "Code pin is not a valid SHA-256. Actual submitted code, output and isolated exit receipt independently establish the correctly scoped arithmetic execution, so this is not a false-execution finding.",
+      "dimensions": [
+        "Q5",
+        "Q8"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/outputs/A/final/witnesses.json",
+          "sha256": "edd75e6e07f5cce3abc5fc37a45b4b5b883f279b5e969956cc9d2505909ec589"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_evidence/A/exec-ozlvdxvm/0-code.py",
+          "sha256": "e33e1f9dcccf68da59c324cadfb34f3d08a3efc77aa59272836b1415a29d78a1"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_evidence/A/exec-ozlvdxvm/0-execution-facts.json",
+          "sha256": "6b2fab41d5c32157a0f57d079622d77c940a4803f5040277f0173583a606c0b4"
+        }
+      ],
+      "id": "DA002",
+      "kind": "Malformed executed-witness code SHA-256",
+      "severity": "MINOR",
+      "status": "CONFIRMED"
+    }
+  ],
+  "evaluation_id": "independent-pipeline-7",
+  "evidence_pin_manifests": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_source_pins.json",
+      "sha256": "3e30da412f114d9a7a0fac85c11dc6bcd27076b641beb9829d923ae606485646"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_evidence_pins.json",
+      "sha256": "1cd131a421a02f1e867ec29c228386b551ba17840ac818468f17e0bc63f7db04"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_additional_pins.json",
+      "sha256": "0bbeddde23aa3c96fcd4d38145e5ffef804f9962d6fc68b6c51a70f1a8c09d3e"
+    }
+  ],
+  "execution_boundary": "No candidate Goal/run/retest/repair feedback or new candidate source answers. Execution judged from actual frozen positive witness facets; arithmetic expectation independently reasoned, no evaluator rerun.",
+  "missing_and_limits": [
+    {
+      "arm": "A",
+      "capture_id": "75ef409e6be94000a4df3bfe49219f5a",
+      "effect": "No silent substitute or complete compare/ancestry credit. Exact requested current-tag implementation/test bytes independently support release source presence; runtime test execution remains UNEXECUTED.",
+      "state": "UNLOCATED_IN_EXACT_CURRENT_STORES"
+    },
+    "Primary response hashes establish bytes, not candidate comprehension. Acquisition UTC and courier-copy UTC remain distinct.",
+    "All performance, application recovery, export interoperability, dependency integration and accessibility behavior remain proposed validation, not proven app behavior."
+  ],
+  "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+  "phase": "P1_PRE_KEY_INDEPENDENT",
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/reservation.json",
+    "sha256": "4a351c914c388a6ad3a33036f48dd7e3bfa7e91b7ad037b7bceffd8b43fa2ae7"
+  },
+  "rubric_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_brief_obligations": 12,
+    "invented_weighted_aggregate_score": false,
+    "targeted_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "schema": "er9.independent-full-brief-phase1-assessment.v1",
+  "separate_outcomes": {
+    "clean_matched_causal_winner": "NOT_ESTABLISHED",
+    "full_pipeline_quality": "UNASSESSED_PHASE1_RUNTIME_AND_HISTORY_WITHHELD",
+    "money": "UNKNOWN",
+    "native_completion": "UNASSESSED_PHASE1",
+    "opaque_goal_id": "UNKNOWN",
+    "operational_delivery": "Four designated current final artifacts per arm present and hash-verified; neutral current-owned quiet proof present. No native-completion inference.",
+    "physical_provider": "UNKNOWN"
+  },
+  "source_quality": {
+    "A": {
+      "outcome": "FAIL",
+      "reason": "Confirmed major evidence-binding/reproducibility defect DA001; minor W1 code-pin defect DA002. Underlying design and source findings substantially supported.",
+      "scope": "complete current full-brief final and catalogs"
+    },
+    "B": {
+      "outcome": "PASS",
+      "reason": "All 12 obligations and consequential fact/inference/choice/validation groups assessed against actual primary sources, executed witness and admitted preservation inputs; no consequential unsupported assertion or hidden critical dependency found.",
+      "scope": "complete current full-brief research proposal and catalogs"
+    }
+  },
+  "source_start": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/source_start.json",
+    "sha256": "3bfbbdfba03f74dc7fed4e29c4f8d4bb4b79c6523e24f4bbb6e632cbd4c4bdc8"
+  }
+}

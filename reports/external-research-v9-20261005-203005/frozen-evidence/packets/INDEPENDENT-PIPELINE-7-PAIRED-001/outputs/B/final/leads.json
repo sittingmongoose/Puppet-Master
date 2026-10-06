@@ -1,0 +1,86 @@
+{
+  "schema": "er9.leads.v1",
+  "stage": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "leads": [
+    {
+      "id": "L1",
+      "category": "critical unresolved dependency",
+      "title": "Freeze a compatible desktop dependency set",
+      "detail": "The source pins studied are napari v0.5.6 at commit 42a6b9eb4ed1e8c4dc688ea0bee67364bf570875, tifffile v2026.9.15 at commit 561d5c2cbad0271e1d695188928ea14a3a977752, and Zarr 3.3.0. Their individual source facts do not establish that the complete Python/Qt/NumPy/Zarr/tifffile/napari set resolves or performs together. Freeze and test one supported environment before architecture commitment.",
+      "priority": "critical before implementation lock",
+      "source_ids": ["T1", "N1", "N2"],
+      "next_validation": "Build a clean environment from an exact lockfile; open sliced TIFF Zarr store, add Points/Shapes/Labels, persist/reopen project, and run CPU interaction smoke checks. Record OS/Python/package versions.",
+      "status": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L2",
+      "category": "critical unresolved assumption",
+      "title": "Lab format and access-pattern corpus",
+      "detail": "The brief names multiple instruments but not their actual file families, TIFF tile/strip layouts, compression, single-plane sizes or shared-storage protocol. These determine whether direct chunk access is viable or a staged conversion is needed.",
+      "priority": "critical before promising 3 GB support",
+      "source_ids": ["T1", "T2", "O1", "O2"],
+      "next_validation": "Collect representative, permission-cleared lab files; inventory instrument/software, file family, axes, calibration, compression and typical navigation; include the MMStack legacy-string fixture if MMStack is in scope.",
+      "status": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L3",
+      "category": "critical coordinate dependency",
+      "title": "Coordinate-center and orientation interoperability",
+      "detail": "The proposed app convention fixes integer indices at voxel centers; OME-NGFF describes named axes and scale/translation for multiscales but this reviewed section does not establish the same pixel-center rule for every consumer. Arbitrary rotation/shear also needs the app manifest outside the NGFF multiscale per-level transform fields.",
+      "priority": "critical before annotation/export compatibility claim",
+      "source_ids": ["O1", "N1"],
+      "next_validation": "Round-trip known landmarks through app index/physical/export/reopen and an independent OME-Zarr/TIFF reader; test nonzero origins, axis reorder, anisotropy, oblique orientation and resampling. Document consumer-specific offsets.",
+      "status": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L4",
+      "category": "critical storage dependency",
+      "title": "Local filesystem and shared-drive commit semantics",
+      "detail": "SQLite documentation states WAL is not for network filesystems and atomic commit depends on filesystem/device flush and locking behavior. The proposed local working copy and closed-bundle exchange reduce the exposure but do not establish atomic rename or durable-copy semantics for the group's particular shared drive.",
+      "priority": "critical before operational handoff",
+      "source_ids": ["D1", "D2"],
+      "next_validation": "Identify OS/filesystem/protocol; interrupt staged publication and verify READY/hash recovery. Keep live editing local unless a separate network-storage design is proven.",
+      "status": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L5",
+      "category": "compatibility lead",
+      "title": "OME-Zarr v0.4 and v0.5 coexistence",
+      "detail": "OME-NGFF 0.4 uses Zarr v2 while 0.5 uses Zarr v3. The proposal writes v0.5 natively and requires version-aware recognition; implementation effort and exact 0.4 adapter coverage are not established.",
+      "priority": "high; decide from lab corpus",
+      "source_ids": ["O1", "O2", "T1"],
+      "next_validation": "Create/check minimal v0.4 and v0.5 multiscale fixtures with time/channel/space axes and labels; explicitly test import, conversion provenance and preservation of original metadata.",
+      "status": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L6",
+      "category": "optional opportunity",
+      "title": "Other research-tool readers and exporters",
+      "detail": "The tifffile README lists independent libraries such as Bio-Formats wrappers, BioIO and other TIFF readers. A pluggable adapter boundary could add the two highest-value instrument formats without claiming universal compatibility. Conversion through an external reader is also a fallback if it retains the original and records tool/version/parameters.",
+      "priority": "deferred until minimum supported set works",
+      "source_ids": ["T1"],
+      "next_validation": "Compare candidates on lab fixtures, axis/calibration preservation, supported OS/dependency burden, bounded access, license and failure behavior. Do not treat the README list as compatibility evidence.",
+      "status": "optional lead; uninvestigated"
+    },
+    {
+      "id": "L7",
+      "category": "optional opportunity",
+      "title": "Remote chunk reads and shared image catalog",
+      "detail": "OME-NGFF 0.4 describes hierarchical local and in-cloud layouts, suggesting later remote reads or a managed image catalog. The first version remains local-first; HTTP/object storage and cross-user concurrent editing add latency, permissions and consistency requirements outside this brief's minimum.",
+      "priority": "deferred",
+      "source_ids": ["O1", "O2", "D2"],
+      "next_validation": "Only after local bundle exchange and identity pass: assess supported protocols, caching, offline state, access control, concurrent writes and SQLite replacement if a multiwriter service is desired.",
+      "status": "optional lead; not a v1 obligation"
+    },
+    {
+      "id": "L8",
+      "category": "optional opportunity",
+      "title": "Segmentation and registration extensions",
+      "detail": "Automatic segmentation and registration are deferred. OME-NGFF label images and an explicit transform/provenance graph provide useful foundations for adding derived masks or registered views later, but algorithms and clinical interpretation are not part of this research workspace proposal.",
+      "priority": "deferred until identity, transforms and manual review are dependable",
+      "source_ids": ["O1", "N1"],
+      "next_validation": "If requested, specify algorithm/version/parameters, parent image identity, transform, output hash and human review/undo path; benchmark independently and keep results visibly derived.",
+      "status": "optional lead; not a v1 obligation"
+    }
+  ]
+}

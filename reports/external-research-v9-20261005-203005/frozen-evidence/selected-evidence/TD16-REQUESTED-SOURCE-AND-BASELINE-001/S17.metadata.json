@@ -1,0 +1,35 @@
+{
+  "schema": "er9.selected-current-public-source-acquisition-metadata.v1",
+  "source_id": "S17",
+  "requested_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py",
+  "entries": [
+    {
+      "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+      "actual_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py",
+      "body_complete": false,
+      "capture_format": "exact-http-response-body-bytes",
+      "capture_id": "98e29c800df44bb2b1c53a75d7569895",
+      "captured_bytes": 524288,
+      "captured_utc": "2026-10-06T03:18:52.441610+00:00",
+      "content_encoding": null,
+      "content_length_header": "988932",
+      "content_type": "text/plain; charset=utf-8",
+      "etag": "\"5c9dc03f42061bd814a10dc431e41ef58b986fd256c0a4d0530b27918bce9d93\"",
+      "incomplete_http_body": true,
+      "last_modified": null,
+      "redirects": [],
+      "requested_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py",
+      "response_bytes_observed": 524289,
+      "sha256": "d2067d45cf578bf5a74ee6b0356c434b16eed2179080f34b55049ef537aebfb3",
+      "source_version": "sha256:d2067d45cf578bf5a74ee6b0356c434b16eed2179080f34b55049ef537aebfb3",
+      "status": 200,
+      "truncated": true,
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py",
+      "utf8_bytes": 524288,
+      "utf8_valid": true,
+      "original_metadata_sha256": "cd33318d24a2579d870f7c18af2c82755dccc2d7c0b86a89eea153528f3cb6e9"
+    }
+  ],
+  "url_acquisition_identity": "EXACT_MATCH",
+  "model_comprehension": "UNKNOWN"
+}

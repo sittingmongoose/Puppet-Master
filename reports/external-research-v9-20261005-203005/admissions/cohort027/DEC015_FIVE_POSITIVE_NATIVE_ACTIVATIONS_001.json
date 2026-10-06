@@ -1,0 +1,1863 @@
+{
+  "schema": "er9.fixed-five-warm-native-activation.v1",
+  "observed_utc": "2026-10-06T06:22:10.475808+00:00",
+  "cursor_observed_utc": "2026-10-06T06:22:02.723756+00:00",
+  "active_by_family": {
+    "M": 0,
+    "Z": 2,
+    "L": 5
+  },
+  "confirmed_native_starts": 213,
+  "rows": [
+    {
+      "job_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "pair_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "source_slot": "I-05",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "status_at_snapshot": "RUNNING",
+      "native_goal_starts": 1,
+      "identity": {
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "ephemeral": false
+      },
+      "native_activation": {
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "observed_activation_epoch": 1791267605,
+        "observed_activation_monotonic_ns": 98024092307694
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "original_clock_proof": {
+        "clock_profile_sha256": "a7aa6dfe3b4b2f596b8184e027e59158949e4385d8afc05fe924e488f28d7558",
+        "original_controller_receipt_sha256": "d928aa82766ed9fd705794a37e1f4c31fd6b261166945a0ca43612bbf958c54c",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "original_birth_monotonic_ns": 98018470886093,
+        "original_stage_allocation_seconds": 1500,
+        "original_candidate_action_deadline_monotonic_ns": 99503470886093,
+        "original_total_cleanup_stop_monotonic_ns": 99518470886093,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "11d806a1e729746369985a4d6dfc0be3cb43780e2341d586427c67bd13b07e18",
+        "neutral_second_native_text_sha256": "11d806a1e729746369985a4d6dfc0be3cb43780e2341d586427c67bd13b07e18",
+        "scientific_first_native_text_sha256": "f2c74bcddde05ce447c868b7a21d4c2d829969b594289380bb18cf00f2255832",
+        "goal_objective_sha256": "1d5a64e975c3c761d6125831edc5b90899a51e705a01bd9659f1f9254e893c34",
+        "actual_initial_input_array_sha256": "a8546f09e2968c10c27ca23e4d4b616897d4187c52e2cf72a28be53920f633df",
+        "clock_profile_sha256": "a7aa6dfe3b4b2f596b8184e027e59158949e4385d8afc05fe924e488f28d7558",
+        "initial_clock_metadata": {
+          "schema": "er9.original-action-clock.telemetry.v1",
+          "stage_clock": {
+            "stage_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+            "action_deadline_status": "KNOWN",
+            "original_stage_allocation_seconds": 1500,
+            "original_birth_monotonic_ns": 98018470886093,
+            "original_candidate_action_deadline_monotonic_ns": 99503470886093,
+            "original_total_cleanup_stop_monotonic_ns": 99518470886093,
+            "observation_monotonic_ns": 98020320352193,
+            "elapsed_since_original_birth_ms": 1849,
+            "remaining_candidate_action_ms": 1483150
+          },
+          "scope": "Snapshot of original controller action window; cleanup stop is separate. No timer reset, extension, permission or Goal status. Clock-awareness is a common behavioral overlay."
+        },
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "e542110f1b57e9b906cdb77e3e74febf65820cb8bc4ca50c9f5087a7ded9b689",
+        "source_TASK_sha256": "e542110f1b57e9b906cdb77e3e74febf65820cb8bc4ca50c9f5087a7ded9b689",
+        "declaration_sha256": "d220c6c7cb5c0acac9f70101b8655da897296fd96bbb35be2740444a9fac0285"
+      },
+      "resource_profile": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/RESOURCE_PROFILE.json",
+        "sha256": "897f282e3cf00fe68f0394efdaa39be76930a926e15e743bd9c30b2b045d3fc1"
+      },
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-05-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2705955",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memd3f15cfbb1294dd7b4ae33fd0c2f51e0.slice/er9-203005-i-05-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "MemoryPeak": "32776192",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "31760384",
+          "memory.peak": "32776192",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "31043584",
+          "memory.peak": "32321536",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 98020210502157,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "resource_placements_before_inference": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-203005-i-05-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2705955",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memd3f15cfbb1294dd7b4ae33fd0c2f51e0.slice/er9-203005-i-05-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+            "MemoryPeak": "32776192",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "31760384",
+            "memory.peak": "32776192",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "31043584",
+            "memory.peak": "32321536",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98020210502157,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-bc9dc60b3bff41c68f4827c37505ead8.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706011",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memd3f15cfbb1294dd7b4ae33fd0c2f51e0.slice/er9-luna-bc9dc60b3bff41c68f4827c37505ead8.service",
+            "MemoryPeak": "43118592",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "43118592",
+            "memory.peak": "43118592",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "226668544",
+            "memory.peak": "462643200",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98023786238772,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-74be2f150db2414e9ca1f755088d8528.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2705977",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memd3f15cfbb1294dd7b4ae33fd0c2f51e0.slice/er9-luna-74be2f150db2414e9ca1f755088d8528.service",
+            "MemoryPeak": "12197888",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "12132352",
+            "memory.peak": "12197888",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "227217408",
+            "memory.peak": "462643200",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98023823256656,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-6ab500a6fdce476c8c0825b6f89be6c1.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2705992",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memd3f15cfbb1294dd7b4ae33fd0c2f51e0.slice/er9-luna-6ab500a6fdce476c8c0825b6f89be6c1.service",
+            "MemoryPeak": "11223040",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11223040",
+            "memory.peak": "11223040",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "227287040",
+            "memory.peak": "462643200",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98023861688903,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "source_native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "3f1518241062995807d610e99b5a79af388ffb08293894bfa4f14a1753f8ed1b"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+        "sha256": "5b872221a0ecc1464d32226c00ee421fc096ab36c7e5ec55b4f3bb72ca9c9f39"
+      },
+      "actual_origin_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/warm-source-bound-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "3adc29e2bc9e4392b1f00eada1fccc8fa1a3ac12e97bed68e6cdf9ef1f851897"
+      },
+      "whole_pipeline_or_source_quality_claimed": false,
+      "extra_fresh_or_matched_target_credit": false
+    },
+    {
+      "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "pair_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001",
+      "source_slot": "I-06",
+      "arm": "control",
+      "stage": "critic_final",
+      "status_at_snapshot": "RUNNING",
+      "native_goal_starts": 1,
+      "identity": {
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "ephemeral": false
+      },
+      "native_activation": {
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "observed_activation_epoch": 1791267607,
+        "observed_activation_monotonic_ns": 98025858902233
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "original_clock_proof": {
+        "clock_profile_sha256": "e2a66514405e545de1511b85288f750c05a81e07101ccde69dc76415ee98b2a4",
+        "original_controller_receipt_sha256": "836ff426f394c600144341930c8ca601e7c3e7b2ee6995abf29a0648f6d3c6ef",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "original_birth_monotonic_ns": 98020360600290,
+        "original_stage_allocation_seconds": 1500,
+        "original_candidate_action_deadline_monotonic_ns": 99505360600290,
+        "original_total_cleanup_stop_monotonic_ns": 99520360600290,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "46a423988583fe016198aeca867675ea1b1b34183e8e084f1016759305f4ddb7",
+        "neutral_second_native_text_sha256": "46a423988583fe016198aeca867675ea1b1b34183e8e084f1016759305f4ddb7",
+        "scientific_first_native_text_sha256": "22cceb8d6b430953aed7245a625b395e1c6efbf216b097affdcd96587b1f98ee",
+        "goal_objective_sha256": "f7431cc9fa5b24858a39ae031d5492f7fd997dd97fb884f15ea21681424d5e44",
+        "actual_initial_input_array_sha256": "295114cb328f3bf30e203f743a4ee3dfbf7262b6faf69b6e5c0a61efaacab4c8",
+        "clock_profile_sha256": "e2a66514405e545de1511b85288f750c05a81e07101ccde69dc76415ee98b2a4",
+        "initial_clock_metadata": {
+          "schema": "er9.original-action-clock.telemetry.v1",
+          "stage_clock": {
+            "stage_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+            "action_deadline_status": "KNOWN",
+            "original_stage_allocation_seconds": 1500,
+            "original_birth_monotonic_ns": 98020360600290,
+            "original_candidate_action_deadline_monotonic_ns": 99505360600290,
+            "original_total_cleanup_stop_monotonic_ns": 99520360600290,
+            "observation_monotonic_ns": 98022120559914,
+            "elapsed_since_original_birth_ms": 1759,
+            "remaining_candidate_action_ms": 1483240
+          },
+          "scope": "Snapshot of original controller action window; cleanup stop is separate. No timer reset, extension, permission or Goal status. Clock-awareness is a common behavioral overlay."
+        },
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "79169acb21ba9dcd7a45322101946e54f899c309e72d561ad4885ac05f3934a8",
+        "source_TASK_sha256": "79169acb21ba9dcd7a45322101946e54f899c309e72d561ad4885ac05f3934a8",
+        "declaration_sha256": "e308dfb4176e9998ce6c223a6a5af440ce603c332936a9d043cd4238dbc2951d"
+      },
+      "resource_profile": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/RESOURCE_PROFILE.json",
+        "sha256": "27c80d5cf53f33d3fb069879833dcf6205f3ab44edc59fdae17b7043364094c8"
+      },
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-06-control-blind-source-fidelity-r001-critic_final-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2705980",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem1134a3b37bc049ec857a843bb40490f7.slice/er9-203005-i-06-control-blind-source-fidelity-r001-critic_final-a001.service",
+          "MemoryPeak": "31727616",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30785536",
+          "memory.peak": "31727616",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "30261248",
+          "memory.peak": "31543296",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 98022011164320,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "resource_placements_before_inference": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-203005-i-06-control-blind-source-fidelity-r001-critic_final-a001.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2705980",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem1134a3b37bc049ec857a843bb40490f7.slice/er9-203005-i-06-control-blind-source-fidelity-r001-critic_final-a001.service",
+            "MemoryPeak": "31727616",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "30785536",
+            "memory.peak": "31727616",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "30261248",
+            "memory.peak": "31543296",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98022011164320,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-de8f596984a74c0a92c261af3035c009.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706247",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem1134a3b37bc049ec857a843bb40490f7.slice/er9-luna-de8f596984a74c0a92c261af3035c009.service",
+            "MemoryPeak": "44232704",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "44195840",
+            "memory.peak": "44232704",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "136986624",
+            "memory.peak": "372776960",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98025549319386,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-16b908f940964b29a3e45f05f2df3f1a.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706072",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem1134a3b37bc049ec857a843bb40490f7.slice/er9-luna-16b908f940964b29a3e45f05f2df3f1a.service",
+            "MemoryPeak": "12533760",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "12124160",
+            "memory.peak": "12533760",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "137187328",
+            "memory.peak": "372776960",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98025583986502,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-e1e5159a0ba34a97b229b364630b29ec.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706128",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem1134a3b37bc049ec857a843bb40490f7.slice/er9-luna-e1e5159a0ba34a97b229b364630b29ec.service",
+            "MemoryPeak": "11288576",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11227136",
+            "memory.peak": "11288576",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "137252864",
+            "memory.peak": "372776960",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98025620257992,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "source_native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "92b67b6d56b34aec6f14652b9d9dacfb7631c14c017a9b3da648cee5553749c1"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+        "sha256": "4ef7fcfd2b81d2c79d37d584f5314cef7165b72e5d56cc10e09caeb22fe46423"
+      },
+      "actual_origin_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/warm-source-bound-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "3e1739b8f22312340d52ab22f82c59a3bbf16f9fceb9107f8c4f676181bf0830"
+      },
+      "whole_pipeline_or_source_quality_claimed": false,
+      "extra_fresh_or_matched_target_credit": false
+    },
+    {
+      "job_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "source_slot": "I-06",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "status_at_snapshot": "RUNNING",
+      "native_goal_starts": 1,
+      "identity": {
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "ephemeral": false
+      },
+      "native_activation": {
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "observed_activation_epoch": 1791267624,
+        "observed_activation_monotonic_ns": 98043689138014
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "original_clock_proof": {
+        "clock_profile_sha256": "b896ee98ed28124e11f517cdd84afec44cb6f9ad5d317b33e6dab528b722209c",
+        "original_controller_receipt_sha256": "28b4bd278b9db46a210d75a8237fa43cdad99d21dc36f0220ec41af9864f2e0e",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "original_birth_monotonic_ns": 98038371701294,
+        "original_stage_allocation_seconds": 1500,
+        "original_candidate_action_deadline_monotonic_ns": 99523371701294,
+        "original_total_cleanup_stop_monotonic_ns": 99538371701294,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "209c7cf85ad5338c90cb5f59363d88ac42c942cd21e1654086d07308ddddad7e",
+        "neutral_second_native_text_sha256": "209c7cf85ad5338c90cb5f59363d88ac42c942cd21e1654086d07308ddddad7e",
+        "scientific_first_native_text_sha256": "d6b56e49ac13961a171b6f88f7ff0386b7b22efee82a00e79367cd45ae90fbbe",
+        "goal_objective_sha256": "0c1ac81669aa8ed707f442ed432a3cf4cca33a87c3433d12852e985cf4e12070",
+        "actual_initial_input_array_sha256": "3dfa23d7dc2dfac2bd372182f9e7b3d176369282319c555274fe78b9176e4f02",
+        "clock_profile_sha256": "b896ee98ed28124e11f517cdd84afec44cb6f9ad5d317b33e6dab528b722209c",
+        "initial_clock_metadata": {
+          "schema": "er9.original-action-clock.telemetry.v1",
+          "stage_clock": {
+            "stage_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+            "action_deadline_status": "KNOWN",
+            "original_stage_allocation_seconds": 1500,
+            "original_birth_monotonic_ns": 98038371701294,
+            "original_candidate_action_deadline_monotonic_ns": 99523371701294,
+            "original_total_cleanup_stop_monotonic_ns": 99538371701294,
+            "observation_monotonic_ns": 98040053634246,
+            "elapsed_since_original_birth_ms": 1681,
+            "remaining_candidate_action_ms": 1483318
+          },
+          "scope": "Snapshot of original controller action window; cleanup stop is separate. No timer reset, extension, permission or Goal status. Clock-awareness is a common behavioral overlay."
+        },
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "f9d20e9334550c560401850f6ffe949a9c891b8f47354bdb95e64eb02da8c2ef",
+        "source_TASK_sha256": "f9d20e9334550c560401850f6ffe949a9c891b8f47354bdb95e64eb02da8c2ef",
+        "declaration_sha256": "0bef45ac014aa2b18e5a6d9ebd16b92e76f9028b55e34d55d819456b2c169a02"
+      },
+      "resource_profile": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/RESOURCE_PROFILE.json",
+        "sha256": "368effbcef0dc0396449e2a9d524e0d174b9fb35880704e3e5f1c5c31b695441"
+      },
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-06-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2706468",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem10b7363c960b48f298c65c2cdbda226a.slice/er9-203005-i-06-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "MemoryPeak": "31129600",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30158848",
+          "memory.peak": "31129600",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "30081024",
+          "memory.peak": "31092736",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 98039947531346,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "resource_placements_before_inference": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-203005-i-06-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706468",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem10b7363c960b48f298c65c2cdbda226a.slice/er9-203005-i-06-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+            "MemoryPeak": "31129600",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "30158848",
+            "memory.peak": "31129600",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "30081024",
+            "memory.peak": "31092736",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98039947531346,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-188833ed9cbe40cfad1a4515e71c3d71.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706517",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem10b7363c960b48f298c65c2cdbda226a.slice/er9-luna-188833ed9cbe40cfad1a4515e71c3d71.service",
+            "MemoryPeak": "42037248",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "41758720",
+            "memory.peak": "42037248",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "133632000",
+            "memory.peak": "373448704",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98043368260965,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-76afcf7a96764ec7a68640f0417cacdf.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706486",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem10b7363c960b48f298c65c2cdbda226a.slice/er9-luna-76afcf7a96764ec7a68640f0417cacdf.service",
+            "MemoryPeak": "12455936",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11857920",
+            "memory.peak": "12455936",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "134127616",
+            "memory.peak": "373448704",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98043402949814,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-b62f232715da4a35b764b9f6f267f84a.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706502",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem10b7363c960b48f298c65c2cdbda226a.slice/er9-luna-b62f232715da4a35b764b9f6f267f84a.service",
+            "MemoryPeak": "11227136",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11091968",
+            "memory.peak": "11227136",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "134524928",
+            "memory.peak": "373448704",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98043440682157,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "source_native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "21ba0c66506145dea196ce44cf78e283a45c2afc3878bf01b912eae551315bc4"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+        "sha256": "4378118615cb3e0547ad6baa13ce62dfbdde40058485b8d60dd130d0ef69c29a"
+      },
+      "actual_origin_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/warm-source-bound-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "e5eaff5cc8560c1de5723f3e6225d0b9563bf9222841f7ff5f57aa29f90f5e44"
+      },
+      "whole_pipeline_or_source_quality_claimed": false,
+      "extra_fresh_or_matched_target_credit": false
+    },
+    {
+      "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "pair_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001",
+      "source_slot": "I-07",
+      "arm": "control",
+      "stage": "critic_final",
+      "status_at_snapshot": "RUNNING",
+      "native_goal_starts": 1,
+      "identity": {
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "ephemeral": false
+      },
+      "native_activation": {
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "observed_activation_epoch": 1791267626,
+        "observed_activation_monotonic_ns": 98045571131110
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "original_clock_proof": {
+        "clock_profile_sha256": "28c5a0107832cd0ad7761df62effbdb1ac0b70029b70ff7c5aa92fb2aba462b1",
+        "original_controller_receipt_sha256": "1d363fee8f1ec5d58477968f0418519727bc79d9dae64ac3af97d8979655891e",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "original_birth_monotonic_ns": 98040080888476,
+        "original_stage_allocation_seconds": 1500,
+        "original_candidate_action_deadline_monotonic_ns": 99525080888476,
+        "original_total_cleanup_stop_monotonic_ns": 99540080888476,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "b5e3c9b779c4742862218177367a3eac6599a651c2e081bc7f205ee46eb4e4ca",
+        "neutral_second_native_text_sha256": "b5e3c9b779c4742862218177367a3eac6599a651c2e081bc7f205ee46eb4e4ca",
+        "scientific_first_native_text_sha256": "c630f0450c52062e5e2e6995882e358f1c33dd7e1f9beafd1fac7838657448a5",
+        "goal_objective_sha256": "8e485d6ee394c02041fe9e40de65822e229bba13ca54d7e8777c278c2ec666db",
+        "actual_initial_input_array_sha256": "6fc28a70284bf55a984c393d98702e9f2a453fd13529283f0a2be16398e71287",
+        "clock_profile_sha256": "28c5a0107832cd0ad7761df62effbdb1ac0b70029b70ff7c5aa92fb2aba462b1",
+        "initial_clock_metadata": {
+          "schema": "er9.original-action-clock.telemetry.v1",
+          "stage_clock": {
+            "stage_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+            "action_deadline_status": "KNOWN",
+            "original_stage_allocation_seconds": 1500,
+            "original_birth_monotonic_ns": 98040080888476,
+            "original_candidate_action_deadline_monotonic_ns": 99525080888476,
+            "original_total_cleanup_stop_monotonic_ns": 99540080888476,
+            "observation_monotonic_ns": 98041875175405,
+            "elapsed_since_original_birth_ms": 1794,
+            "remaining_candidate_action_ms": 1483205
+          },
+          "scope": "Snapshot of original controller action window; cleanup stop is separate. No timer reset, extension, permission or Goal status. Clock-awareness is a common behavioral overlay."
+        },
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "f013771bce32e10a101baf63da6f3bf099f66285a58704c07ed1b3046eeee86f",
+        "source_TASK_sha256": "f013771bce32e10a101baf63da6f3bf099f66285a58704c07ed1b3046eeee86f",
+        "declaration_sha256": "1853714c82204b07f9e739c9b29eb4a7fdac29bee171dc411873f232ec4613d8"
+      },
+      "resource_profile": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/RESOURCE_PROFILE.json",
+        "sha256": "5ba0c80ca7af446ee906dc72958b1a39dc00f091466d6140a8b02b38fa3f6cb9"
+      },
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-07-control-blind-source-fidelity-r001-critic_final-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2706496",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem85c1422aa5874a90acc4d09140ebaf8d.slice/er9-203005-i-07-control-blind-source-fidelity-r001-critic_final-a001.service",
+          "MemoryPeak": "31485952",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30478336",
+          "memory.peak": "31485952",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "30281728",
+          "memory.peak": "31232000",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 98041796935459,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "resource_placements_before_inference": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-203005-i-07-control-blind-source-fidelity-r001-critic_final-a001.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706496",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem85c1422aa5874a90acc4d09140ebaf8d.slice/er9-203005-i-07-control-blind-source-fidelity-r001-critic_final-a001.service",
+            "MemoryPeak": "31485952",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "30478336",
+            "memory.peak": "31485952",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "30281728",
+            "memory.peak": "31232000",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98041796935459,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-1a1a67609a824cb893bc32a0ec69b211.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706968",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem85c1422aa5874a90acc4d09140ebaf8d.slice/er9-luna-1a1a67609a824cb893bc32a0ec69b211.service",
+            "MemoryPeak": "42541056",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "42491904",
+            "memory.peak": "42541056",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "133668864",
+            "memory.peak": "372191232",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98045254324769,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-a9a9af271ae1453182fbd19f126c9e1a.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706614",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem85c1422aa5874a90acc4d09140ebaf8d.slice/er9-luna-a9a9af271ae1453182fbd19f126c9e1a.service",
+            "MemoryPeak": "12455936",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "12169216",
+            "memory.peak": "12455936",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "134193152",
+            "memory.peak": "372191232",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98045287768018,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-850c303db632477394c4aa1b1774c9a7.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2706659",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem85c1422aa5874a90acc4d09140ebaf8d.slice/er9-luna-850c303db632477394c4aa1b1774c9a7.service",
+            "MemoryPeak": "11231232",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11096064",
+            "memory.peak": "11231232",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "134164480",
+            "memory.peak": "372191232",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98045322935794,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "source_native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "8490a3b7cad3ab3101d45fce2df95432775fa91a2b338ae43a5f4ee4e723a32f"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+        "sha256": "2b277a8bd1a2d1a1163a80cfdc5806827445fbaba67744fa066f212e32354739"
+      },
+      "actual_origin_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/warm-source-bound-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "cf96ec3e8d35af263fea463e33ae16c30c58dbc509473b1aa14d35473c1e61b8"
+      },
+      "whole_pipeline_or_source_quality_claimed": false,
+      "extra_fresh_or_matched_target_credit": false
+    },
+    {
+      "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "pair_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "source_slot": "I-07",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "status_at_snapshot": "RUNNING",
+      "native_goal_starts": 1,
+      "identity": {
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "ephemeral": false
+      },
+      "native_activation": {
+        "native_activation_observed": true,
+        "goal_started_turn": true,
+        "observed_activation_epoch": 1791267644,
+        "observed_activation_monotonic_ns": 98063792387788
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "original_clock_proof": {
+        "clock_profile_sha256": "7368177810c458f2676157de24f4471fddc4ddfaa0d8b7af61873b0d62181ed5",
+        "original_controller_receipt_sha256": "763d37053cf2a019aae07c545e42e50ddf4e12334feaa751aca0d85b86d26c38",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "original_birth_monotonic_ns": 98058558723539,
+        "original_stage_allocation_seconds": 1500,
+        "original_candidate_action_deadline_monotonic_ns": 99543558723539,
+        "original_total_cleanup_stop_monotonic_ns": 99558558723539,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "4b0e51b425e8836073e26efe789f73ef8f8492a9080e9d4e785f67f3c334284c",
+        "neutral_second_native_text_sha256": "4b0e51b425e8836073e26efe789f73ef8f8492a9080e9d4e785f67f3c334284c",
+        "scientific_first_native_text_sha256": "9ff1a7214629933068ed9361b56332902a1e6aa2e47d3f38188299e7aa11112c",
+        "goal_objective_sha256": "2143209ab7f0cdac15b22ecc8ddf18376662295802f161211b41068a32d0b897",
+        "actual_initial_input_array_sha256": "cb7951315d77a11e58759bb06ac01ca045d3f08ee86db749d18616d8b71414fa",
+        "clock_profile_sha256": "7368177810c458f2676157de24f4471fddc4ddfaa0d8b7af61873b0d62181ed5",
+        "initial_clock_metadata": {
+          "schema": "er9.original-action-clock.telemetry.v1",
+          "stage_clock": {
+            "stage_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+            "action_deadline_status": "KNOWN",
+            "original_stage_allocation_seconds": 1500,
+            "original_birth_monotonic_ns": 98058558723539,
+            "original_candidate_action_deadline_monotonic_ns": 99543558723539,
+            "original_total_cleanup_stop_monotonic_ns": 99558558723539,
+            "observation_monotonic_ns": 98060239686510,
+            "elapsed_since_original_birth_ms": 1680,
+            "remaining_candidate_action_ms": 1483319
+          },
+          "scope": "Snapshot of original controller action window; cleanup stop is separate. No timer reset, extension, permission or Goal status. Clock-awareness is a common behavioral overlay."
+        },
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "d41c18d83aa680ce7c8f9ac417e8c57034c50a03580aac6a7576e9a46e2e5e22",
+        "source_TASK_sha256": "d41c18d83aa680ce7c8f9ac417e8c57034c50a03580aac6a7576e9a46e2e5e22",
+        "declaration_sha256": "d207e37da92283d38cf85839a68fa8bf7fbb3bddb6b6cc2da37601d98466589b"
+      },
+      "resource_profile": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/RESOURCE_PROFILE.json",
+        "sha256": "4577300be430ff27d11eac292d5d4de5b9c6182c08df0469f74439fc5eeeb36c"
+      },
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-07-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2707345",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem0d7e39bff5164d49833093a6574f3d04.slice/er9-203005-i-07-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "MemoryPeak": "31465472",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30208000",
+          "memory.peak": "31465472",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "30154752",
+          "memory.peak": "31186944",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 98060178870998,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "resource_placements_before_inference": [
+        {
+          "component": "outer_worker",
+          "unit": "er9-203005-i-07-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2707345",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem0d7e39bff5164d49833093a6574f3d04.slice/er9-203005-i-07-treatment-blind-source-fidelity-r001-critic_final-a001.service",
+            "MemoryPeak": "31465472",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "30208000",
+            "memory.peak": "31465472",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "30154752",
+            "memory.peak": "31186944",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98060178870998,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "native",
+          "unit": "er9-luna-b41455f07d1a41cb8f44a070f887761b.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2707383",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem0d7e39bff5164d49833093a6574f3d04.slice/er9-luna-b41455f07d1a41cb8f44a070f887761b.service",
+            "MemoryPeak": "41947136",
+            "MemoryMax": "805306368",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "805306368",
+            "memory.swap.max": "0",
+            "memory.current": "41947136",
+            "memory.peak": "41947136",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "133398528",
+            "memory.peak": "373518336",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98063485533277,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_boundary",
+          "unit": "er9-luna-d0d8c21ab8d04a88a4806209d598f6dc.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2707357",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem0d7e39bff5164d49833093a6574f3d04.slice/er9-luna-d0d8c21ab8d04a88a4806209d598f6dc.service",
+            "MemoryPeak": "12201984",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "12062720",
+            "memory.peak": "12201984",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "133017600",
+            "memory.peak": "373518336",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98063519748678,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        },
+        {
+          "component": "pm_execution",
+          "unit": "er9-luna-7dbda19005e441dfab056ad37fcc4c91.service",
+          "unit_observation": {
+            "LoadState": "loaded",
+            "ActiveState": "active",
+            "SubState": "running",
+            "MainPID": "2707371",
+            "Result": "success",
+            "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem0d7e39bff5164d49833093a6574f3d04.slice/er9-luna-7dbda19005e441dfab056ad37fcc4c91.service",
+            "MemoryPeak": "11218944",
+            "MemoryMax": "268435456",
+            "MemorySwapMax": "0"
+          },
+          "component_kernel_limits": {
+            "memory.max": "268435456",
+            "memory.swap.max": "0",
+            "memory.current": "11096064",
+            "memory.peak": "11218944",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "aggregate_kernel_limits": {
+            "memory.max": "2415919104",
+            "memory.swap.max": "0",
+            "memory.current": "133394432",
+            "memory.peak": "373518336",
+            "memory.events": {
+              "low": "0",
+              "high": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_kill": "0",
+              "oom_group_kill": "0",
+              "sock_throttled": "0"
+            },
+            "cgroup.events": {
+              "populated": "1",
+              "frozen": "0"
+            }
+          },
+          "verified_monotonic_ns": 98063556984409,
+          "actual_component_under_private_aggregate": true,
+          "actual_limits_match": true
+        }
+      ],
+      "source_native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "cbcb24c25ae07fdfccf57ac517eda35ea6d0f29aba36595be0db41d0379b9a7b"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/stage.json",
+        "sha256": "d5a2f4911f67bef44688694d1a5a535970ea57aa304f17f2229b8c9c8ed4b2d7"
+      },
+      "actual_origin_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/warm-source-bound-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "b31e8582a1296bbee4cf84bec6798ba9e82d7591b27a9f5e160cc0abe1d57be0"
+      },
+      "whole_pipeline_or_source_quality_claimed": false,
+      "extra_fresh_or_matched_target_credit": false
+    }
+  ],
+  "all_five_prospective_closure_prelaunch": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC015_IMPORT_001/PRELAUNCH.json",
+    "sha256": "aa6ac82d27ad6b5035d64f2f4b2db2b805f7d7e3297051de9b4ff608d33c6791"
+  },
+  "modelIO_auth_or_evaluator_findings": false
+}

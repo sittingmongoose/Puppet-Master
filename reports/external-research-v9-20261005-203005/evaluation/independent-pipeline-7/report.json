@@ -1,0 +1,154 @@
+{
+  "accounting": {
+    "evaluator_usage": "UNKNOWN",
+    "limits": "Per-role cumulative native notifications and direct Goal counters are retained as separate observables. Cached/reasoning counters are not added to their enclosing fields; no parent/provider/evaluator addition or billable-money conversion. Imports of frozen same-arm predecessor bytes create zero new inference or Goals.",
+    "money": "UNKNOWN",
+    "native_http_attempts": "UNKNOWN",
+    "opaque_native_goal_id": "UNKNOWN",
+    "physical_provider": "UNKNOWN",
+    "positive_recorded_per_role_usage": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/operational_crosscheck.json",
+      "sha256": "64efbb0cec41e95eeed6cbd6d05dd2ddccb6261e42583b2742855f2a3248a5fd"
+    }
+  },
+  "actual_allocation_and_time": {
+    "control": {
+      "actual_role_count": 3,
+      "all_selected_owned_scopes_and_private_slices_quiet": true,
+      "all_selected_roles_native_complete": true,
+      "all_selected_roles_within_original_deadlines": true,
+      "original_allocated_total_seconds": 2700,
+      "roles": [
+        "research",
+        "critique",
+        "revision"
+      ],
+      "same_arm_predecessor_imports_new_goal_count": 0,
+      "sum_of_selected_role_elapsed_seconds": 2333.8912022600002
+    },
+    "treatment": {
+      "actual_role_count": 2,
+      "all_selected_owned_scopes_and_private_slices_quiet": true,
+      "all_selected_roles_native_complete": true,
+      "all_selected_roles_within_original_deadlines": true,
+      "original_allocated_total_seconds": 2700,
+      "roles": [
+        "research",
+        "critic_final"
+      ],
+      "same_arm_predecessor_imports_new_goal_count": 0,
+      "sum_of_selected_role_elapsed_seconds": 2145.335250396
+    }
+  },
+  "alias_map": {
+    "A": "control",
+    "B": "treatment"
+  },
+  "clean_matched_causal_winner": "NOT_ESTABLISHED",
+  "clock": {
+    "P1_freeze_is_literal_inclusive_P2_anchor": true,
+    "P2_elapsed_inclusive_seconds_at_report": 544.410419912,
+    "actual_phase2_checking_start": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2_check_start.json",
+      "sha256": "1e4b5050eff2788c5ae144237a4815ff110e80a2607b25efff24adbc9c8ae48d"
+    },
+    "includes_key_wait_checks_reports_handoffs": true,
+    "phase2_deadline_monotonic_ns": 97993283174393,
+    "report_written_monotonic_ns": 97937693594305,
+    "report_written_utc": "2026-10-06T06:18:38.838594+00:00",
+    "reset": false,
+    "source_seconds": 774.664498284,
+    "source_start": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/source_start.json",
+      "sha256": "3bfbbdfba03f74dc7fed4e29c4f8d4bb4b79c6523e24f4bbb6e632cbd4c4bdc8"
+    },
+    "whole_deadline_monotonic_ns": 98418618676109,
+    "whole_elapsed_seconds_at_report": 1319.074918196
+  },
+  "comparative_scope": "One current operationally completed pair with treatment research+critic_final (2) versus control research+critique+revision (3); both total original allocation 2700s. Reported occupied role sums differ, but allocation distribution and role count remain actual. No three-each conversion, replication/generalization, canonical best-of selection or financial superiority inferred.",
+  "evaluation_id": "independent-pipeline-7",
+  "full_pipeline_quality": {
+    "control_A": "FAIL_ON_CONFIRMED_CURRENT_FINAL_SCIENTIFIC_REPRODUCIBILITY",
+    "qualification_limit": "Current embedded pre-enrichment native receipt digests and final native-result digests are distinct. Proof-reader binding is matched, but exact source-order chain and separately retained prior receipt bytes remain UNKNOWN pending narrow owner proof. Native inference tool payload independently unobserved; current metrics inventory remains HOLD. These limits do not rewrite P1 science or negate observed current Goal completion.",
+    "treatment_B": "SOURCE_FINAL_PASS; END_TO_END_PROVENANCE_QUALIFICATION_HOLD"
+  },
+  "method_or_money_winner": "NOT_ESTABLISHED",
+  "native_completion": {
+    "basis": "Exact released positive direct-first/last Goal projections and current native statuses; each role has one host Goal activation and final complete status within original deadline",
+    "opaque_goal_id": "UNKNOWN; thread/session IDs not substituted",
+    "outcome": "OBSERVED_COMPLETE_ALL_FIVE_CURRENT_ROLES"
+  },
+  "no_new_source_science_after_P1_lock": true,
+  "operational_delivery": {
+    "basis": "All four designated final files in both arms match P1 hash pins; current freeze and host hashes match neutral quiet proof; all five selected role/slice scopes quiet and permits released; original deadlines retained",
+    "outcome": "CURRENT_PAIRED_DELIVERY_COMPLETE"
+  },
+  "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+  "phase": "P2_CURRENT_KEY_RUNTIME_CROSSCHECK_AFTER_IMMUTABLE_P1",
+  "phase1": {
+    "assessment": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/assessment.json",
+      "sha256": "7aa606aa66c740d86844acc92078343fbb0a3406613bfc5d85f26c367a07560e"
+    },
+    "changed": false,
+    "freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/freeze.json",
+      "sha256": "990e0aa05d52a8de595eaaa4c39302f95cf1d2d4216968b7dbad64f9a24f8c6c"
+    },
+    "judgment": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/judgment.md",
+      "sha256": "17a8b58bc18fc3428ccf05c2abfa7d4ea5821ba19e16475dd3bcec48bbdaf2eb"
+    },
+    "pinlock": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/pinlock.json",
+      "sha256": "edbd944e8197b390e3349f823fc8feea3b864ce7a9c1c479f8bb2c99699a9fe0"
+    }
+  },
+  "phase2_evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/key.json",
+      "sha256": "2a0f4a82ed11ed88ca4ddc0fc74e7a3bd7a7f6178a9092c52fbdcb655f59820d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/P7_CURRENT_FINAL_PAIR_RUNTIME_002.json",
+      "sha256": "cb9291f73a3f0d33a8c391caafed8135eaba4d13d9baa5ee5bbd82acb97ef20e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/P7_CURRENT_FINAL_PAIR_RESOURCE_EXECUTION_001.json",
+      "sha256": "a4da238533d80c6d47df2927304cc649cdece0cd8ba0ecef15dd14d8690016fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/P7_CURRENT_PIPELINE_ROLE_LIFECYCLE_001.json",
+      "sha256": "e2c0b902271fb218cec0bf7176aa2877dc543c5ccb7cd67cec81eab148a8f780"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/key_crosscheck.json",
+      "sha256": "cc36e2d04c6b954ab8238f00e9be22eb8bfaa25bff16db6b499f1553c818ce30"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase2/operational_crosscheck.json",
+      "sha256": "64efbb0cec41e95eeed6cbd6d05dd2ddccb6261e42583b2742855f2a3248a5fd"
+    }
+  ],
+  "prohibited_actions_performed": false,
+  "resources": {
+    "CPU_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED",
+    "all_five_role_OOM_observed": false,
+    "complete_current_final_owned_job_memory_max_bytes": 2415919104,
+    "memory_scope": "owned complete job includes controller/guards, sibling services and execution overlap, per released profile",
+    "resource_fit": "UNKNOWN",
+    "swap_max_bytes": 0
+  },
+  "schema": "er9.independent-full-pipeline-assessment.v1",
+  "scientific_source_quality": {
+    "control_A": {
+      "major_defect": "DA001 final proposal citation IDs point to unrelated unchanged adopted catalog entries; substantive underlying findings preserved",
+      "minor_defect": "DA002 63-character code SHA; actual correctly scoped arithmetic execution verified",
+      "outcome": "FAIL"
+    },
+    "treatment_B": {
+      "outcome": "PASS",
+      "scope": "complete standalone full research proposal, 12 obligations/8 common dimensions/5 important checks, target3 N/A; no application/performance PASS"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema": "er9.dec015-all-five-atomic-prelaunch.v1",
+  "observed_utc": "2026-10-06T06:19:46.517739+00:00",
+  "outbox_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/OUTBOX_FINAL.json",
+    "sha256": "1d11498a87014e15cbd167521b0a1649f5b344f837227a36a707b08d13bd5125"
+  },
+  "all_five_source_closure": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/blind-source-fidelity-recovery-001/provenance-clarified-002/ALL_FIVE_SOURCE_CLOSURE.json",
+    "sha256": "df79ecafb1f06a14fdb9a98357745d326d676a15f9a6be833a75fba1f6530e65"
+  },
+  "all14_current_origins_complete_ownedquiet": true,
+  "all_new5_native0_noIntent": true,
+  "role_ids": [
+    "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+  ],
+  "native_calls": 0
+}

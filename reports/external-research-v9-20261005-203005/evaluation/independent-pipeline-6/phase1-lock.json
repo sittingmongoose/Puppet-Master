@@ -1,0 +1,53 @@
+{
+  "all_pinned_inputs_read_only": true,
+  "artifacts": {
+    "phase1-input-pins.json": {
+      "bytes": 53313,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-input-pins.json",
+      "sha256": "5fb5c5669d336bb8602dd1a8cde8d4ade9f5a53cc7354e39c15f7c62f4d6a58c"
+    },
+    "phase1-judgment.json": {
+      "bytes": 30351,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-judgment.json",
+      "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd"
+    },
+    "phase1-report.md": {
+      "bytes": 8244,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-report.md",
+      "sha256": "5fd7316bce82fc1a1878e2fd84d9564600c73465cb81a914b5849e47bf3256e1"
+    },
+    "reservation.json": {
+      "bytes": 823,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/reservation.json",
+      "sha256": "7b852e88a1af6d4bfe1e87528d0bb4c0b23694eab2edfa3c6ae4169163f1842a"
+    },
+    "source-start.json": {
+      "bytes": 899,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/source-start.json",
+      "sha256": "7cfab36e95805d20730298c5cb41969474629446120ee1f15b47abbd264f4db4"
+    }
+  },
+  "evaluation_id": "independent-pipeline-6",
+  "freeze_monotonic_ns": 97522397802002,
+  "freeze_utc": "2026-10-06T06:11:43.540778+00:00",
+  "independent_verification_before_release": "REQUIRED_NOT_SELF_ASSERTED",
+  "input_file_count": 166,
+  "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+  "phase1_source_limit_seconds": 1200,
+  "phase2_deadline_monotonic_ns": 98122397802002,
+  "phase2_includes": [
+    "key_wait",
+    "checks",
+    "report",
+    "handoffs"
+  ],
+  "phase2_literal_inclusive_limit_seconds": 600,
+  "private_key_runtime_status_history_cost_read_before_freeze": false,
+  "reset": false,
+  "schema": "er9.independent-phase1-lock.v1",
+  "source_elapsed_seconds": 910.784239432,
+  "source_read_after_phase1_freeze": "FORBIDDEN_UNLESS_PHASE2_AUTHORIZED",
+  "source_start_monotonic_ns": 96611613562570,
+  "source_start_utc": "2026-10-06T05:56:32.756541+00:00",
+  "whole_deadline_monotonic_ns": 98411613562570
+}

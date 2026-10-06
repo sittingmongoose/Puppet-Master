@@ -1,0 +1,39 @@
+{
+  "schema": "er9.zero-inference-import-adapter-verification.v2",
+  "observed_utc": "2026-10-06T05:59:45.685979+00:00",
+  "actual_source22_temporary_registry_import": "PASS",
+  "roles": 22,
+  "source_owner_all_role_constructor_pending": 14,
+  "final_B_roles": 8,
+  "all_roles_zero_additional_logical_credit": true,
+  "clock_behavioral_stratum_explicit_unpooled": true,
+  "native_calls": 0,
+  "live_new_registrations": 0,
+  "actual_old22_positive_quiet_gate_required": true,
+  "source_files": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/register_fresh_cohort.py",
+      "sha256": "4adbd39d787e55deb4aa5559848b5032d0118f0dff8786bdb674481b50f31cef"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/register_dec014.py",
+      "sha256": "f14ade68b6422bf3bcbbce809e5c59e25c05881b365223964c1bca0aafaa447b"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/strict_role_birth_cursor.py",
+      "sha256": "6a8c12ef42a99c6c781528b2399153bdf8ec5c45f5f5afe69088c60d284976c8"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/role_birth_cursor.py",
+      "sha256": "fe879489e95c6d217c843b33e0cf91f16d032a04a459f7b217a52eb7cffebb03"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/glm_template_bind.py",
+      "sha256": "4267caa01f7bc50a2f57c556ed3d8e69c0a68bf3397dd699f2d1678937494019"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/DEC014_ROLE_CONSTRUCTOR_PIN_001.json",
+      "sha256": "0d7b3c4185bebc75ea23d537b667ef80e551cd29311b60cea584fea4da0e10d1"
+    }
+  ]
+}

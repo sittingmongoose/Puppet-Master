@@ -1,0 +1,14 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-015/NATIVE_ENTRY_QUALIFIER.json",
+      "sha256": "8394ad0030aa58dca6f4d5ae869b09eb4d10d82715753794318d5d7f926466b1"
+    },
+    {
+      "path": "accounting/cohort-015/NATIVE_ENTRY_QUALIFIER.schema.json",
+      "sha256": "d39e48bf804158162869426256a21889d0c71e0efbcdc32d09b78bfa8087d66f"
+    }
+  ],
+  "exclusion": "Only additive neutral native-entry qualifier+schema; primary015 immutable, captures and unlisted bodies excluded.",
+  "schema": "er9.accounting.positive-selection.v1"
+}
