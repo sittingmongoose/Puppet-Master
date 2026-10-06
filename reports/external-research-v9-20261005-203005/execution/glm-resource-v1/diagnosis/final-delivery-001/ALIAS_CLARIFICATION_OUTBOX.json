@@ -1,0 +1,34 @@
+{
+  "schema": "er9.prospective-writer-label-clarification-outbox.v1",
+  "created_utc": "2026-10-06T03:26:38.231559+00:00",
+  "status": "METADATA_RECOMMENDATION_ONLY_NOT_ADOPTED",
+  "source_fault": "No writer observed here; current alias tag not used for dispatch and not established causal deliveryfault",
+  "existing_profile_writer_alias": "write_text",
+  "recommended_label_meaning": "declared logical writer kind, not observed native surface",
+  "configured_G_native_tool": "mcp__pm_boundary__write_file",
+  "underlying_source_dispatch": "write_file",
+  "observed_native_writer_for_this_run": "UNOBSERVED",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+    "sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69"
+  },
+  "exact_source_line": 252,
+  "actual_source_field": "DELIVERY_MANIFEST.native_surface_writer_binding",
+  "source_usage": "copy-only actor metadata; no tool dispatch/permission/schema/adoption guard depends on alias",
+  "prospective_binding_fields": {
+    "logical_writer_kind": "write_text",
+    "configured_native_tool": "mcp__pm_boundary__write_file",
+    "observed_native_tool": "set only from actual native tool-call+source-operation evidence, otherwise UNOBSERVED"
+  },
+  "adoption_owner": "case/ops/root only, new prospective metadata version; botharms full perroleclosure before future firstfreshstage",
+  "unchanged": [
+    "API/tool names/schema and mappings",
+    "scientific prompt/brief/criteria and content roles",
+    "stage budget/resources/Goal model effort",
+    "current active and frozen profiles/closures/attempts"
+  ],
+  "no_auto_commit_final4_or_answers": true,
+  "no_retroactive_completion_or_new_charge": true,
+  "runtime_code_patch": false,
+  "model_or_goal_calls": 0
+}

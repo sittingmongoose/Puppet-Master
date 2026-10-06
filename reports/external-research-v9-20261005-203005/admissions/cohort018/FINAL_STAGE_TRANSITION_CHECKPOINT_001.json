@@ -1,0 +1,282 @@
+{
+  "schema": "er9.final-stage-transition-checkpoint.v1",
+  "observed_utc": "2026-10-06T03:22:42.812591+00:00",
+  "cursor_utc": "2026-10-06T03:22:39.403181+00:00",
+  "actual_active_family_counts": {
+    "M": 0,
+    "Z": 2,
+    "L": 8
+  },
+  "retained_resource_job_ids": [],
+  "candidate_native_goal_starts": 134,
+  "rows": [
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-control-revision-a001",
+      "pair_id": "I-05-FRESH-DELIVERY-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "start_utc": "2026-10-06T03:03:27.792546+00:00",
+      "original_birth_monotonic_ns": 86226649528347,
+      "native_goal_starts": 1,
+      "native_session_id": "01a10f2a-9b53-7910-9550-f79289af9704",
+      "actual_role_birth_binding": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/role-birth-ops/I-05-FRESH-DELIVERY-R001-control-revision-a001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "ad8bfb1239636b009be9e9ad080d46cd89624c597ceda41f94a143b444222547"
+      },
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "7eeb3e31fe44cde31bc742830bceb58f55b134f190b62a12a3d76f1d6081654f"
+      },
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "cc083a54b5bac03402b3046944dd856b6099fb0ef71d2c7093225eb6230982ea"
+      },
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "sha256": "e43cf71db410f318d45d033e1316f96d3f647f83287040fa475c89e3357bda5c"
+      },
+      "native_status": "HOLD",
+      "native_quiescent": true,
+      "elapsed_seconds": 585.631653008,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": [
+        {
+          "relative_path": "scratch/final-proposal.md",
+          "sha256": "a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4",
+          "bytes": 29722
+        },
+        {
+          "relative_path": "scratch/napari-line-map.json",
+          "sha256": "ea74962b227d41798b1cac9ef04b2725b28073898a79f3b9d19fa8602a19d4a4",
+          "bytes": 135279
+        },
+        {
+          "relative_path": "scratch/ngff-line-map.json",
+          "sha256": "e7132c6ef2e4d7b7676f1fdea79e8246dbc195bef29e6a645027d286ccc4de61",
+          "bytes": 271949
+        }
+      ]
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "pair_id": "I-05-FRESH-DELIVERY-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "start_utc": null,
+      "original_birth_monotonic_ns": null,
+      "native_goal_starts": 0,
+      "native_session_id": null,
+      "actual_role_birth_binding": null,
+      "private_slice_release": null,
+      "permit_release_confirmed": null
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-control-revision-a001",
+      "pair_id": "I-06-FRESH-DELIVERY-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "start_utc": null,
+      "original_birth_monotonic_ns": null,
+      "native_goal_starts": 0,
+      "native_session_id": null,
+      "actual_role_birth_binding": null,
+      "private_slice_release": null,
+      "permit_release_confirmed": null
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "pair_id": "I-06-FRESH-DELIVERY-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "start_utc": null,
+      "original_birth_monotonic_ns": null,
+      "native_goal_starts": 0,
+      "native_session_id": null,
+      "actual_role_birth_binding": null,
+      "private_slice_release": null,
+      "permit_release_confirmed": null
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+      "pair_id": "I-07-FRESH-DELIVERY-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "start_utc": "2026-10-06T03:06:44.513056+00:00",
+      "original_birth_monotonic_ns": 86423370036692,
+      "native_goal_starts": 1,
+      "native_session_id": "01a10f2d-9bef-7993-8b86-1c3e6d7b95ec",
+      "actual_role_birth_binding": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/role-birth-ops/I-07-FRESH-DELIVERY-R001-control-revision-a001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "4f561363222e88e841d0adc5319c314ba59b6dde80bd32f0266526fdf9053364"
+      },
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "8796b5ac5e9bb4d649c885c665a64c30b98da4d7f8c7079043b2e68c8f94a762"
+      },
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "17a0dff7298754a3ff57dd957fb423149d44be8043de61b9f648d7365cc73d54"
+      },
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "sha256": "862f271e508a28dc1a004fe0d30c0d9411cdad206ff2ae5b16533f8394d99df2"
+      },
+      "native_status": "HOLD",
+      "native_quiescent": true,
+      "elapsed_seconds": 585.667611111,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": [
+        {
+          "relative_path": "scratch/napari_shapes_v092.py",
+          "sha256": "4e7ac1b7b1c4b3163b34b6e2688e81745beea3a9043629594046894d57247a30",
+          "bytes": 131764
+        },
+        {
+          "relative_path": "scratch/napari_test_shapes.py",
+          "sha256": "0ce384062ceb2f9d9096d1dd445747938641dbfbca2eb64030bb1976fb986fe5",
+          "bytes": 92530
+        },
+        {
+          "relative_path": "scratch/sqlite_pragma.html",
+          "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+          "bytes": 139778
+        },
+        {
+          "relative_path": "scratch/sqlite_pragma_line_map.txt",
+          "sha256": "fbe1d5f737131bf9a3d2513d7038a73643e76e15dfba80bd63941bf18df63331",
+          "bytes": 204821
+        },
+        {
+          "relative_path": "scratch/test_line_map.txt",
+          "sha256": "3f82308b4fccdc84771eb154040c81c6076cf6e3981820eefc7636f66b9d3743",
+          "bytes": 168031
+        }
+      ]
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-treatment-critic_final-a001",
+      "pair_id": "I-07-FRESH-DELIVERY-R001",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "start_utc": null,
+      "original_birth_monotonic_ns": null,
+      "native_goal_starts": 0,
+      "native_session_id": null,
+      "actual_role_birth_binding": null,
+      "private_slice_release": null,
+      "permit_release_confirmed": null
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+      "pair_id": "I-08-FRESH-DELIVERY-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "start_utc": "2026-10-06T03:07:51.098813+00:00",
+      "original_birth_monotonic_ns": 86489955796833,
+      "native_goal_starts": 1,
+      "native_session_id": "01a10f2e-9fd2-7da3-9237-f8db1f5d957c",
+      "actual_role_birth_binding": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/role-birth-ops/I-08-FRESH-DELIVERY-R001-control-revision-a001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "be3ddf7aa91608d2eade08671a651de5ea71797b8b274f3dcbdd498d11b4002f"
+      },
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "62d5cce631d1963c0bbecb565f2a588f301ea1884902f0ea673d8bdd64bcc2dd"
+      },
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "859fc1c23b4d1c1f9fa10c47e26ae0f3a79e9faf8eec9cd65ebc52e7890d5da1"
+      },
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "sha256": "73b5400f6fb9675919fa846e699e8ca21538f5e54e1e212ec340d1ff4bf32430"
+      },
+      "native_status": "HOLD",
+      "native_quiescent": true,
+      "elapsed_seconds": 585.631221386,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": [
+        {
+          "relative_path": "scratch/cgroupv2-lines.json",
+          "sha256": "8d1e48e3b7f0c84e3ed1f0085bfb4f7c936eaad67a45b2ad009a644e220b67f5",
+          "bytes": 263310
+        }
+      ]
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001",
+      "pair_id": "I-08-FRESH-DELIVERY-R001",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "start_utc": null,
+      "original_birth_monotonic_ns": null,
+      "native_goal_starts": 0,
+      "native_session_id": null,
+      "actual_role_birth_binding": null,
+      "private_slice_release": null,
+      "permit_release_confirmed": null
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "pair_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "start_utc": "2026-10-06T02:57:17.999135+00:00",
+      "original_birth_monotonic_ns": 85856853398856,
+      "native_goal_starts": 1,
+      "native_session_id": "sess_77b7ac56-5f00-4d93-903e-f7f694903883",
+      "actual_role_birth_binding": null,
+      "private_slice_release": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "db75fddb2a7cfb785df4cd5c1e5dbbfc2479676afe98d925a0ff0e522ae7edbe"
+      },
+      "permit_release_confirmed": true,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/OUTPUT_FREEZE.json",
+        "sha256": "1bdf34b6239ff44dd2142e0f708cec5af33b0cdd4f1823ff156040ad4bfd70df"
+      },
+      "native_receipt": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+        "sha256": "9e441e22ca9b772b4dbda2fd9dc9fd51b49dca9b8a108eb29c2156d3f067c06c"
+      },
+      "native_status": "cap_seconds",
+      "native_quiescent": true,
+      "elapsed_seconds": 575.501726721006,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": []
+    }
+  ],
+  "canonical_full_pipeline_delivery_not_inferred_from_scratch_or_failure": true
+}

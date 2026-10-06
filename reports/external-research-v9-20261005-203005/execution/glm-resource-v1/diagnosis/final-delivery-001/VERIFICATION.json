@@ -1,0 +1,23 @@
+{
+  "schema": "er9.final-delivery-control-verification.v1",
+  "created_utc": "2026-10-06T03:26:38.231559+00:00",
+  "status": "PASS_METADATA_CONSISTENCY",
+  "exact_terminal_job": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+  "source_pins": "actualstage/native/freeze/ownermarker/resource/runtime/tool/profile hashes verified",
+  "native_activation": "positive startedTurn/active andmatchingtarget; finaldirectpaused",
+  "count_consistency": "native41scheduled/started/completed sourcecalls; server41starts41results41flushes;40success1readerror;0writer;0execution",
+  "time_consistency": "allocation600,workstop570 viaexact30s reserve,24responses below60cap; final575.502includescleanup",
+  "actual_MCP_startup": "2configured2connected0failed",
+  "cleanup": "native/components/privateparentquiet,OOMfalse",
+  "profile_and_suffix": "actualnative_bundle_enabled/profileSHA/jobarm/pinnedneutralSuffix match",
+  "fault_inference": "noobservedwriter,so no observedcarrier guardfailure; modelintent/schemaavailability/unseeninvalidrequests/readerrorcauseUNKNOWN",
+  "runtime_or_candidate_changes": 0,
+  "model_goal_or_account_calls": 0,
+  "new_canary_tests": 0,
+  "reason_no_fixture": "No concrete engineering deliveryfault or runtimepatch; metadata-only diagnosis, no historical proof manufactured",
+  "writer_alias_source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+    "sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69"
+  },
+  "writer_alias_copy_only_line": 252
+}

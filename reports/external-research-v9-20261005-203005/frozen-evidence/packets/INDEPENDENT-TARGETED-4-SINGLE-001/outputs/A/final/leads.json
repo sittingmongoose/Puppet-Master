@@ -1,0 +1,114 @@
+{
+  "schema": "er9.lead-inventory.v1",
+  "stage": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+  "leads": [
+    {
+      "id": "L01",
+      "title": "Qualify a per-platform notebook execution isolation backend",
+      "classification": "critical unresolved dependency",
+      "evidence": ["S05 establishes that Jupyter Server access permits arbitrary code execution; it does not validate a proposed sandbox."],
+      "question": "Which maintained OS sandbox/VM can enforce no network, read-only source mounts, private writable staging, CPU/memory/process/disk limits, descendant cancellation, and safe Jupyter Server/kernel operation on each team OS?",
+      "next_step": "Build a threat model and test profile for each supported OS. Until a profile passes, keep project viewing/editing available and disable execution on that OS.",
+      "state": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L02",
+      "title": "Resolve exact compatible runtime and environment-lock format",
+      "classification": "critical unresolved dependency",
+      "evidence": ["S01-S05 and S11 document relevant component APIs/version labels, but no captured evidence proves one installed compatibility tuple."],
+      "question": "What exact CPython patch, JupyterLab/Server, ipykernel, jupyter-client, nbformat, nbclient, DuckDB wheel/engine, native libraries, platform, and lock metadata form the supported build?",
+      "next_step": "Create one locked build and run the compatibility qualification in V01; pin package artifacts and record platform/native-library identity.",
+      "state": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L03",
+      "title": "Measure the 5 GB envelope by query shape",
+      "classification": "critical validation dependency",
+      "evidence": ["S09 documents spill support and explicit exceptions; S10 documents additional memory-limit caveats."],
+      "question": "Which bounded, streaming, and spill-supported CSV/NDJSON/Parquet plans meet latency, RSS, temporary-disk, and responsiveness limits on the target workstation?",
+      "next_step": "Run the synthetic and representative 5 GB plan matrix from V04; include combined blockers, pivot/list aggregates, Python materialization, and disk exhaustion.",
+      "state": "unresolved; no 5 GB execution performed"
+    },
+    {
+      "id": "L04",
+      "title": "Preserve source-level missing/null and schema-evolution semantics",
+      "classification": "critical contract detail",
+      "evidence": ["S07 documents that typed JSON reading maps missing keys to SQL NULL and that multi-file inference/union are bounded or opt-in."],
+      "question": "Which parser path preserves field-presence and raw values when analysts need missing distinct from explicit null, especially across multiple changing files?",
+      "next_step": "Prototype raw-object/presence-column capture in the chosen DuckDB build and test schema changes beyond sample limits; otherwise label the typed projection as intentionally collapsing absent/null.",
+      "state": "unresolved; no engine check performed"
+    },
+    {
+      "id": "L05",
+      "title": "Validate row identity and order metadata through transformations",
+      "classification": "critical validation dependency",
+      "evidence": ["S08 describes operator-specific order preservation and limitations for joins, grouping, and tied sorts."],
+      "question": "Can the selected readers and transform wrappers preserve stable source locators through CSV quoted records, Parquet row groups, joins, and aggregation without materializing the input?",
+      "next_step": "Specify and test source-ordinal/key propagation and whether a total output ordering key exists; disable row-level diff where identity cannot be proved.",
+      "state": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L06",
+      "title": "Turn CSV sniffing into a reviewable import recipe",
+      "classification": "useful opportunity",
+      "evidence": ["S06 documents sniff_csv output, suggested read command, sample scope, and user overrides."],
+      "question": "Can the UI make detected delimiter/header/types and the sniffing sample scope understandable, editable, and persist them as the accepted contract?",
+      "next_step": "Prototype the import dialog and ensure a sample-derived recipe remains provisional until full validation.",
+      "state": "optional design exploration; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L07",
+      "title": "Qualify Arrow interop for bounded result exchange",
+      "classification": "useful optional opportunity",
+      "evidence": ["S11 documents querying Arrow/Pandas/Polars data and result conversion. No Arrow performance claim is made."],
+      "question": "Which Arrow reader/writer paths allow bounded batch handoff without materializing a 5 GB table in Python, and how are schema/null semantics preserved?",
+      "next_step": "Compare batch APIs and measure memory/copy behavior in the pinned environment before promising zero-copy or streaming behavior.",
+      "state": "optional; not tested"
+    },
+    {
+      "id": "L08",
+      "title": "Compare a thin CLI replay-first delivery",
+      "classification": "plausible alternative",
+      "evidence": ["S02 establishes the .ipynb interchange structure; S03 documents sequential execution and hooks."],
+      "question": "Can a local CLI plus nbclient and the project manifest prove the import/replay/provenance core before a unified visual notebook pane is built?",
+      "next_step": "Prototype as a bounded alternative and compare implementation cost/accessibility against the integrated JupyterLab status/preview UX; retain the standard notebook format either way.",
+      "state": "alternative to evaluate; not selected for minimum workflow"
+    },
+    {
+      "id": "L09",
+      "title": "Compare a Python-dataframe-first engine alternative",
+      "classification": "optional alternative research",
+      "evidence": [],
+      "question": "Would a Python-native lazy/batch engine better fit analyst-authored transforms, and what SQL interoperability and out-of-core trade-offs would result?",
+      "next_step": "If SQL usage or DuckDB compatibility testing becomes a blocker, independently inspect a primary-source Polars/Arrow implementation and benchmark the same workload matrix. This lead is not source-backed in the current proposal and is not a claim about capabilities.",
+      "state": "unresearched optional lead"
+    },
+    {
+      "id": "L10",
+      "title": "Review rich output portability and safe rendering",
+      "classification": "optional product/security exploration",
+      "evidence": ["S02 documents multiple notebook output representations; the proposed renderer restrictions are product security choices, not established by that format description."],
+      "question": "Which MIME types (images, HTML/SVG, widgets) should be portable, safely rendered, and included in comparison digests?",
+      "next_step": "Define a minimal allowlist, sanitize or isolate active output, set size limits, and test across supported notebook viewers.",
+      "state": "proposed/UNEXECUTED"
+    },
+    {
+      "id": "L11",
+      "title": "Test filesystem locking and atomic commit across exchange media",
+      "classification": "critical validation dependency",
+      "evidence": [],
+      "question": "Which local filesystems and ordinary folder/bundle workflows provide the needed rename, fsync, and advisory-lock behavior?",
+      "next_step": "Fault-inject interrupted saves and concurrent writes on supported local filesystems. Treat network/shared filesystem synchronization as unsupported until separately qualified.",
+      "state": "unresolved; proposed/UNEXECUTED"
+    },
+    {
+      "id": "L12",
+      "title": "Optional collaboration, hosted execution, scheduling, and more kernels",
+      "classification": "deferred opportunity",
+      "evidence": [],
+      "question": "Would any of these later features materially improve this small local team workflow after provenance and isolation are established?",
+      "next_step": "Do not build into the minimum plan; revisit only from team usage evidence and a separate threat/operations assessment.",
+      "state": "optional and deferred"
+    }
+  ]
+}

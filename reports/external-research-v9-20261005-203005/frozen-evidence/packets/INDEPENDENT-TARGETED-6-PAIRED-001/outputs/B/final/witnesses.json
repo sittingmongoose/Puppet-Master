@@ -1,0 +1,67 @@
+{
+  "schema": "candidate.witness-inventory.v1",
+  "captured_date": "2026-10-06",
+  "executed_by_candidate": [
+    {
+      "id": "W01",
+      "label": "executed by candidate",
+      "kind": "isolated arithmetic check of upstream regression fixture geometry",
+      "tool": "pm_execution.python_execute",
+      "execution_id": "exec-6uodj87q",
+      "code": "header_bytes = 26\nrow_bytes = 25\ncr_offset_in_row = 22\nrow_index_zero_based = 39\nbuffer_bytes = 1024\nfirst_cr = header_bytes + row_bytes * row_index_zero_based + cr_offset_in_row\nprint({\"first_cr_offset\": first_cr, \"boundary\": buffer_bytes, \"cr_is_last_byte_of_first_buffer\": first_cr == buffer_bytes - 1, \"terminator_crosses_buffer\": first_cr < buffer_bytes < first_cr + 3})",
+      "input": {"header_bytes": 26, "row_bytes": 25, "cr_offset_in_row": 22, "row_index_zero_based": 39, "buffer_bytes": 1024},
+      "expected_behavior": "The fixture arithmetic places the first CR at byte offset 1023 (last byte of the 1024-byte buffer), with the three-byte CRCRLF terminator crossing the boundary.",
+      "stdout": "{'first_cr_offset': 1023, 'boundary': 1024, 'cr_is_last_byte_of_first_buffer': True, 'terminator_crosses_buffer': True}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "code_sha256": "5defe05b5daddf10f50eb89d5909dfc728fe54d3c43358f6fe7063cce6e9f11d",
+      "data_sha256": "35a3cd2848dd5ba63d3e6165d31711d4540e35b24eee2a1513bb83da29f199d0",
+      "stdout_sha256": "22e6c3c7e455e1eae0677ff6dc7dbb0d4230de273cf624731d302c3e4386e912",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "scope_limit": "Only candidate-authored standard-library arithmetic ran in an isolated empty execution environment. It did not run DuckDB, parse a CSV, run the upstream regression test, or establish release behavior."
+    }
+  ],
+  "executed_only_by_evaluator": [],
+  "proposed_unexecuted": [
+    {
+      "id": "P01",
+      "label": "proposed/UNEXECUTED",
+      "check": "Run the exact generated CRCRLF boundary regression against an official DuckDB v1.5.6 binary and a build at merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86. Record row count, distinct IDs, parser rejects, row values and exit/logs; also test ordinary CRLF/LF controls and the separate trailing-LF symptom.",
+      "expected_behavior_basis": "The upstream test source and PR report 60 rows on both paths after the fix and 61 parallel rows before it. The v1.5.6 source lacks the exact guard; actual v1.5.6 runtime outcome remains unknown until run.",
+      "success_criterion": "Release decision based on observed behavior and exact build identity; block CRCRLF support until no duplicates, value corruption or silent record loss is demonstrated across boundary cases.",
+      "scope_limit": "A small fixture does not establish safety for all CSV dialects, platforms, file sizes or arbitrary malformed data."
+    },
+    {
+      "id": "P02",
+      "label": "proposed/UNEXECUTED",
+      "check": "Compatibility and clean-replay integration: pin a compatible Python/Jupyter stack (nbformat 5.10.4, nbclient 0.11, jupyter_client 8.10.0 as candidate baseline), create a fresh kernel for replay, associate messages by parent request and session, save a successful run, restart, fail and cancel runs, and compare event journal with .ipynb output state.",
+      "expected_behavior_basis": "Notebook format fields and Jupyter messaging behavior are specified by the captured sources; end-to-end application behavior is not present in the sources.",
+      "success_criterion": "Saved outputs point to exact cell/source/environment/input digests; restart and partial execution cannot retain a current label; failure/cancel preserves the last complete run and marks the attempted output failed.",
+      "scope_limit": "Does not establish reproducibility for arbitrary third-party packages or undeclared side effects."
+    },
+    {
+      "id": "P03",
+      "label": "proposed/UNEXECUTED",
+      "check": "Schema and ingestion contract matrix using synthetic CSV, NDJSON and Parquet: missing vs null, Unicode, timestamp zones and parse errors, mixed types, reordered/added/removed columns across files, malformed records, duplicate business keys, and deterministic row identity. Confirm original input hashes remain unchanged.",
+      "expected_behavior_basis": "Required by the brief; DuckDB documentation demonstrates inference and position/name schema-unification choices, not the proposed contract itself.",
+      "success_criterion": "Every coercion and null/missing policy is recorded; incompatible evolution and malformed records fail with locations or are explicitly quarantined with raw source reference and error; no implicit row deletion or source mutation.",
+      "scope_limit": "Synthetic cases do not establish correctness for all encodings, dialects or formats."
+    },
+    {
+      "id": "P04",
+      "label": "proposed/UNEXECUTED",
+      "check": "Benchmark 5 GB generated CSV, NDJSON and Parquet workloads on an 8-core/16-GB workstation with the intended thread, process-memory, spill-disk and output limits. Test streaming projection/filter/write plus a global sort/group/join that may exceed the bound; collect wall time, peak RSS, temporary disk, rows, hashes and ordering.",
+      "expected_behavior_basis": "The brief sets a target, not a result; DuckDB memory-per-thread guidance is only a rule of thumb.",
+      "success_criterion": "Supported scans complete within declared memory/disk limits and preserve expected row identity; unsupported global operations stop with a clear resource error before unbounded materialization.",
+      "scope_limit": "One hardware and synthetic workload does not prove all production data or operations."
+    },
+    {
+      "id": "P05",
+      "label": "proposed/UNEXECUTED",
+      "check": "Linux sandbox adversarial and recovery validation: attempt reads/writes outside mounted project inputs, symlink/path escapes, network/socket access, credential/environment discovery, subprocess fan-out, excess memory/CPU/disk, cancellation, kernel orphaning, process crash during atomic save, concurrent project opens and stale-lock recovery.",
+      "expected_behavior_basis": "Jupyter Server documents arbitrary code execution for server users; the proposed OS boundary is an engineering design that needs direct testing.",
+      "success_criterion": "Kernel can access only declared read-only sources, bounded scratch and explicit result destinations; denied actions are visible; limits terminate cleanly; last committed manifest survives crashes; second writer cannot overwrite it.",
+      "scope_limit": "A finite test suite does not prove an OS sandbox free of vulnerabilities; unsupported OSes remain execution-disabled until equivalent checks pass."
+    }
+  ]
+}

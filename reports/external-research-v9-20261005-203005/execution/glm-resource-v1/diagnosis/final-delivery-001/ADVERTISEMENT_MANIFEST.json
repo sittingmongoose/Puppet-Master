@@ -1,0 +1,34 @@
+{
+  "schema": "er9.final-delivery-advertisement-addendum-manifest.v1",
+  "created_utc": "2026-10-06T03:34:29.524141+00:00",
+  "addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_METADATA_ADDENDUM.json",
+    "sha256": "ec343adadaf5fd677bd5a4bbbbfdf8c77d6dd657ddefd12992dcf505d7f7b060"
+  },
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_REPORT.md",
+    "sha256": "52bac967f5dfe97ccb1fdd02086a8a119b05c7d0579fc11094293a2e10ea891d"
+  },
+  "projector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/advertisement.py",
+    "sha256": "af618e97ab23c9e2211397ec7d02dc67be23cc8511f61160bf639d55f83ac0e4"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_VERIFICATION.json",
+    "sha256": "44dbea929eedba82866635d55ed294b884e6db2a45f7bf01d69983cc0b0e24d3"
+  },
+  "preserved_original_diagnosis_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/PUBLIC_SELECTION.json",
+    "sha256": "37d919f5f0de2bb78f66708b8491259b4ebdcf7f77b9417be9f1d3c72e2ae07c"
+  },
+  "source_request_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/model-io.redacted.jsonl",
+    "sha256": "1e68166257589b18d8af5e4e3dda8601cf82f5e12bb05945a93935035bc20f04",
+    "receipt_pin_source": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+      "sha256": "9e441e22ca9b772b4dbda2fd9dc9fd51b49dca9b8a108eb29c2156d3f067c06c",
+      "selector": "/native_io/redacted_export_sha256"
+    }
+  },
+  "change_scope": "Later authorized whitelist-only metadata evidence; originalUNKNOWN remainsimmutable; no source/candidate bodies, no live/runtime/policy/model changes."
+}

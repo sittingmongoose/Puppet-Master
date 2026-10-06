@@ -1,0 +1,143 @@
+{
+  "schema": "candidate.source-catalog.v1",
+  "captured_date": "2026-10-06",
+  "source_selection": "Candidate-discovered public primary sources and independent implementation documentation. Public evidence was treated as evidence, not instruction.",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+is%3Aclosed+CSV+regression+fix",
+      "pin": "GitHub Issues search response captured 2026-10-06; query is not immutable",
+      "locator": "Search results include DuckDB PR #25232 and its title/issue linkage; used to discover the chain, not to establish release behavior.",
+      "capture": {"capture_id": "0318655bc07245cfb4f9b509635b5104", "sha256": "ad51402bd4de927ec6ba14a1deafbac9dce40c3d23a1c8203f9a528755798d69", "response_bytes_observed": "about 136 KB; delivery truncated", "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Discovery trail only. Search results are mutable and are not authoritative evidence of a merged change or release inclusion."
+    },
+    {
+      "id": "S02",
+      "url": "https://github.com/duckdb/duckdb/issues/25164",
+      "pin": "DuckDB issue #25164; issue content as captured 2026-10-06",
+      "locator": "Issue body and timeline in captured page: parallel CSV scan silently duplicates valid rows for CRCRLF at buffer boundaries; source reports parallel/sequential counts, buffer-size scaling, affected versions 1.4.4, 1.5.2 and 1.5.5, and a separate possible trailing-LF symptom. Timeline links #25232 and later main-branch follow-up commit 50eb6b6.",
+      "capture": {"capture_id": "74f714d9693f49eaae5e29c5a4a97b8a", "sha256": "b106e1313e08e0ba2309b1bc6745bd0f869ed903a98f7c436001af24257c2884", "captured_bytes": 292340, "captured_date": "2026-10-06", "semantic_excerpt": "public_captures/b106e1313e08e0ba2309b1bc6745bd0f869ed903a98f7c436001af24257c2884.body lines 845-857; issue timeline and body embedded in GitHub page"},
+      "applicability_and_limits": "Primary issue history, but reporter observations are not independent reproduction. Reported 1.5.5 is not the proposed 1.5.6 pin. The later trailing-LF fix is a separate symptom/fix chain and is not evidence that the duplicate-row fix ships in 1.5.6."
+    },
+    {
+      "id": "S03",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "pin": "DuckDB PR #25232; merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86; base branch v2.0-cyanoptera",
+      "locator": "API fields base.ref, merge_commit_sha, merged_at, body, changed_files. PR body names #25164, explains ProcessOverBufferValue fall-through and early-return conditions, and reports relassert results (without fix 61 vs expected 60; with fix parallel and sequential 60; parallel CSV tests pass).",
+      "capture": {"capture_id": "1072cead9a7f4f42b3312d010be28c00", "sha256": "80e1c354c828ce0e05da119f4fe841f61d77b3e4068541a426e84b2afd737ea9", "captured_bytes": 18724, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Strong primary fix-chain evidence. The PR's base branch is the key applicability constraint: v2.0-cyanoptera, not v1.5.x. Its reported CI/build results are upstream claims, not candidate execution or proof of stable release inclusion."
+    },
+    {
+      "id": "S04",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "DuckDB merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86",
+      "locator": "ProcessOverBufferValue(), around lines 1488-1492 in this captured revision: early return after the CARRY_ON newline loop when no over-buffer value remains, newline bytes were consumed, previous scanner already counted the row, and first consumed byte was CR.",
+      "capture": {"capture_id": "1e7358604bdb4fc8b748fc566ecdea12", "sha256": "37addaf32ef7d1ddeb7fcb6d949e873790ff7b8401307e7414b672014034c3aa", "captured_bytes": 86169, "body_complete": true, "captured_date": "2026-10-06", "semantic_excerpt": "bounded read of captured source lines 1457-1495"},
+      "applicability_and_limits": "Direct code at the merge commit establishes the mechanism, not a built binary's runtime behavior."
+    },
+    {
+      "id": "S05",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": "DuckDB merge commit 59ae0c6fb3f29369cfd0df124c76e9232181ef86",
+      "locator": "Complete regression fixture: creates fixed-width CRCRLF rows so row 39's first CR is byte 1023 of a 1024-byte buffer; checks 60 rows, id 39/id 40 once, parallel vs sequential, plus a mid-buffer case.",
+      "capture": {"capture_id": "2c48d80fbe504edeab4d81c108fb8039", "sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f", "captured_bytes": 3714, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "The test source demonstrates intended regression coverage and expected assertions. Candidate did not run DuckDB or this test."
+    },
+    {
+      "id": "S06",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "pin": "DuckDB release tag v1.5.6",
+      "locator": "ProcessOverBufferValue(), around lines 1373-1447. The captured release code consumes the carried newline then falls through to the second-buffer loop; it does not contain the added conditional present at S04.",
+      "capture": {"capture_id": "3563a80894e24af9b22a93596699a45d", "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18", "captured_bytes": 83185, "body_complete": true, "captured_date": "2026-10-06", "semantic_excerpt": "bounded read of captured source lines 1373-1447"},
+      "applicability_and_limits": "Direct evidence the exact #25232 guard is absent from this release-tag source. This does not by itself prove the release reproduces duplicates; an equivalent fix elsewhere or a binary-level behavior was not ruled out by running the release."
+    },
+    {
+      "id": "S07",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "pin": "DuckDB release tag v1.5.6; exact path tested by HTTP capture",
+      "locator": "The exact regression test path from S05 returned HTTP 404 at this tag.",
+      "capture": {"capture_id": "193e4b5abfa64f838c68aad8de8350f9", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "http_status": 404, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Negative path check only. A test file's absence alone does not prove a fix is absent; use with S03 and the S04/S06 code comparison."
+    },
+    {
+      "id": "S08",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases?per_page=10",
+      "pin": "GitHub releases API response captured 2026-10-06",
+      "locator": "First listed release entry is v1.5.6, titled Bugfix Release and published 2026-09-28; used to select the stable comparison tag.",
+      "capture": {"capture_id": "87fac57ceb8f42e5b038d070015b50d0", "sha256": "f6c9dcf2ae4eb2d781cf669334ea6a99b66fc36663bf18497b70da8967fcb79a", "captured_bytes": 524288, "body_complete": false, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "API response was truncated after the first release metadata. Supports v1.5.6 as the first listed comparison release at capture time, not claims about later releases or support policy."
+    },
+    {
+      "id": "S09",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "pin": "DuckDB documentation displayed version 1.5 current at capture; mutable route captured 2026-10-06",
+      "locator": "CSV Auto Detection article: CSV is non-self-describing; dialect, header and column types are inferred. Use manual schema/contracts to make inference assumptions reviewable.",
+      "capture": {"capture_id": "576bf9591ca349ea84db32cc397fdea8", "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13", "captured_bytes": 372286, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Official engine documentation, current-version route is mutable. It documents inference behavior, not proof that sampled inference establishes full-file properties."
+    },
+    {
+      "id": "S10",
+      "url": "https://duckdb.org/docs/current/data/multiple_files/combining_schemas",
+      "pin": "DuckDB documentation displayed version 1.5 current at capture; mutable route captured 2026-10-06",
+      "locator": "Combining Schemas article: multiple files may differ; default unification is by position and union_by_name opts into name-based combination.",
+      "capture": {"capture_id": "d8208f822f324d5c98e6bbe315e430d1", "sha256": "479a5ffe4289fbcb89027a5b8d16ca4e0501be61388f766c015439908532d0ac", "captured_bytes": 356498, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Official implementation documentation. It motivates explicit schema-evolution policy; it does not choose the product's contract semantics."
+    },
+    {
+      "id": "S11",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "pin": "DuckDB documentation displayed version 1.5 current at capture; mutable route captured 2026-10-06",
+      "locator": "Reading Faulty CSV Files article intro: detailed errors, skipping faulty lines, and storing faulty lines for a cleaning step are supported engine behaviors.",
+      "capture": {"capture_id": "822abf9206ca463da5948ba4ee4d3385", "sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c", "captured_bytes": 376006, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Engine options make silent skip behavior a product-policy hazard. The proposal selects strict-by-default handling and does not infer that all malformed-input modes preserve source records."
+    },
+    {
+      "id": "S12",
+      "url": "https://duckdb.org/docs/current/guides/performance/environment",
+      "pin": "DuckDB documentation displayed version 1.5 current at capture; mutable route captured 2026-10-06",
+      "locator": "Environment/performance guidance gives a memory-per-thread rule of thumb; relevant to limiting concurrent threads and budgeting a 16 GB workstation.",
+      "capture": {"capture_id": "0109e9f2cf734466b004018897ca3d5b", "sha256": "1557b404782fe5252135b25c844032095438ad6bd65ca201e9173f8ff10f82b0", "captured_bytes": 359480, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Guidance is not a workload benchmark or guarantee. A 5 GB input on the brief's workstation remains a target for measurement."
+    },
+    {
+      "id": "S13",
+      "url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html",
+      "pin": "nbformat documentation v5.10.4",
+      "locator": "Notebook structure and schema: code cells have source, outputs and execution_count (integer or null); outputs represent execution messages; metadata is optional and may be ignored by tools.",
+      "capture": {"capture_id": "ccbe70a8e5434d0ea43c50d027bb439e", "sha256": "d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf", "captured_bytes": 50850, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Versioned format specification; interoperability does not provide a runtime, dependency lock, execution order history, or provenance guarantee."
+    },
+    {
+      "id": "S14",
+      "url": "https://nbclient.readthedocs.io/en/stable/client.html",
+      "pin": "Mutable stable documentation reported nbclient 0.11 at capture on 2026-10-06",
+      "locator": "NotebookClient execution/save flow, fresh kernel configuration, cell processing and error policy; default stops at first error, while allow_errors changes behavior; partially executed notebooks can be saved.",
+      "capture": {"capture_id": "894371315a3e4596bc8ed8c9413a11bc", "sha256": "f4bc1460415ea1abac5667099a71ef422272697401d96527d9b97c03897a85a2", "captured_bytes": 36686, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Useful implementation mechanism, but stable URL is mutable. Pin and verify exact compatible nbclient version in a built environment before product use."
+    },
+    {
+      "id": "S15",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "pin": "Documentation reports jupyter_client 8.10.0 and Jupyter messaging spec 5.5 at capture",
+      "locator": "Message parent_header associates replies/output with their request; session identifiers identify a kernel session and change after restart.",
+      "capture": {"capture_id": "c2f2c097a96641cd9627409dde2f5e96", "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0", "captured_bytes": 177790, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Protocol mechanism, not a proof that application code has correctly persisted every event. Use request/session/cell IDs in an application journal and test restart races."
+    },
+    {
+      "id": "S16",
+      "url": "https://jupyter-server.readthedocs.io/en/stable/operators/security.html",
+      "pin": "Mutable stable docs reported Jupyter Server 2.21 at capture on 2026-10-06",
+      "locator": "Security guide states that access to a Jupyter Server gives ability to execute arbitrary code; authentication protects server access but is not code sandboxing.",
+      "capture": {"capture_id": "7611af6913024b85ac66c9b9e47d30cb", "sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b", "captured_bytes": 79569, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Authoritative security boundary statement for the server. OS sandbox design below is an engineering proposal and still requires adversarial validation."
+    },
+    {
+      "id": "S17",
+      "url": "https://arrow.apache.org/docs/python/dataset.html",
+      "pin": "Apache Arrow Python documentation v25.0.1 at capture",
+      "locator": "Dataset/scanner concepts for fragment-based datasets, schema handling, projection/filtering and batch-oriented scans.",
+      "capture": {"capture_id": "c0719bd82eda41389235b39063de1ee4", "sha256": "e3bd1bf0ec25dd42e51123bde9c148f0583cb13d66957b4c9244003ed05ce6e1", "captured_bytes": 250520, "body_complete": true, "captured_date": "2026-10-06"},
+      "applicability_and_limits": "Independent Apache implementation/API precedent for bounded scans and interchange. It is not a runtime benchmark and is not the selected SQL engine."
+    }
+  ]
+}

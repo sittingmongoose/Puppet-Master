@@ -1,0 +1,33 @@
+{
+  "schema": "er9.safe-queue-transition-checkpoint.v1",
+  "observed_utc": "2026-10-06T03:26:15.043356+00:00",
+  "cursor_sha256": "6e777e201cfd32db06e28c9f5e04dab73f640c2cc94b54c6d82d658316ac6377",
+  "cursor_utc": "2026-10-06T03:26:14.009660+00:00",
+  "active_by_family": {
+    "M": 0,
+    "Z": 2,
+    "L": 8
+  },
+  "running_job_ids": [
+    "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+    "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+    "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+  ],
+  "retained_resources": [],
+  "native_starts_confirmed": 138,
+  "initial_terminal_slots": 12,
+  "fixedfresh_registered_pairs": 12,
+  "locked_confirmation_registered_pairs": 4,
+  "canonical_complete_pipeline_count": "NOT_INFERRED; scoreboard joins full-role freezes separately",
+  "last_final_terminal_selector": {
+    "path": "LAB_ROOT/ops/dispatcher/FINAL_STAGE_TRANSITION_CHECKPOINT_001.json",
+    "sha256": "d0c6f0131316811597a91c2a628831ad73081f0b4864b82f29aa485c1179b595"
+  }
+}

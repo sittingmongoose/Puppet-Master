@@ -1,0 +1,19 @@
+{
+  "schema": "er9.paired-targeted-neutral-integrity.v1",
+  "arms": [
+    {
+      "alias": "A",
+      "exact_current_freeze_sha256": "1d2da01abe5211480b74428f47cf977c1f6616046537e9197dfa748330a69755",
+      "actual_owned_quiet_confirmed": true,
+      "host_record_SHA256s": [
+        "0c4322d189a3b3549b539dbbf2d8413f39620df0f85045bae38401ab07a2ea20",
+        "e6a794f2a64a490d273ca7a130e0aabf34192c26055eea03860197d7556b5997",
+        "114e2f1e92efb9dc4bab15e8e6e1d930b644d839e4f608f71acd19d8f3eb4606"
+      ],
+      "proof_basis": "all5directnativequiet flags true +all3terminalhostcgroups absent/empty +saved executionunits quiet",
+      "canonical_final_byteSHA_verified": "ebc4bf26767bb226a8b1d2a76915d3f0aa47166c3515c4cac584ea0e8d053c49",
+      "catalog_absence_preserved": []
+    }
+  ],
+  "native_status/Goal/history/economics/identity": "WITHHELD untilimmutablePhase1"
+}

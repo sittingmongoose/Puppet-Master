@@ -1,0 +1,87 @@
+{
+  "schema": "er9.witness-inventory.v1",
+  "stage": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+  "executed": [
+    {
+      "id": "W01",
+      "label": "executed by candidate",
+      "name": "Synthetic provenance-key and row-contract component check",
+      "purpose": "Check a tiny proposed helper contract: explicit unique-key ordering, preservation of Unicode, distinguishing a missing JSON property from explicit null in the input representation, and invalidating a canonical content key when source/code/environment values change.",
+      "code": "import hashlib\nimport json\n\nrows = data[\"rows\"]\ncode = data[\"transform_code\"]\nenv = data[\"environment\"]\n\ndef canonical(value):\n    return json.dumps(value, sort_keys=True, separators=(\",\", \":\"), ensure_ascii=False).encode(\"utf-8\")\n\ndef digest(value):\n    return hashlib.sha256(canonical(value)).hexdigest()\n\ndef cache_key(source_rows, transform_code, environment):\n    return digest({\"source\": source_rows, \"code\": transform_code, \"environment\": environment})\n\n# This synthetic contract sorts on an explicitly declared unique key; it preserves\n# strings and distinguishes an absent field from an explicit JSON null.\nassert len({row[\"id\"] for row in rows}) == len(rows)\nordered = sorted(rows, key=lambda row: row[\"id\"])\noutput = [{\"id\": row[\"id\"], \"timestamp\": row[\"timestamp\"], **({\"note\": row[\"note\"]} if \"note\" in row else {})} for row in ordered]\nassert [row[\"id\"] for row in output] == [1, 2, 3]\nassert output[0][\"note\"] is None\nassert \"note\" not in output[1]\nassert output[2][\"note\"] == \"café 東京\"\n\nbase = cache_key(rows, code, env)\nassert base == cache_key(rows, code, env)\nsource_changed = cache_key(rows + [{\"id\": 4, \"timestamp\": \"2025-02-04T00:00:00Z\", \"note\": \"added\"}], code, env)\ncode_changed = cache_key(rows, code + \"\\n# changed\", env)\nenv_changed = cache_key(rows, code, {**env, \"lock\": \"lock-b\"})\nassert len({base, source_changed, code_changed, env_changed}) == 4\n\nprint(json.dumps({\n    \"synthetic_rows\": len(rows),\n    \"sorted_ids\": [row[\"id\"] for row in output],\n    \"missing_distinct_from_null\": (\"note\" not in output[1] and output[0][\"note\"] is None),\n    \"unicode_preserved\": output[2][\"note\"],\n    \"source_code_environment_changes_invalidate_key\": len({base, source_changed, code_changed, env_changed}) == 4,\n    \"output_sha256\": hashlib.sha256(canonical(output)).hexdigest()\n}, ensure_ascii=False, sort_keys=True))",
+      "input": {
+        "rows": [
+          {"id": 3, "timestamp": "2025-02-03T11:00:00Z", "note": "café 東京"},
+          {"id": 1, "timestamp": "2025-02-01T09:30:00Z", "note": null},
+          {"id": 2, "timestamp": "2025-02-02T18:15:00Z"}
+        ],
+        "transform_code": "sort by unique id; preserve missing versus null; project id,timestamp,note",
+        "environment": {"runtime": "candidate-isolated-python", "lock": "lock-a"}
+      },
+      "expected_behavior": "Exit 0; assert unique IDs; output sorted IDs [1,2,3]; retain the explicit null for id 1 and absence of note for id 2; retain Unicode text for id 3; repeated signature is identical and a changed source, code, or lock value yields a different key.",
+      "actual": {
+        "receipt_id": "exec-q6mffan7",
+        "completed_utc": "2026-10-05T23:43:23.895228+00:00",
+        "code_sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8",
+        "input_sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03",
+        "stdout": "{\"missing_distinct_from_null\": true, \"output_sha256\": \"ff519b07c47358df349504c451ecc33b4d34185857039d0d83ddd463ab7004b7\", \"sorted_ids\": [1, 2, 3], \"source_code_environment_changes_invalidate_key\": true, \"synthetic_rows\": 3, \"unicode_preserved\": \"café 東京\"}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "stdout_sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "stream_bytes_each": 32768, "network": "new empty namespace"}
+      },
+      "scope_limits": [
+        "This is a candidate-authored standard-library component check in the admitted isolated execution capability, not a DuckDB or Jupyter test.",
+        "The input is synthetic JSON data, not a physical CSV/NDJSON/Parquet file; there is no parser, notebook, kernel, cache store, project manifest, sandbox, or large-data path here.",
+        "It verifies the helper's stated assertions only. It does not establish that a full application associates real outputs with these keys or that the selected environment tuple works.",
+        "No public-source code was executed. The isolated capability provides the runtime boundary; this receipt is not a claim that the proposed product sandbox has been implemented."
+      ]
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "V01",
+      "label": "proposed/UNEXECUTED",
+      "check": "Lock and compatibility qualification",
+      "expected": "A single exact CPython/JupyterLab/Jupyter Server/ipykernel/jupyter-client/nbformat/nbclient/DuckDB/native-library set opens and saves .ipynb, launches a fresh kernel, records cell events/outputs, interrupts and cleans up in each explicitly supported OS profile.",
+      "reason_not_executed": "No package installation or full runtime execution was authorized or performed; the researched documentation labels do not prove a compatible installed set."
+    },
+    {
+      "id": "V02",
+      "label": "proposed/UNEXECUTED",
+      "check": "Format/schema/error contract matrix",
+      "cases": ["CSV dialect/header/quote variants", "compressed CSV sampled from beginning", "NDJSON missing key versus explicit null", "Unicode and timestamps with timezone", "mixed types and strict conversion failure", "malformed record without silent dropping", "multi-file schema drift beyond sampled files", "Parquet schema change", "source remains byte-identical after failed transform"],
+      "expected": "Preview labels sample scope; strict full scan catches out-of-contract values; explicit policies are recorded; malformed data fails visibly or is placed into an explicit separately counted quarantine; originals remain unchanged."
+    },
+    {
+      "id": "V03",
+      "label": "proposed/UNEXECUTED",
+      "check": "Notebook state, replay, status, and invalidation integration",
+      "cases": ["execute cells out of display order", "edit an upstream cell after an interactive run", "change source hash/schema/lock", "restart kernel", "interrupt a running clean replay", "fail a middle cell", "reopen a notebook with outputs but no sidecar", "external modification of saved output"],
+      "expected": "Events reflect actual request order and cell snapshot; interactive/imported outputs are unverified; dependent outputs become stale; failure/cancel/restart cannot leave affected output current; cancellation terminates the worker and preserves the last committed generation."
+    },
+    {
+      "id": "V04",
+      "label": "proposed/UNEXECUTED",
+      "check": "8-core/16 GB and 5 GB workload qualification",
+      "cases": ["bounded previews", "streaming projections/filters", "one blocking operator with spill", "combined blocking operators", "list/string_agg/PIVOT", "Python full materialization", "large output display truncation"],
+      "measure": ["elapsed time", "peak worker RSS", "DuckDB memory setting", "spill bytes/free disk", "CPU use/host responsiveness", "result digest and output ordering"],
+      "expected": "Supported bounded operations stay within agreed resource/time limits; unsupported/high-risk plans fail visibly without mutating inputs or committed outputs. No target number or performance success is asserted before measurement."
+    },
+    {
+      "id": "V05",
+      "label": "proposed/UNEXECUTED",
+      "check": "Isolation and active-output security review",
+      "cases": ["attempt host-home/credential access", "attempt undeclared file reads/writes", "attempt network access", "fork/process exhaustion", "memory and disk exhaustion", "timeout/cancel a child process", "render HTML/SVG/widget output", "load an extension"],
+      "expected": "Default worker cannot access host secrets, unmounted files, or network; resource ceilings and cancel terminate descendants; active output is restricted; any permitted extension is pinned/approved."
+    },
+    {
+      "id": "V06",
+      "label": "proposed/UNEXECUTED",
+      "check": "Save, concurrency, and portable recovery",
+      "cases": ["crash before/after output flush and before commit pointer", "two notebook editors modify same file", "two clean runs race to commit", "stale lock after process death", "second-machine reopen with and without source files", "manifest corruption/trailing partial event", "local versus shared filesystem semantics"],
+      "expected": "Only complete generations are current; the prior commit remains usable after interrupted save; external edits conflict visibly; no incomplete event/result is promoted; remapped inputs are fully re-fingerprinted."
+    }
+  ],
+  "coverage_note": "Only W01 was executed. V01–V06 are plans, not receipts or test results."
+}

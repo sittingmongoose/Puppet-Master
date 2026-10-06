@@ -1,0 +1,72 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "fec6af161ceef682abc3326c4b2d10cfe5f075f127aa1a763e122ae73faa6ded",
+  "retained_exact_fields": {
+    "schema": "er9.diagnostic_method_card.v1",
+    "pair_id": "D-V16-A",
+    "track": "A",
+    "case_id": "D-V16-A-v1",
+    "domain": "A",
+    "task_name": "Decision-focused image delivery with conditions and leads intact",
+    "task": "Use a complete candidate research report containing required coordinate/export conditions, optional opportunities, rejected alternatives and unresolved dependencies. Compare normal standalone delivery to concise decision/proposal plus structured lead/history inventory.",
+    "question": "Use reports containing required conditions, optional ideas, rejected alternatives and real open dependencies. Check that concise delivery does not hide critical information in the appendix.",
+    "source_scope": "Actual affordable-candidate report and sources; both retain the same complete brief obligations and required meaning in designated final.",
+    "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+    "discovery_conclusion_allowed": false,
+    "integration_limit": "Both arms must satisfy the same research goal. This tests organization and duplication, not reducing requirements or defining a smaller answer after seeing failures.",
+    "brief_path": "briefs/development-A-biomedical.md",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "neutral_task_prompt_path": "diagnostics/D-V16-A-TASK.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json",
+      "lead_inventory": "out/final/leads.json"
+    },
+    "important_checks": [
+      {
+        "id": "D-V16-A-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V16-A-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V16-A-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "no_truth_key_in_candidate": true,
+    "coverage_path": "diagnostics/D-V16-A-coverage.json"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "candidate_authorship",
+    "card_version",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "observed_effort",
+    "observed_model",
+    "outcome",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "stages",
+    "status",
+    "treatment"
+  ],
+  "note": "No sourceanswers/status/modelhistory/economics/oldgrades added; targetcoverage inherited sourcepair metadata preservedbyteexact separately."
+}

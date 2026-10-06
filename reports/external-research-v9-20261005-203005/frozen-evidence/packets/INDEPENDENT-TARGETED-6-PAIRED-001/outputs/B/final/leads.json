@@ -1,0 +1,54 @@
+{
+  "schema": "candidate.leads.v1",
+  "captured_date": "2026-10-06",
+  "leads": [
+    {
+      "id": "L01",
+      "status": "critical unresolved applicability check",
+      "lead": "Run the CSV boundary fixture on the exact DuckDB v1.5.6 runtime and compare with the fix commit.",
+      "why_it_matters": "The #25232 fix/test chain is on v2.0-cyanoptera; captured v1.5.6 source lacks the guard and the test path is absent. The release's actual user-visible result was not executed.",
+      "next_action": "Resolve before enabling parallel CRCRLF CSV ingestion; otherwise fail closed for CRCRLF or ship only a tested supported build.",
+      "source_ids": ["S02", "S03", "S04", "S05", "S06", "S07", "S08"]
+    },
+    {
+      "id": "L02",
+      "status": "unresolved distinct issue symptom",
+      "lead": "Check whether DuckDB v1.5.6 contains the later main-branch change for CRCRLF trailing-LF leakage into the next field (commit 50eb6b6, referenced by issue #25164 timeline).",
+      "why_it_matters": "The issue describes a separate possible value-corruption symptom, and a later commit identifies it as a distinct fix. Do not treat #25232's duplicate-row test as coverage for that symptom.",
+      "next_action": "Compare that commit's source/test with the v1.5.6 tag and add an independent fixture to P01.",
+      "source_ids": ["S02", "S06"]
+    },
+    {
+      "id": "L03",
+      "status": "critical implementation validation",
+      "lead": "Pin and verify a mutually compatible exact Jupyter/Python runtime and package lock for the chosen OS and architecture.",
+      "why_it_matters": "The notebook protocol and execution libraries are separate components; captured docs establish mechanisms but not this workspace's compatibility matrix or replay guarantees.",
+      "next_action": "Build an offline reproducible environment, record exact interpreter/kernel/library hashes and test clean replay on two machines.",
+      "source_ids": ["S13", "S14", "S15"]
+    },
+    {
+      "id": "L04",
+      "status": "optional implementation alternative",
+      "lead": "Prototype Apache Arrow Dataset scanners as a bounded reader/interchange path if Arrow-native batches or partitioned sources dominate.",
+      "why_it_matters": "Arrow provides an independently maintained dataset/scanner model; its behavior on the team's actual inputs and the CRCRLF fixture has not been tested.",
+      "next_action": "Compare schema evolution, projection/filter pushdown, batch memory, error reporting, and round-trip identity against the selected DuckDB path before adoption.",
+      "source_ids": ["S17", "S09", "S10"]
+    },
+    {
+      "id": "L05",
+      "status": "opportunity",
+      "lead": "A provenance comparison view can show the first changed dependency beside outputs that became stale, including source hashes, schema-contract changes, package-lock diffs and result summaries.",
+      "why_it_matters": "It turns the team's central question—why did this shared notebook change?—into an actionable review instead of a run log. It builds on the project manifest and execution journal without requiring hosted collaboration.",
+      "next_action": "Prototype a saved-run comparison for one notebook and one tabular output after core status/invalidation rules are validated.",
+      "source_ids": ["S13", "S14", "S15"]
+    },
+    {
+      "id": "L06",
+      "status": "optional opportunity",
+      "lead": "Investigate safe cached replay of unchanged deterministic cells once declared dependencies and file accesses are captured reliably.",
+      "why_it_matters": "A content-addressed cache could shorten iteration on larger datasets, but caching across hidden kernel state or undeclared dependencies would preserve stale results as if they were current.",
+      "next_action": "Keep cache disabled for untracked interactive state; evaluate only after clean-run provenance and invalidation tests pass.",
+      "source_ids": ["S14", "S15"]
+    }
+  ]
+}

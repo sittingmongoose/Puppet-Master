@@ -1,0 +1,168 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "stage": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+  "capture_date": "2026-10-05",
+  "method_scope": "Candidate-selected BRIEF_ONLY public primary sources. Captures are evidence snapshots, not trusted instructions. No source code was executed.",
+  "sources": [
+    {
+      "id": "S01",
+      "title": "JupyterLab Notebook user documentation",
+      "url": "https://jupyterlab.readthedocs.io/en/stable/user/notebook.html",
+      "pin": {"kind": "captured documentation release", "value": "JupyterLab 4.6.4 as labeled in the captured stable documentation", "snapshot_sha256": "c1227feffde5b03eb621bc4ae15d6638e6b9d1aed4ec14f2c0b36f6ed955ed65"},
+      "locator": "Notebook user guide; notebook editing/execution concepts and page/version identity. The report uses it only as the existing notebook-editor precedent.",
+      "capture": {"capture_id": "364cb1405e0a47f9a6c9d2d19cbfdfc0", "sha256": "c1227feffde5b03eb621bc4ae15d6638e6b9d1aed4ec14f2c0b36f6ed955ed65", "bytes": 59191, "captured_utc": "2026-10-05T23:38:43Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Supports JupyterLab as an extant notebook UI/document precedent.",
+      "limits": "The response body was captured completely but only its first 32,768 bytes were delivered for inspection. It does not establish the proposed product's provenance, isolation, status UI, or runtime compatibility."
+    },
+    {
+      "id": "S02",
+      "title": "nbformat notebook format description",
+      "url": "https://nbformat.readthedocs.io/en/latest/format_description.html",
+      "pin": {"kind": "captured documentation release", "value": "nbformat 5.11 as labeled in the captured documentation", "snapshot_sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503"},
+      "locator": "Format description: notebook cell list, code-cell execution_count and outputs, output types, optional metadata.",
+      "capture": {"capture_id": "f9b6e6a84a1d448d917328e42c2e2a00", "sha256": "f534c9b16fe3f228576ce9c85ddb7e0602427626e1ab3c7dbf3e2de404e7f503", "bytes": 51110, "captured_utc": "2026-10-05T23:39:49Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Supports keeping .ipynb as the interchange document and storing project-specific provenance separately.",
+      "limits": "Only the first 32,768 response bytes were delivered for inspection. The format schema does not promise any particular external runtime behavior or preservation of arbitrary custom metadata."
+    },
+    {
+      "id": "S03",
+      "title": "nbclient Client API documentation",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": {"kind": "captured documentation release", "value": "nbclient 0.11-series documentation label; exact patch not exposed", "snapshot_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a"},
+      "locator": "NotebookClient execution, timeout/error options, and cell lifecycle hooks.",
+      "capture": {"capture_id": "39b42c5467b340408cf8e1782086ba57", "sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a", "bytes": 36686, "captured_utc": "2026-10-05T23:39:43Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Supports a sequential notebook replay component and hooks for progress/event recording.",
+      "limits": "The displayed documentation did not establish OS isolation, complete provenance, cancel guarantees, or successful execution with the other proposed dependencies. Response text delivered to the candidate was capped at 32,768 bytes."
+    },
+    {
+      "id": "S04",
+      "title": "Jupyter Client messaging protocol documentation",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "pin": {"kind": "captured documentation and protocol labels", "value": "jupyter_client 8.10.0; messaging protocol 5.5 as labeled in captured page", "snapshot_sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0"},
+      "locator": "Messaging specification sections for execute requests/replies, IOPub, parent_header/session routing, and the Control channel.",
+      "capture": {"capture_id": "9a2bc2553270405c8ae2c65b5ef3a426", "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0", "bytes": 177790, "captured_utc": "2026-10-05T23:39:46Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Supports recording actual kernel requests, output association, session epochs, and control/progress integration.",
+      "limits": "Only the first 32,768 bytes of the complete body were delivered. The protocol does not itself say that a run is reproducible or safe; product-level association and error handling still require implementation."
+    },
+    {
+      "id": "S05",
+      "title": "Jupyter Server security documentation",
+      "url": "https://jupyter-server.readthedocs.io/en/stable/operators/security.html",
+      "pin": {"kind": "captured documentation release", "value": "Jupyter Server 2.21 as labeled in the captured documentation", "snapshot_sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b"},
+      "locator": "Security introduction: access to the server permits arbitrary code execution; authentication/token discussion.",
+      "capture": {"capture_id": "ef9fcdab16b0487f9ed9aaed6f218c15", "sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b", "bytes": 79569, "captured_utc": "2026-10-05T23:39:45Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Supports treating notebook code as arbitrary code and requiring a separate OS-level execution boundary.",
+      "limits": "The doc is a security statement, not evidence that any particular VM/container profile safely isolates this proposed application. Only the first 32,768 bytes were delivered."
+    },
+    {
+      "id": "S06",
+      "title": "DuckDB CSV Auto Detection documentation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/data/csv/auto_detection.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa"},
+      "locator": "Sample Size; sniff_csv; dialect/type/header detection; type candidates and explicit overrides; sampling behavior for seekable versus compressed/non-seekable inputs.",
+      "capture": {"capture_id": "a1ccdb336e9a48178e4dae90771c80d0", "sha256": "705a483c38b6b1323958d082861a72a23d5608c53f467c59d77a66bed7e65bfa", "bytes": 12270, "captured_utc": "2026-10-05T23:43:40.308745Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 12270},
+      "applicability": "Supports sample-scoped CSV inference, explicit import recipes, and limits for compressed-file sampling.",
+      "limits": "Documentation of one captured DuckDB web commit does not establish engine execution or inferential correctness for all CSV dialects/files."
+    },
+    {
+      "id": "S07",
+      "title": "DuckDB Loading JSON documentation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/data/json/loading_json.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642"},
+      "locator": "NDJSON reader/object reader options; sample_size and maximum_sample_files; union_by_name; ignore_errors; missing-key-to-NULL behavior.",
+      "capture": {"capture_id": "39736533b2564c039026b8cf91085eff", "sha256": "d1f4b37b321ecd1ce24ef7faaa21183b04c90609d6f1260ed645093b922c8642", "bytes": 15526, "captured_utc": "2026-10-05T23:43:44.536498Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 15526},
+      "applicability": "Supports explicit NDJSON sampling/schema-union/error policy and the distinction between source JSON absence and typed SQL NULL.",
+      "limits": "The behavior is documented for the captured current docs and has not been executed against the proposed engine build."
+    },
+    {
+      "id": "S08",
+      "title": "DuckDB Order Preservation documentation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/sql/dialect/order_preservation.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "5af7c5eab350cf86672f02d75ee5d0d63c4e52ce21d03ea5b76b993c9c6bd916"},
+      "locator": "Clauses/operators listed as preserving or not guaranteeing row order; insertion-order setting; row_number() OVER () tip.",
+      "capture": {"capture_id": "89f967d8686c41dda0a5a2a54e4decad", "sha256": "5af7c5eab350cf86672f02d75ee5d0d63c4e52ce21d03ea5b76b993c9c6bd916", "bytes": 2814, "captured_utc": "2026-10-05T23:43:42.061242Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 2814},
+      "applicability": "Supports recording whether output order is explicit, preserved by a documented operation, or unspecified.",
+      "limits": "Documentation is release-specific and does not justify relying on undocumented ordering in other operations or versions."
+    },
+    {
+      "id": "S09",
+      "title": "DuckDB Tuning Workloads: larger-than-memory processing",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/guides/performance/how_to_tune_workloads.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb"},
+      "locator": "Larger-than-memory/spilling section, blocking operators, limitations, profiling guidance, and connection guidance.",
+      "capture": {"capture_id": "cbc01f02411e4ebeb8721f50f6f4865e", "sha256": "743ec0d904dde2652ea392384bf4b18d58a587e5e940e9baeed79900b2513fcb", "bytes": 10226, "captured_utc": "2026-10-05T23:43:48.795177Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 10226},
+      "applicability": "Supports a qualified out-of-core target and explicit unsupported/at-risk plans.",
+      "limits": "It documents engine capabilities, not this product's 5 GB performance, memory envelope, or every file format/plan combination."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB Out-of-Memory Issues guide",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/guides/performance/oom.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "ca39ab3ff1221b096e8022ed7bc8baedf3d3f33759e81515b6d03e731ae9dd48"},
+      "locator": "Configuration options for threads, memory_limit, insertion-order preservation; schema and index memory notes.",
+      "capture": {"capture_id": "89626b46e2554a669641629f6cef4f20", "sha256": "ca39ab3ff1221b096e8022ed7bc8baedf3d3f33759e81515b6d03e731ae9dd48", "bytes": 2106, "captured_utc": "2026-10-05T23:43:50.353254Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 2106},
+      "applicability": "Supports conservative starting memory/thread limits and warns that engine memory_limit is not a full process-RSS cap.",
+      "limits": "The suggested settings are general documentation guidance, not measured or guaranteed settings for the proposed 16 GB workstation profile."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB Python API documentation",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/1425b30d787a0acbc6192cb43f1e80bfdc908be2/docs/current/clients/python/overview.md",
+      "pin": {"kind": "immutable Git commit", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "captured_body_sha256": "a905b6df3c9a14bfd2496488c8801e3364bb223701e52b85697ceeb5e9b693e9"},
+      "locator": "Python minimum; direct CSV/JSON/Parquet query; Arrow/Pandas/Polars interop and result conversion; connection and global-thread-safety sections.",
+      "capture": {"capture_id": "48a17e17b64d4c319f498925245c26af", "sha256": "a905b6df3c9a14bfd2496488c8801e3364bb223701e52b85697ceeb5e9b693e9", "bytes": 9336, "captured_utc": "2026-10-05T23:43:52.838623Z", "format": "exact HTTP response body", "body_complete": true, "text_delivered_bytes": 9336},
+      "applicability": "Supports one embedded SQL engine in the Python worker, direct path queries, and explicit per-worker connections.",
+      "limits": "Documentation shows API behavior but does not show compatibility with the proposed notebook stack, sandbox, or 5 GB workload; version template on the page is not an exact wheel lock."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB issue #7789: read_csv_auto fails on CrashStatistics.csv",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/7789",
+      "pin": {"kind": "immutable issue number plus captured API snapshot", "value": "duckdb/duckdb#7789", "snapshot_sha256": "3edb5aeae43fc71b9fbaaccb94ba2f14bccf19cd3d0224846be1398e0358fa9e"},
+      "locator": "Issue title/body and report environment: 0.7.1 success versus 0.8.0 parse failure on the named fixture near row 3219.",
+      "capture": {"capture_id": "68d3e94d2cb84eaa8ed2db32d23e7dde", "sha256": "3edb5aeae43fc71b9fbaaccb94ba2f14bccf19cd3d0224846be1398e0358fa9e", "bytes": 6501, "captured_utc": "2026-10-05T23:38:49Z", "format": "exact GitHub API response body", "body_complete": true, "text_delivered_bytes": 6501},
+      "applicability": "Primary reporter evidence for a version-specific CSV regression.",
+      "limits": "An issue is a report, not independent verification of the reproducer, cause, fix, or released behavior."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB issue #7789 comments",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/7789/comments?per_page=100",
+      "pin": {"kind": "captured mutable discussion snapshot", "value": "comments on duckdb/duckdb#7789", "snapshot_sha256": "d7843486a34f6f558d05d0dc182b64dafbab78d9ac3f25852db9f9fa8b4c2f77"},
+      "locator": "Chronological comments: maintainer explanation of one-chunk option handling and later reporter/maintainer statements about development snapshots.",
+      "capture": {"capture_id": "f0bf64a99e6f456c9bf00e1914efe159", "sha256": "d7843486a34f6f558d05d0dc182b64dafbab78d9ac3f25852db9f9fa8b4c2f77", "bytes": 30319, "format": "exact GitHub API response body", "body_complete": true, "text_delivered_bytes": 30319},
+      "applicability": "Shows reported mechanism and version/branch ambiguity that limits the release conclusion.",
+      "limits": "Comments are maintainer/reporter statements, not a controlled reproduction or proof of a release binary."
+    },
+    {
+      "id": "S14",
+      "title": "DuckDB PR #8253: CSV Sniffer – State Machine",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/8253",
+      "pin": {"kind": "merged pull request and immutable merge commit", "value": "duckdb/duckdb#8253; merge commit 3b58f4490f4c9192a8ff4dbd4fcea134be3106a2; merged 2023-09-04", "snapshot_sha256": "b699e6161bb0e83ddcf3731e5652243973060793340eb43739a2c1ea10666b94"},
+      "locator": "PR body, merge metadata, head/base and merge_commit_sha; description says state machine examines sample_chunks and addresses #7789; notes remaining sampling/type limits.",
+      "capture": {"capture_id": "a879fe03a3594634bc66eed5367d4f51", "sha256": "b699e6161bb0e83ddcf3731e5652243973060793340eb43739a2c1ea10666b94", "bytes": 22511, "captured_utc": "2026-10-05T23:39:04Z", "format": "exact GitHub API response body", "body_complete": true, "text_delivered_bytes": 22511},
+      "applicability": "Evidence for the intended mechanism, merge identity, and the PR author's stated relationship to #7789.",
+      "limits": "A merged PR and its description alone do not prove runtime or release behavior. PR touched many files; see tagged test source separately."
+    },
+    {
+      "id": "S15",
+      "title": "DuckDB v0.9.0 tagged regression test test_7789.test",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v0.9.0/test/sql/copy/csv/parallel/test_7789.test",
+      "pin": {"kind": "release tag plus captured file digest", "value": "duckdb/duckdb v0.9.0", "snapshot_sha256": "d936f76d9ce2e2a461a8b47ce63c4de7da1dee85ef8574f1c514bba187e90e26"},
+      "locator": "Complete test file: reads CrashStatistics.csv with SAMPLE_SIZE=-1 and asserts count 4980.",
+      "capture": {"capture_id": "fcaff8c8ddcb4084bb5d3b856eafbdeb", "sha256": "d936f76d9ce2e2a461a8b47ce63c4de7da1dee85ef8574f1c514bba187e90e26", "bytes": 429, "captured_utc": "2026-10-05T23:39:09Z", "format": "exact raw GitHub response body", "body_complete": true, "text_delivered_bytes": 429},
+      "applicability": "Establishes that the v0.9.0 source tag contains a regression oracle for the reported input.",
+      "limits": "Presence of a test in a source tag does not establish that the test passed in CI, that a release binary contains/passes it, or behavior in later versions."
+    },
+    {
+      "id": "S16",
+      "title": "DuckDB web documentation repository main commit identity",
+      "url": "https://api.github.com/repos/duckdb/duckdb-web/commits/main",
+      "pin": {"kind": "captured branch-tip object", "repository": "duckdb/duckdb-web", "commit": "1425b30d787a0acbc6192cb43f1e80bfdc908be2", "commit_date": "2026-10-05"},
+      "locator": "Commit object SHA/date used to pin S06-S11 raw documentation URLs to one repository revision.",
+      "capture": {"capture_id": "898512abfba4477d8d966667b2438b3b", "sha256": "d4e6bc8eec93bb6b5db3443381c072b43ee2083d0e9dcda9f9e816114112c69e", "bytes": 274593, "captured_utc": "2026-10-05T23:41:57Z", "format": "exact GitHub API response body", "body_complete": true, "text_delivered_bytes": 32768},
+      "applicability": "Anchors the captured `current` documentation pages to the named duckdb-web revision.",
+      "limits": "This pins the documentation repository, not the DuckDB engine binaries. The API body's inspected text was truncated to the first 32,768 bytes; the target SHA was observed in the response metadata."
+    }
+  ]
+}

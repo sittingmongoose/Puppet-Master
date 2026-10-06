@@ -1,0 +1,39 @@
+{
+  "schema": "er9.direct-native-goal-status.v1",
+  "created_utc": "2026-10-06T03:23:11.783037+00:00",
+  "jobs": [
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "pair_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001",
+      "arm": "control",
+      "stage": "revision",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw38qxp_2de35267-e1e4-4e2f-b20d-03581a196057",
+      "native_goal_record_update_utc": "2026-10-06T03:06:48.476000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/final-session.redacted.json",
+        "sha256": "f1315617ee50dcf31e16d6096c0c61f776afb54e63dec06d936a15f562101a42",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+        "sha256": "9e441e22ca9b772b4dbda2fd9dc9fd51b49dca9b8a108eb29c2156d3f067c06c",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791256008476,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    }
+  ],
+  "scope": "One exact terminal job; source-positive native target status only, separate from failure/completeness."
+}

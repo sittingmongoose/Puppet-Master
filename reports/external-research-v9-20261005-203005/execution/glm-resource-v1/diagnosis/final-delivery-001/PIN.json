@@ -1,0 +1,22 @@
+{
+  "schema": "er9.final-delivery-diagnosis-source-pins.v1",
+  "created_utc": "2026-10-06T03:26:38.231559+00:00",
+  "files": {
+    "project.py": "3c8095810a5273158da53962d426af8c14b1c1873732b121947000893ba63fd7",
+    "DIAGNOSIS.json": "c43ca8a4838af40f7a3b6e8b4f5bfbc081c88bb29f93c939761364977c1e1691",
+    "NATIVE_GOAL_STATUS.json": "c9e860a840c95b2a252b8267fb66f1c903be7ee68e07a607159c57a5d7fa72ce",
+    "REPORT.md": "5bc7f0fb41cee45c5cedb4d2fed3ed1b5584784bf3c9d2ff551140669ad2d2af",
+    "ALIAS_CLARIFICATION_OUTBOX.json": "8cedd98c6e0486fccbe38589b91e11f58ac48cb82b66896db91b209044e4c8c4",
+    "VERIFICATION.json": "dd73897c9f7a641a1ca0252f4c514b79ad62963d14194d1e1dac3432d2b99e1a",
+    "MANIFEST.json": "14720531021ff1edb95ac36970b64dc82b0198a6f65485b81d446d648c8ad377"
+  },
+  "original_runtime_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+    "sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+  },
+  "source_request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_DELIVERY_TRIAGE_REQUEST_001.json",
+    "sha256": "f7441391b7f8a667c67ad40961dd284cf554cfa77312c6f9c252b0f015f8fb66"
+  },
+  "new_runtime_or_goal_calls": 0
+}

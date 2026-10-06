@@ -1,0 +1,24 @@
+{
+  "schema": "er9.final-delivery-advertisement-verification.v1",
+  "created_utc": "2026-10-06T03:34:29.524141+00:00",
+  "status": "PASS_BOUNDED_WHITELIST",
+  "rows": 25,
+  "writer_and_path_text_schema_actual_request_rows": 24,
+  "cancelled_request_metadata_unexposed_rows": 1,
+  "source_export_SHA_matches_native_receipt": true,
+  "all_request_sessions_match_actualGoalSession": true,
+  "metadata_and_body_tool_names_match_complete_rows": 24,
+  "selectors": [
+    "/request/toolNames",
+    "/request/body/tools/*/name",
+    "/request/body/tools/*/input_schema key names",
+    "/request/body/tools/*/input_schema/properties key names",
+    "/request/body/tools/*/input_schema/required property names"
+  ],
+  "excluded": [
+    "requestheaders/provideroptions/messages/sdkMessages/descriptions/arguments/text_utf8values/response/source/evaluatorbody"
+  ],
+  "new_model_goal_probe_or_runtime_calls": 0,
+  "original_frozen_diagnosis_changed": false,
+  "new_codepatch": false
+}

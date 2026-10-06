@@ -1,0 +1,57 @@
+{
+  "schema": "er9.common_criteria.v1",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "dimensions": [
+    {
+      "id": "Q1",
+      "name": "Required question and plan-obligation coverage"
+    },
+    {
+      "id": "Q2",
+      "name": "Correct source interpretation, version, conditions, normative force and applicability"
+    },
+    {
+      "id": "Q3",
+      "name": "Justified inference, component choice and plan consequences"
+    },
+    {
+      "id": "Q4",
+      "name": "Verified useful discovery, alternatives, failures and breadth"
+    },
+    {
+      "id": "Q5",
+      "name": "Correctness and scope of executed witnesses and proposed validation"
+    },
+    {
+      "id": "Q6",
+      "name": "Supported semantic preservation and no new consequential errors"
+    },
+    {
+      "id": "Q7",
+      "name": "Honest uncertainty, scope/refusal and critical dependencies"
+    },
+    {
+      "id": "Q8",
+      "name": "Reproducible final delivery; economics and execution evidence reported separately"
+    }
+  ],
+  "scoring": "No weighted, aggregate or invented eighteen-facet score. Use obligation coverage and source-grounded defect identities/severity.",
+  "whole_case_PASS": "All declared obligations and consequential current claims independently assessed; no consequential error or unsupported critical dependency in the chosen design; remaining uncertainty correctly qualified. Optional adoption may remain open.",
+  "coverage_states": [
+    "COMPLETE",
+    "PARTIAL",
+    "UNASSESSED"
+  ],
+  "case_outcomes": [
+    "NOT_RUN",
+    "INCOMPLETE",
+    "UNASSESSED",
+    "FAIL_SCREEN",
+    "FAIL",
+    "PASS"
+  ],
+  "screening": "A decisive source-grounded failed screen may end the full review with remaining scope UNASSESSED. Match predeclared checks across both arms. Two FAIL labels do not imply equal quality.",
+  "minimum_negative_controls": "Do not credit empty delivery, blanket rejection, unrelated link counts or hiding obligations in a lead appendix. Preserve supported claims and legitimate proposed validation.",
+  "evaluation_blinding": "Evaluator receives exact brief, coverage card, admitted source access and designated current final first. Hide treatment label, candidate identity when practical, economics and prior grades until saved output judgment. Record unavoidable identity hints.",
+  "truth_separation": "These cards contain requirements, never evaluator-selected semantic answers. Source-grounded counterexamples created after output freeze stay evaluator-only until the relevant locked block ends."
+}

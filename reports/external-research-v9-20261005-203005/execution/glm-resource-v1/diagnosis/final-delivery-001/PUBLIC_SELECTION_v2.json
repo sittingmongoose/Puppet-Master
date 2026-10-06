@@ -1,0 +1,79 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T03:34:29.524141+00:00",
+  "owner": "execution_engine",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/project.py",
+      "sha256": "3c8095810a5273158da53962d426af8c14b1c1873732b121947000893ba63fd7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/DIAGNOSIS.json",
+      "sha256": "c43ca8a4838af40f7a3b6e8b4f5bfbc081c88bb29f93c939761364977c1e1691"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/NATIVE_GOAL_STATUS.json",
+      "sha256": "c9e860a840c95b2a252b8267fb66f1c903be7ee68e07a607159c57a5d7fa72ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/REPORT.md",
+      "sha256": "5bc7f0fb41cee45c5cedb4d2fed3ed1b5584784bf3c9d2ff551140669ad2d2af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ALIAS_CLARIFICATION_OUTBOX.json",
+      "sha256": "8cedd98c6e0486fccbe38589b91e11f58ac48cb82b66896db91b209044e4c8c4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/VERIFICATION.json",
+      "sha256": "dd73897c9f7a641a1ca0252f4c514b79ad62963d14194d1e1dac3432d2b99e1a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/MANIFEST.json",
+      "sha256": "14720531021ff1edb95ac36970b64dc82b0198a6f65485b81d446d648c8ad377"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/PIN.json",
+      "sha256": "b6297af10e39403da69405cae223732af42bae30c7d0455d0f684714539fe55d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/advertisement.py",
+      "sha256": "af618e97ab23c9e2211397ec7d02dc67be23cc8511f61160bf639d55f83ac0e4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_METADATA_ADDENDUM.json",
+      "sha256": "ec343adadaf5fd677bd5a4bbbbfdf8c77d6dd657ddefd12992dcf505d7f7b060"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_REPORT.md",
+      "sha256": "52bac967f5dfe97ccb1fdd02086a8a119b05c7d0579fc11094293a2e10ea891d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_VERIFICATION.json",
+      "sha256": "44dbea929eedba82866635d55ed294b884e6db2a45f7bf01d69983cc0b0e24d3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_MANIFEST.json",
+      "sha256": "d6c50eb52155ac227ada3b06219961f3d7be706676768d6ccbd62c77885181ee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/ADVERTISEMENT_PIN.json",
+      "sha256": "e8e3540ac29fac17187f4ea84fab58e071f7bc7c56181dadab049ef46b8d4ffa"
+    }
+  ],
+  "old_selector_unchanged": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-001/PUBLIC_SELECTION.json",
+    "sha256": "37d919f5f0de2bb78f66708b8491259b4ebdcf7f77b9417be9f1d3c72e2ae07c"
+  },
+  "excluded": [
+    "__pycache__",
+    "originalnativeRPC/modelIO/UI/conversations",
+    "candidateanswers/text_utf8/source/evaluatorpayload",
+    "operatorprofiles/taskscientificprefix",
+    "livejobs/registry/runtime/card files",
+    "all native/model request bodies except explicitly copied function/schema-key metadata"
+  ],
+  "owner_files_quiescent": true,
+  "metadata_only": true,
+  "additive_only": true,
+  "model_goal_or_account_calls": 0
+}
