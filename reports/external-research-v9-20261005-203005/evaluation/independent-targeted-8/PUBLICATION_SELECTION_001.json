@@ -1,0 +1,74 @@
+{
+  "schema": "er9.positive-publication-selector.v1",
+  "evaluation_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "createdUTC": "2026-10-06T04:09:32.131089Z",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/reservation.json",
+      "sha256": "f9f937aa03dec7365edc3c4ed5689f620c393dc886da7491846c5f0e81494d1f",
+      "bytes": 909
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+      "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+      "bytes": 272
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+      "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+      "bytes": 11658
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.md",
+      "sha256": "13162e7adb1bca6616e69696ca10a0c7270a57b65d2cf64bec4f006550fc744c",
+      "bytes": 1875
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_lock.json",
+      "sha256": "e35827156dc1b69779b54615a7130d4a3a41f6d342950186556d9930978059b0",
+      "bytes": 1554
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_access_log.json",
+      "sha256": "62df85cbafa4f289ec9fa29d6978b6b3c1398692611be88f96d07ffee6965593",
+      "bytes": 6363
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_start.json",
+      "sha256": "48e121dcbffee5c52951d4563a05c5b872797586a5de263739a96ae047457204",
+      "bytes": 347
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_checks_end.json",
+      "sha256": "b8aeb55f84989dd4681c069d6a91fe870a8a0e3da9cdb41161570053c07f4445",
+      "bytes": 588
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_assessment.json",
+      "sha256": "7dc36b74182db4839e22c1dff9a589a5bd97788dd5d988cdd99109cc3eedb805",
+      "bytes": 24474
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/final_report.json",
+      "sha256": "0d781bedc7cac352d70b7b86fe8d84be2bfe9d3d4b04bd67416b0c8747143632",
+      "bytes": 4555
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/final_report.md",
+      "sha256": "d477604285e9d1f2dd29bda5c0ec6a9cd17f7bc01b86380ff9bdda75468a699b",
+      "bytes": 4007
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/neutral_accounting.json",
+      "sha256": "14b980bc1f5a90ec925568a5aaab6bea11fa24562c25cac2c941d8582296cb10",
+      "bytes": 6944
+    }
+  ],
+  "excluded": [
+    "Raw task/source/native conversation bodies",
+    "Private Phase2 key",
+    "Exact OS unit/cgroup/PID observations and private pin checks"
+  ],
+  "scope": "Compact immutable assessment and clock/accounting reports only; no raw captures, candidate feedback, new final promotion or scientific pipeline credit."
+}

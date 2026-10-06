@@ -1,0 +1,2052 @@
+{
+  "schema": "er9.actual-prospective-clock-cohort-selection.v1",
+  "observed_utc": "2026-10-06T04:21:21.373759+00:00",
+  "selected_role_count": 46,
+  "selected_pair_count": 7,
+  "logical_extra_jobs": 0,
+  "source_outbox": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/OUTBOX.json",
+    "sha256": "0226f3000a16dba1026a7b740b245b5e11dcead9090d186f7ba9d6898ff4f188"
+  },
+  "contract": {
+    "path": "LAB_ROOT/supervision/CONTRACT-CLOCK-001.json",
+    "sha256": "ff30d96ef164cbd396440113f7d581d29f517e65978e9007f5ccb600d44cbfb3"
+  },
+  "selector_source": {
+    "path": "LAB_ROOT/ops/dispatcher/register_clock_cohort.py",
+    "sha256": "24c6db2e4bfcb81a7e9e834e2269764f449dd2d02ac51e485d9d8ab3694b5a95"
+  },
+  "excluded_entered_pairs": [
+    "I-01-FRESH-DELIVERY-R001",
+    "C-04-RESOURCE-R002-BUNDLE"
+  ],
+  "rows": [
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "a6dd5e995e9ef4186f0ce118f41efd25a23c5a7a96548c03cc42a1dbd0f70393"
+      }
+    },
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f95284d953901f33b47cf6770c8867f824649dcd637a7fc069bfbdc367c27536"
+      }
+    },
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f8b824aeae083547b2e30b39bb9b7c48b19903843a812a1bb0b0d6ebee1aae09"
+      }
+    },
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "bb6247a3b41d27b872868b9f94a73f90bd84c2006f47d747da3e2d1694b5b9c5"
+      }
+    },
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "e858545dc6eb2e307210a916005d98fec54c72d304955641cde28c59baec9b2e"
+      }
+    },
+    {
+      "job_id": "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-02-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-02-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "8ac9d571af01d0ce0d45222e146d78c487440c7ef988b9629da4b54536aff5fd"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "886a4e6409f1a16e07943a56ffeffeb2e5358c01cba804a4c411d9a18df0ff20"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "3bb55778357446862118b959fcf442084b0dc524ef362bef51abeae88f752b0d"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "aa2872168a172957d00b4514d566b88dbbb60c2d4499718d95db252a47886ca2"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "6a2f6d6c848d2503e574ce0038658d532d5e35faa37a353de2cd7d24b3ca513f"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "ffc6d09fa8aaf54452ae0fcf165bfe73ac49b7462faf159984d2d636a85eea45"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f7b662ea8934d5bfe6a6abc414aa5fcc955ae10775170ccdc88e0f48da7e43eb"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "flash_check",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "c7d7eb1552573de6634bd86bdb973550ac06e31bf8ef24e95957b8dd7567cb70"
+      }
+    },
+    {
+      "job_id": "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+      "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "final_resolution",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "10cd505e96aaf51e8d452f9dbbbd3742b27263a50f7c4dbe0e4bf96947d43538"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "957e6dbf4da0c7489794b92795a49ee134891d2107c63d38d5d5889f9901896d"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "2b59fb1a2f15f4ae403573a769bce61333bd55ef46158e7b90c507ae0b6f5022"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f2f434ce9b1629c01b5d35dd333926bb3750e8d2625cad4d8accc5a596a443cb"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "0e49638e41530d7f0308d4b42a1056483ed37c70f567efdb5a46496dc120774e"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "488565a6c7aef27387207b788eb0ccf5cf37ff3eb95fcfcae1d037dea9b4206f"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "ea5300d46bf58a4d0b0534a78d09de88e5c5900da8b264a93c4009463116b574"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "flash_check",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f03e6e3758963db5a88d93228e240fae6c98a26271a5c6ca6640f89bca0a4051"
+      }
+    },
+    {
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+      "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "final_resolution",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "dc39c86fe94d5add1b5f4ce226323ee842e85ec74d8f3078754bd8059be017ee"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "9b2e4e8ec78702d4801e25bd193ad8ffaa6bd321c57f9b7d35e73903e7038941"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "0fdc6f1fb89cc8eeb5ceb996230626992de69ce2cdc4dff89ab81c37d2f4b285"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "239d071eeff6462eb8651fcbc47bebd0d2098068e710cac88a43a636c8ebb36b"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "1ba63e36920a8e3e6c900ea519a944a73076c21b0651494d955aedb01a6ea592"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "f942cb3f7015b98bd80ffb65d3e44b01452c853c51400363ec5495b65697894e"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-09-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "5999dd19b72b7c252101fb977bfb698f5320147ec687d01083473d41c5b31df0"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "987238d2f973fddba0aae9b3e4125d9905c0db20561578cf3b766ae75e62f95f"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "a084112b8d5d96be1c1b290ce1eccc07ac987bf3d8ad18c55479e5cf6e93f041"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "ea822146c2a29d945fe17ec461aacf7f6c969f4070e51e0f438efa48fde110c9"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "5aab9b5689688d06e00c9b21765495cf8984cae536c07c213c26fe72045b848b"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "9c66bd0d8972cfa4f46636a69b0b429fd47b51f7cab7939781e04d04986b3d8f"
+      }
+    },
+    {
+      "job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "a024b889f9cf89b1bade530c76d3ccaf668683caf0a729fb42107d78e933d640"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "5826b517a0991eeef9ca40e8a73ad2773027bc833df3d4304e44557bb4748424"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "8638a4ba1852aab1d757b744c83a94eef184ef92e5ac203bc0af2f24e0c99138"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "e1f62d178e37421106f2b185d24d1ec49442cb456cd4f1c0c7dcd2ac4dab4328"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "6b656ecd5d6316c974ac46add6a5942075fcda6a82dd5a947abdd12035e47801"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "96fa6242310fd368d2b0599f8aa801711d6f0fd32af0f10582e840113d16df53"
+      }
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-11-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "4fd90f981b6df72f00c1c90ce1dfb1723e4bfd8082ce507d3a683cdccc4de8f1"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "18565f34edbc7c31cb297ec14d4f6bc6ec70005f9e293d3ee5beed64710ab900"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "49e3f93403bbcc81d3ff0d33c52c22197fd806c3bc165d77072c18cd16498153"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "e8bc4fd04498b9413849647ee46e2f36fe6a2e155a99b44a336987cf8f2b7a44"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "36f77f0ff0922fb3939f608770b0b7b6a4f408d447c6792fe579b8c49d32dcdc"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "5669fa4a0864d323804c652b080d5183c63a69fbe4ca925863175ff9b4b3d051"
+      }
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "replaces_job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+        "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "resource_definition": {
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "version": "glm_complete2304_bundle_clock_v3",
+        "source_pin": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "resource_contract": {
+          "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN"
+      },
+      "pipeline_closure": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+        "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+        "sha256": "e1fd18b1f452c3e56d7ada969e9b13937635356a5722c068e1e535cbd9f4bd18"
+      }
+    }
+  ],
+  "all46_zero_at_actual_selection": true,
+  "running_jobs_unchanged_at_selection": true,
+  "dynamic_actual_clock_input_config_and_action_proof_before_native_Goal_required": true
+}

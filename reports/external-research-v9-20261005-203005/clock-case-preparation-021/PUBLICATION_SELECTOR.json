@@ -1,0 +1,1636 @@
+{
+  "actual_deployment_or_native_admission": false,
+  "candidate_role_or_captured_source_bodies_selected": false,
+  "checkpoint_utc": "2026-10-06T04:15:37.794839+00:00",
+  "clock_awareness_explicit_common_behavioral_intervention": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/BLUEPRINT.json",
+      "sha256": "2ca2d4f7f4400ad1ef0724ce7a68ad58580fdb646aacef08213f285e237b9378"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/ELIGIBILITY_DECISION_002.json",
+      "sha256": "435f0e6c2f066fd7b02fdf8ca40e628efc853bb282be05d4052a1a6db06a0e46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/OUTBOX.json",
+      "sha256": "0226f3000a16dba1026a7b740b245b5e11dcead9090d186f7ba9d6898ff4f188"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/PIN.json",
+      "sha256": "bab230c26f5bbe5d859e200f4fcb262da18d1b362866f3e47ff83dfb0392f7af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/VERIFICATION.json",
+      "sha256": "2a4d6baedaff3c325bb00c5670d6377d8ed0d5e753741a62f9695e3e2f7269c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/blueprint.py",
+      "sha256": "c7b89a2546e8ecec82162f5d823480c828889c1be45235533266f375313e8bf2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/prepare_versions.py",
+      "sha256": "8e12e2e6f02050172bf92711933c56510912cc3a345c5a88750dc7a063ebdf77"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/test_blueprint.py",
+      "sha256": "1b451bb680a26326810b6e70ec74fdea25e462a64c72b0f70e2f10683e782b5e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/test_tool_clock_contract.py",
+      "sha256": "a40603908102d98da19a40d0cbfb78b47d1b5d42f175e529137333591e92b4dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/test_versions.py",
+      "sha256": "ce52d8ef0c1e16b009b651e135194004887712bdd05d82b60e68ebc653dd33bf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f95284d953901f33b47cf6770c8867f824649dcd637a7fc069bfbdc367c27536"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4b3fba4d22e2a30b3c729bb1cf35edbde0f23e4821e8f614d37aec20ac9e6e14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "a6dd5e995e9ef4186f0ce118f41efd25a23c5a7a96548c03cc42a1dbd0f70393"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f8b824aeae083547b2e30b39bb9b7c48b19903843a812a1bb0b0d6ebee1aae09"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "a0c8eb73bfd545c648d7f8a89c873696ef0c067f8aed8a9d1fa717262780303d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "e858545dc6eb2e307210a916005d98fec54c72d304955641cde28c59baec9b2e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "6dd3e68519a90a61d6c38d7b8c6be15d913ff096503c990fddea309939537870"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "bb6247a3b41d27b872868b9f94a73f90bd84c2006f47d747da3e2d1694b5b9c5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "8ac9d571af01d0ce0d45222e146d78c487440c7ef988b9629da4b54536aff5fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "23d11bae8b987c6d6a74ade0fc2c7bc5523cfedb30ebd95c3d32fd6ae2b94d03"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "6d0f8c815419d30e96d50dfe807533d58a915802d69669ae48a567ebf7ee33a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "58650dbc0e0cac6fbe41786f44e50539a0956021039df430a523ef00223e2d2e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-02-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "3bb55778357446862118b959fcf442084b0dc524ef362bef51abeae88f752b0d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "71d42a6c283a4c836d4b8f8177c5e6046cae6f50a31e77746d4570da1ec992ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "886a4e6409f1a16e07943a56ffeffeb2e5358c01cba804a4c411d9a18df0ff20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "0b7b136a71f640f2f7813a8df17148c7be14c494579860eea3b6f6aa8fffec6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "aa2872168a172957d00b4514d566b88dbbb60c2d4499718d95db252a47886ca2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "c721dce9ca8aa49eb6c10b5c34e65d8205993f51306863652786ab32ea568b6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5c9102887a9350af00df1fa4121023c9596482e2d790f27694721d1e04d546bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "ffc6d09fa8aaf54452ae0fcf165bfe73ac49b7462faf159984d2d636a85eea45"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "729e55d4d3290496ac13a4737feb25dac44f5d96a5f6db1a33bea9a94ddc639d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5e29cbb351c092342ff4e8030415a4973c299b82836eb274fff4468561bed2c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "10cd505e96aaf51e8d452f9dbbbd3742b27263a50f7c4dbe0e4bf96947d43538"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "55451dd9e9650721d161307c392305d4dcf20339b45144f8ae76636ece4e1202"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5dc209401923f75fa1cc0f14e98e955bfb38c67332b2a7e4e0e93fe1b95c3246"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "c7d7eb1552573de6634bd86bdb973550ac06e31bf8ef24e95957b8dd7567cb70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "fa31077c414a125e9a9031ab20ed16daf5d5a2c1f378de982e5bef9cdaec2394"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "dc11266ddc8228d6c00cdc29403c1a95ed6e852a987a6bddafa9a936c0ba1300"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "6a2f6d6c848d2503e574ce0038658d532d5e35faa37a353de2cd7d24b3ca513f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "151133a8db41fd06e5533d722da499224446489f08bef23c5eb5a71a3469804f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "b47274127d6fb2bfc6360eeb95db80a9fbca29628d1059c47d099b63572ddb5d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f7b662ea8934d5bfe6a6abc414aa5fcc955ae10775170ccdc88e0f48da7e43eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "5b76d4903b5813ce24ba43a5feb2a515569d8d408eb8dd97a6423177e6ae2879"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "804ff37f028b236e0d124a2cd09d0e8f50cd210a8748049704bdd33f595f5704"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "5954fcdf0f677fd998ad4972b572caac0b82e79311ecdbf0e7ed795e43ea4439"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-03-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "2b59fb1a2f15f4ae403573a769bce61333bd55ef46158e7b90c507ae0b6f5022"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4e444afd3e18c41f680cb3d9cd2b1e4e4ff42bbb2d0b86b758f568994751c16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "957e6dbf4da0c7489794b92795a49ee134891d2107c63d38d5d5889f9901896d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f2f434ce9b1629c01b5d35dd333926bb3750e8d2625cad4d8accc5a596a443cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "082934200c0035d4c5b5fe83909a35e5fffe62c74a2387935e3c8d242123d7c5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5c9102887a9350af00df1fa4121023c9596482e2d790f27694721d1e04d546bd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "488565a6c7aef27387207b788eb0ccf5cf37ff3eb95fcfcae1d037dea9b4206f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "25df778ed95d6afd2557a7b0caf49183fc6eccc25da4fe0acbca0a345eb85ee2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5e29cbb351c092342ff4e8030415a4973c299b82836eb274fff4468561bed2c2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "dc39c86fe94d5add1b5f4ce226323ee842e85ec74d8f3078754bd8059be017ee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "901095593fde1a76191cda54dae8026684ccbf26d21ebced4c25ee3bbf69ea72"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "5dc209401923f75fa1cc0f14e98e955bfb38c67332b2a7e4e0e93fe1b95c3246"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f03e6e3758963db5a88d93228e240fae6c98a26271a5c6ca6640f89bca0a4051"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "33cfe71d0f746be4a4d6e42bf2f78f3a410f38c3ee3934c50a94302f6cb05e8a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "dc11266ddc8228d6c00cdc29403c1a95ed6e852a987a6bddafa9a936c0ba1300"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "0e49638e41530d7f0308d4b42a1056483ed37c70f567efdb5a46496dc120774e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "7d534499bde70aacca2526c4d952f1e9da205c2e691730441d5065bf17e6691e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "b47274127d6fb2bfc6360eeb95db80a9fbca29628d1059c47d099b63572ddb5d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "ea5300d46bf58a4d0b0534a78d09de88e5c5900da8b264a93c4009463116b574"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "de5415f8d35bfbbb93b4eacf1b35e4262a84f6c6aa6f27facf881e8d8c0b468d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "933c8cc9897080261e42c46131ccef75f6840b47b08ddcbe48a0ab8abb6182f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "0269ce670b2af481a96a259611f3dfe41b53d3c2e149f2325d8101db13fd1aa6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-04-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "0fdc6f1fb89cc8eeb5ceb996230626992de69ce2cdc4dff89ab81c37d2f4b285"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "71d42a6c283a4c836d4b8f8177c5e6046cae6f50a31e77746d4570da1ec992ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "9b2e4e8ec78702d4801e25bd193ad8ffaa6bd321c57f9b7d35e73903e7038941"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "0b7b136a71f640f2f7813a8df17148c7be14c494579860eea3b6f6aa8fffec6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "239d071eeff6462eb8651fcbc47bebd0d2098068e710cac88a43a636c8ebb36b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b78f7a3c53700856ca7bcda08721a4e6f78e8fe099ce4906a1d939cdb3906f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "f942cb3f7015b98bd80ffb65d3e44b01452c853c51400363ec5495b65697894e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "71d42a6c283a4c836d4b8f8177c5e6046cae6f50a31e77746d4570da1ec992ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "1ba63e36920a8e3e6c900ea519a944a73076c21b0651494d955aedb01a6ea592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "ea741094f75d595bf12331f0c9c4e1c60de9327aa903b0b4e3d796f991d6b6be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "5999dd19b72b7c252101fb977bfb698f5320147ec687d01083473d41c5b31df0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "2f27cf741abcdea4889c8c567dbd84429635eaeb9cbe1764a99f8f01f117418c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "8fff8c001638e6ca498f07bdc64c90082df17dc2ad7864a26fd3a137c06f125d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "ec11fb256ad71d7359fa8c5accbbfd36b301f15ebed3092a76556d13e3056e26"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-09-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "a084112b8d5d96be1c1b290ce1eccc07ac987bf3d8ad18c55479e5cf6e93f041"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4e444afd3e18c41f680cb3d9cd2b1e4e4ff42bbb2d0b86b758f568994751c16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "987238d2f973fddba0aae9b3e4125d9905c0db20561578cf3b766ae75e62f95f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "ea822146c2a29d945fe17ec461aacf7f6c969f4070e51e0f438efa48fde110c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "f69cf57b35c8b06d41186dcbfbd8baec4d551a37d35565f56fab13ffd786fa3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "9c66bd0d8972cfa4f46636a69b0b429fd47b51f7cab7939781e04d04986b3d8f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4e444afd3e18c41f680cb3d9cd2b1e4e4ff42bbb2d0b86b758f568994751c16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "5aab9b5689688d06e00c9b21765495cf8984cae536c07c213c26fe72045b848b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "09c718ae335faaaa8f5ca26cb9a94ddc447827d5d0ca006293f1ec99e6452510"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "a024b889f9cf89b1bade530c76d3ccaf668683caf0a729fb42107d78e933d640"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "1d282b299b286535e9af8750e59d197ff4e8b6f3310434b409f08246e66d2f36"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "827a3df05646c5271b4b1f5eef57cea6175a38c6b7a71b2050e1d95c78a71abb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "4878d5318b1752d2b679203040b9c70ae54a835d8e82cf27492271b40a8e0430"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-10-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "8638a4ba1852aab1d757b744c83a94eef184ef92e5ac203bc0af2f24e0c99138"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "71d42a6c283a4c836d4b8f8177c5e6046cae6f50a31e77746d4570da1ec992ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "5826b517a0991eeef9ca40e8a73ad2773027bc833df3d4304e44557bb4748424"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "0b7b136a71f640f2f7813a8df17148c7be14c494579860eea3b6f6aa8fffec6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "e1f62d178e37421106f2b185d24d1ec49442cb456cd4f1c0c7dcd2ac4dab4328"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "f2f41ca229a8d72f96b12f5b516f9d5e5bbe3e6a6c1b4694cdd7e918cb6fb9b7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "96fa6242310fd368d2b0599f8aa801711d6f0fd32af0f10582e840113d16df53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "71d42a6c283a4c836d4b8f8177c5e6046cae6f50a31e77746d4570da1ec992ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "6b656ecd5d6316c974ac46add6a5942075fcda6a82dd5a947abdd12035e47801"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "0b7b136a71f640f2f7813a8df17148c7be14c494579860eea3b6f6aa8fffec6e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "4fd90f981b6df72f00c1c90ce1dfb1723e4bfd8082ce507d3a683cdccc4de8f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "e575fdb05fc262590cce86696df1481a8969c69790010239e849411c1762655a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "2854585f9f10a1280d36ef8b7bbcc188697921b1560d1e4d998401ff0f95dad3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "71255b5237414f7479565faee054473ac667bfac80c3d5a74b4640ebb2ab8223"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-11-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/COMMON_RUNTIME_CLOSURE.json",
+      "sha256": "4fe67290e3e5d8a85ab1d38f8d0d354efbea07d575eb26aeca57602cfd4ceb9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "49e3f93403bbcc81d3ff0d33c52c22197fd806c3bc165d77072c18cd16498153"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4e444afd3e18c41f680cb3d9cd2b1e4e4ff42bbb2d0b86b758f568994751c16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "18565f34edbc7c31cb297ec14d4f6bc6ec70005f9e293d3ee5beed64710ab900"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "e8bc4fd04498b9413849647ee46e2f36fe6a2e155a99b44a336987cf8f2b7a44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "f5baf525c5f914aa0bff1a0c0b9b5b888b039abdb3a4e50ecfb603b3ba164d8e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "5669fa4a0864d323804c652b080d5183c63a69fbe4ca925863175ff9b4b3d051"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "4e444afd3e18c41f680cb3d9cd2b1e4e4ff42bbb2d0b86b758f568994751c16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "36f77f0ff0922fb3939f608770b0b7b6a4f408d447c6792fe579b8c49d32dcdc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "sha256": "e1fd18b1f452c3e56d7ada969e9b13937635356a5722c068e1e535cbd9f4bd18"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/TASK.md",
+      "sha256": "53510243715e547a97285645b70a9dd0cdc03ac1dcd6a6dfaeaded53d5e446e5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/workspace/inputs/source_separation.md",
+      "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+      "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+      "sha256": "5cfb23c671cfc896aaa43c449ae8458c79693b41e454feb12707bff2752968ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/registration.json",
+      "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2"
+    }
+  ],
+  "native_raw_output_auth_private_evaluator_selected": false,
+  "publisher_only_adds_listed_exact_sha_files": true,
+  "schema": "er9.positive-publication-selection.v1",
+  "scope_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001"
+}

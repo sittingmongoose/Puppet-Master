@@ -1,0 +1,24 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_029_TD7_CURRENT_PHASE2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-7_CURRENT_RUNTIME_001.json",
+      "sha256": "4571d9e87fe7ea30745b78a8d90a628f177315292f85c897334803595b819107",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-7_CURRENT_RUNTIME_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD7_CURRENT_RESOURCE_EXECUTION_001.json",
+      "sha256": "87cc58ad31bc0c6469dfb7dc41198369797075b283c4ee731dbdec1b7aeaf6dc",
+      "relative_path": "phase2/TD7_CURRENT_RESOURCE_EXECUTION_001.json"
+    }
+  ],
+  "exclusions": [
+    "privatekeys",
+    "rawmodelIO",
+    "rawnativehistory",
+    "privateOS/session identifiers",
+    "priorgrade/runtime substitution"
+  ],
+  "release_basis": "allimmutablePHASE1_LOCK34e3a2...files independentlyhashverified/nonwritable beforeheldkeyrelease"
+}

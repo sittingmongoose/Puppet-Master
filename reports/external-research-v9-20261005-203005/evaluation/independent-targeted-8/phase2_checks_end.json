@@ -1,0 +1,15 @@
+{
+  "schema": "er9.independent-phase2-checks-end.v1",
+  "evaluation_id": "independent-targeted-8",
+  "checking_endUTC": "2026-10-06T04:07:59.117347Z",
+  "checking_end_monotonic": 90097.974389939,
+  "source_seconds": 240.9548613599909,
+  "phase2_checking_seconds": 357.21801953400427,
+  "conservative_phase2_since_source_freeze_seconds": 389.0246095860057,
+  "whole_to_checks_end_seconds": 629.9794709459966,
+  "source_limit_seconds": 1200,
+  "phase2_checking_limit_seconds": 600,
+  "whole_limit_seconds": 1800,
+  "clock_reset": false,
+  "report_handoffs_closure_pending_in_whole": true
+}

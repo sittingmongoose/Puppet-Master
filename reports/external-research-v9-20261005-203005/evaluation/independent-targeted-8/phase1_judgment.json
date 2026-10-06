@@ -1,0 +1,303 @@
+{
+  "schema": "er9.independent-phase1-judgment.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "eval_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "source_startUTC": "2026-10-06T03:57:29.137886Z",
+  "source_start_monotonic": 89467.994918993,
+  "phase1_frozenUTC": "2026-10-06T04:01:30.092738Z",
+  "phase1_frozen_monotonic": 89708.949780353,
+  "source_elapsed_seconds": 240.9548613599909,
+  "source_budget_seconds": 1200,
+  "accepted_evaluator": {
+    "model": "gpt-6.1-sol",
+    "effort": "xhigh",
+    "actual_model": "UNKNOWN",
+    "actual_provider": "UNKNOWN"
+  },
+  "blinding": {
+    "identity_hints": "Assignment case/model hints and launched task arm/stage labels unavoidable; not perfectly blinded.",
+    "aliases_status_history_economics_private_key_read": false,
+    "prior_scientific_grades_answers_read": false
+  },
+  "source_log": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+    "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+    "bytes": 272
+  },
+  "counts": {
+    "common_dimensions": 8,
+    "full_A_obligations": 12,
+    "common_important_checks": 5,
+    "target_obligations": 3,
+    "target_important_checks": 3
+  },
+  "outcomes": {
+    "A": {
+      "case_outcome": "INCOMPLETE",
+      "designated_final": "ABSENT",
+      "source_catalog": "ABSENT",
+      "witness_catalog": "ABSENT",
+      "lead_inventory": "ABSENT",
+      "actual_partial_artifacts": 1,
+      "scientific_quality": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    "B": {
+      "case_outcome": "INCOMPLETE",
+      "designated_final": "ABSENT",
+      "source_catalog": "ABSENT",
+      "witness_catalog": "ABSENT",
+      "lead_inventory": "ABSENT",
+      "actual_partial_artifacts": 0,
+      "scientific_quality": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    }
+  },
+  "independent_observations": [
+    {
+      "id": "TD8-OBS-DELIVERY",
+      "observation": "Both anonymous sides lack the exact current designated proposal and sources/witnesses/leads catalogs required by actual stage tasks. The source-map scratch is not an adoption bundle or a materialized current final. Delivery is incomplete on both sides.",
+      "scientific_scope": "Absence is a delivery result; absent scientific content is UNASSESSED, not false scientific PASS or an invented source error."
+    },
+    {
+      "id": "TD8-OBS-LOCATOR",
+      "observation": "A scratch artifact is valid JSON with exactly source, source_sha256, lines. Its 1349 unique consecutive 1-based line/text entries reconstruct with LF and final LF to the entire admitted 45003-byte 0006.body; reconstruction SHA-256 fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e equals both anonymous admitted source captures and declared map source pin.",
+      "locator_suitability": "Useful exact local locator for this captured changelog; metadata resolves its raw GitHub master URL and capture ID ec24d46c000041ec8ba96ce6b742a6a2. Exact byte capture is pinned; a Git commit/release applicability chain is not established by this map.",
+      "preservation": "All copied source lines, blank lines, dated sections, breaking/experimental/untested qualifications and literal terminal ellipsis are preserved. Metadata says HTTP200/body_complete true/truncated false; terminal ellipsis is present in admitted source, not evidence of a mapper omission.",
+      "limits": "No coordinate contract, source interpretation, independent precedent analysis, issue/fix/test chain, witness, design recommendation, correction, or full-task completion is authored in this artifact. Capture accessibility is not candidate comprehension."
+    },
+    {
+      "id": "TD8-OBS-PRESERVE",
+      "observation": "Potentially useful source leads remain visible with their dated context, e.g. source L54-81 (2026.5.15/2026.5.2 API changes), L92-96 (TVIPS units note), L164-166 (length-one dimension fix), L181-185 versus L187-192 (different Zarr compatibility dates).",
+      "preservation_obligation": "Retain these exact source/date/condition leads if a later authorized result uses them. This assessment does not turn their changelog wording into verified current implementation behavior or a repaired draft claim.",
+      "scientific_remainder": "UNASSESSED"
+    }
+  ],
+  "common_dimensions": [
+    {
+      "id": "Q1",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "scope": "Delivery obligation assessed as incomplete; scientific required-question coverage UNASSESSED."
+    },
+    {
+      "id": "Q2",
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "scope": "A exact source-locator transcription checked; source/version/condition applicability to chosen design remains UNASSESSED."
+    },
+    {
+      "id": "Q3",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED"
+    },
+    {
+      "id": "Q4",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED"
+    },
+    {
+      "id": "Q5",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED"
+    },
+    {
+      "id": "Q6",
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "scope": "A copied source content preserved exactly; supported draft semantics and consequential scientific errors remain UNASSESSED."
+    },
+    {
+      "id": "Q7",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED"
+    },
+    {
+      "id": "Q8",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "scope": "Final/catalog absence assessed as INCOMPLETE. Execution/economics held for Phase2."
+    }
+  ],
+  "full_A_obligations": [
+    {
+      "id": "A01",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A02",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A03",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A04",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A05",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A06",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A07",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A08",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A09",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A10",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A11",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    },
+    {
+      "id": "A12",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "scope": "Full development proposal scientific completeness outside current partial artifact; no final promotion."
+    }
+  ],
+  "common_important_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No designated final exists. Catalog/witness/draft analysis was not supplied as authored current output. Missing claims are not vacuous source PASS."
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No designated final exists. Catalog/witness/draft analysis was not supplied as authored current output. Missing claims are not vacuous source PASS."
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No designated final exists. Catalog/witness/draft analysis was not supplied as authored current output. Missing claims are not vacuous source PASS."
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No designated final exists. Catalog/witness/draft analysis was not supplied as authored current output. Missing claims are not vacuous source PASS."
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No designated final exists. Catalog/witness/draft analysis was not supplied as authored current output. Missing claims are not vacuous source PASS."
+    }
+  ],
+  "target_obligations": [
+    {
+      "id": "D-V02-A-01",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No authored array/display/physical binding or boundary/inverse operation."
+    },
+    {
+      "id": "D-V02-A-02",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "Transcription verified separately; behavior applicability and critical dependencies not authored."
+    },
+    {
+      "id": "D-V02-A-03",
+      "A": "INCOMPLETE",
+      "B": "INCOMPLETE",
+      "scientific_subchecks": "UNASSESSED",
+      "reason": "Exact current standalone result and catalogs absent."
+    }
+  ],
+  "target_important_checks": [
+    {
+      "check_id": "D-V02-A-P1",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "No authored correction/preservation of draft behavior claims; source-map transcription fidelity is narrower."
+    },
+    {
+      "check_id": "D-V02-A-P2",
+      "A": "INCOMPLETE",
+      "B": "INCOMPLETE",
+      "scientific_retention": "UNASSESSED",
+      "reason": "Both mandatory current final proposals and all three catalogs absent; no blanket rejection or false completeness claim is evidenced by the empty boundary."
+    },
+    {
+      "check_id": "D-V02-A-P3",
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "A has a source map; B has no artifact. Neither supplies a unit/type/domain binding, calculation/invariant, executed witness, or repair result. No causal method attribution from this difference."
+    }
+  ],
+  "prohibited_inferences": [
+    "No winner",
+    "No full-pipeline/domain PASS",
+    "No scientific PASS from empty delivery",
+    "No scratch promotion to final",
+    "No autonomous discovery credit from supplied inputs",
+    "No native completion inferred from wrapper status",
+    "No causal/mechanism success from unequal artifact presence"
+  ],
+  "finding_routing": "Source findings only /root and designated report/publisher; courier receives pins only. No candidate/ops/engine/tools/case feedback."
+}

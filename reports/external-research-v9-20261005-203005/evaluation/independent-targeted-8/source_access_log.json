@@ -1,0 +1,113 @@
+{
+  "schema": "er9.independent-source-access-log.v1",
+  "eval_id": "independent-targeted-8",
+  "scope": "Exact frozen dispatch/task/partial artifact plus requested admitted 0006.body and source-index records only",
+  "source_start": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+    "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+    "bytes": 272
+  },
+  "read_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/dispatch.json",
+      "sha256": "a32bf076514af05d0394aa28ade566fa47e361e6daadde54b363290061cbcc44",
+      "bytes": 10492
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "937d3bb4f6a41ca2522ea66a43a06b47ea48272f85b0724b5717b5320e2ebba9",
+      "bytes": 2245
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+      "bytes": 1421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted-card.json",
+      "sha256": "68c5c348dc7b8e29879ed3f9052b9d26b783681ee62abb7ce2ce2b4694ba2574",
+      "bytes": 3607
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "10497db261f5fd5848351857a87daecb40114e880f13d4685b8700dad29a5ed3",
+      "bytes": 14843
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7",
+      "bytes": 14966
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/outputs/A/scratch/changelog-line-map.txt",
+      "sha256": "487184cb7287004a2949f447b21f74660a8a8e71017baa2f344ecbfe57bdca44",
+      "bytes": 80463
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/MANIFEST.json",
+      "sha256": "40f8b666fb19282281e731a4063312c9ac7d8734e09f0a95c7dc9b1aad2ba335",
+      "bytes": 1522
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/A-0006.body",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "bytes": 45003
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/A-0006.metadata.json",
+      "sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+      "bytes": 721
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/B-0006.body",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "bytes": 45003
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/B-0006.metadata.json",
+      "sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+      "bytes": 721
+    }
+  ],
+  "external_fetches": 0,
+  "candidate_execution_or_retest": false,
+  "unread_before_phase1_freeze": [
+    "integrity-proof.json",
+    "aliases",
+    "native Goal records",
+    "status/history",
+    "economics",
+    "private key"
+  ],
+  "initial_task_output_truncation": "All task files pin-verified; separately re-read full obligations, common checks, output contract, targeted card and launched task A. Launched task B visible in full. Partial JSON reformatted and read in three complete contiguous source-line ranges 1-500,501-1000,1001-1349."
+}

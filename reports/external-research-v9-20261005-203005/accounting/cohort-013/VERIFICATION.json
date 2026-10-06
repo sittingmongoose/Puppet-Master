@@ -1,0 +1,17 @@
+{
+  "capture_interval_utc": {
+    "end": "2026-10-06T04:21:35.673556+00:00",
+    "start": "2026-10-06T04:21:34.874566+00:00"
+  },
+  "checks": [
+    "All original012 attempts retained; every original known token total retained or advanced.",
+    "Exact typed schemas pass.",
+    "Unique provider-request and actual Goal identities validated by builder; cache/input and reasoning/output subset checks pass.",
+    "Historical native-proof receipt bindings match; 37 existing provider rows referenced, never recharged.",
+    "All source pins with captured bytes match; changed-source flag retained; direct Luna Goal status selectors and updatedAt preserved.",
+    "Clock owner SHA pins independently verified; nested checkpoints not added."
+  ],
+  "errors": [],
+  "schema": "er9.accounting.capture-validation.v1",
+  "unknowns": "Physical provider, billing, helpers, cancelled/unexposed tails, true critical path, wasted time and allocation remain UNKNOWN."
+}

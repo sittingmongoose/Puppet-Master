@@ -1,0 +1,99 @@
+{
+  "schema": "er9.independent-reviewer-closure.v1",
+  "evaluation_id": "independent-targeted-7",
+  "status": "COMPLETED_CURRENT_PARTIAL_TARGETED_REVIEW",
+  "closure_utc": "2026-10-06T04:16:03.624403+00:00",
+  "closure_monotonic_ns": 90582481391958,
+  "source_inclusive_seconds": 624.291697865,
+  "source_limit_seconds": 1200,
+  "phase2_literal_inclusive_seconds": 561.235772228,
+  "phase2_inclusive_limit_seconds": 600,
+  "phase2_checking_span_seconds": 484.740795335,
+  "checking_span_scope": "first P2 metadata check through checks/report/notices/closure; not active CPU, does not replace inclusive start",
+  "phase2_prechecking_wait_and_handoff_seconds": 76.494976893,
+  "whole_inclusive_seconds": 1185.527470093,
+  "whole_limit_seconds": 1800,
+  "all_deadlines_met": true,
+  "whole_original_start_monotonic_ns": 89396953921865,
+  "whole_original_deadline_monotonic_ns": 91196953921865,
+  "phase2_inclusive_original_deadline_monotonic_ns": 90621245619730,
+  "clock_reset_performed": false,
+  "phase1_lock_and_every_pin_unchanged_after_phase2": true,
+  "required_scientific_notices": [
+    {
+      "target": "/root/publisher",
+      "delivery": "SEND_MESSAGE_ACCEPTED",
+      "receiver_read_ack": "NOT_WAITED_FOR"
+    },
+    {
+      "target": "/root/cost_accounting",
+      "delivery": "SEND_MESSAGE_ACCEPTED",
+      "receiver_read_ack": "NOT_WAITED_FOR"
+    },
+    {
+      "target": "/root",
+      "delivery": "SEND_MESSAGE_ACCEPTED",
+      "receiver_read_ack": "NOT_WAITED_FOR"
+    }
+  ],
+  "notice_send_results_failure": [],
+  "source_findings_forwarded_to_ops_case_engine_or_candidates": false,
+  "metadata_only_recipients": [
+    "/root/frozen_exports",
+    "/root/projection_keeper"
+  ],
+  "mailbox_final_check": "no unread mail",
+  "scientific_phase1_regrade": false,
+  "evaluator_isolated_executions": {
+    "count": 2,
+    "exit_codes": [
+      0,
+      0
+    ],
+    "cleanup_confirmed": [
+      true,
+      true
+    ],
+    "candidate_receipts_distinct": true
+  },
+  "candidate_goals_created_by_evaluator": 0,
+  "forbidden_actions_performed": [],
+  "campaign_completed": false,
+  "artifact_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/REPORT.json",
+      "sha256": "af6abb3b0dc5f800f204af8b5d753750cd0b770070efe4ff29e4658492de1289",
+      "bytes": 19972
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/REPORT.md",
+      "sha256": "0d12902f245f9a8d7f0cde17e1a65086001abae951c5ad01e0d1e9e8df846886",
+      "bytes": 4981
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/raw-evidence-manifest.json",
+      "sha256": "740f34a95bde64ac54c589946a8a5d7b09cf4703cd5f6a2d74fd3fe02b292f44",
+      "bytes": 12191
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/PHASE1_LOCK.json",
+      "sha256": "34e3a2c3d6de02f4d09ca0d2313bb26a4184271e8ebf33dcf15e041498974b7a",
+      "bytes": 3049
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/PHASE2_INCLUSIVE_START.json",
+      "sha256": "52d6fe16c23bb0b0aa0441db4dcd0ca4a6ec2a54b707e9f3bdf4e0ad03b6828b",
+      "bytes": 754
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/PHASE2_CHECKING_START.json",
+      "sha256": "e46c90813086cd879e741fa6f9971662a22e7071f0e9d450c0d7350ec01babce",
+      "bytes": 396
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/phase2-owned-scope-check.json",
+      "sha256": "d7a8c0dafe4a9bc23c2fbd2fe5e760687f5f07179e5b8cf256613d3f37e2e200",
+      "bytes": 12067
+    }
+  ]
+}

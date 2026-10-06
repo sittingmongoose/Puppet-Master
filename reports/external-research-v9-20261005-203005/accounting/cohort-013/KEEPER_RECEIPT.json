@@ -1,0 +1,64 @@
+{
+  "attempts_pin": {
+    "path": "accounting/cohort-013/attempts.safe.json",
+    "sha256": "815c44f3cb7a92713471c6f99bff6043aa6365d567118d4009dfd823bbb83352"
+  },
+  "candidate_totals": {
+    "attempts": 168,
+    "known_tokens": 476595505,
+    "native_goal_starts_known": 150,
+    "occupied_seconds_known": 110753.80026436699,
+    "occupied_seconds_unknown_rows": 5,
+    "starts_unknown_rows": 0,
+    "usage_unknown_rows": 6
+  },
+  "capture_interval_utc": {
+    "end": "2026-10-06T04:21:35.673556+00:00",
+    "start": "2026-10-06T04:21:34.874566+00:00"
+  },
+  "continuation_rule": "Accounting snapshot is not a campaign stop, quality/pipeline credit, source uptake or cache benefit. Helpers/billing/physical/provider tails remain UNKNOWN.",
+  "current_changed_sources": [],
+  "neutral_ops_provenance_pins_reference_only_postcapture": [
+    {
+      "path": "ops/dispatcher/CLOCK_COHORT_ADOPTION_001.json",
+      "sha256": "7f52329a807ab6bee4c7e58ec9dfcd0d011451c6e75ae7cde3f6f7d69546e4a4"
+    },
+    {
+      "path": "ops/dispatcher/I01_FRESH_FIRST_G_ACTIVATION_PUBLIC_001.json",
+      "sha256": "5d98cc00a3a10c277244e05e84cb5d7f693b51d4c44df8e599390edcbd90c8e7"
+    }
+  ],
+  "ops_provenance_scope": "Clock/resource-version import metadata and firstI01 activation provenance only; no new inference/attempt from imports, no exact native activation time inferred from enclosing hosttime. Current capturedjournal counts remain authoritative.",
+  "prior012_changed_source_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior012_selection_pin": {
+    "path": "accounting/cohort-012/PUBLIC_SELECTION.json",
+    "sha256": "5c2dd116ca8d4d38fad5b695d8b47d0fa3bd8499af6290b6edb7c8103590b314"
+  },
+  "root_counter_separate": {
+    "add_to_provider": false,
+    "billing_dollars": "UNKNOWN",
+    "helper_inclusion": "UNKNOWN",
+    "observation_timestamp": "2026-10-06T04:00:32Z",
+    "status": "active",
+    "time_used_seconds": 27081,
+    "tokens_used": 18611821
+  },
+  "schema": "er9.accounting.restart-receipt.v1",
+  "snapshot_pin": {
+    "path": "accounting/cohort-013/snapshot.safe.json",
+    "sha256": "003514722a12839a3fc973d433ef426bdd2c4acc93d864cf59376eb841cde0d9"
+  }
+}

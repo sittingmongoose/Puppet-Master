@@ -1,0 +1,382 @@
+{
+  "schema": "er9.independent-targeted-report.v1",
+  "evaluation_id": "independent-targeted-7",
+  "pair_id": "D-V01-B",
+  "prepared_utc": "2026-10-06T04:14:27.306576+00:00",
+  "report_ready_monotonic_ns": 90486129066422,
+  "scope": "one current partial targeted diagnostic pair; not campaign completion",
+  "immutable_phase1": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/PHASE1_LOCK.json",
+    "sha256": "34e3a2c3d6de02f4d09ca0d2313bb26a4184271e8ebf33dcf15e041498974b7a",
+    "judgment_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/phase1/judgment.json",
+    "judgment_sha256": "432adf352516691aabb9793d6580355685690ffca34dd1c46a0c19eb100b2465",
+    "all_pins_rechecked_after_Phase2": true,
+    "grade_rewritten": false
+  },
+  "scientific_outcomes": {
+    "A": {
+      "required_artifact_delivery": "COMPLETE_PRESENT_PARSEABLE",
+      "case_outcome": "UNASSESSED",
+      "source_coverage": "PARTIAL",
+      "checked_subset_result": "NO_CONSEQUENTIAL_DEFECT_IDENTIFIED",
+      "targeted_whole_PASS": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "autonomous_discovery_credit": false
+    },
+    "B": {
+      "required_artifact_delivery": "FAIL_SCREEN_FINAL_AND_ALL_THREE_CATALOGS_ABSENT",
+      "case_outcome": "FAIL_SCREEN",
+      "source_coverage": "PARTIAL_ARTIFACT_CHECK_ONLY",
+      "scientific_quality_remainder": "UNASSESSED",
+      "targeted_whole_PASS": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "partial_promoted_to_final": false
+    }
+  },
+  "phase2_operational_accounting_rows": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "job_id": "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_status": "HOLD",
+      "native_completion": false,
+      "operational_complete": false,
+      "required_artifacts_present": 4,
+      "required_artifacts_total": 4,
+      "missing_required_artifacts": [],
+      "invalid_json_artifacts": [],
+      "required_artifact_validity": "present A three JSON catalogs parseable and exact frozen pin; B missing required artifacts, no validity inferred",
+      "owned_quiescence": true,
+      "actual_service_set_size": 2,
+      "actual_current_execution_count": 0,
+      "actual_current_execution_receipts": [],
+      "mechanism_uptake": "A no new current execution; B two current bootstrap-started candidate executions exit1 then0; successful code exactmatches frozen partial. This is usage evidence, not integrated scientific PASS or receipt-consumption proof.",
+      "requested_selector": {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "max"
+      },
+      "observed_configuration_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime": "UNKNOWN",
+      "opaque_native_goal_id": "UNKNOWN_NOT_EXPOSED",
+      "session_thread_vs_goal": "route activation positive and direct Goal status observed; API session/thread identifier is separate and not relabeled opaque GoalID",
+      "native_turns": {
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1
+      },
+      "host_set_current_goal_count": 1,
+      "goal_replacements_observed": 0,
+      "native_result_elapsed_seconds": 585.618108696,
+      "output_freeze_elapsed_seconds": 585.674768615,
+      "goal_counter": {
+        "createdAt": 1791249869,
+        "status": "paused",
+        "timeUsedSeconds": 580,
+        "tokenBudget": null,
+        "tokensUsed": 356033,
+        "updatedAt": 1791250449
+      },
+      "observed_native_usage": {
+        "cachedInputTokens": 3027456,
+        "inputTokens": 3334592,
+        "outputTokens": 48897,
+        "reasoningOutputTokens": 24246,
+        "totalTokens": 3383489
+      },
+      "native_http_attempts": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "accounting_limits": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "resource_budget_seconds": 600.0,
+      "aggregate_memory_cap_bytes": 2415919104,
+      "aggregate_memory_peak_bytes": 343035904,
+      "memory_swap_cap_bytes": 0,
+      "oom_observed": false,
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "outer_release_elapsed_seconds": 592.848880498,
+      "outer_release_before_original_deadline": true,
+      "outer_release_descendants_quiet": true,
+      "proof_hash_namespace": {
+        "embedded_pre_enrichment_native_receipt_sha256": "899a5192c1bfbba5bf3f88a98011e34d9fa4447fecfa02a2b34b39284f686331",
+        "enriched_current_native_result_sha256": "116f7a4a56c4ef10e8ee3c5e06d98e4b849d74ad2a36e3cf24d3a65c11203d7d",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "qualification": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed."
+      }
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "job_id": "D-V01-B-treatment-diagnostic-a001-resource-v13-a002",
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_status": "HOLD",
+      "native_completion": false,
+      "operational_complete": false,
+      "required_artifacts_present": 0,
+      "required_artifacts_total": 4,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "invalid_json_artifacts": [],
+      "required_artifact_validity": "present A three JSON catalogs parseable and exact frozen pin; B missing required artifacts, no validity inferred",
+      "owned_quiescence": true,
+      "actual_service_set_size": 3,
+      "actual_current_execution_count": 2,
+      "actual_current_execution_receipts": [
+        {
+          "execution_id": "exec-18n25imi",
+          "original_result_sha256": "d6974cf073925af7a3b02757c1ef6654e73c8c6b19ffba5eb8bef5717bdd6ac8",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-18n25imi",
+            "execution_label": "executed by candidate",
+            "exit_code": 1,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "c9ed010c7638e976b5009b27e821e40f08ec68855970e2254b3504bd4c6d6174",
+            "data_sha256": "0ac11252301ba0163ed74e5940b1a0190f09bdea6e8f7f5f1dccabc0c74aa6fb",
+            "stdout_bytes": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_bytes": 489,
+            "stderr_sha256": "247f99dcc60cacf8e31dd58951ba359851cd288e400f4798e5bc6aff91cb8412",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-l16fuu19",
+          "original_result_sha256": "c87ce0fc76bd4ade125b610d580979a29714378864ddeabed26d93cc57244d55",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-l16fuu19",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "de51e3f90f69601727f70b2ebb2f4e92be02532a4229fda7a5494021bcd4adc1",
+            "data_sha256": "bdbdc15810c0e310548ebeb00370a18f4837e933350ec3aa17ff101aa9676958",
+            "stdout_bytes": 389,
+            "stdout_sha256": "8025a53a82bfd7af84ae024fdbafc2bf789028af72b3f1da7082854cb477086f",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        }
+      ],
+      "mechanism_uptake": "A no new current execution; B two current bootstrap-started candidate executions exit1 then0; successful code exactmatches frozen partial. This is usage evidence, not integrated scientific PASS or receipt-consumption proof.",
+      "requested_selector": {
+        "model": "gpt-6-luna",
+        "reasoning_effort": "max"
+      },
+      "observed_configuration_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime": "UNKNOWN",
+      "opaque_native_goal_id": "UNKNOWN_NOT_EXPOSED",
+      "session_thread_vs_goal": "route activation positive and direct Goal status observed; API session/thread identifier is separate and not relabeled opaque GoalID",
+      "native_turns": {
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1
+      },
+      "host_set_current_goal_count": 1,
+      "goal_replacements_observed": 0,
+      "native_result_elapsed_seconds": 585.630049564,
+      "output_freeze_elapsed_seconds": 585.673058744,
+      "goal_counter": {
+        "createdAt": 1791250306,
+        "status": "paused",
+        "timeUsedSeconds": 580,
+        "tokenBudget": null,
+        "tokensUsed": 169825,
+        "updatedAt": 1791250886
+      },
+      "observed_native_usage": {
+        "cachedInputTokens": 1548288,
+        "inputTokens": 1690674,
+        "outputTokens": 27439,
+        "reasoningOutputTokens": 22240,
+        "totalTokens": 1718113
+      },
+      "native_http_attempts": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "accounting_limits": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "resource_budget_seconds": 600.0,
+      "aggregate_memory_cap_bytes": 2415919104,
+      "aggregate_memory_peak_bytes": 364732416,
+      "memory_swap_cap_bytes": 0,
+      "oom_observed": false,
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "outer_release_elapsed_seconds": 591.445635291,
+      "outer_release_before_original_deadline": true,
+      "outer_release_descendants_quiet": true,
+      "proof_hash_namespace": {
+        "embedded_pre_enrichment_native_receipt_sha256": "63b83dd4855c36f81979f3930cf9bc45506d51ccc57fb887ef06ec8927a66689",
+        "enriched_current_native_result_sha256": "c8e6507dcd7229ee7cb094b6601931f64cdfba64845f653c4bd779d7ee39ca60",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "qualification": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed."
+      }
+    }
+  ],
+  "chronological_selection": {
+    "schema": "er9.chronological-ready-clock-namespace.v1",
+    "rows": [
+      {
+        "alias": "A",
+        "job_id": "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+        "registry_terminal_utc": "2026-10-06T01:34:17.281774+00:00",
+        "registry_permit_release_confirmed": true,
+        "exact_native_owned_scope_observation_monotonic_ns": 80868803859294,
+        "exact_native_elapsed_seconds": 585.618108696,
+        "exact_outer_slice_release_monotonic_ns": 80876038517745,
+        "private_slice_release_sha256": "b0d6bcbd8a26e4cd5466dc4c885dbaca2b197a9fe2036e5deeedc5a18bf49477",
+        "actual_all_private_slice_descendants_quiet": true,
+        "release_utc": "UNKNOWN_NOT_EXPOSED_BY_RECEIPT; do not translate proof clocks into terminalUTC"
+      },
+      {
+        "alias": "B",
+        "job_id": "D-V01-B-treatment-diagnostic-a001-resource-v13-a002",
+        "registry_terminal_utc": "2026-10-06T01:41:33.263660+00:00",
+        "registry_permit_release_confirmed": true,
+        "exact_native_owned_scope_observation_monotonic_ns": 81306202297966,
+        "exact_native_elapsed_seconds": 585.630049564,
+        "exact_outer_slice_release_monotonic_ns": 81312020552117,
+        "private_slice_release_sha256": "7848f88eee985b66726864ae5753eeb162d34eac6f0c06b4f4a16b94e9dbda1b",
+        "actual_all_private_slice_descendants_quiet": true,
+        "release_utc": "UNKNOWN_NOT_EXPOSED_BY_RECEIPT; do not translate proof clocks into terminalUTC"
+      }
+    ],
+    "predeclared_pair_terminal_proxy_ready_utc": "2026-10-06T01:41:33.263660+00:00",
+    "declared_scheduling_basis": "paired unit ordered by max exact registry terminalUTC among both positively frozen/permitreleased/ownedquiet roles; currentselectedpair01:41:33.263660. Original role clocks not replaced by laterpacketprepare time.",
+    "actual_all_owned_quiet_ready_monotonic_ns": 81312020552117,
+    "clock_qualification": "scheduling terminalUTCproxy vs native proof/outerrelease monotonic namespaces are distinct; exact outerrelease UTC not separately exposed; no inferred equality",
+    "no_grade_or_source_clock_rewrite": true
+  },
+  "evaluator_identity": {
+    "requested_selector": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "fork_turns": "none"
+    },
+    "accepted_by_root": true,
+    "physical_provider_runtime": "UNKNOWN",
+    "generic_developer_identity_is_physical_attestation": false,
+    "native_goal_created_by_evaluator": false,
+    "evaluator_tokens_and_money": "UNKNOWN_NOT_EXPOSED_TO_THIS_REVIEWER"
+  },
+  "clocks": {
+    "original_start_utc": "2026-10-06T03:56:18.096934+00:00",
+    "original_start_monotonic_ns": 89396953921865,
+    "source_screen_inclusive_seconds": 624.291697865,
+    "source_limit_seconds": 1200,
+    "phase2_inclusive_start_utc": "2026-10-06T04:06:42.388617+00:00",
+    "phase2_inclusive_start_monotonic_ns": 90021245619730,
+    "phase2_inclusive_elapsed_at_report_seconds": 464.883446692,
+    "phase2_inclusive_limit_seconds": 600,
+    "phase2_checking_start_utc": "2026-10-06T04:07:58.883610+00:00",
+    "phase2_checking_start_monotonic_ns": 90097740596623,
+    "phase2_checking_elapsed_at_report_seconds": 388.388469799,
+    "phase2_prechecking_overhead_seconds": 76.494976893,
+    "whole_elapsed_at_report_seconds": 1089.175144557,
+    "whole_limit_seconds": 1800,
+    "inclusive_deadline_monotonic_ns": 90621245619730,
+    "whole_original_deadline_monotonic_ns": 91196953921865,
+    "literal_inclusive_definition": "Phase2 includes courier wait, read/verification, checking, report, notices and closure from immutable Phase1 lock. Checking clock distinct and does not replace it. Whole begins original START before first source read, no reset.",
+    "final_notice_and_closure_clock_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/CLOSURE.json"
+  },
+  "phase2_input_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-7_PHASE2_KEY_001.json",
+      "sha256": "5c2d2d75d3a0c78a20370bac6c2a8c24a6c404c9b799d0d7b4daf04f842c1ef6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-7_CURRENT_RUNTIME_001.json",
+      "sha256": "4571d9e87fe7ea30745b78a8d90a628f177315292f85c897334803595b819107"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD7_CURRENT_RESOURCE_EXECUTION_001.json",
+      "sha256": "87cc58ad31bc0c6469dfb7dc41198369797075b283c4ee731dbdec1b7aeaf6dc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD7_CHRONOLOGICAL_READY_NAMESPACE_001.json",
+      "sha256": "741350cacad151ed283f4936d4ec80a045f3fc064509fa501715ff39d292c7a6"
+    }
+  ],
+  "owned_scope_check": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/phase2-owned-scope-check.json",
+    "sha256": "d7a8c0dafe4a9bc23c2fbd2fe5e760687f5f07179e5b8cf256613d3f37e2e200",
+    "quiet_A": true,
+    "quiet_B": true,
+    "exact_record_unit_original_cgroup_PID_sets_byte_verified": true,
+    "request_SHA_sets_equal_current_inventory": true,
+    "original_request_bodies_not_read": true
+  },
+  "raw_evidence_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/raw-evidence-manifest.json",
+    "sha256": "740f34a95bde64ac54c589946a8a5d7b09cf4703cd5f6a2d74fd3fe02b292f44",
+    "raw_NAS_file_count": 39
+  },
+  "interpretation_boundaries": [
+    "delivery A4/4 versus B0/4 is observed, not scientific whole-case ranking",
+    "B execution uptake exists but no complete delivered recommendation to compare",
+    "both native Goals paused and operational incomplete, despite A four files",
+    "matched stage wall/memory limits do not establish matched response count, provider runtime, whole-pipeline completion or causal winner",
+    "native usage totals are cumulative observed accounting, not money; cache and reasoning subsets not added again",
+    "direct Goal counters are separate from native usage totals and parent/UI/provider accounting; unexposed cancelled tail UNKNOWN",
+    "embedded pre-enrichment and final native hashes occupy distinct namespaces; no preembedding bytes reconstructed",
+    "first chronological pair readiness uses max registry terminalUTC proxy for both eligible roles, not packet preparation time; actual owned quiet/outer release monotonic separate"
+  ],
+  "forbidden_actions_performed": [],
+  "campaign_completion_claim": false,
+  "required_notice_targets": [
+    "/root",
+    "/root/publisher",
+    "/root/cost_accounting"
+  ],
+  "closure_rule": "report notices and closure within original whole1800 and literal inclusiveP2600; no ACK wait"
+}

@@ -1,0 +1,551 @@
+{
+  "schema": "er9.independent-phase2-receipt-assessment.v1",
+  "evaluation_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "phase1_unchanged": true,
+  "phase1_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_lock.json",
+    "sha256": "e35827156dc1b69779b54615a7130d4a3a41f6d342950186556d9930978059b0",
+    "bytes": 1554
+  },
+  "phase1_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+    "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+    "bytes": 11658
+  },
+  "evidence_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-8_PHASE2_KEY_001.json",
+      "sha256": "61d867a44fe8acd853051f29c7df5528adc84b66986b28f75d5f3164e4a42174",
+      "bytes": 54252
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-8_CURRENT_RUNTIME_001.json",
+      "sha256": "49e4e5fc1b6d3f9912d0e0fb31fa55c7dfa091ad9a8fe9e9671872d21ba7a670",
+      "bytes": 48329
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD8_CURRENT_RESOURCE_PROJECTION_001.json",
+      "sha256": "dfece437af3824434b0465a62c9df25b0c32a31893275d3bc9cab49101c4be76",
+      "bytes": 8118
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD8_FAILED_RESPONSE_AVAILABILITY_001.json",
+      "sha256": "c120291d622155bac5c737a58d531c978cf278015ea625b7bff6a5ab8d68f2c0",
+      "bytes": 1138
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_exact_owned_quiet.json",
+      "sha256": "67adca8d419ac93861b15f0adc75283f464cda9a5a5bd4c3e01ca26f377f0ef5",
+      "bytes": 6674
+    }
+  ],
+  "phase1_file_checks": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/reservation.json",
+      "sha256": "f9f937aa03dec7365edc3c4ed5689f620c393dc886da7491846c5f0e81494d1f",
+      "bytes": 909,
+      "still_matches": true,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+      "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+      "bytes": 272,
+      "still_matches": true,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_access_log.json",
+      "sha256": "62df85cbafa4f289ec9fa29d6978b6b3c1398692611be88f96d07ffee6965593",
+      "bytes": 6363,
+      "still_matches": true,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+      "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+      "bytes": 11658,
+      "still_matches": true,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.md",
+      "sha256": "13162e7adb1bca6616e69696ca10a0c7270a57b65d2cf64bec4f006550fc744c",
+      "bytes": 1875,
+      "still_matches": true,
+      "readonly": true
+    }
+  ],
+  "checking_end": {
+    "schema": "er9.independent-phase2-checks-end.v1",
+    "evaluation_id": "independent-targeted-8",
+    "checking_endUTC": "2026-10-06T04:07:59.117347Z",
+    "checking_end_monotonic": 90097.974389939,
+    "source_seconds": 240.9548613599909,
+    "phase2_checking_seconds": 357.21801953400427,
+    "conservative_phase2_since_source_freeze_seconds": 389.0246095860057,
+    "whole_to_checks_end_seconds": 629.9794709459966,
+    "source_limit_seconds": 1200,
+    "phase2_checking_limit_seconds": 600,
+    "whole_limit_seconds": 1800,
+    "clock_reset": false,
+    "report_handoffs_closure_pending_in_whole": true
+  },
+  "rows": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "native": {
+        "fresh_session": true,
+        "activation_observed": true,
+        "first_direct_goal": {
+          "createdAt": 1791254883,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791254883
+        },
+        "last_direct_goal": {
+          "createdAt": 1791254883,
+          "status": "paused",
+          "timeUsedSeconds": 580,
+          "tokenBudget": null,
+          "tokensUsed": 137121,
+          "updatedAt": 1791255463
+        },
+        "opaque_native_goal_id": "UNKNOWN_NOT_EXPOSED",
+        "session_thread_identifier_is_goal_id": false,
+        "host_candidate_goal_creations": 1,
+        "host_goal_replacements_observed": 0,
+        "host_thread_goal_set_rpc_count": 2,
+        "thread_goal_set_definition": "RPC count includes current activation and cleanup pause; not two candidate Goal creations. Exact opaque native Goal ID not exposed.",
+        "native_goal_status_before_cleanup": "active",
+        "native_goal_status_final": "paused",
+        "native_turn_statuses": [
+          {
+            "method": "turn/started",
+            "observed_monotonic_ns": 85302424482472,
+            "status": "inProgress"
+          },
+          {
+            "method": "turn/completed",
+            "observed_monotonic_ns": 85882449912570,
+            "status": "interrupted"
+          }
+        ],
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "native_http_attempts": "UNKNOWN",
+        "native_responses": "UNKNOWN",
+        "response_cap_enforced": false,
+        "outcome": "HOLD",
+        "operational_complete": false,
+        "error": "original native stop reached",
+        "error_class": "TimeoutError",
+        "native_elapsed_seconds": 585.611094837,
+        "freeze_elapsed_seconds": 585.690609709,
+        "held_transport_process_exit_code": 0,
+        "held_runner_exit_code": 126,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "7a478bc539c4321be3172fc91a8476f5dc40c1dfd4c21c137a2eedb2b9569a8c",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "9325565a13872bf94305affaa5700bc30cbb466484837333ac59ba8339f42ca2",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "7024ee9acb9a68350c8027aebfe79f4ce62dbd9a221f2a00253fa5dc05f5b508",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "identity": {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "max",
+          "api_observed_identity": {
+            "effort": "max",
+            "model": "gpt-6-luna"
+          },
+          "physical_provider_runtime_attestation": "UNKNOWN"
+        }
+      },
+      "quiet": {
+        "five_original_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "saved_all_owned_scopes_quiet": true,
+        "independent_exact_unit_observation": "All selected native/client/execution named units quiet; separate readonly private receipt.",
+        "unit_service_count": 3,
+        "execution_unit_count": 2,
+        "outer_private_slice_release_quiet": true,
+        "release_stop_returncode": 0,
+        "scope": "Saved terminal proof and independent current exact-unit read, distinct from successful Goal completion."
+      },
+      "resource": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_whole_stage_seconds": 600.0,
+        "release_before_original_total_stop": true,
+        "observed_memory_peak_bytes": "365125632",
+        "observed_memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "resource_oom_observed": false,
+        "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED",
+        "fit": "UNKNOWN",
+        "profile_sha256": "df91306daafd32ebb17c268bbe1be20c6dcce63808c50894814f9338b50d6892",
+        "private_slice_release_sha256": "a74e40034c235685237e32666f09a2541ba093be2f0cde7e2a491f3d56c756cc",
+        "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "pre_enrichment_receipt_sha256": "99cb3c6b647666f9785ebad170e734ac158dd2c3c1f8b75d83c20f93639e7a12",
+        "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash is distinct namespace. Exact reader matches native prospective source pin and launch seal. Separately saved oldPREbytes UNKNOWN; not reconstructed.",
+        "old_pre_enrichment_bytes": "UNKNOWN; not reconstructed",
+        "budget_match_scope": "Exposed two exact selected profiles match memory/swap/component caps and original 600-second stage allowance. No mechanism effect or source-quality credit inferred."
+      },
+      "counts": {
+        "visible_tool_attempt_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 21,
+          "pm_execution.python_execute": 2
+        },
+        "visible_tool_completed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 21,
+          "pm_execution.python_execute": 2
+        },
+        "visible_tool_failed_counts": {},
+        "boundary_metadata_counts_independently_match": true,
+        "goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "empty_goal_tool_counts_do_not_prove_zero": true,
+        "usage_notification_count": 26,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        }
+      },
+      "execution_receipt_presence": {
+        "current_execution_inventory_count": 2,
+        "all_have_code_input_stdout_stderr_result_request_file_metadata": true,
+        "candidate_scientific_witness_correctness": "UNASSESSED; code/expectation/source/output bodies not semantically reviewed in Phase2, no witness promoted into missing final",
+        "execution_scope": "Exact current selected terminal execution store file inventories only, no evaluator retest"
+      },
+      "failed_call_error_availability": {
+        "alias": "A",
+        "current_failed_call_hashes": [],
+        "selected_trusted_event_metadata": [],
+        "actual_response_error_body_locator": "UNAVAILABLE_IN_SELECTED_POSITIVE_RECEIPTS",
+        "error_text_cause": "UNKNOWN; hashmatch not proof of guessed errorclass/permissiondeny"
+      },
+      "usage": {
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 1220608,
+          "inputTokens": 1338106,
+          "outputTokens": 19623,
+          "reasoningOutputTokens": 17704,
+          "totalTokens": 1357729
+        },
+        "input_uncached_tokens_derived": 117498,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "ui_goal_tokens_used_separate": 137121,
+        "provider_requests": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "unexposed_cancelled_tail_usage": "UNKNOWN"
+      },
+      "integrity": {
+        "exact_file_hash_checks": 51,
+        "all_match": true,
+        "source_input_hashes_checked_without_reading_semantic_bodies": 43
+      }
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "native": {
+        "fresh_session": true,
+        "activation_observed": true,
+        "first_direct_goal": {
+          "createdAt": 1791254885,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791254885
+        },
+        "last_direct_goal": {
+          "createdAt": 1791254885,
+          "status": "paused",
+          "timeUsedSeconds": 579,
+          "tokenBudget": null,
+          "tokensUsed": 116392,
+          "updatedAt": 1791255464
+        },
+        "opaque_native_goal_id": "UNKNOWN_NOT_EXPOSED",
+        "session_thread_identifier_is_goal_id": false,
+        "host_candidate_goal_creations": 1,
+        "host_goal_replacements_observed": 0,
+        "host_thread_goal_set_rpc_count": 2,
+        "thread_goal_set_definition": "RPC count includes current activation and cleanup pause; not two candidate Goal creations. Exact opaque native Goal ID not exposed.",
+        "native_goal_status_before_cleanup": "active",
+        "native_goal_status_final": "paused",
+        "native_turn_statuses": [
+          {
+            "method": "turn/started",
+            "observed_monotonic_ns": 85303963183938,
+            "status": "inProgress"
+          },
+          {
+            "method": "turn/completed",
+            "observed_monotonic_ns": 85883871180186,
+            "status": "interrupted"
+          }
+        ],
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "native_http_attempts": "UNKNOWN",
+        "native_responses": "UNKNOWN",
+        "response_cap_enforced": false,
+        "outcome": "HOLD",
+        "operational_complete": false,
+        "error": "original native stop reached",
+        "error_class": "TimeoutError",
+        "native_elapsed_seconds": 585.584226405,
+        "freeze_elapsed_seconds": 585.670009339,
+        "held_transport_process_exit_code": 0,
+        "held_runner_exit_code": 126,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "4a79f469046252452fbddbcb8de19aef7c47970c34507d3be7dfdcc995820529",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "40c763695e4433deafda4f813e58752853f5d67e27e72f6f994ebd284e71ccd6",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "ccd0bb58b803f62bb3e62e231abecfd75bfca6f67bea895a60ecb509f9cdf605",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "identity": {
+          "requested_model": "gpt-6-luna",
+          "requested_effort": "max",
+          "api_observed_identity": {
+            "effort": "max",
+            "model": "gpt-6-luna"
+          },
+          "physical_provider_runtime_attestation": "UNKNOWN"
+        }
+      },
+      "quiet": {
+        "five_original_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "saved_all_owned_scopes_quiet": true,
+        "independent_exact_unit_observation": "All selected native/client/execution named units quiet; separate readonly private receipt.",
+        "unit_service_count": 3,
+        "execution_unit_count": 1,
+        "outer_private_slice_release_quiet": true,
+        "release_stop_returncode": 0,
+        "scope": "Saved terminal proof and independent current exact-unit read, distinct from successful Goal completion."
+      },
+      "resource": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_whole_stage_seconds": 600.0,
+        "release_before_original_total_stop": true,
+        "observed_memory_peak_bytes": "360669184",
+        "observed_memory_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "resource_oom_observed": false,
+        "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED",
+        "fit": "UNKNOWN",
+        "profile_sha256": "130de8de24cf2ee4af9c5f1c07f5551715f7b309914159bdb095c86ad5d5962d",
+        "private_slice_release_sha256": "3080698a6ff09a68a3e74e2ad99cc802751fa3bf0f6fd951e3a1e9ab51206890",
+        "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "pre_enrichment_receipt_sha256": "2c10021740ad8aa0e7e0239c8b2f46ed68d75754dfcecd370c3ca2f941322560",
+        "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash is distinct namespace. Exact reader matches native prospective source pin and launch seal. Separately saved oldPREbytes UNKNOWN; not reconstructed.",
+        "old_pre_enrichment_bytes": "UNKNOWN; not reconstructed",
+        "budget_match_scope": "Exposed two exact selected profiles match memory/swap/component caps and original 600-second stage allowance. No mechanism effect or source-quality credit inferred."
+      },
+      "counts": {
+        "visible_tool_attempt_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_boundary.write_file": 1,
+          "pm_execution.python_execute": 1
+        },
+        "visible_tool_completed_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_execution.python_execute": 1
+        },
+        "visible_tool_failed_counts": {
+          "pm_boundary.write_file": 1
+        },
+        "boundary_metadata_counts_independently_match": true,
+        "goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "empty_goal_tool_counts_do_not_prove_zero": true,
+        "usage_notification_count": 16,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        }
+      },
+      "execution_receipt_presence": {
+        "current_execution_inventory_count": 1,
+        "all_have_code_input_stdout_stderr_result_request_file_metadata": true,
+        "candidate_scientific_witness_correctness": "UNASSESSED; code/expectation/source/output bodies not semantically reviewed in Phase2, no witness promoted into missing final",
+        "execution_scope": "Exact current selected terminal execution store file inventories only, no evaluator retest"
+      },
+      "failed_call_error_availability": {
+        "alias": "B",
+        "current_failed_call_hashes": [
+          {
+            "namespace": "pm_boundary",
+            "tool": "write_file",
+            "call_id": "call_VauthHw9OSKC0rh7cyExOjGo",
+            "argument_sha256": "5c5701bda8610193069e64472846f0c6dbbd89960aae88dbdb827064dd30d359",
+            "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+            "response_bytes": 87,
+            "success": false
+          }
+        ],
+        "selected_trusted_event_metadata": [],
+        "actual_response_error_body_locator": "UNAVAILABLE_IN_SELECTED_POSITIVE_RECEIPTS",
+        "error_text_cause": "UNKNOWN; hashmatch not proof of guessed errorclass/permissiondeny"
+      },
+      "usage": {
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 386304,
+          "inputTokens": 471722,
+          "outputTokens": 30974,
+          "reasoningOutputTokens": 19110,
+          "totalTokens": 502696
+        },
+        "input_uncached_tokens_derived": 85418,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "ui_goal_tokens_used_separate": 116392,
+        "provider_requests": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "unexposed_cancelled_tail_usage": "UNKNOWN"
+      },
+      "integrity": {
+        "exact_file_hash_checks": 51,
+        "all_match": true,
+        "source_input_hashes_checked_without_reading_semantic_bodies": 43
+      }
+    }
+  ],
+  "protocol_limitations": [
+    "After immutable Phase1, collaboration.list_agents was called to identify report/accounting recipients; output incidentally included unrelated completed-agent scientific summaries. No prior scientific source bodies or answer files were opened. Source judgment remains unchanged; no regrade, methodological inference, or scientific answer uses that exposure. No further agent inventory.",
+    "Initial multiline output views had tool truncation; source/task content was reread in bounded complete ranges and Phase2 selected fields reread before assessment."
+  ],
+  "evaluator_identity": {
+    "accepted_model": "gpt-6.1-sol",
+    "accepted_effort": "xhigh",
+    "actual_runtime_model": "UNKNOWN",
+    "physical_provider": "UNKNOWN"
+  },
+  "no_campaign_mutation": true,
+  "no_goal_created_or_retest_or_repair": true,
+  "source_judgment_reopened": false
+}

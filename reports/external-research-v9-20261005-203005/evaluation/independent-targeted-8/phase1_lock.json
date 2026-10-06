@@ -1,0 +1,35 @@
+{
+  "schema": "er9.independent-phase1-lock.v1",
+  "eval_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "frozenUTC": "2026-10-06T04:01:30.092738Z",
+  "frozen_monotonic": 89708.949780353,
+  "immutable": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/reservation.json",
+      "sha256": "f9f937aa03dec7365edc3c4ed5689f620c393dc886da7491846c5f0e81494d1f",
+      "bytes": 909
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+      "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+      "bytes": 272
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_access_log.json",
+      "sha256": "62df85cbafa4f289ec9fa29d6978b6b3c1398692611be88f96d07ffee6965593",
+      "bytes": 6363
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+      "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+      "bytes": 11658
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.md",
+      "sha256": "13162e7adb1bca6616e69696ca10a0c7270a57b65d2cf64bec4f006550fc744c",
+      "bytes": 1875
+    }
+  ]
+}

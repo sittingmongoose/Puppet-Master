@@ -1,0 +1,9 @@
+# Independent targeted assessment 8 — immutable Phase1
+
+Pair D-V02-A-BUNDLE-R001. Both sides are **INCOMPLETE at final delivery**: neither supplies its required current proposal or source, witness and lead catalogs. Scientific quality and full pipeline quality remain **UNASSESSED**. There is no winner.
+
+A supplies one scratch source-location map; B supplies no partial artifact. A’s map is a valid exact transcription of the admitted changelog capture: 1,349 consecutive numbered lines reconstruct all 45,003 bytes and the declared source SHA-256. The requested source-index record resolves the public URL and capture identity. Dated release sections and qualifications remain intact, including the source’s literal final ellipsis. This is useful as a locator into that captured text. It does not establish actual API applicability, a coordinate contract, an issue/fix/test chain, executed checking, candidate comprehension, or a current final.
+
+All 12 full-brief scientific obligations and five common important scientific checks remain UNASSESSED. Of the three targeted obligations, the current-result obligation is incomplete; the coordinate and source/behavior obligations remain unassessed. Target check P2 records incomplete delivery while semantic retention remains unassessed; P1/P3 scientific checking and mechanism uptake remain unassessed. The eight common dimensions are recorded individually in phase1_judgment.json with the source-map locator/preservation observations restricted to their actual narrow scope.
+
+No private key, native status/history, economics, or prior scientific grades/answers were read before this judgment. Actual launched tasks expose unavoidable arm/stage hints. The map is not promoted to a final, and captured source bytes do not establish scientific validity or candidate understanding. This Phase1 is immutable before Phase2.

@@ -1,0 +1,58 @@
+{
+  "schema": "er9.independent-final-report.v1",
+  "evaluation_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "report_readyUTC": "2026-10-06T04:09:32.131089Z",
+  "report_ready_monotonic": 90190.988076548,
+  "immutable_phase1": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+    "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+    "bytes": 11658
+  },
+  "immutable_phase1_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_lock.json",
+    "sha256": "e35827156dc1b69779b54615a7130d4a3a41f6d342950186556d9930978059b0",
+    "bytes": 1554
+  },
+  "separate_phase2": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_assessment.json",
+    "sha256": "7dc36b74182db4839e22c1dff9a589a5bd97788dd5d988cdd99109cc3eedb805",
+    "bytes": 24474
+  },
+  "delivery": {
+    "A_control": "INCOMPLETE: all four required current final artifacts absent",
+    "B_treatment": "INCOMPLETE: all four required current final artifacts absent"
+  },
+  "science": {
+    "A_control": "UNASSESSED beyond narrow exact source locator/preservation observation",
+    "B_treatment": "UNASSESSED",
+    "full_pipeline": "UNASSESSED",
+    "winner": "NOT_ESTABLISHED",
+    "mechanism_effect": "UNASSESSED"
+  },
+  "partial_source_observation": "A scratch map exactly transcribes all 1,349 lines/45,003 bytes of the admitted changelog capture; useful captured-text locator, no current proposal, witness, repair, implementation applicability or independent discovery credit. B has no output artifact.",
+  "native_completion": "Both current original native Goals positively activated but interrupted/paused, native outcomes HOLD and operational_complete false. Opaque native Goal IDs not exposed; session/thread IDs are separate.",
+  "owned_cleanup": "All five saved quiet flags true on both. Independent readonly exact-unit observations found 3 native/client services plus 2 A / 1 B execution units quiet. Selected outer slices also recorded released quiet.",
+  "resources": "Both exact selected profiles: 2,415,919,104-byte complete-job memory cap; zero swap; original whole stage 600 seconds. Peaks A 365,125,632 / B 360,669,184 bytes, observed memory max/OOM events zero. CPU/tasks/scratch aggregate caps and fit remain UNKNOWN.",
+  "identity": "Candidate API-observed gpt-6-luna/max; physical provider/runtime attestation UNKNOWN. Accepted evaluator gpt-6.1-sol/xhigh; actual evaluator runtime model/provider UNKNOWN.",
+  "counter_scope": "Observed native cumulative usage, UI Goal usage, native terminal turn events, tool attempts/completions/failures, and host RPCs are distinct. HTTP attempts/native responses/money remain UNKNOWN. Cached input is included in input; reasoning output is included in output. No double counting or cost-quality inference.",
+  "errors": "Both current selected native records: TimeoutError, original native stop reached. B has one observed failed write_file call with pinned metadata; actual response error body unavailable in selected positive receipts, cause UNKNOWN. Transport/service/held-runner exit codes retain separate scopes.",
+  "protocol_limitations": [
+    "After immutable Phase1, collaboration.list_agents was called to identify report/accounting recipients; output incidentally included unrelated completed-agent scientific summaries. No prior scientific source bodies or answer files were opened. Source judgment remains unchanged; no regrade, methodological inference, or scientific answer uses that exposure. No further agent inventory.",
+    "Initial multiline output views had tool truncation; source/task content was reread in bounded complete ranges and Phase2 selected fields reread before assessment."
+  ],
+  "no_source_regrade_after_phase1": true,
+  "no_candidate_feedback_goal_retest_repair_or_campaign_mutation": true,
+  "clocks": {
+    "source_seconds": 240.9548613599909,
+    "phase2_checking_seconds": 357.21801953400427,
+    "phase2_since_phase1_freeze_to_check_end_seconds": 389.0246095860057,
+    "whole_report_ready_seconds": 722.9931575549999,
+    "literal_phase2_start_to_report_ready_seconds": 450.2317061430076,
+    "source_limit_seconds": 1200,
+    "phase2_checking_limit_seconds": 600,
+    "whole_limit_seconds": 1800,
+    "clock_resets": 0,
+    "required_handoffs_and_closure_measured_separately": true
+  }
+}

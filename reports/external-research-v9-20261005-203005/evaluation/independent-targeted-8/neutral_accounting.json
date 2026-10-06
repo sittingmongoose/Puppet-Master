@@ -1,0 +1,153 @@
+{
+  "schema": "er9.independent-neutral-accounting-receipt.v1",
+  "evaluation_id": "independent-targeted-8",
+  "pair_id": "D-V02-A-BUNDLE-R001",
+  "source_start": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/source_start.json",
+    "sha256": "99fe1c85c55758094604a9a1be8c0002fdb699bea57c5221449e0c2b6f7b661c",
+    "bytes": 272
+  },
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/reservation.json",
+    "sha256": "f9f937aa03dec7365edc3c4ed5689f620c393dc886da7491846c5f0e81494d1f",
+    "bytes": 909
+  },
+  "phase2_start": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_start.json",
+    "sha256": "48e121dcbffee5c52951d4563a05c5b872797586a5de263739a96ae047457204",
+    "bytes": 347
+  },
+  "checks_end": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase2_checks_end.json",
+    "sha256": "b8aeb55f84989dd4681c069d6a91fe870a8a0e3da9cdb41161570053c07f4445",
+    "bytes": 588
+  },
+  "clock": {
+    "source_seconds": 240.9548613599909,
+    "phase2_checking_seconds": 357.21801953400427,
+    "phase2_since_phase1_freeze_to_check_end_seconds": 389.0246095860057,
+    "whole_report_ready_seconds": 722.9931575549999,
+    "literal_phase2_start_to_report_ready_seconds": 450.2317061430076,
+    "source_limit_seconds": 1200,
+    "phase2_checking_limit_seconds": 600,
+    "whole_limit_seconds": 1800,
+    "clock_resets": 0,
+    "required_handoffs_and_closure_measured_separately": true
+  },
+  "report_readyUTC": "2026-10-06T04:09:32.131089Z",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "usage": {
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 1220608,
+          "inputTokens": 1338106,
+          "outputTokens": 19623,
+          "reasoningOutputTokens": 17704,
+          "totalTokens": 1357729
+        },
+        "input_uncached_tokens_derived": 117498,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "ui_goal_tokens_used_separate": 137121,
+        "provider_requests": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "unexposed_cancelled_tail_usage": "UNKNOWN"
+      },
+      "counts": {
+        "visible_tool_attempt_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 21,
+          "pm_execution.python_execute": 2
+        },
+        "visible_tool_completed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 21,
+          "pm_execution.python_execute": 2
+        },
+        "visible_tool_failed_counts": {},
+        "boundary_metadata_counts_independently_match": true,
+        "goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "empty_goal_tool_counts_do_not_prove_zero": true,
+        "usage_notification_count": 26,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        }
+      },
+      "native_elapsed_seconds": 585.611094837,
+      "freeze_elapsed_seconds": 585.690609709,
+      "resource": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "original_whole_stage_seconds": 600.0,
+        "observed_memory_peak_bytes": "365125632",
+        "resource_oom_observed": false
+      }
+    },
+    {
+      "alias": "B",
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "usage": {
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 386304,
+          "inputTokens": 471722,
+          "outputTokens": 30974,
+          "reasoningOutputTokens": 19110,
+          "totalTokens": 502696
+        },
+        "input_uncached_tokens_derived": 85418,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "ui_goal_tokens_used_separate": 116392,
+        "provider_requests": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "unexposed_cancelled_tail_usage": "UNKNOWN"
+      },
+      "counts": {
+        "visible_tool_attempt_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_boundary.write_file": 1,
+          "pm_execution.python_execute": 1
+        },
+        "visible_tool_completed_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_execution.python_execute": 1
+        },
+        "visible_tool_failed_counts": {
+          "pm_boundary.write_file": 1
+        },
+        "boundary_metadata_counts_independently_match": true,
+        "goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "empty_goal_tool_counts_do_not_prove_zero": true,
+        "usage_notification_count": 16,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        }
+      },
+      "native_elapsed_seconds": 585.584226405,
+      "freeze_elapsed_seconds": 585.670009339,
+      "resource": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "original_whole_stage_seconds": 600.0,
+        "observed_memory_peak_bytes": "360669184",
+        "resource_oom_observed": false
+      }
+    }
+  ],
+  "scientific_findings_included": false,
+  "billing_dollars": "UNKNOWN",
+  "no_double_count": "Cumulative usage already belongs to selected current native attempts; evaluator observations do not create additional candidate charges. Evaluator provider usage/cost unexposed UNKNOWN.",
+  "final_handoff_closure_clock_pending": true
+}
