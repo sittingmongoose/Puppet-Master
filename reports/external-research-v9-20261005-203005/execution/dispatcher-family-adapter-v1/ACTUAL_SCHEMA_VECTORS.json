@@ -1,0 +1,1689 @@
+{
+  "schema": "er9.family-schema-vectors.v1",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/FAMILY_FIELD_AFFECTED_JOBS.json",
+    "sha256": "b8577c80c6826d4e1b571d3c87ea30dbf32811d5504a9ffd71ce766ad462f0e0"
+  },
+  "vectors": [
+    {
+      "job_id": "C-01-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-01-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-01-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-01-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-01-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-01-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-01-DEC007-locked-r001.json",
+        "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-02-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-02-DEC007-locked-r001.json",
+        "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-03-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-03-DEC007-locked-r001.json",
+        "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-03-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-03-DEC007-locked-r001.json",
+        "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-03-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-03-DEC007-locked-r001.json",
+        "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-03-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-03-DEC007-locked-r001.json",
+        "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-03-treatment-critic_final-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-03-DEC007-locked-r001.json",
+        "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-04-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-04-DEC007-locked-r001.json",
+        "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-04-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-04-DEC007-locked-r001.json",
+        "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-04-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-04-DEC007-locked-r001.json",
+        "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-04-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-04-DEC007-locked-r001.json",
+        "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "C-04-treatment-critic_final-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/registration/C-04-DEC007-locked-r001.json",
+        "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "048cfaf4b72197cf0114f68fcf30e37b19acf9d4e13181a383926a1566c2f6cb"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "048cfaf4b72197cf0114f68fcf30e37b19acf9d4e13181a383926a1566c2f6cb"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "048cfaf4b72197cf0114f68fcf30e37b19acf9d4e13181a383926a1566c2f6cb"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "64c4991d493d276c9ebb753deded874b8ed11f4744309f65ada9601741f6a062"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "64c4991d493d276c9ebb753deded874b8ed11f4744309f65ada9601741f6a062"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "64c4991d493d276c9ebb753deded874b8ed11f4744309f65ada9601741f6a062"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "7de15738e2e9ec98e6093d3a7abc108a84be04d16390cd8109ba57df0bb21c88"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "7de15738e2e9ec98e6093d3a7abc108a84be04d16390cd8109ba57df0bb21c88"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "7de15738e2e9ec98e6093d3a7abc108a84be04d16390cd8109ba57df0bb21c88"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "7de15738e2e9ec98e6093d3a7abc108a84be04d16390cd8109ba57df0bb21c88"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch002/I-02-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch003/I-05-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "0b003874793d176fd3844de62325473aa476ed92125c11ab985628a8d17249ca"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch003/I-05-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "1362a66fdfb1ab69ff1dc2271210fe916475cf4ad22343866c1f88252d819caa"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch003/I-05-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "0b003874793d176fd3844de62325473aa476ed92125c11ab985628a8d17249ca"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch003/I-05-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "1362a66fdfb1ab69ff1dc2271210fe916475cf4ad22343866c1f88252d819caa"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/card.json",
+        "sha256": "6b2140310c04950cc2b83f2c3dea24c8df5d930b413401a6c5879d5c63cfd9ee"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/card.json",
+        "sha256": "6b2140310c04950cc2b83f2c3dea24c8df5d930b413401a6c5879d5c63cfd9ee"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/card.json",
+        "sha256": "6b2140310c04950cc2b83f2c3dea24c8df5d930b413401a6c5879d5c63cfd9ee"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/card.json",
+        "sha256": "6b2140310c04950cc2b83f2c3dea24c8df5d930b413401a6c5879d5c63cfd9ee"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/card.json",
+        "sha256": "6b2140310c04950cc2b83f2c3dea24c8df5d930b413401a6c5879d5c63cfd9ee"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+        "sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "790ee5786a16986fbe714f019f82aebab34aa6bc965eff2c18846acda40a4c00"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-03-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "829e2c056e7feff575bdd6e3b003dfebcee44df4a0e680091c898a1023aeef93"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-04-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "L",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+      },
+      "card_declaration": {
+        "candidate_family": "Luna",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+      },
+      "owner_declaration": {
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "c5b6a9fcad7b22008da6c2782bc33c7aa5ad5bad49e28acef39d1bb6b4964cbc"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "c5b6a9fcad7b22008da6c2782bc33c7aa5ad5bad49e28acef39d1bb6b4964cbc"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "c5b6a9fcad7b22008da6c2782bc33c7aa5ad5bad49e28acef39d1bb6b4964cbc"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-11-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "3f9859997d2bb650ae259d682a382d3462f9a52f34b0286c45bf8ccbcd8678ab"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-11-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "3f9859997d2bb650ae259d682a382d3462f9a52f34b0286c45bf8ccbcd8678ab"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-11-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "audited_status": "WAITING_RUNTIME_BINDING",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/card.json",
+        "sha256": "3f9859997d2bb650ae259d682a382d3462f9a52f34b0286c45bf8ccbcd8678ab"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    },
+    {
+      "job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001",
+      "audited_status": "SEALED_READY",
+      "registered_family": "Z",
+      "card_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/card.json",
+        "sha256": "57a2adf273e7bd8d6276ee5a963a9a2b75300032eb48296d4c9a83c0e2141ae8"
+      },
+      "card_declaration": {
+        "candidate_family": "GLM",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "owner_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/registration.json",
+        "sha256": "25179dbe442a18705861a440027a2f453b0f33208392f2eb3ef7d09fd32a7afb"
+      },
+      "owner_declaration": {
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      }
+    }
+  ],
+  "scope": "Declared identity fields only, no case/task/candidate content or runtime inference"
+}

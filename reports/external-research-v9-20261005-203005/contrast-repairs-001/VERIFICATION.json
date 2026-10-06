@@ -1,0 +1,21 @@
+{
+  "schema": "er9.contrast-repair-zero-inference-verification.v1",
+  "recorded_utc": "2026-10-06T00:51:27.800031+00:00",
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "status": "PASS",
+  "native_Goals": 0,
+  "model_calls": 0,
+  "source_answers_or_evaluator_feedback_authored": false,
+  "test_source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/test_packets.py",
+    "sha256": "cc902fa1d9a3b52c50deae2489e912a8daa3678375def25e8ad59e2f9a2efae0"
+  },
+  "source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/SOURCE_PINS.json",
+    "sha256": "1f93ec5c0565cbf2928ae0c021e7aad80b6af211d404d0cf49524ac0b388004d"
+  },
+  "test_output": "test_01_immutable_source_inventory_and_16_methods (__main__.Contracts.test_01_immutable_source_inventory_and_16_methods) ... ok\ntest_02_both_arm_positive_zero_start_receipt (__main__.Contracts.test_02_both_arm_positive_zero_start_receipt) ... ok\ntest_03_exact_neutral_and_runtime_prompt_delta (__main__.Contracts.test_03_exact_neutral_and_runtime_prompt_delta) ... ok\ntest_04_whole_input_inventory_unchanged_except_neutral (__main__.Contracts.test_04_whole_input_inventory_unchanged_except_neutral) ... ok\ntest_05_matched_pair_outside_arm_modifier (__main__.Contracts.test_05_matched_pair_outside_arm_modifier) ... ok\ntest_06_actual_criteria_12_obligations_and_role_retained (__main__.Contracts.test_06_actual_criteria_12_obligations_and_role_retained) ... ok\ntest_07_prepared_stage_semantics_and_pins (__main__.Contracts.test_07_prepared_stage_semantics_and_pins) ... ok\ntest_08_model_tools_resource_budget_pin_parity_not_old_family_claim (__main__.Contracts.test_08_model_tools_resource_budget_pin_parity_not_old_family_claim) ... ok\ntest_09_registration_whole_pair_and_exact_lineage (__main__.Contracts.test_09_registration_whole_pair_and_exact_lineage) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 0.155s\n\nOK\n",
+  "scientific_limit": "Byte/contract isolation proof only. Actual method uptake, source suitability, quality and effect remain unassessed."
+}

@@ -1,0 +1,136 @@
+{
+  "schema": "er9.prospective-neutral-byte-delta-proof.v1",
+  "pairs": [
+    {
+      "pair_id": "D-V02-A",
+      "setup_version": "neutral-r1",
+      "original_neutral": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A-TASK.md",
+        "sha256": "cff40503b62af6bfc73923de88c145bfc9a83fdd788bb0094eaba840c4607295"
+      },
+      "new_neutral": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+        "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+      },
+      "neutral_diff": "--- original neutral\n+++ neutral-r1\n@@ -2,7 +2,7 @@\n \n This is a prospective matched diagnostic task. Your launcher identifies the arm and provides only its frozen task materials. Do not inspect another arm or evaluator.\n \n-Check the frozen candidate draft\u2019s relation between stored array axes, displayed coordinates and physical calibration, including a boundary or inverse operation actually supported by selected sources. Candidate binds source/type/unit/domain before choosing examples.\n+Check the frozen candidate draft\u2019s relation between stored array axes, displayed coordinates and physical calibration, including a boundary or inverse operation actually supported by selected sources.\n \n Permitted source scope: Exact candidate-selected pinned coordinate/axis APIs and governing metadata documentation, full surrounding conditions and candidate draft; no evaluator formula.\n \n",
+      "arms": [
+        {
+          "arm": "control",
+          "new_job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+          "old_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/D-V02-A-control-diagnostic-a001/workspace/TASK.md",
+            "sha256": "9825faa5457a2a10aaa3e39463ef1d403925e57908e03c1c06fc255aae9d620a"
+          },
+          "new_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+            "sha256": "17d0bc1e42922c1de8d3a927405d692b2b10ea7c5aa6d2cc15bde366ebc84dae"
+          },
+          "new_prepared_stage": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+            "sha256": "8a851aa36c28dd3dd19ee4d2e9d22cdce1ca189aded074b5571c1321d5d0e36f"
+          },
+          "copied_source_captures": 33,
+          "shared_input_delta": [
+            "diagnostic_task.md"
+          ],
+          "other_input_bytes_preserved": true,
+          "arm_modifier_bytes_preserved": true
+        },
+        {
+          "arm": "treatment",
+          "new_job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003",
+          "old_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/D-V02-A-treatment-diagnostic-a001/workspace/TASK.md",
+            "sha256": "7430d8351eed845e91b522c289088bb9212e11c4cc30566812b4f7e031dc78ea"
+          },
+          "new_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+            "sha256": "d3d39817d3407bb4389e575719c9ba40fcdd352baee5f6de13e488bc39f4f253"
+          },
+          "new_prepared_stage": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+            "sha256": "05dafa25718d6c93b664bc4f3c3293a71710c28dcbba76ee57958406393762cd"
+          },
+          "copied_source_captures": 33,
+          "shared_input_delta": [
+            "diagnostic_task.md"
+          ],
+          "other_input_bytes_preserved": true,
+          "arm_modifier_bytes_preserved": true
+        }
+      ],
+      "registration_outbox": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/REGISTRATION_OUTBOX.json",
+        "sha256": "1485dd19f75bdd18e6fbbd7b2c4e535974a3aeb95f29d606145114b58136c795"
+      }
+    },
+    {
+      "pair_id": "D-V07-A",
+      "setup_version": "neutral-r1",
+      "original_neutral": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A-TASK.md",
+        "sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+      },
+      "new_neutral": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/NEUTRAL_TASK.md",
+        "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+      },
+      "neutral_diff": "--- original neutral\n+++ neutral-r1\n@@ -2,7 +2,7 @@\n \n This is a prospective matched diagnostic task. Your launcher identifies the arm and provides only its frozen task materials. Do not inspect another arm or evaluator.\n \n-Check an image plan with architecture-critical support assumptions, routine annotation/UI assertions, a real low-ranked defect and a useful optional mechanism. Candidate identifies consequence order; no evaluator risk ranking is supplied.\n+Check an image plan with architecture-critical support assumptions, routine annotation/UI assertions, a real low-ranked defect and a useful optional mechanism. No evaluator risk ranking is supplied.\n \n Permitted source scope: Full frozen candidate proposal with public implementation evidence and context for critical and low-ranked claims; private admission of substantive mixture only.\n \n",
+      "arms": [
+        {
+          "arm": "control",
+          "new_job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+          "old_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/D-V07-A-control-diagnostic-a001/workspace/TASK.md",
+            "sha256": "fd2899d19f5840d55995da6549f76538fd6dea05a20dd8f901d16a44e6212d38"
+          },
+          "new_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+            "sha256": "7a9ae820a444989a099d86027b0cd94bf004d4e6dd555a4719f4401f85888117"
+          },
+          "new_prepared_stage": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+            "sha256": "1802ec8087c05affcd5d7b8ed38fd108a85843c196686d61f1e7d0ae9c67d75c"
+          },
+          "copied_source_captures": 33,
+          "shared_input_delta": [
+            "diagnostic_task.md"
+          ],
+          "other_input_bytes_preserved": true,
+          "arm_modifier_bytes_preserved": true
+        },
+        {
+          "arm": "treatment",
+          "new_job_id": "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003",
+          "old_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/D-V07-A-treatment-diagnostic-a001/workspace/TASK.md",
+            "sha256": "9e86fbfce57bb94c3dddfc12a5d5ebd27af1fc38142e8f07ab69aff4037e7b3d"
+          },
+          "new_prompt": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+            "sha256": "7dc5e0ad14573d79ab656ac68f8a69f58af970e0870ed3dff036c30e1ef88cef"
+          },
+          "new_prepared_stage": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+            "sha256": "073ad18d64cafb894cace4777b32ae109bb5e24c5d83ccc911865da978ca230d"
+          },
+          "copied_source_captures": 33,
+          "shared_input_delta": [
+            "diagnostic_task.md"
+          ],
+          "other_input_bytes_preserved": true,
+          "arm_modifier_bytes_preserved": true
+        }
+      ],
+      "registration_outbox": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/REGISTRATION_OUTBOX.json",
+        "sha256": "d8375bfca1aeea439b5e5ffa4f3f472a3f35961e0bbbccb6dfc4e830ce5488f0"
+      }
+    }
+  ],
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/VERIFICATION.json",
+    "sha256": "a15cb754abf9480cc5082846d6b36ee1a69c40dbebbfe2a5b2bc0cb58aefb517"
+  },
+  "scientific_claim": "Procedural isolation only; uptake, quality and effect unassessed."
+}

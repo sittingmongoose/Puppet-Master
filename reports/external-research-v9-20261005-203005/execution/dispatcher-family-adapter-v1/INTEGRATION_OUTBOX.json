@@ -1,0 +1,40 @@
+{
+  "schema": "er9.dispatcher-family-adapter-integration.v1",
+  "request_id": "ER9-FAMILY-FIELD-ADAPTER-V1",
+  "status": "READY_FOR_OPS_OWN_SEQUENTIAL_INTEGRATION",
+  "owner": "codex-er9-ops",
+  "module": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/dispatcher-family-adapter-v1/family_adapter.py",
+    "sha256": "c20e1c1c708e9ccda575b4ad1b6cf60bf12899e0ed547cc50428257b9df64a14"
+  },
+  "pin_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/dispatcher-family-adapter-v1/PIN.json",
+    "sha256": "f34a349e111d51a5c0839569111cfd17365b0b70fdd575239ecdd8c8d1b27393"
+  },
+  "expected_existing_dispatcher_sha256": "991cea7b2983aec4725b534188f02f57816d2b5648282f02cfa3073ef7197776",
+  "entrypoint": "declared_family(card)",
+  "narrow_replacement": "expected_family = family_adapter.declared_family(card)",
+  "pure_identity_entrypoints": [
+    "registered_family(card, request, row.get(\"family\"))",
+    "validate_launch_binding(card, request, registered_queue_family, verified_runtime_identity)"
+  ],
+  "required_preserved_guards": [
+    "frozen owner registration hash",
+    "registered queue family",
+    "owner family/model/max effort",
+    "bound runtime family",
+    "accepted runtime and dispatcher source pins",
+    "supported response bound",
+    "actual native model/effort before Goal activation",
+    "existing resource admission",
+    "original stage and pipeline clocks"
+  ],
+  "integration_steps": [
+    "Ops imports/pins exact module before prelaunch guard",
+    "Ops replaces only the requested_family-indexing expression",
+    "Ops retains existing checks and tests the actual sealed rows before admission",
+    "Ops updates only its prospective dispatcher source marker to the new dispatcher+module hashes",
+    "Ops resumes its owned dispatcher sequentially without changing frozen cards, active jobs or old outcomes"
+  ],
+  "constraints": "No new Goal, provider call, account, tool, clock, model, stage schema or publication action is authorized by this outbox itself."
+}

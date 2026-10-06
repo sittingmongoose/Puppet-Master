@@ -1,0 +1,208 @@
+{
+  "schema": "er9.contrast-repair-packet-pin.v1",
+  "setup_version": "neutral-r1",
+  "status": "PREPARED_NOT_ADMITTED",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/DELTA_PROOF.json",
+      "sha256": "fe7bbd54148b8a63d518078d8ede759aee6ac48d8a929fb510effd02a7cebaf2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/README.md",
+      "sha256": "a081b23728f51b7d0633d23478871126668c9ec08b5be0f51d2dac9ff02e82a5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/RUNTIME_EXPECTATIONS.json",
+      "sha256": "06b1fc31bff6be919dd61fa6b9e6dd8d4539930a9f738b17e04e604b7d1ced57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/SOURCE_PINS.json",
+      "sha256": "1f93ec5c0565cbf2928ae0c021e7aad80b6af211d404d0cf49524ac0b388004d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/VERIFICATION.json",
+      "sha256": "a15cb754abf9480cc5082846d6b36ee1a69c40dbebbfe2a5b2bc0cb58aefb517"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/build_packets.py",
+      "sha256": "824e6a53d4409984c45a00a0fedfcad5f7b1ccf5b8ac6a4da7fb88ef661e557a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/test_packets.py",
+      "sha256": "cc902fa1d9a3b52c50deae2489e912a8daa3678375def25e8ad59e2f9a2efae0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "fe770086f32a58110887b0958e5262bb95dfb549e6f30df4be566339452588eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "8a851aa36c28dd3dd19ee4d2e9d22cdce1ca189aded074b5571c1321d5d0e36f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "17d0bc1e42922c1de8d3a927405d692b2b10ea7c5aa6d2cc15bde366ebc84dae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "6a57b72dc20a76a5001bde07edff74d1b5fa1ede9baff760d94bf6718ec93a34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "afe09a820d0f1d8dc3737a0966925ff0965e2d186fb3bf994ee44dddb474d838"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "05dafa25718d6c93b664bc4f3c3293a71710c28dcbba76ee57958406393762cd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "d3d39817d3407bb4389e575719c9ba40fcdd352baee5f6de13e488bc39f4f253"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "c8279a3650820bd5f56e21790f54a515016542939b44fd3c7bedc2ff0aba706b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/LINEAGE.json",
+      "sha256": "f78ba7596a2cdeb5c3c0487289fd47c7ceaa22d41a20bb107b6a14e5f738c247"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "e77bc5ba260b382c91b9549d3bb6fd882c6a2e5c84e162a8f0517700c7b9e08c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/REGISTRATION_OUTBOX.json",
+      "sha256": "1485dd19f75bdd18e6fbbd7b2c4e535974a3aeb95f29d606145114b58136c795"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/card.json",
+      "sha256": "07e382939708ac6f1a70be84dc520e551cfcafb811aff84db1acb32c5e22fcc8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-control-neutral-r1-dec009-r001.json",
+      "sha256": "f2de136e1b5f4c5f72d8cf05337e6d5993ae41364f5ceae50b134757292d7437"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-treatment-neutral-r1-dec009-r001.json",
+      "sha256": "2ace87446f07b2ed4fc728e25e114e037afea219ef29eada27ebec346358fdda"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "f47eb29033cffe20e04e2a7d0e7e08d95ad01498e5a26b22f1f541257141e51b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "1802ec8087c05affcd5d7b8ed38fd108a85843c196686d61f1e7d0ae9c67d75c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "7a9ae820a444989a099d86027b0cd94bf004d4e6dd555a4719f4401f85888117"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "511fdacb47d9900da5975de451ecc9ccb0ee376f62fddfa04012f8e5d9675f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "b919b8205eb211c9a16f826cfc4da99c364b0a1eac1453b8854eec7b51836954"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "073ad18d64cafb894cace4777b32ae109bb5e24c5d83ccc911865da978ca230d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "7dc5e0ad14573d79ab656ac68f8a69f58af970e0870ed3dff036c30e1ef88cef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "092a67d8894fc43a16a1103849808b54d9b2b8e180597e988fd4c4a50ac2c125"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/LINEAGE.json",
+      "sha256": "8c00d55133558e6db96bd29714816485e0fe372176f3ff560d20f3280571b46a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/NEUTRAL_TASK.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "efd1e92fdfcec5073e2ea336337a37b5874cb8b7f1dc0c20afb6dfdb154163ed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/REGISTRATION_OUTBOX.json",
+      "sha256": "d8375bfca1aeea439b5e5ffa4f3f472a3f35961e0bbbccb6dfc4e830ce5488f0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+      "sha256": "d199fe83a5d5b5cc429277c3c4aa29323f532962deb4963bbe7fa89df415fea0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-control-neutral-r1-dec009-r001.json",
+      "sha256": "73c025acefba7087b0aa5f004a8e4847fa42cefccaa4f60fa2f02bf7cd759492"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-treatment-neutral-r1-dec009-r001.json",
+      "sha256": "737ceba68aee106f00a200c6d5174d2f481ed64c44688f096180e1550eb1d7f6"
+    }
+  ],
+  "native_Goals": 0,
+  "model_calls": 0,
+  "integration_owner": "codex-er9-ops",
+  "publication_owner": "publisher",
+  "candidate_result_claims": false
+}

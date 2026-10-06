@@ -1,0 +1,505 @@
+{
+  "schema": "er9.diagnostic-pair-source-freeze.v2",
+  "pair_id": "D-V07-A",
+  "source_slot": "D-V07-A",
+  "status": "INPUTS_FROZEN_NOT_ADMITTED",
+  "card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+    "sha256": "d199fe83a5d5b5cc429277c3c4aa29323f532962deb4963bbe7fa89df415fea0"
+  },
+  "corrected_dag_ref": {
+    "pair_id": "D-V07-A",
+    "method_id": "V07",
+    "domain": "A",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V07-A.json",
+    "sha256": "b68c960928113c713c8d57e6c97940b74edb070e280c4adbea43bfe06f4c7c47",
+    "status": "BASE_PROVENANCE_READY_FACETS_UNASSESSED",
+    "genuine_missing_roles": []
+  },
+  "authority_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-006-evidence.json",
+    "sha256": "d70fb927f4b47798cdc8f49de6b1d76cc88d4011452d2ba317060f342a7538d0"
+  },
+  "seed_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+    "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+    "seed_id": "BASE-A-DEC006",
+    "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+  },
+  "seed_content_digest": "2319ca82b846478385966a8667a3ea14c7594e2d14f88106569d645d655d92c8",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 600,
+    "occupied_candidate_seconds_per_arm": 600,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance",
+    "V09_note": null
+  },
+  "cold_cost_references": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+        "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+      },
+      "original_native_goal_starts": 1,
+      "original_elapsed_seconds": 1079.6402334250015,
+      "reuse_new_native_starts": 0,
+      "accounting_rule": "Charge actual origin once; reuse links that existing cost. Dollars/unknown counters not invented."
+    }
+  ],
+  "source_index": [
+    {
+      "candidate_path": "inputs/source_context/0000.body",
+      "url": "https://ngff.openmicroscopy.org/0.5/index.html",
+      "version_or_commit": "sha256:a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "capture_id": "5e1577f1e24b483f9c9faa1821988023",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0001.body",
+      "url": "https://napari.org/stable/howtos/layers/transforms.html",
+      "version_or_commit": "sha256:b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+      "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+      "capture_id": "ef253e056dd94ad29e22545242058092",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0002.body",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGELOG.rst",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "6cc5463eb2cc472985af64a61770ac8b",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0003.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/contents/",
+      "version_or_commit": "sha256:c4a765d89e4e40539598955be740420d8ac8c663c7a3133cf3204d2e3ccad8bc",
+      "sha256": "c4a765d89e4e40539598955be740420d8ac8c663c7a3133cf3204d2e3ccad8bc",
+      "capture_id": "9883439ef2cd4cc39b5cf49ef7662b4f",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0004.body",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/transforms.md",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "241c45ac1d9c4016bd374dcdd0d28fe6",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0005.body",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/tutorials/fundamentals/bigg_data.md",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "3aad04d08c25408fb1fd3ef541fef334",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0006.body",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "version_or_commit": "sha256:fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "capture_id": "ec24d46c000041ec8ba96ce6b742a6a2",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0007.body",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs",
+      "version_or_commit": "sha256:687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+      "sha256": "687768ba7e39a1c687878a0c6dfafc1402bced5124569a4ff7f38653f03dc368",
+      "capture_id": "1ac97cc059c34445b175bc699d4c6b3c",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0008.body",
+      "url": "https://raw.githubusercontent.com/ome/ngff/main/0.5/index.md",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "27d321cc1faf45f4a65b129428c48044",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0009.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/54",
+      "version_or_commit": "sha256:654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "capture_id": "24a1d6df50b94411ab360bc54118498a",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0010.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "version_or_commit": "sha256:0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "capture_id": "174a2677b4974899b581e6ee07336961",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0011.body",
+      "url": "https://api.github.com/repos/ome/ngff/contents/",
+      "version_or_commit": "sha256:aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+      "sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+      "capture_id": "b0cb2518366c431e8a1a85e7dcf0b16c",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0012.body",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs/howtos",
+      "version_or_commit": "sha256:2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+      "sha256": "2847bcc5f6cabebb5a9a628dcb2f0c30750ce8be5bfe5ddd05e4668dff957a27",
+      "capture_id": "9e2fb99d3a7d4e8eaa94479a22121947",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0013.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "version_or_commit": "sha256:a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "capture_id": "2d0da64bb8a749f28bf0fae816d19089",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0014.body",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs/howtos/layers",
+      "version_or_commit": "sha256:ee7346895acfb63d40d28659683b2d48fdb0765c088df195626096bde793bbc3",
+      "sha256": "ee7346895acfb63d40d28659683b2d48fdb0765c088df195626096bde793bbc3",
+      "capture_id": "6d18e9c3ac2c490ab7005f900948ab73",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0015.body",
+      "url": "https://api.github.com/repos/ome/ngff/contents/specifications",
+      "version_or_commit": "sha256:dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+      "sha256": "dcd3b3138f02558ea740a4c7f057fbae74209744861a6bdf99795c6f1b4f6baa",
+      "capture_id": "cd622d2f2362428bbd0c1c511bfc6f38",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0016.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "version_or_commit": "sha256:fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "capture_id": "d98ef66b18794ac185c756b87ce37766",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0017.body",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "version_or_commit": "sha256:c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "capture_id": "744343a38392409d8b360a9308828c88",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0018.body",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/main/0.5/index.md",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "3de861d1dedf42e7b30202981489fcb9",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0019.body",
+      "url": "https://api.github.com/repos/ome/ngff-spec/contents/?ref=d9164040dd61b3e4688494de1a58a69251b13f24",
+      "version_or_commit": "sha256:c25ab4e64ff14abfad8efc5c66fc6151427bf71a483daacec17cf58f4be97ae8",
+      "sha256": "c25ab4e64ff14abfad8efc5c66fc6151427bf71a483daacec17cf58f4be97ae8",
+      "capture_id": "aea76f33bc90427cbe280364202b06d5",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0020.body",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "version_or_commit": "sha256:2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "capture_id": "47b6fd92a2df40a6b9a5ef3ea6f7cc8a",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0021.body",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs/guides",
+      "version_or_commit": "sha256:1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+      "sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+      "capture_id": "81d38d6fb566441d8be82d214cc9a0c4",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0022.body",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "version_or_commit": "sha256:7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "capture_id": "f6ab4397d26f460d957dc7603fbf08b9",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0023.body",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "version_or_commit": "sha256:cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "capture_id": "820a5a9673af4adaa05c9da2031ae009",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0024.body",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/project/projects.html",
+      "version_or_commit": "sha256:db1e53fdc05e8077c54d774ef158ad816eb4e4e9c776c0b5df39f79143bcab82",
+      "sha256": "db1e53fdc05e8077c54d774ef158ad816eb4e4e9c776c0b5df39f79143bcab82",
+      "capture_id": "20aef47e07424e05b94a0115d24512c1",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0025.body",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/commands/annotations.html",
+      "version_or_commit": "sha256:7b7d10a504df6235a25394a0192fb1de3e22c3ffbc0796cb90ec0ca2e8f154e9",
+      "sha256": "7b7d10a504df6235a25394a0192fb1de3e22c3ffbc0796cb90ec0ca2e8f154e9",
+      "capture_id": "7641884582584e58b17d112435f77fb3",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0026.body",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "version_or_commit": "sha256:ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "capture_id": "911f1a111be642d9a525568f9ea56e4a",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0027.body",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "version_or_commit": "sha256:d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "capture_id": "6db33ecab474458db9f627cf7a135203",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0028.body",
+      "url": "https://qupath.readthedocs.io/en/stable/",
+      "version_or_commit": "sha256:2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "capture_id": "91dcb9c1ef8344bc9548c185747d1059",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0029.body",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "version_or_commit": "sha256:c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "capture_id": "5e247c657f3e40e696e1308cc6d8f6e3",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0030.body",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "version_or_commit": "sha256:df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "capture_id": "1183d0f02ff24075a8c3ddc7b550071a",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0031.body",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "version_or_commit": "sha256:d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "capture_id": "e324d5433ba94511a95e9741015b953a",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0032.body",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "version_or_commit": "sha256:8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "capture_id": "bb417749f1884a8c9f7f30cc5ebc2cdb",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ],
+  "designated_final": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "admission_seal_required": true,
+  "fixture_suitability": "UNASSESSED_PER_FACET; absent facets are not tested coverage",
+  "source_selection": "All origin-Goal captures, without quality or semantic filtering",
+  "created_utc": "2026-10-06T00:51:22.941980+00:00",
+  "setup_version": "neutral-r1",
+  "neutral_task_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/NEUTRAL_TASK.md",
+    "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+  },
+  "prospective_setup_lineage": {
+    "schema": "er9.prospective-neutral-lineage.v1",
+    "setup_version": "neutral-r1",
+    "authority": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    "zero_start_confirmation": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    "predecessor_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+      "sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20"
+    },
+    "predecessor_neutral": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A-TASK.md",
+      "sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+    },
+    "predecessor_pair_freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "8ff56924822e5b79f7b551db21213bc3192e31565a6f1d4e7e16427e66b0d8e7"
+    },
+    "role_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V07-A.json",
+      "sha256": "b68c960928113c713c8d57e6c97940b74edb070e280c4adbea43bfe06f4c7c47"
+    },
+    "predecessor_job_ids": [
+      "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+      "D-V07-A-treatment-diagnostic-a001-resource-v13-a002"
+    ],
+    "procedural_delta_only": true,
+    "source_or_quality_selection": false,
+    "actual_method_uptake": "UNKNOWN",
+    "outcome_assessment": "NOT_RUN",
+    "reason": "Neutrality precaution: shared ranking instruction narrows control; first-verification contrast is not proven erased.",
+    "created_utc": "2026-10-06T00:51:22.941980+00:00"
+  }
+}

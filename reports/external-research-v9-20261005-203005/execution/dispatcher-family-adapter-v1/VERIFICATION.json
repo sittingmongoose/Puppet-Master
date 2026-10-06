@@ -1,0 +1,15 @@
+{
+  "schema": "er9.dispatcher-family-adapter-verification.v1",
+  "created_utc": "2026-10-06T00:48:47.087967+00:00",
+  "exit_code": 0,
+  "test_count": 17,
+  "actual_owner_rows": 73,
+  "actual_card_groups": 16,
+  "affected_sealed_ready_rows": 29,
+  "stdout": "",
+  "stderr": "test_actual_runtime_effort_mismatch (test_family_adapter.FamilyAdapterTests.test_actual_runtime_effort_mismatch) ... ok\ntest_actual_runtime_family_mismatch (test_family_adapter.FamilyAdapterTests.test_actual_runtime_family_mismatch) ... ok\ntest_actual_runtime_model_mismatch (test_family_adapter.FamilyAdapterTests.test_actual_runtime_model_mismatch) ... ok\ntest_all_actual_new_cards_and_owner_requests (test_family_adapter.FamilyAdapterTests.test_all_actual_new_cards_and_owner_requests) ... ok\ntest_both_declared_fields_agree (test_family_adapter.FamilyAdapterTests.test_both_declared_fields_agree) ... ok\ntest_conflicting_fields_rejected (test_family_adapter.FamilyAdapterTests.test_conflicting_fields_rejected) ... ok\ntest_explicit_verified_actual_runtime_bindings (test_family_adapter.FamilyAdapterTests.test_explicit_verified_actual_runtime_bindings) ... ok\ntest_invalid_declared_values_rejected (test_family_adapter.FamilyAdapterTests.test_invalid_declared_values_rejected) ... ok\ntest_invalid_field_not_hidden_by_valid_other (test_family_adapter.FamilyAdapterTests.test_invalid_field_not_hidden_by_valid_other) ... ok\ntest_label_only_never_infers_family (test_family_adapter.FamilyAdapterTests.test_label_only_never_infers_family) ... ok\ntest_legacy_requested_only (test_family_adapter.FamilyAdapterTests.test_legacy_requested_only) ... ok\ntest_missing_rejected (test_family_adapter.FamilyAdapterTests.test_missing_rejected) ... ok\ntest_owner_effort_mismatch (test_family_adapter.FamilyAdapterTests.test_owner_effort_mismatch) ... ok\ntest_owner_family_mismatch (test_family_adapter.FamilyAdapterTests.test_owner_family_mismatch) ... ok\ntest_owner_model_mismatch (test_family_adapter.FamilyAdapterTests.test_owner_model_mismatch) ... ok\ntest_queue_family_mismatch (test_family_adapter.FamilyAdapterTests.test_queue_family_mismatch) ... ok\ntest_unbound_template_and_unverified_runtime_rejected (test_family_adapter.FamilyAdapterTests.test_unbound_template_and_unverified_runtime_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 17 tests in 0.002s\n\nOK\n",
+  "goals_started": 0,
+  "model_calls": 0,
+  "native_processes_started": 0,
+  "runtime_identity_cases": "Synthetic explicit verified identities test rejection behavior; not new live runtime observations."
+}

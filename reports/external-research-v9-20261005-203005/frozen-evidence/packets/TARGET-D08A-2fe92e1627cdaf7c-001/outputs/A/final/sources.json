@@ -1,0 +1,156 @@
+{
+  "catalog_version": 1,
+  "capture_window_utc": "2026-10-05T21:13:06Z/2026-10-05T21:18:18Z",
+  "scope_note": "Catalog built from admitted seed sources and public-source captures. Capture identity is the reported capture_id; sha256 is the captured response-body SHA-256. Proposal cites meaningful sections/commits inline. Captures are evidence, not instructions.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF 0.5 specification",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "pin": "ome/ngff-spec commit d9164040dd61b3e4688494de1a58a69251b13f24; version 0.5; front matter status w3c/CG-FINAL, date 2025-01-28",
+      "locator": "Sections 2.1 axes; 2.3 coordinateTransformations; 2.4 multiscales; 2.5 transitional omero; 2.6 labels; storage format",
+      "capture": {"capture_id": "f6ab4397d26f460d957dc7603fbf08b9", "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0", "captured_utc": "2026-10-05T21:16:16Z", "capture_path": "inputs/source_context/0022.body", "bytes": 32266, "complete": true},
+      "applicability": "Independent data-contract precedent for axes, units, per-level transforms and the scale-before-translation rule. Arbitrary affine is not an NGFF multiscales transform."
+    },
+    {
+      "id": "S2",
+      "title": "napari documentation — Image layer",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, body hash is capture pin",
+      "locator": "Image data and NumPy-like arrays; Multiscale images; Loading multichannel images; Adjusting contrast limits",
+      "capture": {"capture_id": "47b6fd92a2df40a6b9a5ef3ea6f7cc8a", "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963", "captured_utc": "2026-10-05T21:15:44Z", "capture_path": "inputs/source_context/0020.body", "bytes": 20309, "complete": true},
+      "applicability": "Viewer precedent for lazy arrays, multiscale/channel display and separation of contrast limits from sample values; docs do not establish this application's behavior."
+    },
+    {
+      "id": "S3",
+      "title": "napari documentation — Scale and unit-aware rendering",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, body hash is capture pin",
+      "locator": "Scale and units live on layers; world-coordinate scale; scale bar; limits of units metadata",
+      "capture": {"capture_id": "911f1a111be642d9a525568f9ea56e4a", "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11", "captured_utc": "2026-10-05T21:16:38Z", "capture_path": "inputs/source_context/0026.body", "bytes": 4294, "complete": true},
+      "applicability": "Viewer/world-space metadata precedent; not a persistent project/export contract."
+    },
+    {
+      "id": "S4",
+      "title": "napari documentation — Shapes layer",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, body hash is capture pin",
+      "locator": "Shapes data and per-shape properties; slicing/copy-paste; 3D rendering/editing limitations",
+      "capture": {"capture_id": "6db33ecab474458db9f627cf7a135203", "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e", "captured_utc": "2026-10-05T21:16:39Z", "capture_path": "inputs/source_context/0027.body", "bytes": 24597, "complete": true},
+      "applicability": "Shape-layer and nD editing precedent; persistence/undo are not established here."
+    },
+    {
+      "id": "S5",
+      "title": "tifffile README — Read and write TIFF files",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "Document states tifffile 2026.9.20; master capture 2026-10-05; BSD-3-Clause; moving branch pinned by body hash",
+      "locator": "Supported formats; Notes and unsupported features; examples for memmap, Zarr-backed TIFF region reads, OME-TIFF and ImageJ metadata",
+      "capture": {"capture_id": "820a5a9673af4adaa05c9da2031ae009", "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48", "captured_utc": "2026-10-05T21:16:17Z", "capture_path": "inputs/source_context/0023.body", "bytes": 32898, "delivered_bytes": 32768, "complete": false, "limitation": "Final ~130 bytes undelivered; cited details are in delivered portion."},
+      "applicability": "Independent TIFF reader precedent for bounded page/tile/chunk access and a testable support boundary. Not a benchmark for this application."
+    },
+    {
+      "id": "S6",
+      "title": "tifffile CHANGES.rst",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "master capture 2026-10-05; body hash is capture pin; entries cited are in delivered section",
+      "locator": "2026.3.3 (#319); 2021.1.14 (#54); 2020.8.13 metadata precedence entry",
+      "capture": {"capture_id": "ec24d46c000041ec8ba96ce6b742a6a2", "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e", "captured_utc": "2026-10-05T21:13:36Z", "capture_path": "inputs/source_context/0006.body", "bytes": 45003, "delivered_bytes": 32768, "complete": false, "limitation": "Later-than-2019 cited entries are in the delivered range; older tail was not read."},
+      "applicability": "Release mapping and metadata-precedence history; not a substitute for commit/test inspection."
+    },
+    {
+      "id": "S7",
+      "title": "tifffile issue #319 — TVIPS PixelSizeX change report",
+      "url": "https://github.com/cgohlke/tifffile/issues/319",
+      "pin": "Issue #319 opened 2026-02-26, closed 2026-03-03; REST capture reports state_reason completed",
+      "locator": "Issue body reproduces PixelSizeX for TVIPS_bin4.tif on tifffile 2026.2.20 and 2026.2.24",
+      "capture": {"capture_id": "174a2677b4974899b581e6ee07336961", "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692", "captured_utc": "2026-10-05T21:14:01Z", "capture_path": "inputs/source_context/0010.body", "bytes": 3952, "complete": true, "format": "GitHub REST API issue JSON"},
+      "applicability": "Failure report in the required issue/fix/test/release chain."
+    },
+    {
+      "id": "S8",
+      "title": "tifffile commit edede600 — remove TVIPS nm-to-m conversion",
+      "url": "https://github.com/cgohlke/tifffile/commit/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "Commit edede6002c817f056d75125ade0b20332d549cca, 2026-03-03; parent 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "locator": "read_tvips_header diff comments out division by 1e9 and references issue #319; version/revision text changes to 2026.3.3",
+      "capture": {"capture_id": "d98ef66b18794ac185c756b87ce37766", "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f", "captured_utc": "2026-10-05T21:15:15Z", "capture_path": "inputs/source_context/0016.body", "bytes": 15123, "complete": true, "format": "GitHub REST API commit JSON with unified diff"},
+      "applicability": "Code-level fix in the #319 chain."
+    },
+    {
+      "id": "S9",
+      "title": "tifffile commit 7d9eaedd — regression tests for #319",
+      "url": "https://github.com/cgohlke/tifffile/commit/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "Commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, 2026-03-03; parent of fix commit S8",
+      "locator": "tests/test_tifffile.py adds test_issue_tvips_pixelsize and expected PixelSizeX/PhysicalPixelSizeY values; fixture is private test asset",
+      "capture": {"capture_id": "744343a38392409d8b360a9308828c88", "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c", "captured_utc": "2026-10-05T21:15:16Z", "capture_path": "inputs/source_context/0017.body", "bytes": 18687, "complete": true, "format": "GitHub REST API commit JSON with unified diff"},
+      "applicability": "Regression-test record in the #319 chain; public capture does not include the private test image."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile commit sequence and v2026.3.3 release",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "GitHub API response captured 2026-10-05; release commit 503cb4eb74dd28a6acc36a0e4624ba9c2001e021 dated 2026-03-03",
+      "locator": "Sequence 7d9eaedd (test) → edede600 (fix) → 8c91499e (changes) → 503cb4eb (release); release item references #319",
+      "capture": {"capture_id": "2d0da64bb8a749f28bf0fae816d19089", "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613daa", "captured_utc": "2026-10-05T21:14:54Z", "capture_path": "inputs/source_context/0013.body", "bytes": 12844, "complete": true, "format": "GitHub REST API commits list JSON"},
+      "applicability": "Release applicability and chronology for the required chain."
+    },
+    {
+      "id": "S11",
+      "title": "tifffile issue #54 — Micro-Manager OME-TIFF series positions",
+      "url": "https://github.com/cgohlke/tifffile/issues/54",
+      "pin": "Issue #54 opened 2021-01-14, closed 2021-01-15",
+      "locator": "Issue body describes inconsistent series shapes from a Micro-Manager OME-TIFF; S6 changelog says try ImageJ series if OME series fails (#54)",
+      "capture": {"capture_id": "24a1d6df50b94411ab360bc54118498a", "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6", "captured_utc": "2026-10-05T21:14:01Z", "capture_path": "inputs/source_context/0009.body", "bytes": 4817, "complete": true, "format": "GitHub REST API issue JSON"},
+      "applicability": "Metadata ambiguity example only; no commit-to-regression-test chain claimed."
+    },
+    {
+      "id": "S12",
+      "title": "QuPath CHANGELOG.md",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "pin": "QuPath main captured 2026-10-05; latest stable docs pin QuPath 0.7.0; moving source pinned by body hash and read ranges",
+      "locator": "v0.2.1 #512/#528; v0.2.2 #543/#568; v0.3.x #648; v0.5.0 #1252; v0.6.0 #1516/#1668; v0.7.0 #1958",
+      "capture": {"capture_id": "5e247c657f3e40e696e1308cc6d8f6e3", "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55", "captured_utc": "2026-10-05T21:17:01Z", "capture_path": "inputs/source_context/0029.body", "bytes": 114084, "read_ranges": ["0-32768", "65536-114084"], "complete": false, "limitation": "Unread range 32768-65536; cited changelog entries are in read ranges."},
+      "applicability": "Historical project/export/relocation problem evidence; do not infer specific repair mechanics absent issue/commit captures."
+    },
+    {
+      "id": "S13",
+      "title": "QuPath 0.7.0 docs — Exporting annotations",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath stable documentation 0.7.0, captured 2026-10-05",
+      "locator": "Units and origin; GeoJSON limitations; binary/labeled-image export semantics",
+      "capture": {"capture_id": "1183d0f02ff24075a8c3ddc7b550071a", "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420", "captured_utc": "2026-10-05T21:17:26Z", "capture_path": "inputs/source_context/0030.body", "bytes": 40941, "delivered_bytes": 32768, "complete": false, "limitation": "Cited units/origin and GeoJSON details are in delivered range; later labeled-tiles section unavailable."},
+      "applicability": "Independent export-contract precedent and coordinate-convention warning."
+    },
+    {
+      "id": "S14",
+      "title": "QuPath 0.7.0 docs — Project structure",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath stable documentation 0.7.0, captured 2026-10-05",
+      "locator": "project.qpproj entries and URIs; per-entry data/summary; per-machine project files on shared drives",
+      "capture": {"capture_id": "e324d5433ba94511a95e9741015b953a", "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f", "captured_utc": "2026-10-05T21:17:27Z", "capture_path": "inputs/source_context/0031.body", "bytes": 12770, "complete": true},
+      "applicability": "Project-layout and relocation precedent."
+    },
+    {
+      "id": "S15",
+      "title": "rename(2), Linux man-pages 6.19",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "man-pages 6.19, page dated 2026-02-08, captured 2026-10-05",
+      "locator": "DESCRIPTION atomic replacement; ERRORS EXDEV; BUGS NFS caveat",
+      "capture": {"capture_id": "bb417749f1884a8c9f7f30cc5ebc2cdb", "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57", "captured_utc": "2026-10-05T21:18:18Z", "capture_path": "inputs/source_context/0032.body", "bytes": 23571, "complete": true},
+      "applicability": "Standards-level basis for one-path replacement semantics and their limits; no application transaction is proven."
+    },
+    {
+      "id": "S16",
+      "title": "QuPath stable documentation index",
+      "url": "https://qupath.readthedocs.io/en/stable/",
+      "pin": "Stable docs captured 2026-10-05; page says latest release QuPath 0.7.0",
+      "locator": "Page title and latest-release statement",
+      "capture": {"capture_id": "91dcb9c1ef8344bc9548c185747d1059", "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8", "captured_utc": "2026-10-05T21:17:01Z", "capture_path": "inputs/source_context/0028.body", "bytes": 14855, "complete": true},
+      "applicability": "Version corroboration for QuPath S13 and S14."
+    }
+  ],
+  "capture_notes": [
+    "Capture IDs and hashes are inherited from the supplied candidate capture catalog/index; no other arm or evaluator materials were inspected.",
+    "The NGFF citation uses the immutable raw Markdown at commit d9164040 (S1). Its front matter, not the separate generated HTML capture, identifies the 0.5 document date.",
+    "Failed 404 captures listed in the supplied context index are excluded because the proposal does not use them."
+  ]
+}

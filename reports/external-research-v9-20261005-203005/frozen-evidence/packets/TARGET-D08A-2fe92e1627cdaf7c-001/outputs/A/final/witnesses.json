@@ -1,0 +1,58 @@
+{
+  "witness_catalog_version": 1,
+  "labels": {
+    "executed_by_candidate": "An execution receipt was returned by the isolated pm_execution.python_execute tool. This establishes only the submitted component check and output, not application behavior or semantic correctness.",
+    "executed_only_by_evaluator": "none supplied at this stage",
+    "proposed_unexecuted": "Plan only; no execution receipt exists."
+  },
+  "executed": [
+    {
+      "id": "W4",
+      "title": "Ordered physical transform and source/derived coordinate mapping",
+      "label": "executed by candidate",
+      "rationale": "The correction makes NGFF list order and source-to-derived transform direction explicit. Choose noncommuting scale/translation and a right-angle affine so reversing the order or omitting the inverse is observable.",
+      "input": {
+        "source_index": [2.0, 3.0],
+        "ngff_scale": [0.5, 2.0],
+        "ngff_translation": [100.0, -7.0],
+        "source_to_derived": [[0.0, -1.0, 5.0], [1.0, 0.0, 2.0], [0.0, 0.0, 1.0]],
+        "input_location": "constants embedded in submitted code"
+      },
+      "expected": "NGFF scale then translation maps [2,3] to [101,-1]; source_to_derived maps [2,3] to [2,4]; its inverse returns [2,3]. Applying translation before scale gives a different world coordinate.",
+      "code": "import json\n\ncase = {\n    \"source_index\": [2.0, 3.0],\n    \"ngff_scale\": [0.5, 2.0],\n    \"ngff_translation\": [100.0, -7.0],\n    \"source_to_derived\": [[0.0, -1.0, 5.0], [1.0, 0.0, 2.0], [0.0, 0.0, 1.0]],\n}\n\ndef scale_then_translate(point, scale, translation):\n    return [point[i] * scale[i] + translation[i] for i in range(len(point))]\n\ndef apply_2d(matrix, point):\n    x, y = point\n    return [matrix[0][0] * x + matrix[0][1] * y + matrix[0][2],\n            matrix[1][0] * x + matrix[1][1] * y + matrix[1][2]]\n\ndef inverse_orthogonal_affine(matrix, point):\n    a, b, tx = matrix[0]\n    c, d, ty = matrix[1]\n    det = a * d - b * c\n    x, y = point[0] - tx, point[1] - ty\n    return [(d * x - b * y) / det, (-c * x + a * y) / det]\n\np = case[\"source_index\"]\nworld = scale_then_translate(p, case[\"ngff_scale\"], case[\"ngff_translation\"])\nq = apply_2d(case[\"source_to_derived\"], p)\nback = inverse_orthogonal_affine(case[\"source_to_derived\"], q)\nassert world == [101.0, -1.0]\nassert q == [2.0, 4.0]\nassert back == p\nreverse_order = [(p[i] + case[\"ngff_translation\"][i]) * case[\"ngff_scale\"][i] for i in range(2)]\nassert reverse_order != world\nprint(\"source index:\", p)\nprint(\"NGFF scale then translation => world:\", world)\nprint(\"source_to_derived => derived index:\", q)\nprint(\"inverse export mapping => source index:\", back)\nprint(\"translation then scale differs:\", reverse_order != world)\nprint(\"frame-aware coordinate round-trip:\", back == p)\n",
+      "execution": {
+        "execution_id": "exec-ggbhz4r7",
+        "completed_utc": "2026-10-05T23:53:25.255310+00:00",
+        "code_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+        "data_sha256": "74234e98afe749f28bf0fae816d19089b?",
+        "stdout_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+        "stdout": "source index: [2.0, 3.0]\nNGFF scale then translation => world: [101.0, -1.0]\nsource_to_derived => derived index: [2.0, 4.0]\ninverse export mapping => source index: [2.0, 3.0]\ntranslation then scale differs: True\nframe-aware coordinate round-trip: True\n",
+        "stderr": "",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "none", "filesystem": "fresh empty sandbox"}
+      },
+      "scope_limits": [
+        "Pure Python arithmetic on one 2D affine and one 2-axis scale/translation example.",
+        "The affine inverse routine is used for this orthogonal 90-degree transform only; it is not a generic matrix inverse or resampling implementation.",
+        "Does not parse NGFF, convert units, resolve pixel-center conventions, serialize an application frame, resample pixels, export a file, reopen a project, or establish viewer/application behavior."
+      ]
+    }
+  ],
+  "prior_supplied_receipts_not_reproduced": [
+    {
+      "ids": ["W1", "W2", "W3"],
+      "label": "supplied prior candidate receipt summaries; not used as independently reproduced checks",
+      "source": "inputs/seed/witness_catalog.json",
+      "reason": "The supplied catalog contains execution IDs, hashes, stdout summaries and limits but not submitted code or complete input payloads. The present output therefore does not restate them as current executed witnesses or base a new claim on them."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "V1", "title": "Instrument reader and calibration fixtures", "status": "UNEXECUTED", "plan": "For each supported fixture file, compare raw metadata, axis order, dtype, sample values and (calibration value, unit) through the pinned reader and application import service; include a #319-style unit regression fixture and conflicting-metadata cases.", "acceptance": "No unit/axis changes go unnoticed; unsupported ambiguity remains recoverable and cannot create an annotation frame by guesswork."},
+    {"id": "V2", "title": "3 GB bounded review benchmark", "status": "UNEXECUTED", "plan": "On the 8-core/16 GB machine use representative tiled and compressed instrument files; measure visible-tile p95 latency, RSS, cache/in-flight memory, cancellation and progress under concurrent requests.", "acceptance": "Evaluate proposed goals p95 <100 ms, RSS <4 GB and cancel <250 ms; report failures and actual workload rather than claiming these from component docs."},
+    {"id": "V3", "title": "Frame-aware reopen after relocation and reader change", "status": "UNEXECUTED", "plan": "Move the same source bytes to another path/machine, reopen the project under a changed reader version and metadata parse, and compare saved source hash, frame ID, raw metadata, correction operations and annotations.", "acceptance": "Saved frame is preserved; new calibration interpretation requires a new explicit correction/frame ID; mismatching bytes remain unresolved absent explicit adoption."},
+    {"id": "V4", "title": "Source-frame and derived-frame export round trip", "status": "UNEXECUTED", "plan": "Export one annotation in its source frame and in a resampled derived frame. Verify manifest frame IDs and transform directions, forward-map the source geometry and inverse-map where defined. Test crop, flip, rotation, noninteger scale and changed output shape separately.", "acceptance": "Coordinates match the declared frame within a format-specific tolerance; no requirement that derived-frame coordinates equal stored source indices."},
+    {"id": "V5", "title": "Save and export interruption on local and shared storage", "status": "UNEXECUTED", "plan": "Interrupt before/after CURRENT promotion and during export on local storage and the actual shared-storage system (SMB/NFS as used). Validate generations, directory flush behavior, retries, backups and partial-output cleanup.", "acceptance": "Reopen sees a valid prior or complete new generation, never a partial committed state; share-specific ambiguity is reported."},
+    {"id": "V6", "title": "Reference versus portable bundle relocation", "status": "UNEXECUTED", "plan": "Move a referenced project and source, test matching/mismatching hashes, then repeat with explicit copied source data. Verify workstation path aliases and derived files.", "acceptance": "No silent relink on byte mismatch; portability trade-off and included content are visible."},
+    {"id": "V7", "title": "Keyboard-only workflow and feedback", "status": "UNEXECUTED", "plan": "Complete import, navigation, channel/display adjustment, point/polygon/mask editing, undo/redo, save/reopen/export with keyboard only and increased text scale.", "acceptance": "All actions reachable with visible focus; metadata and errors are legible text with recovery action and no color-only status."}
+  ]
+}

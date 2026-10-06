@@ -1,0 +1,44 @@
+{
+  "scope": "Three exact safe metadata event objects; bounded tail projection, not full event history.",
+  "events": [
+    {
+      "original_line_sha256": "16e6cd598509844d8f566635def3d7f25b894f1e961ad2750480e59704977607",
+      "event": {
+        "utc": "2026-10-06T00:43:03.427883+00:00",
+        "event": "ALL_OWNED_MEMORY_GROWTH_SCOPE_CLARIFIED",
+        "path": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-ADDENDUM-001.json",
+        "sha256": "cbc5bb1e208bd885c25d364f12867233070ec3abab414d3e9bcdeefe4653b76e",
+        "ops_owner_report_only": true,
+        "candidate_starts_by_root": 0
+      }
+    },
+    {
+      "original_line_sha256": "d47ec9661164c114a59d5304cc52ac79123c7ba543c3836c577a51b3f0f1d368",
+      "event": {
+        "utc": "2026-10-06T00:44:39.860156+00:00",
+        "event": "PROSPECTIVE_NEUTRAL_TARGETED_SETUP_REPAIR_AUTHORIZED",
+        "path": "supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+        "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+        "pairs": [
+          "D-V02-A",
+          "D-V07-A"
+        ],
+        "requires_unstarted_proof": true,
+        "candidate_answers": false
+      }
+    },
+    {
+      "original_line_sha256": "517f55da9744dbc7e91cfafe2f3a6c70da30ef9a0573255052dbc138f850c74f",
+      "event": {
+        "utc": "2026-10-06T00:50:08.508275+00:00",
+        "event": "ACCOUNTING008_AND_PROSPECTIVE_FULL_ENVELOPE_GUARD",
+        "selector_sha256": "5db438eacd9e9d3925c2f0d817b2c4b561815010accc6ed3b1a7bc8c44f0bc23",
+        "known_Goals": 66,
+        "known_provider_tokens": 183574628,
+        "no_new_unbounded_admissions": true,
+        "existing_clocks_preserved": true,
+        "quality_or_canon_changes": false
+      }
+    }
+  ]
+}

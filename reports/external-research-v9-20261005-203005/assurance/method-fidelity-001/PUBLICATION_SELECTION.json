@@ -1,0 +1,36 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "cohort": "method-fidelity-001",
+  "source_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001",
+  "destination_hint": "assurance/method-fidelity-001",
+  "status": "FROZEN_METADATA_REPORT_NO_SCIENTIFIC_RESULT",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/README.md",
+      "sha256": "b379c616fc67e9c89dcd8b605952b8e4c72b55aad11548a9f6cb6841ea23f140",
+      "relative_path": "README.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/FINDINGS.json",
+      "sha256": "f5943fe372310ef709407fca4ac54ea54ca845186087380a6247c2e4c7cfa061",
+      "relative_path": "FINDINGS.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/METHOD_SUMMARY.json",
+      "sha256": "1ff3e0b811d6743d6309bd9723f36f09d84fe4b0f4daa0d87c7b4ca8a4d84f96",
+      "relative_path": "METHOD_SUMMARY.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/EVIDENCE.json",
+      "sha256": "9e7068b81d5432fabd94f854a966341d7a8c77825414ae61723c6358c5a3f32a",
+      "relative_path": "EVIDENCE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/SEED_LINEAGE_METADATA.json",
+      "sha256": "c622f18fca9b8c1a70650895216ab57d05994965fd1b32212d2926e0eae0c1ee",
+      "relative_path": "SEED_LINEAGE_METADATA.json"
+    }
+  ],
+  "exclusions": "Every unlisted path; larger local row/descriptor snapshots, candidate/source bodies, evaluator/auth/raw native IO, sealed holdouts, runtime stores. No recursive copy.",
+  "root_or_ops_mutation_by_auditor": false
+}

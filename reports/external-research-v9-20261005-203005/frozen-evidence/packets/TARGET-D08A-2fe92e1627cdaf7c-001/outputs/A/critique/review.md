@@ -1,0 +1,40 @@
+# Critique — correction review
+
+Scope: the admitted seed proposal and its supplied source captures/catalogs, assessed against brief A. This is a critic-and-final stage; it does not establish independent source discovery. Findings below distinguish a specific contract defect from claims that remain supported.
+
+## Correction that changes the export/reopen plan
+
+The proposal correctly states NGFF 0.5’s transform order: dataset transformations are applied in list order; for multiscale datasets scale is required and translation, when present, follows scale (§2.3–2.4; supplied source S1, immutable `ome/ngff-spec@d9164040dd61b3e4688494de1a58a69251b13f24`). The seed’s simple axis-aligned equation `physical = pixel * scale + origin` is consistent with that sequence.
+
+The proposed native schema does not preserve that clarity. §4.3 and §7.1 allow a full affine in the same frame record as `scale` and `origin`; §7.1’s equation ignores the affine, while §5 C2 says the schema will use “either” scale/translation “or” affine. It never defines precedence or composition. The mismatch reaches export: §4.8/§6.6 request a “transform chain” but do not name each matrix’s input/output frame or direction, and V4 expects all exports to round-trip to the original stored pixel values. A resampled/rotated derived image requires a declared source-to-derived mapping; its pixel coordinates cannot be equated to source indices without applying the inverse/forward map. QuPath’s export docs reinforce the risk: its export coordinates are pixel units with an origin at the top-left of the full-resolution image, and it explicitly warns that other software may expect different origins/units (S13, “Units and origin”).
+
+**Correction:** define a canonical source sample-index frame and a separate physical frame; store exactly one ordered mapping for each frame edge. Use an affine `p_world = A_source_to_world · [p_source,1]` as the internal authority, with column vectors and named row-major serialization. For NGFF-compatible axis-aligned inputs, encode/apply the dataset list first (scale then translation), then any group-level list, in spec order; the canonical affine is the evaluated result, not an additional transform to apply. Store geometric-operation mappings explicitly as `input_index_to_output_index`; resampling uses the inverse mapping to sample its input. Each annotation pins a frame ID as well as source/derived content identity. Exports name the annotation coordinate frame, chosen output frame, transform IDs/directions actually applied, and whether samples were resampled or only coordinates transformed. Reopen verifies both file-byte identity and the persisted frame/operation identities; matching bytes never triggers replacement of a stored user correction by newly parsed metadata. Update V4 to check both source-frame and derived-frame exports, including a forward/inverse coordinate round-trip, with precision tolerance justified per format.
+
+An isolated arithmetic witness W4 was executed for this correction (receipt `exec-ggbhz4r7`; complete code/output in `out/final/witnesses.json`). It checks a discriminating NGFF scale-then-translation example, a source-to-derived affine, and the inverse coordinate mapping. It validates only those equations, not a reader, exporter, resampler, or application.
+
+## Source/version corrections and limits
+
+- Use the immutable S1 raw Markdown capture at `ome/ngff-spec@d9164040dd61b3e4688494de1a58a69251b13f24` as the specification pin; its front matter records version 0.5, status `w3c/CG-FINAL`, and date 2025-01-28. A separate current HTML capture (source_context/0000.body) is generated markup and visibly carries a later report/update date; do not conflate that page date with the pinned source document’s front matter.
+- The #319 history is a real issue → code fix → regression test → release chain in the admitted captures: issue #319 reproduces TVIPS `PixelSizeX` as `1.4208036661148071` on 2026.2.20 and `1.4208036661148072e-09` on 2026.2.24 (S7); commit `7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938` adds `test_issue_tvips_pixelsize` asserting file-native nm values (S9); its child `edede6002c817f056d75125ade0b20332d549cca` comments out the nm-to-m conversion with the issue URL and changes the version to 2026.3.3 (S8); release commit `503cb4eb74dd28a6acc36a0e4624ba9c2001e021` contains the changelog item “Do not convert TVIPS pixel sizes to m (#319)” (S10). The public test commit identifies the TVIPS binary as a private test asset; the supplied capture does not provide it for a fresh rerun. This supports the unit-semantics lesson and a reader pin/fixture policy, not a claim that this workspace or every tifffile format path behaves correctly.
+- The seed correctly says no commit-to-test chain was established for issue #54. Keep that limitation.
+- napari evidence is captured documentation on moving `main`, not a release-pinned API guarantee; tifffile’s README/CHANGES are also moving-branch captures, though their content hashes and stated versions are recorded. Pin actual dependencies in a lockfile and rerun instrument fixtures before shipping.
+
+## Supported claims to preserve
+
+- OME-NGFF’s axes, units, per-resolution geometry and explicitly restricted scale/translation sequence are a strong independent data-contract precedent (S1).
+- napari’s documented separation of contrast limits from underlying values and lazy NumPy-like inputs is a useful viewer precedent (S2); its units/world metadata and shapes behavior are useful but do not establish persistence for this application (S3–S4).
+- tifffile documents page/tile/SubIFD/pyramidal access, memory mapping and a concrete unsupported-feature boundary (S5); this makes it a useful bounded-I/O reader precedent, not evidence that a proposed 3 GB workload meets latency/RSS targets.
+- QuPath’s JSON project references, per-entry directories, relocation guidance, and explicit export-coordinate caveats are useful project/export precedents (S12–S14). The public changelog records relevant historical problems, but absent issue/fix diffs it is not proof of each repair mechanism (S12).
+- POSIX `rename(2)` documents replacement atomicity for one path, `EXDEV`, and an NFS caveat (S15). It does not prove multi-file transactionality or the behavior of the group’s unspecified shared-storage service.
+
+## Other material qualifications and dependencies
+
+1. Treat the 3 GB target as a benchmark gate, not as guaranteed by tifffile, napari or the hardware envelope. Test actual tiled and compressed instrument files, memory, cancellation and concurrency.
+2. A same-directory temp + `os.replace` protects one replacement; multi-file project saves need a generation/commit manifest and last-known-good recovery. Exercise power loss and the actual SMB/NFS/shared storage separately.
+3. A byte hash identifies bytes, not spatial interpretation. Frame definitions, axis mapping, corrections, and each derived operation need stable IDs/content hashes. Preserve original metadata and show corrections in UI.
+4. The seed claims candidate execution receipts W1–W3 but the admitted witness catalog lacks the source code and complete input payloads needed to reproduce those checks. Keep their report summaries only as supplied prior-stage evidence with that limitation, or use new complete receipts. Do not make the final proposal rely on those receipts as independently rechecked.
+5. The proposal’s TIFF/Zarr dtype, compression, >4 GB, OME-TIFF and NGFF compatibility list is a product target requiring format-by-format fixtures. Fail unsupported/ambiguous imports into a recoverable project entry and preserve the metadata bytes; do not silently repair input.
+
+## Affected final sections
+
+The correction must appear consistently in the summary, data contract, architecture/frame model, annotation anchoring, derived-operation ledger, reopen/relocation rules, export manifest, and proposed export/reopen validation. A local affine formula edit alone would leave the original export ambiguity intact.

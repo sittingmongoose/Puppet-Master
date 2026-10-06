@@ -1,0 +1,19 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/restart-projection-20261006T004001.769181Z/current.json",
+      "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+    },
+    {
+      "path": "accounting/restart-projection-20261006T004001.769181Z/campaign.json",
+      "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+    },
+    {
+      "path": "accounting/restart-projection-20261006T004001.769181Z/UPDATE_RECEIPT.json",
+      "sha256": "cad9d5bef260bb246b637acc6391f52c62dec7f62df17c0e806a838435142bd6"
+    }
+  ],
+  "cohort": "restart-projection-20261006T004001.769181Z",
+  "exclusion": "Metadata restart projections and receipt only; no candidate/source bodies, raw archive bodies, private runtime or unlisted files.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

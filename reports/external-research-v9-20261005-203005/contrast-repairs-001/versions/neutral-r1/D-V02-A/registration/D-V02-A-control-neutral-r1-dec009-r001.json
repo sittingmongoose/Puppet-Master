@@ -1,0 +1,90 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V02-A-control-neutral-r1-dec009-r001",
+  "pair_id": "D-V02-A",
+  "source_slot": "D-V02-A",
+  "family": "L",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/card.json",
+  "card_sha256": "07e382939708ac6f1a70be84dc520e551cfcafb811aff84db1acb32c5e22fcc8",
+  "stage_jobs": [
+    {
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+      "arm": "control",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "stage_sha256": "8a851aa36c28dd3dd19ee4d2e9d22cdce1ca189aded074b5571c1321d5d0e36f",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "setup_version": "neutral-r1",
+      "predecessor_job_id": "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+      "runtime_binding_ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_3_READY.json",
+        "sha256": "534e9ae13e2439c6d8d5298cda6617e19a9c3ef052513cecd888274c4527106e"
+      },
+      "additional_prelaunch_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/LINEAGE.json": "f78ba7596a2cdeb5c3c0487289fd47c7ceaa22d41a20bb107b6a14e5f738c247"
+      }
+    }
+  ],
+  "root_scope_required": true,
+  "status": "PREPARED_NOT_ADMITTED",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "runtime_binding_required": true,
+  "created_utc": "2026-10-06T00:51:22.941980+00:00",
+  "setup_version": "neutral-r1",
+  "prospective_setup_lineage": {
+    "schema": "er9.prospective-neutral-lineage.v1",
+    "setup_version": "neutral-r1",
+    "authority": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    "zero_start_confirmation": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    "predecessor_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A.json",
+      "sha256": "d03b907ec90e9e048aaf354b7a3677a4495a2c0bf6bfc50bdaae51d416c29a1f"
+    },
+    "predecessor_neutral": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A-TASK.md",
+      "sha256": "cff40503b62af6bfc73923de88c145bfc9a83fdd788bb0094eaba840c4607295"
+    },
+    "predecessor_pair_freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "90b8a07e0dd8a2d2ae8caab1985f2e109c442d7f262c9066dd4cc878006603f6"
+    },
+    "role_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V02-A.json",
+      "sha256": "eb772d2e323a4ff224eec1b03e0def5fefa4dee583c50fc9bbebedbe0190267a"
+    },
+    "predecessor_job_ids": [
+      "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+      "D-V02-A-treatment-diagnostic-a001-resource-v13-a002"
+    ],
+    "procedural_delta_only": true,
+    "source_or_quality_selection": false,
+    "actual_method_uptake": "UNKNOWN",
+    "outcome_assessment": "NOT_RUN",
+    "reason": "Shared neutral task contained the treatment binding procedure; isolate the declared arm modifier.",
+    "created_utc": "2026-10-06T00:51:22.941980+00:00"
+  },
+  "runtime_binding_ready": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_3_READY.json",
+    "sha256": "534e9ae13e2439c6d8d5298cda6617e19a9c3ef052513cecd888274c4527106e"
+  }
+}

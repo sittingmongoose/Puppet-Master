@@ -1,0 +1,692 @@
+{
+  "cohort": "D08-role-output-and-method-accounting-010",
+  "snapshot_at": "2026-10-06T00:53:31.248076+00:00",
+  "sources": [
+    {
+      "source": "ops/frozen-exports/PUBLIC_SELECTION_011.json",
+      "published": "frozen-evidence/PUBLIC_SELECTION_011.json",
+      "source_sha256": "568f27463a25bec4c4cb569713ee8b45361d1e7168245b5739bfa527f0d3cffb",
+      "public_sha256": "568f27463a25bec4c4cb569713ee8b45361d1e7168245b5739bfa527f0d3cffb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-TASK.md",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-TASK.md",
+      "source_sha256": "5b0a56e8d17e329763ca22e6eba50a61c579281b5146a895768bfdba1e7ce72f",
+      "public_sha256": "5b0a56e8d17e329763ca22e6eba50a61c579281b5146a895768bfdba1e7ce72f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-coverage.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-coverage.json",
+      "source_sha256": "54fd36329877fc4c0e4af48edbf220420b0ea9a364f4b59fa2ef5389b4c8a8d8",
+      "public_sha256": "54fd36329877fc4c0e4af48edbf220420b0ea9a364f4b59fa2ef5389b4c8a8d8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A.json",
+      "source_sha256": "5efcba23635414a16ecf571e04871753e932585f518697057e7fdb36cb254ba5",
+      "public_sha256": "5efcba23635414a16ecf571e04871753e932585f518697057e7fdb36cb254ba5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/common_criteria.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/development-A-biomedical.md",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/development-A-biomedical.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/important-checks-A.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/important-checks-A.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/source_access.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/dispatch.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/dispatch.json",
+      "source_sha256": "e08b7a4c9aa90da5e7dd6017e6a685c099f420ced840d64de901016a0944d132",
+      "public_sha256": "6ce0758ff96c9022e153ad96ec226eb8a7861cbe065a2b1ba3aedadda260ca28",
+      "transform": "LAB_ROOT path labels"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/integrity-proof.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/integrity-proof.json",
+      "source_sha256": "be0de9734656d79dc10e78a433c67483afc5ad268755fbe8b0c67ee2905308c5",
+      "public_sha256": "be0de9734656d79dc10e78a433c67483afc5ad268755fbe8b0c67ee2905308c5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/critique/review.md",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/critique/review.md",
+      "source_sha256": "9e90502a58ee212718d959a8c3a1d3340ad5cf63747f3983806eb8768e4b68e6",
+      "public_sha256": "9e90502a58ee212718d959a8c3a1d3340ad5cf63747f3983806eb8768e4b68e6",
+      "transform": "byte-identical candidate authored bytes"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/proposal.md",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/proposal.md",
+      "source_sha256": "28bfa801e56e559999ef6a35bdf10f5f5f72c2a86ff085ccbcc44dd7f7addbfe",
+      "public_sha256": "28bfa801e56e559999ef6a35bdf10f5f5f72c2a86ff085ccbcc44dd7f7addbfe",
+      "transform": "byte-identical candidate authored bytes"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/sources.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/sources.json",
+      "source_sha256": "4839a4508ebf3d9657e587b9b9eb2164528e28483cf766ec0af58c7a18f0a1f3",
+      "public_sha256": "4839a4508ebf3d9657e587b9b9eb2164528e28483cf766ec0af58c7a18f0a1f3",
+      "transform": "byte-identical candidate authored bytes"
+    },
+    {
+      "source": "ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/witnesses.json",
+      "published": "frozen-evidence/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/witnesses.json",
+      "source_sha256": "7e4f22a43a01e1bdcebf7a602848bad318642d6a2bfd6e16941221fd8958348d",
+      "public_sha256": "7e4f22a43a01e1bdcebf7a602848bad318642d6a2bfd6e16941221fd8958348d",
+      "transform": "byte-identical candidate authored bytes"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/P2-I05-BOUNDARY-RECEIPTS-LATE-001/MANIFEST.json",
+      "published": "frozen-evidence/phase2/P2-I05-BOUNDARY-RECEIPTS-LATE-001/MANIFEST.json",
+      "source_sha256": "d24a702daf143b6e85452024e75e8afe268718f2d600cf8cea5330ad12b77610",
+      "public_sha256": "d24a702daf143b6e85452024e75e8afe268718f2d600cf8cea5330ad12b77610",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/PUBLICATION_SELECTION.json",
+      "published": "assurance/method-fidelity-001/PUBLICATION_SELECTION.json",
+      "source_sha256": "937bf607fec5c91c9db8115cf18805a4f2324e1d307cab9a2d7a9eab8864a619",
+      "public_sha256": "937bf607fec5c91c9db8115cf18805a4f2324e1d307cab9a2d7a9eab8864a619",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/README.md",
+      "published": "assurance/method-fidelity-001/README.md",
+      "source_sha256": "b379c616fc67e9c89dcd8b605952b8e4c72b55aad11548a9f6cb6841ea23f140",
+      "public_sha256": "b379c616fc67e9c89dcd8b605952b8e4c72b55aad11548a9f6cb6841ea23f140",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/FINDINGS.json",
+      "published": "assurance/method-fidelity-001/FINDINGS.json",
+      "source_sha256": "f5943fe372310ef709407fca4ac54ea54ca845186087380a6247c2e4c7cfa061",
+      "public_sha256": "f5943fe372310ef709407fca4ac54ea54ca845186087380a6247c2e4c7cfa061",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/METHOD_SUMMARY.json",
+      "published": "assurance/method-fidelity-001/METHOD_SUMMARY.json",
+      "source_sha256": "1ff3e0b811d6743d6309bd9723f36f09d84fe4b0f4daa0d87c7b4ca8a4d84f96",
+      "public_sha256": "1ff3e0b811d6743d6309bd9723f36f09d84fe4b0f4daa0d87c7b4ca8a4d84f96",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/EVIDENCE.json",
+      "published": "assurance/method-fidelity-001/EVIDENCE.json",
+      "source_sha256": "9e7068b81d5432fabd94f854a966341d7a8c77825414ae61723c6358c5a3f32a",
+      "public_sha256": "9e7068b81d5432fabd94f854a966341d7a8c77825414ae61723c6358c5a3f32a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/method-fidelity-001/SEED_LINEAGE_METADATA.json",
+      "published": "assurance/method-fidelity-001/SEED_LINEAGE_METADATA.json",
+      "source_sha256": "c622f18fca9b8c1a70650895216ab57d05994965fd1b32212d2926e0eae0c1ee",
+      "public_sha256": "c622f18fca9b8c1a70650895216ab57d05994965fd1b32212d2926e0eae0c1ee",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/PUBLIC_SELECTION.json",
+      "published": "execution/dispatcher-family-adapter-v1/PUBLIC_SELECTION.json",
+      "source_sha256": "d184aeb7d0fec191cd355f17b5d2e9078b5b03e5e11b5c213a47f8ff3d1aeae9",
+      "public_sha256": "d184aeb7d0fec191cd355f17b5d2e9078b5b03e5e11b5c213a47f8ff3d1aeae9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/family_adapter.py",
+      "published": "execution/dispatcher-family-adapter-v1/family_adapter.py",
+      "source_sha256": "c20e1c1c708e9ccda575b4ad1b6cf60bf12899e0ed547cc50428257b9df64a14",
+      "public_sha256": "c20e1c1c708e9ccda575b4ad1b6cf60bf12899e0ed547cc50428257b9df64a14",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/test_family_adapter.py",
+      "published": "execution/dispatcher-family-adapter-v1/test_family_adapter.py",
+      "source_sha256": "12a82fc1bff6d67a6192627d23361b275ddef9b2c67de2450253b7a66cad0a60",
+      "public_sha256": "12a82fc1bff6d67a6192627d23361b275ddef9b2c67de2450253b7a66cad0a60",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/ACTUAL_SCHEMA_VECTORS.json",
+      "published": "execution/dispatcher-family-adapter-v1/ACTUAL_SCHEMA_VECTORS.json",
+      "source_sha256": "1248dfb399cdeee15ffb1ea46ccaf2c9cde95012810b4c080c0adbf9f7fd4547",
+      "public_sha256": "1248dfb399cdeee15ffb1ea46ccaf2c9cde95012810b4c080c0adbf9f7fd4547",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/README.md",
+      "published": "execution/dispatcher-family-adapter-v1/README.md",
+      "source_sha256": "2fd78011bbd263c1b0b2c2c092e9388f9bf10a2df6c5e49cdab25b3698b5790d",
+      "public_sha256": "2fd78011bbd263c1b0b2c2c092e9388f9bf10a2df6c5e49cdab25b3698b5790d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/VERIFICATION.json",
+      "published": "execution/dispatcher-family-adapter-v1/VERIFICATION.json",
+      "source_sha256": "8d6978e07a715167e8d218c0253f50fb86b5463129fb735aadfa5517210b2d29",
+      "public_sha256": "8d6978e07a715167e8d218c0253f50fb86b5463129fb735aadfa5517210b2d29",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/REPORT.json",
+      "published": "execution/dispatcher-family-adapter-v1/REPORT.json",
+      "source_sha256": "8712c308f7b291d2dee12494fd7decf26f60f186e63850c63a8d8f2d4a299a7a",
+      "public_sha256": "8712c308f7b291d2dee12494fd7decf26f60f186e63850c63a8d8f2d4a299a7a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/PIN.json",
+      "published": "execution/dispatcher-family-adapter-v1/PIN.json",
+      "source_sha256": "f34a349e111d51a5c0839569111cfd17365b0b70fdd575239ecdd8c8d1b27393",
+      "public_sha256": "f34a349e111d51a5c0839569111cfd17365b0b70fdd575239ecdd8c8d1b27393",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/dispatcher-family-adapter-v1/INTEGRATION_OUTBOX.json",
+      "published": "execution/dispatcher-family-adapter-v1/INTEGRATION_OUTBOX.json",
+      "source_sha256": "fc58271cb7a29872ef534b04b4c6cc693c8e9fcf3370e82e6d7a08a6a99837e4",
+      "public_sha256": "fc58271cb7a29872ef534b04b4c6cc693c8e9fcf3370e82e6d7a08a6a99837e4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-PUBLICATION-001.json",
+      "published": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-PUBLICATION-001.json",
+      "source_sha256": "3cdcf1afc9cfd3717b90231a1a0b3afc0923b3ae3ad01a28109f5e365bc7098d",
+      "public_sha256": "3cdcf1afc9cfd3717b90231a1a0b3afc0923b3ae3ad01a28109f5e365bc7098d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-ADDENDUM-001.json",
+      "source_sha256": "cbc5bb1e208bd885c25d364f12867233070ec3abab414d3e9bcdeefe4653b76e",
+      "public_sha256": "cbc5bb1e208bd885c25d364f12867233070ec3abab414d3e9bcdeefe4653b76e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-009-PUBLICATION.json",
+      "published": "supervision/DECISIONS-009-PUBLICATION.json",
+      "source_sha256": "f334a47105c3a03bbfa81413c5e8aa4b44216303d77fb98165f9db80d29b90c4",
+      "public_sha256": "f334a47105c3a03bbfa81413c5e8aa4b44216303d77fb98165f9db80d29b90c4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "published": "supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "source_sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+      "public_sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-008/PUBLIC_SELECTION.json",
+      "source_sha256": "5db438eacd9e9d3925c2f0d817b2c4b561815010accc6ed3b1a7bc8c44f0bc23",
+      "public_sha256": "5db438eacd9e9d3925c2f0d817b2c4b561815010accc6ed3b1a7bc8c44f0bc23",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/attempts.safe.json",
+      "published": "accounting/cohort-008/attempts.safe.json",
+      "source_sha256": "7bd047e1660f772c8bcdf0347594ad5a8432b706f82c24fc30d5461cfc61fd2f",
+      "public_sha256": "7bd047e1660f772c8bcdf0347594ad5a8432b706f82c24fc30d5461cfc61fd2f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/snapshot.safe.json",
+      "published": "accounting/cohort-008/snapshot.safe.json",
+      "source_sha256": "f5ebfc2826a990311403a3019d6ec0615415acee99d54e8aa919abe92fcd346c",
+      "public_sha256": "f5ebfc2826a990311403a3019d6ec0615415acee99d54e8aa919abe92fcd346c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/attempts.safe.schema.json",
+      "published": "accounting/cohort-008/attempts.safe.schema.json",
+      "source_sha256": "ebda6b66fe9c5b011c1444d8ab7dc2c2587b8c83d9fea6d857f0660673fb3acd",
+      "public_sha256": "ebda6b66fe9c5b011c1444d8ab7dc2c2587b8c83d9fea6d857f0660673fb3acd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/snapshot.safe.schema.json",
+      "published": "accounting/cohort-008/snapshot.safe.schema.json",
+      "source_sha256": "363074de2e2c0ff9369ea78796480796b586d8dd61bd4e0396ed703a043f7175",
+      "public_sha256": "363074de2e2c0ff9369ea78796480796b586d8dd61bd4e0396ed703a043f7175",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-008/COST_SNAPSHOT.md",
+      "published": "accounting/cohort-008/COST_SNAPSHOT.md",
+      "source_sha256": "3cfd711427566fbb6a84b8e3ddf614694336e8262fc44b718619ec62101e81ae",
+      "public_sha256": "3cfd711427566fbb6a84b8e3ddf614694336e8262fc44b718619ec62101e81ae",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/restart-projection-20261006T004001.769181Z/PUBLIC_SELECTION.json",
+      "published": "accounting/restart-projection-20261006T004001.769181Z/PUBLIC_SELECTION.json",
+      "source_sha256": "81bfa8ea92287fc79081a8b039afdbf692513c5e62e4dcd133a7ae88311b0876",
+      "public_sha256": "81bfa8ea92287fc79081a8b039afdbf692513c5e62e4dcd133a7ae88311b0876",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/restart-projection-20261006T004001.769181Z/current.json",
+      "published": "accounting/restart-projection-20261006T004001.769181Z/current.json",
+      "source_sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7",
+      "public_sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/restart-projection-20261006T004001.769181Z/campaign.json",
+      "published": "accounting/restart-projection-20261006T004001.769181Z/campaign.json",
+      "source_sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7",
+      "public_sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/restart-projection-20261006T004001.769181Z/UPDATE_RECEIPT.json",
+      "published": "accounting/restart-projection-20261006T004001.769181Z/UPDATE_RECEIPT.json",
+      "source_sha256": "cad9d5bef260bb246b637acc6391f52c62dec7f62df17c0e806a838435142bd6",
+      "public_sha256": "cad9d5bef260bb246b637acc6391f52c62dec7f62df17c0e806a838435142bd6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/MANIFEST.json",
+      "published": "execution/dispatcher-guards-v1/MANIFEST.json",
+      "source_sha256": "9f2bc94d6c14223809e22deabefdb0f9bfb3636609ba07a942c4c5c075ceb06e",
+      "public_sha256": "9f2bc94d6c14223809e22deabefdb0f9bfb3636609ba07a942c4c5c075ceb06e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/dispatch.py",
+      "published": "execution/dispatcher-guards-v1/dispatch.py",
+      "source_sha256": "f2e8280e2a2faad38317bbdb942a5c9b894c109968a96c77a483ccece5a01536",
+      "public_sha256": "f2e8280e2a2faad38317bbdb942a5c9b894c109968a96c77a483ccece5a01536",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/resource_admission.py",
+      "published": "execution/dispatcher-guards-v1/resource_admission.py",
+      "source_sha256": "ce6fc02785137c5eabd598e8e694899f64f89dd38937696f0613025f56e2e93c",
+      "public_sha256": "ce6fc02785137c5eabd598e8e694899f64f89dd38937696f0613025f56e2e93c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/test_dispatch.py",
+      "published": "execution/dispatcher-guards-v1/test_dispatch.py",
+      "source_sha256": "c49b9f614b49362670e6d54f6ac96141228410a5441f31352aec7330eaade77f",
+      "public_sha256": "c49b9f614b49362670e6d54f6ac96141228410a5441f31352aec7330eaade77f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/supplementary_metadata.py",
+      "published": "execution/dispatcher-guards-v1/supplementary_metadata.py",
+      "source_sha256": "dc4c6e59ae5745830e944ebcd71cc06650432d30fea79765513d9a04c0a2fc6d",
+      "public_sha256": "dc4c6e59ae5745830e944ebcd71cc06650432d30fea79765513d9a04c0a2fc6d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/diagnostic_dag_cursor.py",
+      "published": "execution/dispatcher-guards-v1/diagnostic_dag_cursor.py",
+      "source_sha256": "16041fed4ad5b99ac81b11032bf8f52ca21f5cb567a306ed29ca2995ebec3403",
+      "public_sha256": "16041fed4ad5b99ac81b11032bf8f52ca21f5cb567a306ed29ca2995ebec3403",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "published": "execution/dispatcher-guards-v1/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "source_sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b",
+      "public_sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/DISPATCH_GUARDS_V1/VERIFICATION.json",
+      "published": "execution/dispatcher-guards-v1/VERIFICATION.json",
+      "source_sha256": "e0aa00f2f783686d4bfa36f9d3ba46f8634d3059dedfe31a4ffa9dffe0ca11a3",
+      "public_sha256": "e0aa00f2f783686d4bfa36f9d3ba46f8634d3059dedfe31a4ffa9dffe0ca11a3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/current.json",
+      "published": "restart/cohort010/current.json",
+      "source_sha256": "6e56c0f5e829ab8f236361d1416bd07b7b48e96e99aa00f901c9e4b0ed556e77",
+      "public_sha256": "6e56c0f5e829ab8f236361d1416bd07b7b48e96e99aa00f901c9e4b0ed556e77",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/campaign.json",
+      "published": "restart/cohort010/campaign.json",
+      "source_sha256": "6e56c0f5e829ab8f236361d1416bd07b7b48e96e99aa00f901c9e4b0ed556e77",
+      "public_sha256": "6e56c0f5e829ab8f236361d1416bd07b7b48e96e99aa00f901c9e4b0ed556e77",
+      "transform": "byte-identical"
+    }
+  ],
+  "root_events": "restart/cohort010/ROOT_METADATA_EVENTS.json",
+  "D08A_review": "STARTED, not frozen/graded in this cohort",
+  "late_boundary_appendix": "After original Phase2/whole ceiling; no new source assessment credit",
+  "whole_pipeline_or_winner_claim": false,
+  "candidate_findings_feedback": false,
+  "contrast_repairs_positive_selector_sha256": "78e58450ce9f74d362404baa5de68fa0ed47427761c687fc91b64fd1973648fe",
+  "contrast_repair_sources": [
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/DELTA_PROOF.json",
+      "published": "contrast-repairs-001/DELTA_PROOF.json",
+      "sha256": "fe7bbd54148b8a63d518078d8ede759aee6ac48d8a929fb510effd02a7cebaf2",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/PIN.json",
+      "published": "contrast-repairs-001/PIN.json",
+      "sha256": "2c84af44ccbe89b0037f2fbf6195f68a5e5fcb55895ea87ab5aebe7b3ef12bb8",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/README.md",
+      "published": "contrast-repairs-001/README.md",
+      "sha256": "a081b23728f51b7d0633d23478871126668c9ec08b5be0f51d2dac9ff02e82a5",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/RUNTIME_EXPECTATIONS.json",
+      "published": "contrast-repairs-001/RUNTIME_EXPECTATIONS.json",
+      "sha256": "06b1fc31bff6be919dd61fa6b9e6dd8d4539930a9f738b17e04e604b7d1ced57",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/SOURCE_PINS.json",
+      "published": "contrast-repairs-001/SOURCE_PINS.json",
+      "sha256": "1f93ec5c0565cbf2928ae0c021e7aad80b6af211d404d0cf49524ac0b388004d",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/VERIFICATION.json",
+      "published": "contrast-repairs-001/VERIFICATION.json",
+      "sha256": "a15cb754abf9480cc5082846d6b36ee1a69c40dbebbfe2a5b2bc0cb58aefb517",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/build_packets.py",
+      "published": "contrast-repairs-001/build_packets.py",
+      "sha256": "824e6a53d4409984c45a00a0fedfcad5f7b1ccf5b8ac6a4da7fb88ef661e557a",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/test_packets.py",
+      "published": "contrast-repairs-001/test_packets.py",
+      "sha256": "cc902fa1d9a3b52c50deae2489e912a8daa3678375def25e8ad59e2f9a2efae0",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "fe770086f32a58110887b0958e5262bb95dfb549e6f30df4be566339452588eb",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "8a851aa36c28dd3dd19ee4d2e9d22cdce1ca189aded074b5571c1321d5d0e36f",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "17d0bc1e42922c1de8d3a927405d692b2b10ea7c5aa6d2cc15bde366ebc84dae",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "6a57b72dc20a76a5001bde07edff74d1b5fa1ede9baff760d94bf6718ec93a34",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "afe09a820d0f1d8dc3737a0966925ff0965e2d186fb3bf994ee44dddb474d838",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "05dafa25718d6c93b664bc4f3c3293a71710c28dcbba76ee57958406393762cd",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "d3d39817d3407bb4389e575719c9ba40fcdd352baee5f6de13e488bc39f4f253",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "c8279a3650820bd5f56e21790f54a515016542939b44fd3c7bedc2ff0aba706b",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/LINEAGE.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/LINEAGE.json",
+      "sha256": "f78ba7596a2cdeb5c3c0487289fd47c7ceaa22d41a20bb107b6a14e5f738c247",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/PAIR_SOURCE_FREEZE.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "e77bc5ba260b382c91b9549d3bb6fd882c6a2e5c84e162a8f0517700c7b9e08c",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/REGISTRATION_OUTBOX.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/REGISTRATION_OUTBOX.json",
+      "sha256": "1485dd19f75bdd18e6fbbd7b2c4e535974a3aeb95f29d606145114b58136c795",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/card.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/card.json",
+      "sha256": "07e382939708ac6f1a70be84dc520e551cfcafb811aff84db1acb32c5e22fcc8",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-control-neutral-r1-dec009-r001.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-control-neutral-r1-dec009-r001.json",
+      "sha256": "f2de136e1b5f4c5f72d8cf05337e6d5993ae41364f5ceae50b134757292d7437",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-treatment-neutral-r1-dec009-r001.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V02-A/registration/D-V02-A-treatment-neutral-r1-dec009-r001.json",
+      "sha256": "2ace87446f07b2ed4fc728e25e114e037afea219ef29eada27ebec346358fdda",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "f47eb29033cffe20e04e2a7d0e7e08d95ad01498e5a26b22f1f541257141e51b",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "1802ec8087c05affcd5d7b8ed38fd108a85843c196686d61f1e7d0ae9c67d75c",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "7a9ae820a444989a099d86027b0cd94bf004d4e6dd555a4719f4401f85888117",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "511fdacb47d9900da5975de451ecc9ccb0ee376f62fddfa04012f8e5d9675f73",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/packet.json",
+      "sha256": "b919b8205eb211c9a16f826cfc4da99c364b0a1eac1453b8854eec7b51836954",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "sha256": "073ad18d64cafb894cace4777b32ae109bb5e24c5d83ccc911865da978ca230d",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/TASK.md",
+      "sha256": "7dc5e0ad14573d79ab656ac68f8a69f58af970e0870ed3dff036c30e1ef88cef",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/arm_instruction.md",
+      "sha256": "092a67d8894fc43a16a1103849808b54d9b2b8e180597e988fd4c4a50ac2c125",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/LINEAGE.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/LINEAGE.json",
+      "sha256": "8c00d55133558e6db96bd29714816485e0fe372176f3ff560d20f3280571b46a",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/NEUTRAL_TASK.md",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/NEUTRAL_TASK.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "efd1e92fdfcec5073e2ea336337a37b5874cb8b7f1dc0c20afb6dfdb154163ed",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/REGISTRATION_OUTBOX.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/REGISTRATION_OUTBOX.json",
+      "sha256": "d8375bfca1aeea439b5e5ffa4f3f472a3f35961e0bbbccb6dfc4e830ce5488f0",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+      "sha256": "d199fe83a5d5b5cc429277c3c4aa29323f532962deb4963bbe7fa89df415fea0",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-control-neutral-r1-dec009-r001.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-control-neutral-r1-dec009-r001.json",
+      "sha256": "73c025acefba7087b0aa5f004a8e4847fa42cefccaa4f60fa2f02bf7cd759492",
+      "byte_identical": true
+    },
+    {
+      "source": "dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-treatment-neutral-r1-dec009-r001.json",
+      "published": "contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-treatment-neutral-r1-dec009-r001.json",
+      "sha256": "737ceba68aee106f00a200c6d5174d2f481ed64c44688f096180e1550eb1d7f6",
+      "byte_identical": true
+    }
+  ]
+}

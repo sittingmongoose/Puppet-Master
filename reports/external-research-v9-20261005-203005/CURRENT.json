@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "archive-and-evaluator-clocks-009",
-  "publication_snapshot_at": "2026-10-06T00:36:14.323326+00:00",
+  "cohort": "D08-role-output-and-method-accounting-010",
+  "publication_snapshot_at": "2026-10-06T00:53:31.248076+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -37,7 +37,7 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-007/snapshot.safe.json",
+  "campaign_accounting_snapshot": "accounting/cohort-008/snapshot.safe.json",
   "accounting_snapshot_is_live_or_final": false,
   "independent_I02_research_verdicts": [
     "FAIL_SCREEN",
@@ -63,7 +63,7 @@
   "research_stage_count_scope": "Four original I01/I02 published artifact sets plus one R001 available research set; missing R001 partner is a separate attempted stage. Not full campaign attempts/occupancy.",
   "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
   "I01_scored_stages_observed_in_phase2": 4,
-  "accounting_snapshot_scope": "65 deployments/57 known candidate Goals/161759973 known cache-inclusive tokens plus3 unknown usage rows at accounting007 capture; not final billing or current liveness.",
+  "accounting_snapshot_scope": "74deployments/66known candidate Goals/183574628known cache-inclusive tokens +3unknown usage rows at accounting008 capture; not final billing/liveness.",
   "DEC006_import_scope": {
     "neutral_locators": 622,
     "unique_contents": 405,
@@ -116,5 +116,8 @@
     "isolated_coordinate_execution": "Confirmed; W1/W7 label binding and earlier history UNASSESSED"
   },
   "archive_tool": "archive/tool-001/README.md",
-  "Eval2_clock_companion": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json"
+  "Eval2_clock_companion": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
+  "D08A_role_packet": "Available frozen roles; review STARTED, source quality UNASSESSED, incomplete pair",
+  "method_audit": "Frozen cutoff; prospective repair selections are not repair completion proof",
+  "dispatcher_kernel_envelope_admission": "NOT_OBSERVED_IN_THIS_COHORT"
 }

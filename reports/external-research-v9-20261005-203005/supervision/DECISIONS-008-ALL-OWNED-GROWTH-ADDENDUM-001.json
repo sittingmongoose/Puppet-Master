@@ -1,0 +1,32 @@
+{
+  "schema": "er9.complete_job_memory_envelope_addendum.v1",
+  "recorded_utc": "2026-10-06T00:43:03.427883+00:00",
+  "parent_decision": {
+    "path": "supervision/DECISIONS-008.json",
+    "sha256": "944d74c9b2ea236a0f65d98453ab27e4bd53e475907c9490a12c85f5b722132f"
+  },
+  "scope": "Admission headroom must include remaining memory growth of every active or retained ER9-owned job, including GLM and Luna, in addition to one proposed full-envelope job and unchanged 3 GiB host reserve.",
+  "MemAvailable_already_accounts_for_current_usage": true,
+  "unknown_legacy_outer_growth_is_zero": false,
+  "unknown_legacy_growth_rule": "Wait for original bounded stage termination and positive owned cleanup unless a complete existing hard envelope is positively demonstrated; do not change caps on running jobs.",
+  "owner_report": {
+    "owner": "/root/ops_recovery",
+    "previous_growth_helper_scope": "Luna only",
+    "repaired_growth_helper_scope": "All ER9-owned active/retained Luna and GLM",
+    "running_I12_control_legacy_GLM_complete_outer_bound": "UNKNOWN; admission held until terminal",
+    "mechanical_tests_reported_passed": 11,
+    "test_scope": "Prospective aggregate launch preserves original clock/private slice/outer768 MiB/swap0/no +45",
+    "direct_supervisor_test_or_kernel_verification": false
+  },
+  "unchanged": {
+    "host_reserve_GiB": 3,
+    "native_model_tool_task_source_time_scope": true,
+    "live_caps": true,
+    "prior_results_costs_and_flags": true,
+    "sibling": true
+  },
+  "new_model_Goals_by_supervisor": 0,
+  "new_candidate_answers_or_grade_changes": 0,
+  "new_phase_approval_required": false,
+  "fit_for_candidate_research": "UNKNOWN"
+}

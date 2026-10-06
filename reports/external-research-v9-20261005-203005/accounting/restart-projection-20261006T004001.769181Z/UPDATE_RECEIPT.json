@@ -1,0 +1,51 @@
+{
+  "event": {
+    "backup_receipt": {
+      "path": "state/history/projection-20261006T004001.769181Z/BACKUP_RECEIPT.json",
+      "sha256": "4a1e2d1bab9a439925a3f37e0c3556e34647365fa369786e91d3f8f1ec8b1e19"
+    },
+    "event": "ROOT_AUTHORIZED_RESTART_PROJECTION_V2_REFRESH",
+    "metric_appended": true,
+    "new_projection_pins": [
+      {
+        "path": "state/current.json",
+        "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+      },
+      {
+        "path": "state/campaign.json",
+        "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+      }
+    ],
+    "note": "Exact old bytes retained; stale copied live claims replaced by timestamped queue pointer. Targets/caps/protections unchanged, ops custody unchanged; no candidate inputs/scores/launches, no new cutoff/Goal stop.",
+    "publication_cohort": "009",
+    "publication_commit": "1103430122fdeb3141ef2a75229df005fcb4cb4c",
+    "utc": "2026-10-06T00:40:01.769181+00:00"
+  },
+  "history_receipt": {
+    "path": "state/history/projection-20261006T004001.769181Z/BACKUP_RECEIPT.json",
+    "sha256": "4a1e2d1bab9a439925a3f37e0c3556e34647365fa369786e91d3f8f1ec8b1e19"
+  },
+  "metric_appended": true,
+  "metric_record": {
+    "budget": null,
+    "metric_scope": "Native root cumulative supplied by root; helper/cache/input/provider inclusion UNKNOWN; separate from provider candidate totals, never summed or used as a global stop.",
+    "status": "active",
+    "thread_id": "01a10dc1-6ddf-7c11-9e16-cb928aed5640",
+    "time_used_seconds": 14718,
+    "tokens_used": 8633062,
+    "utc": "2026-10-06T00:34:29Z"
+  },
+  "projection_pins": [
+    {
+      "path": "state/current.json",
+      "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "80992a1781e50df969b4ff5923c0ab069ccf8e844354e96d5aecac674ed588c7"
+    }
+  ],
+  "schema": "er9.restart-projection.update-receipt.v1",
+  "utc": "2026-10-06T00:40:01.769181+00:00",
+  "validation": "targets/caps/protections preserved; exact backups; source evidence pinned; GitHub009 head/tree verified from neutral receipt; no jobs/attempts/cursor mutation"
+}

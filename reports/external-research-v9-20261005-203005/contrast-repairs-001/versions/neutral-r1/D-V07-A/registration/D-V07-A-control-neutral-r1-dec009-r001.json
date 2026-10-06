@@ -1,0 +1,90 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V07-A-control-neutral-r1-dec009-r001",
+  "pair_id": "D-V07-A",
+  "source_slot": "D-V07-A",
+  "family": "L",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+  "card_sha256": "d199fe83a5d5b5cc429277c3c4aa29323f532962deb4963bbe7fa89df415fea0",
+  "stage_jobs": [
+    {
+      "job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+      "arm": "control",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+      "stage_sha256": "1802ec8087c05affcd5d7b8ed38fd108a85843c196686d61f1e7d0ae9c67d75c",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "setup_version": "neutral-r1",
+      "predecessor_job_id": "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+      "runtime_binding_ready": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_3_READY.json",
+        "sha256": "534e9ae13e2439c6d8d5298cda6617e19a9c3ef052513cecd888274c4527106e"
+      },
+      "additional_prelaunch_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/LINEAGE.json": "8c00d55133558e6db96bd29714816485e0fe372176f3ff560d20f3280571b46a"
+      }
+    }
+  ],
+  "root_scope_required": true,
+  "status": "PREPARED_NOT_ADMITTED",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "runtime_binding_required": true,
+  "created_utc": "2026-10-06T00:51:22.941980+00:00",
+  "setup_version": "neutral-r1",
+  "prospective_setup_lineage": {
+    "schema": "er9.prospective-neutral-lineage.v1",
+    "setup_version": "neutral-r1",
+    "authority": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    "zero_start_confirmation": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    "predecessor_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+      "sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20"
+    },
+    "predecessor_neutral": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A-TASK.md",
+      "sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+    },
+    "predecessor_pair_freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "8ff56924822e5b79f7b551db21213bc3192e31565a6f1d4e7e16427e66b0d8e7"
+    },
+    "role_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V07-A.json",
+      "sha256": "b68c960928113c713c8d57e6c97940b74edb070e280c4adbea43bfe06f4c7c47"
+    },
+    "predecessor_job_ids": [
+      "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+      "D-V07-A-treatment-diagnostic-a001-resource-v13-a002"
+    ],
+    "procedural_delta_only": true,
+    "source_or_quality_selection": false,
+    "actual_method_uptake": "UNKNOWN",
+    "outcome_assessment": "NOT_RUN",
+    "reason": "Neutrality precaution: shared ranking instruction narrows control; first-verification contrast is not proven erased.",
+    "created_utc": "2026-10-06T00:51:22.941980+00:00"
+  },
+  "runtime_binding_ready": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_3_READY.json",
+    "sha256": "534e9ae13e2439c6d8d5298cda6617e19a9c3ef052513cecd888274c4527106e"
+  }
+}

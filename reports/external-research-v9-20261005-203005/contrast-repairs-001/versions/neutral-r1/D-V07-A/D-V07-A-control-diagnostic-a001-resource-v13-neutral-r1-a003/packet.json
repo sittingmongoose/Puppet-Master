@@ -1,0 +1,68 @@
+{
+  "schema": "er9.prospective-diagnostic-stage.v1",
+  "job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+  "status": "PREPARED_NOT_ADMITTED",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/card.json",
+  "card_sha256": "d199fe83a5d5b5cc429277c3c4aa29323f532962deb4963bbe7fa89df415fea0",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "stage_spec_template": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003/prepared-stage.json",
+  "stage_spec_sha256": "1802ec8087c05affcd5d7b8ed38fd108a85843c196686d61f1e7d0ae9c67d75c",
+  "public_get": true,
+  "execution_enabled": true,
+  "requested_allocation": {
+    "critical_path_candidate_seconds_per_arm": 600,
+    "occupied_candidate_seconds_per_arm": 600,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance",
+    "V09_note": null
+  },
+  "prerequisite_job_ids": [],
+  "tool_namespace": "inputs/ read-only and out/ write; host private/evaluator/sibling denied",
+  "native_spawned": false,
+  "actual_native_identity": null,
+  "public_sources_supplied": true,
+  "source_scope": "Full frozen candidate proposal with public implementation evidence and context for critical and low-ranked claims; private admission of substantive mixture only.",
+  "runner_contract": "GLM dev/execution/stage_worker.py stable stage-json API; Luna owner stage_runner API awaiting equivalent output freeze binding; never substitute Sol.",
+  "setup_version": "neutral-r1",
+  "prospective_setup_lineage": {
+    "schema": "er9.prospective-neutral-lineage.v1",
+    "setup_version": "neutral-r1",
+    "authority": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    "zero_start_confirmation": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    "predecessor_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+      "sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20"
+    },
+    "predecessor_neutral": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A-TASK.md",
+      "sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+    },
+    "predecessor_pair_freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "8ff56924822e5b79f7b551db21213bc3192e31565a6f1d4e7e16427e66b0d8e7"
+    },
+    "role_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V07-A.json",
+      "sha256": "b68c960928113c713c8d57e6c97940b74edb070e280c4adbea43bfe06f4c7c47"
+    },
+    "predecessor_job_ids": [
+      "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+      "D-V07-A-treatment-diagnostic-a001-resource-v13-a002"
+    ],
+    "procedural_delta_only": true,
+    "source_or_quality_selection": false,
+    "actual_method_uptake": "UNKNOWN",
+    "outcome_assessment": "NOT_RUN",
+    "reason": "Neutrality precaution: shared ranking instruction narrows control; first-verification contrast is not proven erased.",
+    "created_utc": "2026-10-06T00:51:22.941980+00:00"
+  }
+}

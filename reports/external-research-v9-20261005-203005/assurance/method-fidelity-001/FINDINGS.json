@@ -1,0 +1,114 @@
+{
+  "schema": "er9.bounded-method-fidelity-findings.v1",
+  "as_of_utc": "2026-10-06T00:42:24.171666+00:00",
+  "findings": [
+    {
+      "finding_id": "MF001",
+      "classification": "ACTIONABLE_PRELAUNCH_SCHEMA_BLOCKER",
+      "summary": "Launcher owner guard indexes requested_family, but 73 registered owner rows use candidate_family-only cards; 29 are SEALED_READY at frozen snapshot. This is a field compatibility blocker; bound runtime family agrees with registered family.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+          "sha256": "f2e8280e2a2faad38317bbdb942a5c9b894c109968a96c77a483ccece5a01536"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+          "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-11-DELIVERY-RECOVERY-R002/card.json",
+          "sha256": "3f9859997d2bb650ae259d682a382d3462f9a52f34b0286c45bf8ccbcd8678ab"
+        }
+      ],
+      "affected_sealed_ready_job_ids": [
+        "C-01-control-research-a001",
+        "C-01-treatment-research-a001",
+        "C-02-control-research-a001",
+        "C-02-treatment-research-a001",
+        "C-03-control-research-a001",
+        "C-03-treatment-research-a001",
+        "C-04-control-research-a001",
+        "C-04-treatment-research-a001",
+        "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+        "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-07-FRESH-DELIVERY-R002-control-research-a001",
+        "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-04-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001"
+      ],
+      "repair": "Declared-family adapter accepts requested_family or candidate_family, rejects absent/conflicting fields, preserves exact owner model/effort/runtime checks and all frozen cards. Root assigned execution_engine additive adapter; ops sole live integrator.",
+      "holds_imposed_by_auditor": false
+    },
+    {
+      "finding_id": "MF002",
+      "classification": "CLEAR_SHARED_NEUTRAL_FACTOR_CONTAMINATION_UNSTARTED",
+      "summary": "D-V02-A neutral task instructs source/type/unit/domain binding before examples in both actual bound arms, duplicating V02 treatment procedure into control.",
+      "exact_sentence": "Candidate binds source/type/unit/domain before choosing examples.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A.json",
+          "sha256": "d03b907ec90e9e048aaf354b7a3677a4495a2c0bf6bfc50bdaae51d416c29a1f"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A-TASK.md",
+          "sha256": "cff40503b62af6bfc73923de88c145bfc9a83fdd788bb0094eaba840c4607295"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-control-diagnostic-a001-resource-v13-a002/workspace/TASK.md",
+          "sha256": "9825faa5457a2a10aaa3e39463ef1d403925e57908e03c1c06fc255aae9d620a"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-treatment-diagnostic-a001-resource-v13-a002/workspace/TASK.md",
+          "sha256": "7430d8351eed845e91b522c289088bb9212e11c4cc30566812b4f7e031dc78ea"
+        }
+      ],
+      "repair": "Root authorized case_repairs prospective wholly-unstarted pair neutral version; remove only shared procedure, preserve exact sole modifiers/common subjects/criteria/sources/budgets/models/tools/resources and old files. Ops verifies both zero starts; other queue continues.",
+      "uptake_or_effect": "UNKNOWN",
+      "holds_imposed_by_auditor": false
+    },
+    {
+      "finding_id": "MF003",
+      "classification": "PARTIAL_FACTOR_AMBIGUITY_UNSTARTED_NEUTRALITY_PRECAUTION",
+      "summary": "D-V07-A shared neutral sentence requests consequence order in both arms. This overlaps treatment ranking, but does not prove the critical-first verification scheduling contrast is erased.",
+      "exact_sentence": "Candidate identifies consequence order; no evaluator risk ranking is supplied.",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+          "sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A-TASK.md",
+          "sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-control-diagnostic-a001-resource-v13-a002/workspace/TASK.md",
+          "sha256": "fd2899d19f5840d55995da6549f76538fd6dea05a20dd8f901d16a44e6212d38"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-treatment-diagnostic-a001-resource-v13-a002/workspace/TASK.md",
+          "sha256": "9e86fbfce57bb94c3dddfc12a5d5ebd27af1fc38142e8f07ab69aff4037e7b3d"
+        }
+      ],
+      "repair": "Root authorized same narrow prospective neutral repair precaution, retaining no evaluator risk ranking clause and exact arm modifiers. No historical edits or uptake claim.",
+      "uptake_or_effect": "UNKNOWN",
+      "holds_imposed_by_auditor": false
+    }
+  ],
+  "no_scoring_or_quality_claim": true,
+  "no_candidate_calls_or_native_goals_by_auditor": true
+}

@@ -1,0 +1,273 @@
+{
+  "I05_Eval2_last_verified": {
+    "cost_receipt": {
+      "path": "evaluation/independent-pipeline-2/review0001/COST_RECEIPT.json",
+      "sha256": "6351a085c8a7cf87fcd1b627ad92f3f7b2e02fdfa1f8768dcb015bb997a35dcd"
+    },
+    "coverage": "PARTIAL",
+    "finished_utc": "2026-10-06T00:28:35.363866Z",
+    "full_matched_comparison_credit": false,
+    "full_pipeline_credit": false,
+    "overlap_rule": "Whole includes phase slices; do not add them again. Native/operator failures are separate from quality.",
+    "phase2_seconds": 527.175318055,
+    "quality": "FAIL_SCREEN",
+    "source_screen_seconds": 457.105438333,
+    "whole_including_report_seconds": 1743.470693741
+  },
+  "accounting_checkpoint": {
+    "candidate_deployments": 65,
+    "candidate_unknown_usage_rows": 3,
+    "counter_scope": "Failure-inclusive known snapshot; cancelled/unexposed tails and billing UNKNOWN. Cache included once; UI/provider/root meters separate. Not live counts or full campaign totals.",
+    "eval2_clock_companion": {
+      "path": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
+      "sha256": "27c389487f28481abd75950625e33e3d04fe6801afec985bfb72810897dd737b"
+    },
+    "finished_evaluator_clock_companion": {
+      "path": "accounting/cohort-006-evaluator-clocks-001/PUBLIC_SELECTION.json",
+      "sha256": "994f8933553b4ef621f40df5bdb0bc5c2665d6c6764549022efeb0b1c93d51f1"
+    },
+    "known_candidate_tokens": 161759973,
+    "known_native_candidate_Goals": 57,
+    "selection": {
+      "path": "accounting/cohort-007/PUBLIC_SELECTION.json",
+      "sha256": "73b28586ac0b67965347fa2b58130a4569f4dbc06a9692fa1d9b3010a51ff610"
+    },
+    "snapshot_utc": "2026-10-06T00:20:43.478360+00:00"
+  },
+  "admission_owner": "Root standing authority; sole candidate admission/deployment custody /root/ops_recovery",
+  "authority": "2026-10-05 user /goal; input/ER9/ER9_EXECUTE_HANDOFF.md",
+  "branch": "research/external-research-v9-20261005-203005",
+  "campaign_id": "external-research-v9-20261005-203005",
+  "candidate_caps": {
+    "glm_active_goals": 2,
+    "luna": "actual capacity, no policy cap",
+    "muse_active_goals": 4
+  },
+  "confirmation_recipe_lock": {
+    "A_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "B_seconds": [
+      1200,
+      1500
+    ],
+    "actual_family": "GLM",
+    "all32_or_PASS_prerequisite": false,
+    "all_four_pairs_execute_even_after_early_failure": true,
+    "budget_addendum": {
+      "path": "supervision/DECISIONS-007-BUDGET-DEFINITION-ADDENDUM-001.json",
+      "sha256": "60f649b39f58dda101ca4e7cee599c43d15680d93c12a745632da58f75fb5c79"
+    },
+    "control_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "effort": "max",
+    "execution_gate": "All initial I-01..I-12 slots have terminal development outcomes, verified by sole ops; recovery accounting separate",
+    "locked_utc": "2026-10-05 23:56:07 UTC",
+    "original_lock_bytes_unchanged": true,
+    "original_occupied_scalar_definition": "Inherited outer occupied-work ceiling; no extra executable stage/recovery allowance; not observed cost.",
+    "original_occupied_seconds_per_arm": 5400,
+    "outside_locked_allowance_recovery_separate": true,
+    "pairs": 4,
+    "pin": {
+      "path": "supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+    },
+    "pipelines": 8,
+    "requested_model": "GLM 5.3 Flash",
+    "stage_allowance_seconds_per_arm": 2700,
+    "stage_allowance_seconds_per_pair": 5400,
+    "status": "LOCKED"
+  },
+  "delivery_recovery_policy": {
+    "cumulative_failed_and_recovery_costs_retained": true,
+    "decision": {
+      "path": "supervision/DECISIONS-007.json",
+      "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+    },
+    "frozen_utc": "2026-10-05 23:56:07 UTC",
+    "independent_PASS_native_completion_prerequisite": false,
+    "original_status_bytes_costs_preserved": true,
+    "recovery_selection": {
+      "path": "supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de"
+    },
+    "unpaired_recovery_fresh_matched_credit": false,
+    "use_exact_source_card_role_and_pipeline_allocations": true
+  },
+  "goal_thread_id": "01a10dc1-6ddf-7c11-9e16-cb928aed5640",
+  "historical_v8_closed_commit": "873dc5996a78ffbb7017e4d5a862fc56921f668c",
+  "history": {
+    "exact_previous_bytes_receipt": {
+      "path": "state/history/projection-20261006T004001.769181Z/BACKUP_RECEIPT.json",
+      "sha256": "4a1e2d1bab9a439925a3f37e0c3556e34647365fa369786e91d3f8f1ec8b1e19"
+    },
+    "historical_projections_preserved": true
+  },
+  "last_verified_delivery_counts": {
+    "authority": "Root supplied last verified counts; this metadata rewrite performs no assessment",
+    "full_matched_quality_comparisons_verified_complete": 0,
+    "recorded_utc": "2026-10-06T00:40:01.769181+00:00",
+    "scope": "No completion credit inferred from terminal stages, Goal statuses, partial reviews, imports, archive coverage or publication.",
+    "whole_pipelines_verified_complete": 0
+  },
+  "latest_publication": {
+    "cohort": "009",
+    "commit": "1103430122fdeb3141ef2a75229df005fcb4cb4c",
+    "github_verified": true,
+    "historical_008": {
+      "commit": "9ad4454bcba8726d38141b7acf99695dd9957321",
+      "selected_files": 1029,
+      "verification_receipt": {
+        "path": "ops/publication/cohort008-verification.json",
+        "sha256": "89d48693f60b5c40fb47d5c0b079a92c2da9b3e21287c8f9f90c3893f6f47619"
+      }
+    },
+    "no_main_or_PR": true,
+    "selected_files": 1039,
+    "verification_receipt": {
+      "path": "ops/publication/cohort009-verification.json",
+      "sha256": "cb2b1be481c3536f613ec8e2c0b6620183a898f853d86cbcb0a4ad5da3ef3a8b"
+    }
+  },
+  "live_dispatch_pointer": {
+    "authority": "ops sole custody; read actual current pointer on resume",
+    "captured_pointer_utc": "2026-10-06T00:40:01.769181+00:00",
+    "path": "state/queue_cursor.json",
+    "queue_record_updated_utc": "2026-10-06T00:39:57.510485+00:00",
+    "timestamp_policy": "No stage counts or active-family counts copied into this projection"
+  },
+  "next_actions": [
+    "Read current queue and exact owned resource receipts; ops continues finite authorized queue within actual capacity.",
+    "Continue DEC007 declared delivery recovery while preserving original costs/statuses and exact source-card allocations.",
+    "Execute four locked fresh confirmations after initial twelve development slots have terminal outcomes; no all32/PASS barrier.",
+    "Assess frozen eligible outputs independently and publish useful evidence/accounting/restart checkpoints.",
+    "Finish finite queue, exact coverage/cost reconciliation and final cleanup without introducing global cutoff rules."
+  ],
+  "no_global_stops": [
+    "12-hour cutoff",
+    "144 starts",
+    "token total",
+    "helper start ceiling",
+    "two-repair cap"
+  ],
+  "operating_sources": {
+    "attempts": "state/attempts.jsonl",
+    "decisions": {
+      "path": "supervision/DECISIONS-007-evidence.json",
+      "sha256": "3911dc0b920c60017db084a34db8c72c7d5f34a050080feaf99f17bca4e4f3f2"
+    },
+    "events": "state/events.jsonl",
+    "jobs": "state/jobs.json",
+    "supervisor_counters": "state/supervisor_goal_counters.jsonl"
+  },
+  "owners": {
+    "cases": "/root/case_design",
+    "evaluation_protocol": "/root/eval_protocol",
+    "execution": "/root/execution_engine",
+    "luna": "/root/luna_route",
+    "muse": "/root/muse_route",
+    "ops": "/root/ops_recovery",
+    "tools": "/root/generic_tools"
+  },
+  "partial_archive": {
+    "cohorts": [
+      {
+        "cohort": "selected_artifacts_001_005",
+        "coverage": "PARTIAL_FROZEN_SELECTIONS_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 265,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/d4d821ac105528766e49adbc390413f3770006df1a184561fadf7168eecf69ba/MANIFEST.json",
+        "manifest_sha256": "f519f01268b2d84f525998181267a5b1f7b1454b99ffd79f8938b50b9746e908",
+        "selected_bytes": 1252478
+      },
+      {
+        "cohort": "selected_I02_D14_public_bodies",
+        "coverage": "PARTIAL_SELECTED_I02_D14_CAPTURES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 86,
+        "incomplete_count": 1,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/response-bodies/949aae0057c9c63e84bfa47fbb1b18af9299a731acca9ee46563ffed235db0c5/MANIFEST.json",
+        "manifest_sha256": "5b716b0abca338cfa7f420a3c96d346614192ca02ef252cde6a9cd153b4699fc",
+        "non200_count": 1,
+        "selected_bytes": 5956423,
+        "truncated_count": 1
+      },
+      {
+        "coverage": "PARTIAL_EXACT_EVAL2_PUBLIC_BODIES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 15,
+        "http_status_non200_count": 0,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/fef51aa8c38d93e0c82763e827a13343fed4cdbd96f016e48dc811d963e80be6/MANIFEST.json",
+        "manifest_sha256": "e9f4b13561f3e426e7b9737b8d41ca94108d0f09bf38369b399e4c41b37e842e",
+        "selected_bytes": 848425,
+        "selection_sha256": "fef51aa8c38d93e0c82763e827a13343fed4cdbd96f016e48dc811d963e80be6",
+        "truncated_count": 0
+      },
+      {
+        "coverage": "PARTIAL_EXACT_NEXT003_PUBLIC_BODIES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 20,
+        "http_status_non200_count": 0,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/61ad8e68f6cc94784fbdea76f035e82c2a30cb179b29e45814d2af3c2fcae197/MANIFEST.json",
+        "manifest_sha256": "9e2f81402de61b37043e0bb0b98e2d434a09008627fb86cd9cdbcdddf38c0ab8",
+        "selected_bytes": 1767923,
+        "selection_sha256": "61ad8e68f6cc94784fbdea76f035e82c2a30cb179b29e45814d2af3c2fcae197",
+        "truncated_count": 1
+      }
+    ],
+    "coverage": "PARTIAL_POSITIVE_SELECTIONS_NOT_FINAL_QUEUE_RECONCILIATION",
+    "coverage_pin": {
+      "path": "ops/evidence-archive/public/ARCHIVE_TOOL_001/COVERAGE.json",
+      "sha256": "0b9b55b24b83366c51fc44c675c057f89aa0c464e6e83e129a89c0c3780074d4"
+    },
+    "scope": "Four partial selected archive cohorts, not full queue/corpus reconciliation or final cleanup. Raw bodies were not read by this updater.",
+    "selection_pin": {
+      "path": "ops/evidence-archive/PUBLIC_TOOL_SELECTION_001.json",
+      "sha256": "97768c49a79489aee38963f42a83343e652fb1107406f69f36da33177ac7a7fb"
+    }
+  },
+  "projection_rule": "Restart/source pointers only. Queue and observations are timestamped source records, not live occupancy. Saved native Goal enums do not establish current processes; no extra cutoff or Goal stop.",
+  "protected": [
+    "canon Plans",
+    "main",
+    "WorkNodes",
+    "sibling campaign",
+    "historical ER8 grades/state"
+  ],
+  "resource_and_tools": {
+    "host_reserve_bytes": 3221225472,
+    "mechanical_readiness_only": true,
+    "oom_policy": "charge failures; no automatic resource/model/clock escalation",
+    "original_active_or_frozen_versions_retained": true,
+    "outer_exact_slice_release_required": true,
+    "research_fit": "UNKNOWN; consult actual native/version-specific receipts, no prospective success inference",
+    "route_v1_3_pin": {
+      "path": "dev/luna-route/versions/v1.3/PIN.json",
+      "sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227"
+    },
+    "scope": "wholly unstarted symmetric pairs/new explicitly declared lineages only; old/live bytes/statuses/costs unchanged",
+    "tools_v1_2_source_pins": {
+      "path": "dev/tools/versions/v1.2/SOURCE_PINS.json",
+      "sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34"
+    },
+    "tools_v1_3_source_pins": {
+      "path": "dev/tools/versions/v1.3/SOURCE_PINS.json",
+      "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+    },
+    "whole_job_max_bytes": 2415919104
+  },
+  "schema": "er9.restart-projection.v2",
+  "status": "EXECUTING",
+  "targets": {
+    "confirmation_pairs": 4,
+    "confirmation_pipelines": 8,
+    "diagnostic_arms": 64,
+    "diagnostic_pairs": 32,
+    "hypotheses": 16,
+    "integrated_pairs": 12,
+    "integrated_pipelines": 24
+  },
+  "updated_at": "2026-10-06T00:40:01.769181+00:00",
+  "worktree": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005"
+}

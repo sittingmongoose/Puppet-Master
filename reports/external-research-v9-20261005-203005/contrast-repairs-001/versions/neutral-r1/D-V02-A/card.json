@@ -1,0 +1,159 @@
+{
+  "schema": "er9.diagnostic_method_card.v1",
+  "pair_id": "D-V02-A",
+  "card_version": "v2-neutral-r1",
+  "track": "A",
+  "status": "NOT_RUN",
+  "freeze_state": "PROSPECTIVE_UNLAUNCHED",
+  "method_id": "V02",
+  "method_name": "Unit-, type- and domain-aware checking",
+  "case_id": "D-V02-A-v2-neutral-r1",
+  "domain": "A",
+  "task_name": "Physical units, axis conventions and valid transform domain",
+  "task": "Check the frozen candidate draft\u2019s relation between stored array axes, displayed coordinates and physical calibration, including a boundary or inverse operation actually supported by selected sources.",
+  "question": "Use unlike coordinate conventions and a non-geometric analogue such as byte/character offsets, index/count distinctions, or major/minor version predicates. The critic derives its own examples.",
+  "source_scope": "Exact candidate-selected pinned coordinate/axis APIs and governing metadata documentation, full surrounding conditions and candidate draft; no evaluator formula.",
+  "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+  "discovery_conclusion_allowed": false,
+  "control": "The V01 tool-enabled critic uses ordinary calculations with the same executable access and total allowance.",
+  "treatment": "Before computing, the critic binds each consequential variable to units, coordinate system/type, source version and allowed domain; it then checks conversions, boundary values, and forward/inverse or other applicable invariants.",
+  "measure": "Whether errors in applying otherwise-correct formulas are found; whether irrelevant unit rules or unsupported invariants are invented; cost beyond plain calculation.",
+  "integration_limit": "Compare to V01, not to a tool-denied control, so this tests interpretation discipline separately from tool availability.",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "requested_route": "fresh standalone native Codex /goal",
+  "observed_model": null,
+  "observed_effort": null,
+  "family_binding_rule": "Within pair identical actual supported family/model/effort. Root may version an unstarted card prospectively if route unavailable; preserve original planned family and reason. No substitution attributed as same-model replication.",
+  "brief_path": "briefs/development-A-biomedical.md",
+  "common_criteria_path": "common_criteria.json",
+  "source_access_path": "source_access.json",
+  "stages": {
+    "control": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 600,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ],
+    "treatment": [
+      {
+        "stage": "diagnostic",
+        "max_native_seconds": 600,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_parent_responses": 100
+      }
+    ]
+  },
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 600,
+    "occupied_candidate_seconds_per_arm": 600,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance",
+    "V09_note": null
+  },
+  "execution_policy": {
+    "public_get": true,
+    "control_execution_enabled": true,
+    "treatment_execution_enabled": true,
+    "isolation_config_pin": null,
+    "retrieval_config_pin": null,
+    "factor_enforcement": "V01 control critic physically lacks execution, not only text prohibition; otherwise tools equal unless documented factor is retrieval ordering/representation."
+  },
+  "fixture_prerequisites": [
+    "Freeze an authentic affordable-candidate unscored development seed appropriate to this task, with complete relevant source captures. Do not have Sol write candidate findings or a source-answer key.",
+    "Independent fixture-admission evaluator verifies task suitability/source versions and any required mix privately; candidate receives no truth labels or corrected answers.",
+    "Record seed provenance, actual candidate model/native job, creation cost and SHA-256; seed is development input, never scored arm completion."
+  ],
+  "frozen_seed_manifest_path": null,
+  "neutral_task_prompt_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+  "candidate_artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "important_checks": [
+    {
+      "id": "D-V02-A-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V02-A-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V02-A-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "no_truth_key_in_candidate": true,
+  "candidate_authorship": "All substantive scored candidate checking, integration and code remain affordable candidate-native Goal work; Sol only scenario/protocol/evaluator infrastructure.",
+  "evaluate_before_history": true,
+  "economics_fields": [
+    "actual_starts_and_stage_models",
+    "wall_and_critical_path_seconds",
+    "occupied_candidate_seconds",
+    "parent_responses",
+    "native_retries_and_waits",
+    "known_input_cache_output_counters_and_definitions",
+    "unknown_child/cancelled_usage",
+    "tool/source_traffic",
+    "cold_seed_development_cost_separate"
+  ],
+  "outcome": {
+    "attempted": 0,
+    "completed": 0,
+    "assessed": 0,
+    "quality": "NOT_RUN"
+  },
+  "arm_modifier_paths": {
+    "control": "diagnostics/D-V02-A-CONTROL.md",
+    "treatment": "diagnostics/D-V02-A-TREATMENT.md"
+  },
+  "coverage_path": "diagnostics/D-V02-A-coverage.json",
+  "setup_version": "neutral-r1",
+  "prospective_setup_lineage": {
+    "schema": "er9.prospective-neutral-lineage.v1",
+    "setup_version": "neutral-r1",
+    "authority": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    "zero_start_confirmation": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    "predecessor_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A.json",
+      "sha256": "d03b907ec90e9e048aaf354b7a3677a4495a2c0bf6bfc50bdaae51d416c29a1f"
+    },
+    "predecessor_neutral": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A-TASK.md",
+      "sha256": "cff40503b62af6bfc73923de88c145bfc9a83fdd788bb0094eaba840c4607295"
+    },
+    "predecessor_pair_freeze": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/PAIR_SOURCE_FREEZE.json",
+      "sha256": "90b8a07e0dd8a2d2ae8caab1985f2e109c442d7f262c9066dd4cc878006603f6"
+    },
+    "role_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V02-A.json",
+      "sha256": "eb772d2e323a4ff224eec1b03e0def5fefa4dee583c50fc9bbebedbe0190267a"
+    },
+    "predecessor_job_ids": [
+      "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+      "D-V02-A-treatment-diagnostic-a001-resource-v13-a002"
+    ],
+    "procedural_delta_only": true,
+    "source_or_quality_selection": false,
+    "actual_method_uptake": "UNKNOWN",
+    "outcome_assessment": "NOT_RUN",
+    "reason": "Shared neutral task contained the treatment binding procedure; isolate the declared arm modifier.",
+    "created_utc": "2026-10-06T00:51:22.941980+00:00"
+  }
+}

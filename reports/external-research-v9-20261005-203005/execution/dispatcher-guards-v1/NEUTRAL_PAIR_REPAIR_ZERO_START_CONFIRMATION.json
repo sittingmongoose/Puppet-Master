@@ -1,0 +1,69 @@
+{
+  "schema": "er9.prospective-pair-zero-start-confirmation.v1",
+  "observed_utc": "2026-10-06T00:46:34.396810+00:00",
+  "rows": [
+    {
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+      "pair_id": "D-V02-A",
+      "status": "HELD_PROSPECTIVE_NEUTRAL_PAIR_REPAIR",
+      "native_goal_starts": 0,
+      "activation_observed": null,
+      "unit": null,
+      "start_utc": null,
+      "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A.json",
+      "card_sha256": "d03b907ec90e9e048aaf354b7a3677a4495a2c0bf6bfc50bdaae51d416c29a1f",
+      "prepared_stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/D-V02-A-control-diagnostic-a001/prepared-stage.json",
+      "prepared_stage_sha256": "5b0cd65686146d9a2e319e360fd82cb34c37b7dda0edc1267330b9dad25c15ae",
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-control-diagnostic-a001-resource-v13-a002/stage.json",
+      "stage_sha256": "9d7abf654f14ab9f10097d2b2b10f6842eb5015020cc7e2d482805f2629d29ef"
+    },
+    {
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-a002",
+      "pair_id": "D-V02-A",
+      "status": "HELD_PROSPECTIVE_NEUTRAL_PAIR_REPAIR",
+      "native_goal_starts": 0,
+      "activation_observed": null,
+      "unit": null,
+      "start_utc": null,
+      "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V02-A.json",
+      "card_sha256": "d03b907ec90e9e048aaf354b7a3677a4495a2c0bf6bfc50bdaae51d416c29a1f",
+      "prepared_stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V02-A/D-V02-A-treatment-diagnostic-a001/prepared-stage.json",
+      "prepared_stage_sha256": "eb31897383f6d54353b591490feaa00990fdb8c3fdcb293e7cc198aeb91877c8",
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-treatment-diagnostic-a001-resource-v13-a002/stage.json",
+      "stage_sha256": "c62e356ab8d7a2de7ac13f85c8dd31356d120bb7596981680705ad462fd5a87c"
+    },
+    {
+      "job_id": "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+      "pair_id": "D-V07-A",
+      "status": "HELD_PROSPECTIVE_NEUTRAL_PAIR_REPAIR",
+      "native_goal_starts": 0,
+      "activation_observed": null,
+      "unit": null,
+      "start_utc": null,
+      "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+      "card_sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20",
+      "prepared_stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/D-V07-A-control-diagnostic-a001/prepared-stage.json",
+      "prepared_stage_sha256": "754901b97aa902db1b3560864d5ce01951538ced8aefd3c24b98016ca55b7510",
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-control-diagnostic-a001-resource-v13-a002/stage.json",
+      "stage_sha256": "da79d3aa6b90ac96e26851d6ed2d81ae2d48cacf0b708ec7b551bb6d7e93976f"
+    },
+    {
+      "job_id": "D-V07-A-treatment-diagnostic-a001-resource-v13-a002",
+      "pair_id": "D-V07-A",
+      "status": "HELD_PROSPECTIVE_NEUTRAL_PAIR_REPAIR",
+      "native_goal_starts": 0,
+      "activation_observed": null,
+      "unit": null,
+      "start_utc": null,
+      "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V07-A.json",
+      "card_sha256": "742276f24037929d3e0d2239a7b9475abd771438e24d79034c9f5faac182ec20",
+      "prepared_stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V07-A/D-V07-A-treatment-diagnostic-a001/prepared-stage.json",
+      "prepared_stage_sha256": "1f878b7ca3dd1b7892afada5f4e718d6ad89c6b45411c94de9181e59259516f1",
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-treatment-diagnostic-a001-resource-v13-a002/stage.json",
+      "stage_sha256": "84513315a039c00d5a9bc479f655f43d8817b4beab1b5917df6b14cd424de601"
+    }
+  ],
+  "controller_stopped_during_custody_update": true,
+  "no_native_starts": true,
+  "original_bytes_preserved": true
+}

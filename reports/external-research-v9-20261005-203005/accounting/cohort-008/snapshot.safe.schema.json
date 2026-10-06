@@ -1,0 +1,1770 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual_family_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "GLM": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN_PRE_NATIVE": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "GLM",
+        "Luna",
+        "UNKNOWN",
+        "UNKNOWN_PRE_NATIVE"
+      ],
+      "type": "object"
+    },
+    "as_of_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "billing_dollars": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cleanup_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "counter_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evaluator_extensions_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "assessment_boundary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "clock_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "counter_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "overlap_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pipeline_eval2_separate": {
+          "additionalProperties": false,
+          "properties": {
+            "assessment_boundary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "billing_dollars": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "candidate_physical_provider_and_http_attempts": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "candidate_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "existing_attempt_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "existing_goal_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "freeze_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "job_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "native_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "native_goal_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "native_receipt_pin": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                "new_charge_tokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "router_terminal_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "rule": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "usage": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cachedInputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "inputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "outputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "reasoningOutputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "totalTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "cachedInputTokens",
+                    "inputTokens",
+                    "outputTokens",
+                    "reasoningOutputTokens",
+                    "totalTokens"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "existing_attempt_id",
+                "existing_goal_id",
+                "freeze_elapsed_seconds",
+                "job_status",
+                "native_elapsed_seconds",
+                "native_goal_status",
+                "native_receipt_pin",
+                "new_charge_tokens",
+                "router_terminal_status",
+                "rule",
+                "usage"
+              ],
+              "type": "object"
+            },
+            "clock_rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluation_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_observed_effort": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_observed_model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_provider_tokens": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "interphase_wait_and_report_prep_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "no_clock_reset_or_extension": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "observed_pre_source_seconds_since_reservation": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "phases": {
+              "additionalProperties": false,
+              "properties": {
+                "phase1": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                },
+                "phase2": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                },
+                "report_write": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "phase1",
+                "phase2",
+                "report_write"
+              ],
+              "type": "object"
+            },
+            "pre_source_scope": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_pin": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "validation_errors": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "whole_assessment_elapsed_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "whole_review_including_report_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "assessment_boundary",
+            "billing_dollars",
+            "candidate_physical_provider_and_http_attempts",
+            "candidate_reference_only",
+            "clock_rule",
+            "evaluation_id",
+            "evaluator_observed_effort",
+            "evaluator_observed_model",
+            "evaluator_provider_tokens",
+            "interphase_wait_and_report_prep_seconds",
+            "no_clock_reset_or_extension",
+            "observed_pre_source_seconds_since_reservation",
+            "phases",
+            "pre_source_scope",
+            "schema",
+            "source_pin",
+            "validation_errors",
+            "whole_assessment_elapsed_seconds",
+            "whole_review_including_report_seconds"
+          ],
+          "type": "object"
+        },
+        "rows": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "clock_reset": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "evaluation_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_allowance_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "extension_deadline_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_elapsed_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "extension_finished_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_start_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "full_review_elapsed_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "full_review_finished_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "model_occupied_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_provider_tokens": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_effort": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_model": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_allowance_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_closed_elapsed_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_closed_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_closure_logged_elapsed_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_deadline_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_start_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "report_write_elapsed_seconds_intermediate": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "requested_effort": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "requested_model": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "screen_elapsed_seconds_subset": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "source_pins": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "billing_dollars",
+              "clock_reset",
+              "evaluation_id",
+              "extension_allowance_seconds",
+              "extension_deadline_utc",
+              "extension_elapsed_seconds",
+              "extension_finished_utc",
+              "extension_start_utc",
+              "full_review_elapsed_seconds",
+              "full_review_finished_utc",
+              "model_occupied_seconds",
+              "native_provider_tokens",
+              "observed_effort",
+              "observed_model",
+              "original_allowance_seconds",
+              "original_closed_elapsed_seconds",
+              "original_closed_utc",
+              "original_closure_logged_elapsed_seconds",
+              "original_deadline_utc",
+              "original_start_utc",
+              "report_write_elapsed_seconds_intermediate",
+              "requested_effort",
+              "requested_model",
+              "screen_elapsed_seconds_subset",
+              "source_pins"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sum_reported_extension_wall_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "validation_errors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "assessment_boundary",
+        "clock_rule",
+        "counter_rule",
+        "overlap_rule",
+        "pipeline_eval2_separate",
+        "rows",
+        "schema",
+        "sum_reported_extension_wall_seconds",
+        "validation_errors"
+      ],
+      "type": "object"
+    },
+    "goal_status_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "helper_provider_usage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_identity_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "configured_accountant": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "physical_provider_telemetry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "configured_accountant",
+        "physical_provider_telemetry",
+        "candidate_identity_rule"
+      ],
+      "type": "object"
+    },
+    "quiescence_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reconciliations": {
+      "additionalProperties": false,
+      "properties": {
+        "I01_full4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna_D14_first4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "I01_full4",
+        "Luna_D14_first4"
+      ],
+      "type": "object"
+    },
+    "role_import_cost_links_reference_only": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_consumer_exposure": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "candidate_bytes_rewritten": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "cost_rule": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "known_origin_tokens_reference_only": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "manifest_pin": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "new_native_goal_starts": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "origin_artifact_pins": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "origin_job_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "role": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "role",
+                "origin_job_id",
+                "sha256",
+                "bytes",
+                "path"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin_attempt_ids": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": "array"
+          },
+          "per_comparison_apportionment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seed_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "seed_id",
+          "manifest_pin",
+          "origin_attempt_ids",
+          "known_origin_tokens_reference_only",
+          "new_native_goal_starts",
+          "candidate_bytes_rewritten",
+          "origin_artifact_pins",
+          "cost_rule",
+          "actual_consumer_exposure",
+          "per_comparison_apportionment"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "root_counter_timestamp_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_apportionment_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_unique_actor_artifact_cost": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_attempt_ids": {
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "comparison_apportionment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cost_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_cold_seed_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "known_seed_role_continuation_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "observed_started_seed_dependency_consumers": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "registered_jobs": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "registered_jobs",
+        "actual_attempt_ids",
+        "cost_rule",
+        "known_cold_seed_tokens",
+        "known_seed_role_continuation_tokens",
+        "observed_started_seed_dependency_consumers",
+        "comparison_apportionment"
+      ],
+      "type": "object"
+    },
+    "snapshot_consistency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "supervisor_cumulative_snapshots_separate_never_sum": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "budget": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "null"
+            ]
+          },
+          "remaining_tokens": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "null"
+            ]
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "time_used_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "tokens_used": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "at",
+          "tokens_used",
+          "time_used_seconds",
+          "status",
+          "remaining_tokens",
+          "budget"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "targeted_evaluator_reservation_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "pair_seconds_observed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "recorded_closed_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_FINISHED": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "source_STARTED": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "source_pin": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sha256": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "source_screen_seconds_observed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "source_pin",
+        "status",
+        "recorded_closed_utc",
+        "source_screen_seconds_observed",
+        "pair_seconds_observed",
+        "source_STARTED",
+        "source_FINISHED",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "targeted_evaluator_started_receipts_separate": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "FINISHED_receipt_imported": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "billing_dollars": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "finished_elapsed_seconds": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "null"
+            ]
+          },
+          "pair_authorized_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "pair_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provider_usage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "receipt_event": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "scope": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_pin": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "source_screen_authorized_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "started_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "source_pin",
+          "pair_id",
+          "receipt_event",
+          "started_utc",
+          "source_screen_authorized_seconds",
+          "pair_authorized_seconds",
+          "FINISHED_receipt_imported",
+          "finished_elapsed_seconds",
+          "provider_usage",
+          "billing_dollars",
+          "scope"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "totals": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_attempt": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary_or_metadata": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_probe": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "candidate_attempt",
+        "route_canary",
+        "route_canary_or_metadata",
+        "route_probe"
+      ],
+      "type": "object"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "wall_critical_path_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "wasted_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "as_of_utc",
+    "sources",
+    "totals",
+    "actual_family_totals",
+    "reconciliations",
+    "supervisor_cumulative_snapshots_separate_never_sum",
+    "role_import_cost_links_reference_only",
+    "evaluator_extensions_separate",
+    "targeted_evaluator_started_receipts_separate",
+    "targeted_evaluator_reservation_separate",
+    "helper_provider_usage",
+    "root_counter_timestamp_rule",
+    "billing_dollars",
+    "wall_critical_path_seconds",
+    "wasted_seconds",
+    "seed_unique_actor_artifact_cost",
+    "seed_apportionment_rule",
+    "cleanup_rule",
+    "quiescence_rule",
+    "goal_status_rule",
+    "counter_rule",
+    "snapshot_consistency",
+    "model_provenance",
+    "validation_errors"
+  ],
+  "title": "ER9 exact safe snapshot schema",
+  "type": "object"
+}

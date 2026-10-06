@@ -1,0 +1,26 @@
+{
+  "schema": "er9.diagnostic-registration-outbox.v2",
+  "pair_id": "D-V07-A",
+  "setup_version": "neutral-r1",
+  "requests": [
+    {
+      "request_id": "D-V07-A-control-neutral-r1-dec009-r001",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-control-neutral-r1-dec009-r001.json",
+      "sha256": "73c025acefba7087b0aa5f004a8e4847fa42cefccaa4f60fa2f02bf7cd759492",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "request_id": "D-V07-A-treatment-neutral-r1-dec009-r001",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V07-A/registration/D-V07-A-treatment-neutral-r1-dec009-r001.json",
+      "sha256": "737ceba68aee106f00a200c6d5174d2f481ed64c44688f096180e1550eb1d7f6",
+      "status": "PREPARED_NOT_ADMITTED"
+    }
+  ],
+  "prepared_pairs": 1,
+  "prepared_native_stage_packets": 2,
+  "status": "PREPARED_NOT_ADMITTED",
+  "new_native_starts": 0,
+  "integration_owner": "codex-er9-ops",
+  "fresh_runtime_seal_required": true,
+  "scientific_credit": "Prospective setup repair only; method uptake and quality remain unassessed."
+}

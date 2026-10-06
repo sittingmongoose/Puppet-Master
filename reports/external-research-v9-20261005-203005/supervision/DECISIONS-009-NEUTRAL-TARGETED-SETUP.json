@@ -1,0 +1,40 @@
+{
+  "schema": "er9.prospective_paired_setup_repair.v1",
+  "recorded_utc": "2026-10-06T00:44:39.860156+00:00",
+  "decision": "Authorize new paired neutral setup versions for D-V02-A and D-V07-A after both arms are positively verified unstarted; preserve all old bytes and failed preactivation attempts.",
+  "basis": "Read-only method fidelity audit of actual registered task/config contracts; no candidate output or source-evaluator facts used.",
+  "cases": [
+    {
+      "pair": "D-V02-A",
+      "shared_sentence": "Candidate binds source/type/unit/domain before choosing examples.",
+      "classification": "Treatment procedure supplied to control in shared neutral task; actual uptake UNKNOWN",
+      "source_TASK_sha256": "cff40503b62af6bfc73923de88c145bfc9a83fdd788bb0094eaba840c4607295",
+      "registered_control_TASK_sha256": "9825faa5457a2a10aaa3e39463ef1d403925e57908e03c1c06fc255aae9d620a"
+    },
+    {
+      "pair": "D-V07-A",
+      "shared_sentence": "Candidate identifies consequence order",
+      "classification": "Shared ranking narrows control; first-verification contrast is not proven erased. Neutrality precaution only.",
+      "source_TASK_sha256": "d4967ac0731328203417a45be62cc326a7654706366c669fcf05189e25040c7d"
+    }
+  ],
+  "repair_scope": "Remove only method-procedural shared sentence(s) in prospective whole-pair versions; sole arm modifiers preserved.",
+  "must_preserve": [
+    "actual full brief/subject/source access",
+    "frozen common criteria/obligations/checks",
+    "output role contracts",
+    "budget/clock policy",
+    "actual model/effort/tool/resource pins",
+    "old cards/TASKs/seals/attempts/statuses/costs",
+    "canon/main/WorkNodes/sibling"
+  ],
+  "admission_condition": "Both arms zero native Goals confirmed before new version registration. If already started, no live edit; refer fresh paired lineage for adjudication.",
+  "engineering_owner": "/root/case_repairs new dev/diagnostic-runner/contrast-repairs-001 only",
+  "integration_owner": "/root/ops_recovery",
+  "source_answers_or_evaluator_feedback_supplied": false,
+  "unilateral_quality_grade_rewrite": false,
+  "native_Goals_by_supervisor": 0,
+  "other_useful_queue_must_continue": true,
+  "new_user_Go_required": false,
+  "supporting_audit_report": "Pending bounded assurance/method-fidelity-001 positive report; owner-reported hashes above, not direct supervisor source review"
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "er9.dispatcher-family-adapter-report.v1",
+  "created_utc": "2026-10-06T00:48:47.088595+00:00",
+  "defect": "Prelaunch launch guard directly indexed card.requested_family, but actual frozen confirmation/recovery card schema uses candidate_family. This raised KeyError before admission; no semantic or provider inference required.",
+  "original_dispatcher_source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+    "sha256": "f2e8280e2a2faad38317bbdb942a5c9b894c109968a96c77a483ccece5a01536"
+  },
+  "expected_defective_dispatcher_sha256": "991cea7b2983aec4725b534188f02f57816d2b5648282f02cfa3073ef7197776",
+  "audited_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/FAMILY_FIELD_AFFECTED_JOBS.json",
+    "sha256": "b8577c80c6826d4e1b571d3c87ea30dbf32811d5504a9ffd71ce766ad462f0e0"
+  },
+  "actual_cards": 16,
+  "actual_owner_rows": 73,
+  "affected_sealed_ready_job_ids": [
+    "C-01-control-research-a001",
+    "C-01-treatment-research-a001",
+    "C-02-control-research-a001",
+    "C-02-treatment-research-a001",
+    "C-03-control-research-a001",
+    "C-03-treatment-research-a001",
+    "C-04-control-research-a001",
+    "C-04-treatment-research-a001",
+    "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+    "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+    "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+    "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+    "I-02-DELIVERY-RECOVERY-R002-control-critique-a001",
+    "I-02-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+    "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+    "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+    "I-07-FRESH-DELIVERY-R002-control-research-a001",
+    "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+    "I-09-FRESH-DELIVERY-R002-control-research-a001",
+    "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+    "I-03-DELIVERY-RECOVERY-R002-control-research-a001",
+    "I-03-DELIVERY-RECOVERY-R002-treatment-research-a001",
+    "I-04-DELIVERY-RECOVERY-R002-control-critique-a001",
+    "I-04-DELIVERY-RECOVERY-R002-treatment-research-a001",
+    "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+    "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+    "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+    "I-11-DELIVERY-RECOVERY-R002-treatment-research-a001",
+    "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001"
+  ],
+  "declared_family_counts": {
+    "GLM": 57,
+    "Luna": 16
+  },
+  "fix_scope": "Add explicit requested/candidate family field resolver; keep owner/model/effort/runtime/source/response/resource/clock guards. Reject conflicts, missing values and labels-only. Ops performs live integration separately.",
+  "bindings": "Registration/queue must agree with the resolved family; supported model/Max checks remain before activation. Native workers retain actual native model/effort verification. Optional pure verified-runtime identity helper rejects unbound/mismatched tuples.",
+  "not_claimed": [
+    "No native route or research quality retest",
+    "No newly observed runtime identity",
+    "No family inferred from suffix or absent runtime selector",
+    "No model substitution or authorization widening"
+  ],
+  "ownership": "Only this new adapter directory written; no live dispatcher, jobs, cards, runtime, private HOME, accounting or Git edits",
+  "goals_started": 0,
+  "model_calls": 0
+}

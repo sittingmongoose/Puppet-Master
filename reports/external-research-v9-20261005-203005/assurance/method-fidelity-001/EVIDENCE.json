@@ -1,0 +1,97 @@
+{
+  "schema": "er9.bounded-method-fidelity-source-selector.v1",
+  "source_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/CAMPAIGN_PLAN.json",
+      "sha256": "7baf6fd1d688a85021bb042f0eb6bf18aa3a9301cde39a13e9495205db0639a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/QUEUE.json",
+      "sha256": "7fe3a19d92a9ebf231069006cd03e4e0bbeb1dc7ea126b09207b2408bb72e9cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+      "sha256": "991cea7b2983aec4725b534188f02f57816d2b5648282f02cfa3073ef7197776"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/luna_bind_next.py",
+      "sha256": "31a8f48682919d8a8399e789245b204ba3b3fc5721658843a2a05c49ac60e9e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/glm_template_bind.py",
+      "sha256": "8ba1aae80ae07124fb6717e7bce955b05e9b4edff0ad7241ba17d3159b660a56"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/bind_next.py",
+      "sha256": "2e6b02e4b7f3bd7c9cd63f3cd7b64d36e35b57665c35eb66817ab56277d596ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/prepare.py",
+      "sha256": "48ff881c11fd89c12d9ce6c6f24790bb34956f970aa55575644ae2cbdf03d6cb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/build_imports.py",
+      "sha256": "d0aed90bc6432ca0a8c974ca490753c45d97a428a388d811c1651f7c7615a377"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bind_imported_v4.py",
+      "sha256": "e8b0c9519d3fd0ba62b79a4b7a1a06361517036f10234e2dab0711d389cf02f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/extend_base.py",
+      "sha256": "cb5e2ec7befc0ddff2716f921ebaab0ed035f1d2ef48a8373d660582fe3308c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/BASE_IMPORT_OUTBOX.json",
+      "sha256": "bfac874eb3f9592edf8542e35684d3464487d00811b5bf27bf1ffa79826b1131"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/CORRECTED_DAG_OUTBOX.json",
+      "sha256": "505a561e2ae1e36522677c66041fc35d75519a25822636a5e83d1e43eb0d9856"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepare_integrated_v2.py",
+      "sha256": "5054dd96f47a918937802ff10344c2b5f1168d5e657a683b8054b4ac8b4054df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-BUDGET-DEFINITION-ADDENDUM-001.json",
+      "sha256": "60f649b39f58dda101ca4e7cee599c43d15680d93c12a745632da58f75fb5c79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/CONFIRMATION_RELEASE_RECEIPT.json",
+      "sha256": "869061dc8cdcd805c5df145ad60f6d70f182563f5951e26a652d0dd4c103b770"
+    }
+  ],
+  "metadata_snapshot_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/AUDIT_METADATA.json",
+    "sha256": "2db12643d49a9c3fcbebbea4345e55b91751583b3378f4caac08853335b50fe7"
+  },
+  "registered_snapshot_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/REGISTERED_JOB_METADATA.json",
+    "sha256": "54c7a79264ac613383a8251314d4573174cbc09c8dbeac7b5e8e3113030aad9c"
+  },
+  "descriptor_projection_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/DESCRIPTOR_CONTROL_METADATA.json",
+    "sha256": "5b5eb497d27eb47f59fffcf8fbf76f7115c25f692b011907f0487497236d740d"
+  },
+  "family_affected_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/FAMILY_FIELD_AFFECTED_JOBS.json",
+    "sha256": "b8577c80c6826d4e1b571d3c87ea30dbf32811d5504a9ffd71ce766ad462f0e0"
+  },
+  "pair_common_input_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/PAIR_COMMON_INPUT_COMPARISONS.json",
+    "sha256": "138f531f2ae697d3dc085e866073f812ab9990dc14398754b0297cf623ef3782"
+  },
+  "seed_lineage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-001/SEED_LINEAGE_METADATA.json",
+    "sha256": "c622f18fca9b8c1a70650895216ab57d05994965fd1b32212d2926e0eae0c1ee"
+  }
+}
