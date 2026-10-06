@@ -1,0 +1,43 @@
+{
+  "observed_utc": "2026-10-06T10:42:20.632570+00:00",
+  "job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+  "native_goal_starts": 1,
+  "activation_events": [
+    {
+      "utc": "2026-10-06T10:40:27.498053+00:00",
+      "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+      "job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "actual_native_goal_starts": 1,
+      "target_id": "target_muwjs2u7_b724d508-0ea7-4ced-91fe-323a84320f2f",
+      "session_id": "sess_b6ba7a20-61c8-4546-9001-cad3a981b32c",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "activation_path": "LAB_ROOT/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/activation.json",
+      "activation_sha256": "9203aa6c3e18feb8555a1b28a412b3b327d0552fb3db0b3bb832bc3304bf4673"
+    }
+  ],
+  "stage_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/stage.json",
+    "sha256": "a5c1b2bdd13cb6f26fa6514f7ca4e7fc9a16297bcd407550eb4a22b4cd942730"
+  },
+  "launch_seal_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/LAUNCH_SEAL.json",
+    "sha256": "9d4bab14aa5673b063cfddf787b12be349ca83afe86b4f8b90d78e7c391aa2d0"
+  },
+  "resource_profile_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/RESOURCE_PROFILE.json",
+    "sha256": "0740462aae75fe2d4c79faa0a56a26bc8ade898f24248315a018383781dae9bc"
+  },
+  "runtime_ready_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+    "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+  },
+  "version": "glm_complete2304_bundle_clock_readiness_v1",
+  "original_birth_monotonic_ns": 113631875126297,
+  "max_seconds": 600,
+  "max_responses": 60,
+  "no_completion_or_quality_claim": true
+}

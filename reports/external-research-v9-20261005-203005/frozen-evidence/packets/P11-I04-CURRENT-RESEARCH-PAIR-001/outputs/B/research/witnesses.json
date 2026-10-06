@@ -1,0 +1,65 @@
+{
+  "schema": "er9.witness-catalog.v1",
+  "stage": "research",
+  "labels_legend": "executed-by-candidate: run via the experiment's admitted pm_execution.python_execute sandbox, receipts verbatim from the execution result schema er9.execution.result.v1. No evaluator-only executions occurred in this stage.",
+  "sandbox_limits_observed": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "stream_bytes_each": 32768, "network": "new empty namespace", "note": "sandbox reports 'kernel isolation supplied by Bubblewrap/systemd, not AST filters' and 'execution receipts do not prove semantic correctness or candidate consumption'"},
+  "witnesses": [
+    {
+      "id": "W1",
+      "title": "Notebook document semantics: stable cell id vs display order vs execution order",
+      "label": "executed by candidate",
+      "execution_id": "exec-mzmdgd6v",
+      "completed_utc": "2026-10-06T06:08:11.996204+00:00",
+      "code_sha256": "5a87e135b2e43f168fc9146413d97afad6cf8256db2d87d017d7970ba8cd47f1",
+      "data_sha256": "f98702232b5b01c11ae90c9aa3b64ad97117ece80738a113a60628a8503f042e",
+      "input": "In-memory notebook dict with three code cells (ids cell-01..03, execution_counts 1..3, one execute_result output bound to execution_count 2), built to the v4.5 schema constraints from source S1; the check reverses the cells array and re-validates identity/order/association invariants with assertions (stdlib re only).",
+      "expected_behavior": "Cell ids remain valid and stable after reordering; execution order (execution_count) is independent of display order; the saved execute_result stays associated with its producing execution; unexecuted cell has execution_count null; error outputs are structured (ename/evalue/traceback).",
+      "justification": "Each expectation is a direct restatement of the captured nbformat v4.5 schema text (S1 locator fields); the check validates that a downstream tracker can rely on these invariants, not that the nbformat library validates.",
+      "observed": {"exit_code": 0, "stderr_bytes": 0, "stdout_sha256": "a3a9fc74adc85f20c9d30bbf317d2e50465f689281bede23db847a1242d51c81", "stdout_summary": "W1 PASS; display order after edit ['cell-03','cell-02','cell-01']; execution order ['cell-01','cell-02','cell-03']; output->execution association stable; null ec + structured error output OK"},
+      "scope_limits": "Isolated component check on synthetic dict data; does not execute nbformat/ipykernel or prove any editor product behavior; the v4.5 schema was captured from a floating main branch (S1 limit)."
+    },
+    {
+      "id": "W2",
+      "title": "Output-status / invalidation state machine (current/stale/failed/unverified)",
+      "label": "executed by candidate",
+      "execution_id": "exec-labihxuz",
+      "completed_utc": "2026-10-06T06:09:02.502760+00:00",
+      "code_sha256": "b2dc700e56c9fff8d9d84b36f73818e2a7f7b04260fe9028629fd8a18fd07f75",
+      "data_sha256": "961de249ab89c5d206069e989b568e9bbd074ee91ac9e8d042a9f3ff738bc566",
+      "input": "Candidate-designed rule set over a linear notebook A->B->C with the six invalidation rules R1..R6 (upstream cell edit, dataset/env edit, kernel restart, interrupted run, clean replay incl. error path); pure stdlib dict logic, assertions on full state dictionaries.",
+      "expected_behavior": "R1 editing A stales A,B,C and rerunning only A leaves B,C stale; R2/R3 dataset or env edits stale all current outputs; R4 restart turns every 'current' into 'unverified' while 'failed' stays failed; R5 a cancelled run marks mid-flight cells 'unverified' (never 'current'); R6 replay marks completed cells 'current', an erroring cell 'failed', and its downstream 'unverified'.",
+      "justification": "These rules operationalize the brief's requirements (invalidation effects; restart/interrupt must not silently label old outputs current) using the cell-id/output-association mechanisms evidenced by S1/S4/S5; the check proves the rule set is internally consistent and complete for the tested transitions.",
+      "observed": {"exit_code": 0, "stderr_bytes": 0, "stdout_sha256": "a7faee18781e68a43362e2d90d0654ffea17b32ad5ebb1b364bb5d0aae46ae60", "stdout_summary": "W2 PASS; all six rules' resulting state dictionaries printed"},
+      "attempt_history": [
+        {"execution_id": "exec-b1kg3bly", "exit_code": 1, "cause": "candidate harness bug (rev 1 asserted the boolean return of the error-path replay step, which is False by design); rule logic unchanged in rev 2"}
+      ],
+      "scope_limits": "Isolated component check of candidate logic on a 3-cell linear graph; no kernel, no real upstream/downstream analysis (transitive dependencies beyond a linear chain are design work, UNEXECUTED); does not prove a real replay engine implements these rules."
+    },
+    {
+      "id": "W3",
+      "title": "Bounded streaming ingestion with reject capture, no source mutation, and preview-vs-full-dataset separation",
+      "label": "executed by candidate",
+      "execution_id": "exec-3dtvtehh",
+      "completed_utc": "2026-10-06T06:11:49.847082+00:00",
+      "code_sha256": "e4c90aa135f21a18ea4ff425c87e1f473ce9e1bb6d900e99d60695e8960e3098",
+      "data_sha256": "fd55df34c3ac21b3d2fffeb8576d36de6640eede9d0c566c983c1601d9e6de9f",
+      "input": "data = {rows: 20000, chunk_hint_bytes: 16384, preview_n: 100}. Candidate-authored code writes a synthetic CSV (unicode labels, empty-string missing values, timestamps, one field-count-violating line at row 13335, upward value trend), then re-reads it with a chunked streaming loop (16 KB read hints), captures malformed lines into a reject ledger with line numbers, accumulates full-dataset vs first-100-row value means, and hashes the source before/after.",
+      "expected_behavior": "ok_count + rejected_count == total rows (no silent drops); exactly one reject recorded with the correct line number; source file SHA-256 unchanged; preview mean materially differs from the full mean (gap > 0.2), demonstrating a bounded preview cannot be presented as a full-dataset property; the loop buffers a bounded number of lines per chunk.",
+      "justification": "Reject-ledger semantics mirror the documented DuckDB store_rejects pattern (S8); no-mutation and preview-separation are explicit brief requirements; the trend fixture makes the preview-vs-full gap deterministic rather than probabilistic.",
+      "observed": {"exit_code": 0, "stderr_bytes": 0, "stdout_sha256": "28e4abe3d1788e77749527266beccf671ac6080e984725172e76d232c357567f", "stdout_summary": "W3 PASS; total=20000 ok=19999 rejected=1 (line 13335, field_count!=4); source sha256 unchanged; full mean=1.0000 (n=17141) vs 100-row preview mean=0.5029, gap=0.4970; max 417 lines buffered per chunk"},
+      "attempt_history": [
+        {"execution_id": "exec-i6nuuv0u", "exit_code": 1, "cause": "rev 1: the sandbox delivered the data parameter as a JSON string; rev 2+ parse defensively"},
+        {"execution_id": "exec-rkrqgme8", "exit_code": 1, "cause": "rev 2: OSError Errno 27 'File too large' writing the 150k-row fixture — the isolated sandbox enforces a small per-file quota; fixture reduced to 20k rows (rev 3)"}
+      ],
+      "scope_limits": "Isolated component check with 20k-row synthetic data and a plain chunked reader (not pyarrow/DuckDB); it demonstrates contract mechanics, NOT 5 GB performance, NOT columnar-engine behavior, and NOT memory-profile compliance of any real engine (explicitly UNEXECUTED at 5 GB scale)."
+    }
+  ],
+  "proposed_unexecuted": [
+    "5 GB CSV/NDJSON/Parquet streaming benchmark on the 8-core/16 GB envelope with wall-time, RSS and reject-ledger accounting (target, not a verified result)",
+    "kernel-death replay integration test modeled on nbclient PR #90's Autokill.ipynb (S5) inside the product's sandbox, asserting outputs are labelled per W2 R4/R5",
+    "DuckDB ingestion validation profile replicating S8 repro cases (#26211 TIMESTAMPTZ+ICU, #25825 buffer_size) against the pinned engine version",
+    "cross-machine reopen: bundle a project, reopen on a second machine, verify manifest hashes and per-output status rendering",
+    "crash-recovery drill: kill the app mid-save and verify journal-replay restores a consistent project record",
+    "sandbox confinement audit: attempt filesystem/network escape from the notebook sandbox; assert default-deny behavior"
+  ]
+}

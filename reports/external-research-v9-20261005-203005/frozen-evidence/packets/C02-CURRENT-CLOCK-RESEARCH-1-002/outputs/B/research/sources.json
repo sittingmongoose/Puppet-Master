@@ -1,0 +1,139 @@
+{
+  "catalog": "out/research/sources.json",
+  "stage": "research",
+  "captured_utc_window": "2026-10-06T06:51:24Z..2026-10-06T06:55:51Z",
+  "capture_method": "mcp public_https_get (exact-http-response-body-bytes); issue metadata via unauthenticated api.github.com search",
+  "eligibility_note": "All entries are independently chosen third-party public primary sources. No campaign/evaluator/other-arm material was retrieved or used.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "The SQLite R*Tree Module",
+      "url": "https://www.sqlite.org/rtree.html",
+      "exact_locator": "sections 3.4 (Roundoff Error), 3.5 (Reading And Writing At The Same Time), 4/4.1/4.1.1 (auxiliary columns, limitations), 5 (rtree_i32), 7.2 (rtreecheck)",
+      "pin": "anchor ids #roundoff_error, #reading_and_writing_at_the_same_time, #auxiliary_columns, #limitations, #intrtree, #integrity_check_using_the_rtreecheck_sql_function",
+      "capture_identity": {"captured_utc": "2026-10-06T06:51:24.141724+00:00", "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55", "etag": "\"m6aa3e181sa355\"", "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT", "status": 200, "bytes": 41813, "delivered_bytes": 32768, "complete_source_delivered": false},
+      "key_facts": ["32-bit float coords with outward rounding; expand contained-within query boxes (~0.000012%); rtree_i32 variant", "mid-scan writes to same rtree fail SQLITE_LOCKED", "aux columns since SQLite 3.24.0; their constraints/affinities ignored", "rtreecheck() integrity function"],
+      "applicability": "Precedent for bounded spatial access over 250k observations; drives index-as-derived-rebuildable design."
+    },
+    {
+      "id": "S2",
+      "title": "PROJ FAQ (stable docs, PROJ 9.9.0)",
+      "url": "https://proj.org/en/stable/faq.html",
+      "exact_locator": "sections 'Why is the axis ordering in PROJ not consistent?', 'What is the best format for describing coordinate reference systems?', 'Why am I getting the error \"Cannot find proj.db\"?'",
+      "pin": "anchor ids #why-is-the-axis-ordering-in-proj-not-consistent, #what-is-the-best-format-for-describing-coordinate-reference-systems, #why-am-i-getting-the-error-cannot-find-proj-db",
+      "capture_identity": {"captured_utc": "2026-10-06T06:51:24.611843+00:00", "sha256": "177c3400e36b16731e899769ce057c9c96dabeb6014dccf4714cee58a5b00cfb", "etag": "W/\"5fa89d5c4d8dea5d708eac8d3572e93d\"", "last_updated_footer": "03 Oct 2026", "status": 200, "bytes": 26489, "complete_source_delivered": true},
+      "key_facts": ["PROJ respects authority axis order per ISO 19111; EPSG:4326 is lat-first; most GIS software does not follow; PROJ <6 did not", "WKT2 preferred; PROJ-string conversions lose information 'potentially leading to erroneous transformations'", "proj.db located via PROJ_DATA (PROJ_LIB before 9.1); required for operation"],
+      "applicability": "Coordinate contract: axis-order handling, CRS description format, transformation-resource versioning."
+    },
+    {
+      "id": "S3",
+      "title": "pyproj 3.7.2 documentation — Transformer API",
+      "url": "https://pyproj4.github.io/pyproj/stable/api/transformer.html",
+      "exact_locator": "Transformer.from_crs signature; axis-order warning admonition; versionadded notes",
+      "pin": "anchor id #pyproj-transformer.Transformer.from_crs; warning box linking PROJ FAQ axis order; 'Added in version 2.2.0: always_xy'; 2.3.0 area_of_interest; 3.1.0 authority/accuracy/allow_ballpark; 3.4.0 force_over; 3.5.0 only_best; Transformer.accuracy '-1 if unknown'; Transformer.area_of_use",
+      "capture_identity": {"captured_utc": "2026-10-06T06:51:41.631090+00:00", "sha256": "86ca34e1956d0a431a5b47814ba3440885a62252c56c1cd2db02c2045304a2a8", "etag": "\"6aaa8b56-2b335\"", "last_modified": "Wed, 16 Sep 2026 12:28:06 GMT", "status": 200, "bytes": 176949, "delivered_bytes": 32768, "complete_source_delivered": false},
+      "key_facts": ["always_xy forces traditional GIS (lon,lat)/(E,N) order, default False, added 2.2.0", "accuracy property may be -1 (unknown); area_of_use exposed"],
+      "applicability": "Single transform choke point design; accuracy/area-of-use based flagging."
+    },
+    {
+      "id": "S4",
+      "title": "pyproj issue #1377 — 'Inverted x/y for transformation from WSG84 to LV95 (EPSG:2056)'",
+      "url": "https://github.com/pyproj4/pyproj/issues/1377",
+      "exact_locator": "issue body code sample (transform(8.5417, 47.3769) → wrong order); labels: axis-order ('Issue related to axis order changes introduced in PROJ 6.'), state closed, created 2024-02-14",
+      "pin": "API JSON capture fields: number=1377, state=closed, labels[axis-order], body code block",
+      "capture_identity": {"captured_utc": "2026-10-06T06:53:08.135754+00:00", "via": "https://api.github.com/search/issues?q=repo:pyproj4/pyproj+state:closed+axis+order", "capture_sha256": "d4b2de69a0a8311613fdb0c0d24e1ad285756fe71f21546edcd8fdd903138e4b", "status": 200},
+      "key_facts": ["Real user-visible axis-order failure on current versions (pyproj 3.6.1/PROJ 9.3.0)", "closed as expected behavior; fix path is always_xy"],
+      "applicability": "Issue-chain context: the user-facing failure class the regression tests guard."
+    },
+    {
+      "id": "S5",
+      "title": "pyproj issue #1368 — 'Invert lat lon Transformer'",
+      "url": "https://github.com/pyproj4/pyproj/issues/1368",
+      "exact_locator": "body code sample EPSG:4326→EPSG:32632; labels duplicate/question + axis-order; closed 2024-01-16",
+      "pin": "API JSON capture fields: number=1368, state=closed, labels[axis-order]",
+      "capture_identity": {"captured_utc": "2026-10-06T06:53:08.135754+00:00", "via": "same search capture as S4", "capture_sha256": "d4b2de69a0a8311613fdb0c0d24e1ad285756fe71f21546edcd8fdd903138e4b"},
+      "key_facts": ["Recurring user confusion class (duplicate of axis-order reports)"],
+      "applicability": "Corroborates axis-order as a persistent field failure mode."
+    },
+    {
+      "id": "S6",
+      "title": "pyproj PR #1566 — 'ENH: add always_xy arg to from_pipeline method' (diff)",
+      "url": "https://github.com/pyproj4/pyproj/pull/1566.diff",
+      "exact_locator": "docs/history.rst hunk: '- ENH: Added always_xy kwarg to :meth:`pyproj.transformer.Transformer.from_pipeline`'; pyproj/_transformer.pyx hunk: 'if always_xy: transformer._set_always_xy()'; pyproj/transformer.py '.. versionadded:: 3.8.0 always_xy'; test/test_transformer.py adds six tests: test_always_xy__from_pipeline, test_always_xy__from_pipeline_vs_transformer_group, test_always_xy__from_pipeline_axis_order, test_always_xy__from_pipeline_projected_crs, test_always_xy__from_pipeline_projected_to_geographic, test_always_xy__from_pipeline_geographic_to_projected",
+      "pin": "diff hunks quoted above; sha256 of full diff in capture_identity",
+      "capture_identity": {"captured_utc": "2026-10-06T06:53:54.027344+00:00", "actual_url": "https://patch-diff.githubusercontent.com/raw/pyproj4/pyproj/pull/1566.diff", "sha256": "020ce0ecbf22b1bd863af3092e48dc2a8e36b201397a29dcff82fdc867abcb73", "status": 200, "bytes": 14794, "complete_source_delivered": true},
+      "key_facts": ["Fix normalizes axis order via proj-side always-xy setter when always_xy=True", "regression tests cover geographic/projected, both directions, and pipeline-vs-TransformerGroup equivalence"],
+      "applicability": "Required real issue→fix→regression-test chain; template for the proposed CRS corpus tests."
+    },
+    {
+      "id": "S7",
+      "title": "pyproj PR #1566 — metadata (issue/fix chain anchor)",
+      "url": "https://github.com/pyproj4/pyproj/pull/1566",
+      "exact_locator": "API fields: state=closed, merged_at=2026-01-10T13:38:15Z, milestone=3.8.0 (state closed, 43 closed items), body 'Closes #1565', 'Tests added', updated history.rst",
+      "pin": "API JSON capture: number=1566, pull_request.merged_at, milestone.title=3.8.0",
+      "capture_identity": {"captured_utc": "2026-10-06T06:53:08.135754+00:00", "via": "same search capture as S4", "capture_sha256": "d4b2de69a0a8311613fdb0c0d24e1ad285756fe71f21546edcd8fdd903138e4b"},
+      "key_facts": ["Issue #1565 (pipeline always_xy gap) closed by PR #1566; fix released in milestone 3.8.0"],
+      "applicability": "Release/branch applicability: design binds pyproj >= 3.8.0 for pipeline always_xy."
+    },
+    {
+      "id": "S8",
+      "title": "pyproj issue #1474 — 'Problem downloading grids on the fly' (open)",
+      "url": "https://github.com/pyproj4/pyproj/issues/1474",
+      "exact_locator": "body: pyproj 3.6.1 TransformerGroup+download_grids flow broke on 3.7 in clean environments; user data dir missing files.geojson; env report 'EPSG Database: v10.094', 'PROJ DATA (recommended version): 1.15'",
+      "pin": "API JSON capture: number=1474, state=open, labels bug+proj",
+      "capture_identity": {"captured_utc": "2026-10-06T06:52:36.449439+00:00", "via": "https://api.github.com/search/issues?q=repo:pyproj4/pyproj+always_xy", "capture_sha256": "4cc844043823e866695a3c0ab61eafd5ae878aa5b9f9bbfd7ce3106405c5b3bb"},
+      "key_facts": ["On-the-fly grid download is environment-sensitive; offline use requires pre-downloaded grids"],
+      "applicability": "Offline transformation constraint: pre-fetch grids at import time."
+    },
+    {
+      "id": "S9",
+      "title": "pyproj issue #1644 — transforms return inf when grid download fails (open, milestone 3.8.1)",
+      "url": "https://github.com/pyproj4/pyproj/issues/1644",
+      "exact_locator": "body: freed CA bundle path → curl cert failure → transform returns (inf, inf) without error; regression introduced with thread-local contexts #1133/#1419 in 3.7.0; references #1499; env pyproj 3.8.0/PROJ 9.8.1",
+      "pin": "API JSON capture: number=1644, state=open, milestone 3.8.1, expected-output line",
+      "capture_identity": {"captured_utc": "2026-10-06T06:52:36.449439+00:00", "via": "same search capture as S8", "capture_sha256": "4cc844043823e866695a3c0ab61eafd5ae878aa5b9f9bbfd7ce3106405c5b3bb"},
+      "key_facts": ["Silent non-finite transform outputs are a real failure mode in the selected dependency family"],
+      "applicability": "Justifies the non-finite output guard and quarantine in the CRS service."
+    },
+    {
+      "id": "S10",
+      "title": "MBTiles 1.3 specification",
+      "url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "exact_locator": "sections Metadata (MUST name/format; SHOULD bounds/center/minzoom/maxzoom; MAY attribution), Tiles (schema; TMS Y-reversal note 'tile_row = 2^z − 1 − y'), Compatibility ('core SQLite features only; SHALL NOT require extensions')",
+      "pin": "markdown headings '## Metadata', '#### Content', '### Tiles', '## Compatibility'",
+      "capture_identity": {"captured_utc": "2026-10-06T06:52:37.740392+00:00", "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d", "etag": "\"54a9f7e689608a645f493227544ff357ac214be79cae8a25d3081970bcd1cadd\"", "status": 200, "bytes": 15807, "complete_source_delivered": true},
+      "key_facts": ["bounds in WGS84 left,bottom,right,top", "attribution is a MAY metadata row — bundles can carry license credits", "SQLite container, no extensions"],
+      "applicability": "Bounded map-area storage inside the project bundle; attribution carrying."
+    },
+    {
+      "id": "S11",
+      "title": "OpenStreetMap Copyright and License",
+      "url": "https://www.openstreetmap.org/copyright",
+      "exact_locator": "sections 'OpenStreetMap licensing' (ODbL via OSMF; credit; share-alike), 'How to credit OpenStreetMap', 'Additional services' ('we cannot provide a free-of-charge map API or map tiles for third-parties' + Tile Usage Policy link), contributors list (per-country open licenses)",
+      "pin": "h3 headings quoted above; links https://operations.osmfoundation.org/policies/tiles/, https://osmfoundation.org/wiki/Licence/Attribution_Guidelines",
+      "capture_identity": {"captured_utc": "2026-10-06T06:53:54.717464+00:00", "sha256": "e12a3d6eb6ecdcb96c7238bb83c42561188048703fcb1ee4cdc7ec732859f61b", "etag": "W/\"e12a3d6eb6ecdcb96c7238bb83c42561\"", "status": 200, "bytes": 21314, "complete_source_delivered": true},
+      "key_facts": ["ODbL terms incl. derivative share-alike", "attribution required and format depends on use (browsable map / printed / static)", "OSMF does not provide free third-party tile/API service"],
+      "applicability": "Bundled map-data license boundary for the selected (OSM-based) source."
+    },
+    {
+      "id": "S12",
+      "title": "The SQLite Session Extension",
+      "url": "https://www.sqlite.org/sessionintro.html",
+      "exact_locator": "1.1 Typical Use Case (two parallel workers, end-of-day changeset exchange, 'similar to patch'); 1.2 Obtaining (in amalgamation since 3.13.0; disabled by default; -DSQLITE_ENABLE_SESSION -DSQLITE_ENABLE_PREUPDATE_HOOK); 1.3 Limitations (no virtual tables; declared PRIMARY KEY required; NULL-PK rows silently ignored); 2.1 changeset/patchset payloads; 2.2 conflict types and handler options (omit/abort/apply-despite); 4 invert (undo), changegroup",
+      "pin": "anchor ids #typical_use_case, #obtaining_the_session_extension, #limitations, #changesets_and_patchsets, #conflicts; footer 'last updated on 2025-05-31'",
+      "capture_identity": {"captured_utc": "2026-10-06T06:55:51.721672+00:00", "sha256": "5410c53bab447ac791594e11698ac331aed9d2168838150c4f030b4dcbb11dc2", "etag": "\"m6aa3e181s6d91\"", "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT", "status": 200, "bytes": 28049, "complete_source_delivered": true},
+      "key_facts": ["changesets carry old+new values enabling three-way conflict detection", "inverted changeset undoes a session", "virtual tables (incl. R*Tree) are NOT captured"],
+      "applicability": "Merge/revision precedent; drives app-layer oplog with session-style semantics and rebuildable spatial index."
+    },
+    {
+      "id": "S13",
+      "title": "Mergin Maps documentation — Synchronisation (whole-product lead; capture-limited)",
+      "url": "https://merginmaps.com/docs/manage/synchronisation/",
+      "exact_locator": "page title/meta description only ('Synchronisation is what makes effective collaboration possible...'); sidebar confirms sibling pages manage/project-history, manage/selective_sync",
+      "pin": "meta og:title 'Synchronisation'",
+      "capture_identity": {"captured_utc": "2026-10-06T06:52:37.414146+00:00", "sha256": "ec3fe40c989db5cdb5b78a28b67c2b55cacc69f6c666e941c2d1e3ae040ffb1e", "status": 200, "bytes": 93713, "delivered_bytes": 32768, "complete_source_delivered": false, "limitation": "VitePress client-rendered body not machine-read in this capture; raw markdown paths 404'd on both master and main branches"},
+      "key_facts": ["Only navigational structure captured; no conflict-mechanism claims drawn from it"],
+      "applicability": "Lead L1; content requires a follow-up capture before any claim."
+    }
+  ]
+}

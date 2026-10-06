@@ -1,0 +1,73 @@
+{
+  "stage": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+  "unresolved_leads": [
+    {
+      "id": "L1",
+      "title": "Permissive CSV row-loss on current DuckDB versions (issue #19880 family)",
+      "evidence_state": "Reported on DuckDB 1.4.1 (2025-11-21): read_csv_auto(ignore_errors=true) dropped 12,094/99,999 valid rows that strict mode reads [S4/S7]. Issue closed with no captured maintainer fix comment; only comment is the reporter requesting deletion after uploading proprietary data [S8]. No evidence establishes whether any release fixes it.",
+      "design_response": "Default ingestion path never uses skip-on-error; strict full-column scan + quarantine is mandatory before any permissive read (proposal §5, §14).",
+      "next_step": "Verify behavior on the pinned engine version during implementation (proposed check PU-W6); re-check duckdb issue tracker before release."
+    },
+    {
+      "id": "L2",
+      "title": "DVC docs repository ownership moved (iterative/dvc.org -> treeverse/dvc.org observed in GitHub API redirect)",
+      "evidence_state": "Contents API for iterative/dvc.org served repository URL api.github.com/repositories/135934107 = treeverse/dvc.org [S2 capture context]. Docs content still resolves via the same path.",
+      "design_response": "Cite DVC docs by content sha256, not by branch; treat DVC as an exported format target, not a runtime dependency (proposal §2.2).",
+      "next_step": "None for the design; citation-hygiene note only."
+    },
+    {
+      "id": "L3",
+      "title": "Cross-machine numerical determinism",
+      "evidence_state": "DVC's own guidance avoids hardware-dependent code in reproducible stages [S2]; bit-level float equality across BLAS/CPU variants is not established by any captured source.",
+      "design_response": "Replay guarantee is scoped to deterministic re-execution against pinned inputs/env, not bitwise equality; comparisons use normalized-content hashes (proposal §6).",
+      "next_step": "During validation, measure float-result hash stability across two machines (PU-W5 extension)."
+    },
+    {
+      "id": "L4",
+      "title": "DuckDB cross-process concurrency semantics",
+      "evidence_state": "Concurrency documentation page exists in the captured docs navigation (duckdb.org/docs/current/connect/concurrency) but its content was NOT captured; no source fact on multi-process write behavior.",
+      "design_response": "Architecture already avoids sharing one DuckDB database file across processes (per-kernel in-process engine; files as interchange; single-writer flock per project) (proposal §3, §10).",
+      "next_step": "Capture and read the concurrency page before implementing any shared-file shortcut."
+    },
+    {
+      "id": "L5",
+      "title": "pylock.toml installer/tool support in current pip/uv",
+      "evidence_state": "PEP 751 is Final and names pylock.toml [S9], and its banner says the canonical spec moved to the PyPA specs page; which installers consume it today was not established in this research.",
+      "design_response": "pylock.toml is the binding format; fallback is a fully-hashed requirements export (proposal §14).",
+      "next_step": "Check PyPA pylock.toml spec page + pip/uv release notes at implementation time."
+    },
+    {
+      "id": "L6",
+      "title": "Whether DuckDB #11740-class error-path inconsistencies (conversion error despite ignore_errors=true with rejects_table, 0.10.2) were fully fixed",
+      "evidence_state": "Issue recorded as closed in the search capture [S4]; no fix PR for #11740 specifically was traced (PR #14417 fixes #14393, a related-but-distinct sniffer/rejects issue).",
+      "design_response": "Reinforces strict-default design; permissive path is opt-in with rejects tables (proposal §5).",
+      "next_step": "Optional: trace #11740 closure link if the SQL console exposes rejects_table workflows."
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O1",
+      "title": "Parquet as universal interchange with the SQL colleague",
+      "rationale": "DuckDB reads/writes Parquet natively [S3 engine family]; content-hashed derived tables make sharing drift-resistant. Validation deferred to PU-W5.",
+      "status": "opportunity, not obligation"
+    },
+    {
+      "id": "O2",
+      "title": "nbdime-style rich output diffing",
+      "rationale": "Hash-diff of tabular outputs is in scope now; media-aware diffing deferred (proposal §6).",
+      "status": "deferred opportunity"
+    },
+    {
+      "id": "O3",
+      "title": "Real-time collaboration, hosted service, scheduling, extra language kernels",
+      "rationale": "Explicitly optional per brief §15; rejected for minimum scope; SQL need is met by the embedded engine, not a second kernel (proposal §7).",
+      "status": "out of minimum scope"
+    }
+  ],
+  "rejected_alternatives": [
+    {"id": "R1", "title": "Import blacklist as isolation", "reason": "Does not constrain the interpreter; our own execution receipt describes kernel isolation as supplied by Bubblewrap/systemd, not code filters [W1 limitations]; brief §13 forbids promising it."},
+    {"id": "R2", "title": "requirements.txt as environment binding", "reason": "PEP 751 motivation documents it as non-standard, opt-in-hash, not installer-independent [S9]."},
+    {"id": "R3", "title": "DVC as the core project format", "reason": "Git/CLI-centric, interactive-notebook-poor fit; retained as export target [proposal §2.2/§11]."},
+    {"id": "R4", "title": "pandas+sqlite engine", "reason": "Loses typed columnar scans, rejects tables, and the 5 GB streaming path; kept as bounded fallback [proposal §11, §14]."}
+  ]
+}

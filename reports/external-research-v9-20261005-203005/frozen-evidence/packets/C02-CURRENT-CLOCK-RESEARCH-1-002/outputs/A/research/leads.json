@@ -1,0 +1,78 @@
+{
+  "catalog_schema": "er9.research.leads.v1",
+  "stage": "research",
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "unresolved_dependency",
+      "title": "OSMF Tile Usage Policy not captured",
+      "detail": "Two fetch attempts to https://operations.osmfoundation.org/policies/tiles/ failed with boundary OSError (see sources.json X1). OSM's copyright page (S7) links it and states OSMF provides no free third-party tile API. Exact bulk-download limits for producing offline tile extracts must be verified before any tile tooling ships.",
+      "affects": "proposal 4.3 (map bundling); validation plan tile-license checklist",
+      "bounded_alternative": "Produce extracts from an OSM planet/export file or another openly licensed source with the license shipped in-bundle; defer all automated tile acquisition."
+    },
+    {
+      "id": "L2",
+      "kind": "source_gap",
+      "title": "ODbL share-alike section wording beyond captured bytes",
+      "detail": "The ODbL capture (S8) delivered the first 32768 of 51543 bytes; Section 4 conditions (share-alike mechanics, attribution clause 4.6) are only partially in-capture. proposal 6 labels the derived-data share-alike consequence as inference anchored on S7's summary plus S8's in-capture definitions.",
+      "affects": "proposal 4.3, 6 (licensing limits)",
+      "bounded_alternative": "Retrieve the plain-text ODbL (opendatacommons.org/licenses/odbl-10.txt) and have the license-compliance checklist quote sections verbatim."
+    },
+    {
+      "id": "L3",
+      "kind": "unverified_fact",
+      "title": "First PROJ release containing PR #3477 not mapped",
+      "detail": "PR #3477 merged to master 2022-11-19 (S10). The first tagged release containing merge commit b4ead8c939ba7c9efa86ae49eb396ba3c0aa3012 was not determined this stage; release applicability of the DerivedProjected normalization fix is therefore stated only as 'a version released after 2022-11-19'.",
+      "affects": "proposal 5.3 (release/branch applicability of the fix-regression chain)",
+      "bounded_alternative": "Query PROJ release notes/tags around 9.2.0; or pin the vendored PROJ version per bundle (already required by proposal 2.2) and test the check-point against that exact build."
+    },
+    {
+      "id": "L4",
+      "kind": "design_uncertainty",
+      "title": "Antimeridian-like seams in non-geographic CRSs",
+      "detail": "proposal 2.3 defines segment splitting for geographic longitudes; projected CRSs with their own discontinuities have no universal rule claimed. Per-CRS sanity thresholds need definition with evidence per CRS family.",
+      "affects": "proposal 2.3 (track spanning discontinuity)",
+      "bounded_alternative": "Flag oversized segment jumps for manual review (implemented in v1) rather than attempting automatic splitting outside geographic CRSs."
+    },
+    {
+      "id": "L5",
+      "kind": "unresolved_dependency",
+      "title": "Bundled PROJ data coverage not enumerated",
+      "detail": "proj.db is a mandatory offline resource (S4). The set of transformations available with only the bundled dataset (no network grid files) was not enumerated this stage; proposal 6 marks the supported-CRS/transform boundary as uncertain.",
+      "affects": "proposal 2.2 support boundary; proposal 6 limits",
+      "bounded_alternative": "At implementation, run projinfo over the group's declared CRS list against the vendored dataset and record pass/fail in the bundle manifest."
+    },
+    {
+      "id": "L6",
+      "kind": "alternative_kept_open",
+      "title": "GeoPackage single-file bundle alternative",
+      "detail": "A GPKG container would improve interop with GIS tools but interacts poorly with WAL-based 'copy the directory' exchange (proposal 3.4). Kept as a bounded alternative; unresolved: whether GPKG's SQLite layout can safely adopt the checkpoint-before-share rule in all target workflows.",
+      "affects": "proposal 4.1, 7.2",
+      "bounded_alternative": "Directory bundle in v1; GPKG as an export target first, then evaluate as native format."
+    },
+    {
+      "id": "L7",
+      "kind": "opportunity",
+      "title": "Offline field-collection precedent: ODK Collect drafts/finalization model",
+      "detail": "ODK Collect's documented distinction between unfinished (draft) and finalized form instances aligns with proposal 3.4's draft-vs-committed separation, but its docs were not fetched this stage (time budget). Worth a follow-up precedent investigation alongside the SQLite/WAL recovery design.",
+      "affects": "proposal 3.4 (recovery UX), future offline-sync design",
+      "bounded_alternative": "Keep the oplog-prefix definition of 'committed' as the authoritative rule; use ODK only as comparative evidence later."
+    },
+    {
+      "id": "L8",
+      "kind": "opportunity",
+      "title": "Related PROJ axis-order issues #3598 and #4848",
+      "detail": "Referenced from open issue #4876 (S9): #3598 extended normalizeForVisualization to BoundCRS, #4848 is another always_xy passthrough case (Geographic3D to vertical CRS pipelines). Fetching their patches would extend the investigated defect chain; not fetched this stage.",
+      "affects": "proposal 5.3 depth",
+      "bounded_alternative": "The design rule (assert output axis order; passthrough = validation failure) already covers both classes generically."
+    },
+    {
+      "id": "L9",
+      "kind": "opportunity",
+      "title": "Later-stage optional capabilities (kept distinct from v1 minimums)",
+      "detail": "Real-time collaborative sync over the oplog; vector basemaps (PMTiles/MBTiles); route guidance; automated observation classification; hosted exchange service. None is required by the brief's minimum; all are enabled by the chosen architecture (oplog + content-addressed bundle).",
+      "affects": "proposal 7.1",
+      "bounded_alternative": "Ship v1 without them; each has a bounded adoption path via the oplog/manifest extension points."
+    }
+  ]
+}

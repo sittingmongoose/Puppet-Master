@@ -1,0 +1,138 @@
+{
+  "stage": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+  "captured_utc": "2026-10-06",
+  "note": "All captures are exact HTTP response bodies fetched by the candidate via the admitted bounded public_https_get tool. Pins are content hashes of the captured bytes (sha256) plus the ref/URL fetched; branch 'main'/'stable' refs are NOT release pins and are flagged where applicable.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "title": "Jupyter Notebook format v4.5 JSON schema (nbformat repo, branch main)",
+      "pin": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a (branch main @ 2026-10-06; not a release tag)",
+      "capture": {"capture_id": "1b6c37f5bc43410d9eaa7797969b61e7", "status": 200, "bytes": 16104, "complete": true, "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "captured_utc": "2026-10-06T06:01:38Z"},
+      "locators": [
+        "root: required ['metadata','nbformat_minor','nbformat','cells']; nbformat=4, nbformat_minor>=5",
+        "definitions.code_cell: required ['id','cell_type','metadata','source','outputs','execution_count']; execution_count described as 'The code cell's prompt number. Will be null if the cell has not been run.'",
+        "metadata.kernelspec: only name/display_name required; metadata.language_info: name + editor fields -> no environment/data provenance fields exist in the schema"
+      ],
+      "used_for": "Precedent 2.1: display order (cells array) vs execution order (execution_count); inline per-cell outputs; absence of provenance fields",
+      "limits": "Branch capture, not a tagged release; schema text only — runtime behavior of tools reading this format is not established by it"
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/iterative/dvc.org/main/content/docs/user-guide/project-structure/dvcyaml-files.md",
+      "title": "DVC documentation: dvc.yaml (stages, deps, outs, params, dvc.lock)",
+      "pin": "sha256:5f1880889da66e66987bb9b8c455bd66d308df8214f740a2d3688a149c6cecd8 (branch main @ 2026-10-06; repo observed redirected to treeverse/dvc.org via GitHub contents API)",
+      "capture": {"capture_id": "a9c51c04f678470d80236da04ca9fa9c", "status": 200, "bytes": 28970, "complete": true, "sha256": "5f1880889da66e66987bb9b8c455bd66d308df8214f740a2d3688a149c6cecd8", "captured_utc": "2026-10-06T06:05:05Z"},
+      "locators": [
+        "'Stages' section: stage fields cmd/deps/outs/params; 'DVC will check whether they have changed to decide whether the stage requires re-execution (see dvc status)'",
+        "'dvc.lock file' section: 'Allow DVC to detect when stage definitions, or their dependencies have changed. Such conditions invalidate stages'; per-output 'content hash field (md5, etag, or checksum)'",
+        "'Avoiding unexpected behavior' details block: reproducible stage code should be deterministic; avoid random numbers, time functions, hardware dependencies; read/write only declared deps/outs",
+        "dvc.lock example: cmd 'jupyter nbconvert --execute featurize.ipynb' with deps md5 d8b874c5fa18c32b2d67f73606a1be60"
+      ],
+      "used_for": "Precedent 2.2: hash-based invalidation mechanism; determinism guidance; notebook-as-stage pattern",
+      "limits": "Docs describe tool semantics; DVC executable behavior itself not executed here; upstream repo ownership changed (treeverse/dvc.org observed in API redirect) — pin by content hash"
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "title": "DuckDB documentation: Reading Faulty CSV Files (docs/current)",
+      "pin": "sha256:12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad (branch main @ 2026-10-06; 'current' docs = DuckDB 1.5 per rendered-site version selector in companion capture)",
+      "capture": {"capture_id": "76c71188e32e4799873f97a46da182e9", "status": 200, "bytes": 12080, "complete": true, "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad", "captured_utc": "2026-10-06T06:03:33Z"},
+      "locators": [
+        "'By default, when performing a CSV read, if any structural errors are encountered, the scanner will immediately stop the scanning process and throw the error'",
+        "'Using the ignore_errors Option': 'rows containing data that would otherwise cause the CSV parser to generate an error will be ignored'",
+        "Projection pushdown caveat: selecting only 'name' makes both rows valid because 'the casting error on the age would never occur'",
+        "'Retrieving Faulty CSV Lines': store_rejects; reject_errors columns: line, line_byte_position, byte_position, column_idx, column_name, error_type, csv_line, error_message",
+        "Error example output shows sample_size=20480 and suggests sample_size=-1 for full-scan auto-detection; LINE SIZE OVER MAXIMUM default 2,097,152 bytes",
+        "Companion rendered page captured: https://duckdb.org/docs/current/data/csv/overview.html, capture sha256:ca5fb8588ce3e9db1c635114288200a8dee38613a4d2569be8e143de027cf3c5 (nav/nav-only content in first 32KB; capture_id 59ca806023984fb1b0d50e3f49a1b713)"
+      ],
+      "used_for": "Precedent 2.3; data-contract §5 (quarantine fields, sample-based sniffing, all-column validation necessity, line-size bound)",
+      "limits": "Documentation of intended behavior; engine behavior on a given version must be verified per version (see S7/S8 recurrence)"
+    },
+    {
+      "id": "S4",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+csv+ignore_errors+in:title&per_page=10",
+      "title": "GitHub issues search: duckdb/duckdb 'csv ignore_errors' (captures issue records #19880, #14277, #14417, #12966, #11296, #11201, #10777, #11740, #10769)",
+      "pin": "capture sha256:a1edb5014a051dea820df8ab43c99c099a761a7e17b5af7e959153e09106daa7 (live query result @ 2026-10-06; search results are mutable)",
+      "capture": {"capture_id": "26a31605d1e3423e962b76ca7c749bbd", "status": 200, "bytes": 37555, "complete_body_bytes": 37555, "bytes_delivered": 32768, "sha256": "a1edb5014a051dea820df8ab43c99c099a761a7e17b5af7e959153e09106daa7", "captured_utc": "2026-10-06T06:02:04Z"},
+      "locators": [
+        "issue #10769 'Ignore_errors causes empty result in read_csv': created 2024-02-20T15:57:10Z, closed 2024-02-21T09:54:19Z, DuckDB Version 0.10.0, client Python; repro read_csv('titanic.csv', ignore_errors=true) -> empty",
+        "PR #10777 '[CSV Sniffer] Minor sniffer tweak to give preference to dialects that generate the least errors if ignore_errors = true': merged_at 2024-02-21T08:45:01Z, body 'Fix:#10777'/'Fix: #10769'",
+        "issue #11296 'Ignore_errors causes empty result (read_csv)': created 2024-03-21 (DuckDB 0.10.1), closed 2024-05-20; header/data column-count mismatch; 'Same bug as #10769 ... showed up again'",
+        "PR #14417 'Sniff CSV rejects options and small sniffer fix for ignore_errors': merged 2024-10-18, 'Fix: #14393'",
+        "issue #19880 'read_csv_auto(ignore_errors=true) drops valid rows that strict mode parses successfully': created/closed 2025-11-21, DuckDB 1.4.1, reports 87,905 vs 99,999 rows (12,094 dropped), persists with ALL_VARCHAR=TRUE",
+        "issue #11740 (0.10.2): conversion error raised despite ignore_errors=true with rejects_table — error-path inconsistency"
+      ],
+      "used_for": "Issue/fix/regression chain §1/§2; recurrence evidence",
+      "limits": "Search-result JSON delivered in first 32768 of 37555 bytes; all cited items were fully present in the delivered text. Search captures are point-in-time; issue/PR fields quoted are those in the capture"
+    },
+    {
+      "id": "S5",
+      "url": "https://github.com/duckdb/duckdb/pull/10777.diff",
+      "title": "PR #10777 diff — CSV sniffer fix for ignore_errors=true (issue #10769)",
+      "pin": "capture sha256:6c7c1314e258223be7de65378b6e1429b20567a0d13a791d64be9c698dc1d771 (full diff, 63,948 bytes; both halves read by candidate)",
+      "capture": {"capture_id": "15049d6a9cf444b5be85ff077b7c7dec", "status": 200, "bytes": 63948, "complete": true, "sha256": "6c7c1314e258223be7de65378b6e1429b20567a0d13a791d64be9c698dc1d771", "captured_utc": "2026-10-06T06:02:58Z", "second_half_read_locally": "public_captures/6c7c1314e258223be7de65378b6e1429b20567a0d13a791d64be9c698dc1d771.body bytes 32500-63948, range sha256:6dd96c9278df13a93ac4b48090f39c59efa459f9048c37f88d6b717ce4efbb82"},
+      "locators": [
+        "new fixture data/csv/titanic.csv (892 data rows added)",
+        "src/execution/operator/csv_scanner/sniffer/type_detection.cpp: adds 'idx_t min_errors = NumericLimits<idx_t>::Maximum();' and guards candidate selection with '(!options.ignore_errors || candidate->error_handler->errors.size() < min_errors)' so the sniffer prefers dialects generating the fewest errors when ignore_errors=true",
+        "test/sql/copy/csv/test_ignore_errors.test: extends with 'query IIIIIIIIIIII' / \"FROM read_csv('data/csv/titanic.csv', ignore_errors=1) limit 10\" and 10 expected rows (regression test)"
+      ],
+      "used_for": "Fix + regression-test evidence in the issue chain",
+      "limits": "Diff proves what changed in the PR; it does not by itself prove which release contains it — release membership established separately by S6"
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v0.10.1",
+      "title": "DuckDB v0.10.1 release ('Bugfix Release')",
+      "pin": "capture sha256:437b9fdccefc309dc06ee3ba0a52aa6fde18d7bf3a4288da8e3f96c17d116c4b (first 32,768 of 59,488 bytes; cited fields in delivered text)",
+      "capture": {"capture_id": "7c6cb56b3f82476aabc9e622ebc9a70b", "status": 200, "bytes": 59488, "bytes_delivered": 32768, "sha256": "437b9fdccefc309dc06ee3ba0a52aa6fde18d7bf3a4288da8e3f96c17d116c4b", "captured_utc": "2026-10-06T06:02:59Z"},
+      "locators": [
+        "published_at 2024-03-18T16:02:49Z; created_at 2024-03-18T12:31:35Z; tag v0.10.1; target_commitish 4a89d97db8a5a23a15f3025c8d2d2885337c2637",
+        "release notes 'What's Changed' include: '[CSV Sniffer] Minor sniffer tweak to give preference to dialects that generate the least errors if ignore_errors = true by @pdet in https://github.com/duckdb/duckdb/pull/10777'"
+      ],
+      "used_for": "Version applicability: first stable release containing the #10777 fix is v0.10.1 (2024-03-18); #10769 was filed against 0.10.0",
+      "limits": "Partial body capture (release assets tail not read); notes text confirms inclusion, no per-commit cherry-pick audit performed"
+    },
+    {
+      "id": "S7",
+      "title": "Issue #19880 author comment (closure context)",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/19880/comments",
+      "pin": "capture sha256:9d398f72a11e006f46fd6cf03890bbb9d0fe2a9fa23782d1031ba33e1a616ea2 (complete, 1,883 bytes)",
+      "capture": {"capture_id": "03d777db0bdf4f2f8fcb12d6139d83ee", "status": 200, "bytes": 1883, "complete": true, "sha256": "9d398f72a11e006f46fd6cf03890bbb9d0fe2a9fa23782d1031ba33e1a616ea2", "captured_utc": "2026-10-06T06:02:59Z"},
+      "locators": [
+        "single comment (2025-11-21T15:50:24Z, author schroderj, association NONE): reporter states proprietary data was accidentally uploaded, links removed, and asks maintainers to delete the issue"
+      ],
+      "used_for": "Honest closure context for #19880: closure is NOT evidence of a fix; no maintainer fix/backport comment captured",
+      "limits": "Comment history may change; only this comment existed at capture time"
+    },
+    {
+      "id": "S8",
+      "url": "https://jupyter-server.readthedocs.io/en/stable/operators/security.html",
+      "title": "Jupyter Server documentation: Security in the Jupyter Server (stable, doc version 2.21)",
+      "pin": "capture sha256:55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b (first 32,768 of 79,569 bytes; quoted sentence in delivered text)",
+      "capture": {"capture_id": "220d57bdeb094bb787bd5ea936c84e4a", "status": 200, "bytes": 79569, "bytes_delivered": 32768, "sha256": "55f3e3da2253d9ea00b38d82acf1efaf404c3fcfb34f308a3622aed75196206b", "captured_utc": "2026-10-06T06:02:03Z"},
+      "locators": [
+        "'Since access to the Jupyter Server means access to running arbitrary code, it is important to restrict access to the server.'"
+      ],
+      "used_for": "§8: notebook stack = arbitrary code execution; isolation must come from outside the server (OS/network/resource layers)",
+      "limits": "Partial capture; page is primarily about token auth — used only for the quoted arbitrary-code principle"
+    },
+    {
+      "id": "S9",
+      "url": "https://peps.python.org/pep-0751/",
+      "title": "PEP 751 – A file format to record Python dependencies for installation reproducibility (Status: Final)",
+      "pin": "capture sha256:a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0 (first 32,768 of 162,130 bytes; cited sections in delivered text); etag \"6ac147a7-27952\", Last-Modified Sat, 03 Oct 2026",
+      "capture": {"capture_id": "003cb1ff49b24e68bc5cb80c799b4b6b", "status": 200, "bytes": 162130, "bytes_delivered": 32768, "sha256": "a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0", "captured_utc": "2026-10-06T06:01:39Z"},
+      "locators": [
+        "Header: Status 'Final', Standards Track, Created 24-Jul-2024, Resolution 31-Mar-2025",
+        "Abstract: format 'designed to be human-readable and machine-generated. Installers consuming the file should be able to calculate what to install without the need for dependency resolution at install-time.'",
+        "Specification > File Name: MUST be named pylock.toml or match ^pylock\\.([^.]+)\\.toml$",
+        "Motivation: requirements files 'not a standard but ... supported by convention ... not secure by default (file hash support is entirely an opt-in feature)'",
+        "Banner: canonical, up-to-date spec maintained at PyPA specs page (packaging.python.org pylock.toml Specification)"
+      ],
+      "used_for": "Environment binding (§3, §9): pylock.toml as pinned, hash-carrying, machine-generated env interchange",
+      "limits": "Partial capture (spec details beyond File Name/sections not all read); PEP page notes canonical spec moved to PyPA — implementation/tool support status not established here (see leads L7)"
+    }
+  ],
+  "eligible_source_policy": "Only independently chosen third-party public documentation, repositories, issue trackers, and standards were used. No campaign, evaluator, other-arm, or prior-candidate material was retrieved or used."
+}

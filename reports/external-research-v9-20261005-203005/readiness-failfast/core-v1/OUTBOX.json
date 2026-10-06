@@ -1,0 +1,42 @@
+{
+  "descriptor_binding": {
+    "glm_resource.effort": "max",
+    "glm_resource.model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+    "glm_resource.source_pins": "exact PIN.runtime_source_pins map, including readiness.py",
+    "glm_resource.tools_config_builder": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+      "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+    },
+    "glm_resource.version": "glm_complete2304_clock_readiness_v1",
+    "other_fields": "retain exact current admitted per-role factor/tools/profile/Task/input/artifact/model/caps and original clock choices; no template inference/fallback"
+  },
+  "eligibility": "explicit future unentered stage versions only; ops owns source/closure seal and actual import. No mutation of old/live/frozen stage JSON. No automatic candidate retry. Respect complete source-choice prospectivity for each owning lineage.",
+  "entrypoint": [
+    "/usr/bin/python3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+    "--stage-json",
+    "FROZEN_NEW_STAGE_JSON",
+    "--stage-sha256",
+    "FROZEN_NEW_STAGE_SHA",
+    "--birth-monotonic-ns",
+    "ORIGINAL_ROLE_BIRTH",
+    "--resource-profile",
+    "FRESH_ORIGINAL_RESOURCE_PROFILE",
+    "--resource-profile-sha256",
+    "EXACT_PROFILE_SHA"
+  ],
+  "failure_metadata_schema": "pre_goal_readiness_failure typed fields with UNKNOWN actual status/billing/cause; accounting must retain direct native status proof requirements",
+  "native_model_Goal_calls": 0,
+  "private_record_binding": "guard writes ownership intent before unit start; no ops-populated or label-derived unit fallback",
+  "schema": "er9.glm.readiness-failfast-integration-outbox.v1",
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+    "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+  },
+  "status": "READY_ZERO_INFERENCE_PROSPECTIVE_ONLY",
+  "version": "glm_complete2304_clock_readiness_v1",
+  "worker": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+    "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+  }
+}

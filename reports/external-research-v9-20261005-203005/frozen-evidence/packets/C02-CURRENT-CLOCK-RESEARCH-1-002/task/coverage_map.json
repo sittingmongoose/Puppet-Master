@@ -1,0 +1,172 @@
+{
+  "schema": "er9.confirmation_coverage.v1",
+  "case_id": "H2-v1",
+  "status": "SEALED_NOT_RUN",
+  "brief_path": "confirmation/sealed/H2.md",
+  "common_criteria_path": "common_criteria.json",
+  "obligations": [
+    {
+      "id": "H2-01",
+      "text": "Minimum offline import/inspect/add/edit/save/reopen/combine/export workflow; originals/provenance preserved",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-02",
+      "text": "Explicit reference-system/axis/unit/altitude/time and stored/display/export coordinate contract with bounded geometry/support and ambiguity handling",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-03",
+      "text": "Record/project/media identity, revisions, edit/delete/reimport/duplicate semantics and conflicts between diverged copies",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-04",
+      "text": "Interrupted import/save/merge recovery and honest incomplete/committed distinction without silent record loss",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-05",
+      "text": "Bounded large observation access/index/cache/viewport/export/cancel and offline map/media/license support investigated honestly",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-06",
+      "text": "Accessible record/conflict/status editing, keyboard operation, reversible edits and visible offline/provenance state",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-07",
+      "text": ">=2 independently useful candidate-discovered implementation precedents, exact sources/pins and plan consequences",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-08",
+      "text": "Real candidate-discovered issue/failure -> associated fix -> regression-test chain with applicability/evidence limits",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-09",
+      "text": "Coherent architecture/support/merge boundary, critical dependencies, >=1 opportunity and >=1 alternative; optional adoption distinguished",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "H2-10",
+      "text": "Standalone source-correct complete final with preserved meaning and honest executed versus proposed transform/index/merge validation",
+      "required": true,
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "assessment": "NOT_RUN"
+    }
+  ],
+  "dimension_note": "Common eight dimensions apply as relevant to actual obligation, no facet count or aggregate score. Full PASS additionally assesses all consequential current final claims.",
+  "truth_key": null,
+  "release_rule": "Only after both recipes/selection rationale are locked; no intra-block feedback."
+}

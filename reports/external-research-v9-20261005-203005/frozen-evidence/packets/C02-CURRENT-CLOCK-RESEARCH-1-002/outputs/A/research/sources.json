@@ -1,0 +1,108 @@
+{
+  "catalog_schema": "er9.research.sources.v1",
+  "stage": "research",
+  "captured_utc_window": "2026-10-06T06:54:05Z..2026-10-06T06:55:19Z",
+  "capture_tool": "mcp public_https_get (exact HTTP response body bytes; semantic acquisition UNKNOWN per tool contract)",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://www.sqlite.org/rtree.html",
+      "title": "The SQLite R*Tree Module",
+      "pin": "sha256:de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55",
+      "exact_locator": "Sections 3.1 (virtual table, 32-bit bounds), 3.4 (Roundoff Error: outward rounding; expand contained-within boxes), 3.5 (SQLITE_LOCKED read/write), 4 (Key Point: index narrows, does not decide), 7.2 (rtreecheck)",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:05.910709+00:00", "http_status": 200, "etag": "\"m6aa3e181sa355\"", "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT", "bytes": 41813},
+      "applicability": "Direct precedent for bounded spatial storage/viewport access in the project DB; edge-rounding and read-while-write limits adopted as design rules."
+    },
+    {
+      "id": "S2",
+      "url": "https://www.sqlite.org/wal.html",
+      "title": "Write-Ahead Logging (SQLite)",
+      "pin": "sha256:f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+      "exact_locator": "Section 1 (advantages/disadvantages), 2 (atomic commit via WAL; checkpointing), 2.3 (synchronous NORMAL durability tradeoff), 3.3 (WAL mode persistence), 4 (The WAL File: 'part of the persistent state... keep with the database if copied or moved')",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:06.147088+00:00", "http_status": 200, "etag": "\"m6aa3e181sa49f\"", "last_modified": "Fri, 11 Sep 2026 11:09:53 GMT", "bytes": 42143},
+      "applicability": "Mechanism for interrupted-save recovery and the bundle relocation/checkpoint rule; durability configuration choices."
+    },
+    {
+      "id": "S4",
+      "url": "https://proj.org/faq.html",
+      "title": "PROJ FAQ (PROJ 9.9.0 documentation)",
+      "pin": "sha256:177c3400e36b16731e899769ce057c9c96dabeb6014dccf4714cee58a5b00cfb",
+      "exact_locator": "Section 'Why is the axis ordering in PROJ not consistent?' (authority axis order per ISO 19111; EPSG:4326 WKT2 shows AXIS lat ORDER 1; projinfo check); Section 'What is the best format...' (WKT2 preferred, PROJ-string conversions lossy); Section 'Cannot find proj.db' (proj.db runtime requirement, PROJ_DATA search path)",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:06.659825+00:00", "http_status": 200, "final_url": "https://proj.org/en/stable/faq.html", "last_modified": "Sat, 03 Oct 2026 05:58:55 GMT", "bytes": 26489},
+      "applicability": "Authority for axis-order handling, CRS description format choice, and the offline proj.db bundling requirement."
+    },
+    {
+      "id": "S5",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.txt",
+      "title": "RFC 7946: The GeoJSON Format",
+      "pin": "sha256:cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+      "exact_locator": "Section 3.1.1 (position = longitude, latitude 'precisely in that order'; optional third element altitude); Section 4 (WGS84/CRS84; third element metres above WGS84 ellipsoid; alternative CRSs removed for interoperability); 3.1.9 (antimeridian cutting SHOULD); 3.2 (Feature geometry null for unlocated); 5.2 (antimeridian bbox [177,-20,-178,-16]); 3.1.10 (digit count is not uncertainty)",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:06.370779+00:00", "http_status": 200, "bytes": 49143},
+      "applicability": "Export format contract for the map overlay and the null-geometry treatment of incomplete coordinates."
+    },
+    {
+      "id": "S6",
+      "url": "https://gdal.org/tutorials/osr_api_tut.html",
+      "title": "OGR CRS and Coordinate Transformation tutorial (GDAL stable docs)",
+      "pin": "sha256:db51c0711380e1a36188bd9857ffe1c3e9201e6f765796a264c7b75648623b14",
+      "exact_locator": "Section 'CRS and axis order': pre-3.0 GDAL stripped authority axis order; GDAL 3.0+ honours it by default (OAMS_AUTHORITY_COMPLIANT); SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER) as explicit lon/lat data-order escape hatch; WKT1 export shows AXIS[Latitude,NORTH] for EPSG:4326",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:28.382199+00:00", "http_status": 200, "final_url": "https://gdal.org/en/stable/tutorials/osr_api_tut.html", "etag": "W/\"d42ef572e3b6231fa521ebdbd0a70091\"", "last_modified": "Tue, 18 Aug 2026 10:07:15 GMT", "bytes": 92028},
+      "applicability": "Documented precedent that axis order is a recurring interoperability defect class and that an explicit data-order-vs-CRS-order mapping strategy is the established mitigation."
+    },
+    {
+      "id": "S7",
+      "url": "https://www.openstreetmap.org/copyright",
+      "title": "OpenStreetMap Copyright and License page",
+      "pin": "sha256:066fc16b27eb9993b83350ceef9ac5716794db26e224b9089a5c6ad772790aed",
+      "exact_locator": "'OpenStreetMap licensing' (ODbL; credit + state ODbL; share alike if altered); 'How to credit' (attribution notice required); 'Additional services': 'we cannot provide a free-of-charge map API or map tiles for third-parties' with links to API/Tile/Nominatim Usage Policies",
+      "capture_identity": {"captured_utc": "2026-10-06T06:55:18.650945+00:00", "http_status": 200, "bytes": 21314},
+      "applicability": "Licensing facts for bundling OSM-derived map extracts: attribution + ODbL statement required; OSMF tile servers are not a bulk source."
+    },
+    {
+      "id": "S8",
+      "url": "https://opendatacommons.org/licenses/odbl/1-0/",
+      "title": "ODbL v1.0 full text (Open Data Commons)",
+      "pin": "sha256:cdcbc6bd08f482e515b6a4ceabbfd40e33522144ac315a1cb80cfb14a0ebbce5",
+      "exact_locator": "Preamble; Section 1.0 definitions (Database, Derivative Database, Produced Work, Extraction, Re-utilisation, Substantial); Section 2.4 (license covers database, not individual contents); Section 3.0 rights granted. NOTE: capture delivered first 32768 of 51543 bytes; section 4 conditions (share-alike detail) partially beyond capture",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:27.871361+00:00", "http_status": 200, "bytes": 51543, "delivered_bytes": 32768},
+      "applicability": "License obligations for redistributed OSM-derived bundle content; share-alike section wording flagged for full retrieval before distribution (lead L2)."
+    },
+    {
+      "id": "S9",
+      "url": "https://api.github.com/search/issues?q=repo%3AOSGeo%2FPROJ+axis+order+in%3Atitle+type%3Aissue&per_page=5",
+      "title": "GitHub search: PROJ axis-order issues (contains full body of issue #4876)",
+      "pin": "sha256:a8dd5ddf6fe782132e32d3e3d0ecc45c4cc6b7a2ae907a74430243987b8b5ca8",
+      "exact_locator": "items[0] = OSGeo/PROJ issue #4876, created 2026-10-01T09:32:47Z, state OPEN: 'proj_normalize_for_visualization() does not normalise an EngineeringCRS, and Cartesian Grid Offsets ignores its axis order'; reproduction shows transposed results with no error for (northing,easting) EngineeringCRS under always_xy; references prior fixes #3477 (DerivedProjected), #3598 (BoundCRS), #4848; also items[1] issue #2442 (WGS84 axis order changes transformation choice, closed 2020-12-04)",
+      "capture_identity": {"captured_utc": "2026-10-06T06:54:28.750423+00:00", "http_status": 200, "bytes": 34608, "delivered_bytes": 32768},
+      "applicability": "Live failure chain for the brief's axis-order hazard; establishes that normalize-style helpers silently pass through unsupported CRS types."
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/repos/OSGeo/PROJ/pulls/3477",
+      "title": "PROJ PR #3477 'Implement normalizeForVisualization for DerivedProjected' (API metadata)",
+      "pin": "sha256:9005df662e00aab600f5aa78d320ccf7a0df7097ac9af2676fdb553d9c0087ad",
+      "exact_locator": "state closed, merged true, merged_at 2022-11-19T01:29:23Z, merge_commit_sha b4ead8c939ba7c9efa86ae49eb396ba3c0aa3012, merged_by rouault; head sha 24f5d70f2bedbf94db9b4e05dbd66e4c952d6504; changed_files 2, additions 131, deletions 18; body checklist 'Tests added'",
+      "capture_identity": {"captured_utc": "2026-10-06T06:55:17.754885+00:00", "http_status": 200, "bytes": 16383},
+      "applicability": "Fix side of the investigated issue/fix/regression chain for the same defect class as open issue #4876."
+    },
+    {
+      "id": "S11",
+      "url": "https://api.github.com/repos/OSGeo/PROJ/pulls/3477/files?per_page=10",
+      "title": "PROJ PR #3477 file patches (fix + regression tests)",
+      "pin": "sha256:a4479a380a8af9e9fcfd8eaadb6cc66bd12f9cc6d3cbced61d72843051bc2a3f",
+      "exact_locator": "files[0] src/iso19111/crs.cpp: adds DerivedProjectedCRS branches to mustAxisOrderBeSwitchedForVisualization / applyAxisOrderReversal / normalizeForVisualization (patch hunks @@ -893,26; @@ -1076,6; @@ -1084,31); files[1] test/unit/test_crs.cpp: adds TEST(crs, normalizeForVisualization_derivedprojected_operation) and TEST(crs, normalizeForVisualization_derivedprojected) asserting exact PROJ pipeline strings including +proj=axisswap +order=2,1 insertion/removal",
+      "capture_identity": {"captured_utc": "2026-10-06T06:55:18.152396+00:00", "http_status": 200, "bytes": 11272},
+      "applicability": "Concrete fix diff + regression tests; lesson adopted: assert exact transform pipelines and treat normalize passthrough as failure."
+    },
+    {
+      "id": "X1",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "title": "OSMF Tile Usage Policy — FETCH FAILED",
+      "pin": "none (two fetch attempts returned boundary OSError at 2026-10-06T06:54:28Z and 06:55:17Z)",
+      "exact_locator": "unavailable in this stage",
+      "capture_identity": {"captured_utc": null, "http_status": null, "error": "boundary failure: OSError (x2)"},
+      "applicability": "Referenced by S7; exact bulk-extract limits for tile bundling remain UNVERIFIED — see leads.json L1. No claims in proposal.md rest on this page's content."
+    }
+  ],
+  "eligibility_note": "All sources are independently selected public primary documentation/issue trackers fetched during this stage; no campaign, evaluator, other-arm, or prior-cohort material was retrieved or used."
+}

@@ -1,0 +1,844 @@
+{
+  "schema": "er9.independently-verified-P1-key-release.v1",
+  "evaluation_id": "independent-targeted-25",
+  "observed_utc": "2026-10-06T10:28:39.914769+00:00",
+  "phase1_freeze_sha256": "435beb393788971c9ac598e9a9f2bbe9e5696f3abb3c1a086a3a20a37be5ad3e",
+  "verified_files": [
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/reservation.json",
+      "sha256": "1095f955d43af30f2d5c708b71c58c9511f9fca42ebe9fb5917791cae183adf1",
+      "bytes": 713,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/source_start.json",
+      "sha256": "ab6444d39a8e2eb78b8fdd7cdedb0049f1ad27ff47192efbbbf2ff9ceafa9808",
+      "bytes": 358,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/input_pins.json",
+      "sha256": "083a38ebda3b194574f989a6435ed30660980fccef4b541b0c1bffdd454b4d9c",
+      "bytes": 7916,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/supplemental_input_pins.json",
+      "sha256": "f3207f2350749524bacfddfef2c06dc66990533477960b37c8d3b47b03fefb48",
+      "bytes": 22743,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/inherited_witness_pins.json",
+      "sha256": "22f6428bd251618090fde81401c80b9193240a255565193afd7b9b0182ae27fd",
+      "bytes": 6924,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_source_pins.json",
+      "sha256": "d1e232fb576ca5b10549289462f3a32f841a32614dc1925e612bfca63daf4816",
+      "bytes": 7785,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/source_observations.json",
+      "sha256": "322085c01c0615e70ffc4a3110724b973e6087ff1497a3ce95b8e9881a600d41",
+      "bytes": 6356,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase1.judgment.json",
+      "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+      "bytes": 21473,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase1.report.md",
+      "sha256": "fb0ba67c35e0fcdbcec801f0919b11d443c03f29afdc1998630cb427bf70a7bc",
+      "bytes": 16445,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S15.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S12.body",
+      "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "bytes": 114084,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/tvips-related-issue54.json",
+      "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "bytes": 4817,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S2.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S16.body",
+      "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "bytes": 14855,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/tvips-fix.json",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S5.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/ngff-pinned.md",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/rfc7946.html",
+      "sha256": "14a199832db53142aca3a64394418ca4a14951dbd188d253424cc53d3c3a733f",
+      "bytes": 65295,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/manifest.json",
+      "sha256": "bc726f56e558160dd706d582e5295b2210ccedc8f10c338439da7dc78f89028e",
+      "bytes": 2099,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/supplemental_manifest.json",
+      "sha256": "d093e8a19e62963499d98d2317dcd33a99b0218a05ddce865176395fe247b2d1",
+      "bytes": 6026,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S14.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S10.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/rfc7946_manifest.json",
+      "sha256": "49b0be682b379058be253e7c7e0b776d1265429b6e8834c3a247c5e9d3f7d26c",
+      "bytes": 459,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/tvips-test.json",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S4.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S6.body",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "bytes": 45003,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S3.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/S11.body",
+      "sha256": "6331c17cfcec204bd735fcb1f7ae06fc564ff7bfe654f3ed1f74649c7676d6f2",
+      "bytes": 264486,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/qupath-export.html",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/tvips-issue-319.json",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/public_sources/issue54_manifest.json",
+      "sha256": "d70f2f666ef7388f01515fc653e4cb69c2900cb840892f767628ec09ea549dab",
+      "bytes": 473,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/dispatch.json",
+      "sha256": "5e4940cf5cee82320b1fe9fef4b41f60f3331fb4f2c0382355010d92d7a61763",
+      "bytes": 14270,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/integrity-proof.json",
+      "sha256": "e7e4755182ea20814fc9594d526738839eccf0d2fb438328b67fc590e6f8eeb2",
+      "bytes": 1457,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/A/final/leads.json",
+      "sha256": "526f13b760906a29ccc232180a19b5bd066b6dc73807b9ba5c684536f12ca7f0",
+      "bytes": 5437,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/A/final/proposal.md",
+      "sha256": "c2978c174dcd720a8d74b6fc61f653f06d33374fb79e2dc005ab926d1f82eff1",
+      "bytes": 20835,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/A/final/sources.json",
+      "sha256": "68714786217db20cae027a75bad4dc072e0f6eb4abd7602a3663618aa31a3882",
+      "bytes": 11216,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/A/final/witnesses.json",
+      "sha256": "0422f12ba83a00bb6a821091821250e092c3c4d3c0bb67f2244ff1672095076e",
+      "bytes": 8931,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/B/amendment.corrected.diff",
+      "sha256": "acc6695a106921a8e11700dcf35193b432cda70c7fd5e5a3a5dcaff69d61705e",
+      "bytes": 5317,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/B/amendment.diff",
+      "sha256": "49688fb038331bc5e582d69402c45c82a3224ca322774880e6ac25051c22c6b0",
+      "bytes": 5317,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/B/final/leads.json",
+      "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+      "bytes": 4731,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/B/final/sources.json",
+      "sha256": "bec14e032cdb942dabc1921e1534640397ced3f2d232edf1ee39485191e52cd9",
+      "bytes": 10472,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/outputs/B/final/witnesses.json",
+      "sha256": "60a7bebc9df627298bf3c4bc351e23248177839779d3981afc7e2666096fadab",
+      "bytes": 6289,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "fc6caecfa9e77f8884b2618b21c2567cbf746e0067b7c0784dd329740c94cf7c",
+      "bytes": 12018,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "bc0edf51161d97cfee5783f495923169f0b70ebf667b5e166605890c90a89b68",
+      "bytes": 12371,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "4a98f5577818986887c1648c4d76dc54dbf9cd9b2faef911e48d6b327eb13b10",
+      "bytes": 1489,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/targeted-card.json",
+      "sha256": "5b153ca3e7ed641a869da8ad5f7d7c6935cc1fcd66b7c9bce3a6e45af5c1c38b",
+      "bytes": 3723,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-25-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "2cc1967826f50bf7ee0b6ed960503082bffbc64bf8a8e2a7f29d675d861f902f",
+      "bytes": 2231,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/baseline/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "bytes": 38465,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/baseline/critique.md",
+      "sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7",
+      "bytes": 15133,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0022.body",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0026.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0030.body",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0020.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0027.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0010.body",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0016.body",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0017.body",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0013.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0023.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0031.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0032.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/code.py",
+      "sha256": "d090abfc0f08b8d8d90291552af26c7adddda5dfaef31f508df62adcf957d087",
+      "bytes": 490,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/data.json",
+      "sha256": "0508337e5ba77f38cad0b7ce31f7bf29a61975a46e0c5bfad1aed6f740286537",
+      "bytes": 184,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/stdout.bin",
+      "sha256": "263c589c40f79876ecf72e9131097555a03b5a583b085e644a8c650f72eec5a1",
+      "bytes": 148,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/result.source-proof.json",
+      "sha256": "029ea52c8d64950a91cce0c67b8936407e24865e1a6fcba92795eb05fb987d09",
+      "bytes": 2303,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/baseline/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "bytes": 38465,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/baseline/critique.md",
+      "sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7",
+      "bytes": 15133,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0022.body",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0026.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0030.body",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0020.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0027.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0010.body",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0016.body",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0017.body",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0013.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0023.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0031.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0032.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/baseline/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "bytes": 38465,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/baseline/critique.md",
+      "sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7",
+      "bytes": 15133,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0022.body",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0026.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0030.body",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0020.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0027.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0010.body",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0016.body",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0017.body",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0013.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0023.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0031.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/sources/0032.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/code.py",
+      "sha256": "d090abfc0f08b8d8d90291552af26c7adddda5dfaef31f508df62adcf957d087",
+      "bytes": 490,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/data.json",
+      "sha256": "0508337e5ba77f38cad0b7ce31f7bf29a61975a46e0c5bfad1aed6f740286537",
+      "bytes": 184,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/stdout.bin",
+      "sha256": "263c589c40f79876ecf72e9131097555a03b5a583b085e644a8c650f72eec5a1",
+      "bytes": 148,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/A/W4/result.source-proof.json",
+      "sha256": "029ea52c8d64950a91cce0c67b8936407e24865e1a6fcba92795eb05fb987d09",
+      "bytes": 2303,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/baseline/proposal.md",
+      "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+      "bytes": 38465,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/baseline/critique.md",
+      "sha256": "c3b00093877ccf26a2553c9ed7dbfb21bfe79dbdc1e0e7cd0e69cdf34ff15ef7",
+      "bytes": 15133,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0022.body",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0026.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0030.body",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0020.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0027.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0010.body",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0016.body",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0017.body",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0013.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0023.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0031.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-CURRENT-BASELINE-SOURCE-W4-001/B/sources/0032.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-zw6uyd4k/code.py",
+      "sha256": "07bacf9e492b7f0b4d9c7f2bb730df7016dec1d1b04d101e187a5fd292d2ad5c",
+      "bytes": 1081,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-zw6uyd4k/data.json",
+      "sha256": "6e855369b7af1a6d3c45415195c43ae650c19fb9636471ef2bd6b3e781625d42",
+      "bytes": 50,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-zw6uyd4k/stdout.bin",
+      "sha256": "b46266f9c5192b234b28e81b0af1733876af1a21aeccc2b3ecaaeb111765d206",
+      "bytes": 423,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-zw6uyd4k/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-zw6uyd4k/result.source-proof.json",
+      "sha256": "a1cba5084caa0c50356443a2849917b3a4c909c710dabfc2cc44317d870ae85e",
+      "bytes": 2281,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-2ambjtod/code.py",
+      "sha256": "f793df71a823758a791decc451071b8607683911cfdbfcb27faccb583b4ffb9b",
+      "bytes": 882,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-2ambjtod/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-2ambjtod/stdout.bin",
+      "sha256": "efc58e7d4a914db358a6246d052aa5a12f08b7450072a191c8f6c4f894e90671",
+      "bytes": 190,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-2ambjtod/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-2ambjtod/result.source-proof.json",
+      "sha256": "0ab636c6902b9f29168103afbb25a185cc1b671242e2fe0b380060ccdc936ef5",
+      "bytes": 2281,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-gw87zrsh/code.py",
+      "sha256": "b732ae4c1b561fdac4b145029af46bc838c08a8fd6e886907d12b588cada485a",
+      "bytes": 2050,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-gw87zrsh/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-gw87zrsh/stdout.bin",
+      "sha256": "dbc93ac5c8cd384f080572e747b141590a887827d7d024748c7cc6c237fa375c",
+      "bytes": 295,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-gw87zrsh/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "readonly": true
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD25-REQUESTED-INHERITED-W1-W3-001/exec-gw87zrsh/result.source-proof.json",
+      "sha256": "2b89f664801453b83d2b2f5f41772857b7e04a7de90404379329935e5d1d386e",
+      "bytes": 2281,
+      "readonly": true
+    }
+  ],
+  "key_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/private/INDEPENDENT-TARGETED-25_PHASE2_KEY_001.json",
+    "sha256": "889237558d6da9a732b486fae0d1923b715d76376980d57242f778b7a063850d"
+  },
+  "literal_phase2_deadline_utc": "2026-10-06T10:37:11.365486Z",
+  "original_whole_deadline_utc": "2026-10-06T10:37:54.674151Z",
+  "scientific_content_read": "NONE hashonly",
+  "reset": false
+}

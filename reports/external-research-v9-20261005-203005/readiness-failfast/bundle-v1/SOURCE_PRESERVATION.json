@@ -1,0 +1,50 @@
+{
+  "all_original_pinned_files_unchanged": {
+    "README.md": true,
+    "RESOURCE_CONTRACT.json": true,
+    "clock_binding.py": true,
+    "component_gate.py": true,
+    "component_guard.py": true,
+    "external_release.py": true,
+    "glm_stage.py": true,
+    "native_guard.py": true,
+    "native_support.py": true,
+    "pipe_bridge.py": true,
+    "pipe_proxy.py": true,
+    "profile.py": true,
+    "stage_worker.py": true,
+    "task_fragment.py": true
+  },
+  "component_guard_preservation": "original caps, placement, RuntimeMax, owner EOF, signal handling and finally/recursive quiet code identical after removing ownership-intent addition",
+  "exact_inverse_additions_restore_predecessor_files": [
+    "glm_stage.py",
+    "component_guard.py",
+    "profile.py"
+  ],
+  "native_driver_preservation": "all RPC/model/Goal/response/clock/cleanup logic identical after removing declared readiness additions",
+  "no_model_or_native_Goal_calls": 0,
+  "observed_utc": "2026-10-06T10:28:25.088250+00:00",
+  "predecessor_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+    "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+  },
+  "schema": "er9.glm.readiness-source-preservation.v1",
+  "unchanged_enforcement_functions": {
+    "close_components": "a2ed5c0657197141eb0fb78a4f3aa493a7776c5e5d8ad192ca537ead4d1d406e",
+    "component_records_quiet": "4ae173464856d1b5dbfe9b3fc2192d91badc03a880e02b4465cb505e9f1e8164",
+    "original_clock": "75e7175ee448dd84de68aab31835ebda2e5c3f8c02d19accd82be7a04192f5e2",
+    "preactivation_proof": "fd18c187ddd18c241736a44bcd7608ce3ee0300b3f646f63cebc79474827d1c8",
+    "tool_profile": "351efd262fdf37fa56ae761072f28ef20ddec860ff702233e99c95aed8b99107"
+  },
+  "unchanged_runtime_files": {
+    "clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+    "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+    "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+    "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+    "task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+  }
+}

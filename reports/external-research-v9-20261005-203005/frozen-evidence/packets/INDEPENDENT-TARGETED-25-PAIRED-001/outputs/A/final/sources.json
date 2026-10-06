@@ -1,0 +1,132 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "catalog_note": "Curated sources cited in proposal.md. Capture hashes identify supplied response bodies; moving branches are pinned by capture identity, not treated as immutable releases.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF 0.5 specification",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "pin": "ome/ngff-spec commit d9164040dd61b3e4688494de1a58a69251b13f24; v0.5, 2025-01-28",
+      "locator": "Storage format; axes metadata; coordinateTransformations; multiscales; labels",
+      "capture": {"capture_id":"f6ab4397d26f460d957dc7603fbf08b9","captured_utc":"2026-10-05T21:16:16Z","sha256":"7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0","bytes":32266,"complete":true,"provided_as":"inputs/source_context/0022.body"},
+      "applicability": "Axis and scale/translation interchange vocabulary; does not encode an arbitrary affine in multiscales."
+    },
+    {
+      "id": "S2",
+      "title": "napari documentation: Image layer",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, capture hash is pin of record",
+      "locator": "Image data and NumPy-like arrays; multiscale images; multichannel images; adjusting contrast limits",
+      "capture": {"capture_id":"47b6fd92a2df40a6b9a5ef3ea6f7cc8a","captured_utc":"2026-10-05T21:15:44Z","sha256":"2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963","bytes":20309,"complete":true,"provided_as":"inputs/source_context/0020.body"},
+      "applicability": "Viewer architecture and documented display/lazy-array behavior; not a release-specific performance guarantee."
+    },
+    {
+      "id": "S3",
+      "title": "napari documentation: Scale and unit-aware rendering",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, capture hash is pin of record",
+      "locator": "Scale and units live on layers; world transform; unit labels and scale bar",
+      "capture": {"capture_id":"911f1a111be642d9a525568f9ea56e4a","captured_utc":"2026-10-05T21:16:38Z","sha256":"ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11","bytes":4294,"complete":true,"provided_as":"inputs/source_context/0026.body"},
+      "applicability": "Per-layer data-to-world and unit presentation precedent."
+    },
+    {
+      "id": "S4",
+      "title": "napari documentation: Shapes layer",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "pin": "napari/docs main, captured 2026-10-05; moving branch, capture hash is pin of record",
+      "locator": "Shapes data; per-shape properties; 3D rendering and editing",
+      "capture": {"capture_id":"6db33ecab474458db9f627cf7a135203","captured_utc":"2026-10-05T21:16:39Z","sha256":"d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e","bytes":24597,"complete":true,"provided_as":"inputs/source_context/0027.body"},
+      "applicability": "Vector annotation representation and nD editing constraints."
+    },
+    {
+      "id": "S5",
+      "title": "tifffile README: Read and write TIFF files",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "pin": "README states tifffile 2026.9.20; master capture 2026-10-05",
+      "locator": "Supported formats; Notes; examples for memmap, Zarr-backed tile/series access, ImageJ and OME metadata",
+      "capture": {"capture_id":"820a5a9673af4adaa05c9da2031ae009","captured_utc":"2026-10-05T21:16:17Z","sha256":"cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48","response_bytes":32898,"delivered_bytes":32768,"complete":false,"provided_as":"inputs/source_context/0023.body"},
+      "applicability": "Reader mechanism/support-boundary evidence. Supplied capture tail is missing; this is not a benchmark or guarantee for candidate files."
+    },
+    {
+      "id": "S6",
+      "title": "tifffile CHANGES.rst release history",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "pin": "master captured 2026-10-05; file hash is capture pin",
+      "locator": "2026.3.3 entry for #319 and 2020.8.13/2021.1.14 metadata notes; only cited entries in delivered prefix",
+      "capture": {"capture_id":"ec24d46c000041ec8ba96ce6b742a6a2","captured_utc":"2026-10-05T21:13:36Z","sha256":"fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e","response_bytes":45003,"delivered_bytes":32768,"complete":false,"provided_as":"inputs/source_context/0006.body"},
+      "applicability": "Release association and historical metadata precedence."
+    },
+    {
+      "id": "S7",
+      "title": "tifffile issue #319: TVIPS PixelSizeX change report",
+      "url": "https://github.com/cgohlke/tifffile/issues/319",
+      "pin": "Issue #319; opened 2026-02-26, closed 2026-03-03",
+      "locator": "Issue body reproduction comparing tifffile 2026.2.20 and 2026.2.24 outputs for PixelSizeX",
+      "capture": {"capture_id":"174a2677b4974899b581e6ee07336961","captured_utc":"2026-10-05T21:14:01Z","sha256":"0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692","bytes":3952,"complete":true,"format":"GitHub API JSON","provided_as":"inputs/source_context/0010.body"},
+      "applicability": "Failure report and reported outputs; does not alone establish a repair."
+    },
+    {
+      "id": "S8",
+      "title": "tifffile fix commit edede6002c817f056d75125ade0b20332d549cca",
+      "url": "https://github.com/cgohlke/tifffile/commit/edede6002c817f056d75125ade0b20332d549cca",
+      "pin": "Commit edede6002c817f056d75125ade0b20332d549cca, 2026-03-03",
+      "locator": "Diff in read_tvips_header removes nm-to-m conversion; issue link in code; version bump to 2026.3.3",
+      "capture": {"capture_id":"d98ef66b18794ac185c756b87ce37766","captured_utc":"2026-10-05T21:15:15Z","sha256":"fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f","bytes":15123,"complete":true,"format":"GitHub API commit JSON with diff","provided_as":"inputs/source_context/0016.body"},
+      "applicability": "Corrective code record; commit message is generic, linkage supported by code comment and surrounding records."
+    },
+    {
+      "id": "S9",
+      "title": "tifffile regression-test commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "url": "https://github.com/cgohlke/tifffile/commit/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "pin": "Commit 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938, 2026-03-03; parent of S8",
+      "locator": "tests/test_tifffile.py: test_issue_tvips_pixelsize; asserted PixelSizeX and PhysicalPixelSizeY values",
+      "capture": {"capture_id":"744343a38392409d8b360a9308828c88","captured_utc":"2026-10-05T21:15:16Z","sha256":"c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c","bytes":18687,"complete":true,"format":"GitHub API commit JSON with diff","provided_as":"inputs/source_context/0017.body"},
+      "applicability": "Regression assertions; associated fixture is described as unavailable in public repository."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile release v2026.3.3 commit sequence",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "pin": "Release commit 503cb4eb74dd28a6acc36a0e4624ba9c2001e021, 2026-03-03",
+      "locator": "Sequence includes test 7d9eaedd, fix edede600, changelog 8c91499, release 503cb4eb; release message v2026.3.3",
+      "capture": {"capture_id":"2d0da64bb8a749f28bf0fae816d19089","captured_utc":"2026-10-05T21:14:54Z","sha256":"a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a","bytes":12844,"complete":true,"provided_as":"inputs/source_context/0013.body"},
+      "applicability": "Commit/release applicability; no claim that every vendor file/version is covered."
+    },
+    {
+      "id": "S12",
+      "title": "QuPath CHANGELOG.md",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "pin": "QuPath main captured 2026-10-05; docs stable release noted as 0.7.0; cited entries are in captured ranges",
+      "locator": "Entries for #512, #528, #543/#568, #648, #1252, #1516, #1668, #1958",
+      "capture": {"capture_id":"5e247c657f3e40e696e1308cc6d8f6e3","captured_utc":"2026-10-05T21:17:01Z","sha256":"c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55","bytes":114084,"read_ranges":["0-32768","65536-114084"],"complete_for_cited_ranges":true,"provided_as":"inputs/source_context/0029.body"},
+      "applicability": "Secondary evidence of project durability, relocation, calibration, and export failure/fix history; changelog records do not substitute for implementation-level verification."
+    },
+    {
+      "id": "S13",
+      "title": "QuPath 0.7.0 docs: Exporting annotations",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath 0.7.0 stable documentation, captured 2026-10-05",
+      "locator": "Units and origin admonition; GeoJSON limitations; labeled-image overlap/order behavior",
+      "capture": {"capture_id":"1183d0f02ff24075a8c3ddc7b550071a","captured_utc":"2026-10-05T21:17:26Z","sha256":"df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420","response_bytes":40941,"delivered_bytes":32768,"complete":false,"provided_as":"inputs/source_context/0030.body"},
+      "applicability": "Documents QuPath's pixel-unit/full-resolution/top-left origin statement and specific export losses; does not define center-versus-edge offset."
+    },
+    {
+      "id": "S14",
+      "title": "QuPath 0.7.0 docs: Project structure",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath 0.7.0 stable documentation, captured 2026-10-05",
+      "locator": "project.qpproj entries, serverBuilder/URI, entryID and data directory; per-machine project copies on shared drives",
+      "capture": {"capture_id":"e324d5433ba94511a95e9741015b953a","captured_utc":"2026-10-05T21:17:27Z","sha256":"d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f","bytes":12770,"complete":true,"provided_as":"inputs/source_context/0031.body"},
+      "applicability": "Project layout and relocation precedent, not proof of this proposal's durability."
+    },
+    {
+      "id": "S15",
+      "title": "Linux rename(2) manual page, man-pages 6.19",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "pin": "man-pages 6.19, page dated 2026-02-08, captured 2026-10-05",
+      "locator": "DESCRIPTION atomic replacement; EXDEV; NFS caveat in BUGS",
+      "capture": {"capture_id":"bb417749f1884a8c9f7f30cc5ebc2cdb","captured_utc":"2026-10-05T21:18:18Z","sha256":"8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57","bytes":23571,"complete":true,"provided_as":"inputs/source_context/0032.body"},
+      "applicability": "POSIX/Linux rename semantics and stated NFS limitation; not a guarantee about SMB or all OS/filesystem combinations."
+    }
+  ]
+}

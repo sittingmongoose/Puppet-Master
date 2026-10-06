@@ -1,0 +1,152 @@
+{
+  "catalog_version": "stage-final/1.0",
+  "assembled_from": "frozen supplied candidate source catalog and captures; no claim of autonomous discovery in this stage",
+  "capture_date_utc": "2026-10-05",
+  "notes": "Pins and capture identities are inherited from the supplied source catalog/index. Moving branch and GitHub API responses are pinned by captured-body SHA-256. Capture status is historical to the capture date. Cited facts do not by themselves establish runtime behavior.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "DuckDB issue search: null_padding and issue #12596",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+null_padding+in:title&per_page=10",
+      "pin": "capture sha256:e38b15690edbd1170f96dfc8cd5622fa975c32347916e1942ce92f359322ad12",
+      "locator": "Search items[3], issue #12596 body: short rows with trailing delimiter, explicit schema and null_padding, parallel=false; reported DuckDB 1.0.0 and reproduced label. Items[6], PR #6765 body, states its null_padding default; default discrepancy remains unresolved against S2.",
+      "capture_identity": {"capture_id": "b5fc08bfd24f4ac4b5a01b788534e258", "captured_utc": "2026-10-05T21:51:35Z", "body_sha256": "e38b15690edbd1170f96dfc8cd5622fa975c32347916e1942ce92f359322ad12"},
+      "applicability": "Reported issue reproduction and option motivation only; search response is not an independent execution."
+    },
+    {
+      "id": "S2",
+      "title": "DuckDB docs: Reading Faulty CSV Files",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "pin": "content sha256:12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad (moving main branch)",
+      "locator": "Structural Errors; Anatomy of a CSV Error (default stop-and-throw and auto-detected settings); Using ignore_errors (projection-pushdown caveat); Retrieving Faulty CSV Lines; Parameters/store_rejects.",
+      "capture_identity": {"capture_id": "9d16285005d740ba9a34b29ef579d94c", "captured_utc": "2026-10-05T21:54:52Z", "body_sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad"},
+      "applicability": "CSV error handling and reject-ledger precedent; does not establish 5 GB performance or behavior for NDJSON/Parquet."
+    },
+    {
+      "id": "S3",
+      "title": "DuckDB docs: Concurrency",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/connect/concurrency.md",
+      "pin": "content sha256:f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f (moving main branch)",
+      "locator": "Single Process; Multiple Processes; Troubleshooting > File locks, including warning about shared/network directories.",
+      "capture_identity": {"capture_id": "c5c3a688a12d4e379d46547e8344112e", "captured_utc": "2026-10-05T21:54:53Z", "body_sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f"},
+      "applicability": "Concurrency and locking design context; project-level locking remains a product choice."
+    },
+    {
+      "id": "S4",
+      "title": "Jupyter nbformat v4.5 JSON schema",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "pin": "schema sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a; supplied listing reports shared git blob 670bbd35f343f0d1324b8e6056ba42420f7ec6aa for v4 and v4.5 schemas",
+      "locator": "Cell array; cell IDs; code-cell execution_count integer or null (null means not run); saved outputs; kernelspec metadata. Schema specifies document shape, not a complete kernel event history or replay semantics.",
+      "capture_identity": {"capture_id": "00fac44f69fa4da68621633d3cab87ec", "captured_utc": "2026-10-05T21:52:09Z", "body_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"},
+      "applicability": "Interchange/document facts; limits on historical execution recovery are an inference from the schema's per-cell fields."
+    },
+    {
+      "id": "S5",
+      "title": "marimo README",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/README.md",
+      "pin": "content sha256:d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca (moving main branch)",
+      "locator": "Introduction: dependent cells run or become stale; pure Python storage; deterministic order based on variable references rather than page position.",
+      "capture_identity": {"capture_id": "b96ca39e9df943c490bd24df071266fa", "captured_utc": "2026-10-05T21:51:36Z", "body_sha256": "d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca"},
+      "applicability": "Independent reactive-runtime precedent; not adopted as the project document format."
+    },
+    {
+      "id": "S6",
+      "title": "marimo docs: Running cells / reactivity",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/guides/reactivity.md",
+      "pin": "content sha256:e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f (moving main branch)",
+      "locator": "Static refs/defs analysis and DAG; lazy stale marking; variable mutation not tracked; interrupt cancels queued dependents; unique global names.",
+      "capture_identity": {"capture_id": "b93bf458d9dc41328c75cc3e7262e02b", "captured_utc": "2026-10-05T21:52:47Z", "body_sha256": "e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f"},
+      "applicability": "Static impact analysis mechanism and its mutation limitation."
+    },
+    {
+      "id": "S9",
+      "title": "DuckDB issue #12596 timeline",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/12596/timeline?per_page=100",
+      "pin": "capture sha256:453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489",
+      "locator": "Reproduced label dated 2024-06-19; connected PR #12679 and issue closure dated 2024-06-24.",
+      "capture_identity": {"capture_id": "ce4cfbafcf9f412791d0fb2b9a770dbd", "captured_utc": "2026-10-05T21:52:46Z", "body_sha256": "453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489"},
+      "applicability": "Issue-to-PR linkage and reported reproduction label, not a candidate test run."
+    },
+    {
+      "id": "S10",
+      "title": "DuckDB PR #12679 metadata",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/12679",
+      "pin": "merge commit 2532c30fa649ac6296c7ab2b55976b4337ff46ce; PR head fa19250f8bf06b65be937178b252fc21a98d4fb9; base duckdb:main",
+      "locator": "PR title, merged_at 2024-06-24T17:12:33Z, issue-fix relationship; three files changed.",
+      "capture_identity": {"capture_id": "d257f27e8d0a4910ada81712fce86c89", "captured_utc": "2026-10-05T21:53:13Z", "body_sha256": "a8070fb9adc318735a76fabec97ce756542dffb69ecd98c8b9e877d5a15eadc3"},
+      "applicability": "Merge metadata; does not by itself prove a released version contains the patch."
+    },
+    {
+      "id": "S11",
+      "title": "DuckDB PR #12679 files and patches",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/12679/files?per_page=100",
+      "pin": "capture sha256:31d9efa2ad145366ac537e1e9036e59932b2d8600ae20ab5a18ec0cc51cd5825; patches refer to head fa19250f8bf06b65be937178b252fc21a98d4fb9",
+      "locator": "Patch to string_value_scanner.cpp adds `result.chunk_col_id > 0` guard; fixture data/csv/bug_12596.csv; test/sql/copy/csv/test_12596.test asserts two rows with parallel and parallel=false.",
+      "capture_identity": {"capture_id": "0a0dcc8289a046ab92f2ad65146e2a74", "captured_utc": "2026-10-05T21:53:14Z", "body_sha256": "31d9efa2ad145366ac537e1e9036e59932b2d8600ae20ab5a18ec0cc51cd5825"},
+      "applicability": "Patch mechanism and regression-test content; no test execution receipt."
+    },
+    {
+      "id": "S12",
+      "title": "DuckDB v1.0.0 tag commit API response",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/v1.0.0",
+      "pin": "commit 1f98600c2cf8722a6d2f2d805bb4af5e701319fc; capture sha256:695c4faccba61e5a1b2ea492312c2215c729894485362988450a9343629b4f94",
+      "locator": "Commit metadata and authored date 2024-05-29, before PR #12679 merge date.",
+      "capture_identity": {"capture_id": "4b8b8f7ee312463784f240d9e902ed09", "captured_utc": "2026-10-05T21:53:14Z", "body_sha256": "695c4faccba61e5a1b2ea492312c2215c729894485362988450a9343629b4f94"},
+      "applicability": "Pre-fix date boundary only; not behavior test evidence."
+    },
+    {
+      "id": "S13",
+      "title": "DuckDB v1.1.0 tag commit API response",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/v1.1.0",
+      "pin": "commit fa5c2fe15f3da5f32397b009196c0895fce60820; capture sha256:837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d",
+      "locator": "Tag commit metadata dated 2024-09-08; captured commit response has files for that commit but does not show PR #12679 ancestry. The supplied research notes also identify buffer-pool eviction and SetLimit in the v1.1.0 source line; this is not an operator-level out-of-core benchmark.",
+      "capture_identity": {"capture_id": "30a71717ae544c7cbc59c759916acd49", "captured_utc": "2026-10-05T21:53:15Z", "body_sha256": "837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d"},
+      "applicability": "Later-tag date and bounded-memory mechanism context only; exact release inclusion of #12679 remains unresolved."
+    },
+    {
+      "id": "S14",
+      "title": "Papermill README",
+      "url": "https://raw.githubusercontent.com/nteract/papermill/master/README.md",
+      "pin": "content sha256:2eee9aa7da7e9851c7dc7b36273a8cee5a2d3b6dc4d3c5699407d9bb1121621e (moving master branch)",
+      "locator": "Notebook parameterization/execution; injected-parameters cell; execute_notebook(input, output) separate-output pattern.",
+      "capture_identity": {"capture_id": "9db338a5fa0044eda2d02add3c06d0d0", "captured_utc": "2026-10-05T21:51:37Z", "body_sha256": "2eee9aa7da7e9851c7dc7b36273a8cee5a2d3b6dc4d3c5699407d9bb1121621e"},
+      "applicability": "Separate replay artifact precedent; not a guarantee of LabBook runtime semantics."
+    },
+    {
+      "id": "S15",
+      "title": "Python Developer's Guide versions policy and rendered page",
+      "url": "https://raw.githubusercontent.com/python/devguide/main/versions.rst",
+      "pin": "versions.rst sha256:f2fb384bd78bc6667372bc0792ca201ea5c81253c13b50264233c502a937757c; rendered page sha256:4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c",
+      "locator": "versions.rst: end-of-life five years after release; rendered capture captured 2026-10-05 and identifies Python 3.16 main branch as future.",
+      "capture_identity": {"capture_id": "9530c002c2c948dfab7923546b927128"},
+      "applicability": "Support policy, not exact per-minor lifecycle dates."
+    },
+    {
+      "id": "S16",
+      "title": "endoflife.date Python API snapshot",
+      "url": "https://endoflife.date/api/python.json",
+      "pin": "capture sha256:cad1d97926cff0ce8f110242733f4376c7a7ff65670434c8f204bf6fee4c54e6",
+      "locator": "Python 3.10 EOL 2026-10-01; 3.11/3.12/3.13 lifecycle dates in captured records; 3.14 release/EOL fields.",
+      "capture_identity": {"capture_id": "4df07dc4957f4947b80c1df855504094", "captured_utc": "2026-10-05T21:54:52Z", "body_sha256": "cad1d97926cff0ce8f110242733f4376c7a7ff65670434c8f204bf6fee4c54e6"},
+      "applicability": "Aggregator snapshot for policy planning; recheck primary lifecycle status before release."
+    },
+    {
+      "id": "S17",
+      "title": "PEP 723: Inline script metadata",
+      "url": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0723.rst",
+      "pin": "content sha256:17de64ccc1b03003dcd031abb0372c6c946ae9bbdc802ae3af7ede4437507e59; supplied capture contains first 32768 bytes",
+      "locator": "Final PEP; `# /// script` metadata with dependencies and requires-python; security implications discuss auto-installing untrusted metadata.",
+      "capture_identity": {"capture_id": "3bc3d21d9ad24ba1819a80d3a7393290", "captured_utc": "2026-10-05T21:54:53Z", "body_sha256": "17de64ccc1b03003dcd031abb0372c6c946ae9bbdc802ae3af7ede4437507e59"},
+      "applicability": "Inline script metadata convention; not a notebook environment lock or runtime."
+    },
+    {
+      "id": "S21",
+      "title": "marimo issue search capture: stale-output and reload reports",
+      "url": "https://api.github.com/search/issues?q=repo:marimo-team/marimo+stale+in:title&per_page=10",
+      "pin": "capture sha256:82f775d151d93285a8dba4ffc363e7c9454747d80b2ce609d7a4f4db95e681b6",
+      "locator": "Search item #9881 issue body describes cached stale error after reconnect and absent live-vs-cached indication; #3140 requests avoiding stale on whitespace/comment edits; #10912 PR is marked merged 2026-10-02 and describes generation-based protection from re-staling rerun cells; #10915 has merged_at null in this capture. Search response is not a complete issue timeline or release matrix.",
+      "capture_identity": {"capture_id": "ac8fe25b4f6f4285ae74d0d2653804f2", "captured_utc": "2026-10-05T21:52:11Z", "body_sha256": "82f775d151d93285a8dba4ffc363e7c9454747d80b2ce609d7a4f4db95e681b6"},
+      "applicability": "Reported failure modes and captured PR state only; issue status may have changed and no general product verdict follows."
+    }
+  ]
+}

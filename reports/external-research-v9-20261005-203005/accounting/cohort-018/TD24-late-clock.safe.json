@@ -1,0 +1,20 @@
+{
+  "evaluator_provider_tokens_billing": "UNKNOWN",
+  "extra_logical_or_pass_credit": false,
+  "later_than_primary_usage_capture": true,
+  "original_follow_remaining_clock_flag_reference": true,
+  "owner_observed_utc": "2026-10-06T10:15:41.043065+00:00",
+  "phase2_literal_inclusive_through_handoffs_seconds": 601.782969944,
+  "phase2_overrun_seconds": 1.782969944,
+  "phase2_within600": false,
+  "primary018_usage_capture_unchanged": true,
+  "qualified_clock_rule": "ObservedP2 negative headroom and explicitfalsewithin600 govern P2qualification. Aremaining-clock followflag is not proof P2compliance; enclosingwhole headroom is a separate scope. Nested source/P2/whole not added. No sourcegrade read/rewrite, no reset or candidatecharge.",
+  "schema": "er9.accounting.late-closed-clock-qualification.v1",
+  "source_elapsed_seconds": 301.892997997,
+  "source_pin": {
+    "path": "evaluation/independent-targeted-24/completion_clock_receipt.json",
+    "sha256": "183bbb8e8f7108950ca289589d6bf4f69eab81455d3f276fa4c935a080ecd954"
+  },
+  "whole_elapsed_seconds": 903.675967941,
+  "whole_within1800": true
+}

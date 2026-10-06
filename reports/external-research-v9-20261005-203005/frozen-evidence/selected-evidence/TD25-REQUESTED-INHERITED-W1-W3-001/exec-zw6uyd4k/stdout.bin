@@ -1,0 +1,8 @@
+float64 stored px : 104857.6
+float32 stored px : 104857.6015625 err_px = 0.001562499994179234
+physical um f64   : 6815.744000000001
+physical um f32   : 6815.74365234375 err_um = 0.0003476562505966285
+roundtrip f32 px  : 104857.6015625 err_px = 0.001562499994179234
+json roundtrip exact: True
+json text: {"x_um": 6815.744000000001, "y_px": 104857.6}
+float32 value in json: {"x_um": 6815.74365234375} -> reloaded equal: True

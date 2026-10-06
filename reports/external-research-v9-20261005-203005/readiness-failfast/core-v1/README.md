@@ -1,0 +1,9 @@
+This is a prospective actual runner release. Select the exact PIN worker and glm_resource version; use its full runtime_source_pins. The same actual GLM5.3Flash/max/native Goal, tools1.5 builder, whole2304MiB private envelope, component caps, Swap0, Task/input/factor/permissions and original birth/action/cleanup clocks are retained.
+
+A private immutable ownership intent is written by each component guard before its existing unit launch. The driver uses guard PIDs from the native Popen and MCP Bridge.proc to join exact unit/component/profile SHA/birth/stop. The existing readiness loop now raises OwnedComponentReadinessTerminated promptly only for a positive final unready terminal-and-quiet component record. Missing/foreign/unknown/future facts retain the original wait and stop behavior. The unchanged preactivation kernel and placement proof still runs before Goal submission.
+
+The exception exposes safe pre_goal_readiness_failure metadata and UNKNOWN backend cause/billing. This class, goal_activated:false, a missing submission or an empty usage export alone do not establish historical actual Goal-start0 or free execution. Existing cleanup, settlement, original caps and external release remain unchanged.
+
+16 zero-inference tests pass for this actual directory, including a production g.run fixture with a synthetic Protocol, no native CLI/provider/account access and no Goal set reached. The kernel enforcement functions were not re-probed: their source identity to the previously verified predecessor is proved. Nine runtime files and five enforcement functions are byte-identical; exact inverse additions restore the other three modified runtime files. Old and live files remain unchanged.
+
+Ops alone may integrate this frozen successor into explicitly unentered future stages with complete prospective closures. This release neither admits jobs nor authorizes an automatic candidate retry.

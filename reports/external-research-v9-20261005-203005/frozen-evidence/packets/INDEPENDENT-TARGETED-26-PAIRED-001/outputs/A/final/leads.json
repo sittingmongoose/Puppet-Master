@@ -1,0 +1,75 @@
+{
+  "leads_version": "stage-final/1.0",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Production sandbox primitive and supported platforms",
+      "status": "unverified",
+      "detail": "The admitted executor demonstrates an isolated component-check pattern. The production OS mechanism, filesystem mediation, network policy enforcement, escape resistance and Windows behavior were not selected or tested.",
+      "next_step": "Choose a per-platform isolation design and run the V4 escape/resource/permission validation suite before claiming support."
+    },
+    {
+      "id": "L2",
+      "title": "DuckDB #12596 first released fix version",
+      "status": "unresolved",
+      "detail": "Captured issue/timeline/PR patch/test establish report, merged patch and regression test. v1.0.0 commit date predates merge and v1.1.0 tag date postdates merge, but supplied captures do not establish tag ancestry or first fixed release; 1.0.x applicability is unknown.",
+      "next_step": "Check ancestry of merge commit 2532c30fa649ac6296c7ab2b55976b4337ff46ce against each release tag and run the regression fixture on pinned release artifacts."
+    },
+    {
+      "id": "L3",
+      "title": "DuckDB 5 GB behavior for global operators",
+      "status": "unverified",
+      "detail": "Captured buffer-pool code and CSV docs do not prove bounded RSS or successful spilling for full sort, exact distinct or high-cardinality joins on an 8-core/16 GB machine.",
+      "next_step": "Run proposed V2 with peak RSS, temporary disk, cancellation, and correctness measurements for CSV/NDJSON/Parquet."
+    },
+    {
+      "id": "L4",
+      "title": "Historic execution order for imported notebooks",
+      "status": "unavailable_without_journal",
+      "detail": "The saved nbformat document has per-cell latest execution_count/output fields, not the full sequence of repeated executions or kernel mutations. Historical order is unverified unless an event journal accompanies the project.",
+      "next_step": "Persist an append-only LabBook event log for new runs; keep legacy/imported results unverified and test this behavior under V1."
+    },
+    {
+      "id": "L5",
+      "title": "Completeness of static dependency analysis",
+      "status": "unverified",
+      "detail": "The marimo reference describes refs/defs and says mutations are not tracked. Arbitrary Jupyter reflection, dynamic imports, hidden files and external services can evade a static graph.",
+      "next_step": "Define detectable unsupported constructs and broad invalidation fallback; exercise them in real-kernel V1."
+    },
+    {
+      "id": "L6",
+      "title": "Current status of marimo reconnect/staleness issues",
+      "status": "historical_capture_only",
+      "detail": "The supplied issue-search capture is dated 2026-10-05 and not a full issue timeline/release matrix. #9881 is open in that capture; #10912 is reported merged; #10915 has no merged_at there. Later states may differ.",
+      "next_step": "Recheck primary issue/PR timelines and released versions before making a current upstream-status claim. The design treats the reported risk as motivation, not a universal runtime verdict."
+    },
+    {
+      "id": "L7",
+      "title": "DuckDB null_padding version default discrepancy",
+      "status": "unresolved",
+      "detail": "The frozen candidate catalog records a PR description saying the option defaults true while the captured current-doc error sample prints null_padding=0. Default behavior is version-dependent or unclear in this evidence.",
+      "next_step": "Pin schema and parser options explicitly; if defaults matter, test exact release versions with a short-row fixture."
+    },
+    {
+      "id": "L8",
+      "title": "Filesystem durability and atomic replacement across platforms",
+      "status": "unverified",
+      "detail": "Temp-file, fsync, atomic rename and torn-journal recovery are product choices; guarantees differ across filesystems and operating systems and were not executed here.",
+      "next_step": "Run V3 crash injection and recovery tests on each claimed local filesystem/platform."
+    },
+    {
+      "id": "L9",
+      "title": "Notebook dependency metadata and lock portability",
+      "status": "design_follow_up",
+      "detail": "PEP 723 specifies inline-script metadata, not a complete notebook dependency or cross-platform environment lock. The proposal keeps notebook/project environment binding in a separate lock and uses PEP 723 only for script export.",
+      "next_step": "Choose lock format, platform-marker semantics and offline environment rebuild policy; test reopen on a second machine."
+    },
+    {
+      "id": "L10",
+      "title": "Multiwriter collaboration",
+      "status": "optional_future",
+      "detail": "The brief does not require hosted real-time collaboration. Current choice is one writer per project, with read-only secondary access.",
+      "next_step": "Revisit only if concurrent editing becomes a real requirement; first re-evaluate the engine's current supported multi-process/catalog modes."
+    }
+  ]
+}

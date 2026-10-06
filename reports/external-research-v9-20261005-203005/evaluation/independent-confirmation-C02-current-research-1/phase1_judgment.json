@@ -1,0 +1,502 @@
+{
+  "schema": "er9.independent-current-research-phase1-judgment.v1",
+  "eval_id": "independent-confirmation-C02-current-research-1",
+  "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+  "scope": "CURRENT_RESEARCH_ONLY",
+  "designated_final": {
+    "A": null,
+    "B": null
+  },
+  "outcomes": {
+    "A": "FAIL_SCREEN",
+    "B": "FAIL_SCREEN"
+  },
+  "outcome_definition": "Decisive source-grounded screening judgment on the selected current research outputs. Not a full review, not equality of quality, and not a pipeline or final outcome.",
+  "matched_screens": [
+    "H2 coordinate acceptance/validation claims must match the applicable primary-source contract",
+    "H2 record identity and merge source claims must preserve missing/ambiguous identity honestly",
+    "H2 save/share/reopen source claims must honor checkpoint/committed-state conditions",
+    "Exact research artifact presence and real implementation/fix/test source duties are checked for both"
+  ],
+  "criteria_counts": {
+    "released_H2_obligations": 10,
+    "common_dimensions": 8,
+    "critical_card_duties": 3
+  },
+  "not_applicable": [
+    "base_A_B_12",
+    "base_A_B_important5",
+    "diagnostic_target3"
+  ],
+  "findings": [
+    {
+      "id": "A-F01",
+      "alias": "A",
+      "severity": "MAJOR",
+      "kind": "incorrect_normalization_acceptance_rule",
+      "decisive_screen": true,
+      "obligations": [
+        "H2-02",
+        "H2-09"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6"
+      ],
+      "candidate_locator": {
+        "input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/C02-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/proposal.md",
+          "sha256": "6e9fa7b95874369c6a4342981bfa1be9d279c3d4509c5575b55686392faf2e6a",
+          "bytes": 26669
+        },
+        "section": "5.3",
+        "lines": [
+          321,
+          325
+        ]
+      },
+      "candidate_claim": "An unchanged CRS object returned by normalization is treated as validation failure.",
+      "source_finding": "The cited PROJ implementation swaps axes only when its direction test requires it; for an already east/north or longitude/latitude CRS it legitimately returns the original CRS object. The same conditional no-op remains in PROJ 9.8.1. Unchanged identity does not establish a failed normalization.",
+      "consequence": "The proposed guard rejects supported, correctly ordered inputs, including ordinary east/north projected CRSs. This contradicts the stated support boundary and is a consequential error in the coordinate acceptance contract.",
+      "evidence": [
+        {
+          "id": "E05",
+          "url": "https://raw.githubusercontent.com/OSGeo/PROJ/24f5d70f2bedbf94db9b4e05dbd66e4c952d6504/src/iso19111/crs.cpp",
+          "final_url": "https://raw.githubusercontent.com/OSGeo/PROJ/24f5d70f2bedbf94db9b4e05dbd66e4c952d6504/src/iso19111/crs.cpp",
+          "access_utc": "2026-10-06T10:29:02.760406+00:00",
+          "status": 200,
+          "headers": {
+            "ETag": "\"2adb73e1c4eca5bd1049f1d83c90d63cd06c331133e295fd2fff56e254fcd276\"",
+            "Last-Modified": null,
+            "Content-Type": "text/plain; charset=utf-8"
+          },
+          "bytes": 285621,
+          "sha256": "3dfda54b65264d966cfeabc32c9cfbc0b5f4cd05ec0db2d9e3dca97bc219e55f",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E05.body",
+          "exact_locator": "src/iso19111/crs.cpp at 24f5d70f2bedbf94db9b4e05dbd66e4c952d6504: direction predicate around lines 845-891; CRS::normalizeForVisualization lines 1105-1142"
+        },
+        {
+          "id": "E16",
+          "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/src/iso19111/crs.cpp",
+          "final_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/src/iso19111/crs.cpp",
+          "access_utc": "2026-10-06T10:30:44.953259+00:00",
+          "status": 200,
+          "bytes": 300230,
+          "sha256": "baceecbd7aacfa84b599afc0aa711d8187d2f4c537c829d04173c22f8ab83df4",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E16.body",
+          "exact_locator": "src/iso19111/crs.cpp at release 9.8.1: CRS::normalizeForVisualization conditional axis checks and unchanged return"
+        }
+      ],
+      "scope_limit": "Static source interpretation; no candidate or production execution. Rejecting an unsupported engineering CRS remains legitimate, but object identity is not the support/type predicate."
+    },
+    {
+      "id": "A-F02",
+      "alias": "A",
+      "severity": "MAJOR",
+      "kind": "unchecked_checkpoint_transfer_claim",
+      "decisive_screen": true,
+      "obligations": [
+        "H2-01",
+        "H2-04"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6",
+        "Q7"
+      ],
+      "candidate_locator": {
+        "input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/C02-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/proposal.md",
+          "sha256": "6e9fa7b95874369c6a4342981bfa1be9d279c3d4509c5575b55686392faf2e6a",
+          "bytes": 26669
+        },
+        "section": "3.4",
+        "lines": [
+          190,
+          196
+        ]
+      },
+      "candidate_claim": "Running wal_checkpoint(TRUNCATE) before built-in share/close makes the exchanged database self-contained.",
+      "source_finding": "TRUNCATE only removes WAL contents on successful completion. The pragma can return a busy result when readers or another connection prevent completion. The WAL documentation explicitly makes committed frames part of the persistent database state.",
+      "consequence": "The prescribed built-in share rule lacks a success check and a stable snapshot/connection boundary. Merely issuing the pragma cannot justify copying the database without its WAL; the exchange could omit committed edits. The separate warning against raw copies while open does not establish correctness of built-in share.",
+      "evidence": [
+        {
+          "id": "E01",
+          "url": "https://www.sqlite.org/pragma.html",
+          "final_url": "https://www.sqlite.org/pragma.html",
+          "access_utc": "2026-10-06T10:29:02.755141+00:00",
+          "status": 200,
+          "headers": {
+            "ETag": "\"m6aa3e181s22202\"",
+            "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+            "Content-Type": "text/html; charset=utf-8"
+          },
+          "bytes": 139778,
+          "sha256": "b9bcb335ae818497f3fa05114a10492f64f35503f275da2264f2d5d436db3f5d",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E01.body",
+          "exact_locator": "PRAGMA wal_checkpoint: TRUNCATE success condition and first result column indicating SQLITE_BUSY"
+        },
+        {
+          "id": "E03",
+          "url": "https://www.sqlite.org/wal.html",
+          "final_url": "https://www.sqlite.org/wal.html",
+          "access_utc": "2026-10-06T10:29:02.757778+00:00",
+          "status": 200,
+          "headers": {
+            "ETag": "\"m6aa3e181sa49f\"",
+            "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+            "Content-Type": "text/html; charset=utf-8"
+          },
+          "bytes": 42143,
+          "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E03.body",
+          "exact_locator": "section 4, The WAL File; section 2.2 checkpoint limitations with long-running readers"
+        }
+      ],
+      "scope_limit": "Source-grounded protocol gap, not evidence that any application was built or a real user lost data. Successful, quiescent checkpointing can be a valid approach."
+    },
+    {
+      "id": "B-F01",
+      "alias": "B",
+      "severity": "MAJOR",
+      "kind": "nullable_identity_constraint_misinterpretation",
+      "decisive_screen": true,
+      "obligations": [
+        "H2-03",
+        "H2-09"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6"
+      ],
+      "candidate_locator": {
+        "input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/C02-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/proposal.md",
+          "sha256": "2344d5b6c11be80077f22c2c9fff6eec01ed0a4c85610f6f601577fa426b21a9",
+          "bytes": 26619
+        },
+        "section": "3",
+        "lines": [
+          33,
+          33
+        ]
+      },
+      "candidate_claim": "Declaring the observation UUID as TEXT PRIMARY KEY makes NULL impossible at schema level.",
+      "source_finding": "Ordinary SQLite rowid tables permit NULL in a non-integer primary-key column unless NOT NULL is declared or a STRICT/WITHOUT ROWID table is selected. The candidate specifies none of those exceptions. The session source cited by the candidate itself warns that rows with NULL primary-key values are silently omitted.",
+      "consequence": "The design treats a missing identity as schema-impossible when its specified constraint does not enforce that invariant. In the proposed native-session alternative such rows are omitted from change tracking, directly undermining the no-silent-loss identity/merge contract.",
+      "evidence": [
+        {
+          "id": "E02",
+          "url": "https://www.sqlite.org/lang_createtable.html",
+          "final_url": "https://www.sqlite.org/lang_createtable.html",
+          "access_utc": "2026-10-06T10:29:02.756395+00:00",
+          "status": 200,
+          "headers": {
+            "ETag": "\"m6aa3e181sb5b10\"",
+            "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+            "Content-Type": "text/html; charset=utf-8"
+          },
+          "bytes": 744208,
+          "sha256": "76396a8a82203639387f766fbd59ef2a5b131e43cb4ebabe4516c3a39ce5074c",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E02.body",
+          "exact_locator": "section 3.5, The PRIMARY KEY: SQLite NULL exceptions"
+        },
+        {
+          "id": "E04",
+          "url": "https://www.sqlite.org/sessionintro.html",
+          "final_url": "https://www.sqlite.org/sessionintro.html",
+          "access_utc": "2026-10-06T10:29:02.759114+00:00",
+          "status": 200,
+          "headers": {
+            "ETag": "\"m6aa3e181s6d91\"",
+            "Last-Modified": "Fri, 11 Sep 2026 11:09:53 GMT",
+            "Content-Type": "text/html; charset=utf-8"
+          },
+          "bytes": 28049,
+          "sha256": "5410c53bab447ac791594e11698ac331aed9d2168838150c4f030b4dcbb11dc2",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E04.body",
+          "exact_locator": "section 1.3, Limitations: session ignores rows with a NULL primary-key component"
+        }
+      ],
+      "scope_limit": "This establishes an incorrect schema claim and a conditional omission path. It does not claim every generated UUID is NULL, or that the chosen app-layer oplog necessarily uses the optional session extension."
+    },
+    {
+      "id": "B-F02",
+      "alias": "B",
+      "severity": "MODERATE",
+      "kind": "wrong_crs_axis_expectation_in_validation_plan",
+      "decisive_screen": false,
+      "obligations": [
+        "H2-02",
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q5",
+        "Q6"
+      ],
+      "candidate_locator": {
+        "input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/C02-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/proposal.md",
+          "sha256": "2344d5b6c11be80077f22c2c9fff6eec01ed0a4c85610f6f601577fa426b21a9",
+          "bytes": 26619
+        },
+        "sections": [
+          "5",
+          "13"
+        ],
+        "lines": [
+          61,
+          143
+        ]
+      },
+      "candidate_claim": "EPSG:2056 is included among latitude-first target CRSs for the validation corpus.",
+      "source_finding": "In the applicable PROJ 9.8.1 dataset, EPSG:2056 is CH1903+ / LV95 using Cartesian coordinate system 4400. That system has easting as axis 1 and northing as axis 2, in metres. It is not a latitude-first target.",
+      "consequence": "The proposed expected-axis corpus misidentifies a consequential reference case. The issue #1377 failure arose from source EPSG:4326 input ordering; it does not establish a latitude-first EPSG:2056 target.",
+      "evidence": [
+        {
+          "id": "E21",
+          "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/projected_crs.sql",
+          "final_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/projected_crs.sql",
+          "access_utc": "2026-10-06T10:33:20.906949+00:00",
+          "status": 200,
+          "bytes": 1371346,
+          "sha256": "a7dd2ab382e290a35e2afbd3a21ad47885e19941747d1283b9abfbbebe19241f",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E21.body",
+          "exact_locator": "projected_crs.sql line 115, EPSG:2056 references EPSG coordinate system 4400"
+        },
+        {
+          "id": "E22",
+          "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/axis.sql",
+          "final_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/axis.sql",
+          "access_utc": "2026-10-06T10:33:21.120850+00:00",
+          "status": 200,
+          "bytes": 29892,
+          "sha256": "e62edeb9a4ffd7bc64a105ce75804d7c5b0d4b4fa514b7afea5ad2e93daf80fe",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E22.body",
+          "exact_locator": "axis.sql lines 59-60: coordinate system 4400 easting/order1 and northing/order2, EPSG:9001 metre"
+        },
+        {
+          "id": "E23",
+          "url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/coordinate_system.sql",
+          "final_url": "https://raw.githubusercontent.com/OSGeo/PROJ/9.8.1/data/sql/coordinate_system.sql",
+          "access_utc": "2026-10-06T10:33:21.235412+00:00",
+          "status": 200,
+          "bytes": 9712,
+          "sha256": "3e4a77ef2832a2d229e68b8356788ceba976d18c906f16554cf006df18e6a58a",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E23.body",
+          "exact_locator": "coordinate_system.sql line 32: EPSG:4400 Cartesian, dimension 2"
+        },
+        {
+          "id": "E20",
+          "url": "https://api.github.com/repos/pyproj4/pyproj/issues/1377",
+          "final_url": "https://api.github.com/repos/pyproj4/pyproj/issues/1377",
+          "access_utc": "2026-10-06T10:30:45.666537+00:00",
+          "status": 200,
+          "bytes": 5514,
+          "sha256": "c080b864193543a70163798ad1e347b4819643c29fc70fa8e0601a8e38a87211",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_captures/E20.body",
+          "exact_locator": "issue #1377 body: EPSG:4326 input order and expected projected output"
+        }
+      ],
+      "scope_limit": "A proposed-test specification error; no claim that the unexecuted test actually ran or failed."
+    }
+  ],
+  "coverage": [
+    {
+      "obligation_id": "H2-01",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both specify the minimum offline workflow. A built-in exchange safety fails its source screen. Remaining end-to-end workflow claims are not fully assessed."
+    },
+    {
+      "obligation_id": "H2-02",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both distinguish stored/display/export coordinates and expose metadata ambiguity. A normalization guard is wrong; B validation corpus misstates EPSG:2056. Remaining transform/support claims are not exhaustively assessed."
+    },
+    {
+      "obligation_id": "H2-03",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both provide project/record/media identity, revisions, tombstones and inspectable conflict choices. B schema-level identity guarantee is false. Full multi-exchange ancestry/idempotence is not established by the supplied toy checks."
+    },
+    {
+      "obligation_id": "H2-04",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both discuss committed versus incomplete work and recovery. A transfer checkpoint inference is unsafe as stated. Product crash-recovery checks remain proposed."
+    },
+    {
+      "obligation_id": "H2-05",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both give bounded index/cache/viewport/export/cancellation plans and OSM license limits. R*Tree source mechanisms are verified. Full selected map-production rights, scale and resource behavior are not assessed to completion."
+    },
+    {
+      "obligation_id": "H2-06",
+      "A": "COMPLETE",
+      "B": "COMPLETE",
+      "basis": "Research-proposal coverage includes keyboard editing, provenance/error feedback, offline status, reversible edits and inspectable conflicts. This is specification coverage, not implemented accessibility qualification."
+    },
+    {
+      "obligation_id": "H2-07",
+      "A": "COMPLETE",
+      "B": "COMPLETE",
+      "basis": "At least two independently useful implementation mechanisms have concrete source-backed lessons: A SQLite spatial/WAL and GDAL/PROJ; B SQLite spatial/session and pyproj/PROJ. Independent usefulness does not require different repository owners. Candidate discovery-process execution is not separately assessed."
+    },
+    {
+      "obligation_id": "H2-08",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "A verifies an older DerivedProjected failure/fix/test chain but does not map its first release, and it is not a fix for current EngineeringCRS #4876. B has a genuine #1565 -> #1566 -> tests chain and 3.8.0 applicability, independently verified; its current proposal does not identify #1565 or explain that association outside the catalog, leaving standalone chain coverage partial."
+    },
+    {
+      "obligation_id": "H2-09",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Both preserve useful opportunities and plausible bounded alternatives. Architecture coverage is substantial, but consequential errors affect selected boundaries, and all remaining critical dependencies were not assessed after the failed screen."
+    },
+    {
+      "obligation_id": "H2-10",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "basis": "Each exact current research proposal plus three catalogs is present and standalone content is substantial. Execution claims are scoped, but actual witness code/receipts were not supplied in this source packet. Current scientific correctness fails screening. Designated finals and preservation through later stages remain unassessed."
+    }
+  ],
+  "common_dimensions": [
+    {
+      "id": "Q1",
+      "assessment": "PARTIAL",
+      "basis": "All ten released obligations inventoried; substantial current research coverage, with screened errors and incomplete independent assessment recorded."
+    },
+    {
+      "id": "Q2",
+      "assessment": "PARTIAL",
+      "basis": "Primary-source correctness screens decisively fail for both; source versions and normative conditions recorded per finding."
+    },
+    {
+      "id": "Q3",
+      "assessment": "PARTIAL",
+      "basis": "Useful component consequences preserved; incorrect guards/identity/checkpoint inferences identified."
+    },
+    {
+      "id": "Q4",
+      "assessment": "PARTIAL",
+      "basis": "Useful independent mechanisms, alternatives and failures retained; candidate discovery provenance and all breadth claims not fully independently verified."
+    },
+    {
+      "id": "Q5",
+      "assessment": "PARTIAL",
+      "basis": "Executed-versus-proposed scope is generally honest. B expected-axis test case is wrong. Execution receipts/code unavailable in the admitted packet, so actual execution is UNKNOWN."
+    },
+    {
+      "id": "Q6",
+      "assessment": "PARTIAL",
+      "basis": "Research content has consequential errors; later semantic preservation is UNASSESSED."
+    },
+    {
+      "id": "Q7",
+      "assessment": "PARTIAL",
+      "basis": "Both disclose meaningful source/resource limits; A exchange claim and B identity guarantee exceed established evidence. Remaining dependencies not exhaustively assessed."
+    },
+    {
+      "id": "Q8",
+      "assessment": "PARTIAL",
+      "basis": "Exact research four-artifact delivery and input pins verified. Final delivery, economics and runtime history are outside P1 scientific assessment."
+    }
+  ],
+  "card_duties": {
+    "complete_actual_final4_required": {
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "note": "Both designated_final fields are null; current research4 is structurally present for both. No final penalty or final credit is inferred."
+    },
+    "independent_implementation_precedents_min_2": {
+      "A": "COMPLETE",
+      "B": "COMPLETE"
+    },
+    "real_issue_fix_regression_chain_required": {
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Mechanism and exact issue/fix/test evidence preserved; standalone/release limits described in H2-08."
+    }
+  },
+  "unassessed": [
+    "all remaining consequential current claims beyond recorded screens",
+    "actual candidate witness execution",
+    "later_critic",
+    "final",
+    "pipeline",
+    "winner",
+    "economics",
+    "candidate/native_Goal_status",
+    "operational_history"
+  ],
+  "preserved_valid_claims": {
+    "A": [
+      "Original/render/export coordinate separation and visible unknown metadata",
+      "SQLite R*Tree rounding/exact-filter lesson and WAL persistent-state warning",
+      "Explicit record conflicts, reversible edits, quarantine and honest 50k-only synthetic scope",
+      "A real older DerivedProjected fix and regression tests; honest release-mapping gap",
+      "OSM source/licensing limits, useful alternatives and optional opportunities"
+    ],
+    "B": [
+      "Explicit provenance, stored/display/export separation, source originals and grid hashes",
+      "always_xy from_crs API and real from_pipeline feature/fix/test chain in pyproj 3.8.0",
+      "Session build/virtual-table limits and app-layer merge alternative",
+      "R*Tree exact-filter mechanism, bounded access/cache/export plans",
+      "Honest toy witness limits, source capture failures, accessibility and optional alternatives"
+    ]
+  },
+  "execution_evidence": {
+    "A": {
+      "claimed_candidate_executed_witnesses": 3,
+      "independent_execution_verified": "UNKNOWN"
+    },
+    "B": {
+      "claimed_candidate_executed_witnesses": 2,
+      "independent_execution_verified": "UNKNOWN"
+    },
+    "reason": "Packet contains inventory IDs/hashes and summaries (B also stdout), but not exact code and original tool receipts. No original arm directory or execution history was inspected; no evaluator retest was performed."
+  },
+  "blinding": {
+    "phase2_key_read": false,
+    "model_identity": "UNKNOWN",
+    "physical_evaluator_runtime": "UNKNOWN",
+    "unavoidable_hints": [
+      "H2/domain/current-stage strings",
+      "The allowlisted launched Task_B explicitly contains named discovery/API-binding modifiers; this was visible before key. No perfect blinding claim."
+    ],
+    "excluded_inputs": [
+      "old confirmation/development reports",
+      "grades/root status",
+      "cost/history",
+      "rosters/sibling summaries",
+      "unlisted LAB or candidate artifacts"
+    ]
+  },
+  "timing": {
+    "source_start": {
+      "schema": "er9.independent-evaluator-source-start.v1",
+      "eval_id": "independent-confirmation-C02-current-research-1",
+      "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+      "actual_source_start_utc": "2026-10-06T10:26:58.713251+00:00",
+      "actual_source_start_monotonic_ns": 112837570291294,
+      "budgets_seconds": {
+        "source": 1200,
+        "inclusive_p2": 600,
+        "whole": 1800
+      }
+    },
+    "judgment_saved_utc": "2026-10-06T10:36:44.114165+00:00",
+    "judgment_saved_monotonic_ns": 113422971190288
+  },
+  "science_recipients": [
+    "/root",
+    "/root/publisher"
+  ]
+}

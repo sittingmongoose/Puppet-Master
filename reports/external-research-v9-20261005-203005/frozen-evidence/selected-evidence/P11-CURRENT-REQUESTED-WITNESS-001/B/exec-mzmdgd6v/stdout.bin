@@ -1,0 +1,5 @@
+W1 PASS
+display order after edit: ['cell-03', 'cell-02', 'cell-01']
+execution order from execution_count: ['cell-01', 'cell-02', 'cell-03']
+output->execution association stable after reorder: cell-02 out ec == 2
+unexecuted cell ec null: OK; error output structured: OK

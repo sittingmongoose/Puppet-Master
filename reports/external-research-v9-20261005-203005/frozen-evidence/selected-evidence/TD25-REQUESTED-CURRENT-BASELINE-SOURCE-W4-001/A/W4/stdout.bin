@@ -1,0 +1,4 @@
+input sample-center index xyz: [4, 3, 2]
+world xyz um: [99.25, 202.0, 304.0]
+inverse sample-center index xyz: [4.0, 3.0, 2.0]
+roundtrip exact: True

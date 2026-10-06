@@ -1,0 +1,67 @@
+{
+  "catalog_schema": "er9.research.leads.v1",
+  "note": "Unresolved or optional leads preserved honestly; none are obligations, none were completed within the stage budget.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "First release containing Audacity fix commit 754e3f39f6a3f3d066d0854d2d957ef0ab654ac9",
+      "status": "UNVERIFIED",
+      "method": "Compare commit against release tags (git tag --contains, or GitHub compare API between 4.0.0/4.0.1 tags); 3.7.x backports, if any, also untraced.",
+      "impact": "None on design (design rests on recurrence evidence S5, not on the specific release); affects only the precision of the §10 causal statement."
+    },
+    {
+      "id": "L2",
+      "title": "Regression-test coverage of PR #9611",
+      "status": "UNVERIFIED",
+      "method": "Read the PR diff and linked Autobot test cases; the PR body's 'Autobot test cases have been run' checkbox was UNCHECKED in capture S2, so automated coverage is not established."
+    },
+    {
+      "id": "L3",
+      "title": "Fix for Audacity #9276 'Autosave is corrupting project (waveforms to zero)'",
+      "status": "untraced",
+      "method": "Timeline events of the issue to find the closing PR/commit; only closure date (2025-09-16) captured."
+    },
+    {
+      "id": "L4",
+      "title": "soxr/libsamplerate quality modes adequate for speech review",
+      "status": "UNVERIFIED critical dependency",
+      "method": "Benchmark soxr HQ/MQ vs quality thresholds on speech material; bounded alternative if inadequate: per-source preview-rate conversion with native-rate holds."
+    },
+    {
+      "id": "L5",
+      "title": ">4 GiB export path",
+      "status": "design bounded, unverified",
+      "method": "Verify W64 write and segmented-export manifest behavior in the real build; libsndfile 1.2.2 table shows W64 R/W and no RF64 row (S8)."
+    },
+    {
+      "id": "L6",
+      "title": "whisper.cpp transcription feasibility on 8 GB laptops (opportunity, optional)",
+      "status": "UNEXECUTED",
+      "method": "Benchmark 2 h interview transcription time/RAM on the reference laptop; only ever produces machine-flagged draft cues."
+    },
+    {
+      "id": "L7",
+      "title": "Ardour region/playlist model as a third implementation precedent",
+      "status": "not investigated (time-bounded)",
+      "method": "Ardour session/region docs and source for region-based nondestructive editing and crossfade objects; would strengthen §13."
+    },
+    {
+      "id": "L8",
+      "title": "EAF TIME_UNITS NTSC-frames/PAL-frames semantics for video-linked oral history",
+      "status": "not investigated",
+      "method": "ELAN documentation for frame-based time units before enabling EAF import for video-derived interviews (S6 shows the enumeration exists; semantics unread)."
+    },
+    {
+      "id": "L9",
+      "title": "Audacity 4.0 accessibility implementations (#11367, #11368, #11645)",
+      "status": "titles only",
+      "method": "Read the issues/PRs for concrete Qt patterns for keyboard-navigable timeline rulers and announced toasts to inform §11."
+    },
+    {
+      "id": "L10",
+      "title": "W3C Media Fragments URIs as stable citation identifiers for exported cues",
+      "status": "opportunity, not investigated",
+      "method": "Assess media-fragment t= syntax compatibility with sample-exact anchors and archival citation practice."
+    }
+  ]
+}

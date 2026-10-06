@@ -1,0 +1,67 @@
+{
+  "schema": "er9.positive-neutral-clock-checkpoint-pinset.v1",
+  "observed_utc": "2026-10-06T09:55:42.556086+00:00",
+  "files": [
+    {
+      "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/TERMINAL_CLOCK_RECEIPT.json",
+      "sha256": "fd29eb5096b9b2d239933f05128c074273f0ce7ca60622f66a9b011783bbcaeb",
+      "bytes": 3532,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-pipeline-10-research-I03/TERMINAL_CLOCK.json",
+      "sha256": "85256dacc1908b26b83b518069ab459d0f6f962c32a01b48d4dcdc182b3a99a7",
+      "bytes": 1242,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/final_clock.json",
+      "sha256": "b181266acfeebd7e7f56504a0cb88164e27fe66fca8d0bf8453fac69e37ea35d",
+      "bytes": 1186,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/completion.json",
+      "sha256": "00d7090b203a6d4c8eab17e686ae6d8488a46becb0b44bf56ebf22967fd4ed21",
+      "bytes": 2042,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/completion.json",
+      "sha256": "55b93d44c4b683c784b54e41db5f1beb4ac58726cf456cfa0c48db3d4ec3dbc3",
+      "bytes": 1149,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-pipeline-11-research-I04/phase2_complete.json",
+      "sha256": "2c49de292a8eb16fbf41f48814d9c7b4d370b64b82c9b10646f89b607b9e909a",
+      "bytes": 2214,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/source_start.json",
+      "sha256": "32552c444077a5b0f3bead8a89cd46bc6c20a63af965dc07b7eba685f2d9b7a4",
+      "bytes": 491,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/DEC017_CURRENT_FOUR_FINAL_ACTIVATION_SNAPSHOT_001/CHECKPOINT.json",
+      "sha256": "b9159c06d22ddff070e86ed93abd3ecae43c78d5efb99d9eb676b3832d7949d3",
+      "bytes": 10466,
+      "purpose": "neutral current clock/lifecycle metadata only; no scientific report body"
+    }
+  ],
+  "root_counter24_hash_only": {
+    "observed_utc": "2026-10-06T09:30:38Z",
+    "tokens": 34560702,
+    "native_time_used_seconds": 46688,
+    "remaining": null,
+    "helper_inclusion": "UNKNOWN",
+    "whole_journal_sha256": "6b137aad2761940da6f86e2a57003dd299f3ed98df9a1b4a7256fef86513af81",
+    "prior23_prefix_sha256": "6adead32aecf25b5f4bf19f60cd2d815b3c9d7315ca5b7a9b25b1423a135c021",
+    "row_sha256": "9d268ecbc441274651136d69c84f3a3f6dbc4d32812e84c9140c7c54b9bf809a",
+    "scope": "root-supplied dated nativeSDK counter; not provider/helper sum, no old017/005 retrofit"
+  },
+  "all_scientific_grades": "HELD_OR_UNASSESSED",
+  "no_original_clock_reset": true
+}

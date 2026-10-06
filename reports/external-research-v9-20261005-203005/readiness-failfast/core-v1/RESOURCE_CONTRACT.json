@@ -1,0 +1,86 @@
+{
+  "admission_owner": "ops_recovery",
+  "aggregate_memory_max_bytes": 2415919104,
+  "backend_immediate_termination_cause": "UNKNOWN",
+  "candidate_Task_tools_source_factors_permissions_changed": false,
+  "clock_and_Task_constructor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/task_fragment.py",
+    "sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+  },
+  "clocks": "original birth+original allocation; action total-30seconds; guardian total-5seconds; outer total; no reset/extension",
+  "component_memory_max_bytes": {
+    "native": 805306368,
+    "outer_worker": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "created_utc": "2026-10-06T10:30:15.218793+00:00",
+  "effort": "max",
+  "exception_scope": "positive owned readiness closure only; no actual Goal-start/zero-cost/billing inference",
+  "failure_class": "OwnedComponentReadinessTerminated",
+  "failure_receipt_field": "pre_goal_readiness_failure",
+  "family": "Z",
+  "memory_swap_max_bytes": 0,
+  "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "modified_runtime_files": [
+    "glm_stage.py",
+    "component_guard.py",
+    "profile.py"
+  ],
+  "new_failfast": "only fully joined prelaunch owned intent + exact guard PID from parent-created process + original profile/hash/birth/stop + final false readiness + positive closure/exit + terminal MainPID0/emptyControlGroup/owned quiet",
+  "new_private_records": [
+    "native-host.ownership.json",
+    "pm_boundary-resource.ownership.json",
+    "pm_execution-resource.ownership.json when admitted"
+  ],
+  "new_runtime_files": [
+    "readiness.py"
+  ],
+  "predecessor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+    "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+  },
+  "prospective_only": true,
+  "readiness": "existing verified_before_command_exec true across exact owned records, then unchanged preactivation kernel/placement proof before session/goal set",
+  "resource_allocator": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py",
+    "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+  },
+  "schema": "er9.glm.readiness-failfast-runtime-contract.v1",
+  "tools_config_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+    "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+  },
+  "tools_release_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/PIN.json",
+    "sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "unchanged_enforcement_functions": {
+    "close_components": "a2ed5c0657197141eb0fb78a4f3aa493a7776c5e5d8ad192ca537ead4d1d406e",
+    "component_records_quiet": "4ae173464856d1b5dbfe9b3fc2192d91badc03a880e02b4465cb505e9f1e8164",
+    "original_clock": "75e7175ee448dd84de68aab31835ebda2e5c3f8c02d19accd82be7a04192f5e2",
+    "preactivation_proof": "fd18c187ddd18c241736a44bcd7608ce3ee0300b3f646f63cebc79474827d1c8",
+    "tool_profile": "351efd262fdf37fa56ae761072f28ef20ddec860ff702233e99c95aed8b99107"
+  },
+  "unchanged_runtime_files": {
+    "clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+    "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+    "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+    "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+    "task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+  },
+  "version": "glm_complete2304_clock_readiness_v1",
+  "worker": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+    "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+  }
+}

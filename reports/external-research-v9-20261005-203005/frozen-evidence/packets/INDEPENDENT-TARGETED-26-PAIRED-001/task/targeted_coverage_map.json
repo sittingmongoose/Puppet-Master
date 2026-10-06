@@ -1,0 +1,61 @@
+{
+  "schema": "er9.diagnostic_coverage.v1",
+  "pair_id": "D-V06-B",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "common_criteria_path": "common_criteria.json",
+  "obligations": [
+    {
+      "id": "D-V06-B-01",
+      "text": "Use a candidate report linking replay and stale-output statements, one bounded correction, a validation proposal and an independent data-streaming opportunity. Both arms deliver complete standalone meaning.",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "D-V06-B-02",
+      "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "D-V06-B-03",
+      "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+      "dimensions": [
+        "Q1",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    }
+  ],
+  "important_checks": [
+    {
+      "id": "D-V06-B-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V06-B-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V06-B-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "scope": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "truth_key": null
+}

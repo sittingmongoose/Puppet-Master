@@ -1,0 +1,12 @@
+{
+  "purpose": "Citation-ID alignment between proposal.md inline citations [SF-S#] / leads.json [S#] and the entry ids in sources.json. write_file in this stage is create-only, so instead of silently renumbering either file, this map states the correspondence explicitly.",
+  "identical_ids": ["S1", "S2", "S3", "S4", "S5", "S6"],
+  "proposal_citation_to_sources_entry": {
+    "S7 (proposal: recurrence records #11296/#19880 and related PRs/issues)": "S4 (sources.json: search-results capture containing those items)",
+    "S8 (proposal: issue #19880 author comment)": "S7 (sources.json: comments capture)",
+    "S9 (proposal: Jupyter Server security docs)": "S8 (sources.json)",
+    "S10 (proposal: PEP 751)": "S9 (sources.json)"
+  },
+  "leads_json_note": "leads.json cites proposal numbering: its L1 '[S4/S7]' should read '[S7]' (search capture) under that numbering; its '[S8]' (comment) and '[S9]' (PEP 751) are correct under proposal numbering.",
+  "content_note": "No source content differs between files; this is an ID-pointer correction only. Per the output contract, correcting a finding/citation ID does not by itself establish the corrected wording as true — the underlying captures and their limits are unchanged."
+}

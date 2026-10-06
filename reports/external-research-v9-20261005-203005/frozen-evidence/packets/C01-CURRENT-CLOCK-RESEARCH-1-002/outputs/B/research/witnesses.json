@@ -1,0 +1,45 @@
+{
+  "catalog_schema": "er9.research.witnesses.v1",
+  "labels_legend": "executed-by-candidate = run by this candidate in the admitted bounded isolation with recorded receipts; proposed-UNEXECUTED = validation planned for the real build, never run; evaluator-only = none present at this stage.",
+  "witnesses": [
+    {
+      "id": "W-1",
+      "kind": "executed-by-candidate",
+      "receipt_id": "exec-ycwlk7os",
+      "title": "Sample-exact timeline mapping and cue semantics under trim/gap/crossfade",
+      "code_sha256": "5630f7b1a0226c5930b6624418bd9d23f5e4f41d595a1dcde65e49130fe0723b",
+      "input": "pure-Python integer-rational model: source 44100 Hz trimmed to frames [22050,44100), project rate 48000, 2400-frame crossfade, second clip 72000 frames; cue anchors at source frames 33150 (mid), 22050 (trim start), 15000 (in removed region)",
+      "justified_expected": "44100->48000 is exactly 160/147, so 22050 and 44100 scale to exactly 24000 and 48000 project frames; mid cue 33150 -> 24000 + floor(11100*160/147)=36081; trim-start cue -> first retained frame 24000; in-gap cue -> None (must not be silently moved); joined length 45600+72000=117600; inverse mapping floor(12081*147/160)=11099 differs from true 11100 by -1 (forward mapping authoritative)",
+      "observed": {
+        "stdout": "cue_mid=36081 boundary_cue=24000 gap_cue=None total_samples=117600 xfade=2400 / inverse_hover_delta=-1 sample (forward mapping authoritative) / 2h_stereo_float32=2.57 GiB peaks_pyramid=5.49 MiB render_block=0.50 MiB / W-1 PASS",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "scope_limits": "Isolated arithmetic/bookkeeping contract only. No resampler, no decoder, no GUI, no file I/O, no real editor exercised. Proves the proposal §5 contract is internally consistent on exact integers, nothing more."
+    },
+    {
+      "id": "W-2",
+      "kind": "executed-by-candidate",
+      "receipt_id": "exec-mxmqsf3m",
+      "title": "WAV declared-vs-measured data-chunk contradiction policy",
+      "code_sha256": "fad0c9d2f1a120f3126bffa68010b25edfa232abe51dc417e324e607687e04",
+      "input": "two crafted RIFF/WAVE buffers (PCM mono 16-bit 48 kHz): consistent (declared 8 B, 8 B present) and contradictory (declared 1000 B, 8 B present); candidate-authored chunk parser",
+      "justified_expected": "consistent file: contradiction=False, frames=4; contradictory file: declared retained as 1000, measured clamps to 8, contradiction=True, frames=4 (declared size must not fabricate audio frames)",
+      "observed": {
+        "stdout": "consistent: {'declared': 8, 'measured': 8, 'contradiction': False, 'frames': 4} / contradictory: {'declared': 1000, 'measured': 8, 'contradiction': True, 'frames': 4} / W-2 PASS",
+        "stderr": "",
+        "exit_code": 0
+      },
+      "scope_limits": "Validates the candidate-authored parser's policy in isolation only. Does NOT establish how libsndfile, python-soundfile or FFmpeg treat contradictory headers (that is proposed V-7)."
+    },
+    { "id": "V-1", "kind": "proposed-UNEXECUTED", "title": "2 h three-source workflow on 8 GB RAM laptop", "pass": "RSS ceiling 1.5 GB; no UI freeze >500 ms; full §2 workflow completes" },
+    { "id": "V-2", "kind": "proposed-UNEXECUTED", "title": "Render throughput", "pass": "single-pass 48 kHz stereo render >= 8x realtime on reference laptop" },
+    { "id": "V-3", "kind": "proposed-UNEXECUTED", "title": "SRC/cue-position audit against a reference resampler (ffmpeg aresample frame counts)", "pass": "rendered cue positions match actual output frames; any drift becomes status flags, never silent" },
+    { "id": "V-4", "kind": "proposed-UNEXECUTED", "title": "Seek reconciliation over 1000 random seeks incl. crossfade regions", "pass": "frame counters reconcile via fingerprint windows; zero undetected mismatches" },
+    { "id": "V-5", "kind": "proposed-UNEXECUTED", "title": "Cancel-mid-render ledger integrity", "pass": "renders.json shows only cancelled/failed; temp files removed; UI never shows complete export (counter-evidence target for Audacity #9036/#10500-class failures)" },
+    { "id": "V-6", "kind": "proposed-UNEXECUTED", "title": "kill -9 during save", "pass": "reopen offers journal vs committed choice; committed document never auto-mutated" },
+    { "id": "V-7", "kind": "proposed-UNEXECUTED", "title": "Real-decoder contradiction suite (truncated/contradictory WAV/FLAC headers)", "pass": "ambiguity flags surface; decoded frames equal measured truth" },
+    { "id": "V-8", "kind": "proposed-UNEXECUTED", "title": "Exchange round-trip across two machines with renamed and deleted media", "pass": "fingerprint relink works; deleted media -> degraded open with all cues retained" },
+    { "id": "V-9", "kind": "proposed-UNEXECUTED", "title": "Accessibility smoke (screen reader + keyboard-only traversal of transport/cue/provenance flows)", "pass": "all actions keyboard-reachable; errors announced with code and recovery action" }
+  ]
+}

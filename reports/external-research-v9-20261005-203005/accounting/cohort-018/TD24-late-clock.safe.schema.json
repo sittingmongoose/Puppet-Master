@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evaluator_provider_tokens_billing": {
+      "type": "string"
+    },
+    "extra_logical_or_pass_credit": {
+      "type": "boolean"
+    },
+    "later_than_primary_usage_capture": {
+      "type": "boolean"
+    },
+    "original_follow_remaining_clock_flag_reference": {
+      "type": "boolean"
+    },
+    "owner_observed_utc": {
+      "type": "string"
+    },
+    "phase2_literal_inclusive_through_handoffs_seconds": {
+      "type": "number"
+    },
+    "phase2_overrun_seconds": {
+      "type": "number"
+    },
+    "phase2_within600": {
+      "type": "boolean"
+    },
+    "primary018_usage_capture_unchanged": {
+      "type": "boolean"
+    },
+    "qualified_clock_rule": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "source_elapsed_seconds": {
+      "type": "number"
+    },
+    "source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "whole_elapsed_seconds": {
+      "type": "number"
+    },
+    "whole_within1800": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema",
+    "source_pin",
+    "owner_observed_utc",
+    "primary018_usage_capture_unchanged",
+    "later_than_primary_usage_capture",
+    "source_elapsed_seconds",
+    "phase2_literal_inclusive_through_handoffs_seconds",
+    "phase2_within600",
+    "phase2_overrun_seconds",
+    "whole_elapsed_seconds",
+    "whole_within1800",
+    "original_follow_remaining_clock_flag_reference",
+    "qualified_clock_rule",
+    "evaluator_provider_tokens_billing",
+    "extra_logical_or_pass_credit"
+  ],
+  "type": "object"
+}

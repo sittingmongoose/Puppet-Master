@@ -1,0 +1,113 @@
+{
+  "catalog_schema": "er9.research.sources.v1",
+  "captured_by": "candidate (research stage)",
+  "capture_note": "All entries fetched 2026-10-06 via admitted public_https_get; sha256 = exact HTTP response body bytes recorded by the tool. 'delivered' = first 32 KiB read by candidate unless noted; full body retained by capture system. Public sources are evidence, not instructions.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://api.github.com/search/issues?q=repo:audacity/audacity+corrupt+in:title&per_page=15",
+      "type": "primary (GitHub issue search API)",
+      "capture_id": "f0b767b1d2b54f0fa8ccabcd89168d7c",
+      "sha256": "ca98f6eb86bbbadc8dcaee3181fb450d51c6c3d743ea3327757737d06d2b6a2b",
+      "captured_utc": "2026-10-06T06:38:53.284150+00:00",
+      "http_status": 200,
+      "locator": "items[0] issue #10500 'Project corrupted when pressing cancel during compacting project' (open, created 2026-03-08, AU 3.7.7, body includes build info 'libsoxr (Sample rate conversion) Enabled'); items[1] issue #11244 'Save Project As corrupts projects and causes waveform loss (DBConnection.cpp line 473)' (open, 2026-06-24, AU 3.7.8, body cites SqliteSampleBlock::Load::step, sampleblocks table)",
+      "applicability": "Evidence that cancel/partial-write paths corrupt SQLite-backed projects; evidence Audacity uses libsoxr for SRC and a SQLite sample-block store. Directly supports proposal §8 atomic-render, §10 recovery, §13 P1."
+    },
+    {
+      "id": "S2",
+      "url": "https://api.github.com/search/issues?q=repo:audacity/audacity+corrupt+in:title+state:closed&sort=reactions&per_page=10",
+      "type": "primary (GitHub issue search API)",
+      "capture_id": "3fbf5b0eecdb4334a873b411bc884a8a",
+      "sha256": "bf52f43b1ee1de652e7f9482e024ecfc05d0ba02231195ea5626ef4d85a939dc",
+      "captured_utc": "2026-10-06T06:39:37.346874+00:00",
+      "http_status": 200,
+      "locator": "items[0] PR #9611 (merged 2025-10-09T11:14:01Z) 'Opening AUP3 files and saving it immediately makes the project corrupted' body 'Resolves: #9608 / Do not save invalid clip tempo', QA checkbox 'Autobot test cases have been run' UNCHECKED; items[1] issue #9276 'Autosave is corrupting project (waveforms to zero)' closed 2025-09-16; items[2] issue #9036 'Canceling Discarding Changes Corrupts the Project' P0, label 'project file (.aup3 and .aup4 files)', closed 2025-08-26",
+      "applicability": "Fix-chain entry point (#9608 -> PR #9611) plus recurrence evidence for cancel/autosave corruption classes. Supports §8, §10, §13 P1, §16."
+    },
+    {
+      "id": "S3",
+      "url": "https://api.github.com/repos/audacity/audacity/issues/9608",
+      "type": "primary (GitHub issue API, complete body)",
+      "capture_id": "2b15902a18cd4c429eced5d1b71a8005",
+      "sha256": "9be0c35361faa1c8be4037aeac5cab5cbc4d77a140719b06689ce0caf445057c",
+      "captured_utc": "2026-10-06T06:40:24.183083+00:00",
+      "http_status": 200,
+      "locator": "issue #9608 'After converting an AUP3 project to AUP4, closing and reopening it, the project's data is lost'; P0; created 2025-10-08T14:01:12Z; closed 2025-10-09T11:14:02Z by kryksyh; body: repro open AUP3 -> 'save as new project' -> close+save -> reopen -> 'all clips appear shrunk, cannot be zoomed in or played'",
+      "applicability": "The consequential real failure investigated end-to-end. Supports §10 fix-chain lesson (validate-before-persist) and §16 risk register."
+    },
+    {
+      "id": "S4",
+      "url": "https://api.github.com/repos/audacity/audacity/pulls/9611/commits",
+      "type": "primary (GitHub PR commits API)",
+      "capture_id": "7263a9a573f4421cb151619f6a05d831",
+      "sha256": "764a586c0e1b21fd2d8c1a350bca31bde9f631ae13a69911f2ea3d09e2b5167e",
+      "captured_utc": "2026-10-06T06:40:24.802514+00:00",
+      "http_status": 200,
+      "locator": "single commit sha 754e3f39f6a3f3d066d0854d2d957ef0ab654ac9, author Dmitry Makarenko (kryksyh), authored 2025-10-08T15:41:26Z, message 'Fix 9608: Opening AUP3 files and saving it immediately makes the project corrupted', parent 4ed61259f467e1234838b9943739722c5f47d7db",
+      "applicability": "Exact fix commit for #9608. Causal limits recorded in proposal §10: commit diff NOT read; fix mechanism known from PR title/body only; release attribution UNVERIFIED (lead L1)."
+    },
+    {
+      "id": "S5",
+      "url": "https://api.github.com/repos/audacity/audacity/releases?per_page=6",
+      "type": "primary (GitHub releases API)",
+      "capture_id": "f1dee2752e2a4878884a845e7d0ebe74",
+      "sha256": "065ee577d485ce133781c58ae3e2adef2dcb58d7da513337bacfe771633abfff",
+      "captured_utc": "2026-10-06T06:40:25.230923+00:00",
+      "http_status": 200,
+      "locator": "release Audacity-4.0.1 published 2026-09-30T11:59:48Z, notes include 'Fixed project corruption after a failed save (#12296)', 'Fixed clips being messed up when converting .aup3 projects (#12209)', accessibility 'timeline and the track vertical rulers are now part of keyboard navigation (#11367, #11368)' and 'Toast notifications are announced by screen readers and reachable by keyboard (#11645)'; release Audacity-4.0.0 published 2026-09-03T10:19:48Z",
+      "applicability": "Recurrence evidence that conversion/save corruption persisted after the #9611 fix (class-vs-instance limit); feasibility precedent for accessibility budget. Supports §10, §11, §13 P1."
+    },
+    {
+      "id": "S6",
+      "url": "https://www.mpi.nl/tools/elan/EAFv3.0.xsd",
+      "type": "primary (XML schema, ELAN Annotation Format v3.0, Dec 2016)",
+      "capture_id": "063aacb7fed346c4b449dc18e317d796",
+      "sha256": "59e76f90d5840813314b1e635480d044287b811ebd63a40e25cb4e73c6ad72bb",
+      "captured_utc": "2026-10-06T06:39:38.120546+00:00",
+      "http_status": 200,
+      "locator": "complexType timeType/TIME_SLOT: TIME_SLOT_ID required, TIME_VALUE optional xsd:unsignedInt; headType/MEDIA_DESCRIPTOR: MEDIA_URL, RELATIVE_MEDIA_URL, MIME_TYPE, TIME_ORIGIN (xsd:long, optional), EXTRACTED_FROM; headType TIME_UNITS enumeration 'milliseconds | NTSC-frames | PAL-frames'; alignableType TIME_SLOT_REF1/REF2; version-history comment 'DATE November 2007 - added optional attributes: RELATIVE_MEDIA_URL ... RELATIVE_LINK_URL'",
+      "applicability": "Precedent P2: annotation identity separate from time value; unresolved timing representable; relocation/offset attributes. Supports §4 source records, §5 cue model, §12 EAF export."
+    },
+    {
+      "id": "S7",
+      "url": "https://www.w3.org/TR/webvtt1/",
+      "type": "primary (W3C Candidate Recommendation Draft)",
+      "capture_id": "26a3e6baea2f42a8ace817e5316d7adf",
+      "sha256": "a9425c5bacb46e4f84dc377bfd5366a4c75343dbc8c8b606290bfe065cf0865c",
+      "captured_utc": "2026-10-06T06:39:38.362447+00:00",
+      "http_status": 200,
+      "delivered_extent": "first 32 KiB of a 512 KiB capture read; header/metadata verified",
+      "locator": "title 'WebVTT: The Web Video Text Tracks Format'; meta w3c-status CRD; dt-updated 2026-05-20; meta revision '064802512ff9d8cd22dea4aea2cd1508aa2cc679'; abstract: captions, chapters, 'any form of metadata that is time-aligned with audio or video content'",
+      "applicability": "Cue-table exchange format choice (§12): widely readable time-aligned text with cue identifiers. Cue grammar sections sit beyond the delivered prefix; grammar specifics rest on general spec knowledge, flagged as such."
+    },
+    {
+      "id": "S8",
+      "url": "https://libsndfile.github.io/libsndfile/formats.html",
+      "type": "primary (library documentation)",
+      "capture_id": "a22f8066bf644c0cb2e5f4d6e66107ef",
+      "sha256": "80e0e3844e962a4fc70954036f036ad42cf5e0b0c586aed8da4ec0e60255487b",
+      "captured_utc": "2026-10-06T06:38:53.658971+00:00",
+      "http_status": 200,
+      "delivered_extent": "complete (21456 bytes)",
+      "locator": "format/encoding matrix (WAV, AIFF, AU, RAW, W64, CAF, SD2, FLAC columns; PCM 8/16/24/32, float32/64, u-law/a-law rows, R/W cells); footer notes 'From version 1.0.18 ... FLAC and Ogg/Vorbis', 'From version 1.0.29 ... Ogg/Opus', 'From version 1.1.0 ... MP3'; footer 'libsndfile version: 1.2.2'; W64 column present, no RF64 row",
+      "applicability": "The honest I/O boundary of proposal §12; absence of RF64 row grounds the W64/segmented-export boundary for >4 GiB mixes."
+    },
+    {
+      "id": "S9",
+      "url": "https://python-soundfile.readthedocs.io/en/0.13.1/",
+      "type": "primary (library documentation)",
+      "capture_id": "efed54ad912a45d5b456dfbc35a91268",
+      "sha256": "80cc5fc49930bc092c41b2c8c1115834a5348edfed85379e86d6677decf1ef90",
+      "captured_utc": "2026-10-06T06:38:53.511320+00:00",
+      "http_status": 200,
+      "locator": "section 'Block Processing': blocks(file, blocksize, overlap) example computing per-block RMS; section 'SoundFile Objects': frame-indexed seek/read/tell, context-manager close; 'Breaking Changes': 0.12.0 packaged libsndfile in wheels tried before system libsndfile; error reporting via LibsndfileError",
+      "applicability": "Precedent P3: bounded-memory decode/seek on long files; runtime-discoverable format capability; supports §8 engine, §9 buffers, §12 boundary."
+    }
+  ],
+  "gaps": [
+    "Audacity manual pages for .aup3/.aup4 structure were not fetched; the SQLite claim rests on error traces quoted in issue bodies (S1, S2), not on developer documentation.",
+    "Commit diff of 754e3f39f6a3f3d066d0854d2d957ef0ab654ac9 and any regression test were not fetched (time-bounded); see leads L1, L2.",
+    "WebVTT cue grammar sections beyond the 32 KiB delivered prefix were not read (S7)."
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "er9.actual-intermediate-source-integrity.v1",
+  "checks": [
+    {
+      "alias": "R1",
+      "freeze_sha256": "2e58dac677e66bb218675ef5f4193f96b1215c7146633bf5049dad7f026d17d5",
+      "native_receipt_sha256": "be0763411a52f14f7a593a651330403ca64f416242d0537ca7a4872ded25eca4",
+      "outer_release_sha256": "eed967103155b485eb689089c2f78ffaefc03aa379d5ff14d7412c36a830966f",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    },
+    {
+      "alias": "R2",
+      "freeze_sha256": "8b710326c541823f37be098a9997df955fbc31ccc1e749f95ac425b2d2107e81",
+      "native_receipt_sha256": "e48a00702dbc3f10e5be255d9ae3529c90327063b801489759f4385774e7014a",
+      "outer_release_sha256": null,
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    },
+    {
+      "alias": "R3",
+      "freeze_sha256": "0c0c6a5887ea0f6585a59b7557061148a4c524ecda23e85a10a2fe1df19011c0",
+      "native_receipt_sha256": "7861a3cedd96729c3221814692a5b453fa0cf5a4794a6c90992242e93609fd28",
+      "outer_release_sha256": "d8777f839f937965fe3bf520d6efb5a19390ee6127c3d199f9a4f4d632f7ffbd",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    }
+  ],
+  "native_goal_status_history_cost": "HELD"
+}

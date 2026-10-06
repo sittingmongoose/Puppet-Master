@@ -1,0 +1,53 @@
+{
+  "schema": "er9.independent-phase1-readonly-freeze.v1",
+  "eval_id": "independent-confirmation-C02-current-research-1",
+  "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+  "phase1_freeze_utc": "2026-10-06T10:36:44.206352+00:00",
+  "phase1_freeze_monotonic_ns": 113423063339715,
+  "source_elapsed_seconds": 585.493048421,
+  "literal_phase2_start_utc": "2026-10-06T10:36:44.206352+00:00",
+  "literal_phase2_start_monotonic_ns": 113423063339715,
+  "phase2_inclusive_budget_seconds": 600,
+  "phase2_deadline_monotonic_ns": 114023063339715,
+  "whole_deadline_monotonic_ns": 114637570291294,
+  "no_clock_reset": true,
+  "phase2_key_read_before_freeze": false,
+  "readonly_artifact_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/reservation.json",
+      "sha256": "b04a48d927f80888f2846e5008aa97458b75ef1836bd9065820e50850eaac710",
+      "bytes": 975
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/source_start.json",
+      "sha256": "ddaed16a26b0c035b5921724148f84322934cd727e9b6db15dc9b230f6e053d4",
+      "bytes": 386
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/independent_source_pins.json",
+      "sha256": "b639e82d97bdc70ef48c3055f866c7ff9b128e9ad16aee46dd0c78fc25d9ff33",
+      "bytes": 15656
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_judgment.json",
+      "sha256": "c47fbca74adb0275db7485c03d6856607039032cb35d8fada06cb4fb3e54f874",
+      "bytes": 24899
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_report.md",
+      "sha256": "5a620bd9ad86d61ffb2053e085d6f4e52246e3bb416caea52627d0a1e993441b",
+      "bytes": 9642
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_input_pins.json",
+      "sha256": "071c0aa4cd5d8380c50a9aa42a34984d9a13b3c7fa19fe444c47774f2b56519f",
+      "bytes": 23208
+    }
+  ],
+  "readonly_source_capture_count": 23,
+  "remaining_claims_unassessed": true,
+  "science_recipients": [
+    "/root",
+    "/root/publisher"
+  ]
+}

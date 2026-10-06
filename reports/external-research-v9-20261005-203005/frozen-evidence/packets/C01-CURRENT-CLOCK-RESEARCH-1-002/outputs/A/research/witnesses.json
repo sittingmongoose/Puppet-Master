@@ -1,0 +1,87 @@
+{
+  "inventory_version": "research-stage-1",
+  "labels": {
+    "executed_by_candidate": "run in admitted bounded isolation (python_execute sandbox; no network; stdlib only)",
+    "proposed_unexecuted": "planned validation, not run this stage"
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "execution_id": "exec-293woo_i",
+      "title": "Timing algebra + equal-power crossfade property check (first run)",
+      "code_sha256": "665c085aa21ef0b5a69f012ad1b69c1936ffb82f6612516ef8b861af4942b96f",
+      "input": "self-contained; project rate 48000; clips (44100,441000),(44100,220500),(48000,960000); gap 24000; crossfade 2400",
+      "expected_behavior": "derived floor-mapping invariants hold",
+      "stdout": "P1 cue-history-independence: FAIL [...]; P2 monotone: PASS; P3 boundary: FAIL 480000 != 504000; P4 total: FAIL; P5 crossfade maxerr 2.22e-16 PASS; P6 guard PASS",
+      "exit_code": 0,
+      "interpretation": "Three assertion-authoring bugs in the CHECK (sign error in expected shift; boundary compared across an inserted gap; 400-loop total vs one-pass expectation). The algebra behaved as defined. Receipts preserved; no silent rerun.",
+      "stdout_sha256": "cfde2f1067edc0f80b3ec53d9da2db2601b544ee1bb5fe367067e4ba86122fe8",
+      "scope_limits": "pure integer arithmetic + math.cos/sin in sandbox; no decoder, engine, UI, or file I/O exercised; does not prove the whole editor"
+    },
+    {
+      "id": "W1b",
+      "label": "executed by candidate",
+      "execution_id": "exec-66t9pgwy",
+      "title": "Timing algebra + crossfade property check (corrected assertions)",
+      "code_sha256": "d4152be8025bac19064d7553a38e9b0f901c9935f98805dbd73e9a66247034c3",
+      "input": "same fixtures; layout() helper; trim-shift 12000 frames before clip 3",
+      "expected_behavior": "P1,P2,P3,P5,P6,P7 pass",
+      "stdout": "P1 cue-history-independence: PASS; P2 monotone floor mapping: PASS; P3 exclusive-out boundary == next clip start: PASS; P4 concatenated total stable: FAIL 223944000 vs 223464000; P5 equal-power crossfade maxerr: 2.22e-16 PASS; P6 missing-source guard: PASS; P7 layout totals shift-consistent: PASS",
+      "exit_code": 0,
+      "interpretation": "P4 residual FAIL is a candidate off-by-one in the EXPECTED value (399 vs 400 clips; difference exactly one 480000-frame clip), not in the algebra; preserved as limitation. Core invariants used by the proposal (cue history-independence, floor monotonicity, exclusive-out boundary, crossfade power law, missing-source guard) are supported at the arithmetic level only.",
+      "stdout_sha256": "ad2b7fdd2a3b03f43561ea3ba8723a7bf7992f22f2df6d9797925dc5eb8d5167",
+      "scope_limits": "isolated component check; no real audio content assembled; does not establish application behavior"
+    },
+    {
+      "id": "W2",
+      "label": "executed by candidate",
+      "execution_id": "exec-2lvjq6af",
+      "title": "Capture-identity recomputation of peaks.js release JSON",
+      "code_sha256": "cb9a0d44f4fa996ad547a7f3f42d5fa7f1fa4297386a0e9b5034a4d13fa09b62",
+      "input": "hand-transcribed body text of S1 capture",
+      "expected_behavior": "sha256 == tool-reported d36f237e... if transcription exact",
+      "stdout": "computed: 332cbe4b57a7436bd7c1e728ee21d9498b643fd5ce3f5b3b19e1bf2ce9d52c83; expected: d36f237e31327ce1aebabb3e895918eb6c4a464a9a37937658ef7f955435d10f; MISMATCH; bytes: 1762",
+      "exit_code": 0,
+      "interpretation": "MISMATCH caused by 6-byte candidate transcription loss (1762 vs 1768). Conclusion: capture identities in sources.json rest on the capture tool's reported sha256 over exact HTTP response bytes; no independent byte-level fidelity claim is made by the candidate.",
+      "stdout_sha256": "150eabb20c1b9e30a9bc173a66ae0944a893301f18b61f97cb28aca65d32158a",
+      "scope_limits": "sandbox has no network; original bytes not re-fetchable in isolation"
+    },
+    {
+      "id": "W3",
+      "label": "proposed/UNEXECUTED",
+      "title": "Golden-mix fixture test",
+      "detail": "3 sources (48k/24 stereo voice, 44.1k/16 mono backup, 48k mono noise); build expected sample arrays for trim/join/crossfade seams; assert rendered output equality sample-by-sample; cue table times asserted against algebra"
+    },
+    {
+      "id": "W4",
+      "label": "proposed/UNEXECUTED",
+      "title": "Round-trip & relocation test",
+      "detail": "save/close/relocate media (hash match)/reopen: cue identities and derived times identical; changed-hash warning path exercised"
+    },
+    {
+      "id": "W5",
+      "label": "proposed/UNEXECUTED",
+      "title": "Cache invalidation test",
+      "detail": "mutate one byte of a source file -> new content hash -> overview cache key changes -> waveform regenerated (peaks.js #452/#39a29933 lesson operationalized)"
+    },
+    {
+      "id": "W6",
+      "label": "proposed/UNEXECUTED",
+      "title": "Cancel/interrupt semantics tests",
+      "detail": "cancel during render -> output removed, manifest status cancelled/absent; kill during save -> autosave recovery offered; import cancel -> .part cleaned; no case labels a cancelled render a complete export"
+    },
+    {
+      "id": "W7",
+      "label": "proposed/UNEXECUTED",
+      "title": "Performance targets on reference 8 GB laptop",
+      "detail": "2 h import index < 5 min; overview < 60 s; seek < 150 ms; steady-state RSS < 300 MB. Investigative target only; no claim until measured"
+    },
+    {
+      "id": "W8",
+      "label": "proposed/UNEXECUTED",
+      "title": "Accessibility walkthrough",
+      "detail": "keyboard-only complete workflow + screen-reader labels audit; error text (not color-only) verification"
+    }
+  ]
+}

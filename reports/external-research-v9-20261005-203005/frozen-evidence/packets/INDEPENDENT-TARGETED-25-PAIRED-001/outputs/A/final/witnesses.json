@@ -1,0 +1,55 @@
+{
+  "schema": "er9.witness-inventory.v1",
+  "labels": {
+    "executed_by_candidate": "The execution record identifies candidate execution. Frozen W1-W3 are retained from the supplied seed catalog; their code/input bytes were not included there, so hashes and outputs are preserved but those checks are not independently auditable from this stage's files. W4 has code and input recorded below.",
+    "executed_only_by_evaluator": "none provided",
+    "proposed_unexecuted": "No execution receipt exists; status is explicitly UNEXECUTED."
+  },
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Coordinate precision and JSON round trip (frozen seed receipt)",
+      "execution_label": "executed by candidate; retained from supplied seed receipt",
+      "rationale_and_expected": "Seed rationale: compare float32 and float64 at about 1e5 pixel coordinates and test a JSON round trip. Expected: float32 has measurable error; binary64 survives the demonstrated Python JSON round trip.",
+      "execution": {"execution_id":"exec-zw6uyd4k","executed_utc":"2026-10-05T21:18:19Z","code_sha256":"07bacf9e492b7f0b4d9c7f2bb730df7016dec1d1b04d101e187a5fd292d2ad5c","data_sha256":"6e855369b7af1a6d3c45415195c43ae650c19fb9636471ef2bd6b3e781625d42","stdout_sha256":"b46266f9c5192b234b28e81b0af1733876af1a21aeccc2b3ecaaeb111765d206","stderr_bytes":0,"exit_code":0},
+      "provided_output": "float64 stored px : 104857.6\nfloat32 stored px : 104857.6015625 err_px = 0.001562499994179234\nphysical um f64   : 6815.744000000001\nphysical um f32   : 6815.74365234375 err_um = 0.0003476562505966285\nroundtrip f32 px  : 104857.6015625 err_px = 0.001562499994179234\njson roundtrip exact: True\njson text: {\"x_um\": 6815.744000000001, \"y_px\": 104857.6}\nfloat32 value in json: {\"x_um\": 6815.74365234375} -> reloaded equal: True\n",
+      "scope_limits": ["stdlib-only isolated arithmetic; supplied catalog includes code/data hashes but not code/input bytes", "one point and scale only", "does not test project serialization or an application"]
+    },
+    {
+      "id": "W2",
+      "title": "Affine composition order (frozen seed receipt)",
+      "execution_label": "executed by candidate; retained from supplied seed receipt",
+      "rationale_and_expected": "Seed rationale: show order is observable for scale and translation; expected outputs differ under the two orders.",
+      "execution": {"execution_id":"exec-2ambjtod","executed_utc":"2026-10-05T21:18:43Z","code_sha256":"f793df71a823758a791decc451071b8607683911cfdbfcb27faccb583b4ffb9b","data_sha256":"74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b","stdout_sha256":"efc58e7d4a914db358a6246d052aa5a12f08b7450072a191c8f6c4f894e90671","stderr_bytes":0,"exit_code":0},
+      "provided_output": "p                : (1.0, 1.0)\ntranslate->scale : (22.0, 84.0)\nscale->translate : (12.0, 24.0)\norders equal     : False\nS then T matrix  : [[2.0, 0.0, 10.0], [0.0, 4.0, 20.0], [0.0, 0.0, 1]]\n",
+      "scope_limits": ["pure arithmetic with column vectors; supplied catalog omits code/input bytes", "does not test any reader, project frame, or export"]
+    },
+    {
+      "id": "W3",
+      "title": "Temp-and-replace save and content hash (frozen seed receipt)",
+      "execution_label": "executed by candidate; retained from supplied seed receipt",
+      "rationale_and_expected": "Seed rationale: simulate failure before replace and compare byte hashes. Expected: prior target remains and an orphan temp can remain.",
+      "execution": {"execution_id":"exec-gw87zrsh","executed_utc":"2026-10-05T21:18:43Z","code_sha256":"b732ae4c1b561fdac4b145029af46bc838c08a8fd6e886907d12b588cada485a","data_sha256":"74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b","stdout_sha256":"dbc93ac5c8cd384f080572e747b141590a887827d7d024748c7cc6c237fa375c","stderr_bytes":0,"exit_code":0},
+      "provided_output": "target intact after failed save : True True\nno leftover temp visible?  files: ['.project-z57qhje0.tmp', 'project.json']\nafter successful save           : {\"v\": 2, \"ann\": [\"ok\"]}\nidentity hash stable            : True\nany byte change alters identity : True\nsame-dir rename supported       : True\n",
+      "scope_limits": ["frozen catalog says local temp/ext filesystem and exception before replace only; supplied catalog omits code/input bytes", "does not test crashes, power loss, cross-filesystem EXDEV, NFS/SMB, or an application"]
+    },
+    {
+      "id": "W4",
+      "title": "Explicit sample-index-to-world affine and inverse",
+      "execution_label": "executed by candidate",
+      "rationale": "A discriminating arithmetic check for the proposed column-vector matrix convention, nonzero origin, anisotropic scales, and axis rotation/permutation. Expected for index [4,3,2] under the supplied matrix is world [99.25,202,304] micrometers; applying the supplied inverse returns [4,3,2].",
+      "code": "m = data[\"index_to_world\"]\np = data[\"point_index\"]\nworld = [sum(m[r][c] * (p + [1])[c] for c in range(4)) for r in range(3)]\ninv = data[\"world_to_index\"]\nq0 = [world[i] - m[i][3] for i in range(3)]\nback = [sum(inv[r][c] * q0[c] for c in range(3)) for r in range(3)]\nprint(\"input sample-center index xyz:\", p)\nprint(\"world xyz um:\", world)\nprint(\"inverse sample-center index xyz:\", back)\nprint(\"roundtrip exact:\", back == p)\nassert world == [99.25, 202.0, 304.0]\nassert back == p",
+      "input": {"point_index":[4,3,2],"index_to_world":[[0.0,-0.25,0.0,100.0],[0.5,0.0,0.0,200.0],[0.0,0.0,2.0,300.0],[0.0,0.0,0.0,1.0]],"world_to_index":[[0.0,2.0,0.0],[-4.0,0.0,0.0],[0.0,0.0,0.5]]},
+      "execution": {"execution_id":"exec-sy5rndqe","completed_utc":"2026-10-06T04:45:19.259470+00:00","code_sha256":"d090abfc0f08b8d8d90291552af26c7adddda5dfaef31f508df62adcf957d087","data_sha256":"0508337e5ba77f38cad0b7ce31f7bf29a61975a46e0c5bfad1aed6f740286537","stdout_sha256":"263c589c40f79876ecf72e9131097555a03b5a583b085e644a8c650f72eec5a1","stderr_sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","exit_code":0,"stderr":"","limits":{"wall_seconds":5,"cpu_seconds":3,"memory_bytes":268435456,"network":"new empty namespace"}},
+      "stdout": "input sample-center index xyz: [4, 3, 2]\nworld xyz um: [99.25, 202.0, 304.0]\ninverse sample-center index xyz: [4.0, 3.0, 2.0]\nroundtrip exact: True\n",
+      "scope_limits": ["isolated Python arithmetic only; matrix and inverse were supplied as inputs", "does not verify matrix construction, calibration parsing, JSON/export precision, pixel-center versus pixel-edge adapter semantics, or any full application"]
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id":"V1","title":"Calibrated annotation/export round trip","status":"UNEXECUTED","plan":"Use 2D and 3D fixtures with nonzero origins, anisotropic spacing, axis flips/permutations, and a rotated affine. Export/reimport vector coordinates, physical coordinates, scope, frame and source IDs. Test a known pixel marker for every external tool adapter to establish center/edge offset.","acceptance":"Frame/source identity and coordinates round-trip within a declared serialization tolerance; adapter offset matches the pinned convention. W4 is not a substitute."},
+    {"id":"V2","title":"Instrument metadata and calibration fixtures","status":"UNEXECUTED","plan":"For every supported instrument/layout, assert axes, shape, original metadata retention, accepted value/unit/frame, and reader version; include TVIPS fixture if distribution permits.","acceptance":"A reader update that changes calibration semantics fails a fixture before annotations are made."},
+    {"id":"V3","title":"3 GB bounded-read and cancellation benchmark","status":"UNEXECUTED","plan":"Benchmark representative tiled and multi-page 3 GB inputs on the 8-core/16 GB target; measure p95 viewport latency, peak RSS, hash time, cache behavior, progress and cancellation.","acceptance":"Agree practical thresholds with users first; report results per file layout and hardware. No numeric performance claim is made from docs."},
+    {"id":"V4","title":"Interrupted import/save/export and shared-storage recovery","status":"UNEXECUTED","plan":"Interrupt each staged-generation/commit-marker and export publication step on local and actual shared storage; reopen, relocate paths, and compare source hashes.","acceptance":"Only a complete committed snapshot/export is accepted, last good state can be recovered, and source bytes remain unchanged."},
+    {"id":"V5","title":"Display, editing, and accessibility workflow","status":"UNEXECUTED","plan":"Test view changes against source identity and samples; test a recorded resample; exercise keyboard-only navigation, scoped annotations, undo/redo through reopen, progress/cancel, and readable metadata/error feedback.","acceptance":"Display actions leave source samples/identity unchanged; geometric ops create derived provenance; required workflows are operable without a mouse."}
+  ]
+}

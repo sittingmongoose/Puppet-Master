@@ -1,0 +1,85 @@
+{
+  "catalog_version": "research-stage-1",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "peaks.js #574 (open upstream bug)",
+      "url": "https://github.com/bbc/peaks.js/issues/574",
+      "status": "open as of capture 2026-08-10 filed",
+      "why_useful": "If any peaks.js-derived waveform component or pattern is adopted, track this: NaN-duration family recurs on attach-after-init; fix suggestion (draw-time isFinite guard + durationchange refresh) is proposed by reporter, not merged.",
+      "deferred_because": "No fix exists to follow through; used instead as causal-limit evidence."
+    },
+    {
+      "id": "L2",
+      "title": "waveform-data.js binary/JSON cache format spec",
+      "url": "https://github.com/bbc/waveform-data.js",
+      "status": "doc/peaks-format.md and doc/waveform-data-format.md returned 404 on main/master this session",
+      "why_useful": "Would pin the exact cache header layout (version, channels, sample_rate, samples_per_pixel, bits) for our cache file format.",
+      "deferred_because": "Path moved; JSON v2 field set evidenced indirectly via #574 reproduction data (S2). Budget."
+    },
+    {
+      "id": "L3",
+      "title": "OpenTimelineIO readthedocs pages (architecture, time ranges, media linkers)",
+      "url": "https://opentimelineio.readthedocs.io/",
+      "status": "otio-objects.html 404; facts taken from pinned README v0.18.1 (S9)",
+      "why_useful": "Media-linker docs would refine our OTIO export adapter design (relocation conventions).",
+      "deferred_because": "Adapter is optional interop, not core v1."
+    },
+    {
+      "id": "L4",
+      "title": "OpenTimelineIO-Plugins PyPI split (issue #1386)",
+      "url": "https://github.com/AcademySoftwareFoundation/OpenTimelineIO/issues/1386",
+      "status": "not fetched",
+      "why_useful": "Determines which adapters ship where post-0.16 if EDL/AAF export is wanted.",
+      "deferred_because": "Only relevant if OTIO adapter is adopted."
+    },
+    {
+      "id": "L5",
+      "title": "Ardour non-destructive playlist/region model",
+      "url": "https://ardour.org/",
+      "status": "not fetched this stage",
+      "why_useful": "Second opinion on region/playlist semantics and sample-accurate editing model for a native C++ alternative.",
+      "deferred_because": "Alternative A (Qt/C++) is bounded, not chosen; peaks.js/OTIO/Audacity coverage met the two-precedent requirement with concrete lessons."
+    },
+    {
+      "id": "L6",
+      "title": "OHMS (Oral History Metadata Synchronizer)",
+      "url": "https://www.ohms.org/",
+      "status": "EXCLUDED/failed: ohms.org now serves an unrelated charity site (One Heart Missions Services) per capture 87c29e02...; correct project source not located this session",
+      "why_useful": "Oral-history-native transcript-sync precedent would inform cue-table export conventions.",
+      "deferred_because": "No eligible primary source captured; no OHMS claims made. Re-locate via a library/archive primary page before use."
+    },
+    {
+      "id": "L7",
+      "title": "ASR-based draft transcription (e.g., faster-whisper) on 8 GB offline laptops",
+      "url": null,
+      "status": "not investigated",
+      "why_useful": "Complements aeneas for auto-generated draft cues; feasibility/latency/model-size tradeoffs unknown offline.",
+      "deferred_because": "Optional opportunity, not v1 obligation; requires dedicated measurement."
+    },
+    {
+      "id": "L8",
+      "title": "EBU BWF / broadcast-wave metadata chunks (bext, iXML)",
+      "url": null,
+      "status": "not investigated",
+      "why_useful": "Field recorders used by oral historians often write BWF; raw-chunk preservation rules in §3.1 would need chunk-level tests.",
+      "deferred_because": "libsndfile homepage-level fact insufficient for chunk fidelity claims; UNEXECUTED."
+    },
+    {
+      "id": "L9",
+      "title": "FFmpeg decode determinism across versions/builds",
+      "url": null,
+      "status": "not investigated",
+      "why_useful": "Affects compressed-input cache invalidation policy (decoder identity recorded in manifest).",
+      "deferred_because": "Mitigation (decode-on-import + manifest) designed; verification proposed W3-adjacent."
+    },
+    {
+      "id": "L10",
+      "title": "libsndfile formats.html full supported-format matrix",
+      "url": "https://libsndfile.github.io/libsndfile/formats.html",
+      "status": "not fetched",
+      "why_useful": "Would enumerate exact per-format read/write support for the v1 support matrix.",
+      "deferred_because": "Homepage-level support facts (S11) sufficient for the research-stage boundary; per-format matrix belongs in implementation validation."
+    }
+  ]
+}

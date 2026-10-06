@@ -1,0 +1,6 @@
+W2 PASS
+R1 upstream cell edit -> edited+downstream stale: {"A": {"status": "stale"}, "B": {"status": "stale"}, "C": {"status": "stale"}}
+R2/R3 dataset/env edit -> all current outputs stale: OK
+R4 restart: current->unverified, failed stays failed: {"A": {"status": "unverified"}, "B": {"status": "stale"}, "C": {"status": "failed"}}
+R5 interrupted mid-flight cell -> unverified, not current: {"A": {"status": "current"}, "B": {"status": "unverified"}, "C": {"status": "current"}}
+R6 clean replay: error -> failed + downstream unverified: {"A": {"status": "current"}, "B": {"status": "failed"}, "C": {"status": "unverified"}}

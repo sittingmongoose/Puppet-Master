@@ -1,0 +1,88 @@
+{
+  "stage": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+  "labeling": "executed_by_candidate | executed_only_by_evaluator (none present) | proposed_UNEXECUTED",
+  "executed_by_candidate": [
+    {
+      "id": "W1-failed-attempt",
+      "execution_id": "exec-kc3bq0pg",
+      "executed_utc": "2026-10-06T06:04:31Z",
+      "exit_code": 1,
+      "summary": "First run of the combined witness; my own assertion was over-strict (expected first quarantine row >= 2; actual first hit was row 1 '3.5'). W1 prints captured; W2/W2b did not run. Superseded by W2-witness-run; recorded honestly, not cited as support.",
+      "code_sha256": "2ea7b2c16a599b66ecf0377610491ab6b3831e4203d44970e185a65463a8ff49",
+      "stdout": "W1 naive per-value types: ['int', 'float', 'NoneType', 'NoneType', 'str', 'int'] / W1 sample-first coercion: ['int', 'NoneType', 'NoneType', 'NoneType', 'NoneType', 'int'] / W1 sum naive vs sample-first: 57.5 vs 54 / W1 quarantine records (no silent drop): [{\"row\": 1, \"raw\": \"3.5\", \"expected\": \"int\"}, {\"row\": 4, \"raw\": \"1,000\", \"expected\": \"int\"}]",
+      "stderr_excerpt": "AssertionError: late-row type failure caught only by full application"
+    },
+    {
+      "id": "W2-witness-run",
+      "execution_id": "exec-q8c_9jfp",
+      "executed_utc": "2026-10-06T06:05:05Z",
+      "exit_code": 0,
+      "author": "candidate (admitted affordable model)",
+      "environment": "experiment's admitted isolated execution capability: fresh sandbox, stdlib-only Python, no network (new empty namespace), memory cap 256 MiB (peak ~12 MiB), wall cap 5 s; no host secrets, evaluator keys, or private files touched",
+      "input_data": {
+        "description": "tiny synthetic values only; no real datasets",
+        "w1_column_strings": ["12", "3.5", "NA", "", "1,000", "42"],
+        "w2_env": "py3.11+duckdb1.1",
+        "w2_source_versions": {"v1": "datasetbytes-v1", "v2": "datasetbytes-v2"},
+        "w2b_rows": [{"k": 2, "i": 0}, {"k": 1, "i": 1}, {"k": 2, "i": 2}]
+      },
+      "code_sha256": "a8dbc6ba722e8baf80c8d34122eaee1541daa1b67c918ad046db88be5c43b80e",
+      "code_full_text_ref": "authored in-turn by candidate; reproduced below in checks[] entries",
+      "stdout_sha256": "0144fe597902fa81e82bed09b9b808b1b7d1c45297c003ac6506263f5992d1a6",
+      "stderr": "",
+      "stdout": "W1 naive per-value types: ['int', 'float', 'NoneType', 'NoneType', 'str', 'int'] / W1 sample-first per-value types: ['int', 'NoneType', 'NoneType', 'NoneType', 'NoneType', 'int'] / W1 sum naive vs sample-first: 57.5 vs 54 / W1 quarantine records (no silent drop): [{\"row\": 1, \"raw\": \"3.5\", \"expected\": \"int\"}, {\"row\": 4, \"raw\": \"1,000\", \"expected\": \"int\"}] / W2 baseline c1,c2: current current / W2 after source-data change c1,c2: stale stale / W2 after kernel restart: ['unverified', 'unverified'] / W2b stable order idx: [1, 0, 2] deterministic: [1, 0, 2] / W1+W2+W2b OK exit 0",
+      "checks": [
+        {
+          "id": "EC-W1",
+          "claim": "Schema/conversion policy — not the file — determines column types and aggregates; sample-first inference misclassifies values beyond (and even at the edge of) its sample; failed conversions are quarantined with row/raw/expected metadata instead of silently dropped (brief §5 'do not silently delete malformed records', 'preview sampling must not be represented as proof').",
+          "code_sketch": "infer_naive tries int then float per value; infer_sample takes kind from head[0] of first 2 rows then forces it on all rows, quarantining failures; sums compared; asserts sums differ and a quarantine row index >= 2 exists",
+          "expected_and_observed": "Expected: naive yields mixed int/float/str ('1,000' stays str) and sum 57.5; sample-first forces int everywhere except declared-NA, yielding sum 54 with '3.5' (row 1) and '1,000' (row 4) quarantined. Observed exactly that; exit 0.",
+          "justification": "Arithmetic over explicit literal data; divergence follows from the policies' definitions and is asserted before printing OK"
+        },
+        {
+          "id": "EC-W2",
+          "claim": "Hash-ledger status rules: outputs are 'current' only while recorded (code, env, input-content) hashes match; a source-data content change marks downstream outputs 'stale' in the same pass; a kernel restart demotes all outputs to 'unverified' and nothing auto-promotes to 'current' (brief §7; proposal §4).",
+          "code_sketch": "sha256 of (code, env, input) per cell record; recompute() sets status to 'stale' on any hash mismatch; restart loop sets every record to 'unverified'; assertions enforce the transition sequence current,current -> stale,stale? -> unverified,unverified",
+          "expected_and_observed": "baseline (current, current); after source change (stale, stale); after restart ['unverified','unverified']; all assertions passed, exit 0",
+          "justification": "Deterministic pure function of recorded hashes; demonstrates the rule, not any real kernel's behavior"
+        },
+        {
+          "id": "EC-W2b",
+          "claim": "Stable vs deterministic ordering distinction: sorting duplicate keys by key only (stable) preserves input order, while a total key (key + original index) is deterministic; both recorded explicitly (proposal §5, §10).",
+          "expected_and_observed": "stable idx [1,0,2], deterministic idx [1,0,2] for the chosen data (asserted); exit 0. Note: for this specific dataset the two orders coincide on the sorted prefix pair by construction; the check asserts the tie-break mechanism is applied and recorded, not that the orders always differ.",
+          "justification": "Pure stdlib sorted() semantics; honest note that this tiny case does not itself exhibit divergence — the mechanism (explicit total-order key) is what the product mandates"
+        }
+      ],
+      "scope_limits": [
+        "Isolated component check of candidate-authored status/inference rules only; the execution receipt itself states 'execution receipts do not prove semantic correctness or candidate consumption'",
+        "No notebook runtime, no DuckDB, no ipykernel, no large data involved",
+        "Tiny synthetic data; demonstrates rule mechanics, not product behavior at scale"
+      ]
+    }
+  ],
+  "executed_only_by_evaluator": [],
+  "proposed_UNEXECUTED": [
+    {
+      "id": "PU-W3",
+      "claim_to_test": "5 GB CSV streams through DuckDB with an explicit memory_limit on the 8-core/16 GB envelope; global sort either spills with declared temp-space bound or refuses explicitly (proposal §10, §13)",
+      "method_sketch": "generate 5 GB synthetic CSV; run row-count + filtered aggregate under memory_limit=~12 GB; compare to known-answer; record RSS/timing; repeat with global sort to observe spill/refusal",
+      "status": "UNEXECUTED"
+    },
+    {
+      "id": "PU-W4",
+      "claim_to_test": "Clean-replay E2E: fresh offline kernel from pylock + pinned dataset hashes reproduces identical output hashes; undeclared write/network access demotes outputs to unverified/failed-with-undeclared-access (proposal §6, §13)",
+      "method_sketch": "5-cell synthetic notebook via kernel subprocess with empty network namespace; replay twice, compare normalized output hashes; inject undeclared access; assert status demotion",
+      "status": "UNEXECUTED"
+    },
+    {
+      "id": "PU-W5",
+      "claim_to_test": "Bundle round-trip on a second machine/environment: rebuild env from pylock.toml, re-verify datasets by content hash, compare exported manifest (proposal §9, §11, §13)",
+      "status": "UNEXECUTED"
+    },
+    {
+      "id": "PU-W6",
+      "claim_to_test": "Validation pass catches sniffer ambiguity regardless of engine version: ambiguous-dialect fixture read strictly (all columns, full scan) yields clean+quarantine counts equal to a reference count (proposal §13, §14)",
+      "status": "UNEXECUTED"
+    }
+  ]
+}

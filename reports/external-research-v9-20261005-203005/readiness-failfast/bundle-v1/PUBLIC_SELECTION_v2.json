@@ -1,0 +1,128 @@
+{
+  "files": [
+    {
+      "bytes": 9783,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/stage_worker.py",
+      "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+    },
+    {
+      "bytes": 22132,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/glm_stage.py",
+      "sha256": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489"
+    },
+    {
+      "bytes": 14435,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_support.py",
+      "sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a"
+    },
+    {
+      "bytes": 5511,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_guard.py",
+      "sha256": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2"
+    },
+    {
+      "bytes": 1379,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_gate.py",
+      "sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af"
+    },
+    {
+      "bytes": 256,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_guard.py",
+      "sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df"
+    },
+    {
+      "bytes": 4860,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_bridge.py",
+      "sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d"
+    },
+    {
+      "bytes": 1197,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_proxy.py",
+      "sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7"
+    },
+    {
+      "bytes": 1845,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/external_release.py",
+      "sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+    },
+    {
+      "bytes": 10110,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/profile.py",
+      "sha256": "324ecc3a5ad555b3aac55835577ed20baf91fc135d4010ce5f6bacc78dc585be"
+    },
+    {
+      "bytes": 6220,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/clock_binding.py",
+      "sha256": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481"
+    },
+    {
+      "bytes": 3574,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/task_fragment.py",
+      "sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+    },
+    {
+      "bytes": 7395,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/readiness.py",
+      "sha256": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07"
+    },
+    {
+      "bytes": 9697,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/test_readiness.py",
+      "sha256": "a755f49cdf500556d073b6d649628df048b393af9de60d2b5edee68ef910c10f"
+    },
+    {
+      "bytes": 4226,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/verify_preservation.py",
+      "sha256": "f63b1e451306004d2334afa4a61eb4b0c177550381b0e0849544c97f9685eeb8"
+    },
+    {
+      "bytes": 9679,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/freeze_release.py",
+      "sha256": "28469768377ff17a5eb5f8f088f1689523651e01429636b1593d3e55daae2262"
+    },
+    {
+      "bytes": 1910,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/README.md",
+      "sha256": "3f1ec94e72641ff14476b75d3eb3772014312afd4ef3fe338019c70c56e562dc"
+    },
+    {
+      "bytes": 4979,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/RESOURCE_CONTRACT.json",
+      "sha256": "8163ed0bf561c418a74fff6899fb04b3f3bede899d634a788b0fc56d8050a248"
+    },
+    {
+      "bytes": 1825,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/VERIFICATION.json",
+      "sha256": "9ce0f32616b96e024378fb4474eb85baf42a72af1a358625e4b2d49c4c043f8a"
+    },
+    {
+      "bytes": 2697,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/SOURCE_PRESERVATION.json",
+      "sha256": "2a7f9a2cbb488dc1842e79e5521605a9c5de8055cc246a268cd22c2c340bbf93"
+    },
+    {
+      "bytes": 425,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/START.json",
+      "sha256": "fb285a3009374a0a401b5fbb273c4e545fc8859f06c9564d324b41a36e865682"
+    },
+    {
+      "bytes": 8144,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+      "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+    },
+    {
+      "bytes": 2550,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/OUTBOX.json",
+      "sha256": "dcf8e253c9ff4f2c08accd5628334d4d87c0287c41cde573b3d23dd3185cdda7"
+    },
+    {
+      "bytes": 791,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/CLOSURE.json",
+      "sha256": "289cf99da8347aa1a7775647b2f9acc17c687d5ff6dbaa8f7cd2a777b711168e"
+    }
+  ],
+  "predecessor_selection_sha256": "465c2ac115143e5c49e79b54651a19bf0191fa7eae23744ebdbc361895f5cffd",
+  "prospective_only": true,
+  "schema": "er9.positive-public-selection.v1",
+  "scope": "source and synthetic control-only checks; no raw runtime, Task/objective/auth/candidate/evaluator contents"
+}

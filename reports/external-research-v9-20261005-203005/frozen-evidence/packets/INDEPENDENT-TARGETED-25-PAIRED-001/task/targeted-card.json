@@ -1,0 +1,85 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "967c76b4501d9ceed30cef16ebf1ebff3533f2665f778eb73165690f09d96c92",
+  "retained_exact_fields": {
+    "schema": "er9.diagnostic_method_card.v1",
+    "pair_id": "D-V06-A-DEFERRED-R001-CLOCK-R002",
+    "track": "A",
+    "case_id": "D-V06-A-v1",
+    "domain": "A",
+    "task_name": "Local calibrated annotation repair with intact unrelated finding",
+    "task": "Use a frozen candidate report with related calibrated annotation/export statements, a condition/cross-reference, a proposed UNEXECUTED validation and an unrelated useful supported finding. Apply supported critique while preserving complete current delivery.",
+    "question": "Use related findings with conditions, cross-references, a corrected assertion, an unexecuted validation idea and an independent unaffected finding.",
+    "source_scope": "Complete original candidate proposal and same critique, sources and catalogs; exact-patch treatment uses generic zero-fuzz text application, no source semantics by host.",
+    "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+    "discovery_conclusion_allowed": false,
+    "integration_limit": "Reuse the working artifact format; do not restart the old per-block parser project. The whole final remains the scored output.",
+    "brief_path": "briefs/development-A-biomedical.md",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "neutral_task_prompt_path": "diagnostics/D-V06-A-TASK.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json",
+      "lead_inventory": "out/final/leads.json"
+    },
+    "important_checks": [
+      {
+        "id": "D-V06-A-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V06-A-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V06-A-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "no_truth_key_in_candidate": true,
+    "coverage_path": "diagnostics/D-V06-A-coverage.json"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "both_v06_bundle_excluded",
+    "candidate_authorship",
+    "candidate_family",
+    "card_version",
+    "clock_behavioral_version",
+    "clock_eligibility_ref",
+    "clock_factor_note",
+    "clock_source_pair_id",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "observed_effort",
+    "observed_model",
+    "old_counterpart_and_failures_preserved",
+    "outcome",
+    "prospective_version",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "selected_family_certificate_ref",
+    "source_card_ref",
+    "source_pair_id",
+    "source_roles_native_only",
+    "source_slot",
+    "stages",
+    "status",
+    "treatment"
+  ],
+  "note": "No sourceanswers/status/modelhistory/economics/oldgrades added; targetcoverage inherited sourcepair metadata preservedbyteexact separately."
+}

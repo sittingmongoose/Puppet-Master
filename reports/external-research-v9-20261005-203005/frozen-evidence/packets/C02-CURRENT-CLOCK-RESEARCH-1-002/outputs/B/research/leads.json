@@ -1,0 +1,104 @@
+{
+  "catalog": "out/research/leads.json",
+  "stage": "research",
+  "note": "Deferred or unresolved leads preserved honestly. Nothing here is claimed as verified. Status values: DEFERRED (worthwhile, out of v1 scope), UNVERIFIED (needed before a dependent decision), UNREAD (fetch failed or content not machine-readable this session), UNEXECUTED (proposed check not run).",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Mergin Maps synchronisation/conflict mechanism (whole-product precedent)",
+      "why_relevant": "Closest whole-product analogue to the brief's bundle-exchange workflow; likely documents an explicit conflict-file approach for diverged QGIS projects.",
+      "status": "UNREAD",
+      "evidence_state": "Docs shell captured (sources.json S13); VitePress body not machine-read; raw markdown 404 on master and main. No conflict-mechanism claim was drawn from it.",
+      "next_step": "Locate the docs source repository (or fetch the VitePress content chunk) and read the conflict-file description; compare with the proposal's oplog contract."
+    },
+    {
+      "id": "L2",
+      "title": "OGC GeoPackage as single-file project container (alternative B)",
+      "why_relevant": "Standard container for tiles+features could replace the custom SQLite+MBTiles bundle; likely better interoperability with QGIS/GDAL ecosystems.",
+      "status": "DEFERRED/UNVERIFIED",
+      "evidence_state": "Not investigated this session; no license or extension audit performed; the proposal blocks v1 adoption on that audit.",
+      "next_step": "Read the GeoPackage spec's extension/RTree provisions and the implementer license terms; compare projection-metadata (gpkg_spatial_ref_sys) handling with the proposal's transform descriptors."
+    },
+    {
+      "id": "L3",
+      "title": "CRDT-based merge (e.g. Automerge family) — opt-in alternative A",
+      "why_relevant": "Automatic convergence for peer sync; a later real-time collaboration lane.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated; v1 rejects it as default because the brief requires inspectable conflicts and W2 shows the silent-loss hazard of naive automatic merges.",
+      "next_step": "If real-time sync is pursued, evaluate CRDT conflict semantics (concurrent delete vs edit) against the brief's 'no silent loss' requirement."
+    },
+    {
+      "id": "L4",
+      "title": "OSM Tile Usage Policy exact limits",
+      "why_relevant": "Gate for any bulk tile extraction/bundling code; OSMF links it from the copyright page (S11) and states no free third-party tile service.",
+      "status": "UNREAD",
+      "evidence_state": "Fetch attempt failed once with a tool boundary error (OSError); URL pinned: https://operations.osmfoundation.org/policies/tiles/",
+      "next_step": "Retry capture; record bulk-download rules before writing any tile-fetch tooling."
+    },
+    {
+      "id": "L5",
+      "title": "QField / QFieldCloud delta-based offline sync",
+      "why_relevant": "Second whole-product precedent family for project-copy reconciliation in the QGIS ecosystem.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated.",
+      "next_step": "Read QFieldCloud delta/conflict documentation; compare divergence bookkeeping with the proposal's base_rev scheme."
+    },
+    {
+      "id": "L6",
+      "title": "ODK / KoboToolbox form-driven field collection",
+      "why_relevant": "Different mechanism family (form-first rather than map-first) for offline observation capture; relevant to form design and media attachment patterns.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated.",
+      "next_step": "Review ODK XForms/instance attachment handling for photo/hash/id patterns."
+    },
+    {
+      "id": "L7",
+      "title": "MapLibre GL JS offline rendering",
+      "why_relevant": "Candidate rendering engine for MBTiles/vector basemaps on tablets; opportunity lane for broad map-source support.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated.",
+      "next_step": "Verify offline/mbtiles:// source support and license in the bound version."
+    },
+    {
+      "id": "L8",
+      "title": "SpatiaLite as spatial layer alternative to R*Tree",
+      "why_relevant": "Alternative spatial index/function family with geometry functions; could replace the R*Tree + exact-filter two-stage query.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated.",
+      "next_step": "Compare function coverage and build/portability burden against the R*Tree design."
+    },
+    {
+      "id": "L9",
+      "title": "GeoPackage RTree extension",
+      "why_relevant": "Bridges leads L2/L8: indexed geometry inside a standard container.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated.",
+      "next_step": "Read the gpkg RTree extension trigger behavior before any GeoPackage adoption."
+    },
+    {
+      "id": "L10",
+      "title": "SQLite WAL/backup/recovery specifics",
+      "why_relevant": "Underpins the interrupted-save/merge recovery contract (validation item 4).",
+      "status": "UNEXECUTED",
+      "evidence_state": "Recovery design relies on staging + commit markers plus documented rtreecheck (S1 §7.2) and changeset abort semantics (S12 §2.2); WAL crash behavior itself was not documented-sourced here.",
+      "next_step": "Capture sqlite WAL documentation; implement and run the SIGKILL recovery suite."
+    },
+    {
+      "id": "L11",
+      "title": "pyproj version binding follow-through (3.7.2 → ≥3.8.0)",
+      "why_relevant": "always_xy on from_pipeline exists only from 3.8.0 (PR #1566, milestone 3.8.0; S6/S7); stable docs today are 3.7.2 (S3); open defect #1644 targets 3.8.1.",
+      "why_relevant_extra": "If ≥3.8.0 is unavailable on a platform, fall back to from_crs-based construction (always_xy since 2.2.0, S3).",
+      "status": "UNVERIFIED",
+      "evidence_state": "Release binding established from PR metadata; actual wheel availability per platform not checked.",
+      "next_step": "Verify wheel availability for the target OS set; re-check assumptions invalidated by the 3.8.1 fix for #1644."
+    },
+    {
+      "id": "L12",
+      "title": "Discrete global grid systems (H3/S2) as viewport index alternative",
+      "why_relevant": "Different index mechanism family for bounded spatial access; potential simplification of cache invalidation.",
+      "status": "DEFERRED",
+      "evidence_state": "Not investigated; R*Tree precedent (S1) chosen for v1.",
+      "next_step": "Only if R*Tree operational costs (rebuild, roundoff handling) prove problematic at 250k."
+    }
+  ]
+}

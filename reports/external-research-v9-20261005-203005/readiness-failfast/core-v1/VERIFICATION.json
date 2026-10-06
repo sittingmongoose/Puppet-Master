@@ -1,0 +1,32 @@
+{
+  "actual_kernel_placement_retested": false,
+  "actual_native_model_Goal_calls": 0,
+  "coverage": [
+    "positive owned termination immediate no poll",
+    "foreign-unit/component/guardPID/original-stop/profile/birth rejected",
+    "missing terminal/quiet/exit/ownership evidence UNKNOWN retains original wait",
+    "unknown/live state or nonempty cgroup/nonzero PID rejected",
+    "future closure rejected",
+    "original deadline precedes late failure classification",
+    "pending record can become ready",
+    "exclusive bounded ownership intent and alias rejection",
+    "actual Protocol parent-created PID mapping",
+    "production g.run with synthetic Protocol stops before Goal set and runs unchanged cleanup"
+  ],
+  "current_live_or_old_files_changed": false,
+  "kernel_cap_placement_basis": "unchanged previously pinned and verified enforcement code; no new kernel/cap behavior",
+  "observed_utc": "2026-10-06T10:30:15.218793+00:00",
+  "result": "PASS",
+  "schema": "er9.glm.readiness-failfast-verification.v1",
+  "source_preservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/SOURCE_PRESERVATION.json",
+    "sha256": "4844d1dc84c6fbec763bbc39f3b69b3e2d9d1b3ba26c10e492a5a69a2b9c167a"
+  },
+  "source_scope": "new successor only; 9 runtime files and5 enforcement functions byte-identical;3 files differ only by declared additions/version source closure",
+  "synthetic_Protocol_fixture": "no native CLI subprocess, no account/auth reads, no provider/model/Goal RPC",
+  "test_command": [
+    "/usr/bin/python3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/test_readiness.py"
+  ],
+  "tests": 16
+}

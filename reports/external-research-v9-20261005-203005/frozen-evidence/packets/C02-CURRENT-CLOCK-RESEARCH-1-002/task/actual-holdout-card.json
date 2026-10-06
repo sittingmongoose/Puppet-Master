@@ -1,0 +1,58 @@
+{
+  "schema": "er9.exact-holdout-source-card-projection.v1",
+  "original_card_sha256": "94836d2a9d003a23b24b0420a9230ebf35906a9ea2c95c5b6fe441ef847063d4",
+  "retained_exact_fields": {
+    "schema": "er9.locked-confirmation-case.v1",
+    "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+    "case_id": "H2-v1",
+    "holdout_code": "H2",
+    "brief_path": "LAB_ROOT/dev/diagnostic-runner/confirmation-preparation/released/H2.md",
+    "coverage_path": "LAB_ROOT/dev/diagnostic-runner/confirmation-preparation/released/H2-coverage.json",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "common_output_contract": "prompts/output_contract.md",
+    "initial_input": "BRIEF_ONLY_CANDIDATE_SOURCE_DISCOVERY",
+    "artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "lead_inventory": "out/final/leads.json",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json"
+    },
+    "critical_source_and_delivery_duties": {
+      "complete_actual_final4_required": true,
+      "independent_implementation_precedents_min": 2,
+      "real_issue_fix_regression_chain_required": true
+    },
+    "source_answers_or_prior_development_in_inputs": false,
+    "whole_case_or_all_diagnostic_PASS_required": false
+  },
+  "omitted_fields": [
+    "actual_runtime_tools_resource_pins_required_before_outputs",
+    "allocation",
+    "candidate_family",
+    "card_version",
+    "clock_behavior_version",
+    "control_competent_and_contemporaneous",
+    "control_stages",
+    "declared_runtime_closure",
+    "exact_locked_bundle",
+    "execute_all_four_after_early_FAILURE",
+    "execution_gate",
+    "method_id",
+    "no_feedback_between_confirmation_comparisons",
+    "observed_model",
+    "policy_ref",
+    "quality",
+    "recipe",
+    "release_receipt_ref",
+    "requested_effort",
+    "requested_model",
+    "reservation_ref",
+    "selection_lock_ref",
+    "source_pair_id",
+    "source_slot",
+    "status",
+    "track",
+    "treatment_stages"
+  ]
+}

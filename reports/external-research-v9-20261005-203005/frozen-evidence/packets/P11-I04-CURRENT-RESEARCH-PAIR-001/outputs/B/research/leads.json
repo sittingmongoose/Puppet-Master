@@ -1,0 +1,70 @@
+{
+  "schema": "er9.leads-catalog.v1",
+  "stage": "research",
+  "items": [
+    {
+      "id": "L1",
+      "type": "unresolved",
+      "title": "First nbclient release containing the kernel-liveness fix (PR #90) not pinned",
+      "detail": "The fix merged 2020-07-10 (S4), but the captured changelog only reaches back to 0.5.7 (S2), so the first PyPI release carrying DeadKernelError-on-death is not established from captures. Presence of the mechanism on main in 2026 is corroborated by open PR #349's description of _async_poll_kernel_alive (S3).",
+      "next_check": "Fetch nbclient git tags/PyPI release history around 2020-07..2020-08 and bisect the changelog; or pin nbclient to the current line (>= 0.10.4 / 0.11.0) where presence is corroborated.",
+      "status": "open"
+    },
+    {
+      "id": "L2",
+      "type": "unresolved",
+      "title": "DuckDB silent-ingestion fixes (#26212 ICU TIMESTAMPTZ, #26195 buffer_size row drop) unmerged at capture",
+      "detail": "Both bugs are 'reproduced' against v1.5.5 and the v2.0.0-alpha nightlies (S8); fixes are open PRs, so no release fixes them as of 2026-10-06 capture. Until a fixed release lands, TIMESTAMPTZ/TIMETZ columns read via read_csv with ICU loaded (CLI/Python default) can silently NULL, and an explicit buffer_size can silently drop an oversized final row.",
+      "next_check": "Re-verify after the next DuckDB release: fetch release notes for #26212/#26195 and re-run the issue repro scripts against the pinned version.",
+      "interim_rule": "Pin the DuckDB engine version per project; include both repro cases in the ingestion validation profile; treat TIMESTAMPTZ CSV columns in affected versions as untrusted unless the contract's reject-ledger shows expected reject counts.",
+      "status": "open"
+    },
+    {
+      "id": "L3",
+      "type": "unresolved",
+      "title": "DuckDB unfinished-result close commits partial writes (#26314, open, Breaking Change)",
+      "detail": "Closing an unfinished streaming result currently commits worker-thread writes on autocommit, and the store_rejects path is 'unprotected' per the PR body (S8). Affects cancel/rollback semantics if SQL steps are allowed to write inside a clean replay.",
+      "next_check": "Track #26314 series merge and release; until then keep clean-replay SQL steps read-only against sources, writing outputs only to staging files that are atomically renamed (write-temp + fsync + rename).",
+      "status": "open"
+    },
+    {
+      "id": "L4",
+      "type": "optional",
+      "title": "nbclient progress/cancel hooks for the replay UI",
+      "detail": "on_cell_executed hook (#222) and error_on_interrupt trait (#224) exist since 0.6.1 (S2). Maps directly onto the required 'inspect progress, cancel, see per-cell status' UX without building a custom kernel client.",
+      "next_check": "Prototype: attach on_cell_executed to emit execution events; verify cancel path marks mid-flight cells unverified (mirrors W2 R5).",
+      "status": "deferred"
+    },
+    {
+      "id": "L5",
+      "type": "optional",
+      "title": "Jupyter output trust/signing (trust database) not investigated",
+      "detail": "Whether saved outputs should carry signatures is unverified this stage; no claim is made. The status model (current/stale/failed/unverified) covers freshness, not authenticity.",
+      "next_check": "Read jupyter_server trust docs and nbconvert trust mechanism if product wants signed manifests.",
+      "status": "deferred"
+    },
+    {
+      "id": "L6",
+      "type": "optional",
+      "title": "pyarrow dataset write-safety options",
+      "detail": "S6 documents basename_template overwrite risk, max_open_files default 900, max_rows_per_file. Useful for concurrent-writer safety rules in the data plane.",
+      "next_check": "Encode unique basename templates per run id in the writer; test two concurrent writers on one dataset dir.",
+      "status": "deferred"
+    },
+    {
+      "id": "L7",
+      "type": "rejected",
+      "title": "Import blacklist as notebook isolation",
+      "detail": "Rejected per brief and per sandbox receipt limitations ('kernel isolation supplied by Bubblewrap/systemd, not AST filters'): blocking imports does not confine a process. The execution boundary must be OS-level (process/container + filesystem allowlist + default-deny network), not source inspection.",
+      "status": "rejected"
+    },
+    {
+      "id": "L8",
+      "type": "optional",
+      "title": "Dedicated data-versioning precedent (DVC or equivalent) not investigated",
+      "detail": "Dataset identity in this proposal is content-hash + sidecar manifest, which is self-contained; a full data-versioning tool was out of scope for the capture budget and remains an alternative for larger teams.",
+      "next_check": "If teams need dataset lineage across many projects, evaluate DVC-style pipelines; do not adopt before the single-project manifest proves insufficient.",
+      "status": "deferred"
+    }
+  ]
+}

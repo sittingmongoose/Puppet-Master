@@ -1,0 +1,31 @@
+{
+  "all_waits_and_validation_overhead_charged": true,
+  "billing_dollars": "UNKNOWN",
+  "campaign_complete": false,
+  "clock_reset": false,
+  "closed_measured_monotonic_ns": 112446449786541,
+  "closed_measured_utc": "2026-10-06T10:20:27.592912+00:00",
+  "helper_provider_usage": "UNKNOWN",
+  "late_TD24_clock_pin": {
+    "path": "accounting/cohort-018/TD24-late-clock.safe.json",
+    "sha256": "72305d071a5a31ba5faaad19f3b804ad816b65117344faca12848f8a072d037d"
+  },
+  "late_clock_after_primary_usage_cutoff_not_retrofitted": true,
+  "later_closure_pointer_notices_and_actual_FINAL_delivery": "UNKNOWN_OUTSIDE_THIS_RECEIPT_MEASUREMENT",
+  "new_candidate_Goals_or_provider_invocations_by_accounting": false,
+  "owner_acknowledgments": "UNKNOWN_NOT_WAITED_FOR",
+  "primary_and_late_clock_required_notice_tool_returns_observed": true,
+  "primary_selection_pin": {
+    "path": "accounting/cohort-018/PUBLIC_SELECTION.json",
+    "sha256": "8ce1ea396221d22399f06e99693dc577bc5a32db62c6cef4357d117072a4d7f9"
+  },
+  "report_ready_elapsed_seconds_subset": 254.111137752,
+  "schema": "er9.accounting.required-notice-closure.v1",
+  "scope": "Ownbounded metadata work includes required primary and lateTD24clock notices. Reportready/source/reviewer phases nested, not extracharges. Primary018 immutable; C01Cstart/usage/billingUNKNOWN andallfailedcosts retained. No grade/source/body/native-admission/stop inference. ImmediateFINAL follows closurepointers.",
+  "start_pin": {
+    "path": "accounting/cohort-018/START.json",
+    "sha256": "f4e0b24d8791595d8b57a37c36d9360eca64912dd94492cd98a55ef90b2407ff"
+  },
+  "whole_limit_seconds": 1800,
+  "whole_through_required_primary_and_late_clock_root_foreman_publisher_keeper_ops_notices_seconds": 526.189386696
+}

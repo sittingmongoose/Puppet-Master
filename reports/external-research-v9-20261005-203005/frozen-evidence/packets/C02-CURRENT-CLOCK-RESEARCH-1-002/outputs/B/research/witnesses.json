@@ -1,0 +1,47 @@
+{
+  "catalog": "out/research/witnesses.json",
+  "stage": "research",
+  "execution_environment": "mcp python_execute — admitted isolated sandbox; Python stdlib only; limits per run: wall 5s, cpu 3s, memory 256 MiB; no network. Kernel isolation by Bubblewrap/systemd per receipt.",
+  "label_convention": "All entries below are 'executed by candidate'. No evaluator-executed checks were provided at this stage.",
+  "scope_statement": "Both witnesses are isolated component/arithmetic demonstrations of specific failure modes and semantics contracts. They do not exercise PROJ, SQLite, or any product code, and do not establish whole-application behavior.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "title": "Antimeridian discontinuity in a short track (naive vs unwrapped midpoint)",
+      "labels": ["executed by candidate"],
+      "execution_id": "exec-5zu1odb2",
+      "code_sha256": "2b39a3199d31f908a1d82a7e5e6edbbce43a39079c35410ebedd2edaddd5e937",
+      "data": {"lon1": 179.99, "lat1": -17.0, "lon2": -179.99, "lat2": -17.0},
+      "input_justification": "Two track vertices 0.02° apart across the antimeridian (Fiji region): the canonical coordinate-domain discontinuity named in the brief.",
+      "expected_behavior": "Naive linear midpoint of longitude lands near lon 0° (~half the globe away); longitude unwrapping (+360° before averaging, then re-wrapping) yields lon ≈ -180° and the true short path; haversine arithmetic (stdlib math only) quantifies the detour.",
+      "stdout": "naive midpoint lon: 0.0\nproper midpoint lon (wrapped to [-180,180]): -180.0\ntrue segment length (km): 2.127\npath length through naive midpoint (km): 32469.0\npath length through proper midpoint (km): 2.127\nnaive/proper detour ratio: 15267.1\n",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Pure arithmetic demonstration of the hazard; validates no product code, no real projection library, no rendering path. Product antimeridian splitting remains proposed/UNEXECUTED."
+    },
+    {
+      "id": "W2",
+      "title": "Divergent-copy merge: LWW silent loss vs explicit three-way conflict + uncommitted classification",
+      "labels": ["executed by candidate"],
+      "execution_id": "exec-8tn24g2_",
+      "code_sha256": "1263918d7a73055706238440b15a744df5c5893893ad3eda24c0230be0be212d",
+      "data": {"base": "r1 rev3 'creek crossing'", "copy_a": "r1 rev4 'trees dense, canopy 80%' + new r2 + uncommitted draft r4", "copy_b": "r1 rev4 'trees sparse, canopy 30%' + new r3"},
+      "input_justification": "Minimal two-copy divergence over the same field (the brief's 'combine a colleague's changed project copy' case) plus an interrupted/draft record to exercise reopen classification.",
+      "expected_behavior": "Last-writer-wins silently discards one side's note; explicit base-vs-(A,B) field comparison emits exactly one inspectable conflict entry preserving base/copy_a/copy_b, keeps the committed base value pending resolution, and classifies the draft (rev 0, no commit marker) as uncommitted at reopen.",
+      "stdout": "LWW merged r1.note: trees dense, canopy 80%\nLWW silently dropped B's edit: True\nexplicit-merge conflict count: 1\nexplicit-merge conflicts: [\n {\n  \"record\": \"r1\",\n  \"field\": \"note\",\n  \"base\": \"creek crossing\",\n  \"copy_a\": \"trees dense, canopy 80%\",\n  \"copy_b\": \"trees sparse, canopy 30%\"\n }\n]\nmerged r1 kept base note pending resolution: creek crossing\nuncommitted drafts classified at reopen: ['r4']\n",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Synthetic dict-based model in stdlib only; no SQLite, no oplog persistence, no crash injection. Demonstrates the merge semantics contract proposed in §7 of the research proposal; the product merge engine and recovery path remain proposed/UNEXECUTED (validation items 3–4)."
+    }
+  ],
+  "proposed_unexecuted_checks": [
+    "CRS corpus tests pinned to lat-first targets (EPSG:2056, EPSG:4326) asserting always_xy and area-of-use flagging",
+    "Transactional import of 250k-row synthetic CSV with 1% malformed rows (all-or-nothing + error report)",
+    "Merge property tests: every differing field ends in {applied, conflict, rejected-with-reason}; no silent loss",
+    "SIGKILL-during-save/import/merge recovery: reopen classifies staged vs committed; rtreecheck passes",
+    "Antimeridian/zone-edge track suite incl. W1 coordinates; export equals stored geometry",
+    "250k viewport-latency and streaming-export benchmark (engineering target)",
+    "Bundle-license conformance check vs MBTiles attribution metadata and OSM attribution guidelines",
+    "Accessibility pass (keyboard-only editing, screen-reader labels)"
+  ]
+}

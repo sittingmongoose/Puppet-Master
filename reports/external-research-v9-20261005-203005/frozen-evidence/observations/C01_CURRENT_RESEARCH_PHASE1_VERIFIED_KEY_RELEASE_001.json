@@ -1,0 +1,331 @@
+{
+  "schema": "er9.independently-verified-P1-key-release.v1",
+  "evaluation_id": "independent-confirmation-C01-current-research-1",
+  "observed_utc": "2026-10-06T09:57:47.300677+00:00",
+  "phase1_freeze_sha256": "39e756a2c146989bc5144e78ab21c16bdd4c942438980df273830be7b1bbdd20",
+  "verified_files": [
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/reservation.json",
+      "sha256": "baa16c3bee13351e6cf4ec6e7d1bd8e22751e12cb3392de4f1e5aeb65fa2c507",
+      "bytes": 1160
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/source_start.json",
+      "sha256": "32552c444077a5b0f3bead8a89cd46bc6c20a63af965dc07b7eba685f2d9b7a4",
+      "bytes": 491
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase1_input_pins.json",
+      "sha256": "6369aead2318e8339d7abdf736ee19dde3fca839b79388dd94890a5cb2441df3",
+      "bytes": 8089
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/matched_check_plan.json",
+      "sha256": "74b5a02e98f55ee4162772d47669091d4deb11b7195c8e3915888abf5a115de8",
+      "bytes": 1953
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent_capture_receipts.json",
+      "sha256": "48801979f4bfcbf70e7fee9309eb6338270f998854f63eee890f680541eeeee2",
+      "bytes": 11239
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase1_judgment.json",
+      "sha256": "e34abd423fcfb4ecf56ccbe7a18ea4adfa591be6fe8104ba4c7f800749072ce3",
+      "bytes": 4655
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c",
+      "bytes": 20358
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/aeneas-readme.md",
+      "sha256": "6263a1ca320584fc8e78ca40249842342ea6a450bc8b90a5e22f6a6ee8f9ca7d",
+      "bytes": 16358
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-754e3f39.patch",
+      "sha256": "3adfc32c285fda9093c32da48ca93c7e1a3afa66d2811f15fcfc3fb7ea1e9a7f",
+      "bytes": 1615
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-9608.json",
+      "sha256": "9be0c35361faa1c8be4037aeac5cab5cbc4d77a140719b06689ce0caf445057c",
+      "bytes": 7351
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-9611-commits.json",
+      "sha256": "764a586c0e1b21fd2d8c1a350bca31bde9f631ae13a69911f2ea3d09e2b5167e",
+      "bytes": 3274
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-9611.json",
+      "sha256": "695f1ad9b2c47e34c62a8241e9f081a3fad02585db9ecb72e2671c6764ec9c2a",
+      "bytes": 19169
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-projects.html",
+      "sha256": "6ed6a9c1e0ee2d8c2cc888eb48dbe6083c58d0ab49982006f2202dd3cc516ed8",
+      "bytes": 37614
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/audacity-releases.json",
+      "sha256": "ddb26a7242231a6c222db2f22d09cc92357dcd33ec2536cde0becf9257b09161",
+      "bytes": 118161
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/elan-eaf30.xsd",
+      "sha256": "59e76f90d5840813314b1e635480d044287b811ebd63a40e25cb4e73c6ad72bb",
+      "bytes": 34436
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/otio-v0181-readme.md",
+      "sha256": "b53290e2573a4a22d005a4e5da4f5a76293a04fb410341c824059ef35adc0f82",
+      "bytes": 9094
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/peaks-450.json",
+      "sha256": "185a5ef4abed62a65c2b92b467e793c63195de897e0146d9be0755cea5a5375b",
+      "bytes": 4818
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/peaks-574.json",
+      "sha256": "c8232205b5dbd334757bcdead11002ed8837e395e8ddea03d8c0c5595635bc69",
+      "bytes": 14295
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/peaks-cad28179.patch",
+      "sha256": "d2a88d44180e33f5fb397ebbdf12d52c13334cc8af5146714a721980f732429c",
+      "bytes": 26671
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/peaks-v2-changelog.md",
+      "sha256": "44673a308cd51c0663705dc64537bf3e9f431294b6be4adaf1407d84fd3e541a",
+      "bytes": 26837
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/peaks400-dist.js",
+      "sha256": "b36623e2a7cfc078b4a8b370a26d1b218f934327e59da71d77d77a1bf1fecffc",
+      "bytes": 568820
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/sndfile-formats.html",
+      "sha256": "80e0e3844e962a4fc70954036f036ad42cf5e0b0c586aed8da4ec0e60255487b",
+      "bytes": 21456
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/sndfile-home.html",
+      "sha256": "edb94f166b988a50907bbae212f0a4d72fb617887d69f8bd071ea92efdd5d527",
+      "bytes": 19818
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/sndfile-v122-h.txt",
+      "sha256": "911098ea4b66f0c5ad59785b176f2b19f6e657042c15c93791edb53467efd6c0",
+      "bytes": 29558
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/independent-primary-captures/soundfile-0131.html",
+      "sha256": "80cc5fc49930bc092c41b2c8c1115834a5348edfed85379e86d6677decf1ef90",
+      "bytes": 159813
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/dispatch.json",
+      "sha256": "41b919faf5a71a3ff8723f21ea17186f8a9a2c4ed70a96d1b35044cb09c8d381",
+      "bytes": 8349
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/integrity-proof.json",
+      "sha256": "f95a16de8bf1a08df4ff45873138bb64f6dd22708311887d802961c64cac3ad2",
+      "bytes": 1236
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/leads.json",
+      "sha256": "41b1c21399c0f8a283ef9dfd1579503757aad2bae234d8ec2590dac2a4a20f0a",
+      "bytes": 4692
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/proposal.md",
+      "sha256": "e41c09cd736ee99ae3ce4a578c6170083a4978371f0151da2c7c5a2c5c44a10d",
+      "bytes": 26226
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/sources.json",
+      "sha256": "6b6636a5c41fca718bf308f5fbeac11cc6e71b9c2d3cd00bb4ca4721d2fa5850",
+      "bytes": 11989
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/witnesses.json",
+      "sha256": "c1abde36191020aa8bc855ddb0a12c8d7b62b95c2dea4bd1d6945c83e5338be1",
+      "bytes": 5692
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/leads.json",
+      "sha256": "f39c532472569e3b7ff0b30638f6c8fe78ba346926d0629ccf042878f45108a8",
+      "bytes": 3387
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/proposal.md",
+      "sha256": "00a4d4665226fb85f86cb013dfe32db09b3e58ebe61f490e28bbefa2b584f8b0",
+      "bytes": 26311
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/sources.json",
+      "sha256": "bdaa4d5cb600fa0da1c0725fd916e9ca125cf42c12b1b7af00574db6661621d4",
+      "bytes": 9639
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/witnesses.json",
+      "sha256": "d2ceb4585ab82608f223e47543311af69f3931637fc7e0c16b2756e4c2d20cd7",
+      "bytes": 4968
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual-holdout-card.json",
+      "sha256": "ef633e7e8159c5e5b3261084488a3f11e878f13311a12feb39871db41559e171",
+      "bytes": 2172
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual_launched_Task_A.md",
+      "sha256": "a286aa4842a40bc008e22f519e9e074c46410cab9407063eb42c18f2692a0c64",
+      "bytes": 14005
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual_launched_Task_B.md",
+      "sha256": "30650562c8418e80a368757965a5e8b76f974316dc37fd440b75cd8992334464",
+      "bytes": 12328
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/brief.md",
+      "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "bytes": 4343
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/coverage_map.json",
+      "sha256": "244191919a265d07a07f2a1906b60a03eaeb9bb7cbacb175c5dc7befa7655701",
+      "bytes": 4234
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/SOURCE_ALLOWLIST.json",
+      "sha256": "d54ccc5dd2af8838d97d1767a08b1b4d1895a73b1d66699f40bbba431e079241",
+      "bytes": 5688
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/dispatch.json",
+      "sha256": "41b919faf5a71a3ff8723f21ea17186f8a9a2c4ed70a96d1b35044cb09c8d381",
+      "bytes": 8349
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/integrity-proof.json",
+      "sha256": "f95a16de8bf1a08df4ff45873138bb64f6dd22708311887d802961c64cac3ad2",
+      "bytes": 1236
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/leads.json",
+      "sha256": "41b1c21399c0f8a283ef9dfd1579503757aad2bae234d8ec2590dac2a4a20f0a",
+      "bytes": 4692
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/proposal.md",
+      "sha256": "e41c09cd736ee99ae3ce4a578c6170083a4978371f0151da2c7c5a2c5c44a10d",
+      "bytes": 26226
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/sources.json",
+      "sha256": "6b6636a5c41fca718bf308f5fbeac11cc6e71b9c2d3cd00bb4ca4721d2fa5850",
+      "bytes": 11989
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/A/research/witnesses.json",
+      "sha256": "c1abde36191020aa8bc855ddb0a12c8d7b62b95c2dea4bd1d6945c83e5338be1",
+      "bytes": 5692
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/leads.json",
+      "sha256": "f39c532472569e3b7ff0b30638f6c8fe78ba346926d0629ccf042878f45108a8",
+      "bytes": 3387
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/proposal.md",
+      "sha256": "00a4d4665226fb85f86cb013dfe32db09b3e58ebe61f490e28bbefa2b584f8b0",
+      "bytes": 26311
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/sources.json",
+      "sha256": "bdaa4d5cb600fa0da1c0725fd916e9ca125cf42c12b1b7af00574db6661621d4",
+      "bytes": 9639
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/outputs/B/research/witnesses.json",
+      "sha256": "d2ceb4585ab82608f223e47543311af69f3931637fc7e0c16b2756e4c2d20cd7",
+      "bytes": 4968
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual-holdout-card.json",
+      "sha256": "ef633e7e8159c5e5b3261084488a3f11e878f13311a12feb39871db41559e171",
+      "bytes": 2172
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual_launched_Task_A.md",
+      "sha256": "a286aa4842a40bc008e22f519e9e074c46410cab9407063eb42c18f2692a0c64",
+      "bytes": 14005
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/actual_launched_Task_B.md",
+      "sha256": "30650562c8418e80a368757965a5e8b76f974316dc37fd440b75cd8992334464",
+      "bytes": 12328
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/brief.md",
+      "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50",
+      "bytes": 4343
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/coverage_map.json",
+      "sha256": "244191919a265d07a07f2a1906b60a03eaeb9bb7cbacb175c5dc7befa7655701",
+      "bytes": 4234
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C01-CURRENT-CLOCK-RESEARCH-1-002/dispatch.json",
+      "sha256": "41b919faf5a71a3ff8723f21ea17186f8a9a2c4ed70a96d1b35044cb09c8d381",
+      "bytes": 8349
+    }
+  ],
+  "key_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/private/C01-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+    "sha256": "4af94f4f0f71792ea92c89880129abc06b268535964e5e4a74f8877a497b38bf"
+  },
+  "literal_phase2_deadline_utc": "2026-10-06T10:06:46.964039+00:00",
+  "whole_deadline_utc": "2026-10-06T10:16:06.473681+00:00",
+  "scientific_content_read": "NONE hashonly",
+  "reset": false
+}

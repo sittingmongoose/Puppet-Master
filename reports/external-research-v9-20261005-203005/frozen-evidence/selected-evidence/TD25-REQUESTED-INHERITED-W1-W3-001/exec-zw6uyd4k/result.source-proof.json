@@ -1,0 +1,53 @@
+{
+  "actor": "candidate",
+  "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+  "bootstrap_started": true,
+  "cleanup_classification": "collected_unit_absent",
+  "cleanup_confirmed": true,
+  "cleanup_query_stderr": "",
+  "cleanup_query_stdout": "LoadState=not-found\nActiveState=inactive\nControlGroup=\n",
+  "cleanup_state_returncode": 0,
+  "code_sha256": "07bacf9e492b7f0b4d9c7f2bb730df7016dec1d1b04d101e187a5fd292d2ad5c",
+  "control_group_absent_after_stop": null,
+  "control_group_populated_after_stop": null,
+  "data_sha256": "6e855369b7af1a6d3c45415195c43ae650c19fb9636471ef2bd6b3e781625d42",
+  "execution_id": "exec-zw6uyd4k",
+  "execution_label": "executed by candidate",
+  "exit_code": 0,
+  "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+  "limitations": [
+    "isolated component check only",
+    "stderr excludes trusted bootstrap prefix; stderr-observed.bin retains wire bytes",
+    "arbitrary stdlib code; kernel isolation supplied by Bubblewrap/systemd, not AST filters",
+    "clock/randomness remain available; deterministic behavior must be candidate-authored",
+    "execution receipts do not prove semantic correctness or candidate consumption"
+  ],
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "schema": "er9.execution.result.v1",
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 423,
+  "stdout_sha256": "b46266f9c5192b234b28e81b0af1733876af1a21aeccc2b3ecaaeb111765d206",
+  "stopped_by_adapter": null,
+  "unit_active_state_after_stop": "inactive",
+  "unit_load_state_after_stop": "not-found",
+  "original_result_sha256": "2ecca4c921b2fb88e178d32ee45cea5e3039c4779adcad90197de1519c1067e1",
+  "omitted_original_fields": [
+    "cleanup_stop_returncode",
+    "cleanup_stop_stderr",
+    "cleanup_stop_stdout",
+    "completed_utc",
+    "control_group_after_stop",
+    "elapsed_seconds",
+    "stderr",
+    "stdout"
+  ],
+  "provenance": "INHERITED_AUTHENTIC_CURRENT_ADMITTED_BASE; notcurrentD06execution; no newinference or evaluatorretest"
+}

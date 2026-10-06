@@ -1,0 +1,98 @@
+{
+  "inventory_version": "diagnostic-stage/1.1",
+  "executor": "experiment-admitted isolated Python executor; W5 receipt reports Bubblewrap/systemd namespace, 256 MiB memory, 5 s wall, 3 s CPU, network-isolated namespace",
+  "stage_notes": "W1-W4 and W1-rev1 are preserved inherited candidate receipts from the frozen input bundle and were not rerun in this stage. W5 was executed by the candidate in this stage. No evaluator-provided execution is represented.",
+  "labels": {
+    "executed_by_candidate": "receipt-backed checks only",
+    "proposed_unexecuted": "listed in proposal.md V1-V8; not an execution result",
+    "scope_warning": "isolated component checks on synthetic data; no witness establishes full application behavior, real notebook runtime behavior, or large-dataset performance"
+  },
+  "witnesses": [
+    {
+      "id": "W1-rev1",
+      "title": "nbformat-4.5-informed document fidelity check (failed attempt, superseded by W1-rev2)",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-83jjs6ws",
+      "code_sha256": "c05485aae07c5f60cbd7a3ec02bb845b180f4fe3a0c910ec9ade7d243ac5d54d",
+      "stdout": "",
+      "stderr": "TypeError: '<' not supported between instances of 'NoneType' and 'int' - replay ordering sorted execution_count without handling the schema-defined null ('not been run') case",
+      "exit_code": 1,
+      "expected_behavior_justification": "schema [S4] defines execution_count as integer or null; the check was wrong to sort mixed values, demonstrating that never-run cells must be partitioned from replay order",
+      "scope_limits": "schema-level rules only; does not run the real nbformat library"
+    },
+    {
+      "id": "W1",
+      "title": "nbformat-4.5-informed document fidelity (rev2)",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-6tyxg1kl",
+      "code_sha256": "122fde487b19ae201ebe104742f055783d77a0eb6360c905afc8a5bf141dda64",
+      "stdout": "5 cells validated, 0 schema problems; display_order [cell-load, cell-plot, cell-stat, cell-fresh] vs replay_order [cell-load, cell-stat, cell-plot] differ as constructed; never_run_cells [cell-fresh] excluded and flagged unverified; doc hash 454465c4057c132a",
+      "stderr": "",
+      "exit_code": 0,
+      "expected_behavior_justification": "rules derived from pinned schema S4: required cell keys, id regex/length, execution_count int-or-null, four output types, kernelspec keys",
+      "scope_limits": "schema-derived rules only; no Jupyter/nbformat library involved; a conforming synthetic document"
+    },
+    {
+      "id": "W2",
+      "title": "bounded-memory streaming NDJSON transform with reject ledger",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-eo7n39wa",
+      "code_sha256": "0cdd861a1625b50aaa50bade9a560fef0203c6626c00c390320bc44c673245f1",
+      "stdout": "50000 lines: 49997 ok + 3 rejected (ledger with line/byte_offset/reason/raw); sum preserved; max rows materialized 512 <= budget 1024; preview bounded to 5 and flagged sample-not-proof; unicode/null/missing/timestamp values exercised; source sha256 unchanged (read-only)",
+      "stderr": "",
+      "exit_code": 0,
+      "expected_behavior_justification": "brief requires bounded/streaming processing, no silent deletion of malformed records, no mutation of originals, and preview not represented as full-dataset proof; assertions map to proposal data-contract rules",
+      "scope_limits": "50k-row in-memory synthetic corpus, not a 5 GB file; json.loads-per-line is not the production engine; memory bound is app-tracked, not OS-measured"
+    },
+    {
+      "id": "W3",
+      "title": "output-status invalidation state machine",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-vephzgkd",
+      "code_sha256": "9d1dd4802343a3ccc76600b679d7be8ffe425f51f22754d663fb3f2f4360c5f8",
+      "stdout": "13-event scenario asserted: run/edit/dataset-change/error/re-run/kernel-restart; final statuses all unverified after restart; error marks cell failed + descendants unverified; dataset identity change stales readers transitively",
+      "stderr": "",
+      "exit_code": 0,
+      "expected_behavior_justification": "brief requires invalidation on upstream edits, source/environment changes, restart, and interruption so stale outputs never remain current",
+      "scope_limits": "model-level simulation of a 3-cell DAG; no real kernel or editor; transitive-ancestor lookup recomputed per event"
+    },
+    {
+      "id": "W4",
+      "title": "clean-replay determinism and manifest component check",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-0mgh0exa",
+      "code_sha256": "fccc8ce64279b36c2d53c6f9d35cdd6207775440e4af31d91bf09c3497ace2f0",
+      "stdout": "pure transform replayed twice -> identical output bytes; unseeded random -> different values across runs; manifest emitted with notebook hash, per-cell code hashes + exec order + status, dataset sha256/bytes/declared schema, python 3.14.4/Linux env binding, replay verdict",
+      "stderr": "",
+      "exit_code": 0,
+      "expected_behavior_justification": "brief requires a reproducibility manifest and an honest clean-replay boundary; this tiny example distinguishes repeatable pure code from unseeded randomness",
+      "scope_limits": "no subprocess isolation (fresh state emulated); interpreter 3.14.4 is not the proposed support boundary; manifest shape is illustrative, not a frozen schema"
+    },
+    {
+      "id": "W5",
+      "title": "producer provenance and cached/live status component check",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-ac7brp_l",
+      "code_sha256": "008b02f20901f9028e08fdeb3ce5dc7480e6f158be468757e328bb7d2ad3855d",
+      "input": null,
+      "input_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "code": "from dataclasses import dataclass\n\n@dataclass(frozen=True)\nclass Run:\n    run_id: str\n    runtime_id: str\n    code_hash: str\n    input_hash: str\n    env_hash: str\n    output: bytes\n    success: bool\n\n@dataclass\nclass View:\n    status: str\n    provenance: str\n    label: str\n\ndef assess(run, current_code, current_input, current_env, runtime_id):\n    if run is None:\n        return View(\"unverified\", \"unknown\", \"No producing event\")\n    if not run.success:\n        status = \"failed\" if (run.code_hash, run.input_hash, run.env_hash) == (current_code, current_input, current_env) else \"stale\"\n    elif (run.code_hash, run.input_hash, run.env_hash) != (current_code, current_input, current_env):\n        status = \"stale\"\n    else:\n        status = \"current\"\n    provenance = \"live\" if run.runtime_id == runtime_id else \"cached\"\n    return View(status, provenance, f\"run={run.run_id}; runtime={run.runtime_id}; env={run.env_hash}\")\n\nsaved_error = Run(\"r-1\", \"kernel-old\", \"code-a\", \"data-a\", \"env-old\", b\"ModuleNotFoundError\", False)\nview = assess(saved_error, \"code-a\", \"data-a\", \"env-new\", \"kernel-new\")\nassert view.status == \"stale\"\nassert view.provenance == \"cached\"\nassert \"run=r-1\" in view.label and \"runtime=kernel-old\" in view.label\n\nsuccess = Run(\"r-2\", \"kernel-new\", \"code-a\", \"data-a\", \"env-new\", b\"result\", True)\nview2 = assess(success, \"code-a\", \"data-a\", \"env-new\", \"kernel-new\")\nassert (view2.status, view2.provenance) == (\"current\", \"live\")\nreopened = assess(success, \"code-a\", \"data-a\", \"env-new\", \"kernel-after-reopen\")\nassert (reopened.status, reopened.provenance) == (\"current\", \"cached\")\nmissing = assess(None, \"code-a\", \"data-a\", \"env-new\", \"kernel-new\")\nassert missing.status == \"unverified\"\nprint(\"stale saved error distinguished from live output; matching event marked current with cached/live provenance; missing event unverified\")",
+      "expected_behavior_justification": "the bounded check exercises the corrected contract: an old error whose environment differs is stale and visibly cached with producer IDs; a matching successful event remains marked cached after reopen; an absent event is unverified",
+      "stdout": "stale saved error distinguished from live output; matching event marked current with cached/live provenance; missing event unverified\n",
+      "stdout_sha256": "c244dc54a778fc6b20932dacde9c31b13d132ac46377a4328aebf1eb9fc44b47",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "elapsed_seconds": 0.37026958899514284,
+      "limits": {
+        "wall_seconds": 5,
+        "cpu_seconds": 3,
+        "memory_bytes": 268435456,
+        "tasks": 16,
+        "network": "new empty namespace"
+      },
+      "scope_limits": "isolated candidate-authored state-model check only; not notebook/product code, not a real kernel reconnect, not environment attestation, and not validation of the marimo issue or the product sandbox"
+    }
+  ],
+  "proposed_unexecuted": ["V1", "V2", "V3", "V4", "V5", "V6", "V7", "V8"]
+}

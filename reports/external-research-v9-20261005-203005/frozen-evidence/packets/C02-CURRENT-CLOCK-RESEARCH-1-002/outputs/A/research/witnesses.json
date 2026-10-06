@@ -1,0 +1,93 @@
+{
+  "catalog_schema": "er9.research.witnesses.v1",
+  "stage": "research",
+  "labeling": "All three checks are 'executed by candidate' in the admitted isolated python_execute sandbox. None is executed by an evaluator. Each is an isolated component check and does not establish whole-application behavior.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "title": "Bounded spatial/viewport access against SQLite (R*Tree + B-tree range)",
+      "status": "executed by candidate",
+      "execution": {
+        "tool": "mcp pm_execution.python_execute",
+        "execution_id": "exec-l_3k4fl9",
+        "completed_utc": "2026-10-06T06:56:25.074118+00:00",
+        "code_sha256": "c1e86c3786be2534c5cbf04fcda880d3ef529b997475ee67fbcfba80c85bfdaf",
+        "data_sha256": "e37ff888897a717f295b096a225272fc2d3d4d22b94c3baab68704778b091152",
+        "stdout_sha256": "e552eaadee84cb076c2f45af15815f6cd485a18b7d332532606f90006dfe8aac",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456}
+      },
+      "input": {"synthetic_points": 50000, "viewport_bbox": [2.30, 48.80, 2.42, 48.90], "seed": 42},
+      "expected_behavior_justification": "If the indexed-mechanism hypothesis holds, a viewport query returns only rows inside the bbox in sub-10ms time in the sandbox, a LIMIT-paged query returns a bounded first page, and the R*Tree strict-containment count may differ from an inclusive B-tree BETWEEN count at bbox edges exactly as SQLite's roundoff-error documentation predicts (S1 3.4).",
+      "stdout_summary": {
+        "engine_used": "rtree+btree",
+        "viewport_bbox_hits_btree_inclusive": 1474,
+        "btree_query_s": 0.00068,
+        "rtree_contained_hits": 1473,
+        "rtree_query_s": 0.00021,
+        "first_page_rows": 200,
+        "paged_query_s": 0.00023,
+        "index_build_s": 0.037
+      },
+      "scope_limits": "50k synthetic uniform points, in-memory DB, constrained sandbox; not a 250k benchmark (proposal.md 4.4 labels 250k as inference/UNEXECUTED); R*Tree module availability is compile-dependent and happened to be present here; observed 1474-vs-1473 edge divergence is consistent with S1 but is not itself proof of the production query design."
+    },
+    {
+      "id": "W2",
+      "title": "Consequence of undeclared axis order; antimeridian wrap spans",
+      "status": "executed by candidate",
+      "execution": {
+        "tool": "mcp pm_execution.python_execute",
+        "execution_id": "exec-9cy4cekc",
+        "completed_utc": "2026-10-06T06:56:25.906493+00:00",
+        "code_sha256": "433cde254cd34c7d08099844d0862441bc6ac411dd9c1e8779250c702f791e79",
+        "data_sha256": "abe375f4fa4c1ca56ca8e40c1fefab5d382072fac9f007a79e2af4fdb6e3aef8",
+        "stdout_sha256": "cc2e2426802aeb76936717846249967427808cf3763cba9ad090a839cdf8362a",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456}
+      },
+      "input": {"recorded_pair": [48.8566, 2.3522], "track_lons": [179.5, -170.0]},
+      "expected_behavior_justification": "Interpreting one pair under both declared axis orders must place the two readings thousands of km apart (motivating 'never infer axis order from values', proposal 2.2), and wrapping longitude deltas must turn a 349.5-degree naive span into the true 10.5-degree span (motivating segment splitting, proposal 2.3).",
+      "stdout_summary": {
+        "distance_between_interpretations_km": 6793.2,
+        "track_step_longitude_span_naive_deg": 349.5,
+        "track_step_longitude_span_wrapped_deg": 10.5,
+        "antimeridian_point_ok": true
+      },
+      "scope_limits": "Illustrative spherical arithmetic (haversine, modulo wrap) authored for this witness; it is NOT a PROJ/GDAL equivalent and does not validate any production transform or CRS database. It demonstrates failure magnitude, not product correctness."
+    },
+    {
+      "id": "W3",
+      "title": "Divergent-copy merge rules: conflict preservation, uncommitted exclusion, nothing silently dropped",
+      "status": "executed by candidate",
+      "execution": {
+        "tool": "mcp pm_execution.python_execute",
+        "execution_id": "exec-h6hiho8_",
+        "completed_utc": "2026-10-06T06:56:26.262682+00:00",
+        "code_sha256": "e22fb002e8d1427d1da74215fa6758e02d305f5ebf28df2d15a8675b59082a39",
+        "data_sha256": "9771228e4ded0b0ae9f5d6c13221b80d23c4dabdead45ee5dedad6bf2d2ac66b",
+        "stdout_sha256": "02d3337366e9b17a9e36f95c89ad4e61d15736b2b202b6e98319a7c153d5e477",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456}
+      },
+      "input": {"base_records": 3, "copies": ["copyA (edit o1, delete o3)", "copyB (edit o1, edit o2, add o4)", "uncommittedA (half-typed o2 draft)"]},
+      "expected_behavior_justification": "Under the proposal's three-way record-level rules (3.3): o1 changed in both copies must surface as an explicit conflict card, single-side changes must resolve to the higher revision, the tombstoned o3 must remain a deletion revision, o4 must be added, the uncommitted draft must NOT enter the merge, and merged+conflicted ids must equal the union of all known ids (nothing silently dropped).",
+      "stdout_summary": {
+        "merged_committed_records": 3,
+        "explicit_conflicts": 1,
+        "conflict_detail": "o1 A.rev2 vs B.rev3 -> explicit_user_choice_required",
+        "uncommitted_edit_included": false,
+        "nothing_silently_dropped": true
+      },
+      "scope_limits": "Toy in-memory model of the rule set only; no storage engine, no transactions, no real devices/rev clocks, 4 records. Demonstrates the merge POLICY, not the shipped merge implementation."
+    }
+  ],
+  "proposed_unexecuted_checks": [
+    "Kill -9 recovery harness against a seeded WAL project (proposal 3.4).",
+    "250k-row synthetic import with viewport/export timing and cancellation (proposal 4.4).",
+    "CRS metadata fuzzing: missing axis lists, grad units, unknown height datum -> quarantine path (proposal 2.2/2.5).",
+    "Merge property tests: idempotent re-merges, tombstone revival, quarantine state merging (proposal 3.5/3.6).",
+    "Tile-license compliance checklist per bundled source; OSMF Tile Usage Policy retrieval (leads L1).",
+    "Bundled PROJ dataset supported-transformation enumeration (leads L5).",
+    "First PROJ release containing PR #3477 merge commit b4ead8c939ba7c9efa86ae49eb396ba3c0aa3012 (leads L3)."
+  ]
+}

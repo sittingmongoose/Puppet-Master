@@ -1,0 +1,196 @@
+{
+  "artifact_lineage_checks": [
+    {
+      "alias": "A",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/leads.json",
+      "sha256": "526f13b760906a29ccc232180a19b5bd066b6dc73807b9ba5c684536f12ca7f0"
+    },
+    {
+      "alias": "A",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/proposal.md",
+      "sha256": "c2978c174dcd720a8d74b6fc61f653f06d33374fb79e2dc005ab926d1f82eff1"
+    },
+    {
+      "alias": "A",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/sources.json",
+      "sha256": "68714786217db20cae027a75bad4dc072e0f6eb4abd7602a3663618aa31a3882"
+    },
+    {
+      "alias": "A",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/witnesses.json",
+      "sha256": "0422f12ba83a00bb6a821091821250e092c3c4d3c0bb67f2244ff1672095076e"
+    },
+    {
+      "alias": "B",
+      "matches_phase1_current_packet": true,
+      "relative_path": "amendment.corrected.diff",
+      "sha256": "acc6695a106921a8e11700dcf35193b432cda70c7fd5e5a3a5dcaff69d61705e"
+    },
+    {
+      "alias": "B",
+      "matches_phase1_current_packet": true,
+      "relative_path": "amendment.diff",
+      "sha256": "49688fb038331bc5e582d69402c45c82a3224ca322774880e6ac25051c22c6b0"
+    },
+    {
+      "alias": "B",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/leads.json",
+      "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751"
+    },
+    {
+      "alias": "B",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/sources.json",
+      "sha256": "bec14e032cdb942dabc1921e1534640397ced3f2d232edf1ee39485191e52cd9"
+    },
+    {
+      "alias": "B",
+      "matches_phase1_current_packet": true,
+      "relative_path": "final/witnesses.json",
+      "sha256": "60a7bebc9df627298bf3c4bc351e23248177839779d3981afc7e2666096fadab"
+    }
+  ],
+  "boundaries": {
+    "autonomous_discovery": "UNASSESSED",
+    "causal_effect": "UNASSESSED",
+    "final_T": "UNASSESSED",
+    "full_pipeline": "UNASSESSED",
+    "matched_winner": "UNASSESSED"
+  },
+  "current_role_baseline_and_critique_pins_match_phase1": true,
+  "elapsed_P2_seconds": 237.0662648800062,
+  "elapsed_whole_seconds": 1393.7575535120122,
+  "evaluation_id": "independent-targeted-25",
+  "exact_key_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-25_PHASE2_KEY_001.json",
+  "exact_key_sha256": "889237558d6da9a732b486fae0d1923b715d76376980d57242f778b7a063850d",
+  "no_candidate_run_goal_render_application_retest_or_feedback": true,
+  "no_model_status_cost_inference_of_quality": true,
+  "no_nativeGoalID_session_substitution": true,
+  "pair_id": "D-V06-A-DEFERRED-R001-CLOCK-R002",
+  "phase1_all_own_immutable_pins_reverified": true,
+  "phase1_changed_after_key": false,
+  "phase1_freeze_sha256": "435beb393788971c9ac598e9a9f2bbe9e5696f3abb3c1a086a3a20a37be5ad3e",
+  "phase1_judgment_sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+  "phase1_report_sha256": "fb0ba67c35e0fcdbcec801f0919b11d443c03f29afdc1998630cb427bf70a7bc",
+  "phase2_start_is_phase1_freeze": true,
+  "recorded_monotonic": 113087.288736518,
+  "recorded_utc": "2026-10-06T10:31:08.431754+00:00",
+  "rows": [
+    {
+      "alias": "A",
+      "all_owned_scopes_quiet": true,
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "candidate_goals_set_by_host": 1,
+      "closed_before_original_total_stop": true,
+      "complete_owned_scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "current_execution_ids": [
+        "exec-sy5rndqe"
+      ],
+      "embedded_pre_enrichment_native_receipt_sha256": "8c3f4c23ae852eef3c75f9c867ff122fc4fa562936786800ae4353f16da6b47c",
+      "final_native_result_sha256": "77db3a3c91f0cfa169a4d4f84b5228100347174432b681ac81fd97c34f12fe81",
+      "fresh_session": true,
+      "goal_replacements_observed": 0,
+      "hash_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "host_followup_turns_started": 0,
+      "host_initial_turns_started": 1,
+      "inherited_W1_W3_are_current_executions": false,
+      "job_id": "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+      "memory_peak_before_release_bytes": 372211712,
+      "native_activation_observed": true,
+      "native_elapsed_seconds": 567.141517549,
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_http_attempts": "UNKNOWN",
+      "native_outcome": "native_goal_complete",
+      "native_responses": "UNKNOWN",
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "native_turns_started": 1,
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "observed_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_fit": "UNKNOWN",
+      "resource_oom_observed": false,
+      "source_quality_from_native_status": "NOT_INFERRED",
+      "swap_max_bytes": 0,
+      "usage_notification_count": 27,
+      "usage_scope": "Exact current native notification totals; cachedInputTokens is a subset, reasoningOutputTokens is a subset; do not add Goal/UI/provider counters or inherited starts.",
+      "usage_totals": {
+        "cachedInputTokens": 1443328,
+        "inputTokens": 1573953,
+        "outputTokens": 28805,
+        "reasoningOutputTokens": 15237,
+        "totalTokens": 1602758
+      }
+    },
+    {
+      "alias": "B",
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "candidate_goals_set_by_host": 1,
+      "closed_before_original_total_stop": true,
+      "complete_owned_scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "current_execution_ids": [],
+      "embedded_pre_enrichment_native_receipt_sha256": "3155a1b1c7f01e41c91b6c1b4f2f5b0590bdb751aa4f179cfe6cff5fbadae7ba",
+      "final_native_result_sha256": "f7bc81d4c1c233727166fc81f2f85b3beeda7634c3fb2c359ceb864c93bfbd41",
+      "fresh_session": true,
+      "goal_replacements_observed": 0,
+      "hash_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "host_followup_turns_started": 0,
+      "host_initial_turns_started": 1,
+      "inherited_W1_W3_are_current_executions": false,
+      "job_id": "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+      "memory_peak_before_release_bytes": 371933184,
+      "native_activation_observed": true,
+      "native_elapsed_seconds": 585.593165678,
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_http_attempts": "UNKNOWN",
+      "native_outcome": "HOLD",
+      "native_responses": "UNKNOWN",
+      "native_turns_completed": 1,
+      "native_turns_interrupted": 1,
+      "native_turns_started": 2,
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "observed_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_fit": "UNKNOWN",
+      "resource_oom_observed": false,
+      "source_quality_from_native_status": "NOT_INFERRED",
+      "swap_max_bytes": 0,
+      "usage_notification_count": 33,
+      "usage_scope": "Exact current native notification totals; cachedInputTokens is a subset, reasoningOutputTokens is a subset; do not add Goal/UI/provider counters or inherited starts.",
+      "usage_totals": {
+        "cachedInputTokens": 2058752,
+        "inputTokens": 2316906,
+        "outputTokens": 29748,
+        "reasoningOutputTokens": 18979,
+        "totalTokens": 2346654
+      }
+    }
+  ],
+  "schema": "er9.independent-phase2-context.v1",
+  "semantic_answer_key": "UNKNOWN_NOT_PRESENT_IN_EXACT_CURRENT_RELEASE; key provides current alias/freeze/input/runtime lineage, not a semantic grading answer map",
+  "source_clock_reset": false
+}

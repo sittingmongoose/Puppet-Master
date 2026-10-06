@@ -1,0 +1,77 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T095818.076665Z/BACKUP_RECEIPT.json",
+    "sha256": "3bdb40e3b7094ac240cae46271b41b1bc6ad03e6ee3a5c95979665dffe19ecac"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 57,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T09:58:18.076665+00:00",
+  "scope": "Exact eightneutralclock-entry pins/root24 rowprefix verified; no scientificbody/grade/newpipeline or campaignfinish.",
+  "source_observed_utc": "2026-10-06T09:55:42.556086+00:00",
+  "sources": [
+    {
+      "bytes": 3736,
+      "path": "ops/frozen-exports/observations/NEUTRAL_CLOSED_CLOCKS_AND_DEC017_ENTRY_PINSET_001.json",
+      "sha256": "62c547294c3dafa8e553a60756c371ffec41c1004ed362adfbf372c84ba58b95"
+    },
+    {
+      "bytes": 3532,
+      "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/TERMINAL_CLOCK_RECEIPT.json",
+      "sha256": "fd29eb5096b9b2d239933f05128c074273f0ce7ca60622f66a9b011783bbcaeb"
+    },
+    {
+      "bytes": 1242,
+      "path": "LAB_ROOT/evaluation/independent-pipeline-10-research-I03/TERMINAL_CLOCK.json",
+      "sha256": "85256dacc1908b26b83b518069ab459d0f6f962c32a01b48d4dcdc182b3a99a7"
+    },
+    {
+      "bytes": 1186,
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/final_clock.json",
+      "sha256": "b181266acfeebd7e7f56504a0cb88164e27fe66fca8d0bf8453fac69e37ea35d"
+    },
+    {
+      "bytes": 2042,
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/completion.json",
+      "sha256": "00d7090b203a6d4c8eab17e686ae6d8488a46becb0b44bf56ebf22967fd4ed21"
+    },
+    {
+      "bytes": 1149,
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/completion.json",
+      "sha256": "55b93d44c4b683c784b54e41db5f1beb4ac58726cf456cfa0c48db3d4ec3dbc3"
+    },
+    {
+      "bytes": 2214,
+      "path": "LAB_ROOT/evaluation/independent-pipeline-11-research-I04/phase2_complete.json",
+      "sha256": "2c49de292a8eb16fbf41f48814d9c7b4d370b64b82c9b10646f89b607b9e909a"
+    },
+    {
+      "bytes": 491,
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/source_start.json",
+      "sha256": "32552c444077a5b0f3bead8a89cd46bc6c20a63af965dc07b7eba685f2d9b7a4"
+    },
+    {
+      "bytes": 10466,
+      "path": "LAB_ROOT/ops/dispatcher/DEC017_CURRENT_FOUR_FINAL_ACTIVATION_SNAPSHOT_001/CHECKPOINT.json",
+      "sha256": "b9159c06d22ddff070e86ed93abd3ecae43c78d5efb99d9eb676b3832d7949d3"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 226757,
+      "path": "state/current.json",
+      "sha256": "84ea210b5e8d915f5cace9850621c643299edb83b1d19aa772025c4b05b66c51"
+    },
+    {
+      "bytes": 226757,
+      "path": "state/campaign.json",
+      "sha256": "84ea210b5e8d915f5cace9850621c643299edb83b1d19aa772025c4b05b66c51"
+    },
+    {
+      "bytes": 37999,
+      "path": "CURRENT.md",
+      "sha256": "f548238a3ecb1f3a47f82e8191a28deb00a19165070d46ed1d90bda45d594ccf"
+    }
+  ]
+}

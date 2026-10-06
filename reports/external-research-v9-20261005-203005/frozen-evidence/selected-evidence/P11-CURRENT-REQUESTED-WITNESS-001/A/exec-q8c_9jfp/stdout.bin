@@ -1,0 +1,9 @@
+W1 naive per-value types: ['int', 'float', 'NoneType', 'NoneType', 'str', 'int']
+W1 sample-first per-value types: ['int', 'NoneType', 'NoneType', 'NoneType', 'NoneType', 'int']
+W1 sum naive vs sample-first: 57.5 vs 54
+W1 quarantine records (no silent drop): [{"row": 1, "raw": "3.5", "expected": "int"}, {"row": 4, "raw": "1,000", "expected": "int"}]
+W2 baseline c1,c2: current current
+W2 after source-data change c1,c2: stale stale
+W2 after kernel restart: ['unverified', 'unverified']
+W2b stable order idx: [1, 0, 2] deterministic: [1, 0, 2]
+W1+W2+W2b OK exit 0

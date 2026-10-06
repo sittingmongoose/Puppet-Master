@@ -1,0 +1,55 @@
+{
+  "inventory_version": "stage-final/1.0",
+  "executor": "admitted isolated Python executor; fresh filesystem, stdlib-only checks, network in a new empty namespace",
+  "scope_warning": "Component checks only. No check establishes notebook application behavior, DuckDB behavior, production sandbox quality, or 5 GB performance.",
+  "executed_by_candidate": [
+    {
+      "id": "W5",
+      "title": "Latest per-cell execution counts do not recover repeated interactive history",
+      "status": "executed by candidate",
+      "execution_id": "exec-8qnmkm6k",
+      "code_sha256": "6ef84d5de82e1798ec9fa87279bd8423bd0b8901bf16bbe84a43d57e0d7c14b0",
+      "executor_data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "input": "No separate JSON data argument; synthetic notebook and execution history are constructed in the exact code below. History is A=1, B=A+1, A=10.",
+      "code": "import json\ncells = [\n    {\"id\": \"a\", \"display_index\": 0, \"execution_count\": None, \"output\": None},\n    {\"id\": \"b\", \"display_index\": 1, \"execution_count\": None, \"output\": None},\n]\n# Interactive kernel ran A, then B, then A again.\nhistory = [(\"a\", \"A=1\"), (\"b\", \"B=A+1\"), (\"a\", \"A=10\")]\nevents = []\nfor count, (cell_id, output) in enumerate(history, start=1):\n    cell = next(c for c in cells if c[\"id\"] == cell_id)\n    cell[\"execution_count\"] = count\n    cell[\"output\"] = output\n    events.append({\"count\": count, \"cell_id\": cell_id, \"output\": output})\nreconstructed = [c[\"id\"] for c in sorted((c for c in cells if c[\"execution_count\"] is not None), key=lambda c: c[\"execution_count\"]) ]\nassert [e[\"cell_id\"] for e in events] == [\"a\", \"b\", \"a\"]\nassert reconstructed == [\"b\", \"a\"]\nassert len(events) > len(reconstructed)\nprint(json.dumps({\"final_document\": [{k: c[k] for k in (\"id\", \"execution_count\", \"output\")} for c in cells], \"actual_event_order\": [e[\"cell_id\"] for e in events], \"order_from_latest_counts\": reconstructed, \"history_events\": len(events), \"cells_with_latest_counts\": len(reconstructed)}, ensure_ascii=False, sort_keys=True))",
+      "expected_behavior_justification": "S4 supplies a per-cell execution_count field, not a history schema. A repeated run should demonstrate that the final per-cell document state cannot retain every event; this check only models that information loss.",
+      "stdout": "{\"actual_event_order\": [\"a\", \"b\", \"a\"], \"cells_with_latest_counts\": 2, \"final_document\": [{\"execution_count\": 3, \"id\": \"a\", \"output\": \"A=10\"}, {\"execution_count\": 2, \"id\": \"b\", \"output\": \"B=A+1\"}], \"history_events\": 3, \"order_from_latest_counts\": [\"b\", \"a\"]}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"},
+      "scope_limits": "Synthetic data model; does not invoke nbformat, a Jupyter kernel, saved notebook files, or the proposed event journal."
+    },
+    {
+      "id": "W7",
+      "title": "Bounded generated NDJSON parser harness with reject and sample accounting",
+      "status": "executed by candidate",
+      "execution_id": "exec-pn8dp9hx",
+      "code_sha256": "bdf83a2d9cb58da7d402fbb4c65a19e809f77395d3288264e904d886c0902e92",
+      "executor_data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "input": "No separate JSON data argument; 200 generated line records (one malformed JSON record, Unicode, null, absent field, timestamp text) are created by the exact generator below.",
+      "code": "import json\n\ndef source_lines(n=200):\n    for i in range(n):\n        if i == 73:\n            yield b'{bad json}\\n'\n        else:\n            row = {\"id\": i, \"label\": \"café\" if i == 4 else \"row\", \"nullable\": None if i == 2 else \"x\"}\n            if i != 0:\n                row[\"optional\"] = \"present\"\n            row[\"when\"] = \"2026-10-06T00:00:00Z\"\n            yield (json.dumps(row, ensure_ascii=False) + \"\\n\").encode(\"utf-8\")\n\nbatch_limit = 32\nbatch = []\nrejects = []\npreview = []\naccepted = 0\nmax_materialized = 0\nrow_sum = 0\nbyte_offset = 0\nfor line_no, raw in enumerate(source_lines(), start=1):\n    try:\n        row = json.loads(raw)\n        batch.append(row)\n        if len(preview) < 5:\n            preview.append(row)\n    except (json.JSONDecodeError, UnicodeDecodeError) as exc:\n        rejects.append({\"line\": line_no, \"byte_offset\": byte_offset, \"reason\": type(exc).__name__, \"raw\": raw.decode(\"utf-8\", \"replace\").rstrip(\"\\n\")})\n    byte_offset += len(raw)\n    if len(batch) == batch_limit:\n        accepted += len(batch)\n        row_sum += sum(row[\"id\"] for row in batch)\n        max_materialized = max(max_materialized, len(batch))\n        batch.clear()\nif batch:\n    accepted += len(batch)\n    row_sum += sum(row[\"id\"] for row in batch)\n    max_materialized = max(max_materialized, len(batch))\n    batch.clear()\nassert accepted == 199 and len(rejects) == 1\nassert max_materialized <= batch_limit and len(preview) == 5\nassert preview[4][\"label\"] == \"café\" and preview[2][\"nullable\"] is None and \"optional\" not in preview[0]\nprint(json.dumps({\"input_lines\": 200, \"accepted\": accepted, \"rejects\": rejects, \"max_materialized_rows\": max_materialized, \"batch_limit\": batch_limit, \"preview_count\": len(preview), \"preview_is_sample\": True, \"id_sum\": row_sum, \"utf8_null_missing_timestamp_exercised\": True}, ensure_ascii=False, sort_keys=True))",
+      "expected_behavior_justification": "The brief requires bounded processing, reject visibility, preservation of Unicode/null/missing distinctions, and an explicitly sampled preview. This synthetic check asserts those harness properties; it is not an engine benchmark.",
+      "stdout": "{\"accepted\": 199, \"batch_limit\": 32, \"id_sum\": 19827, \"input_lines\": 200, \"max_materialized_rows\": 32, \"preview_count\": 5, \"preview_is_sample\": true, \"rejects\": [{\"byte_offset\": 7197, \"line\": 74, \"raw\": \"{bad json}\", \"reason\": \"JSONDecodeError\"}], \"utf8_null_missing_timestamp_exercised\": true}\n",
+      "stderr": "",
+      "exit_code": 0,
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"},
+      "scope_limits": "Small generated input consumed by a Python generator; not a file-backed 5 GB test, not OS RSS proof, not DuckDB, and not proof of CSV/Parquet behavior."
+    }
+  ],
+  "inherited_candidate_reports": [
+    {
+      "ids": ["W1-rev1", "W1", "W2", "W3", "W4"],
+      "status": "executed by candidate (as reported in the frozen supplied witness catalog; not re-executed in this stage)",
+      "source": "inputs/seed/witness_catalog.json",
+      "reported_summary": "W1-rev1 failed on null/int sorting; W1 reports schema-derived document-order checks; W2 reports 50,000-row synthetic NDJSON chunk/reject checks; W3 reports an invalidation state-machine model; W4 reports replay byte comparison and RNG difference.",
+      "evidence_limit": "The supplied catalog contains code hashes and summaries but does not supply the exact code and input or full stdout/stderr receipts required to independently review those checks. Preserve as historical candidate report only; this proposal does not rely on them as verified results. No evaluator execution was provided."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "V1", "title": "Real notebook replay and stale-status integration", "status": "proposed/UNEXECUTED", "expected": "New process and event ID; displayed-order replay; separate output file; prior interactive history not reconstructed from latest counts; restart/cancel/reconnect/source/env edits never leave old outputs marked current."},
+    {"id": "V2", "title": "5 GB data envelope and operator classes", "status": "proposed/UNEXECUTED", "expected": "Measure peak RSS, disk spill, latency and correctness for CSV/NDJSON/Parquet; validate complete reject ledger; sort/distinct/join limits agree with pre-run labels."},
+    {"id": "V3", "title": "Save/reopen/portability/concurrency", "status": "proposed/UNEXECUTED", "expected": "Fault injection during atomic save and journal append; move between hosts; detect changed/missing source or environment; enforce writer lock and safe recovery."},
+    {"id": "V4", "title": "Production OS boundary", "status": "proposed/UNEXECUTED", "expected": "Per-platform tests of read/write paths, network denial, CPU/memory/time limits, cancellation and sandbox escape attempts."},
+    {"id": "V5", "title": "DuckDB fix applicability", "status": "proposed/UNEXECUTED", "expected": "Run captured #12596 regression fixture on explicit release tags and establish tag ancestry/release evidence before naming a first fixed release."}
+  ]
+}

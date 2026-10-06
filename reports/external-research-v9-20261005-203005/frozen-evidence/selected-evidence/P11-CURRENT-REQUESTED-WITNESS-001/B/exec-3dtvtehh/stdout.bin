@@ -1,0 +1,6 @@
+W3 PASS
+rows total=20000 ok=19999 rejected=1 rejected_detail=[{"line": 13335, "reason": "field_count!=4", "raw_prefix": "\"unclosed,\"quote,2026-01-01T00:0"}]
+source sha256 unchanged after processing: True
+full-dataset val mean=1.0000 (n=17141) vs 100-row preview mean=0.5029 -> gap=0.4970
+preview presented as sample only; it does not prove the full-dataset mean
+max lines buffered per chunk=417 (chunk hint 16384 bytes)

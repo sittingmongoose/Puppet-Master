@@ -1,0 +1,17 @@
+{
+  "schema": "er9.prospective-reservation-field-clarification.v1",
+  "observed_utc": "2026-10-06T10:26:23.187621+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-confirmation-C02-current-research-1/reservation.json",
+    "sha256": "b04a48d927f80888f2846e5008aa97458b75ef1836bd9065820e50850eaac710"
+  },
+  "actual_preparation_utc": "2026-10-06T10:20:20.227835+00:00",
+  "dispatch_prospective_budget_reserved_utc_UNKNOWN": "legacy courier expected other timestamp key; exact reservation preparationUTC authoritative, not SOURCESTART",
+  "actual_SOURCE_START": null,
+  "budgets_seconds": {
+    "source": 1200,
+    "inclusive_phase2_from_P1freeze": 600,
+    "whole_from_actualSOURCESTART": 1800
+  },
+  "no_source_clock_reset_or_old_receipt_rewrite": true
+}

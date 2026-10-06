@@ -1,0 +1,42 @@
+{
+  "witness_catalog_version": 1,
+  "labels": {
+    "executed_by_candidate": "Frozen isolated stdlib Python receipts W1-W3 supplied with the candidate report. They establish component-level arithmetic/file behavior only, not application behavior.",
+    "executed_only_by_evaluator": "none provided",
+    "proposed": "UNEXECUTED; no execution receipts exist for these checks."
+  },
+  "executed": [
+    {
+      "id":"W1","title":"Coordinate storage precision: float32 vs float64 vs JSON round-trip",
+      "rationale":"The brief requires enough coordinate precision for reopening and export.",
+      "expected":"float32 gives measurable index error near 1e5 px; binary64 JSON round-trip is exact.",
+      "execution":{"execution_id":"exec-zw6uyd4k","executed_utc":"2026-10-05T21:18:19Z","code_sha256":"07bacf9e492b7f0b4d9c7f2bb730df7016dec1d1b04d101e187a5fd292d2ad5c","data_sha256":"6e855369b7af1a6d3c45415195c43ae650c19fb9636471ef2bd6b3e781625d42","stdout_sha256":"b46266f9c5192b234b28e81b0af1733876af1a21aeccc2b3ecaaeb111765d206","stderr_bytes":0,"exit_code":0,"limits":{"wall_seconds":5,"cpu_seconds":3,"memory_bytes":268435456,"network":"none"}},
+      "stdout":"float64 stored px : 104857.6\nfloat32 stored px : 104857.6015625 err_px = 0.001562499994179234\nphysical um f64   : 6815.744000000001\nphysical um f32   : 6815.74365234375 err_um = 0.0003476562505966285\nroundtrip f32 px  : 104857.6015625 err_px = 0.001562499994179234\njson roundtrip exact: True\njson text: {\"x_um\": 6815.744000000001, \"y_px\": 104857.6}\nfloat32 value in json: {\"x_um\": 6815.74365234375} -> reloaded equal: True\n",
+      "scope_limits":["stdlib-only; no numpy, Qt, zarr, or real file format","one coordinate and scale","does not test a viewer or exporter"]
+    },
+    {
+      "id":"W2","title":"Affine composition order discriminates transform conventions",
+      "rationale":"The transform convention needs a pinned order.",
+      "expected":"translate∘scale and scale∘translate differ for the same point.",
+      "execution":{"execution_id":"exec-2ambjtod","executed_utc":"2026-10-05T21:18:43Z","code_sha256":"f793df71a823758a791decc451071b8607683911cfdbfcb27faccb583b4ffb9b","data_sha256":"74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b","stdout_sha256":"efc58e7d4a914db358a6246d052aa5a12f08b7450072a191c8f6c4f894e90671","stderr_bytes":0,"exit_code":0,"limits":{"wall_seconds":5,"cpu_seconds":3,"memory_bytes":268435456,"network":"none"}},
+      "stdout":"p                : (1.0, 1.0)\ntranslate->scale : (22.0, 84.0)\nscale->translate : (12.0, 24.0)\norders equal     : False\nS then T matrix  : [[2.0, 0.0, 10.0], [0.0, 4.0, 20.0], [0.0, 0.0, 1]]\n",
+      "scope_limits":["pure 3x3 arithmetic under column-vector convention","does not test a transform pipeline"]
+    },
+    {
+      "id":"W3","title":"Atomic project save pattern and content-hash identity",
+      "rationale":"The brief requires recovery after interrupted save and stable source identity.",
+      "expected":"failed write leaves target unchanged; replace succeeds; hashes are byte-sensitive; crash before replace can leave temp file.",
+      "execution":{"execution_id":"exec-gw87zrsh","executed_utc":"2026-10-05T21:18:43Z","code_sha256":"b732ae4c1b561fdac4b145029af46bc838c08a8fd6e886907d12b588cada485a","data_sha256":"74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b","stdout_sha256":"dbc93ac5c8cd384f080572e747b141590a887827d7d024748c7cc6c237fa375c","stderr_bytes":0,"exit_code":0,"limits":{"wall_seconds":5,"cpu_seconds":3,"memory_bytes":268435456,"network":"none"}},
+      "stdout":"target intact after failed save : True True\nno leftover temp visible?  files: ['.project-z57qhje0.tmp', 'project.json']\nafter successful save           : {\"v\": 2, \"ann\": [\"ok\"]}\nidentity hash stable            : True\nany byte change alters identity : True\nsame-dir rename supported       : True\n",
+      "scope_limits":["local tmpfs/ext filesystem; no power-loss/crash injection beyond exception before replace","NFS and EXDEV not exercised","does not establish application behavior"]
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id":"V1","title":"Reopen round-trip on a second machine","plan":"Move/copy project and reference sources to a second path; reopen and compare annotation rows and relocation prompts.","acceptance":"Rows remain identical; hash mismatch never relinks silently.","status":"UNEXECUTED"},
+    {"id":"V2","title":"3 GB bounded-read benchmark","plan":"Measure p95 tile latency, peak RSS, prefetch, and cancel latency on synthetic tiled OME-TIFF and a real instrument file on the target workstation.","acceptance":"p95 <100 ms, RSS <4 GB, cancel <250 ms; thresholds are proposed and need team confirmation.","status":"UNEXECUTED"},
+    {"id":"V3","title":"Interrupt save/export on shared storage","plan":"Kill mid-save and mid-export on the team's actual NFS/SMB share; reopen and inspect partial/temp recovery.","acceptance":"Last good project state remains recoverable and no partial output becomes authoritative.","status":"UNEXECUTED"},
+    {"id":"V4","title":"Sample-index calibration and export round-trip","plan":"With x/y scales (0.25, 0.5) µm and origin (12, 7) µm, verify index points (0,0) and (1.5,2.25) map to (12,7) and (12.375,8.125) µm. Round-trip through the workspace CSV/GeoJSON writer and parser; inspect manifest convention, axes, units, source identity, and transforms. Probe edge-origin conversion separately.","acceptance":"Workspace parser recovers binary64 sample indices exactly; expected physical values and declared sample-center origin match. This is an own-implementation check, not generic GeoJSON/third-party interoperability.","status":"UNEXECUTED"},
+    {"id":"V5","title":"Cross-filesystem relocation (EXDEV path)","plan":"Move a project across mounts; verify same-directory temporary saves or a safe fallback.","acceptance":"No partial authoritative project state after failure.","status":"UNEXECUTED"},
+    {"id":"V6","title":"Per-instrument calibration fixture","plan":"For each instrument, assert imported value and unit against a reviewed fixture and detect reader-upgrade drift, following the tifffile #319 test pattern.","acceptance":"Any unreviewed value/unit semantic change fails visibly.","status":"UNEXECUTED"}
+  ]
+}

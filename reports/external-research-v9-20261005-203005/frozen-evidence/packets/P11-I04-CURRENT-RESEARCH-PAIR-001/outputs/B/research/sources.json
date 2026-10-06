@@ -1,0 +1,98 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "stage": "research",
+  "captured_utc_window": "2026-10-06T06:04:03Z..2026-10-06T06:05:18Z",
+  "notes": "All captures are exact public HTTP response bodies taken by this stage via the admitted public_https_get tool. Pins are branch-level (floating) because no release tags were fetched; content sha256 + capture_id are the capture identity. A source catalog entry records what the capture establishes and its limits; it does not by itself establish release behavior of any product.",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Jupyter Notebook format v4.5 JSON schema (nbformat)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "pin": "branch main (floating ref at capture time); etag \"5a268c8430e216c21dfbbe3301eef41af32e212c1b0d8c41a144c46b5012106f\"",
+      "capture": {"capture_id": "daa3f0b01d494b28b94f56668963c646", "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a", "bytes": 16104, "complete": true, "captured_utc": "2026-10-06T06:04:03.062566+00:00"},
+      "locator": "description \"Jupyter Notebook v4.5 JSON schema.\"; definitions.cell_id pattern ^[a-zA-Z0-9-_]+$ minLength 1 maxLength 64; code_cell required [id, cell_type, metadata, source, outputs, execution_count]; execution_count: \"Will be null if the cell has not been run.\"; output oneOf execute_result|display_data|stream|error; execute_result requires execution_count; error requires ename/evalue/traceback; nbformat_minor minimum 5",
+      "establishes": "Since minor revision 4.5 every cell carries a stable string id independent of position; code cells carry an execution_count (null if never run); saved outputs are structured and execute_result outputs bind to the execution_count that produced them; errors are first-class structured outputs.",
+      "limits": "Main-branch capture, not a release tag. A JSON schema validates document structure only; it establishes no runtime or execution semantics."
+    },
+    {
+      "id": "S2",
+      "title": "nbclient CHANGELOG (jupyter/nbclient main)",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/CHANGELOG.md",
+      "pin": "branch main (floating ref at capture time)",
+      "capture": {"capture_id": "5884867337bc49538c548e2ef8f7010a", "sha256": "1a26f27ba77de88e5807285771ccebe65cc606e7bc9028492439898ed40a6b8e", "bytes_total": 40434, "bytes_verified": 32768, "complete_delivery": false, "captured_utc": "2026-10-06T06:04:03.297653+00:00"},
+      "locator": "\"## 0.11.0\" (release window 2025-12-23..2026-06-05, compare v0.10.4...f1c8b43); \"## 0.10.4\" #338 Allow display_id to be None; \"## 0.7.4\" #282 include stream output in CellExecutionError, #283 avoid duplicate 'Exception: message'; \"## 0.6.1\" #224 Add error_on_interrupt trait, #222 Add on_cell_executed hook",
+      "establishes": "Current nbclient release line is 0.11.0 (June 2026). nbclient exposes per-cell progress hooks (on_cell_executed), interrupt-to-error control (error_on_interrupt), and assembles structured CellExecutionError from cell error + stream outputs.",
+      "limits": "Trailing ~7.7 KB of the file was not rendered; changelog entries before 0.5.7 not observed. Changelog text is release notes, not behavior proof."
+    },
+    {
+      "id": "S3",
+      "title": "GitHub search results: nbclient DeadKernelError (issue #88; open PR #349)",
+      "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbclient+DeadKernelError&per_page=10",
+      "pin": "live API response at capture time",
+      "capture": {"capture_id": "7746831eb9ce464f870c32aa98eca6ee", "sha256": "f73d380d39210ee72e528f59a5481d9d3658c0aaeb6f8ee0b4a5a1df11268304", "bytes": 22607, "complete": true, "captured_utc": "2026-10-06T06:04:22.147958+00:00"},
+      "locator": "items[3] issue #88 \"Nbclient waits indefinitely on killed subprocesses\" created 2020-06-30T11:28:07Z, closed 2020-07-10T22:01:25Z, labels bug+help wanted, body: notebook subprocess killed by docker memory limit -> nbclient hangs forever, cites nbclient/client.py; items[0] PR #349 \"Handle kernel dead status message in iopub polling\" created 2026-06-15T11:50:06Z, state open, body: gateway broadcasts iopub status execution_state=\"dead\", previously silently discarded because it does not match parent_msg_id; \"This mirrors how _async_poll_kernel_alive handles kernel death detection\"",
+      "establishes": "The failure (undetected kernel death hangs execution indefinitely) existed in nbclient as reported 2020; a kernel-death detection mechanism (_async_poll_kernel_alive) exists on main in 2026 per the open PR's description; a residual gap remains for remote/gateway kernels (PR #349 open, unmerged at capture).",
+      "limits": "Issue and PR bodies are claims by their authors, verified here only as recorded text; search snapshot is point-in-time; PR #349 not merged at capture."
+    },
+    {
+      "id": "S4",
+      "title": "nbclient issue #88 timeline (fix linkage: comments + cross-referenced PR #90)",
+      "url": "https://api.github.com/repos/jupyter/nbclient/issues/88/timeline?per_page=30",
+      "pin": "live API response at capture time",
+      "capture": {"capture_id": "a9ae3a21f5d241f29b82d82bca80217f", "sha256": "ae47b874d891bf08dc9e08cdbce1c949b00c92a7bd05f72d9bc30fe0f368e1a5", "bytes": 31281, "complete": true, "captured_utc": "2026-10-06T06:04:54.659921+00:00"},
+      "locator": "comment 655966662 (davidbrochart, 2020-07-09): with timeout=1 the run \"raises a DeadKernelError(\\\"Kernel died\\\") exception\", proposes regular liveness checks; comment 655978447 (2020-07-09): \"we should regularly check for the kernel to be alive, independently of the timeout. I will open a PR.\"; cross-referenced event: PR #90 \"Check if kernel is alive during cell execution\", body \"Fixes #88\", pull_request.merged_at \"2020-07-10T22:01:24Z\"; closed event 2020-07-10T22:01:25Z by MSeal",
+      "establishes": "Issue -> diagnosis -> fix PR -> merge linkage with dates: the fix merged 2020-07-10T22:01:24Z, one minute before the issue was closed.",
+      "limits": "Does not identify the first PyPI release containing the fix (lead L1). Timeline is a JSON event log, not prose documentation."
+    },
+    {
+      "id": "S5",
+      "title": "nbclient PR #90 diff (kernel-liveness fix + regression tests)",
+      "url": "https://github.com/jupyter/nbclient/pull/90.diff",
+      "pin": "PR head at capture time (302 -> patch-diff.githubusercontent.com/raw/jupyter/nbclient/pull/90.diff)",
+      "capture": {"capture_id": "fa53ce616259440288c6cbe2dcadf5b7", "sha256": "72923cfa20d2e93c05b6c90a8879002d8e6f010e5b2bff1725b504436f0cd5a9", "bytes": 9183, "complete": true, "captured_utc": "2026-10-06T06:05:17.838431+00:00"},
+      "locator": "nbclient/client.py: new _async_poll_kernel_alive (loop: await asyncio.sleep(1); await self._async_check_alive(); on DeadKernelError cancel self.task_poll_for_reply); async_execute_cell wraps _async_poll_for_reply in task_poll_for_reply and on asyncio.CancelledError cancels task_poll_output_msg and raises DeadKernelError(\"Kernel died\"); new fixture nbclient/tests/files/Autokill.ipynb whose single cell runs os.kill(os.getpid(), signal.SIGTERM); renamed test test_kernel_death -> test_kernel_death_after_timeout; new regression test test_kernel_death_during_execution (\"Check that an error is raised when the kernel is_alive is false during a cell execution\", pytest.raises(RuntimeError)); requirements.txt jupyter_client>=6.1.0 -> >=6.1.5",
+      "establishes": "The exact fix mechanism: a 1 Hz liveness poll task parallel to output polling, converting kernel death into DeadKernelError even when no cell timeout is configured; plus a regression test that kills the kernel mid-cell and asserts an error is raised.",
+      "limits": "A diff shows intent and tests, not release behavior. Merged status and date come from S4. Which release first shipped it is unresolved (lead L1); presence on main in 2026 is corroborated only via S3's PR #349 description."
+    },
+    {
+      "id": "S6",
+      "title": "PyArrow 'Tabular Datasets' documentation source (apache/arrow main, docs v25.0.1 site)",
+      "url": "https://raw.githubusercontent.com/apache/arrow/main/docs/source/python/dataset.rst",
+      "pin": "branch main (floating ref at capture time); rendered site title 'Tabular Datasets — Apache Arrow v25.0.1' (separate capture e3bd1bf0ec25dd42e51123bde9c148f0583cb13d66957b4c9244003ed05ce6e1, superseded by this RST source)",
+      "capture": {"capture_id": "527b31f382b44870a8e34e2a9ecf120b", "sha256": "02e45ee05b5f1d0feafa96031002304fe555505b9afdbb1efb32a02d6fa031f2", "bytes_total": 35454, "bytes_verified": 32768, "complete_delivery": false, "captured_utc": "2026-10-06T06:04:21.772910+00:00"},
+      "locator": "\"efficiently work with tabular, potentially larger than memory, and multi-file datasets\"; \"Creating a Dataset object does not begin reading the data itself.\"; schema inference \"by default from the first file\"; section \"Iterative (out of core or streaming) reads\": Dataset.to_batches returns an iterator of record batches, mean computed without loading full column; Scanner batch_size \"default is one million rows\"; ordering: \"the order of the files controls the order of the data ... only applies when the dataset is constructed with a list of files. There are no order guarantees given when the files are instead discovered by scanning a directory\"; section \"A note on transactions & ACID guarantees\": \"no transaction support or any ACID guarantees\", concurrent writes \"may have unexpected behavior\", \"Most file formats have magic numbers which are written at the end ... a partial file write can safely be detected and discarded. The CSV file format does not have any such concept and a partially written CSV file may be detected as valid\"; write_dataset max_open_files default 900, max_rows_per_file, basename_template overwrite warning",
+      "establishes": "A >RAM streaming scan mechanism (lazy dataset discovery + batch iterator); explicit non-guarantees that our data contract must paper over: discovered-scan order is unspecified; no ACID; partially written CSVs can be read as valid (crash-corruption risk); concurrent writers can clobber each other unless basename templates are unique.",
+      "limits": "Rolling main-branch docs (site shows v25.0.1); final ~2.7 KB not rendered (tail of write-section). Documents intended behavior, not measured performance."
+    },
+    {
+      "id": "S7",
+      "title": "DuckDB CSV Import documentation (current/1.5)",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "docs version '1.5 current' per captured page version selector; canonical URL docs/current/data/csv/overview.html (308 redirect from /docs/stable/data/csv/overview, redirect capture 8322f51a2bba3a3066ef3552b02caa38697296833c5b9618ef73e34e9d3966a1)",
+      "capture": {"capture_id": "bc50e77f3dc44c89acb5c099daf7c3de", "sha256": "ca5fb8588ce3e9db1c635114288200a8dee38613a4d2569be8e143de027cf3c5", "bytes_total": 393313, "bytes_verified": 32768, "complete_delivery": false, "captured_utc": "2026-10-06T06:04:21.564841+00:00"},
+      "locator": "page title \"CSV Import\"; meta description: SELECT * FROM 'flights.csv'; read_csv with custom options incl. columns = { 'FlightDate': 'DATE', ... } explicit types; sidebar entry \"Reading Faulty CSV Files\" (docs/current/data/csv/reading_faulty_csv_files)",
+      "establishes": "DuckDB (1.5 current) queries CSV files directly with per-column explicit types; a dedicated faulty-CSV docs page exists as the canonical error-policy reference.",
+      "limits": "Only the page shell/nav was rendered before the delivery cap; store_rejects/ignore_errors semantics are therefore established via S8 issue/PR captures, not from this page. A raw-markdown attempt in duckdb-web 404'd (see S9) — docs repo layout changed."
+    },
+    {
+      "id": "S8",
+      "title": "GitHub search results: duckdb store_rejects (issues #26211, #25825, #18980; PRs #26212, #26195, #26314, #26497)",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+store_rejects&per_page=10",
+      "pin": "live API response at capture time",
+      "capture": {"capture_id": "eb0ddefeda0e412b8265aee32cdcc755", "sha256": "18c459368ab9549ae410ea5d4d31bad2f843792ddbd2093ffab6a8a16236c279", "bytes_total": 59016, "bytes_verified": 32768, "complete_delivery": false, "captured_utc": "2026-10-06T06:04:22.612947+00:00"},
+      "locator": "#26211 (open, label 'reproduced'): with ICU loaded, CSV reader loads SQL NULL for unparsable TIMESTAMPTZ/TIMETZ \"even with strict_mode = true and ignore_errors = false\"; \"ignore_errors = true keeps the row (as NULL) instead of skipping it, and store_rejects = true records nothing\"; reproduced on v1.5.5 (d8cdaa33fd) and nightly v2.0.0-alpha (8cbdaba6ac); #26212 (open PR, fixes #26211): ICU casts \"always returned true\"; new test test/sql/copy/csv/test_csv_icu_tz_cast_error.test (require icu); existing tests csv_rejects_read.test and test_timestamptz_12926.test \"pass in CI only because they run without ICU\"; #25825 (open, 'reproduced'): read_csv with explicit buffer_size silently drops an oversized final row (\"no error, no warning, and no entry in reject_errors\"), row-count tables for 64KiB/1MiB/2MiB buffers; #26195 (open PR, fixes #25825): FinishBoundaryScan fix in string_value_scanner.cpp, test_buffer_size_final_row.test; #18980 (open, 'reproduced'): csv_line in reject_errors truncated near 10000 chars (v1.3.2); #26314 (open PR, Breaking Change label): \"Currently, closing (or destroying) a result whose query hasn't finished: On autocommit: commits whatever the worker threads had already run\"; \"one path was and still is unprotected, which is the store_rejects path of read_csv\"",
+      "establishes": "DuckDB has an explicit reject-capture facility (store_rejects option writing to a reject_errors table), and concrete live failure modes where ingestion silently produces wrong results (silent NULLing under ICU; silent row drop with explicit buffer_size; partial-write commit on closed results). All fixes were open/unmerged PRs at capture time on v1.5.5 / v2.0.0-alpha.",
+      "limits": "All items from one search snapshot; PR bodies authored by contributors; fixes not merged at capture, so release behavior is NOT established; remaining ~26 KB of JSON not rendered."
+    },
+    {
+      "id": "S9",
+      "title": "Dead locator: duckdb-web docs/data/csv markdown (and contents API)",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/data/csv/reading_faulty_csv_files.md (404); https://api.github.com/repos/duckdb/duckdb-web/contents/docs/data/csv (404)",
+      "pin": "n/a (failed fetch)",
+      "capture": {"capture_id": "705f58bbbc2a4846ab6beba02bcd36f8", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "bytes": 14, "complete": true, "captured_utc": "2026-10-06T06:04:55.032791+00:00", "second_capture_id": "8628fb326d1848bc84906d7a03d68d44", "second_sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2"},
+      "locator": "response body \"404: Not Found\"; contents API {\"message\":\"Not Found\"}",
+      "establishes": "The duckdb-web docs tree moved; the old markdown path is dead. Recorded so later stages do not re-try this locator and do not mistake the miss for a missing feature.",
+      "limits": "Negative evidence about a URL path only."
+    }
+  ]
+}
