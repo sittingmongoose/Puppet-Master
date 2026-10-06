@@ -1,0 +1,40 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "cohort": "method-fidelity-003",
+  "source_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003",
+  "destination_hint": "assurance/method-fidelity-003",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/README.md",
+      "relative_path": "README.md",
+      "sha256": "6f804ffebf94172829455f977eda0befd7c62b27609539b9258306de421f7cc2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/CONCLUSIONS.json",
+      "relative_path": "CONCLUSIONS.json",
+      "sha256": "e8012f2f6a5dc595760e5a5fd260d95255e72ec481ed8ba5915de960159b1eca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/PAIR_SUMMARY.json",
+      "relative_path": "PAIR_SUMMARY.json",
+      "sha256": "505a8a0ca39f7ed56527dbc42005289d2ee4b17075415ee4b8b9ff59fa0fe070"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/ACTIVATION_CHRONOLOGY.json",
+      "relative_path": "ACTIVATION_CHRONOLOGY.json",
+      "sha256": "8154ec32bbc259ce8eae3c04cdfc657fb240ea1ca4726514133e61459fff60a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/WORKLOAD_METADATA.json",
+      "relative_path": "WORKLOAD_METADATA.json",
+      "sha256": "ef2ec4189d97ebf39148cbfedb39337ebf346b2e70cd89eb4126eea68f78eda1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/EVIDENCE.json",
+      "relative_path": "EVIDENCE.json",
+      "sha256": "dc0ebc3a697f68476ef0292b3ddd63e4049cbd20e045d7086f47f858292450f4"
+    }
+  ],
+  "scope": "Only listed compact metadata/chronology; excludes local full96-role snapshot/collector and every candidate/source/evaluator/raw-native/auth/holdout body",
+  "no_scientific_or_complete_pipeline_claim": true
+}

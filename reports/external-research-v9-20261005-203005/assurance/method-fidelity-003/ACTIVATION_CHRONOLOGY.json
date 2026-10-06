@@ -1,0 +1,571 @@
+{
+  "schema": "er9.safe-closure-activation-chronology.v1",
+  "matrix_cutoff_utc": "2026-10-06T02:32:13.238215+00:00",
+  "matrix_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/WORKLOAD_MATRIX_20261006T0234.json",
+    "sha256": "d8fd262085da2747c917803d18b355c6ecff6a649a8a206cb012e4c9238524db"
+  },
+  "rows": [
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-control-research-a001",
+      "pair_id": "I-05-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-05-FRESH-DELIVERY-R001.json",
+        "sha256": "8991bb5215a4b18711509c95396dd67f145f8ea62bf0ab9574c3196b138247b8"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:17.732488+00:00",
+      "service_intent_start_utc": "2026-10-06T02:26:33.375444+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:26:45.972588+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-05-FRESH-DELIVERY-R001-control-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f08-cf9c-7e70-b7a3-4fa8c18cfbaa",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "d05be8ecd6eec6e1b1f88a58db491cc76aff04f00fe0d1ae05526fbcf96c5a46"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "ca0b47858bb56a529b390adeadb9456606e8cd5a9ddb4a955333ed5859cd354a"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84012232411811,
+        "original_total_stop_monotonic_ns": 85212232411811,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "d05be8ecd6eec6e1b1f88a58db491cc76aff04f00fe0d1ae05526fbcf96c5a46"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253598,
+      "positive_thread_id": "01a10f08-cf9c-7e70-b7a3-4fa8c18cfbaa",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253598,
+        "observed_activation_monotonic_ns": 84017351207855
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+      "pair_id": "I-05-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-05-FRESH-DELIVERY-R001.json",
+        "sha256": "8991bb5215a4b18711509c95396dd67f145f8ea62bf0ab9574c3196b138247b8"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:17.732488+00:00",
+      "service_intent_start_utc": "2026-10-06T02:26:34.659429+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:26:46.000198+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f08-d66a-7192-9e26-f0d6b1b00908",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "034d11943c521158c44d862de246443b0018eef28e6a0798b05a27e324447f43"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-treatment-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "34c5c4b737cfd1ca0ebfb50f979c5ae9ac7ae237609d4634cbc34f37913d6a8d"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84013516412600,
+        "original_total_stop_monotonic_ns": 85213516412600,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "034d11943c521158c44d862de246443b0018eef28e6a0798b05a27e324447f43"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253600,
+      "positive_thread_id": "01a10f08-d66a-7192-9e26-f0d6b1b00908",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253600,
+        "observed_activation_monotonic_ns": 84019079251016
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+      "pair_id": "I-06-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-06-FRESH-DELIVERY-R001.json",
+        "sha256": "526d23e6d393f235afe846611700ad1b03ccde7dee002601b31e71edd67914cf"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:17.889072+00:00",
+      "service_intent_start_utc": "2026-10-06T02:26:48.264947+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:00.853383+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-0a60-76e2-9cec-6ce742711890",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "93e51e79bdbc40a5d5c1f7cdb6ea27b65f2d45b7b81b0441b3620d3310e0b1b7"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "a22edcddfea214062935716f87d3fbb24f479c714140a62807834fdc9da768bc"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84027121931134,
+        "original_total_stop_monotonic_ns": 85227121931134,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "93e51e79bdbc40a5d5c1f7cdb6ea27b65f2d45b7b81b0441b3620d3310e0b1b7"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253613,
+      "positive_thread_id": "01a10f09-0a60-76e2-9cec-6ce742711890",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253613,
+        "observed_activation_monotonic_ns": 84032378116106
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-treatment-research-a001",
+      "pair_id": "I-06-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-06-FRESH-DELIVERY-R001.json",
+        "sha256": "526d23e6d393f235afe846611700ad1b03ccde7dee002601b31e71edd67914cf"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:17.889072+00:00",
+      "service_intent_start_utc": "2026-10-06T02:26:49.756596+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:00.880421+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-06-FRESH-DELIVERY-R001-treatment-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-0e98-71a1-a2c2-a218171c72a9",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "b0a4dd6ac234f752bcc3393179c7969acde2c5627e773da86ac286577291567e"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-treatment-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "2402f433e16ea8114176772d21038798e22b767940a5de55e96cda6184444399"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84028613581229,
+        "original_total_stop_monotonic_ns": 85228613581229,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "b0a4dd6ac234f752bcc3393179c7969acde2c5627e773da86ac286577291567e"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253614,
+      "positive_thread_id": "01a10f09-0e98-71a1-a2c2-a218171c72a9",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253614,
+        "observed_activation_monotonic_ns": 84033579375893
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-control-research-a001",
+      "pair_id": "I-07-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-07-FRESH-DELIVERY-R001.json",
+        "sha256": "72aa627eca42b54eeb32f2f38058141c9db6b3ec849e2163e558556b8ba781b5"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:18.021295+00:00",
+      "service_intent_start_utc": "2026-10-06T02:27:03.258560+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:16.098784+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-07-FRESH-DELIVERY-R001-control-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-44ae-7a80-86d1-007fa23894d1",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "5586e06cdb238fde9dda89a3e2dc86d50e55632ffe0152c0bcfd9f10462f1655"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "c4cd2c06ea20303b921ad9ee3a3ae5ad666a23e5bd27303a5751a3dc55df0968"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84042115544793,
+        "original_total_stop_monotonic_ns": 85242115544793,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "5586e06cdb238fde9dda89a3e2dc86d50e55632ffe0152c0bcfd9f10462f1655"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253628,
+      "positive_thread_id": "01a10f09-44ae-7a80-86d1-007fa23894d1",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253628,
+        "observed_activation_monotonic_ns": 84047329365048
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-treatment-research-a001",
+      "pair_id": "I-07-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-07-FRESH-DELIVERY-R001.json",
+        "sha256": "72aa627eca42b54eeb32f2f38058141c9db6b3ec849e2163e558556b8ba781b5"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:18.021295+00:00",
+      "service_intent_start_utc": "2026-10-06T02:27:04.564620+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:16.171850+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-07-FRESH-DELIVERY-R001-treatment-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-49f3-77d2-b6ac-21fea87b3a91",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "6690e407a98c58e73774a08afbb904d97817479eb2ee0c20f51b176246ddb1cc"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-treatment-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "0209311687ed561228b6c77932ad531e49fbab3afa3fd7b28d4033b1816bb188"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84043421603552,
+        "original_total_stop_monotonic_ns": 85243421603552,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "6690e407a98c58e73774a08afbb904d97817479eb2ee0c20f51b176246ddb1cc"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253629,
+      "positive_thread_id": "01a10f09-49f3-77d2-b6ac-21fea87b3a91",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253629,
+        "observed_activation_monotonic_ns": 84048671905343
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+      "pair_id": "I-08-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-08-FRESH-DELIVERY-R001.json",
+        "sha256": "3789982ba010f8f5ecf6e40e1f5f9b48cb70e413ba7d71abfeda61f175d2d74b"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:18.152200+00:00",
+      "service_intent_start_utc": "2026-10-06T02:27:18.477666+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:24.719795+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-803a-7281-bb97-82191c74e73e",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "9df6230ca6897ba87164de5e3d0da5789725f1dfbce0652a6692598959a81a89"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "ad89363c3ca6139be83b068611c806667356b9dc6009e03abb4f29054617b8fc"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84057334649311,
+        "original_total_stop_monotonic_ns": 85257334649311,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "9df6230ca6897ba87164de5e3d0da5789725f1dfbce0652a6692598959a81a89"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253643,
+      "positive_thread_id": "01a10f09-803a-7281-bb97-82191c74e73e",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253643,
+        "observed_activation_monotonic_ns": 84062568523902
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+      "pair_id": "I-08-FRESH-DELIVERY-R001",
+      "family": "L",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-08-FRESH-DELIVERY-R001.json",
+        "sha256": "3789982ba010f8f5ecf6e40e1f5f9b48cb70e413ba7d71abfeda61f175d2d74b"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:26:18.152200+00:00",
+      "service_intent_start_utc": "2026-10-06T02:27:19.957938+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:27:37.795092+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "01a10f09-858b-7e12-b5a8-b15db35bcc70",
+        "session_id": null,
+        "observed_model": "gpt-6-luna",
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "activation_sha256": "77e808ec15ac301f0a69c2c54e78862ceb97425f1dd75255135339c61b461c9a"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-treatment-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "e418da44cb74db5738cb4897aa8baf979eeeec6b010b0177bd4af97801a88bb9"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84058814922006,
+        "original_total_stop_monotonic_ns": 85258814922006,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "positive_activation_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-treatment-research-a001/ACTIVATION_POSITIVE.json",
+        "sha256": "77e808ec15ac301f0a69c2c54e78862ceb97425f1dd75255135339c61b461c9a"
+      },
+      "recorded_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "recorded_goal_status": "active",
+      "native_goal_created_epoch": 1791253645,
+      "positive_thread_id": "01a10f09-858b-7e12-b5a8-b15db35bcc70",
+      "activation_observation": {
+        "native_activation_observed": true,
+        "observed_activation_epoch": 1791253645,
+        "observed_activation_monotonic_ns": 84063938995598
+      },
+      "positive_guard_fields_match": true,
+      "activation_inside_original_clock": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "family": "Z",
+      "ops_both_arm_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/C-01-RESOURCE-R002-BUNDLE.json",
+        "sha256": "9bf3dabce10b79dbf0545b427410094f32847430649aec053da837652c21915a"
+      },
+      "ops_both_arm_seal_utc": "2026-10-06T02:30:47.739345+00:00",
+      "service_intent_start_utc": "2026-10-06T02:31:05.520657+00:00",
+      "activation_event_projection": {
+        "utc": "2026-10-06T02:31:18.430486+00:00",
+        "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+        "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "actual_native_goal_starts": 1,
+        "target_id": "target_muw2b1o3_c507c1d9-07b8-481b-b055-1967bc56914d",
+        "session_id": "sess_4ebff80b-1dfc-4f9f-8e37-c4200d943703",
+        "observed_model": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "observed_effort": "max",
+        "activation_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+        "activation_sha256": "32bd1fb8272cb5d240172285454af891290ed422a5872f57b012e5d45c3f6d02"
+      },
+      "closure_precedes_service_intent": true,
+      "closure_precedes_observed_native_activation": true,
+      "quiet": "UNKNOWN_ACTIVE_AT_MATRIX; no terminal/quiescence inferred",
+      "resource_profile_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/RESOURCE_PROFILE.json",
+        "sha256": "2a5a3f960102f8d322c4e2b87d7e43cddbc7bc8006bb448e85ba94aeeafb255e"
+      },
+      "resource_clock": {
+        "original_birth_monotonic_ns": 84284376062312,
+        "original_total_stop_monotonic_ns": 85484376062312,
+        "aggregate_memory_max_bytes": 2415919104,
+        "aggregate_swap_max_bytes": null
+      },
+      "clock_duration_matches_source_role": true,
+      "native_public_projection_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/ACTIVATION_PUBLIC_PROJECTION.json",
+        "sha256": "75ea061a82baa30922a1509a1fbdf97f91d069f4a1d24c113f9198c3b372cc69"
+      },
+      "native_public_projection_keys": [
+        "schema",
+        "observed_utc",
+        "job_id",
+        "source_activation_sha256",
+        "startedTurn",
+        "actual_model",
+        "actual_session_id",
+        "effort_fields",
+        "native_goal_target_id",
+        "native_goal_state",
+        "native_thought_level"
+      ],
+      "native_public_identity_projection": {
+        "schema": "er9.public-native-activation-proof.v1",
+        "observed_utc": "2026-10-06T02:37:05.339785+00:00",
+        "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "source_activation_sha256": "32bd1fb8272cb5d240172285454af891290ed422a5872f57b012e5d45c3f6d02",
+        "startedTurn": true,
+        "actual_model": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "actual_session_id": "sess_4ebff80b-1dfc-4f9f-8e37-c4200d943703",
+        "effort_fields": [],
+        "native_goal_target_id": "target_muw2b1o3_c507c1d9-07b8-481b-b055-1967bc56914d",
+        "native_goal_state": "active",
+        "native_thought_level": {
+          "selector": "/snapshot/settings/thoughtLevel",
+          "value": {
+            "available": [
+              {
+                "label": "low",
+                "value": "low"
+              },
+              {
+                "label": "high",
+                "value": "high"
+              },
+              {
+                "label": "max",
+                "value": "max"
+              }
+            ],
+            "current": "max",
+            "defaultLevel": "max",
+            "enabled": true
+          }
+        }
+      }
+    }
+  ],
+  "chat_or_filename_timestamps_used": false,
+  "raw_native_IO_opened": false,
+  "completion_quiescence_or_quality_credit": false
+}

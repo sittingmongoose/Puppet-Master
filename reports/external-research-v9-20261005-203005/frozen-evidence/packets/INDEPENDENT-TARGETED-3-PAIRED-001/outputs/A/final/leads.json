@@ -1,0 +1,116 @@
+{
+  "inventory_version": 1,
+  "scope": "Unresolved dependencies and optional opportunities for follow-up. These leads are not current product requirements and, unless a source ID is given, were not investigated as evidence in this stage.",
+  "unresolved": [
+    {
+      "id": "L1",
+      "topic": "Reader and version compatibility matrix",
+      "status": "unresolved",
+      "question": "Can the selected Napari 0.9.2, Zarr-Python 3.4.0 and OME-NGFF 0.5 stack open the same representative arrays lazily and preserve axes, units, multiscale and transforms?",
+      "next_step": "Build a small compatibility spike with pinned dependencies and asymmetric 2D/3D/5D fixtures before committing the stack.",
+      "decision_impact": "If bounded reads or metadata fidelity fail, choose a different adapter or defer the affected format/view mode.",
+      "related_sources": ["S1", "S2", "S3", "S4"]
+    },
+    {
+      "id": "L2",
+      "topic": "Project coordinate matrix convention and non-scale/translation calibration",
+      "status": "unresolved",
+      "question": "Which canonical vector/axis order, handedness, origin, unit normalization and affine extension will the project schema use for source formats whose orientation exceeds NGFF scale/translation?",
+      "next_step": "Write a schema example for anisotropic and oblique data, then verify forward/inverse mappings through annotation save/reopen/export.",
+      "decision_impact": "Required before storing geometry or claiming physical-coordinate export fidelity.",
+      "related_sources": ["S1", "S2"]
+    },
+    {
+      "id": "L3",
+      "topic": "3 GB bounded-read budget and latency target",
+      "status": "unresolved",
+      "question": "What shapes, sample types, compression, channels, time points and access patterns represent the group's largest data, and what latency/RSS thresholds count as responsive?",
+      "next_step": "Select one representative 3 GB sample and agree measurable thresholds before benchmarking on 8-core/16 GB hardware.",
+      "decision_impact": "Determines chunk size, pyramid generation, cache budget, worker count and whether each reader stays in support.",
+      "related_sources": ["S3"]
+    },
+    {
+      "id": "L4",
+      "topic": "Project identity for directory stores and source relocation",
+      "status": "unresolved",
+      "question": "How should the importer create a reproducible content identity for a Zarr directory while files may change during hashing or live in a large shared store?",
+      "next_step": "Specify deterministic manifest hashing, snapshot consistency and relink rules; test modification during scan and after registration.",
+      "decision_impact": "Affects safe relocation, duplicate detection and whether an annotation can be asserted to target the same image.",
+      "related_sources": []
+    },
+    {
+      "id": "L5",
+      "topic": "Shared storage durability and atomic publication",
+      "status": "unresolved",
+      "question": "Which filesystem/share providers are actually used, and what are their rename, flush, locking and interruption guarantees?",
+      "next_step": "Test staged publication and copy/verify bundle transfer on each intended provider; keep editing local if live share semantics are uncertain.",
+      "decision_impact": "Determines whether atomic rename can be used there or whether only local snapshot creation plus verified copying is supported.",
+      "related_sources": ["S10", "S11", "S12"]
+    },
+    {
+      "id": "L6",
+      "topic": "Bundle size, original data rights and relocation needs",
+      "status": "unresolved",
+      "question": "Can project bundles include source files or only derived data and references, and what storage/retention limits apply?",
+      "next_step": "Agree with the group whether the portable default bundles originals, a converted immutable copy, or checksummed references.",
+      "decision_impact": "Sets portability versus storage cost and the user-visible meaning of an external-source bundle.",
+      "related_sources": []
+    }
+  ],
+  "optional": [
+    {
+      "id": "L7",
+      "topic": "Bio-Formats/ImageJ-Fiji reader route",
+      "status": "deferred_alternative",
+      "why_useful": "A mature microscopy reader/plugin ecosystem may extend instrument coverage sooner than maintaining bespoke adapters.",
+      "why_not_adopted_yet": "No format-by-format bounded-read, axis/calibration, licensing, provenance or export behavior was checked in this diagnostic. Reader breadth alone does not prove project-level identity and recovery behavior.",
+      "next_step": "Choose one representative vendor dataset and compare a Bio-Formats/Fiji route with the proposed NGFF adapter, including exact series selection and exported-coordinate round trip.",
+      "evidence_status": "Candidate lead only; not captured or evaluated as a source in this stage."
+    },
+    {
+      "id": "L8",
+      "topic": "Tiff-centric reader such as tifffile",
+      "status": "deferred_alternative",
+      "why_useful": "Could provide a smaller, maintainable allowlist path for a tested TIFF subset without claiming universal vendor-format support.",
+      "why_not_adopted_yet": "No source capture or bounded-read benchmark was performed; compression, strips/tiles, metadata variants and volumes can change memory behavior.",
+      "next_step": "Evaluate exact version-pinned readers on representative tiled, stripped and compressed fixtures; admit only those with measured regional reads and preserved calibration.",
+      "evidence_status": "Candidate lead only; not captured or evaluated as a source in this stage."
+    },
+    {
+      "id": "L9",
+      "topic": "OME-NGFF labels and ROI interchange",
+      "status": "optional_interoperability",
+      "why_useful": "A later check of the standard's labels/ROI conventions may make mask or region exchange more interoperable than a project-only format.",
+      "why_not_adopted_yet": "This stage used NGFF image axes/transforms as its evidence; it did not establish all label/ROI semantics or round-trip behavior.",
+      "next_step": "Review the exact pinned specification and implementation/test history for label/ROI semantics, then verify annotation scope, axis order and calibration survive export/import.",
+      "evidence_status": "Lead informed by S1; detailed label/ROI behavior not validated."
+    },
+    {
+      "id": "L10",
+      "topic": "Automated segmentation as a derived-mask producer",
+      "status": "optional_opportunity",
+      "why_useful": "Could reduce repeated manual tracing for suitable datasets while keeping model output inspectable as a separate annotation/derived asset.",
+      "why_not_adopted_yet": "Not a minimum obligation; requires model/version, input hash, parameters, uncertainty, human review and reproducibility records. No segmentation component was investigated or run.",
+      "next_step": "If researchers request it, prototype one optional tool that writes a separate versioned mask and never edits source pixels or silently replaces manual annotations.",
+      "evidence_status": "Product opportunity only; no source-backed implementation claim."
+    },
+    {
+      "id": "L11",
+      "topic": "Central collaboration or cloud service",
+      "status": "deferred_opportunity",
+      "why_useful": "Could help if exchanged immutable bundles and parent-generation conflict detection prove insufficient.",
+      "why_not_adopted_yet": "The brief calls for ordinary shared-storage bundle exchange; live multi-user editing, identity, service operations and conflict semantics would expand the first release substantially.",
+      "next_step": "Collect concrete bundle-conflict cases first; revisit only if local versioned snapshots cannot resolve them safely.",
+      "evidence_status": "Product alternative only; no service was investigated."
+    },
+    {
+      "id": "L12",
+      "topic": "Zarr sharding for object/file-count reduction",
+      "status": "deferred_optimization",
+      "why_useful": "Could reduce storage-object count for many small chunks.",
+      "why_not_adopted_yet": "Zarr-Python docs note shard writes require reading the full shard and can create concurrency issues; no workload benefit or write penalty was benchmarked.",
+      "next_step": "Consider only after measuring ordinary chunk storage on representative reads/writes and adding interruption/concurrency tests.",
+      "evidence_status": "Mechanism and tradeoff documented at S3; adoption deferred."
+    }
+  ]
+}

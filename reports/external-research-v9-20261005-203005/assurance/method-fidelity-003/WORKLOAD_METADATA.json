@@ -1,0 +1,29 @@
+{
+  "schema": "er9.bounded-workload-gap-projection.v3",
+  "matrix_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/WORKLOAD_MATRIX_20261006T0234.json",
+    "sha256": "d8fd262085da2747c917803d18b355c6ecff6a649a8a206cb012e4c9238524db"
+  },
+  "matrix_cutoff_utc": "2026-10-06T02:32:13.238215+00:00",
+  "targeted_selected_slots": 32,
+  "targeted_registered_rows": 82,
+  "targeted_slots_without_registered_rows": [
+    "D-V05-A",
+    "D-V05-B",
+    "D-V06-A",
+    "D-V06-B",
+    "D-V13-A",
+    "D-V13-B"
+  ],
+  "gaps_are_unstarted_role_dependencies_not_executions": true,
+  "initial12_terminal_slots": 12,
+  "terminal_does_not_infer_pipeline_completion": true,
+  "fresh12_pairs": 12,
+  "fresh12_roles": 74,
+  "fresh12_native_starts": 8,
+  "confirm_pairs": 4,
+  "confirm_roles": 22,
+  "confirm_native_starts": 1,
+  "full_pair_or_scientific_credit": 0,
+  "cost_total_or_billing_claim": false
+}

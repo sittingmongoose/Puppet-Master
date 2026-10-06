@@ -1,0 +1,136 @@
+{
+  "catalog_version": 1,
+  "scope": "D-V15-A live public-source discovery; captured 2026-10-06; citations in proposal.md (complete proposal is currently at proposal.complete.md because the initialized proposal.md is write-once at this boundary)",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF specification 0.5",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "pin": "OME-NGFF 0.5",
+      "locators": ["§1.1 Images", "§2.1 Axes metadata (#axes-md)", "§2.3 Coordinate transformations (#trafo-md)", "§2.4 Multiscale metadata (#multiscale-md)"],
+      "capture": {"id": "1f1c3cc861cd45cdb11b5c4a98d0b267", "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b", "acquired_utc": "2026-10-06T01:21:57.093848Z", "http_status": 200, "response_bytes": 158591, "read_scope": "Initial 32768-byte excerpt plus relevant byte range 65536–98304; not a full-body semantic review."},
+      "applicability": "Specifies NGFF image arrays, axis metadata and scale/translation coordinate transforms; useful for normalized image metadata and standards-compatible import/export.",
+      "limitations": "Standard metadata vocabulary here does not represent arbitrary affine orientation; cited requirements must not be inferred beyond stated version. Spec does not establish a particular reader's runtime behavior."
+    },
+    {
+      "id": "S2",
+      "title": "Napari Layer API",
+      "url": "https://napari.org/stable/api/napari.layers.Layer.html",
+      "pin": "Napari documentation version 0.9.2 (version shown by captured docs)",
+      "locators": ["Layer", "Layer.affine", "Layer.axis_labels", "Layer.cache", "Layer.units", "Layer.scale", "Layer.multiscale"],
+      "capture": {"id": "5a8f5f60210741e2a7d770634fb8fe5c", "sha256": "af333964c838c6862be57465ab684ff125d42efd0268967af097450a1849591d", "acquired_utc": "2026-10-06T01:22:22.978639Z", "http_status": 200, "response_bytes": 205212, "read_scope": "First 65536 bytes inspected; documentation version was visible in captured metadata/footer."},
+      "applicability": "Viewer/layer API precedent for coordinates, units, affine transforms, multiscale layers and cache concepts.",
+      "limitations": "API documentation is not proof of proposed application behavior. Cache description is for dask arrays; no general Zarr cache or 3 GB responsiveness claim is inferred. Stable URL is mutable; pin is the version identified by this capture, not an immutable tag URL."
+    },
+    {
+      "id": "S3",
+      "title": "Zarr-Python array user guide source",
+      "url": "https://raw.githubusercontent.com/zarr-developers/zarr-python/v3.4.0/docs/user-guide/arrays.md",
+      "pin": "Zarr-Python v3.4.0",
+      "locators": ["Creating an array", "Reading and writing data", "Persistent arrays", "Sharding", "Advanced indexing", "Block indexing"],
+      "capture": {"id": "d9445825cfb44471905b4384b17054cc", "sha256": "34bc92f3a2edd0924e533630fe398a850ce5dabef2f465b140f3f144af93fe39", "acquired_utc": "2026-10-06T01:24:26.010222Z", "http_status": 200, "response_bytes": 30017, "read_scope": "Complete captured Markdown source."},
+      "applicability": "Implementation documentation for chunked arrays, indexed reads/writes, persistent stores and sharding tradeoffs.",
+      "limitations": "Examples/mechanisms do not prove this application's reader is lazy, bounded in peak memory, performant, atomic at project level, or compatible with the selected Napari stack."
+    },
+    {
+      "id": "S4",
+      "title": "Zarr-Python latest release record at capture time",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/releases/latest",
+      "pin": "Release v3.4.0, published 2026-09-15 (API latest at capture time)",
+      "locators": ["Release tag_name", "published_at", "release body"],
+      "capture": {"id": "8421abe646af48ef8388ec6ba9dc5cc4", "sha256": "abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b", "acquired_utc": "2026-10-06T01:23:29.768589Z", "http_status": 200, "response_bytes": null, "read_scope": "Release record excerpt; byte count was not recorded in the receipt summary."},
+      "applicability": "Confirms the selected Zarr documentation pin corresponds to a public release current at capture time.",
+      "limitations": "Latest-release endpoint is mutable and does not establish compatibility with NGFF 0.5, Napari 0.9.2, or the proposed application."
+    },
+    {
+      "id": "S5",
+      "title": "Napari issue #4096: Adding points in 3D is wacky",
+      "url": "https://api.github.com/repos/napari/napari/issues/4096",
+      "pin": "Issue #4096; opened 2022-02-16, closed 2022-03-03",
+      "locators": ["Issue body and reproduction", "title and lifecycle fields"],
+      "capture": {"id": "26422b6ea6ed4505982863fee353d933", "sha256": "44d5060272c256c656c1da56b827dfdfd6f056ab43297bddfc0cc8173d198a8f", "acquired_utc": "2026-10-06T01:24:22.459090Z", "http_status": 200, "response_bytes": null, "read_scope": "Complete API object; receipt summary did not record byte count."},
+      "applicability": "Primary issue evidence for ambiguous/broken point addition in a 3D view.",
+      "limitations": "Issue report is not by itself root-cause or fix evidence. Reporter linked a regression to an earlier guard change; that attribution was not independently traced."
+    },
+    {
+      "id": "S6",
+      "title": "Napari issue #4096 discussion comments",
+      "url": "https://api.github.com/repos/napari/napari/issues/4096/comments",
+      "pin": "Comments on issue #4096, captured 2026-10-06",
+      "locators": ["Maintainer explanation of ndim=2 in ndisplay=3", "Discussion of invisible camera plane", "Reference to PR #4184"],
+      "capture": {"id": "9b3ceef6d248473d97dfd81d25dcbf34", "sha256": "c56ae9a3a78cd6caa43c3a471aee2bb7d84a1b8375f5572e5596c610f8b259e2", "acquired_utc": "2026-10-06T01:22:28.505528Z", "http_status": 200, "response_bytes": null, "read_scope": "Complete comments response; receipt summary did not record byte count."},
+      "applicability": "Maintainer discussion clarifies the dimensional interaction problem and intended scope of the remedy.",
+      "limitations": "Discussion is explanatory evidence for this historical behavior, not a formal guarantee about later releases or all 3D interactions."
+    },
+    {
+      "id": "S7",
+      "title": "Napari PR #4184 metadata and merge record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/4184",
+      "pin": "PR #4184; merged 2022-03-02; merge commit 0cedd32a65374534c01c8835305d346f5f00da87; milestone v0.4.15",
+      "locators": ["PR description", "merge_commit_sha", "merged_at", "milestone"],
+      "capture": {"id": "ddfbe91c0e564d1db0e6513476476a54", "sha256": "f7c76fad82c46607bc61e3e90e8b90af27b62ea0b6259118e4c59106914f3302", "acquired_utc": "2026-10-06T01:22:30.421849Z", "http_status": 200, "response_bytes": null, "read_scope": "Complete API object; receipt summary did not record byte count."},
+      "applicability": "Identifies the proposed fix, scope, merge point and intended release applicability.",
+      "limitations": "PR narrative alone is not sufficient proof of implementation or regression coverage; diff, commit, test and release evidence are cataloged separately."
+    },
+    {
+      "id": "S8",
+      "title": "Napari PR #4184 patch and commit history",
+      "captures": [
+        {"url": "https://api.github.com/repos/napari/napari/pulls/4184/files", "pin": "PR #4184 file diff", "locators": ["napari/layers/points/points.py::_set_editable", "test_editable_2d_layer_ndisplay_3", "test_editable_3d_layer_ndisplay_3"], "capture": {"id": "9af73fb51e2049dfb1f608c07809a6ed", "sha256": "77b8026208d4a072c135ae21b8ff91c276a3ad1f4384835dd97130bba76664a0", "acquired_utc": "2026-10-06T01:22:32.167259Z", "http_status": 200, "response_bytes": null, "read_scope": "Complete files response; receipt summary did not record byte count."}},
+        {"url": "https://api.github.com/repos/napari/napari/pulls/4184/commits", "pin": "PR #4184 commits", "locators": ["7f90dd45d9f9540ddc4f0e7fc3f881f8c0cd5354", "080e519 (allow add in 3D when ndim >= 3)", "19e4c91627ab22bce60adf09a3586f04e256c9f1 (add tests)", "merge 0cedd32a65374534c01c8835305d346f5f00da87"], "capture": {"id": "da18878ba49c49eb8c1e589e6389e80d", "sha256": "ba5b15a2c6ff5174661c8da6709a15c58800b362dcf89cc57ae60662bf547e98", "acquired_utc": "2026-10-06T01:22:33.828386Z", "http_status": 200, "response_bytes": null, "read_scope": "Complete commits response; receipt summary did not record byte count."}}
+      ],
+      "applicability": "The diff implements the guard for 2D layers in 3D and adds paired assertions that the 3D-layer case remains editable; commit history shows tests were added before merge.",
+      "limitations": "Patch/test source was inspected but not executed by this candidate. Tests assert editability state, not rendered coordinates, persistence or exports."
+    },
+    {
+      "id": "S9",
+      "title": "Napari v0.4.15 release and tagged points regression test",
+      "captures": [
+        {"url": "https://api.github.com/repos/napari/napari/releases/tags/v0.4.15", "pin": "Napari v0.4.15 release, published 2022-03-10", "locators": ["Bug-fix entry: block points add mode in 3D when layer.ndim == 2 (#4184)"], "capture": {"id": "2d134043cc484870a9ee8e9bc2ee4562", "sha256": "7291a1047e18f173896eaa3e5f5d0bb67947fa3414f421d33029ce7949df9f16", "acquired_utc": "2026-10-06T01:22:41.482589Z", "http_status": 200, "response_bytes": null, "read_scope": "Release API object excerpt; receipt summary did not record byte count."}},
+        {"url": "https://raw.githubusercontent.com/napari/napari/v0.4.15/napari/layers/points/_tests/test_points.py", "pin": "Napari git tag v0.4.15", "locators": ["test_editable_2d_layer_ndisplay_3", "test_editable_3d_layer_ndisplay_3"], "capture": {"id": "68aa33d37fc6489d96c689c06411d4b2", "sha256": "a6fd5a9c29dd76a86f43f64f7d949b964e8cb42870caae1c3d279047dfbc5b6e", "acquired_utc": "2026-10-06T01:22:45.678058Z", "http_status": 200, "response_bytes": 72880, "read_scope": "Complete source capture; head and tail ranges inspected."}}
+      ],
+      "applicability": "Connects the merged patch to an actual released version and confirms paired regression tests exist in that release tag.",
+      "limitations": "Release note and test source establish applicability and test presence, not that tests were run here or that the complete viewer interaction is correct."
+    },
+    {
+      "id": "S10",
+      "title": "SQLite Atomic Commit In SQLite",
+      "url": "https://sqlite.org/atomiccommit.html",
+      "pin": "SQLite official documentation, captured 2026-10-06 (unversioned URL)",
+      "locators": ["§1 Introduction", "Rollback-mode commit algorithm and documented filesystem/device assumptions"],
+      "capture": {"id": "35fea5c423364c3aacb26d0040f9963", "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1", "acquired_utc": "2026-10-06T01:24:03.269561Z", "http_status": 200, "response_bytes": 77968, "read_scope": "Full captured document."},
+      "applicability": "Primary documentation on SQLite transaction atomicity and the assumptions behind crash/power-failure behavior.",
+      "limitations": "Does not guarantee a project-level atomic save or safety on every filesystem, device, or shared-storage implementation."
+    },
+    {
+      "id": "S11",
+      "title": "SQLite Write-Ahead Logging",
+      "url": "https://sqlite.org/wal.html",
+      "pin": "SQLite official documentation, captured 2026-10-06 (unversioned URL)",
+      "locators": ["§1 Overview", "§2.1 Checkpointing", "§2.2 Concurrency", "§4 WAL File"],
+      "capture": {"id": "3deae10ddff14660b45a68154f93a129", "sha256": "f346e10ddff14660b45a68154f93b3d121ed72764ae28cf66941080ac0badb9e", "acquired_utc": "2026-10-06T01:24:05.458864Z", "http_status": 200, "response_bytes": 42143, "read_scope": "First 32768 bytes inspected; relevant sections are within captured excerpt."},
+      "applicability": "Documents WAL sidecar/checkpoint behavior, one-writer model, same-host requirement and network-filesystem limitation.",
+      "limitations": "Unversioned live documentation. The design still needs testing on the actual local and shared storage platforms."
+    },
+    {
+      "id": "S12",
+      "title": "SQLite Online Backup API",
+      "url": "https://sqlite.org/backup.html",
+      "pin": "SQLite official documentation, captured 2026-10-06 (unversioned URL)",
+      "locators": ["§1 Online Backup API", "Incremental backup and progress example"],
+      "capture": {"id": "ebd236a393be45e8a27516351e2211eb", "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04", "acquired_utc": "2026-10-06T01:24:35.659143Z", "http_status": 200, "response_bytes": 28195, "read_scope": "Full captured document."},
+      "applicability": "Documents a consistent database snapshot API with incremental progress suitable for a bundle workflow.",
+      "limitations": "API documentation does not establish this proposed integration's cancellation, recovery, or filesystem behavior; those require validation."
+    },
+    {
+      "id": "S13",
+      "title": "GitHub issue search used as initial discovery index",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+coordinate+scale+regression+is%3Aissue&per_page=10",
+      "pin": "Search response captured 2026-10-06; mutable index/query result",
+      "locators": ["Result referencing Napari issue #4096"],
+      "capture": {"id": "d7216e7dbbd14988ac055b26684b6a62", "sha256": "5ab91d5c7e3514ebddc283e33567731e509ebdebcadca81f847f02a3fa4efdbd", "acquired_utc": "2026-10-06T01:21:32.747931Z", "http_status": 200, "response_bytes": null, "read_scope": "Search result excerpt; receipt summary did not record byte count."},
+      "applicability": "Discovery index only; records research sequence and how the direct issue was found.",
+      "limitations": "Not substantive evidence for the bug, repair, test, or release. Direct primary-source chain is cataloged as S5–S9."
+    }
+  ]
+}

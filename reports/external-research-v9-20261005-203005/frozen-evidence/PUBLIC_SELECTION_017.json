@@ -1,0 +1,233 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_017_NEXT_CHRONOLOGICAL_PAIRED_TARGETS",
+  "packets": [
+    {
+      "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+      "dispatch_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/dispatch.json",
+      "dispatch_sha256": "e3c598bfb9464e0249b710a9685b8e40452d5a14446d63b3211391c073166856",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/reservation.json",
+        "sha256": "736aefa94b3ae524722b6db2ac956b59de9d872855673cf9b32d3b97937c93e2"
+      },
+      "exactcriteria": {
+        "common_dimensions": 8,
+        "full_A_brief_obligations": 12,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "scope": "two_actual_current_targeted_diagnostic_final_outputs_under_original_targeted_scope"
+    },
+    {
+      "pair_id": "D-V15-A-SCOPE-R002",
+      "dispatch_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/dispatch.json",
+      "dispatch_sha256": "8b022935d2c52f1c7e267c07323c5931a3e25f0bb54fbf41dd20c155a3de1ab1",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/reservation.json",
+        "sha256": "366a60d67860ec0e77266a798ff93c8b00e4a546c1d00625207823b30fa129a2"
+      },
+      "exactcriteria": {
+        "common_dimensions": 8,
+        "full_A_brief_obligations": 12,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "scope": "two_actual_current_targeted_diagnostic_final_outputs_under_original_targeted_scope"
+    }
+  ],
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/dispatch.json",
+      "sha256": "e3c598bfb9464e0249b710a9685b8e40452d5a14446d63b3211391c073166856",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/dispatch.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/integrity-proof.json",
+      "sha256": "7755000b7c95c3c51f64a979e95a11218fcf2325ffe34b1eb24b036d3b046268",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/integrity-proof.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/A/final/proposal.md",
+      "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/A/final/proposal.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/A/final/sources.json",
+      "sha256": "34290a7ef97e36df227bf20caed475b550a443228897abde6f3f6be89314945c",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/A/final/sources.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/B/final/proposal.md",
+      "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/outputs/B/final/proposal.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "22430503264158593df0a9333e9afc524a4a159c1feb1440ab1389710f4678f0",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/actual_launched_task_A.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "50a06c8167b0b7dbfbff7db8b61386fc197fbc35c7ff5dd2be45dbfbb31476f4",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/actual_launched_task_B.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/targeted-card.json",
+      "sha256": "9455a1ac623500e70c7327f0ba3578356b80526a0e10614c7439c985a059059e",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "80496b3b7c247ac69d8c021a0ea4949b2d08fe35fd078baebe639cd223d49a08",
+      "relative_path": "packets/INDEPENDENT-TARGETED-2-PAIRED-001/task/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/dispatch.json",
+      "sha256": "8b022935d2c52f1c7e267c07323c5931a3e25f0bb54fbf41dd20c155a3de1ab1",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/dispatch.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/integrity-proof.json",
+      "sha256": "00d497b7138a2d7ae114f43513b0d0686f7541f562a0d39999d029df18aa7f1d",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/integrity-proof.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/leads.json",
+      "sha256": "71f90a028b20647b88585a077ad1cf3aabf2b342f32f42df508a33b4afdef221",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/leads.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/proposal.md",
+      "sha256": "144cdc9cd941e34731629eae9a0b32f5e041a36bb9321a72cf80048be6124838",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/proposal.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/sources.json",
+      "sha256": "5e613c0af4dbfc0a45c1688356092f709af100e5569c8e720f6d37cd9ecefb41",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/sources.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/witnesses.json",
+      "sha256": "a5103b3189f0c89233fc5c3536e652e91c8a9d130bc141687fc677588e594a88",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/witnesses.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/leads.json",
+      "sha256": "7ef556710c6c5538fa60f8705c3b172ac723f28542766557afd0ce85d602a66b",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/leads.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/proposal.md",
+      "sha256": "e3ebccca2dbf4a7b1502dfc1fb319da55fa0630fa0a7d866f381c218d0eb27fe",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/proposal.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/sources.json",
+      "sha256": "a8aa7e93ad6dde7916f5e5c3a14562e92293e1f5ae08ab8aa47622b4ae75e0c6",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/sources.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/witnesses.json",
+      "sha256": "bc83092f593603c5b40e04d5dab2505ab9fe2ea46d8930c737ea6bed906ba938",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/witnesses.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "fff18555006c364ee10af10da8949eaedb337d104e859efe052183e3a12cc98b",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_A.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "cc5f957af1b0dceb4de37afcce52ea4f36c6212bde56b8c234422742b8c11a22",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_B.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted-card.json",
+      "sha256": "31820d5ffd1b88953bfe0ece111c402f27d8348bb605763c830bb87d31525b88",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "d6dd5b10a8c153dfdcff4a2efc573583188e285327b63958b801077a430f0992",
+      "relative_path": "packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted_coverage_map.json"
+    }
+  ],
+  "selection_rule": "rootconfirmed firstchronologicalunassessed D14ASCOPEpair then distinctD15ASCOPEresourcev13pair; no qualityranking/bestof/oldgrade reuse",
+  "source_scope": "targetedactualscope3 withoriginalfullA12/common8/commonimportant5 preserved; broadercompleteproduct outsideactualtargetscope UNASSESSED",
+  "exclusions": [
+    "private/**",
+    "identity/history/Goals/cost/runtime/rawsourcecaptures/oldsourcegrades",
+    "noncanonicalcomplete/cached/probe bodies notselected"
+  ],
+  "phase2": "keyshelduntil immutablecurrentPhase1 judgment; nosourcefactsrepair"
+}

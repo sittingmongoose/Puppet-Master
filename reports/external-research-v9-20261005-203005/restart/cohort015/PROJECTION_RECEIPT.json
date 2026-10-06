@@ -1,0 +1,47 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T02:48:03.766927+00:00",
+  "owner": "/root/projection_keeper",
+  "meaningful_update_count": 1,
+  "source_observed_utc": "2026-10-06T02:38:42.777982+00:00",
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T024803.766927Z/BACKUP_RECEIPT.json",
+    "sha256": "5a6b9d96a3fc9faff7e00b0046f8a5049bb4bb52b49350c91586d496e89762a4",
+    "bytes": 950
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "747f33bb965338a4a0f2a6ba4d5b184fc4ce615a0affb6870faf14f6f02433c1",
+      "bytes": 42181
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "747f33bb965338a4a0f2a6ba4d5b184fc4ce615a0affb6870faf14f6f02433c1",
+      "bytes": 42181
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "0f616e200a4b8ff390bd16e615c89a14a75f4806e1c10d4723cb8a7c779fb9d6",
+      "bytes": 4028
+    }
+  ],
+  "positive_frozen_projection_files": [
+    {
+      "path": "state/history/projection-20261006T024803.766927Z/frozen-state--current.json",
+      "sha256": "747f33bb965338a4a0f2a6ba4d5b184fc4ce615a0affb6870faf14f6f02433c1",
+      "bytes": 42181
+    },
+    {
+      "path": "state/history/projection-20261006T024803.766927Z/frozen-state--campaign.json",
+      "sha256": "747f33bb965338a4a0f2a6ba4d5b184fc4ce615a0affb6870faf14f6f02433c1",
+      "bytes": 42181
+    },
+    {
+      "path": "state/history/projection-20261006T024803.766927Z/frozen-CURRENT.md",
+      "sha256": "0f616e200a4b8ff390bd16e615c89a14a75f4806e1c10d4723cb8a7c779fb9d6",
+      "bytes": 4028
+    }
+  ],
+  "scope": "TD3 exact original clock and courier017 selector; compact latest restart prose; no new scientific assessment or native count inference"
+}

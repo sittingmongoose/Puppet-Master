@@ -1,0 +1,45 @@
+{
+  "schema": "er9.activation-time-positive-metadata.v1",
+  "observed_utc": "2026-10-06T02:33:21.104783+00:00",
+  "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+  "closure_seal_utc": "2026-10-06T02:30:47.739345+00:00",
+  "closure_seal": {
+    "path": "LAB_ROOT/ops/dispatcher/fresh-closures/C-01-RESOURCE-R002-BUNDLE.json",
+    "sha256": "9bf3dabce10b79dbf0545b427410094f32847430649aec053da837652c21915a"
+  },
+  "ops_original_start_utc": "2026-10-06T02:31:05.520657+00:00",
+  "original_birth_monotonic_ns": 84284376062312,
+  "activation": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+    "sha256": "32bd1fb8272cb5d240172285454af891290ed422a5872f57b012e5d45c3f6d02",
+    "startedTurn": true
+  },
+  "native_snapshot_time_fields": [
+    {
+      "selector": "/snapshot/projection/target/createdAt",
+      "value": 1791253872435
+    },
+    {
+      "selector": "/snapshot/projection/target/updatedAt",
+      "value": 1791253872516
+    },
+    {
+      "selector": "/snapshot/session/createdAt",
+      "value": 1791253872086
+    },
+    {
+      "selector": "/snapshot/session/target/createdAt",
+      "value": 1791253872435
+    },
+    {
+      "selector": "/snapshot/session/target/updatedAt",
+      "value": 1791253872516
+    },
+    {
+      "selector": "/snapshot/session/updatedAt",
+      "value": 1791253872516
+    }
+  ],
+  "exact_goal_activation_utc": "UNEXPOSED in activation receipt; do not infer snapshot updatedAt is activation timestamp",
+  "previous_chat_minute_label": "02:33 and matrix filename0234 were imprecise labels; actual UTC fields govern"
+}

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "critical unresolved dependency",
+      "topic": "Measured, bounded reads for each TIFF layout and the 3 GB target",
+      "status": "unresolved; blocks any broad performance claim",
+      "evidence": ["S9", "S10"],
+      "next_step": "Build a fixture matrix for supported TIFF/BigTIFF families and measure actual segment/tile reads, peak RSS, cancellation and first-display latency on the stated machine class. Select the support boundary from results.",
+      "plan_effect": "Direct read-only TIFF support is conditional on a bounded reader path. A file extension or library feature list is not sufficient evidence."
+    },
+    {
+      "id": "L2",
+      "kind": "critical unresolved dependency",
+      "topic": "Coordinate behavior at the napari adapter and CSV/save boundary",
+      "status": "Open issue in captured state; no completed fix/test chain identified",
+      "evidence": ["S6", "S7", "S8"],
+      "next_step": "Prototype only the adapter path needed by the project; test GUI and programmatic layer creation, transforms, save/reopen, 2D/3D and export. Keep project-owned coordinates authoritative until that matrix passes.",
+      "plan_effect": "Do not make a napari layer CSV or serialized layer state the project's canonical annotation record."
+    },
+    {
+      "id": "L3",
+      "kind": "critical unresolved dependency",
+      "topic": "Zarr sharded write integrity and failure recovery",
+      "status": "Fix chain reaches Zarr-Python v3.1.3; the added test checks GET granularity, not original data equality",
+      "evidence": ["S1", "S2", "S3", "S4", "S5"],
+      "next_step": "Reproduce issue #3169 with the selected package; add array equality/checksum tests, concurrent and partial writes, fresh-handle reopen, cancellation and interrupted-store recovery.",
+      "plan_effect": "Use a fixed release and shard-aware scheduling; keep any derived mask store staged and verifiable. Do not count the upstream request-count regression test as proof of data integrity."
+    },
+    {
+      "id": "L4",
+      "kind": "format compatibility lead",
+      "topic": "Micro-Manager MMStack numeric strings in calibration metadata",
+      "status": "A source fix is present in tifffile 2026.9.15 commit; the captured fix commit adds no regression test",
+      "evidence": ["S11", "S12"],
+      "next_step": "Retain a representative archived fixture, verify displayed axes/origin/spacing/time calibration and metadata preservation with the exact packaged tifffile build, and decide whether this vendor family belongs in v1.",
+      "plan_effect": "Useful support candidate, not a blanket MMStack compatibility promise. If a value cannot be parsed, surface unknown calibration rather than silently inventing a scale."
+    },
+    {
+      "id": "L5",
+      "kind": "critical environment question",
+      "topic": "Atomic publication and flush semantics on ordinary shared storage",
+      "status": "Unknown for the lab's actual filesystem and sync workflow",
+      "evidence": [],
+      "next_step": "Test staging, file and directory flush, rename, lock contention and recovery on each shared storage type used by the six researchers. Use local working copies where semantics are insufficient.",
+      "plan_effect": "The proposed generation-pointer protocol is an engineering design, not a guarantee of network-share transactions. Bundle exchange is in scope; simultaneous merge is not."
+    },
+    {
+      "id": "L6",
+      "kind": "optional opportunity",
+      "topic": "Zarr Vectors for spatially indexed, very large annotation collections",
+      "status": "Preserved for later evaluation; draft specification and evolving implementation",
+      "evidence": ["S13", "S14"],
+      "next_step": "If annotations grow to point clouds, tracks, meshes or spatial query workloads, compare the draft geometry/store model and the Python API stability/conformance story against the project's simple vector schema and common interchange needs.",
+      "plan_effect": "Keep an adapter opportunity. Do not make this draft format a v1 dependency for ordinary points, plane polygons and masks."
+    },
+    {
+      "id": "L7",
+      "kind": "optional alternative",
+      "topic": "Normalize all input to a chunked OME-Zarr working copy",
+      "status": "Deferred pending reader measurements",
+      "evidence": ["S5", "S9", "S10"],
+      "next_step": "Benchmark a copy-on-import path only for file classes that fail bounded direct reading. Verify sample equality or document dtype/interpolation conversion; preserve original source and transformation provenance.",
+      "plan_effect": "Offers one uniform lazy-read format and potential pyramids at the cost of time, storage and another artifact whose identity/recovery must be managed."
+    },
+    {
+      "id": "L8",
+      "kind": "optional product ideas",
+      "topic": "Collaboration beyond exchanging bundles, automatic segmentation and registration",
+      "status": "Deferred; not minimum workflow",
+      "evidence": [],
+      "next_step": "Revisit only after single-user project identity, coordinate export and recoverable bundle exchange are reliable; assess whether actual lab workflows require conflict merging or automated operations.",
+      "plan_effect": "Keep these as later alternatives. They add coordination, provenance and validation needs and should not displace the current reliability work."
+    }
+  ]
+}

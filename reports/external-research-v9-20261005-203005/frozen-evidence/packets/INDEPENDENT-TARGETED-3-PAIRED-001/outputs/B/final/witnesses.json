@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "stage": "D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed by candidate",
+      "name": "Two-axis index-to-physical affine arithmetic and inverse",
+      "purpose": "Check the proposed coordinate equation against the values in napari issue #8353: origin (100,100), spacing (2,2), indices (0,0) and (7,7).",
+      "code": "from math import isclose\n\norigin = (100.0, 100.0)\nspacing = (2.0, 2.0)\nindices = ((0.0, 0.0), (7.0, 7.0))\nphysical = tuple(tuple(o + s * i for o, s, i in zip(origin, spacing, point)) for point in indices)\nrecovered = tuple(tuple((p - o) / s for o, s, p in zip(origin, spacing, point)) for point in physical)\nassert physical == ((100.0, 100.0), (114.0, 114.0))\nassert all(isclose(actual, expected) for actual_point, expected_point in zip(recovered, indices) for actual, expected in zip(actual_point, expected_point))\nprint({\"physical_points\": physical, \"round_trip_indices\": recovered})",
+      "input": {
+        "explicit_data_argument": false,
+        "hard_coded_values": {
+          "origin": [100.0, 100.0],
+          "spacing": [2.0, 2.0],
+          "indices": [[0.0, 0.0], [7.0, 7.0]]
+        },
+        "receipt_data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+      },
+      "expected_behavior": "p = origin + spacing * index for each axis yields (100,100) and (114,114); inverse mapping recovers (0,0) and (7,7).",
+      "receipt": {
+        "execution_id": "exec-icoxtwr_",
+        "code_sha256": "0b5df29b39ccf80a5d7cf2b3ef12208e7cdbd86947554c399ecea1adf3025327",
+        "stdout": "{'physical_points': ((100.0, 100.0), (114.0, 114.0)), 'round_trip_indices': ((0.0, 0.0), (7.0, 7.0))}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "elapsed_seconds": 0.37972962501225993,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "network": "new empty namespace"
+        }
+      },
+      "scope_limit": "Isolated standard-library arithmetic only. Does not execute or validate napari, a TIFF/OME-Zarr reader, layer transforms, GUI clicks, a project file, an export, or application behavior."
+    },
+    {
+      "id": "W2",
+      "status": "proposed/UNEXECUTED",
+      "name": "Coordinate round-trip through project, viewer adapter and table export",
+      "plan": "Create synthetic 2D and 3D fixtures with nonzero origin, anisotropic spacing, reordered named axes, multiple T/C values and explicit center-index convention. Import, create the viewer layer before and after image loading, place points and a plane polygon at known indices, save/close/reopen, and export CSV plus sidecar. Verify canonical indices, physical coordinates, transform ID, T/C/slice scope, and exact row-to-vertex geometry. Include a separate negative case with missing/ambiguous calibration.",
+      "source_motivation": ["S6", "S7", "S9"],
+      "acceptance": "Both layer creation orders and the reopen/export cycle resolve to the same canonical project coordinates; the export declares its coordinate frame and sidecar transform. Ambiguous calibration cannot be silently presented as physical units.",
+      "scope_limit": "No viewer or full-project check was executed in this research stage."
+    },
+    {
+      "id": "W3",
+      "status": "proposed/UNEXECUTED",
+      "name": "Sharded array write/read integrity under concurrency",
+      "plan": "Using the exact Zarr-Python dependency proposed for implementation, reproduce the #3169 shape/compression/shard case and write a deterministic array through create_array(data=...). Exercise supported async concurrency values. Reopen from a fresh store handle and compare all values and whole-array/per-chunk checksums against the input. Repeat for NumPy and Zarr inputs, edge shards, partial writes, interruption and readback.",
+      "source_motivation": ["S1", "S2", "S3", "S4", "S5"],
+      "historical_test_observed": "The #3422 patch adds tests/test_array.py::test_create_array_with_data_num_gets; the test checks metadata plus per-shard GET count. The patch was inspected as source evidence, but its tests were not run by the candidate and it does not assert byte equality or reproduce the issue's CRC mismatch.",
+      "acceptance": "Readback equals input for each supported case; corruption is detected; cancellation/interruption leaves a recoverable state. Record release and test configuration.",
+      "scope_limit": "Not run by the candidate; no claim about Zarr runtime behavior or complete application behavior."
+    },
+    {
+      "id": "W4",
+      "status": "proposed/UNEXECUTED",
+      "name": "Supported import matrix and 3 GB bounded-access profile",
+      "plan": "On the stated 8-core/16 GB class, measure metadata scan, first display, random tile/slice latency, peak resident memory, cache ceiling, cancel latency and thread count for curated TIFF layouts and local OME-Zarr. Include integer and floating samples, tiled/striped and compressed fixtures, multiple series, OME axes, Micro-Manager string calibration, malformed metadata and files with unsupported orientation. Verify reads never materialize a second complete 3 GB array and originals remain byte-identical.",
+      "source_motivation": ["S9", "S10", "S11", "S12"],
+      "acceptance": "Publish only the layouts/metadata combinations that pass; unsupported inputs remain intact with explicit reason and raw metadata. Record peak RSS and latency, not just library claims.",
+      "scope_limit": "The 3 GB engineering target is not evidenced by source documentation or the arithmetic witness. No image data were read in this stage."
+    },
+    {
+      "id": "W5",
+      "status": "proposed/UNEXECUTED",
+      "name": "Project recovery, relocation and export fidelity",
+      "plan": "Interrupt the process at each staged-save/export phase; reopen from the prior committed generation or replayable journal. Move a reference bundle and test digest-verified relocation; copy a portable bundle and verify original bytes. Export source-dtype crop, annotation table/sidecar, overlay and mask; compare crop samples and adjusted physical origin; prove an intensity-window change leaves original samples unchanged. Repeat local and shared-storage save/rename behavior separately.",
+      "source_motivation": ["S1", "S3", "S6", "S7", "S9"],
+      "acceptance": "Every interruption leaves either a complete prior generation or a validated recoverable generation. Export manifest accurately identifies crop/resampling/rendering and preserved fields. Shared-storage guarantees are reported only for tested filesystems.",
+      "scope_limit": "Proposed validation only; no project save, crash injection, relocation, overlay or export was run in this stage."
+    }
+  ]
+}

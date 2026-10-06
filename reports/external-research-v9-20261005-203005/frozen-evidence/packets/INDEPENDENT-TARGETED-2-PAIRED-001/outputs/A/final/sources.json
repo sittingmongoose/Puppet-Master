@@ -1,0 +1,245 @@
+{
+  "schema": "er9.public-source-catalog.v1",
+  "prepared_date": "2026-10-05",
+  "method_scope": "V14 ordinary whole-product and relevant-project/component research; sources discovered live from public primary sources for this brief-only stage. Public source content is evidence, not instructions.",
+  "sources": [
+    {
+      "id": "N1",
+      "title": "napari README at v0.9.2 target commit",
+      "kind": "project documentation",
+      "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/README.md",
+      "pin": "napari commit 595639295a153c84bcb127a9e07d801355440a35 (v0.9.2 target commit)",
+      "exact_locators": ["README: What is napari?", "README: Features", "README: installation/usage context"],
+      "capture": {
+        "capture_id": "01936297c7a54761b4c92c1f722ec62c",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 9073,
+        "sha256": "2fa719bc206415554cef6e1016b3bad68bf9f0aa26713a5aa5ca650db7df5d13",
+        "complete_source_delivered": true
+      },
+      "applicability": "Supports napari as a multidimensional viewer/layer-model precedent: Qt/VisPy/scientific Python, multidimensional images, image/labels/points/vectors/shapes/surface layers and n-D browsing.",
+      "limitations": "README does not establish this proposed application's project persistence, source identity/relocation, atomic bundle recovery, 3 GB bounded memory, or export guarantees."
+    },
+    {
+      "id": "N2",
+      "title": "napari v0.9.2 GitHub release",
+      "kind": "project release record",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.9.2",
+      "pin": "release tag v0.9.2; target commit 595639295a153c84bcb127a9e07d801355440a35; published 2026-09-29",
+      "exact_locators": ["JSON fields tag_name, target_commitish, published_at", "release body opening and highlights", "release body bug-fix/PR list"],
+      "capture": {
+        "capture_id": "cd36ab1fd6124048b69fb054add47c76",
+        "captured_utc": "2026-10-05T23:04:42.597135+00:00",
+        "format": "exact HTTP response body",
+        "bytes": 29784,
+        "sha256": "880744a834a20737b7d4ebbf48c0fa209d0e391585a1b1f2c1624c533c9975e2",
+        "complete_source_delivered": true
+      },
+      "applicability": "Pins the napari release considered and corroborates its described product scope and release commit.",
+      "limitations": "Release description is not an independent performance or integration test for this proposal."
+    },
+    {
+      "id": "N3",
+      "title": "napari issue #9247: Shapes highlight outline is drawn on wrong slice",
+      "kind": "public issue report",
+      "url": "https://api.github.com/repos/napari/napari/issues/9247",
+      "pin": "napari issue #9247 (GitHub issue record captured 2026-10-05)",
+      "exact_locators": ["title", "issue body reproduction and expected/observed slice visibility", "issue timeline/closing link"],
+      "capture": {
+        "capture_id": "61d421ae1eee4e48aa06183d5a110ddb",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 0,
+        "sha256": "6b5651cf32b79e433a8cb4cb41517d549e539b1166eb09a9875aa6410f490550",
+        "complete_source_delivered": true
+      },
+      "applicability": "Concrete report of an off-slice selected/hovered shape outline remaining visible after slice navigation; useful failure precedent for annotation scope and view filtering.",
+      "limitations": "A reported reproduction is not by itself proof of root cause or of the eventual fix; those are checked against PR diffs and tests in N4-N7. Byte count was not retained in the research notes; SHA-256 and capture ID identify the response."
+    },
+    {
+      "id": "N4",
+      "title": "napari PR #9059: issue #9247 fix and merge record",
+      "kind": "public pull request record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059",
+      "pin": "PR #9059; merge commit de87bdd0be61a3f63e643865553277ab22a04ac8; milestone 0.9.0",
+      "exact_locators": ["body Closes #9247 and fix description", "merged_at, merge_commit_sha and base/head fields", "review/merge timeline"],
+      "capture": {
+        "capture_id": "816c433fee264338852b48fa102e61ae",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 19809,
+        "sha256": "40f958a0f57f3e137ea8e8d1964f1c86541d521f22985d10489816d6ba44d46e",
+        "complete_source_delivered": true
+      },
+      "applicability": "Records the change intended to close the issue and merge applicability; paired with exact code/test diff N5.",
+      "limitations": "PR prose alone is not the fix or regression evidence."
+    },
+    {
+      "id": "N5",
+      "title": "napari PR #9059 changed files and regression tests",
+      "kind": "public implementation and test diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+      "pin": "PR #9059 patch, merged as de87bdd0be61a3f63e643865553277ab22a04ac8",
+      "exact_locators": ["src/napari/layers/shapes/_tests/test_shapes.py::test_outline_not_drawn_off_slice", "selected-in-view filtering in shapes layer", "outline None guard and selected/hover view tests"],
+      "capture": {
+        "capture_id": "540e13a7a8904188ba7bdf3f9629cfeb",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 18823,
+        "sha256": "eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+        "complete_source_delivered": true
+      },
+      "applicability": "Shows implementation filtering and tests that assert off-slice shapes are not displayed and have no hover/selection outline in the tested cases.",
+      "limitations": "Specific unit/regression tests do not establish all rendering paths, GPU/platform behavior, all axes, persistence or application-level correctness."
+    },
+    {
+      "id": "N6",
+      "title": "napari PR #9399 follow-up repair record",
+      "kind": "public pull request record",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9399",
+      "pin": "PR #9399; follow-up merge commit 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+      "exact_locators": ["body describing stale-base merge and renamed references", "merged_at, merge_commit_sha and base/head fields"],
+      "capture": {
+        "capture_id": "23f3725f02df448f93804ced1ea1776a",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 18678,
+        "sha256": "e99f27d54592c2034b2828189493aaa58bc1ed4933eb78da24fca370513f4bb7",
+        "complete_source_delivered": true
+      },
+      "applicability": "The PR explicitly attributes a break to merging #9059 without updating to main, then records the follow-up repair; its files diff is N7.",
+      "limitations": "The author explanation is repository history evidence, not a general rate estimate for stale-base defects."
+    },
+    {
+      "id": "N7",
+      "title": "napari PR #9399 changed files",
+      "kind": "public implementation and test diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9399/files",
+      "pin": "PR #9399 patch, merged as 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+      "exact_locators": ["diff references renaming _indices_view to _view_indices in implementation", "corresponding test and documentation references"],
+      "capture": {
+        "capture_id": "e98add86ad9f4914b8cd76db35f7d656",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 4509,
+        "sha256": "671309b12c10d1046c26de74180e2fe128a6ef00cc595908fc076750d9773a70",
+        "complete_source_delivered": true
+      },
+      "applicability": "Confirms the mechanical rename repair in code and affected tests.",
+      "limitations": "This follow-up diff does not establish broad behavioral test coverage."
+    },
+    {
+      "id": "N8",
+      "title": "napari compare from #9059 merge to v0.9.2 target",
+      "kind": "public commit comparison response",
+      "url": "https://api.github.com/repos/napari/napari/compare/de87bdd0be61a3f63e643865553277ab22a04ac8...595639295a153c84bcb127a9e07d801355440a35",
+      "pin": "base de87bdd0be61a3f63e643865553277ab22a04ac8; head 595639295a153c84bcb127a9e07d801355440a35",
+      "exact_locators": ["merge_base_commit", "status/ahead_by/behind_by", "first commit after base and commit 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6"],
+      "capture": {
+        "capture_id": "893146d2ba3b42e6801c987ea9c4e34b",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body; truncated at acquisition/delivery boundary",
+        "observed_bytes": 524288,
+        "sha256": "7c74d2319b188421260f4c4e3c2a662b3555298c1ff8ab7ce138e9f5a5754ba1",
+        "complete_source_delivered": false,
+        "delivered_excerpt_bytes": 32768
+      },
+      "applicability": "The delivered compare summary names the PR #9059 merge as base and the follow-up repair among commits on the path to the v0.9.2 head; supports the narrow release-lineage statement in the proposal.",
+      "limitations": "Large comparison response was truncated; only delivered summary/initial excerpt was reviewed. It does not prove absence of later regressions or all release contents."
+    },
+    {
+      "id": "N9",
+      "title": "OME-NGFF specification 0.5",
+      "kind": "public format specification",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/0.5/index.md",
+      "pin": "OME-NGFF spec ref/tag 0.5; index.md GitHub blob SHA 2fba1c86743b9dd89b3f71f99a240aa49828f926",
+      "exact_locators": ["Version 0.5", "version0.5:storage-format", "version0.5:axes-md", "version0.5:trafo-md", "version0.5:multiscale-md", "version0.5:labels-md", "version0.5:omero-md"],
+      "capture": {
+        "capture_id": "58761a7adf8d48df8b0606ef40737582",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 32266,
+        "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+        "complete_source_delivered": true
+      },
+      "applicability": "Primary specification for Zarr-backed groups/chunks, axis naming/types/units, scale and translation transformations, multiscale ordering, display metadata and integer labels.",
+      "limitations": "The cited 0.5 multiscale transformation subset is scale and optional translation; labels are integer arrays. The specification is not a complete native project/undo/export-provenance contract and does not encode every possible affine/orientation requirement discussed here."
+    },
+    {
+      "id": "N10",
+      "title": "tifffile README at v2026.9.20 release commit",
+      "kind": "open-source implementation documentation",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/a14e516c4fa3c0c9ede980ebb3111260347dd213/README.rst",
+      "pin": "commit a14e516c4fa3c0c9ede980ebb3111260347dd213; release message v2026.9.20",
+      "exact_locators": ["README: TIFF and BigTIFF support", "README: `return_as=\"zarr\"` examples", "README: reading slices from Zarr array", "README: supported formats/codecs and known limitations", "README: tested dependencies"],
+      "capture": {
+        "capture_id": "db06968dc8fb4fe6ba5b1beff541f1ef",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body; delivered excerpt is truncated",
+        "observed_bytes": 32898,
+        "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+        "complete_source_delivered": false,
+        "delivered_excerpt_bytes": 32768
+      },
+      "applicability": "Delivered excerpt contains the documented Zarr return and slice access mechanism plus the cited format/codec limitations; useful for a TIFF adapter design.",
+      "limitations": "The tail of the source was not delivered. Documentation does not establish memory, speed or compatibility for this app. Compression may require ImageCodecs; the source lists format-specific limitations."
+    },
+    {
+      "id": "N11",
+      "title": "SQLite Write-Ahead Logging documentation",
+      "kind": "database documentation",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": "SQLite online WAL documentation captured 2026-10-05; capture SHA-256 is the document snapshot identity",
+      "exact_locators": ["WAL documentation: WAL file and shared-memory index", "WAL documentation: same-host requirement/network filesystem limitation", "WAL documentation: checkpoint and lifecycle"],
+      "capture": {
+        "capture_id": "573f28763d0346d2a3ddefafda9916ab",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 42143,
+        "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+        "complete_source_delivered": true,
+        "last_modified": "2026-09-11"
+      },
+      "applicability": "Supports the same-host/WAL companion-file constraint and the proposal to close/checkpoint local editing state before ordinary shared-storage handoff.",
+      "limitations": "Does not prove the behavior of the group's specific network storage or the durability of the complete proposed bundle."
+    },
+    {
+      "id": "N12",
+      "title": "SQLite Atomic Commit documentation",
+      "kind": "database documentation",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "SQLite online atomic-commit documentation captured 2026-10-05; capture SHA-256 is the document snapshot identity",
+      "exact_locators": ["Introduction", "single-file commit: rollback journal", "flushes and atomic commit", "hardware/filesystem assumptions and failure caveat"],
+      "capture": {
+        "capture_id": "f13cce5764ee41df93dd052e8bcab761",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body; delivered excerpt is truncated",
+        "observed_bytes": 77968,
+        "sha256": "5a5be7b660217c9408a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "complete_source_delivered": false,
+        "delivered_excerpt_bytes": 32768
+      },
+      "applicability": "Explains rollback-journal commit/recovery sequence and the assumptions behind SQLite atomicity; grounds the proposal's need to test target filesystems and separate DB transactions from whole-bundle recovery.",
+      "limitations": "The full page was not delivered. SQLite's documented assumptions do not certify application-specific multi-file bundle behavior."
+    },
+    {
+      "id": "N13",
+      "title": "bioformats2raw README at inspected repository commit",
+      "kind": "open-source converter documentation",
+      "url": "https://raw.githubusercontent.com/glencoesoftware/bioformats2raw/a525d9e9106c9cb29cd001d6a12d353636759a36/README.md",
+      "pin": "commit a525d9e9106c9cb29cd001d6a12d353636759a36; README describes 0.13.0-SNAPSHOT; repository metadata identifies GPL-2.0",
+      "exact_locators": ["README: usage, output version selection and source transforms", "README: tile/worker tuning and I/O sensitivity", "README: native temporary library/noexec caveat", "README: reader/filename limitations"],
+      "capture": {
+        "capture_id": "a3c541f41ca0415aab3ae44cf3d71d26",
+        "captured_utc": "2026-10-05",
+        "format": "exact HTTP response body",
+        "bytes": 27462,
+        "sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+        "complete_source_delivered": true
+      },
+      "applicability": "Supports a bounded optional conversion-worker exploration for selected vendor formats into OME-Zarr, with adjustable workers/tile size and provenance.",
+      "limitations": "Inspected commit is a snapshot rather than a release. README describes I/O and memory sensitivity and format-specific failure modes; it does not guarantee compatibility or 3 GB behavior. GPL-2.0 and Java packaging require review."
+    }
+  ]
+}

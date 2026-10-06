@@ -1,0 +1,780 @@
+{
+  "schema": "er9.compact-fresh-and-confirm-closure-summary.v3",
+  "matrix_cutoff_utc": "2026-10-06T02:32:13.238215+00:00",
+  "pairs": [
+    {
+      "pair_id": "I-01-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V01",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-01-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "a6590ea5e19fe68b02aaa1decb3c03ad8045d477c8ca062d38d462ec944d6d4d"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-01-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "ae8cffa94b98c3a149e5c54a8b7af5db47b4a6ec4175912c33cc6e4e6ebde37a"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-01.json",
+        "sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-01-FRESH-DELIVERY-R001.json",
+        "sha256": "f21b8fb7b200b3c95c9cab7128a4fd1a9fbae033d979a1adf97237c0bdeea78f"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:18.762573+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-02-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V01",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-02-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "0c992b36faffea5ca226bf5caedb0164770ba36cc78929f3121c520ac17554a4"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-02-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "8f042d27e6166a9784ec19f389343b69cee80aacbd756d28be23f53d4c298a86"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-02.json",
+        "sha256": "9ec73ea921de70d8b9798e028cdee87bc835d076397d00db8a208f942e33742b"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-02-FRESH-DELIVERY-R001.json",
+        "sha256": "d26311de238a74a72e1beb97972b56fe7050904c9fa77bfee7210bf84720d6ca"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:21.839170+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-03-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V05",
+      "role_count": 8,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-03-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "030d51ad0b2c9908a0b35e0614ccb251ab18c2771c40c0887d667c19365fc6d3"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-03-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "4678b03dd3c2b3cdcfb7994930a7d1203d0489d627571f883affbe7ee379a4a9"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-03.json",
+        "sha256": "4ce65caf2c3b5aadf7fc31f683ac40beb82e0f1ddae42372f9602f67f7393371"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-03-FRESH-DELIVERY-R001.json",
+        "sha256": "ad48bd25b8c25232d463b73f6831e56d1ee7e7c3644e37f52fcb9a0ae77c5aa9"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:25.826487+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-04-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V05",
+      "role_count": 8,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-04-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "df32bf73e715880c7eeafc6c5b95b46927c41c1ff89c9ad4cf487035dbe35faf"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-04-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "96993a0dc86ad3edba833f724a52f3ca53762b87d9e894d7ed2395a6ef5915a5"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-04.json",
+        "sha256": "f460f9076fbe146140df5862bb2a254dd48b83952f086cd9895bee55301d5a0b"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-04-FRESH-DELIVERY-R001.json",
+        "sha256": "45aa2af6b1d5645c7d35e700ae38225241aab15e4b5221b4dc68c0cdd5b7e729"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:29.923980+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-05-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "L",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "method_id": "V14",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-05-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "b55253681fe3e54b19bd9770b3813dd0636d09c07f3a1195911c435329b78353"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-05-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "3db1cc438ceaa98cb7b1a0ec5d6322b2596e08c545534331f1e0238795d8c6f1"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-05-LUNA-S1.json",
+        "sha256": "69423050785ca4eea6d15ffed950cc18670dcb8e409c1cad133bfa11dcec4c39"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-05-FRESH-DELIVERY-R001.json",
+        "sha256": "8991bb5215a4b18711509c95396dd67f145f8ea62bf0ab9574c3196b138247b8"
+      },
+      "ops_seal_utc": "2026-10-06T02:26:17.732488+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 2
+    },
+    {
+      "pair_id": "I-06-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "L",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "method_id": "V14",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-06-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "90db7805fbfd2dd8f55262a44deb91611076ec7de8f4d8ae385a28bf93785cbc"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-06-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "ed9fba53d47be89618380264cf68caf9772bc1bbded511be68f6274e8eca215f"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-06-LUNA-S1.json",
+        "sha256": "a69fe9caefe0bcd29b7b8651de6888ecee206d847040a6afcbf32da59abd7792"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-06-FRESH-DELIVERY-R001.json",
+        "sha256": "526d23e6d393f235afe846611700ad1b03ccde7dee002601b31e71edd67914cf"
+      },
+      "ops_seal_utc": "2026-10-06T02:26:17.889072+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 2
+    },
+    {
+      "pair_id": "I-07-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "L",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "method_id": "V08",
+      "role_count": 5,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-07-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "b4a30835a459b33f9991447b1af42c8cda4094cfd4b2d3eb4223fc021af87a3e"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-07-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6a4d70b375d74a61c552e71e4499b55938f9529b46667b0be5b045aaaea5741f"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-07-LUNA-S1.json",
+        "sha256": "29d1cbc18a3245e59a3d41abe2c9af6aabf9b03ee2d51715a81917beca8af429"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-07-FRESH-DELIVERY-R001.json",
+        "sha256": "72aa627eca42b54eeb32f2f38058141c9db6b3ec849e2163e558556b8ba781b5"
+      },
+      "ops_seal_utc": "2026-10-06T02:26:18.021295+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 2
+    },
+    {
+      "pair_id": "I-08-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "L",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "method_id": "V08",
+      "role_count": 5,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-08-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "dfdeed8a199ccafac74d1dcc272cd81e1481c07dc7d7861d5c69c896746137a5"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-08-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "01e65501d57b0f225a74f4cd51bb7aca13cdf0efb2d19c9af2be09f2f10b1f73"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-08-LUNA-S1.json",
+        "sha256": "74a632a89e1fb8c471923b4366df6e1c8b90697c0ccedec94109898f574b2f0c"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-08-FRESH-DELIVERY-R001.json",
+        "sha256": "3789982ba010f8f5ecf6e40e1f5f9b48cb70e413ba7d71abfeda61f175d2d74b"
+      },
+      "ops_seal_utc": "2026-10-06T02:26:18.152200+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 2
+    },
+    {
+      "pair_id": "I-09-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V10",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-09-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "70b03bd677eb3d0b7c5e1e4639b4d60625297c7e77bf8600ff61b8d7a134e0a1"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-09-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "6e15c51eea99d9448bacfaff08a29db4e4d4844d98784517c8c40877cba74525"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-09.json",
+        "sha256": "7400fb8e4d8a34c6210b37e9cba74f3f0478a8e430337cd513912b185a061921"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-09-FRESH-DELIVERY-R001.json",
+        "sha256": "4d4394dde5241637ccd79a50b65b32ea929b3cf76dc29de46086c89fef93924b"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:32.972583+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-10-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V10",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-10-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "a4c5322196bc346298fea0d89b23fbfa3e31f49bf70ed9b9a54a1f2d12e11e75"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-10-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "1915fb2e938dce586f7fa677482ef8ec71136f5fb35bbfebd517a6b08f32ac75"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-10.json",
+        "sha256": "59024ee762877e2ab440e0fb2ef03eacd23acd3eb16a16b5a33b7bf63dae528a"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-10-FRESH-DELIVERY-R001.json",
+        "sha256": "abc46a2243b8847ab87ffb1cc472082d6860ed7ebf2ab6d30ca88865a49d1f1b"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:36.005087+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-11-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V16",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-11-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "a8a1791f3c38feb3d9068db1718cbce1a36133415d56373b6b7812991c900480"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-11-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "9bcac1e1825bf5317f055501575523c5efac3782fb761bf3d9fef8a3401dbc92"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-11.json",
+        "sha256": "93d69c906061aa8eab00b2b42fccedf6ac60728cc4212c0f0c6c990d94519dba"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-11-FRESH-DELIVERY-R001.json",
+        "sha256": "a11df77ddaf4043c99b93cac457a7ee8c547917648c09423321b52e260a5f703"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:39.080315+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "I-12-FRESH-DELIVERY-R001",
+      "lane": "fresh-cohort002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "Max",
+      "method_id": "V16",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-12-FRESH-DELIVERY-R001/registration.json",
+        "sha256": "0a452cea33952a43bae34245a25b6e319b1c318c6a41ec4a2de90e683c2c3d39"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-12-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+        "sha256": "114e6f26da68cb687cec9fb900ff55d8d5538a4524da6c683ac3acd4f8f34e4a"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-12.json",
+        "sha256": "0e48d93b24013f8dc5a6794d33e5214b47e325dabd42bd77298d61f33da4f002"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": true,
+      "recipe_lock_matches": null,
+      "source_card_selection_lock_matches": null,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/I-12-FRESH-DELIVERY-R001.json",
+        "sha256": "c8b611ca99b14823488765bed4c2980f1646a00004cd16f3c7be676334525ea2"
+      },
+      "ops_seal_utc": "2026-10-06T02:29:42.136077+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "lane": "confirmation-full-closure002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "max",
+      "method_id": "CONFIRM-A",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "e26abc09b7a7b1cb10e87dce56d9b7eebfa0ee21a186b82fde01244dcdc8035a"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": null,
+      "recipe_lock_matches": true,
+      "source_card_selection_lock_matches": true,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/C-01-RESOURCE-R002-BUNDLE.json",
+        "sha256": "9bf3dabce10b79dbf0545b427410094f32847430649aec053da837652c21915a"
+      },
+      "ops_seal_utc": "2026-10-06T02:30:47.739345+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 1
+    },
+    {
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "lane": "confirmation-full-closure002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "max",
+      "method_id": "CONFIRM-A",
+      "role_count": 6,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "70c7f0cdaad780cf081fc0fc4418e75422b2caafe046017d16718019d383485f"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": null,
+      "recipe_lock_matches": true,
+      "source_card_selection_lock_matches": true,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/C-02-RESOURCE-R002-BUNDLE.json",
+        "sha256": "2dcd9b64106c4776bf26215181b2f3569fb66759b9a3e3fc1caa36d5fd59aaa6"
+      },
+      "ops_seal_utc": "2026-10-06T02:30:50.791378+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "lane": "confirmation-full-closure002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "max",
+      "method_id": "CONFIRM-B",
+      "role_count": 5,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "45741058e25c4957af85371f798c3f96e53e470939b3f2dd808c26a534b72115"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": null,
+      "recipe_lock_matches": true,
+      "source_card_selection_lock_matches": true,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/C-03-RESOURCE-R002-BUNDLE.json",
+        "sha256": "2b2a16d68e3191ed8cae88b1862e50df058ee9f8b472bab1b9c9a472f325def8"
+      },
+      "ops_seal_utc": "2026-10-06T02:30:53.263236+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    },
+    {
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "lane": "confirmation-full-closure002",
+      "family": "Z",
+      "requested_model": "GLM 5.3 Flash",
+      "requested_effort": "max",
+      "method_id": "CONFIRM-B",
+      "role_count": 5,
+      "request_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "1ce8d106979c06b250613b51770c60405d8585d8491db8b112e70eec900fde38"
+      },
+      "pipeline_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+      },
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "both_arms_present": true,
+      "source_common_fields_preserved": {
+        "brief_path": true,
+        "coverage_path": true,
+        "common_criteria_path": true,
+        "source_access_path": true,
+        "common_output_contract": true,
+        "candidate_family": true,
+        "requested_model": true,
+        "requested_effort": true,
+        "method_id": true,
+        "control_stages": true,
+        "treatment_stages": true,
+        "allocation": true,
+        "artifacts": true
+      },
+      "inventory_source_card_matches": null,
+      "recipe_lock_matches": true,
+      "source_card_selection_lock_matches": true,
+      "ops_seal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/fresh-closures/C-04-RESOURCE-R002-BUNDLE.json",
+        "sha256": "46bb9ed504f6f2c5aaa08b842faf44e42dc79727950d1cd7a9fbe48c57a9493e"
+      },
+      "ops_seal_utc": "2026-10-06T02:30:55.837184+00:00",
+      "ops_seal_native_starts": 0,
+      "future_role_hashes_bind_at_birth": true,
+      "matrix_native_starts": 0
+    }
+  ],
+  "full_local_role_checks_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-003/CLOSURE_METADATA.json",
+    "sha256": "02e81d4c35604673f4558d2aa826b5ad91897ec11463020e99114662dd0545a3"
+  },
+  "metadata_differences": [],
+  "not_completion_or_scientific_credit": true
+}

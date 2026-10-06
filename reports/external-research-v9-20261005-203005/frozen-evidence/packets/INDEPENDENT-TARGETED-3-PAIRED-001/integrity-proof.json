@@ -1,0 +1,32 @@
+{
+  "schema": "er9.paired-targeted-neutral-integrity.v1",
+  "arms": [
+    {
+      "alias": "A",
+      "exact_current_freeze_sha256": "c525957b853054c6b33a2a5bd31b7ae05114107cfdc63e0297a0f3527a1aed32",
+      "actual_owned_quiet_confirmed": true,
+      "host_record_SHA256s": [
+        "d50c5ee5a389ea008a34f7af5bde85543e3487c0034c5e725300e630e02faad8",
+        "eff1f0a88897bb1ef3269eb5394db82ce23ebf0c4985e8b4139bacb0a3ec4aa0",
+        "8f63ba70595dc609582852cec4cb923a682c92e738c9379eace30305359138fb"
+      ],
+      "proof_basis": "actualowned proof+host unit/cgroup/PID/requestSHAs matched",
+      "canonical_final_byteSHA_verified": "144cdc9cd941e34731629eae9a0b32f5e041a36bb9321a72cf80048be6124838",
+      "catalog_absence_preserved": []
+    },
+    {
+      "alias": "B",
+      "exact_current_freeze_sha256": "906b0caf93f78eb0da1489d440328293544d80604bb73452c867cdf58894ce13",
+      "actual_owned_quiet_confirmed": true,
+      "host_record_SHA256s": [
+        "2cab2ca51061fc20a9f12e3cc7a43f1d196c7f2af11416e92c04f7a4065dffa9",
+        "e2be691f090c3004499e6bd9c57cb2ab0acb8d3f943d8d34d54ab5e8b04e05f1",
+        "a4b5e70a1f2d30af5188baf3026b04285fd469e5097c9ba761e1bb007900404c"
+      ],
+      "proof_basis": "actualowned proof+host unit/cgroup/PID/requestSHAs matched",
+      "canonical_final_byteSHA_verified": "e3ebccca2dbf4a7b1502dfc1fb319da55fa0630fa0a7d866f381c218d0eb27fe",
+      "catalog_absence_preserved": []
+    }
+  ],
+  "native_status/Goal/history/economics/identity": "WITHHELD untilimmutablePhase1"
+}

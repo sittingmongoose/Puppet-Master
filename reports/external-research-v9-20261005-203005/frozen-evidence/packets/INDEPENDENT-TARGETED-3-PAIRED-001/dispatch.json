@@ -1,0 +1,274 @@
+{
+  "schema": "er9.paired-targeted-source-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "scope": "two_actual_current_targeted_diagnostic_final_outputs_under_original_targeted_scope",
+  "prepared_utc": "2026-10-06T02:38:07.741984+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-targeted-3/reservation.json",
+    "sha256": "366a60d67860ec0e77266a798ff93c8b00e4a546c1d00625207823b30fa129a2"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "d6dd5b10a8c153dfdcff4a2efc573583188e285327b63958b801077a430f0992",
+      "bytes": 2590
+    },
+    "neutral_targeted_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "7687562ba698734d1af43b9d0f4487674ed4203726d93c4316a8e26d07145a88",
+      "bytes": 1424
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "targeted_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/targeted-card.json",
+      "sha256": "31820d5ffd1b88953bfe0ece111c402f27d8348bb605763c830bb87d31525b88"
+    },
+    "actual_launched_task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "fff18555006c364ee10af10da8949eaedb337d104e859efe052183e3a12cc98b"
+    },
+    "actual_launched_task_B": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "cc5f957af1b0dceb4de37afcce52ea4f36c6212bde56b8c234422742b8c11a22"
+    }
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_A_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "actual_stage": "diagnostic",
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/proposal.md",
+        "sha256": "144cdc9cd941e34731629eae9a0b32f5e041a36bb9321a72cf80048be6124838",
+        "bytes": 275
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/sources.json",
+        "sha256": "5e613c0af4dbfc0a45c1688356092f709af100e5569c8e720f6d37cd9ecefb41",
+        "bytes": 14043
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/witnesses.json",
+        "sha256": "a5103b3189f0c89233fc5c3536e652e91c8a9d130bc141687fc677588e594a88",
+        "bytes": 7569
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/leads.json",
+        "sha256": "71f90a028b20647b88585a077ad1cf3aabf2b342f32f42df508a33b4afdef221",
+        "bytes": 8478
+      },
+      "missing_catalogs": [],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "final/mechanical_probe.json",
+          "sha256": "75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458",
+          "bytes": 101,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/mechanical_probe.md",
+          "sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7",
+          "bytes": 41,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/mechanical_probe_cached.md",
+          "sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7",
+          "bytes": 41,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/mechanical_probe_v2.json",
+          "sha256": "0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9",
+          "bytes": 87,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/mechanical_probe_v3.json",
+          "sha256": "5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925",
+          "bytes": 74,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/proposal.complete.md",
+          "sha256": "1b5b24ba3b7d8a07bf7c46176f5770b089d67042e5e36995b7cfdb022b153444",
+          "bytes": 23725,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/sources-corrected.json",
+          "sha256": "52b838910a4e405eaedc94f2d357baac3874f8161008e7f9e840d139c0edf74e",
+          "bytes": 13465,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final/sources-errata.json",
+          "sha256": "06712b505cba7d628a504303b8b4e02ef7b7bbd01ee6b44ada7b34c98bf25e0b",
+          "bytes": 1181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    },
+    {
+      "alias": "B",
+      "actual_stage": "diagnostic",
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/proposal.md",
+        "sha256": "e3ebccca2dbf4a7b1502dfc1fb319da55fa0630fa0a7d866f381c218d0eb27fe",
+        "bytes": 20735
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/sources.json",
+        "sha256": "a8aa7e93ad6dde7916f5e5c3a14562e92293e1f5ae08ab8aa47622b4ae75e0c6",
+        "bytes": 17165
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/witnesses.json",
+        "sha256": "bc83092f593603c5b40e04d5dab2505ab9fe2ea46d8930c737ea6bed906ba938",
+        "bytes": 6853
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/B/final/leads.json",
+        "sha256": "7ef556710c6c5538fa60f8705c3b172ac723f28542766557afd0ce85d602a66b",
+        "bytes": 5452
+      },
+      "missing_catalogs": [],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "tmp/line-map.txt",
+          "sha256": "dd70029514100ef01620e897e2f21f5f3eab12c5385e53667d8600d17fb6b136",
+          "bytes": 10112,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "targeted_predeclared_checks": [
+    {
+      "check_id": "D-V15-A-P1",
+      "obligation_ids": [],
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "check_id": "D-V15-A-P2",
+      "obligation_ids": [],
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "check_id": "D-V15-A-P3",
+      "obligation_ids": [],
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "inherited_target_coverage_source_pair_id": "D-V15-A",
+  "coverage_lineage_rule": "exactinheritedscope map bytes preserved, currentpairedidentity explicit; no truthkey or newrubric",
+  "targeted_scope_boundary": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "broader_full_development_proposal_completeness": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE; currentconsequentialclaims still assessed",
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/integrity-proof.json",
+    "sha256": "00d497b7138a2d7ae114f43513b0d0686f7541f562a0d39999d029df18aa7f1d"
+  },
+  "budget": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "whole_includes_report_handoff": true,
+    "reset": false,
+    "start_rule": "START immediatelybeforefirstpermittedsemantic task/source/candidatebody read"
+  },
+  "blinding": {
+    "known_hints": "Case/role/model labels in rootassignment andexactactualTASKs unavoidable; descriptorcatalogpresence is metadata, no perfectblinding claim",
+    "held": "aliases/nativeGoals/status/history/economics/sourcegrades/privatekey untilimmutablePhase1"
+  },
+  "comparison_boundary": "Actualavailablepairedcurrenttargetedoutputs; partialcatalogs explicit. No canonicalvariant/bestof selection, nativecompletion or matchedcausalcredit inferredfrombodyavailability.",
+  "selection_rule": "rootapproved firstchronologicaleligiblepairedslot; noqualityselection; laterdistinctpair separatelyreserved"
+}

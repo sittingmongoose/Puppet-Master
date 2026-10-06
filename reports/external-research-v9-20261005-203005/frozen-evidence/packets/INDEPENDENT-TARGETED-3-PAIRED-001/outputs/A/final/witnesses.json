@@ -1,0 +1,85 @@
+{
+  "inventory_version": 1,
+  "scope": "Evidence status for proposal.complete.md; no application build or full-app check was executed.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "status": "executed_by_candidate",
+      "kind": "isolated numerical component check",
+      "purpose": "Check the proposed NGFF-style scale-then-translation convention and inverse mapping on one small asymmetric 5-axis coordinate.",
+      "justified_expected_behavior": "OME-NGFF 0.5 §2.3 describes scale followed by translation. With index [1,2,3,6,8], scale [1,1,2.5,0.5,0.5], and translation [0,0,10,-3,4], coordinate-wise world = index*scale + translation should be [1,2,17.5,0,8], and inverse should return the index vector.",
+      "code": "axes = data[\"axes\"]\nindex = data[\"index\"]\nscale = data[\"scale\"]\ntranslation = data[\"translation\"]\nworld = [i * s + t for i, s, t in zip(index, scale, translation)]\ninverse = [(w - t) / s for w, s, t in zip(world, scale, translation)]\nexpected_world = [1.0, 2.0, 17.5, 0.0, 8.0]\nassert len(axes) == len(index) == len(scale) == len(translation)\nassert world == expected_world\nassert inverse == index\nprint(\"axes=\", axes)\nprint(\"index=\", index)\nprint(\"world=\", world)\nprint(\"inverse=\", inverse)\nprint(\"round_trip=PASS\")",
+      "input": {"axes": ["t", "c", "z", "y", "x"], "index": [1.0, 2.0, 3.0, 6.0, 8.0], "scale": [1.0, 1.0, 2.5, 0.5, 0.5], "translation": [0.0, 0.0, 10.0, -3.0, 4.0]},
+      "receipt": {
+        "execution_id": "exec-ebrqbav2",
+        "label": "executed by candidate",
+        "completed_utc": "2026-10-06T01:30:59.367449+00:00",
+        "code_sha256": "70082cd1adbddf9df7cad616d89fadfaf95f21a2f88b6dad62bfdc07450d0ab7",
+        "data_sha256": "b399329b225b0b3ac3fcee6a4f934cd60cdb3b8708f73bd52654d58fb69bba5b",
+        "stdout": "axes= ['t', 'c', 'z', 'y', 'x']\nindex= [1.0, 2.0, 3.0, 6.0, 8.0]\nworld= [1.0, 2.0, 17.5, 0.0, 8.0]\ninverse= [1.0, 2.0, 3.0, 6.0, 8.0]\nround_trip=PASS\n",
+        "stderr": "",
+        "exit_code": 0,
+        "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "network": "new empty namespace"}
+      },
+      "result": "PASS for the stated arithmetic assertions.",
+      "scope_limits": ["Candidate-authored stdlib arithmetic only.", "Does not exercise an OME-NGFF parser, Zarr storage, Napari, any application coordinate convention, file input, rendering, annotations, persistence, or export.", "Does not show general matrix ordering, units, orientation, or transform correctness."]
+    },
+    {
+      "id": "W2",
+      "status": "proposed_unexecuted",
+      "kind": "axis/calibration and serialization discriminator",
+      "check": "Create a tiny asymmetric 5D fixture with unequal scales and nonzero translations; verify selected voxel physical coordinates and save/reopen/export/import identity. Swap axis labels and inject an unknown spatial unit.",
+      "expected_behavior": "Correct fixture round-trips with axis order, units, asset/frame identity and coordinates intact. Ambiguous swapped labels or unknown units block pixel-dependent annotation/export until explicit correction; no plausible guessed overlay is produced.",
+      "scope_limits": ["Requires an implemented importer, project schema, coordinate adapter and exporter; no result exists yet."]
+    },
+    {
+      "id": "W3",
+      "status": "proposed_unexecuted",
+      "kind": "display/data immutability and geometric derivation",
+      "check": "Hash and sample the source before/after changing window/level, gamma, colormap and channel visibility; separately resample with declared interpolation and test a singular transform.",
+      "expected_behavior": "Display edits leave source bytes and sample values unchanged. Resampling creates a new asset/hash with transform, direction, interpolation, output shape and lineage. Singular or non-invertible maps cannot silently transfer annotations.",
+      "scope_limits": ["Requires application code and fixture data; no result exists yet."]
+    },
+    {
+      "id": "W4",
+      "status": "proposed_unexecuted",
+      "kind": "3D point interaction and regression coverage",
+      "check": "Test point addition in 2D layers rendered in 3D and in 3D layers, with calibrated transforms; save, export and reopen each case.",
+      "expected_behavior": "Depth is explicit through a selected plane/control or point editing is disabled with a clear message; persisted/exported coordinates match the visible rule. Napari v0.4.15 tests are source evidence only and must not be treated as this application's test result.",
+      "scope_limits": ["Requires the target application's interaction and persistence paths; not executed."]
+    },
+    {
+      "id": "W5",
+      "status": "proposed_unexecuted",
+      "kind": "3 GB bounded access/performance",
+      "check": "On an 8-core/16 GB workstation, navigate a 3 GB known-shape/type source under cold and warm cache, many channels/timepoints and representative compression; record latency percentiles, peak RSS, worker/cache limits, cancellation latency and full-decode detection.",
+      "expected_behavior": "The reader requests bounded regions, peak memory remains within a researcher-agreed budget below available RAM, cancel/progress remains usable, and navigation meets thresholds agreed before claiming responsiveness.",
+      "scope_limits": ["No 3 GB benchmark was run. Zarr component documentation is not performance evidence for the app."]
+    },
+    {
+      "id": "W6",
+      "status": "proposed_unexecuted",
+      "kind": "crash/recovery and storage semantics",
+      "check": "Fault-inject checksum/import/chunk writes, SQLite commit/snapshot and export; restart after each fault on local filesystems and intended shared storage. Move a referenced source, then alter one byte.",
+      "expected_behavior": "Last committed generation reopens; incomplete generations are detectable and resumable or removable; final export path is unchanged until validated publish; relink accepts matching content identity and rejects changed content. WAL is not used as a live cross-host shared database.",
+      "scope_limits": ["No fault injection or platform/share testing was run; atomic rename and sync are implementation hypotheses."]
+    },
+    {
+      "id": "W7",
+      "status": "proposed_unexecuted",
+      "kind": "bundle/export/accessibility round trip",
+      "check": "Bundle on workstation A and reopen on B with and without source bytes; verify table, overlay and small derived image disclosures. Complete core workflow using keyboard only and inspect legibility/focus/error feedback.",
+      "expected_behavior": "Asset/frame identity and units survive; missing external data is clearly unresolved; exports identify preserved/baked/resampled information; keyboard operation and legible metadata/error feedback cover the minimum workflow.",
+      "scope_limits": ["No second-workstation or accessibility evaluation was run."]
+    },
+    {
+      "id": "W8",
+      "status": "source_test_inspected_not_executed",
+      "kind": "public regression-test evidence",
+      "source_ids": ["S8", "S9"],
+      "check_presence": "The PR diff adds paired tests for a 2D points layer becoming non-editable in 3D and a 3D layer remaining editable; the test source is present in Napari tag v0.4.15, whose release note lists the fix.",
+      "candidate_execution": "Not run by candidate. Source inspection only.",
+      "scope_limits": ["The assertions concern editability state, not end-to-end coordinates, application persistence, or export."]
+    }
+  ]
+}

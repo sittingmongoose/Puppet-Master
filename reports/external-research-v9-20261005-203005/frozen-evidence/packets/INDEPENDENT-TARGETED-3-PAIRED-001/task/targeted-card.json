@@ -1,0 +1,82 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "3538c3a53d8ec5928a06038833d769d4ed813d62b3541f76c57836b2724c65b4",
+  "retained_exact_fields": {
+    "schema": "er9.diagnostic_method_card.v1",
+    "pair_id": "D-V15-A-SCOPE-R002",
+    "track": "A",
+    "case_id": "D-V15-A-v1",
+    "domain": "A",
+    "task_name": "Candidate-discovered image failure/fix/test chain",
+    "task": "From the biomedical brief, locate a consequential mechanism and a real public issue/fix/regression-test chain. Compare ordinary docs-first research with deliberate code/issue/test tracing and two independent useful implementation precedents.",
+    "question": "Use one real fix chain and one misleading or version-mismatched apparent chain. For discovery cells the candidate must locate the chain itself.",
+    "source_scope": "BRIEF_ONLY live primary-source discovery, exact public code/issues/fix/tests/release context; no repository hints or preselected chain.",
+    "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+    "discovery_conclusion_allowed": true,
+    "integration_limit": "An issue title is a lead, not consensus; a merged patch is not automatically evidence of the affected release or a reproduced defect.",
+    "brief_path": "briefs/development-A-biomedical.md",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "neutral_task_prompt_path": "diagnostics/D-V15-A-TASK.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json",
+      "lead_inventory": "out/final/leads.json"
+    },
+    "important_checks": [
+      {
+        "id": "D-V15-A-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V15-A-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V15-A-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "no_truth_key_in_candidate": true,
+    "coverage_path": "diagnostics/D-V15-A-coverage.json"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "candidate_authorship",
+    "card_version",
+    "causality",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "no_actual_native_job_by_preparer",
+    "no_candidate_answers_or_source_hints",
+    "observed_effort",
+    "observed_model",
+    "original_attempt_state",
+    "original_card_ref",
+    "outcome",
+    "repair_factor",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "scope_overlay",
+    "scope_overlay_target",
+    "source_slot",
+    "stages",
+    "status",
+    "supersedes_actual_comparison_version",
+    "treatment"
+  ],
+  "note": "No sourceanswers/status/modelhistory/economics/oldgrades added; targetcoverage inherited sourcepair metadata preservedbyteexact separately."
+}

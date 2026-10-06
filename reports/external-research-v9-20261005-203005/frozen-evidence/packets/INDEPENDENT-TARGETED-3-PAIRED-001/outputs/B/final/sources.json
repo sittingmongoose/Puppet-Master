@@ -1,0 +1,285 @@
+{
+  "schema_version": 1,
+  "retrieved_utc": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Zarr-Python issue #3169: Stored and computed checksum do not match in case when shards larger than chunks",
+      "url": "https://github.com/zarr-developers/zarr-python/issues/3169",
+      "capture_url": "https://api.github.com/repos/zarr-developers/zarr-python/issues/3169",
+      "pin": "Issue report for Zarr-Python 3.0.8; captured issue state on 2026-10-06",
+      "locator": "Issue body reproduction using create_array(data=..., chunks=(1000,100), shards=(5000,500)); symptoms and issue history",
+      "captures": [
+        {
+          "capture_id": "4ad1eb8d65fc4c47afdb5742d3610be5",
+          "sha256": "16323c31ca807db999beaa9658048868e0547fdb01e19c96e821c637996b2b2b",
+          "path": "public_captures/16323c31ca807db999beaa9658048868e0547fdb01e19c96e821c637996b2b2b.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        },
+        {
+          "capture_id": "c7e8feac7a704b99a640f4f82ed9f4eb",
+          "url": "https://api.github.com/repos/zarr-developers/zarr-python/issues/3169/comments?per_page=100",
+          "sha256": "b73e29e105df9c86e2d9c265c13075c6ffc5be3bfa6fd5cb26476cf7b8cecccd",
+          "path": "public_captures/b73e29e105df9c86e2d9c265c13075c6ffc5be3bfa6fd5cb26476cf7b8cecccd.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Evidence of a reported sharded create_array checksum failure in the named reproduction. An issue report and workarounds do not establish root cause or general behavior."
+    },
+    {
+      "id": "S2",
+      "title": "Zarr-Python PR #3299: fix chunk/shard iteration",
+      "url": "https://github.com/zarr-developers/zarr-python/pull/3299",
+      "capture_url": "https://api.github.com/repos/zarr-developers/zarr-python/pulls/3299",
+      "pin": "Merge commit c9eefe663b34b019e9673bcaa37a88aae6158280; merged 2025-08-22",
+      "locator": "PR body and merge status; patch changes chunk/shard iteration and adds iterator/region tests",
+      "captures": [
+        {
+          "capture_id": "f4b073b65a844e3483484997b659dd93",
+          "sha256": "ab289b9e5cef0628ba8c7ad21a093a6ed57a64c19b668d3d49ec5987d2718941",
+          "path": "public_captures/ab289b9e5cef0628ba8c7ad21a093a6ed57a64c19b668d3d49ec5987d2718941.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        },
+        {
+          "capture_id": "3ff304a05d8742c1a3fe413e021bd2f0",
+          "url": "https://github.com/zarr-developers/zarr-python/pull/3299.patch",
+          "actual_url": "https://patch-diff.githubusercontent.com/raw/zarr-developers/zarr-python/pull/3299.patch",
+          "sha256": "6169da4d39e72caeb501e384e536754a7e68d11ebecb8efbd785bd3754f2ed87",
+          "path": "public_captures/6169da4d39e72caeb501e384e536754a7e68d11ebecb8efbd785bd3754f2ed87.body",
+          "bytes": 116108,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Shows repository changes that distinguish inner chunk regions from shard/storage-object regions. Does not by itself verify stored data correctness or application performance."
+    },
+    {
+      "id": "S3",
+      "title": "Zarr-Python PR #3422: fix/shard iteration redux",
+      "url": "https://github.com/zarr-developers/zarr-python/pull/3422",
+      "capture_url": "https://api.github.com/repos/zarr-developers/zarr-python/pulls/3422",
+      "pin": "Merge commit 27d689c632a01162a1209c21fc80f7c00485cb98; merged 2025-09-12",
+      "locator": "PR body; patch src/zarr/core/array.py _copy_arraylike_region hunk; tests/test_array.py test_create_array_with_data_num_gets (assertion: one metadata GET plus one GET per shard, NumPy/Zarr inputs)",
+      "captures": [
+        {
+          "capture_id": "c17a4128d9b3496fb6911c5fba8d965f",
+          "sha256": "411163d53ac9f9cd500f019a898579162805f916a1fcb60e7f0de938608f5bb8",
+          "path": "public_captures/411163d53ac9f9cd500f019a898579162805f916a1fcb60e7f0de938608f5bb8.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        },
+        {
+          "capture_id": "3741ee1ea8b647f9893daa88e5a94283",
+          "url": "https://github.com/zarr-developers/zarr-python/pull/3422.patch",
+          "actual_url": "https://patch-diff.githubusercontent.com/raw/zarr-developers/zarr-python/pull/3422.patch",
+          "sha256": "a4209171b66868af16d3d597a34e01b5a44bdac27c4e717fa028e6e882aecbfe",
+          "path": "public_captures/a4209171b66868af16d3d597a34e01b5a44bdac27c4e717fa028e6e882aecbfe.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "The second copy path now iterates at shard granularity. The added regression assertion measures GET count, not byte-for-byte equality or the issue's exact CRC failure."
+    },
+    {
+      "id": "S4",
+      "title": "Zarr-Python v3.1.3 release",
+      "url": "https://github.com/zarr-developers/zarr-python/releases/tag/v3.1.3",
+      "capture_url": "https://api.github.com/repos/zarr-developers/zarr-python/releases/tags/v3.1.3",
+      "pin": "Release v3.1.3, published 2025-09-18",
+      "locator": "Release notes list PR #3422 (fix/shard iteration redux)",
+      "captures": [
+        {
+          "capture_id": "fe8b1670438b46969b0a2e4781d824f2",
+          "sha256": "f367ae95c84a7174d67aa5e2686ff4b33ec9dcf3fc9b176d7073dd96154f1871",
+          "path": "public_captures/f367ae95c84a7174d67aa5e2686ff4b33ec9dcf3fc9b176d7073dd96154f1871.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Release context for the identified fix. Does not assert RAM use, atomic project saves, or behavior on the proposed application's inputs."
+    },
+    {
+      "id": "S5",
+      "title": "Zarr v3 Sharding codec specification",
+      "url": "https://zarr-specs.readthedocs.io/en/latest/v3/codecs/sharding-indexed/",
+      "pin": "Sharding codec specification version 1.0 as stated on page; latest-route response captured 2026-10-06, SHA-pinned capture",
+      "locator": "Abstract and definitions: shards contain inner chunks and correspond to storage objects; implementation notes on full-shard reads/writes and synchronization; configuration chunk_shape",
+      "captures": [
+        {
+          "capture_id": "a08f3d0df9574b82bd4d2bb49cf8a3eb",
+          "sha256": "fc9e22578a623652e7513c90b34d17a0a92a40001dfa59a476951c925505f574",
+          "path": "public_captures/fc9e22578a623652e7513c90b34d17a0a92a40001dfa59a476951c925505f574.body",
+          "bytes": 48729,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Normative storage-format background for chunk versus shard granularity. The latest route is mutable; the capture hash and stated codec version identify the observed content."
+    },
+    {
+      "id": "S6",
+      "title": "napari issue #8353: Points layer handles scaling (pixel spacing) incorrectly, Points.csv has wrong numbers",
+      "url": "https://github.com/napari/napari/issues/8353",
+      "capture_url": "https://api.github.com/repos/napari/napari/issues/8353",
+      "pin": "Issue state open; captured 2026-10-06; reporter environment napari 0.6.4",
+      "locator": "Issue body: 8x8 ITK/MHD image origin=(100,100), spacing=(2,2), GUI-created Points CSV values near (50,50) and (57,57), expected world values (100,100) and (114,114)",
+      "captures": [
+        {
+          "capture_id": "3aeea26e2fa647a2b3916cfe72719df1",
+          "sha256": "4ed2d404bee947077b3809a5e72e84236f5736232f26e8df564117fad0ee365d",
+          "path": "public_captures/4ed2d404bee947077b3809a5e72e84236f5736232f26e8df564117fad0ee365d.body",
+          "bytes": 6713,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Concrete user report and repro for one napari 0.6.4/reader/layer-creation path. Not a resolved bug or proof of all points exports."
+    },
+    {
+      "id": "S7",
+      "title": "napari issue #8353 discussion",
+      "url": "https://github.com/napari/napari/issues/8353#issuecomment-3398157407",
+      "capture_url": "https://api.github.com/repos/napari/napari/issues/8353/comments?per_page=100",
+      "pin": "Comments captured 2026-10-06; issue remained open in captured issue state",
+      "locator": "Comments by napari participants: layer data coordinates versus world coordinates; CSV stores data without layer transform; creation order affects inherited scale/translate; 2026-09-18 comments ask about save/load and propose metadata-bearing writer; no merged repair identified",
+      "captures": [
+        {
+          "capture_id": "9f88fd0568d1486fb0993c488bba7108",
+          "sha256": "2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57",
+          "path": "public_captures/2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57.body",
+          "bytes": 40697,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Discussion clarifies coordinate semantics and open state, but is not implementation or regression-test evidence."
+    },
+    {
+      "id": "S8",
+      "title": "napari v0.6.4 tag and release notes",
+      "url": "https://github.com/napari/napari/releases/tag/v0.6.4",
+      "capture_url": "https://api.github.com/repos/napari/napari/git/ref/tags/v0.6.4",
+      "pin": "Tag v0.6.4 resolves to commit 8aa6ea45b0fce8ff2a9506d75b55a93fc8ac9589 (annotated tag object 11ca6032f62d0702d5c0c1524185a43e84b7840d)",
+      "locator": "Annotated tag release description identifies napari as a multidimensional image viewer built on Qt, VisPy and scientific Python stack",
+      "captures": [
+        {
+          "capture_id": "3bb8683a9f7b49fcb229cebbd34a8de7",
+          "sha256": "21da7b09412320162dfafc7a609dda69cf143c926ce64bee0829d1049a697f2e",
+          "path": "public_captures/21da7b09412320162dfafc7a609dda69cf143c926ce64bee0829d1049a697f2e.body",
+          "bytes": 329,
+          "format": "exact-http-response-body-bytes"
+        },
+        {
+          "capture_id": "de16873d341f4fbc8529c160f6ab14b5",
+          "sha256": "38d3dfb254f17550f376578f69ceb05e39b79ffb99caed22ac17f27db1f302e3",
+          "path": "public_captures/38d3dfb254f17550f376578f69ceb05e39b79ffb99caed22ac17f27db1f302e3.body",
+          "bytes": 7105,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Exact viewer source pin used for evaluation of candidate fit. Does not establish embedding compatibility or coordinate/export behavior in the proposed shell."
+    },
+    {
+      "id": "S9",
+      "title": "OME-NGFF specification version 0.5",
+      "url": "https://ngff.openmicroscopy.org/0.5/",
+      "pin": "Version 0.5 page; its captured revision history includes 0.5.2 dated 2025-01-10; capture SHA pins the observed live page",
+      "locator": "Sections 2.1 axes, 2.3 coordinateTransformations, 2.4 multiscales; revision history",
+      "captures": [
+        {
+          "capture_id": "c1e55db5d22b467a95a1498fd04cd9fb",
+          "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+          "path": "public_captures/a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b.body",
+          "bytes": 158591,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Metadata/storage convention for axes and scale/translation transforms, not a whole local-project, arbitrary-transform or annotation interchange contract."
+    },
+    {
+      "id": "S10",
+      "title": "tifffile README and examples at the MMStack metadata fix commit",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9/README.rst",
+      "pin": "Git commit 6e0a02f10fc763abd94aee0a0ab8225b4b8860a9; README content identifies 2026.9.9 while the source commit updates tifffile.py to 2026.9.15",
+      "locator": "Quickstart/examples: TiffFile series shape/dtype/axes inspection; return_as='zarr' and selected-region access for TIFF-backed Zarr arrays; notes on TIFF/OME-TIFF scope and limitations",
+      "captures": [
+        {
+          "capture_id": "4c0cb37fe300494f8c668ce6ee487a83",
+          "sha256": "472fae1188b3df0c9e9e56bf181539cb1f3d3c4b9bca202f93c94cf010d5830c",
+          "path": "public_captures/472fae1188b3df0c9e9e56bf181539cb1f3d3c4b9bca202f93c94cf010d5830c.body",
+          "bytes": 32332,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Candidate TIFF inspection and bounded-access entry points with documented format limits. Examples are documentation, not evidence that every layout stays within a 3 GB application's memory budget."
+    },
+    {
+      "id": "S11",
+      "title": "tifffile issue #334: numeric Summary values stored as strings in Micro-Manager MMStack",
+      "url": "https://github.com/cgohlke/tifffile/issues/334",
+      "pin": "Issue state and comments captured 2026-10-06",
+      "locator": "Issue reproduction and reporter's archived MMStack metadata/calibration failure; maintainer links the behavior to 2026.9.15",
+      "captures": [
+        {
+          "capture_id": "7e71a655ea9340049bf708cc80369394",
+          "sha256": "e5572e592f26d01ab6dc8c5efa095c50586e585c409b4fd2622eb059841693ad",
+          "path": "public_captures/e5572e592f26d01ab6dc8c5efa095c50586e585c409b4fd2622eb059841693ad.body",
+          "bytes": null,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Evidence of one legacy metadata compatibility failure. It does not establish general support for MMStack."
+    },
+    {
+      "id": "S12",
+      "title": "tifffile fix commit for MMStack string calibration values",
+      "url": "https://github.com/cgohlke/tifffile/commit/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9",
+      "capture_url": "https://api.github.com/repos/cgohlke/tifffile/commits/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9",
+      "pin": "Commit 6e0a02f10fc763abd94aee0a0ab8225b4b8860a9; source version 2026.9.15; committed 2026-09-15",
+      "locator": "Diff in tifffile/tifffile.py: float conversion of PixelSize_um, z-step_um and Interval_ms with TypeError/ValueError fallback; revision/changelog line says fix MMStack series when numeric Summary metadata values are strings (#334)",
+      "captures": [
+        {
+          "capture_id": "857bd88141c149f78c85afa540a70d5f",
+          "sha256": "2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d",
+          "path": "public_captures/2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d.body",
+          "bytes": 7806,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Fix is visible in source and version/changelog text. Captured commit lists only tifffile.py; no automated regression test was added there, so this is not a complete issue/fix/test chain."
+    },
+    {
+      "id": "S13",
+      "title": "Zarr Vectors draft specification",
+      "url": "https://alleninstitute.github.io/zarr_vectors/",
+      "pin": "Live draft documentation captured 2026-10-06; page explicitly describes itself as a draft released to spark conversation",
+      "locator": "Opening abstract and contents: chunked spatial vector data; points, polylines, meshes, tracks; Zarr v3; geometry and indexing sections",
+      "captures": [
+        {
+          "capture_id": "5b94f1f7a058439c88684850f01b85a1",
+          "sha256": "e9e6ccf39521aa6e32528e9a5172aa6456c24c735ec58a594f0af8108f999930",
+          "path": "public_captures/e9e6ccf39521aa6e32528e9a5172aa6456c24c735ec58a594f0af8108f999930.body",
+          "bytes": 33746,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Optional future precedent for spatially indexed large vector annotations. Draft status means it should be evaluated, not treated as a stable requirement or adopted schema."
+    },
+    {
+      "id": "S14",
+      "title": "zarr-vectors Python implementation documentation",
+      "url": "https://zarr-vectors-py.readthedocs.io/en/latest/",
+      "pin": "Latest documentation response captured 2026-10-06; mutable route, capture SHA identifies observed content",
+      "locator": "Opening overview and API surface: claims spatially indexed vector data in Zarr v3, distinguishes public api/building modules from internal modules, documents stability query",
+      "captures": [
+        {
+          "capture_id": "1d8282a0bd75403ab5ab6c61801f98da",
+          "sha256": "73d80f3c45d7eeb97cf10adb6d76746060a28f9ee7d6850d52f06acf5ec460eb",
+          "path": "public_captures/73d80f3c45d7eeb97cf10adb6d76746060a28f9ee7d6850d52f06acf5ec460eb.body",
+          "bytes": 31182,
+          "format": "exact-http-response-body-bytes"
+        }
+      ],
+      "applicability": "Public implementation docs identify an evolving Python API and stability boundary. No package was installed or executed, and no compatibility with this project was tested."
+    }
+  ]
+}

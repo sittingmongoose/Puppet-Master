@@ -1,0 +1,87 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "a45867e7d111acb88c6d1abe8f19965f61d837e82d078c5e439236e0799fd35b",
+  "retained_exact_fields": {
+    "schema": "er9.diagnostic_method_card.v1",
+    "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+    "track": "A",
+    "case_id": "D-V14-A-LUNA-R1-v1",
+    "domain": "A",
+    "task_name": "Brief-only image breadth beyond whole-product competitors",
+    "task": "Research the full biomedical brief from scratch with an opportunity/alternative lane. Protect part of treatment discovery allowance for different mechanism families and components before deepening the best leads; control does ordinary competent relevant-project/competitor research.",
+    "question": "Use brief-only cases in two domains where relevant components exist outside obvious whole-product competitors. Do not supply the target repositories or a list of answers.",
+    "source_scope": "BRIEF_ONLY public live primary-source discovery; no repository/source list or prior findings. All source access/time same.",
+    "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+    "discovery_conclusion_allowed": true,
+    "integration_limit": "This must run actual external discovery, not only a fixed normative corpus. Keep broad leads even if optional adoption is deferred.",
+    "brief_path": "briefs/development-A-biomedical.md",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "neutral_task_prompt_path": "diagnostics/D-V14-A-TASK.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json",
+      "lead_inventory": "out/final/leads.json"
+    },
+    "important_checks": [
+      {
+        "id": "D-V14-A-LUNA-R1-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V14-A-LUNA-R1-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V14-A-LUNA-R1-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "no_truth_key_in_candidate": true,
+    "coverage_path": "diagnostics/D-V14-A-LUNA-R1-coverage.json"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "candidate_authorship",
+    "card_version",
+    "causality",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "no_actual_native_job_by_preparer",
+    "no_candidate_answers_or_source_hints",
+    "observed_effort",
+    "observed_model",
+    "original_attempt_state",
+    "original_card_ref",
+    "outcome",
+    "repair_factor",
+    "replacement_pair_id",
+    "replacement_reason",
+    "replaces_unrun_pair",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "route_status",
+    "route_unavailability_reason",
+    "scope_overlay",
+    "scope_overlay_target",
+    "source_slot",
+    "stages",
+    "status",
+    "supersedes_actual_comparison_version",
+    "treatment"
+  ],
+  "note": "No sourceanswers/status/modelhistory/economics/oldgrades added; targetcoverage inherited sourcepair metadata preservedbyteexact separately."
+}
