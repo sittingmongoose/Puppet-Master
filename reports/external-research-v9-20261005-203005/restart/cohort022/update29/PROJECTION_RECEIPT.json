@@ -1,0 +1,61 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T04:28:33.453217+00:00",
+  "source_observed_utc": [
+    "2026-10-06T04:25:00Z",
+    "2026-10-06T04:23:09.646556+00:00"
+  ],
+  "meaningful_update_count": 29,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "ops/assessment-dispatch-001/TD9_CONSERVATIVE_BUDGET_CLOCK_ADDENDUM_001.json",
+      "sha256": "8c5c1a9a804e75575c8434fc52adb6ffd0ab3f1d59c7a69a6c242e2e2ef17218",
+      "bytes": 1280
+    },
+    {
+      "path": "dev/luna-route/versions/v1.5-clock-telemetry/PIN.json",
+      "sha256": "f4e6a4eae72265211527ac86800ac489d38cc54775e0eaeddd3a73932bc38498",
+      "bytes": 7026
+    },
+    {
+      "path": "ops/publication/cohort021-verification.json",
+      "sha256": "417199d04f9004dd0264f60cfbf702bb6e5a0704c5195bf94f9748d62bd49486",
+      "bytes": 2871
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-9/clock-authority-addendum.json",
+      "sha256": "5c5e4dab57f3ac1a9a98a0e5768ac4fe4e6518eedb2d71425272ffdef5ec4bb7",
+      "bytes": 1710
+    },
+    {
+      "path": "state/supervisor_goal_counters.jsonl",
+      "line_sha256_including_newline": "19cc9348d2b80a574fc033eba25cb28bd58342961d5e8cef2bfac2fd83fcdb51",
+      "line_number": 14,
+      "bytes": 339
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T042833.453217Z/BACKUP_RECEIPT.json",
+    "sha256": "5ae7e11f33a8befb69a616a5d60a1e728a625220bbffe5db52d91c031ce38ece",
+    "bytes": 879
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "63f8b80a8ca3366b3e9c7b806302f449ac60b674b84d072aef4685c8938402fb",
+      "bytes": 129328
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "63f8b80a8ca3366b3e9c7b806302f449ac60b674b84d072aef4685c8938402fb",
+      "bytes": 129328
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "f78f233e7517c7e8c7c51e335e23da534de5cd5337833356256463f3a8376d69",
+      "bytes": 10449
+    }
+  ],
+  "scope": "Verified021/rootdatedcounter, TD9earlierconservativeBUDGET\u2260semanticSTART, Lpreparednotadmitted and rootacceptedworkloadwake\u2260finished; originalsimmutable/no sciencebody or deployment inference"
+}

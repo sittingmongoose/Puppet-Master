@@ -1,0 +1,69 @@
+{
+  "schema": "er9.luna.actual-clock-stage-api.v1",
+  "entrypoint": "dynamic_stage_runner.py",
+  "cli_added_required": [
+    "--clock-declaration ABS_STATIC_JSON",
+    "--clock-declaration-sha256 EXACT_SHA256"
+  ],
+  "cli_optional_bundle": "--bundle-profile ABS_PRIVATE_JSON; absent core/R/critic/V06both",
+  "clock_declaration_constructor": {
+    "path": "clock_declaration.py",
+    "function": "declaration(stage_id)",
+    "schema": "er9.luna.predeclared-clock-delivery.v1",
+    "visible_reserved_path": "inputs/STAGE_CLOCK.json",
+    "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1"
+  },
+  "no_native_preparation": {
+    "module": "clock_prepare.py",
+    "function": "prepare_stage",
+    "keyword_required": [
+      "workspace",
+      "private",
+      "label",
+      "original_birth_monotonic_ns",
+      "max_seconds",
+      "native_stop_monotonic_ns",
+      "total_stop_monotonic_ns",
+      "resource_profile",
+      "clock_declaration",
+      "clock_declaration_sha256",
+      "execution_enabled",
+      "public_get",
+      "scientific_body",
+      "goal_objective",
+      "source_prompt_sha256",
+      "source_TASK_sha256"
+    ],
+    "keyword_optional": {
+      "bundle_profile": null,
+      "controller_path": "actual dynamic_stage_runner.py"
+    },
+    "returns": [
+      "config",
+      "config_binding",
+      "clock_declaration",
+      "clock_profile_path",
+      "original_clock",
+      "native_input",
+      "input_binding",
+      "native_calls_or_processes_started=False"
+    ],
+    "writes": [
+      "private/STAGE_CLOCK_RECEIPT.json",
+      "private/clock_profile.json",
+      "workspace/inputs/STAGE_CLOCK.json"
+    ],
+    "native_process_thread_Goal_auth_source_calls": "NONE",
+    "actual_controller_action_input": "already computed native_stop_monotonic_ns, not recomputed from cleanup inside clock constructor",
+    "test_fixture_limit": "synthetic body/objective/resource only; not actual kernel allocation proof"
+  },
+  "zero_inference_tests": [
+    "python3 -B test_clock_prepare.py",
+    "python3 -B test_clock_relay.py",
+    "python3 -B test_service_acceptance.py"
+  ],
+  "initial_serialization": "scientific body firsttext unchanged under preceding normalization; exact selected initial_clock_metadata_utf8 secondtext and visiblefile bytes; Goalobjective unchanged",
+  "delivery_record": "NATIVE_INPUT_BINDING.json preGoal canonical UTF8 JSON/input hashes; initial native turn params preGoal hash and same object sent; ACK is distinct from model semantic consumption",
+  "deployment": "only ops-qualified wholly unentered/full all-role closure before donor goals; current narrowed5targetpairs12slots+5prereqjobs; D13Bexcluded",
+  "native_goal_starts_for_repair": 0
+}

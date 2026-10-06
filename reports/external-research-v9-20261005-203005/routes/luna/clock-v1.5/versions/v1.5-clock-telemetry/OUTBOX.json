@@ -1,0 +1,54 @@
+{
+  "schema": "er9.luna.actual-clock-runtime-outbox.v1",
+  "status": "MECHANICALLY_READY_FOR_ELIGIBLE_FULL_CLOSURE_ONLY",
+  "runtime_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.5-clock-telemetry/PIN.json",
+    "sha256": "f4e6a4eae72265211527ac86800ac489d38cc54775e0eaeddd3a73932bc38498"
+  },
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.5-clock-telemetry/dynamic_stage_runner.py",
+    "sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8"
+  },
+  "tools": {
+    "release_pin_sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd",
+    "source_pins_sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+    "outbox_sha256": "cf7262ae7b6936c004c1f0b5aaaca5cac63a43a47bf125cc365ecf31910f631d"
+  },
+  "declaration_constructor": {
+    "path": "clock_declaration.py",
+    "sha256": "064ce0e114dbe12c7b02bde7d47361f5322c36aeed4cb640b6151a3695546241",
+    "function": "declaration(stage_id)"
+  },
+  "production_preparation": {
+    "path": "clock_prepare.py",
+    "function": "prepare_stage",
+    "sha256": "8255dc8d809c9d6163c155dfa98efb57e4b64bbb044543c78c18b9071427db61",
+    "schema": "API.json",
+    "same_function_called_before_Goal": true
+  },
+  "role_cli": {
+    "mandatory_new": [
+      "--clock-declaration ABS_STATIC_JSON",
+      "--clock-declaration-sha256 SHA"
+    ],
+    "optional_B": "--bundle-profile ABS_PRIVATE_JSON; absent core/R/critic/V06both",
+    "unchanged_clock": "--birth-monotonic-ns ORIGINAL_BEFORE_ALLOCATION --max-seconds ORIGINAL_ROLEALLOCATION --resource-profile SAME_ORIGINAL"
+  },
+  "runtime_admin_outputs": [
+    "host-private/STAGE_CLOCK_RECEIPT.json",
+    "host-private/clock_profile.json",
+    "workspace/inputs/STAGE_CLOCK.json",
+    "NATIVE_INPUT_BINDING.json",
+    "result.initial_native_turn_parameters_sha256 before Goal",
+    "result.clock_input_delivery_status after actual turn ACK"
+  ],
+  "current_scope": "current root-qualified5unenteredtargetpairs12native slots+finite5source prerequisite jobs only after BOTH firstGoals0/noIntent/fullallrolesclosure BEFORE donor repair; D13B entirely excluded",
+  "deployment_gate": "ops eligibility/fullclosure before any donor repairs; old queue remains original",
+  "native_goal_starts_for_binding_repair": 0,
+  "positive_ready_proofs": [
+    "CLOCK_PREPARE_REGRESSION.json",
+    "CLOCK_RELAY_REGRESSION.json",
+    "SERVICE_ACCEPTANCE_REGRESSION.json",
+    "PRESERVATION.json"
+  ]
+}

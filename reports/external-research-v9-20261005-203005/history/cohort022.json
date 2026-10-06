@@ -1,0 +1,320 @@
+{
+  "cohort": "Luna-clock-source-and-workload-022",
+  "snapshot_at": "2026-10-06T04:28:27.424478+00:00",
+  "sources": [
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/PUBLICATION_SELECTION.json",
+      "published": "routes/luna/clock-v1.5/PUBLICATION_SELECTION.json",
+      "source_sha256": "3211f70c7bca7676f477d410dfd67c8f8fc7a78af5fa2a7945a8b5e5ef02a31d",
+      "public_sha256": "3211f70c7bca7676f477d410dfd67c8f8fc7a78af5fa2a7945a8b5e5ef02a31d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/dynamic_stage_runner.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/dynamic_stage_runner.py",
+      "source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+      "public_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/completion_policy.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/completion_policy.py",
+      "source_sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "public_sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/completion_driver.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/completion_driver.py",
+      "source_sha256": "0d4ad5013a2afbf8e03eb938aea2258269555b24ac2c05b17e52e3c75a102e3f",
+      "public_sha256": "0d4ad5013a2afbf8e03eb938aea2258269555b24ac2c05b17e52e3c75a102e3f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/projection.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/projection.py",
+      "source_sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "public_sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_host_guard.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_host_guard.py",
+      "source_sha256": "0210b2eb1d8a84b5e43d5eff0548a4b73f2d4103f56944d3afe097f13d0c7c22",
+      "public_sha256": "0210b2eb1d8a84b5e43d5eff0548a4b73f2d4103f56944d3afe097f13d0c7c22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_native_driver.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_native_driver.py",
+      "source_sha256": "88c951e1823051456f060e0347391517bc607163b8a15478aec2604291b61899",
+      "public_sha256": "88c951e1823051456f060e0347391517bc607163b8a15478aec2604291b61899",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_dynamic_driver.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_dynamic_driver.py",
+      "source_sha256": "737e7dd3f0f0dc7065f386bb2179c80e098e13315c7d16b6d3666d4463078f65",
+      "public_sha256": "737e7dd3f0f0dc7065f386bb2179c80e098e13315c7d16b6d3666d4463078f65",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_client_relay.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_client_relay.py",
+      "source_sha256": "dcdedcb141fa54149fe176447a239505ae74d611f80b57d5b87f34b7ebd78115",
+      "public_sha256": "dcdedcb141fa54149fe176447a239505ae74d611f80b57d5b87f34b7ebd78115",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_tool_release.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_tool_release.py",
+      "source_sha256": "4922f54ff667085b1fb222b47077353c5abc3dc69c81e08586e69e17824ad030",
+      "public_sha256": "4922f54ff667085b1fb222b47077353c5abc3dc69c81e08586e69e17824ad030",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/resource_owned_scope_proof.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/resource_owned_scope_proof.py",
+      "source_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "public_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/clock_declaration.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/clock_declaration.py",
+      "source_sha256": "064ce0e114dbe12c7b02bde7d47361f5322c36aeed4cb640b6151a3695546241",
+      "public_sha256": "064ce0e114dbe12c7b02bde7d47361f5322c36aeed4cb640b6151a3695546241",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/clock_stage.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/clock_stage.py",
+      "source_sha256": "bbb00ab1e04170e1e0dabc3c99f84f6fddaeb61a385ac4f0e4ed9bfe0c9b7503",
+      "public_sha256": "bbb00ab1e04170e1e0dabc3c99f84f6fddaeb61a385ac4f0e4ed9bfe0c9b7503",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/clock_prepare.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/clock_prepare.py",
+      "source_sha256": "8255dc8d809c9d6163c155dfa98efb57e4b64bbb044543c78c18b9071427db61",
+      "public_sha256": "8255dc8d809c9d6163c155dfa98efb57e4b64bbb044543c78c18b9071427db61",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/stage_config.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/stage_config.py",
+      "source_sha256": "6adceb7efa5027968c04982dd3880894c32ad80f95a20421b3a89c84109c5b7e",
+      "public_sha256": "6adceb7efa5027968c04982dd3880894c32ad80f95a20421b3a89c84109c5b7e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/service_acceptance_projection.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/service_acceptance_projection.py",
+      "source_sha256": "600eea262f311a55bc6f175f020f99604a1643bd7d133ea4abdb11f4eaa7ab1d",
+      "public_sha256": "600eea262f311a55bc6f175f020f99604a1643bd7d133ea4abdb11f4eaa7ab1d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/test_clock_prepare.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/test_clock_prepare.py",
+      "source_sha256": "31e864fc5bbdb9db472e5333c83ed8f8e190637d876bdf99cf7cf2ed6f9186bd",
+      "public_sha256": "31e864fc5bbdb9db472e5333c83ed8f8e190637d876bdf99cf7cf2ed6f9186bd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/test_clock_relay.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/test_clock_relay.py",
+      "source_sha256": "fcd3e4da6219a7edcad2d3dfcdb5ac93985a6069cc68d171e6a85568fcf78fc9",
+      "public_sha256": "fcd3e4da6219a7edcad2d3dfcdb5ac93985a6069cc68d171e6a85568fcf78fc9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/test_service_acceptance.py",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/test_service_acceptance.py",
+      "source_sha256": "b29458e9edb75272fc058a53c1a002561684f8b85920d67cfd695b91c71a82ea",
+      "public_sha256": "b29458e9edb75272fc058a53c1a002561684f8b85920d67cfd695b91c71a82ea",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/CLOCK_PREPARE_REGRESSION.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/CLOCK_PREPARE_REGRESSION.json",
+      "source_sha256": "5d3d764cdaa2e1aefb3431cd3165f30640ad0c879368d1a311c56cb44c6520d3",
+      "public_sha256": "5d3d764cdaa2e1aefb3431cd3165f30640ad0c879368d1a311c56cb44c6520d3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/CLOCK_RELAY_REGRESSION.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/CLOCK_RELAY_REGRESSION.json",
+      "source_sha256": "8122f74cee0a1550a936b2eed5152c79b6322c90391bf6475fc6144acd8ac586",
+      "public_sha256": "8122f74cee0a1550a936b2eed5152c79b6322c90391bf6475fc6144acd8ac586",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "source_sha256": "de261173285245b76bfcce9eeed19073d5c3aa1e4db5d168864965afa9ce21bd",
+      "public_sha256": "de261173285245b76bfcce9eeed19073d5c3aa1e4db5d168864965afa9ce21bd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/PRESERVATION.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/PRESERVATION.json",
+      "source_sha256": "297c897c2416dadd8c29bd5d5f2c2ba42540877e052e266f50c453e82332b23d",
+      "public_sha256": "297c897c2416dadd8c29bd5d5f2c2ba42540877e052e266f50c453e82332b23d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/README.md",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/README.md",
+      "source_sha256": "18ef5d9346528de5182a673cd178776c9cbdee04e0ebb42490deb8b40b082573",
+      "public_sha256": "18ef5d9346528de5182a673cd178776c9cbdee04e0ebb42490deb8b40b082573",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/API.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/API.json",
+      "source_sha256": "7e2351ce60311e18a638653748a6675e9fe9f94e8c8d8287905d5585dd9ed59d",
+      "public_sha256": "7e2351ce60311e18a638653748a6675e9fe9f94e8c8d8287905d5585dd9ed59d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/PIN.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/PIN.json",
+      "source_sha256": "f4e6a4eae72265211527ac86800ac489d38cc54775e0eaeddd3a73932bc38498",
+      "public_sha256": "f4e6a4eae72265211527ac86800ac489d38cc54775e0eaeddd3a73932bc38498",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/OUTBOX.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/OUTBOX.json",
+      "source_sha256": "e6c4e6a01446c9d3d117cc3b416705b82f45edf38929258d6f3198b608f5714c",
+      "public_sha256": "e6c4e6a01446c9d3d117cc3b416705b82f45edf38929258d6f3198b608f5714c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/PUBLICATION_ADDENDUM_INCIDENT.json",
+      "published": "routes/luna/clock-v1.5/PUBLICATION_ADDENDUM_INCIDENT.json",
+      "source_sha256": "b168a1e9190eaf64256ee86ffcb6a1e5709f1967ff5dec4fcfa2b51da96225b7",
+      "public_sha256": "b168a1e9190eaf64256ee86ffcb6a1e5709f1967ff5dec4fcfa2b51da96225b7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.5-clock-telemetry/INCIDENT_TEAM_INVENTORY_001.json",
+      "published": "routes/luna/clock-v1.5/versions/v1.5-clock-telemetry/INCIDENT_TEAM_INVENTORY_001.json",
+      "source_sha256": "f51207627f829066264a09d48412685cb79ce7fb6481d0620ccc747159038a65",
+      "public_sha256": "f51207627f829066264a09d48412685cb79ce7fb6481d0620ccc747159038a65",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-002/PUBLICATION_SELECTOR.json",
+      "published": "consolidation/workload-002/PUBLICATION_SELECTOR.json",
+      "source_sha256": "f13d137ace168c26256579a5f79e69639168894949826fccc9c8c20f31fd40b7",
+      "public_sha256": "f13d137ace168c26256579a5f79e69639168894949826fccc9c8c20f31fd40b7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-002/WORKLOAD_SCOREBOARD.json",
+      "published": "consolidation/workload-002/WORKLOAD_SCOREBOARD.json",
+      "source_sha256": "c591ec5b8d16a2e015fa202bf117ce9bfec3f2d716cc84cc5e4cd8038c10421e",
+      "public_sha256": "c591ec5b8d16a2e015fa202bf117ce9bfec3f2d716cc84cc5e4cd8038c10421e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-002/README.md",
+      "published": "consolidation/workload-002/README.md",
+      "source_sha256": "88e087c0a601d6686469120f46f75b6f3fef60372ec8b5f953e4b0d294215569",
+      "public_sha256": "88e087c0a601d6686469120f46f75b6f3fef60372ec8b5f953e4b0d294215569",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/PUBLIC_SELECTION.json",
+      "published": "restart/cohort022/PUBLIC_SELECTION.json",
+      "source_sha256": "9aa766527f86f5e20b8998be31bbcb8b3dadac86035d7a13ea191e91ac1db6e4",
+      "public_sha256": "9aa766527f86f5e20b8998be31bbcb8b3dadac86035d7a13ea191e91ac1db6e4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/frozen-state--current.json",
+      "published": "restart/cohort022/frozen-state--current.json",
+      "source_sha256": "927f69ad21cac2d5050baf3238e9055ad56ae3d1916097c98b1f65ded346f7e7",
+      "public_sha256": "1c45570ca885e3e5417faf269d3fa49ba90c5350b1d8afe5643a3631a5fd6629",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/frozen-state--campaign.json",
+      "published": "restart/cohort022/frozen-state--campaign.json",
+      "source_sha256": "927f69ad21cac2d5050baf3238e9055ad56ae3d1916097c98b1f65ded346f7e7",
+      "public_sha256": "1c45570ca885e3e5417faf269d3fa49ba90c5350b1d8afe5643a3631a5fd6629",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/frozen-CURRENT.md",
+      "published": "restart/cohort022/frozen-CURRENT.md",
+      "source_sha256": "f050268da164c70c68a6334dfe015496b2b65513010ec1c48fc6b2f2e6cc7eb5",
+      "public_sha256": "f050268da164c70c68a6334dfe015496b2b65513010ec1c48fc6b2f2e6cc7eb5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/PROJECTION_RECEIPT.json",
+      "published": "restart/cohort022/PROJECTION_RECEIPT.json",
+      "source_sha256": "dd6f96efb3b0f70b6d32b54d62f0a5bc9f949d2b93640d159753586bdb20d425",
+      "public_sha256": "dd6f96efb3b0f70b6d32b54d62f0a5bc9f949d2b93640d159753586bdb20d425",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T042507.441966Z/BACKUP_RECEIPT.json",
+      "published": "restart/cohort022/BACKUP_RECEIPT.json",
+      "source_sha256": "f1179bd87ab66d9a77cf36fa32d1e1db261b7f42756851066f08aa04a3355696",
+      "public_sha256": "f1179bd87ab66d9a77cf36fa32d1e1db261b7f42756851066f08aa04a3355696",
+      "transform": "byte-identical"
+    }
+  ],
+  "Luna_scope": "26 owned source/test/README/PIN/API/outbox/syntheticreceipt files; actualtool1.5builder/clockcontracts/resources/C4T5preserved;0native/thread/Goals; no deployment or semanticuse/perfectblindclaim",
+  "exposure_addendum": "Category-only unsolicited team inventory disclosure; no scientificfacts",
+  "workload_scope": "New002 finite32diagnostic/12integrated/4confirmation lanes/jobs/blockers metadata; old001 preserved, no grades/completioninference",
+  "corrected_keeper_snapshot": "Update28 exactTD7clockcorrection versioned; update27 neverselected; includes configurationadoption distinct fromnativeuse and accountant013 separatecapture",
+  "whole_pipeline_or_winner_claim": false,
+  "newer_restart_snapshot": {
+    "source_selector": "state/history/projection-20261006T042833.453217Z/PUBLIC_SELECTION.json",
+    "sha256": "2451486a21c6184e4881e5d3d389e3268e1064a65971e0a28115faa3ad463b08",
+    "recorded_utc": "2026-10-06T04:28:33.453217+00:00",
+    "sources": [
+      {
+        "source": "state/history/projection-20261006T042833.453217Z/frozen-state--current.json",
+        "published": "restart/cohort022/update29/frozen-state--current.json",
+        "source_sha256": "63f8b80a8ca3366b3e9c7b806302f449ac60b674b84d072aef4685c8938402fb",
+        "public_sha256": "75bcac6387cd19fdc81e12a4aa52feaef27cddd5dd1fe25beaf40c75bee6596d",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T042833.453217Z/frozen-state--campaign.json",
+        "published": "restart/cohort022/update29/frozen-state--campaign.json",
+        "source_sha256": "63f8b80a8ca3366b3e9c7b806302f449ac60b674b84d072aef4685c8938402fb",
+        "public_sha256": "75bcac6387cd19fdc81e12a4aa52feaef27cddd5dd1fe25beaf40c75bee6596d",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T042833.453217Z/frozen-CURRENT.md",
+        "published": "restart/cohort022/update29/frozen-CURRENT.md",
+        "source_sha256": "f78f233e7517c7e8c7c51e335e23da534de5cd5337833356256463f3a8376d69",
+        "public_sha256": "f78f233e7517c7e8c7c51e335e23da534de5cd5337833356256463f3a8376d69",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T042833.453217Z/PROJECTION_RECEIPT.json",
+        "published": "restart/cohort022/update29/PROJECTION_RECEIPT.json",
+        "source_sha256": "c07c82371ffedc2d9d7dc01c001f44bdc0f0239cd15d32f94741f043a5b6aa33",
+        "public_sha256": "5bf15b357ec4b7608bae8c07d80436f580c7f4296874be57ad2c7764186d8b9e",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T042833.453217Z/BACKUP_RECEIPT.json",
+        "published": "restart/cohort022/update29/BACKUP_RECEIPT.json",
+        "source_sha256": "5ae7e11f33a8befb69a616a5d60a1e728a625220bbffe5db52d91c031ce38ece",
+        "public_sha256": "5ae7e11f33a8befb69a616a5d60a1e728a625220bbffe5db52d91c031ce38ece",
+        "transform": "LAB_ROOT metadata labels"
+      }
+    ],
+    "update28_preserved": true
+  }
+}
