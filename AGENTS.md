@@ -81,6 +81,7 @@ Use the repo skill `$pm-bootstrap-planning-ledger` when available. If skills are
   Drop directories you do not need from the sparse set. Branch kinds: `research/`, `audit/`, `concept/`, `plans/`, `fix/`. The object store and your worktree's index stay with the shared checkout on the mount; only your working tree is local. That removes the per-file scan over NFS, which is what made git slow, but it does not make every git operation local.
 - Open your thread, IDE or Codex session in your worktree, not in the shared checkout, so the harness scans hit local disk.
 - Worktrees that already exist on the mount under `/mnt/Cursor/PuppetMaster-research/` may finish the branch they are on; create no new ones there.
+- In T3 Code, the Puppet Master project is a full local clone of this repository on each machine (`~/src/PuppetMaster` on the VM and the Mac, `C:\Users\sitti\src\PuppetMaster` on Windows), and T3 creates each thread's worktree and branch from it on local disk; that replaces the `~/pm-worktrees` recipe above for T3 threads. Fetch `origin/main` before you branch, push your branch after every landing-sized step, and land exactly as "How to land on main" says, from the shared checkout.
 
 ### How to commit and push
 - Commit only the paths you changed, with a message that says what they are. Never `git add -A` or `git add .`. Never commit another thread's edits.

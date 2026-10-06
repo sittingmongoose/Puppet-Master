@@ -73,11 +73,6 @@
 ## Safety
 - Never add secrets/tokens.
 
-## Finish marker
-End with exactly one:
-- `<status>COMPLETE</status>`
-- `<status>BLOCKED</status>`
-
 <!-- agent-rules: start (managed by `agent-rules install` in the Cursor share Inbox folder; edits inside are overwritten) -->
 ## GPU browser testing and recording
 
