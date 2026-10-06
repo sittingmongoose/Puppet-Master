@@ -1,0 +1,205 @@
+{
+  "schema": "er9.independent-phase2-review.v1",
+  "evaluation_id": "P4-I08-R002",
+  "selected_native_role_job_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+  "source_phase1_judgment_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase1_judgment.json",
+    "sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8"
+  },
+  "source_judgment_unchanged": true,
+  "actual_selection_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/I08_TERMINAL_ROLE_SELECTION_001.json",
+    "sha256": "5b8d426aa1d9a063ff62073f1c31e2da1db3666de0167083c45c3d00a76eee00"
+  },
+  "actual_freeze_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/OUTPUT_FREEZE.json",
+    "sha256": "1bf02180931ea924f0e8a9a49a8f25f482a6277b9ef63bfe7e6a6cebb44b9308"
+  },
+  "actual_native_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+    "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+  },
+  "runtime_accounting_manifest_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_runtime_manifest.json",
+    "sha256": "bdfa01b1990ae3df8ea3e559ff2296e80992f42b94bcf54a8f460db401432fe1"
+  },
+  "source_grade": "FAIL_SCREEN",
+  "source_remainder": "UNASSESSED as frozen in Phase1",
+  "structural_delivery": {
+    "canonical_finals_present": 4,
+    "combined_review_present": true,
+    "physical_delivery": true,
+    "invalid_json_catalog": [
+      "out/final/sources.json"
+    ],
+    "all_anonymous_copies_match_actual_frozen_role": true,
+    "delivery_does_not_override_source_grade_or_native_status": true
+  },
+  "native": {
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "observed_configured_identity": {
+      "fresh_empty_history": true,
+      "instruction_sources_empty": true,
+      "model": "gpt-6-luna",
+      "effort": "max",
+      "ephemeral": false
+    },
+    "physical_provider_telemetry": "UNKNOWN",
+    "actual_inference_tool_payload": "UNOBSERVED",
+    "thread_session_id": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "native_Goal_API_threadId": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "separately_exposed_opaque_Goal_id": "UNKNOWN",
+    "host_set_Goals_in_selected_stage": 1,
+    "observed_goal_replacements": 0,
+    "native_goal_activation_positive": true,
+    "turn_statuses": [
+      {
+        "method": "turn/started",
+        "turnId": "01a10ead-e535-7b93-8ec7-9e15137a7c90",
+        "status": "inProgress",
+        "observed_monotonic_ns": 78058732471862
+      },
+      {
+        "method": "turn/completed",
+        "turnId": "01a10ead-e535-7b93-8ec7-9e15137a7c90",
+        "status": "failed",
+        "observed_monotonic_ns": 79388019626390
+      }
+    ],
+    "goal_state_before_cleanup": "blocked",
+    "goal_state_after_cleanup": "paused",
+    "observed_goal_states": [
+      "active",
+      "blocked",
+      "paused"
+    ],
+    "direct_complete_state_observed": false,
+    "operational_status": "FAILED",
+    "outcome": "HOLD",
+    "error_class": "RuntimeError",
+    "error": "native Goal stopped before completion",
+    "service_capacity_projection": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_native_error_projection.json",
+      "sha256": "9f13094817744c3c0df1f7ce3eb526cded031006356cc571af6617065a197524",
+      "native_result_binding_matches": true,
+      "cause_class": "service_capacity",
+      "native_error_info": "server_overloaded",
+      "canonical_message": "Selected model is at capacity. Please try a different model."
+    },
+    "elapsed_native_receipt_seconds": 1333.467675764,
+    "elapsed_freeze_seconds": 1333.542190238,
+    "stage_original_wall_limit_seconds": 1500,
+    "cleanup_reserve_seconds": 15,
+    "closed_before_original_total_stop": true,
+    "raw_native_output_persisted_by_driver": false,
+    "mechanical_route_pass": false
+  },
+  "owned_quiet": {
+    "assessment": "CONFIRMED_SCOPED_RECORDED_OBSERVATION",
+    "all_five_quiet_flags_true": true,
+    "all_owned_scopes_quiet": true,
+    "exact_three_host_records_and_pid_sets_verified": true,
+    "exact_execution_request_bound_to_owned_unit": true,
+    "direct_check_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_owned_quiet_check.json",
+    "pre_embedding_native_hash_bytes_unlocated": true,
+    "proof_is_not_semantic_or_completed_goal_credit": true
+  },
+  "execution_witness": {
+    "id": "W02",
+    "execution_id": "exec-3zkld739",
+    "authentic_current_actor": "candidate",
+    "authentic_request_result_pins": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/operation_receipts/executions/exec-3zkld739/request.json",
+        "sha256": "30b8b7efa97de7a0b5110cc6f784f4a61530a86363aabf138cb5e743b31510d4",
+        "bytes": 2574
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/operation_receipts/executions/exec-3zkld739/result.json",
+        "sha256": "63bf99517e35ed5d936daf18a923218d687f83dd68612ac0c6da5ec6ddf0d0ea",
+        "bytes": 2231
+      }
+    ],
+    "candidate_code_input_streams_match_phase1_catalog": true,
+    "exit_code": 0,
+    "cleanup_confirmed": true,
+    "authenticity_check_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_witness_authenticity.json",
+    "scope": "Tiny standard-library synthetic component check only; no notebook, DuckDB, parser adapter, save/recovery, reviewed sandbox policy, 5 GB, UI or broad source behavior validated.",
+    "evaluator_reexecution": false,
+    "source_phase1_grade_changed": false
+  },
+  "failed_tool_boundary_calls": [
+    {
+      "namespace": "pm_boundary",
+      "tool": "write_file",
+      "call_id": "call_cgnQ0w5bq23rar6pAhrLEkRo",
+      "argument_sha256": "815bb88dc7b91815ea28cc0f5b3796788beca0091db862fd705165085afcc9b5",
+      "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+      "response_bytes": 87,
+      "success": false
+    }
+  ],
+  "failed_call_drop": false,
+  "economics": {
+    "existing_actor_reference_only": true,
+    "carry_adds_new_native_starts": 0,
+    "actual_selected_original_stage_native_goal_starts": 1,
+    "original_actor_counted_once": true,
+    "occupied_native_receipt_seconds": 1333.467675764,
+    "known_native_thread_cumulative_usage": {
+      "inputTokens": 5193444,
+      "cachedInputTokens": 4911104,
+      "outputTokens": 58195,
+      "reasoningOutputTokens": 27419,
+      "totalTokens": 5251639
+    },
+    "input_includes_cached": true,
+    "reasoning_output_is_subset_of_output": true,
+    "usage_notifications": 47,
+    "usage_notifications_are_responses": false,
+    "native_parent_responses": "UNKNOWN",
+    "response_count_enforcement": "UNSUPPORTED",
+    "http_attempts": "UNKNOWN",
+    "monetary_billing": "UNKNOWN",
+    "cancelled_or_unexposed_tail_usage": "UNKNOWN",
+    "cleanup_seconds": "UNKNOWN",
+    "source_bytes_tool_traffic_total": "UNASSESSED; visible request receipts preserved",
+    "evaluator_requested_model": "gpt-6.1-sol",
+    "evaluator_requested_effort": "xhigh",
+    "evaluator_physical_provider_telemetry": "UNKNOWN",
+    "evaluator_monetary_cost": "UNKNOWN",
+    "full_pipeline_economics": "NOT_RECOMPUTED; original prior actors and costs remain preserved"
+  },
+  "fresh_matched_credit": {
+    "credit": false,
+    "reason": "Chronological carry of an existing actual role; zero new activation for carrying; no fresh paired complete run, full-pipeline success, quality equivalence, winner or causal method effect established.",
+    "original_all_costs_statuses_preserved": true,
+    "no_native_status_relabel": true
+  },
+  "source_discovery_and_preservation_provenance": {
+    "same_arm_prior_research_and_source_context_input_pins_present": true,
+    "current_stage_native_public_get_completed": 13,
+    "candidate_discovery_origin_full_audit": "UNASSESSED; no prior research/source/old grade body audit",
+    "semantic_preservation_reassessment_after_freeze": false
+  },
+  "public_archive": {
+    "source_manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/source_capture_manifest.json",
+    "source_manifest_sha256": "a5e04982cd0325c009c33983f9ef92360701c5ea5a7ab1f8d1a3434c3698618f",
+    "external_manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/33e9c28f771ccc1c56be71ae4754f599ca8532a260adaf63103439ff42d87907/MANIFEST.json",
+    "external_manifest_sha256": "d79d8e93c190e222361e555720145775467a9119c6d7a2209abc6d2b1910891c",
+    "receipt_copy": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/public_capture_archive_receipt.json",
+    "receipt_sha256": "8aaa8fb455f7b6f7f372952e6c0d8d39a92999ce16f7c33fdc39fcce867ed772",
+    "public_body_count": 25,
+    "pinned_metadata_count": 25,
+    "partial_scope": true,
+    "private_key_or_command_exported_to_public_archive": false
+  },
+  "limits": [
+    "No old evaluator review bodies or sibling output read",
+    "No source feedback to candidates or repair owners",
+    "No task clock reset or budget expansion",
+    "No candidate rerun or new native activation",
+    "No source judgment altered after Phase2 disclosure"
+  ]
+}

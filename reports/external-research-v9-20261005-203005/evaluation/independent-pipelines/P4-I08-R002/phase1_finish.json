@@ -1,0 +1,20 @@
+{
+  "schema": "er9.evaluator-clock.v1",
+  "evaluation_id": "P4-I08-R002",
+  "phase": "SOURCE",
+  "status": "FINISHED",
+  "finish_utc": "2026-10-06T01:49:01.304173+00:00",
+  "finish_monotonic_ns": 81760161197377,
+  "start_utc": "2026-10-06T01:40:29.989809+00:00",
+  "start_monotonic_ns": 81248846810539,
+  "elapsed_seconds": 511.314386838,
+  "source_limit_seconds": 1200,
+  "within_source_limit": true,
+  "whole_deadline_utc": "2026-10-06T02:10:29.989809+00:00",
+  "judgment_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase1_judgment.json",
+  "judgment_sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+  "scope": "Decisive source screen; explicit UNASSESSED remainder",
+  "source_grade": "FAIL_SCREEN",
+  "immutable_after_phase2_release": true,
+  "reset": false
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er9.current-witness-authenticity-review.v1",
+  "pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/operation_receipts/executions/exec-3zkld739/request.json",
+      "sha256": "30b8b7efa97de7a0b5110cc6f784f4a61530a86363aabf138cb5e743b31510d4",
+      "bytes": 2574
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/operation_receipts/executions/exec-3zkld739/result.json",
+      "sha256": "63bf99517e35ed5d936daf18a923218d687f83dd68612ac0c6da5ec6ddf0d0ea",
+      "bytes": 2231
+    }
+  ],
+  "checks": {
+    "request_sha_bound_to_selected_native_owned_scope": true,
+    "request_unit_equals_owned_scope_unit": true,
+    "request_result_actor_candidate": true,
+    "request_code_hash_catalog_match": true,
+    "request_data_hash_catalog_match": true,
+    "result_exit_zero": true,
+    "bootstrap_started": true,
+    "cleanup_confirmed": true,
+    "exact_current_execution_id": true,
+    "exact_stderr_empty": true,
+    "result_stdout_catalog_match": true
+  },
+  "all_checks_true": true,
+  "selected_native_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+    "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+  },
+  "actual_request_started_utc": "2026-10-06T00:54:33.002898+00:00",
+  "actual_result_completed_utc": "2026-10-06T00:54:33.179749+00:00",
+  "actual_execution_elapsed_seconds": 0.17821160999301355,
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "cleanup_classification": "collected_unit_absent",
+  "cleanup_stop_returncode": 5,
+  "scope": "Authenticates actual current candidate W02 execution only; no runtime/product/CSV/large-data/engine/sandbox-policy test credit; no rerun and no source judgment change.",
+  "sensitive_command_or_paths_exported": false
+}

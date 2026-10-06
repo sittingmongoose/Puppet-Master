@@ -1,0 +1,20 @@
+{
+  "schema": "er9.evaluator-clock.v1",
+  "evaluation_id": "P4-I08-R002",
+  "phase": "PHASE2",
+  "status": "STARTED",
+  "start_utc": "2026-10-06T01:50:08.451295+00:00",
+  "start_monotonic_ns": 81827308317507,
+  "deadline_utc": "2026-10-06T02:00:08.451295+00:00",
+  "phase2_limit_seconds": 600,
+  "whole_start_utc": "2026-10-06T01:40:29.989809+00:00",
+  "whole_start_monotonic_ns": 81248846810539,
+  "whole_deadline_utc": "2026-10-06T02:10:29.989809+00:00",
+  "source_judgment_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase1_judgment.json",
+  "source_judgment_sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+  "key_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/P4_I08_R002_PHASE2_KEY_001.json",
+  "key_sha256": "7c261a4c13f8f923470e0a1fd27c660a6db301b2893786589a15110321fa01ea",
+  "reset": false,
+  "source_grade_may_change": false,
+  "first_key_body_read": "immediately following receipt write in same command"
+}

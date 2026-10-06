@@ -1,0 +1,56 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_016_P4_I08_PHASE2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/code.py",
+      "sha256": "7e6f2565ed9dc7d9f569c99f1c0b023d935d2a647b156d58c7b07b69275c6fa4",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/code.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/data.json",
+      "sha256": "68a4af7b9194e519cf9f7dc87e229b559bca646a9a7bcdc59ad6fae20502806b",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/data.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/execution-facts.json",
+      "sha256": "b13cd8d6b53afad352c593424387920a919674bdcba3ed94aec296613459e773",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/execution-facts.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/request-policy.json",
+      "sha256": "806cac0accba7938c659edaa0baf111a2a1bd9296157b1eb295ad556eb07fc61",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/request-policy.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/stderr.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/stdout.bin",
+      "sha256": "86d2db58534a29b5737dc58a6d4395e6cc3ea8acd69b9e9a9f0fc6870c92827b",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/A/exec-3zkld739/stdout.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P4-I08-EXECUTION-001/MANIFEST.json",
+      "sha256": "b1a2dc35c4c5873d6400236c39447b0b9895a332e39c9e663b8efb6a871ad43b",
+      "relative_path": "evidence/P4-I08-EXECUTION-001/MANIFEST.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P4-I08-RUNTIME-ACCOUNTING-001/PUBLIC_RUNTIME_PROJECTION.json",
+      "sha256": "28dd5bf1d36eb95973f4fbb116f55901a93a615382cbdfea5e25e7b4dc33b49d",
+      "relative_path": "phase2/P4-I08-RUNTIME-ACCOUNTING-001/PUBLIC_RUNTIME_PROJECTION.json"
+    }
+  ],
+  "phase1_judgment_sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+  "scope": "onecurrentW02 execution exactcode/data/streams/facts+policy; selectedcurrentnative lifecycle/errors/quiet/counterdefinitions/accountantrow/carry provenance",
+  "exclusions": [
+    "private/**",
+    "unredactedP4runtimeMANIFEST withOSownershipmetadata",
+    "raw executionrequest privateunit/commands",
+    "auth/rawModelIO/fullGoallogs/oldsourcegrades/oldexecution substitution"
+  ],
+  "semantic_policy": "sourceFAIL_SCREEN/UNASSESSEDremainimmutable; actualstructural4+review notCOMPLETE/pipeline/effectwinner",
+  "counter_policy": "existingrole originalnativecost remains once; carry0newinference not0originalcost; unknownmoney/quota/providercache/rootcounts notinvented/summed"
+}

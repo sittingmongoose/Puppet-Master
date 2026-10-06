@@ -1,0 +1,50 @@
+{
+  "source_catalog": {
+    "json_valid": false,
+    "error": "Expecting value: line 151 column 65 (char 15031)",
+    "line": 151,
+    "column": 65,
+    "offset": 15031,
+    "exact_line": "      \"locator\": [\"StringValueScanner::ProcessOverBufferValue\", source lines 1410-1449; lines 1417-1447 inspected, including fallthrough into second-buffer loop\"],",
+    "sha256": "5987eaa989ca51d386427e470f7ceac69534b1f474e6ffd5fa1043789f2605cc"
+  },
+  "witness_catalog": {
+    "json_valid": true,
+    "sha256": "922755ac372d92a6839cd549337c26f1054c8f0d6db570e04f638607c775c2f0"
+  },
+  "leads": {
+    "json_valid": true,
+    "sha256": "5e342e3c0af94c6b3f0216dfc622b6cc05d5cefddefc34d9de058e081d90ac93"
+  },
+  "witness_catalog_consistency": {
+    "execution_id_catalog": "exec-3zkld739",
+    "candidate_code_not_executed_by_evaluator": true,
+    "code_hash_computed": "7e6f2565ed9dc7d9f569c99f1c0b023d935d2a647b156d58c7b07b69275c6fa4",
+    "code_hash_claimed": "7e6f2565ed9dc7d9f569c99f1c0b023d935d2a647b156d58c7b07b69275c6fa4",
+    "stdout_hash_computed": "86d2db58534a29b5737dc58a6d4395e6cc3ea8acd69b9e9a9f0fc6870c92827b",
+    "stdout_hash_claimed": "86d2db58534a29b5737dc58a6d4395e6cc3ea8acd69b9e9a9f0fc6870c92827b",
+    "stdout_bytes_computed": 195,
+    "stderr_hash_computed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_hash_claimed": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "input_hash_variants": [
+      {
+        "ensure_ascii": false,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "sort_keys": true,
+        "sha256": "68a4af7b9194e519cf9f7dc87e229b559bca646a9a7bcdc59ad6fae20502806b"
+      },
+      {
+        "ensure_ascii": false,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "sort_keys": false,
+        "sha256": "68a4af7b9194e519cf9f7dc87e229b559bca646a9a7bcdc59ad6fae20502806b"
+      }
+    ]
+  }
+}

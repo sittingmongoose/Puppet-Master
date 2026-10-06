@@ -1,0 +1,706 @@
+{
+  "schema": "er9.positive-current-combined-role-phase2-projection.v1",
+  "prepared_utc": "2026-10-06T01:54:35.946928+00:00",
+  "phase1_judgment_sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+  "parent_dispatch_sha256": "43e83870e49403d22c641b683c3782144cf5c677a9d74ba7c340f3974e07eff7",
+  "selection_pin": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/I08_TERMINAL_ROLE_SELECTION_001.json",
+    "sha256": "5b8d426aa1d9a063ff62073f1c31e2da1db3666de0167083c45c3d00a76eee00"
+  },
+  "current_role_job_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+  "freeze_pin": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/OUTPUT_FREEZE.json",
+    "sha256": "1bf02180931ea924f0e8a9a49a8f25f482a6277b9ef63bfe7e6a6cebb44b9308"
+  },
+  "actual_native_receipt_pin": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+    "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+  },
+  "native_positive_projection": {
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "native_selected_identity": {
+      "model": "gpt-6-luna",
+      "effort": "max"
+    },
+    "physical_provider_telemetry": "UNKNOWN",
+    "native_session_or_thread_id": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "nativeGoal_API_threadId": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "opaque_native_Goal_ID": "UNKNOWN; thread/session label not separatelyexposedGoalID",
+    "saved_goal_set_fields": {
+      "status": "active",
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791247639,
+      "updatedAt": 1791247639
+    },
+    "direct_goal_status_before_cleanup": "blocked",
+    "direct_goal_final_metric": "paused",
+    "last_direct_goal_status": "paused",
+    "last_five_status_observations": [
+      "active",
+      "active",
+      "active",
+      "blocked",
+      "paused"
+    ],
+    "native_outcome": "HOLD",
+    "native_error_class": "RuntimeError",
+    "native_error_exact": "native Goal stopped before completion",
+    "elapsed_seconds": 1333.467675764,
+    "closed_before_original_total_stop": true,
+    "held_process_exit_code": 0,
+    "actual_quiet_flags": {
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true
+    },
+    "owned_scope_proof": {
+      "schema": "er9.luna.owned-scope-proof.v1",
+      "observation_monotonic_ns": 79388493353928,
+      "observation_epoch": 1791248969.6363623,
+      "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "native_receipt_sha256": "a32bbfe8ca4f52051ec80aba257e75b8e7f024625e758a3b2b885255770705ca",
+      "native_owned_processes_quiet": true,
+      "client_tool_owned_processes_quiet": true,
+      "execution_units_quiet": true,
+      "all_owned_scopes_quiet": true,
+      "mutations_performed": false,
+      "scope": "exact trusted named units, original cgroups and exact PIDs only; no PGID release or source grade",
+      "receipt_sha256": "5443770f2b328bd5c074333900c137019d9120d5184be6633a93cd48d0a5467d",
+      "exact_host_record_SHA256s": [
+        "d4fceedd3761f790ad5672712649e169649c41324523d78084b09f8d91060ee3",
+        "f4a1c33a1ef989d439f187e4775e8f221cdf6867f912b34a92d6af3d1531b46e",
+        "e1f5e188fe52b4e75ce1b40c88a7127c2dd8413ae53258325f91209bbf7ce4e5"
+      ],
+      "exact_execution_request_SHA256s": [
+        "30b8b7efa97de7a0b5110cc6f784f4a61530a86363aabf138cb5e743b31510d4"
+      ]
+    },
+    "all_owned_scopes_quiet": true,
+    "metrics_positive_projection": {
+      "fresh_session": true,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "goal_status_final": "paused",
+      "native_responses": "UNKNOWN",
+      "usage_notification_count": 47,
+      "native_response_policy": "wall-goal-token-observation-v1",
+      "native_model_response_cap_enforced": false,
+      "candidate_goals_set_by_host": 1,
+      "goal_replacements_observed": 0,
+      "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+      "native_turns_started": 1,
+      "native_turns_completed": 0,
+      "native_turns_terminal": 1,
+      "native_turns_interrupted": 0,
+      "tail_interruptions_observed": [],
+      "adverse_failure_observed": true,
+      "native_owned_continuation_observed": false,
+      "host_initial_turns_started": 1,
+      "host_followup_turns_started": 0,
+      "usage_totals": {
+        "inputTokens": 5193444,
+        "cachedInputTokens": 4911104,
+        "outputTokens": 58195,
+        "reasoningOutputTokens": 27419,
+        "totalTokens": 5251639
+      },
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 24,
+        "pm_boundary.public_https_get": 13,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.write_file": 5
+      },
+      "goal_tool_completed_counts": {},
+      "tool_attempt_counts": {
+        "pm_boundary.read_file": 24,
+        "pm_boundary.public_https_get": 13,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.write_file": 6
+      },
+      "tool_failed_counts": {
+        "pm_boundary.write_file": 1
+      },
+      "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+      "native_http_attempts": "UNKNOWN",
+      "cost": "UNKNOWN",
+      "component_outcome": "HOLD"
+    },
+    "turn_statuses": [
+      {
+        "method": "turn/started",
+        "status": "inProgress"
+      },
+      {
+        "method": "turn/completed",
+        "status": "failed"
+      }
+    ],
+    "all_client_tool_call_metadata": [
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_bKItBUQQ8qHaF90AYvRs5htH",
+        "argument_sha256": "d3231bd11140376ec7c5cacc1a72490a55d08cdf5952c4e5a3994077a8d4b798",
+        "response_sha256": "607b290f172fb22ed20c4f0321d8248164e99caae9a87de587b947058c1ab486",
+        "response_bytes": 15474,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_cMnEVJauNvazLHoqncZxDRJZ",
+        "argument_sha256": "b12695e4ee3f112ada92582c4b9259bc313d444b2ec3ec1926fea76bdec100d1",
+        "response_sha256": "52949ab8e3c46a58e0f8da26469947141f0ff70a61b83eeb9f2b1c284a0b9864",
+        "response_bytes": 6648,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_Ds4Bucxtt8abT0fQnDMQOuaL",
+        "argument_sha256": "66ebb4f12877d0e4b3672307b8366536c53a00ea526e6cefbd809fcade13a713",
+        "response_sha256": "14c6ecfe96b820811aa78b3667b4fbbc77d914afec8ca938c5676796562b7298",
+        "response_bytes": 3041,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_AzeCCKEWS31bFmrMiIFru2FH",
+        "argument_sha256": "02a12aa237f6143f4da50116eb08713592e6dc46e3c89678c12c10c6acd26e80",
+        "response_sha256": "9d0b8ef8a668f84d3c65b97e16db3be7f57fabdeb9f1d875a1b4da30081b5268",
+        "response_bytes": 2825,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_ZJBbTJr3Qu9utrfbgn9tFnWf",
+        "argument_sha256": "07824e17321d5f1214ba74f2bc770422ae7ddba65e9fa69a9a4d551d1b6b9e23",
+        "response_sha256": "35ed54f8a81cfeb50a2a90a9d7dd03f12b7240b69963b28c9f72b757ab18e985",
+        "response_bytes": 31376,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_qKbCmXA8XG6cP5CnIZxmN7WX",
+        "argument_sha256": "28e7e6625c0234134ca3e58c9a19cd1504e62af5aed7d59d02fd14f5e6dcc943",
+        "response_sha256": "262bfa1cbe3dbfee90e9e21ebdfb6aef3f32b7b72dc16c552a9ec309dc83d196",
+        "response_bytes": 25448,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_jCBzuRe5zo9YvnvkGRWFLuSJ",
+        "argument_sha256": "e7f7c9608d4083a40aa0dc0f257a4efa6496953e8a17d3cf1513973b4a073873",
+        "response_sha256": "a65d23728c784368f6687644fa46d9b1a2032e0bff2a5a1791fe681a1e971fc0",
+        "response_bytes": 11286,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_JgXIYpwj4rqy5OCeuQKcYYS8",
+        "argument_sha256": "9efdc1e7d9116c6f38d1e01cca54b01d1f1e4ed65052d345aefd3ac56e08c87b",
+        "response_sha256": "564bf369fd967036153e16e8921f02ecf1774843b6dadd6ec503d8dee51957c6",
+        "response_bytes": 11077,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_Qgq4Bs06iptvKbWbWd4H9i9S",
+        "argument_sha256": "1c6350e142f9ef99942f91f68486160ed9808ed04068c53fcb915fcde993b679",
+        "response_sha256": "09ae7bd827374896d8485a88ce363f0329f7ce59984b49a4b9ee74b241e7cc3c",
+        "response_bytes": 12905,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_C5lj8pDKfHAgSiwqmn93JBde",
+        "argument_sha256": "25708f09839340ba4b278db1b466229710a36265a74cd2b4a438243733eb14ee",
+        "response_sha256": "8f6c4a0c81a7476ca81388d0d1dcd55097f2aebce3a76ce4654fefeda064372e",
+        "response_bytes": 7586,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_6IegbXG1q5TeW8P0z2ko8wHV",
+        "argument_sha256": "eeaa42320a2713f80ee773c0dce55d0f4871661ffd0c49b81f9712efed840f52",
+        "response_sha256": "d9fc16a4de78a7943753c420b6a33a7ecdcf388d21c3a5e56f012559170b9f73",
+        "response_bytes": 10511,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_NBymqNJ3BfLhuYqnvZ29jEBC",
+        "argument_sha256": "baf706b649a4232797e2e0f304d5c41a1de0c6691e16548d09be781469cd05b9",
+        "response_sha256": "8c9e976aa9afb0cd284a9085212b3a84c925d6d348fba71ec7a8b608aeded1f5",
+        "response_bytes": 23487,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_pKdiGkEO3llBTcnNDC6BA2mS",
+        "argument_sha256": "0da6657d8d2eee3b92b885f494b714b2a0716a4d590c603fbb54629cf039190d",
+        "response_sha256": "9871a395c8f32ea888da63813551e78ad4ad0234eaa68fc002dcddbc69c2fb64",
+        "response_bytes": 8227,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_o6IqK2g8RhD4xRpfl6Lqz5na",
+        "argument_sha256": "0a9c3225bdecdd2935e6476acc6e911fb6eba149916b0a022f37d5bad57a9feb",
+        "response_sha256": "f191dba6bcac168235f687770665e11c280a7a6a442d181c27ca275e42dbac93",
+        "response_bytes": 21535,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_EYXxmSSiTR7QkGACJVvMO5P3",
+        "argument_sha256": "e3890b71b154bcbdaf98dd8388e4722a4032cd693b8707cde618d6ba7b3b4c6b",
+        "response_sha256": "f7ca99e435f5a95569036a440e56e1eed13220c3a47e6005bd8e8361bf87191f",
+        "response_bytes": 65419,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_qn7R1xrCm5mXNaC2RMELbh3g",
+        "argument_sha256": "241941a83cf9e08f1bd7983d53d9af64db2a4552b0198c42950b0b08e16e0f52",
+        "response_sha256": "36dc54d87f758b677a1611cb50f49acfe3dc378c8b41a4ff069aea88a1b1d71d",
+        "response_bytes": 24900,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_ukajUHarY8Yoeekgi0K6LRnY",
+        "argument_sha256": "802e6333241e8042e66622e94c1e91a1757d655e88a056e3bb956d39e15d38f5",
+        "response_sha256": "c1d1abc744051675e573ef782a84034e86dda96968f1260ea0f9fd374f1bf418",
+        "response_bytes": 6364,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_2aT0tA3kP6mikFqgQwJX1Lbi",
+        "argument_sha256": "36c8af690014d8c422bada9f8330404902bb1f99f909c312fe931b51c8147a74",
+        "response_sha256": "7e80db177c642b803845f6f013486aaf255de76798e2b0832976dcecba1511e9",
+        "response_bytes": 40162,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_iHW1qV7AjmBJzp9ocXXEIvlK",
+        "argument_sha256": "17263e837804f35b4889056c673b874f1cd29c676c94c3e03170612c9ec7eb4f",
+        "response_sha256": "24303673f93a9b74708bf73965704a0535d2375c413d99837ed07a1c588960e5",
+        "response_bytes": 3655,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_eJ38Nx7ShhPHayYNwoIRTnhm",
+        "argument_sha256": "22d9eb42341b94d506251ff81aec3413bc53e0bfa92f8cdeed68a4614f0a011f",
+        "response_sha256": "4072b47eefa11aed086f136143670a8fee14aacf638c5ca6514a52434668740e",
+        "response_bytes": 2186,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_VYq0vmUvXEwRb0elfk7xrGDO",
+        "argument_sha256": "358708533cee909c0dd8a7a1db45af2ba6abcbb9d61105d503e9e09ef2b912eb",
+        "response_sha256": "093e109d86e7edb1189fea60f0118a6d3f9e4c24de70ca04d443ac8de14109a1",
+        "response_bytes": 43078,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_uRmzjY9QmCuChMZPeUvPp5j3",
+        "argument_sha256": "178b7abee3e405ee16c8030aeb7e5d9d5ecf5269d954bd2ccd670184e015b6bb",
+        "response_sha256": "d3d105d53caa979aad24c30a0402bffefcb5e943e580a6259e065e764d75d204",
+        "response_bytes": 40456,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_0sz2wjfZ8624fXEU5h0iIcSO",
+        "argument_sha256": "4ef34702d75d135cb2d1cc5708ce24b167ef1a1decd59712251ba79695bd0961",
+        "response_sha256": "818e12794acc8108837b44d8b30637dc2ea48df5ad0657a19a4759f2fa07ca68",
+        "response_bytes": 38139,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_6fTmK7AXHlDK5s1YBpuK0anm",
+        "argument_sha256": "d4416d9364c3841b8ffeef7ff1e9a4379d5f0bbd0cbca715205b1413caba6a32",
+        "response_sha256": "66f5f9c8bfd4f06d14aa8ccf6d2d8f44d4cb50fe1d4cadf94893e45369a8bcbc",
+        "response_bytes": 39824,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_nId79ZB4qzN9vdpakyAuDpVG",
+        "argument_sha256": "32af7650c753a3ff1a3c9e2bbd40d91ec861c02a0cc25c530a13f26a2bcae201",
+        "response_sha256": "c28915766c773a69b40318f7a660e0cbe017a50a5490c762b58e7c1f2f291aea",
+        "response_bytes": 13957,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_0NCcfwVxkmJCJfp0e8ypx4zy",
+        "argument_sha256": "d701b84c741f2436093571aa74777a4b4e8be1f078477de9e598d2d8f622e6b6",
+        "response_sha256": "e5297f3f8852e52ecbaf644f2e868cbafd66fa40d787c19361a98b222d05180a",
+        "response_bytes": 3062,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_CtN8yl3PwswdCSEasGiaGYql",
+        "argument_sha256": "c74adbdafb43d7e5e97967bb1cff37375991773e16628d28390d46042e2ee920",
+        "response_sha256": "f41d87fb0084340824b2047c9b968e3d8bccaa86ee4c7039ca7c38c669c4de6e",
+        "response_bytes": 43050,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_r21jf1IFGBdGnwyCwDVIkOWb",
+        "argument_sha256": "47977ebee27cf4d7dad51177ecc0b4cfd0d57d2f14a5c67d34cda43d45c47b0f",
+        "response_sha256": "8a1c9cbdc311e23d049fbb2ce6b83f9be1bd913ccd4518bdb809bcca158f0073",
+        "response_bytes": 22948,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_KzaiLLi7LN4h3EmfcNDupdcm",
+        "argument_sha256": "fcafdbe9f3abd7ae21305e76573972556a8755b37f6df4e7731fa703d9284a80",
+        "response_sha256": "e59f05e2cc57fad9eb2934c682e30a4ce06f1103677847868dbb596cd72289c7",
+        "response_bytes": 8280,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_aiA7r3tb7LlIpVqdk8xblcAP",
+        "argument_sha256": "ddef38546cba4a1f77596ed17e2466dd61333bc3104a59406c38f0cf79b4d70a",
+        "response_sha256": "70dc79e971fddc0b217c71e3be42d8ecaabd1ac9bbb249a13829721f370e6236",
+        "response_bytes": 6227,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_K5LwnwnG4l0dpdbegn3S56az",
+        "argument_sha256": "12deffd3dd3d14132df46628dd71dd6a95dba0d228f7f8432c77afca1f141ae9",
+        "response_sha256": "02ae7d6f4e7f9fbbe5b8dcd8600487b2124669871227cd2fd02d63e17fb86d5c",
+        "response_bytes": 11915,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_gJMHkdYTSV76FakyCwm2u8Wp",
+        "argument_sha256": "60622e7e38bb7bcee094b0a948cadbecc40e6794654d10c47e3cd74e23c184fc",
+        "response_sha256": "7fc9fb82e9147150752203ad785bf0b6d6c78f77eb4b5418af5c1a04a6523254",
+        "response_bytes": 22940,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_yiUgZmWDBNuefDQXQ0ftGkVx",
+        "argument_sha256": "3ac67323a8d45f7d142506f0f892c24f23218d31a9ebef5aeea02e8f45abfb45",
+        "response_sha256": "808962237098cccd7d4595077c65a9fd2f2e30ab1ca2233054c65e752424ae08",
+        "response_bytes": 20216,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_q0VehOuoehRf1j9umKuilIO2",
+        "argument_sha256": "9e0a5f43c78190d0b577802945243040c32377923779aa0c5b2886a00d981689",
+        "response_sha256": "f577a941569e48c7c0b73f51a49887380eab355b3b7c2cf6ef49ba1b1c69fdaa",
+        "response_bytes": 3707,
+        "success": true
+      },
+      {
+        "namespace": "pm_execution",
+        "tool": "python_execute",
+        "call_id": "call_zXUOwFhMzlXKFFdLBv8zrieN",
+        "argument_sha256": "72d2d4275989806c30d3752885086372c753b790e4bebdd5984113482411bd5c",
+        "response_sha256": "5759c0e906141d73c20953c5a6160c7d891fda108ae4cd8a801a0221d1c345fa",
+        "response_bytes": 2530,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_HLnhYg2GE9V8ozHFttgPZi8f",
+        "argument_sha256": "caad0b7f0d18132b770375702021981106c8499e34744f6da36a4694eecc1d91",
+        "response_sha256": "eba395f6054a4d66d0b0a368c735961d18d39ca69cec865401822523938b4707",
+        "response_bytes": 27000,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_QnF29Mp7Ohv1Rdl5PWxZUhwK",
+        "argument_sha256": "27333e459bfa17ad9dce5cd98ee0a06412787f93dfec86e4ff129e24f02c1713",
+        "response_sha256": "7cc361f81880e2d3422740282c4955daee07255e892c107bb9b7643c3748a437",
+        "response_bytes": 11925,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_Gp16BGB5U2Jpkploe8XmIR0H",
+        "argument_sha256": "55ce3ba1cd8c0d79c90deb0983be7a11baabce3a6eb29a4de27589f62c87e225",
+        "response_sha256": "6d471deffc0ff90025b81c21f405cfcdc91e268bca39af26bf2f01186f6eb712",
+        "response_bytes": 248,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_wvvIONfg0IjX6jliS3vpJaT7",
+        "argument_sha256": "3195c9a8ee724a910cf6498e8a50e4d02d9edd7c5c191631ba8e115114dc6948",
+        "response_sha256": "7051dcf0f08b7e242e0138c2ab188d724575d59d6631c3c55f79db8b19ca27fd",
+        "response_bytes": 249,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_WWyk7Kwr9ibJYhUG0pTLfJ4h",
+        "argument_sha256": "d1306d7f5fe00eb2662e842f1c445e0816ebb258ec3f8e09f47104d8e5b0bf58",
+        "response_sha256": "0d0a554024c1769b5c9fde5b4060f38066fe1fbf871fda369889ee4260605abc",
+        "response_bytes": 250,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_qJsb00NNC09FcAVdPix75ib5",
+        "argument_sha256": "8472af3f70288a7b56bae5e631e49fa9b88510ade57b59deea4763bf474266ea",
+        "response_sha256": "37128147c134ee2ac1732a3684e57ee2fcfde838b649adbca433a834f5113f6e",
+        "response_bytes": 247,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_Bq4JfK9Cx87eIttGV6MTc5st",
+        "argument_sha256": "a772b260bda05b965096463245961a492fd1b2a177ad3f57932aacd8fb519765",
+        "response_sha256": "93e6e986652b9aae481fd06c9370c8e25425f2ab5b060ef21fc61cccd42e28fc",
+        "response_bytes": 248,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_BOiIREEprLiycMv2Q1Cfq51t",
+        "argument_sha256": "bda75f25c2fffac06ebaa2860d97babb12751c3a9d653a26cb1af63e60390c25",
+        "response_sha256": "c0e22c61e6212fe000f3dc534b5c995882892e9450b5a0a8ae633f6a3764f157",
+        "response_bytes": 22886,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_cgnQ0w5bq23rar6pAhrLEkRo",
+        "argument_sha256": "815bb88dc7b91815ea28cc0f5b3796788beca0091db862fd705165085afcc9b5",
+        "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+        "response_bytes": 87,
+        "success": false
+      }
+    ],
+    "all_failed_boundary_calls": [
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_cgnQ0w5bq23rar6pAhrLEkRo",
+        "argument_sha256": "815bb88dc7b91815ea28cc0f5b3796788beca0091db862fd705165085afcc9b5",
+        "response_sha256": "7ab650ca60f66170dccba382b39edf184b394d63941f53428c1e4decead1587c",
+        "response_bytes": 87,
+        "success": false
+      }
+    ],
+    "interpretation": "DirectGoalstatuses are notdeploymentenum; FAILED/paused/HOLD/serviceerror are preserved, not inferredsourcegrade."
+  },
+  "exact_selected_cohort010_accountant_row": {
+    "actual_family": "Luna",
+    "all_owned_scopes_quiet": true,
+    "arm": "treatment",
+    "attempt_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+    "billing_dollars": "UNKNOWN",
+    "cancelled_or_unexposed_tail": "UNKNOWN",
+    "category": "candidate_attempt",
+    "cleanup_reserve_seconds": 15.0,
+    "cleanup_seconds": "UNKNOWN",
+    "client_tool_cgroups_quiet": true,
+    "client_tool_owned_processes_quiet": true,
+    "client_tool_process_groups_absent": true,
+    "end_utc": null,
+    "execution_units_quiet": true,
+    "goal_identity": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "held_owned_processes_quiet": true,
+    "held_process_groups_absent": true,
+    "http_attempts": "UNKNOWN",
+    "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+    "job_status": "FAILED",
+    "known_usage": {
+      "cached_input_included": 4911104,
+      "input": 5193444,
+      "output": 58195,
+      "reasoning_output_subset": 27419,
+      "total": 5251639
+    },
+    "native_cgroup_quiet": true,
+    "native_execution_seconds": null,
+    "native_goal_starts": 1,
+    "native_goal_status": "paused",
+    "native_goal_status_before_cleanup": "blocked",
+    "native_goal_status_observation_time": null,
+    "native_goal_status_selector": null,
+    "native_goal_status_source_path": null,
+    "native_goal_status_source_sha256": null,
+    "observed_effort": "max",
+    "observed_model": "gpt-6-luna",
+    "occupied_seconds": 1333.467675764,
+    "owned_scope_observation_epoch": 1791248969.6363623,
+    "owned_scope_supplement_quiet": null,
+    "pair_id": "I-08-DELIVERY-RECOVERY-R002",
+    "provider_request_count": null,
+    "provider_status_counts": {},
+    "quiescent": true,
+    "quota_exhaustion": "UNKNOWN",
+    "requested_effort": "max",
+    "requested_model": "gpt-6-luna",
+    "router_terminal_status": "HOLD",
+    "source_pins": [
+      {
+        "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+        "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+      }
+    ],
+    "stage": "critic_final",
+    "start_utc": null,
+    "supplemental_permit_release_confirmed": null,
+    "terminal_error_class": "RuntimeError",
+    "turn_completion_notifications": 1,
+    "turn_status_counts": {
+      "failed": 1
+    },
+    "ui_usage_separate": null,
+    "usage_basis": "native_thread_cumulative",
+    "usage_notifications": 47
+  },
+  "accountant_source_sha256": "f66678a0b78bfae0b8348249e83ea427b1201d973c5d6756b9a7610e565ebb34",
+  "counter_policy": "exactsource/cache subset/UI/provider/rootdefinitions retained; no sum/doublecount/dollarinfer; cancelled tails/money/providerpayload UNKNOWN where unexposed",
+  "carry_provenance": {
+    "new_native_starts": 0,
+    "fresh_matched_comparison_credit": false,
+    "native_completed_pipeline_claim": false,
+    "native_goal_state_relabelled_complete": false,
+    "original_all_costs_statuses_preserved": true,
+    "source_grade_selection": false
+  },
+  "carry_cost_rule": "chronologicalexistingrole carry adds0newnative starts; original selectedactor/cost/accountantrow remains countedonce, not zero cost ornew secondcombinedactor",
+  "actual_stage_pin": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/stage.json",
+    "sha256": "e47796873a1116c16583e4a0eed4498384c52563a1ba56ca88208d5df85aacb6"
+  },
+  "actual_task_prompt_sha256": "2008b4ab749e3fd146718e45c3613b0a025e1f626937b3bf08d6222a3f8b6aff",
+  "actual_admitted_input_pins": {
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/brief.md": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0011.body": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/index.json": "52d04354e896aa55730b8e6e5cb5cb6c26c9cec8ad43b475dd1d3f12d80e1895",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0006.body": "d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0016.body": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0001.body": "b096c4ac1f3400df6abfc6d367c87db0ab4ce1be0f49b5843e51e485b7c18b31",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0018.body": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0020.body": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0010.body": "8322f51a2bba3a3066ef3552b02caa38697296833c5b9618ef73e34e9d3966a1",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0026.body": "69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0012.body": "27a1c69f0dd1a728d84254d6c2b550735f8ad670e1ff54c5f0df86b5072906f1",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0023.body": "1af16f4f49c7ac0f9c26a8ce3fa150eac75dc87562ca368c09ec96c7c7302872",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0022.body": "b5d1774fded9ae05cf6f6d9b6fc277cb6b59b138dd6ccada0372390ad89d39f3",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0004.body": "c0272a615d196ed66c1b4caf29e15d58b9520a43bb9271f17b6476fd5a633bff",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0019.body": "67ac403be8c2a6a611f8b45b1a3dec16e3941cfa6ecbfa36c999407560042147",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0008.body": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0029.body": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0000.body": "da6821661d5419ca48dba977a44dbcacff6fb577ffb03db68e0e404017f0c9ac",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0025.body": "4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0028.body": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0002.body": "5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0027.body": "12b4ff4dcaed30d87e5af886623682c3509b03aa85fbb226620e4403c8a63b67",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0007.body": "3094f24e3d8a6c73cee3403d30cda4c4ab377253464e25ef46f8e8e5894001fc",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0005.body": "6a539e228eff6f49ac8e8651c472866e75ce29638b15fcc6dc5230186e35d0db",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0013.body": "85d9f578ac784ccb93160b73b29634ffef86e4e77af267af743bccca33a26956",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0017.body": "df88c0b3cb88a0a1c14df3f7b7613c21cd7ff70a854e515fbd4006f735f8452d",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0009.body": "27a1c69f0dd1a728d84254d6c2b550735f8ad670e1ff54c5f0df86b5072906f1",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0015.body": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0030.body": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0021.body": "c089922cd87a8b78aa97a9d25a1f6142c4a36f171a07cc4a21f4386121c08642",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0014.body": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0003.body": "5795ca684a8533f116ede63a7512cd0d28baa5bc90956741d3e5fa50a10cc5e2",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/source_context/0024.body": "817e764cb9776e9cedb9d0c904fe4dda2a666f79072a3a91c6f62a99a85c98c5",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/prior/I-08-LUNA-S1-treatment-research-a001/research/leads.json": "b5c93f5a349f3cd1be8674c8c37e04ba5494aa49630a3cdd1be1a242eba72546",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/prior/I-08-LUNA-S1-treatment-research-a001/research/witnesses.json": "7b366b0fd5b283988022d53fe29f85dd5f1109ec406a102bd2ddbaff87cfbe7c",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/prior/I-08-LUNA-S1-treatment-research-a001/research/sources.json": "a93b465e2150b138d4f353720f1a00f4077235d8c61ec17f264424948ad1bf86",
+    "LAB_ROOT/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/workspace/inputs/prior/I-08-LUNA-S1-treatment-research-a001/research/proposal.md": "92984cd917d0cbbd0de3387bcd30d8bd26997cdeb52364b4131d6f4743a336f2"
+  },
+  "actual_required_artifacts": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "current_exact_execution_ids": [
+    "exec-3zkld739"
+  ],
+  "authentic_execution_policy_original_request_SHA": "30b8b7efa97de7a0b5110cc6f784f4a61530a86363aabf138cb5e743b31510d4",
+  "input_role_provenance": "metadata only; no priorrole/sourcebody/oldgrade audits",
+  "inline_proof_prior_hash_policy": "a32preembeddinghash preserved asquoted; not claimed final7ef orreconstructedpriorbytes",
+  "budget": {
+    "sourceelapsed_frozen_seconds": 511.314386838,
+    "phase2start_utc": "2026-10-06T01:50:08.451295Z",
+    "phase2deadline_utc": "2026-10-06T02:00:08.451295Z",
+    "wholedeadline_utc": "2026-10-06T02:10:29.989809Z",
+    "phase2max_seconds": 600,
+    "reset": false
+  },
+  "semantic_assessment": "NONE; frozen sourceFAIL_SCREEN/UNASSESSED remainder unchanged; structural4+review/Goal/runtime/effectcredit separate",
+  "candidate_feedback": "NONE",
+  "public_redaction": {
+    "original_selected_metadata_sha256": "bdfa01b1990ae3df8ea3e559ff2296e80992f42b94bcf54a8f460db401432fe1",
+    "omitted": "raw ownedprocess unit/cgroup/PID/session ownership details from inlineproof; publicscope/hashes/quietfacts retained, no semanticstatus rewrite",
+    "unredacted_projection": "LAB-only selectedPhase2 metadata; no native ModelIO"
+  }
+}

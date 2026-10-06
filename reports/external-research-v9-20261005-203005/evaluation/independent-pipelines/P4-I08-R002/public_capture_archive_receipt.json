@@ -1,0 +1,21 @@
+{
+  "action": "materialize",
+  "authority_selector_sha256": "a5e04982cd0325c009c33983f9ef92360701c5ea5a7ab1f8d1a3434c3698618f",
+  "body_bytes": 4623638,
+  "body_count": 25,
+  "coverage": "PARTIAL_EXACT_P4_25_PUBLIC_CAPTURES_AND_PINNED_METADATA_NOT_QUEUE_RECONCILED",
+  "derived_text_companions": "NOT_SELECTED_UNPINNED",
+  "files_count": 50,
+  "http_status_counts": {
+    "200": 20,
+    "403": 4,
+    "404": 1
+  },
+  "independent_archive_reread": "ALL50_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/33e9c28f771ccc1c56be71ae4754f599ca8532a260adaf63103439ff42d87907/MANIFEST.json",
+  "manifest_sha256": "d79d8e93c190e222361e555720145775467a9119c6d7a2209abc6d2b1910891c",
+  "metadata_bytes": 63124,
+  "metadata_count": 25,
+  "selected_bytes": 4686762,
+  "selection_sha256": "33e9c28f771ccc1c56be71ae4754f599ca8532a260adaf63103439ff42d87907"
+}

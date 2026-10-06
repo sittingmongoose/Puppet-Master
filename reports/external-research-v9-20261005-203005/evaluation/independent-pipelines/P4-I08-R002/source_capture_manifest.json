@@ -1,0 +1,236 @@
+{
+  "schema": "er9.evaluator-public-capture-archive.v1",
+  "evaluation_id": "P4-I08-R002",
+  "archive_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures",
+  "outside_product_repository": true,
+  "created_utc": "2026-10-06T01:49:47.312471+00:00",
+  "capture_count": 25,
+  "captures": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S01.body",
+      "sha256": "d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf",
+      "bytes": 50850,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S01.json",
+      "metadata_sha256": "114b2499a67001133061ac473ffa6c1a0ea1ce7b5a78155ca6c4463d3bbba130",
+      "url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S02.body",
+      "sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971",
+      "bytes": 49833,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S02.json",
+      "metadata_sha256": "ecf6de3e99983e880816c5efe23f642c8cd9454959b4c7b888259298586b049b",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/nbclient/client.py",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S03.body",
+      "sha256": "50fbbb324008a5c5badaba285dd36c19409bc69774bfbc7f7f7fbf3ac28d8da0",
+      "bytes": 177790,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S03.json",
+      "metadata_sha256": "ef9cb3d5a0467faa28bddf4e21c54cd5d7afd55b3c819209d29eb3092b423dc3",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/messaging.html",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S04.body",
+      "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+      "bytes": 372286,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S04.json",
+      "metadata_sha256": "3d28ea5bbb8321424b4c7d6aa605f5c2f55baefcbd55940440efa560524bd5a9",
+      "url": "https://duckdb.org/docs/current/data/csv/auto_detection",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S05.body",
+      "sha256": "58b86efc8cca4d5d40af215944a38c97f5f19be548875bc4407c43edb6677a6c",
+      "bytes": 376006,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S05.json",
+      "metadata_sha256": "aad448baa827b71cb509859b1713811fe0dde2f926b2b9d596c5e93d137927af",
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S06-html.body",
+      "sha256": "80de82a7ac5b408db93399b93f566b07d7eb004932556860f905925004b23c78",
+      "bytes": 290973,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S06-html.json",
+      "metadata_sha256": "fef418fa1e3c711350d089e94f8e7bd24e343247b9327d3ece1aa847ed4fba94",
+      "url": "https://github.com/duckdb/duckdb/releases/tag/v1.5.6",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S06.body",
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "bytes": 279,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S06.json",
+      "metadata_sha256": "9f37ee0062f9663b5b82d45c25dfa17414437c0b2b68794ba5431a63d4b46d09",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases/tags/v1.5.6",
+      "http_status": 403
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S07-html.body",
+      "sha256": "19b265e0705ffa872d6c301412b43fa6b25d87176cbd9c2e2ac72fb63c876025",
+      "bytes": 292347,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S07-html.json",
+      "metadata_sha256": "6a75b30542d97d52d7a545ccbf7b47ada7d348d9a6a0827cc6bd90097fb056bf",
+      "url": "https://github.com/duckdb/duckdb/issues/25164",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S07.body",
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "bytes": 279,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S07.json",
+      "metadata_sha256": "d1fcdde9761b6d88a724ce99b12735c66de379bbe4318266165289a8061e21b8",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25164",
+      "http_status": 403
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08-html.body",
+      "sha256": "cdc3461011e2f505b7c0a749c0d0e7fe9faeae285962b646d207e8951a6d806d",
+      "bytes": 546165,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08-html.json",
+      "metadata_sha256": "bdc011eeeb4a2ab0078a31bdb97fb485fd600cd63e960d12af810aa71c6e69bf",
+      "url": "https://github.com/duckdb/duckdb/pull/25232",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08-patch.body",
+      "sha256": "9e61ac6d47514b02b7304c43d5fdce9c61ea0901db933e0d9fe0ffe18322f250",
+      "bytes": 217959,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08-patch.json",
+      "metadata_sha256": "cfa43e1d17f09fdda2a379f596f998035676f9002ed1f3fdb933e1f0fc85be84",
+      "url": "https://github.com/duckdb/duckdb/pull/25232.patch",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08.body",
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "bytes": 279,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08.json",
+      "metadata_sha256": "57b2ab17f1b066b46f6c58fb9794bc9de616bfa931d08ea250d76c64fdf11bfa",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "http_status": 403
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S09.body",
+      "sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f",
+      "bytes": 3714,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S09.json",
+      "metadata_sha256": "ed327921c7861be9242eb46d1378c6e4c58b6805ca513e73b50b8d841f7c8b25",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S10-html.body",
+      "sha256": "8ae9c717b1e10d963c2389771c8f1c6bbf774f5ebb3db12fb2875e7d3f66c906",
+      "bytes": 347890,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S10-html.json",
+      "metadata_sha256": "cdbcd1c84cf7d88cbd70d88f8b1b943863ffffc438d705942619f5ac2ec90c3c",
+      "url": "https://github.com/duckdb/duckdb/pull/25325",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S10.body",
+      "sha256": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+      "bytes": 279,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S10.json",
+      "metadata_sha256": "84c296c6898623fbfb3fea258ee8e3845d787a602593a6a8047875e877da825a",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25325",
+      "http_status": 403
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S11.body",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "bytes": 14,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S11.json",
+      "metadata_sha256": "67cb86208fc86a40a10b5c2496c311027dc152579b688971fd6d1fa5c164a31d",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "http_status": 404
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S12.body",
+      "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18",
+      "bytes": 83185,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S12.json",
+      "metadata_sha256": "398341c571f4e6cde1e0ae661f9c30e5d74b55a3c1a7bfbec3f42cd6f524f1f7",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S13.body",
+      "sha256": "4f963de5ffe98e122232cd250b27a308f7e510ebd8f7e028227d6a39b8a1c8f1",
+      "bytes": 399880,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S13.json",
+      "metadata_sha256": "2755e197954d2751afa2502aba18a24a391be4c7181b256cda1b3142c1e95d05",
+      "url": "https://duckdb.org/docs/current/data/json/loading_json",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S14.body",
+      "sha256": "69aabdf5127732a125d777a347a2f690745f067e2a36d7bbf5a7c5dab4d200ca",
+      "bytes": 385364,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S14.json",
+      "metadata_sha256": "8c12a7d9023c0d4b0de14c376eb23988278e3303b0f03f8c4b4e3f36e62f1f5f",
+      "url": "https://duckdb.org/docs/current/data/parquet/overview",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S15.body",
+      "sha256": "2b40448b4177dda3be60fe212cc02946af8e7cf13572ae63853223e2fac37589",
+      "bytes": 541243,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S15.json",
+      "metadata_sha256": "dd3746144f2e40fc16bfb0dc395f045103a2e8b545809f67d1e1e7b4f4dfe871",
+      "url": "https://duckdb.org/2024/07/09/memory-management",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S16.body",
+      "sha256": "8dd960ee1d68981d6ee483bb2f6bccb2b610c3d6f211e16b2d581630b7c5df8b",
+      "bytes": 368625,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S16.json",
+      "metadata_sha256": "3b904e55b176395361e5e5a44036bba23a5d25dfb9cdf1afb8cbeae04458dd38",
+      "url": "https://duckdb.org/docs/current/guides/performance/how_to_tune_workloads.html",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S17.body",
+      "sha256": "b5d1774fded9ae05cf6f6d9b6fc277cb6b59b138dd6ccada0372390ad89d39f3",
+      "bytes": 11234,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S17.json",
+      "metadata_sha256": "315d9fc7b5636b3018d433f094718e543050897c585a6d4bb54838a9b26c2e67",
+      "url": "https://raw.githubusercontent.com/containers/bubblewrap/v0.10.0/README.md",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S18.body",
+      "sha256": "c089922cd87a8b78aa97a9d25a1f6142c4a36f171a07cc4a21f4386121c08642",
+      "bytes": 32252,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S18.json",
+      "metadata_sha256": "449e97535dadf263a0f7bb43e2113a39ffe63d87b8c76814f7e2f92e11397d99",
+      "url": "https://jupyter-client.readthedocs.io/en/stable/security.html",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-test-client.body",
+      "sha256": "367218c8c240ab44369dbba2c70ef702e0cfb953d08616aab2116f0802c33718",
+      "bytes": 71552,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-test-client.json",
+      "metadata_sha256": "ba251fd63727a31613089f632dec50daafdb716861d1fd17008bbe492b1b8b83",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/tests/test_client.py",
+      "http_status": 200
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-update-display-id.body",
+      "sha256": "363f609d83399de2c58c8b871742fcd73e3ef8cedd66394b734b4021293df265",
+      "bytes": 3360,
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-update-display-id.json",
+      "metadata_sha256": "2af70648554863ce62f05578ae727b252fa8ff4282bc2eb08ede346c69411b05",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/tests/files/update-display-id.ipynb",
+      "http_status": 200
+    }
+  ],
+  "note": "Actual fresh public HTTPS bytes preserved, including HTTP403/404 responses. Parsed text companions are derived navigation aids."
+}

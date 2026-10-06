@@ -1,0 +1,82 @@
+{
+  "schema": "er9.independent-owned-quiet-binding-check.v1",
+  "native_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+    "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+  },
+  "services": [
+    {
+      "component": "host-process",
+      "copy_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_host-process.json",
+      "sha256": "d4fceedd3761f790ad5672712649e169649c41324523d78084b09f8d91060ee3",
+      "checks": {
+        "sha_matches_inline_owned_proof": true,
+        "unit_matches": true,
+        "original_cgroup_matches": true,
+        "exact_pid_set_matches": true,
+        "terminal_cgroup_empty": true,
+        "receipt_observation_all_pids_absent": true,
+        "receipt_unit_inactive": true,
+        "receipt_main_pid_zero": true,
+        "receipt_quiet": true
+      }
+    },
+    {
+      "component": "pm_boundary-host-process",
+      "copy_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_pm_boundary-host-process.json",
+      "sha256": "f4a1c33a1ef989d439f187e4775e8f221cdf6867f912b34a92d6af3d1531b46e",
+      "checks": {
+        "sha_matches_inline_owned_proof": true,
+        "unit_matches": true,
+        "original_cgroup_matches": true,
+        "exact_pid_set_matches": true,
+        "terminal_cgroup_empty": true,
+        "receipt_observation_all_pids_absent": true,
+        "receipt_unit_inactive": true,
+        "receipt_main_pid_zero": true,
+        "receipt_quiet": true
+      }
+    },
+    {
+      "component": "pm_execution-host-process",
+      "copy_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase2_pm_execution-host-process.json",
+      "sha256": "e1f5e188fe52b4e75ce1b40c88a7127c2dd8413ae53258325f91209bbf7ce4e5",
+      "checks": {
+        "sha_matches_inline_owned_proof": true,
+        "unit_matches": true,
+        "original_cgroup_matches": true,
+        "exact_pid_set_matches": true,
+        "terminal_cgroup_empty": true,
+        "receipt_observation_all_pids_absent": true,
+        "receipt_unit_inactive": true,
+        "receipt_main_pid_zero": true,
+        "receipt_quiet": true
+      }
+    }
+  ],
+  "native_proof_observation_epoch": 1791248969.6363623,
+  "native_proof_observation_monotonic_ns": 79388493353928,
+  "execution_units": [
+    {
+      "unit": "er9-exec-bddc050cb6e141b08624d578509ed8ea.service",
+      "request_metadata_sha256": "30b8b7efa97de7a0b5110cc6f784f4a61530a86363aabf138cb5e743b31510d4",
+      "unit_observation": {
+        "query_returncode": 0,
+        "load_state": "not-found",
+        "active_state": "inactive",
+        "sub_state": "dead",
+        "main_pid": 0,
+        "control_group": ""
+      },
+      "cgroup_observation": {
+        "control_group": "",
+        "absent_or_empty": true
+      },
+      "quiet": true
+    }
+  ],
+  "all_owned_scopes_quiet": true,
+  "observation_scope": "Exact recorded units, cgroups and PIDs at captured observation; no live workload cleanup or new native activation performed.",
+  "pre_embedding_sha_unlocated": "a32bbfe8ca4f52051ec80aba257e75b8e7f024625e758a3b2b885255770705ca",
+  "pre_embedding_sha_not_claimed_equal_final_native_sha": true
+}
