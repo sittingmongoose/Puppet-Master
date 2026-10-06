@@ -1,0 +1,202 @@
+{
+  "clock_reset": false,
+  "evaluation_id": "independent-targeted-2",
+  "final_handoff_clocks": "Separate HANDOFF_CLOCKS.json supplement after actual outgoing transmissions.",
+  "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+  "phase2_elapsed_seconds": 401.588477843,
+  "phase2_finish_utc": "2026-10-06T02:58:26.770940+00:00",
+  "phase2_overrun_seconds": 0,
+  "phase2_start_utc": "2026-10-06T02:51:45.182462+00:00",
+  "report_ready_monotonic_ns": 85925632463756,
+  "report_ready_utc": "2026-10-06T02:58:26.775473+00:00",
+  "rows": [
+    {
+      "actual_family": "Luna",
+      "alias": "A",
+      "all_owned_scopes_quiet": null,
+      "arm": "control",
+      "attempt_id": "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001",
+      "billing_dollars": "UNKNOWN",
+      "boundary_metadata_counts_match": true,
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "cleanup_reserve_seconds": 15.0,
+      "current_execution_ids": [
+        "exec-mv__hfa5"
+      ],
+      "current_runtime_quiescence": "NOT_QUERIED; historical terminal snapshots preserved",
+      "freeze_elapsed_seconds": 883.503714287,
+      "freeze_sha256": "ebd9564065a1b84f3d798405c7bbe16ec6e0675dcb52bc66844a8a945506eacb",
+      "fresh_session": true,
+      "goal_replacements_observed": 0,
+      "goal_starts": 1,
+      "historical_terminal_host_records_count": 3,
+      "historical_terminal_host_records_quiet": true,
+      "host_followups": 0,
+      "http_attempts": "UNKNOWN",
+      "input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 5287936,
+        "input": 5623539,
+        "output": 34311,
+        "reasoning_output_subset": 21756,
+        "total": 5657850
+      },
+      "native_goal_status": "active",
+      "native_goal_status_before_cleanup": "active",
+      "native_owned_continuation_observed": false,
+      "native_receipt_sha256": "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad",
+      "observed_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "occupied_seconds": 883.350651443,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED",
+      "original_candidate_allowance_seconds": 900,
+      "physical_provider_payload": "UNKNOWN",
+      "requested_model": "gpt-6-luna",
+      "router_terminal_status": "HOLD",
+      "saved_five_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "tool_attempt_counts": {
+        "pm_boundary.mechanical": 2,
+        "pm_boundary.public_https_get": 42,
+        "pm_boundary.read_file": 9,
+        "pm_boundary.write_file": 2,
+        "pm_execution.python_execute": 1
+      },
+      "tool_completed_counts": {
+        "pm_boundary.public_https_get": 42,
+        "pm_boundary.read_file": 5,
+        "pm_boundary.write_file": 2,
+        "pm_execution.python_execute": 1
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 2,
+        "pm_boundary.read_file": 4
+      },
+      "usage_basis": "native_thread_cumulative",
+      "usage_notifications": 59
+    },
+    {
+      "actual_family": "Luna",
+      "alias": "B",
+      "all_owned_scopes_quiet": null,
+      "arm": "treatment",
+      "attempt_id": "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001",
+      "billing_dollars": "UNKNOWN",
+      "boundary_metadata_counts_match": true,
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "cleanup_reserve_seconds": 15.0,
+      "current_execution_ids": [
+        "exec-355qspvm"
+      ],
+      "current_runtime_quiescence": "NOT_QUERIED; historical terminal snapshots preserved",
+      "freeze_elapsed_seconds": 885.53207902,
+      "freeze_sha256": "2ba514f1c9b5596ea8c3cb10aff1d499ffd79ef381508c7d6b9a40b2b6899130",
+      "fresh_session": true,
+      "goal_replacements_observed": 0,
+      "goal_starts": 1,
+      "historical_terminal_host_records_count": 3,
+      "historical_terminal_host_records_quiet": true,
+      "host_followups": 0,
+      "http_attempts": "UNKNOWN",
+      "input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 5581056,
+        "input": 5888629,
+        "output": 29643,
+        "reasoning_output_subset": 23139,
+        "total": 5918272
+      },
+      "native_goal_status": "paused",
+      "native_goal_status_before_cleanup": "active",
+      "native_owned_continuation_observed": false,
+      "native_receipt_sha256": "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895",
+      "observed_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "occupied_seconds": 885.452693902,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED",
+      "original_candidate_allowance_seconds": 900,
+      "physical_provider_payload": "UNKNOWN",
+      "requested_model": "gpt-6-luna",
+      "router_terminal_status": "HOLD",
+      "saved_five_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "tool_attempt_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.public_https_get": 34,
+        "pm_boundary.read_file": 10,
+        "pm_boundary.write_file": 1,
+        "pm_execution.python_execute": 1
+      },
+      "tool_completed_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.public_https_get": 34,
+        "pm_boundary.read_file": 6,
+        "pm_boundary.write_file": 1,
+        "pm_execution.python_execute": 1
+      },
+      "tool_failed_counts": {
+        "pm_boundary.read_file": 4
+      },
+      "usage_basis": "native_thread_cumulative",
+      "usage_notifications": 50
+    }
+  ],
+  "schema": "er9.neutral-operational-cost-clock.v1",
+  "source_accounting_cohort": "cohort-011",
+  "source_accounting_sha256": "1a1093611b3243c14391a16b62fb35096a194f3befbb46c6a57bd8ab58b7bf0b",
+  "source_assessments_or_findings_in_this_neutral_file": false,
+  "source_elapsed_seconds": 681.905497813,
+  "source_freeze_utc": "2026-10-06T02:49:38.816299+00:00",
+  "source_overrun_seconds": 0,
+  "source_start_monotonic_ns": 84715767789235,
+  "source_start_utc": "2026-10-06T02:38:16.910800+00:00",
+  "whole_deadline_utc": "2026-10-06T03:08:16.910800+00:00",
+  "whole_elapsed_at_report_ready_seconds": 1209.864674521,
+  "whole_limit_seconds": 1800
+}

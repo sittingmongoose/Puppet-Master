@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "paired-source-packets-and-unknown-accounting-015",
-  "publication_snapshot_at": "2026-10-06T02:47:25.629589+00:00",
+  "cohort": "finished-targeted-pairs-and-successor-inputs-016",
+  "publication_snapshot_at": "2026-10-06T03:04:10.961964+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -156,5 +156,9 @@
     "native_completion_claim": false
   },
   "TD2_TD3_pair_packet_scope": "Actual chronological paired source packets; ungraded at cutoff, missing catalogs/partial boundary explicit",
-  "C01_confirmation_first_activation": "Positive Flash/max; timing definitions separate, no completion/fit/sourcevalidity claim"
+  "C01_confirmation_first_activation": "Positive Flash/max; timing definitions separate, no completion/fit/sourcevalidity claim",
+  "TD2_review": "Finished INCOMPLETE/PARTIAL;fullcausalUNASSESSED",
+  "TD3_review": "AFAIL_SCREEN/BboundedtargetedsourcePASS; currentBGoalcomplete; fullpipeline/causalUNASSESSED",
+  "TD3_inclusive_phase2_overrun_seconds": 6.407076389,
+  "fresh_luna_actual_checkpoint": "admissions/fresh-luna-terminal-001/MANIFEST.json"
 }

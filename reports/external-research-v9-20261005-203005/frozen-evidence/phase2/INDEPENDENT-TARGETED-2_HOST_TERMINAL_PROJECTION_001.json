@@ -1,0 +1,114 @@
+{
+  "rows": [
+    {
+      "alias": "A",
+      "all_owned_scopes_quiet_original_field": null,
+      "direct_native_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "host_records": [
+        {
+          "closed_monotonic_ns": 72156089996184,
+          "component": "host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "de6feb6ccb8d11c638295ac10ca771709d2f5c844c908f3c84f651ad1090bee6",
+          "service_runner_exit_code": 255,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        },
+        {
+          "closed_monotonic_ns": 72156331080795,
+          "component": "pm_boundary-host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "d2eecb10ec8f0365dddc3a0ab587b026bbc1bd6d1a69a545187e9c5d948cf4b6",
+          "service_runner_exit_code": 255,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        },
+        {
+          "closed_monotonic_ns": 72156576754458,
+          "component": "pm_execution-host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "7f97ff0e1a13cad902512997f3d3d4026028e631b66d501dda2254b4715b2766",
+          "service_runner_exit_code": 255,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        }
+      ],
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001",
+      "no_invented_supplement_or_runtime_query": true
+    },
+    {
+      "alias": "B",
+      "all_owned_scopes_quiet_original_field": null,
+      "direct_native_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "host_records": [
+        {
+          "closed_monotonic_ns": 74400569471825,
+          "component": "host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "3bd138c67628e2fae9b46248527bcf8ef7c47395507f3e05c36303bf1819c719",
+          "service_runner_exit_code": 255,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        },
+        {
+          "closed_monotonic_ns": 74400664263115,
+          "component": "pm_boundary-host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "27567ae80dc53ccb8157e4c18a4d717f32fa2558e2a6982da9735bed32886dbb",
+          "service_runner_exit_code": 255,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        },
+        {
+          "closed_monotonic_ns": 74400586861314,
+          "component": "pm_execution-host-process",
+          "original_cgroup_absent_or_empty": true,
+          "record_sha256": "12eefbe98c203b184059a912c2ca47e98ef967e831357a43b70d671b073350f0",
+          "service_runner_exit_code": 0,
+          "terminal_control_group_empty": true,
+          "terminal_unit_observation": {
+            "active_state": "inactive",
+            "native_host_pid": 0,
+            "sub_state": "dead"
+          }
+        }
+      ],
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001",
+      "no_invented_supplement_or_runtime_query": true
+    }
+  ],
+  "schema": "er9.exact-current-host-terminal-projection.v1",
+  "scope": "Hash-matched immutable original host terminal records; nullable native aggregate fields remain null. No new process queries or signals."
+}

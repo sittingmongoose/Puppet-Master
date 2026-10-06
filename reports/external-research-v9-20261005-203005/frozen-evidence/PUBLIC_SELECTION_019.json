@@ -1,0 +1,29 @@
+{
+  "exclusions": [
+    "private keys",
+    "native raw logs",
+    "OS ownership identifiers",
+    "raw public bodies",
+    "prior-stage runtime",
+    "candidate quality judgments"
+  ],
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-2_PUBLIC_PHASE2_001.json",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-2_PUBLIC_PHASE2_001.json",
+      "sha256": "409f5bccae1ccea0ce80fc3b0bcca1586bd0c64054df1375506d6953cb93b121"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-3_PUBLIC_PHASE2_001.json",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-3_PUBLIC_PHASE2_001.json",
+      "sha256": "5ad8ac50a96ec3a0f1bf5ea7b64488b65e93bb9f18123d936a96cd9c02ebf6e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/observations/next-paired-courier-010/PHASE2_RELEASE_001.json",
+      "relative_path": "observations/next-paired-courier-010/PHASE2_RELEASE_001.json",
+      "sha256": "eec8b01ab677da0065fcf1259096fc573f0f02ff7acde37178e22dd20de7c06a"
+    }
+  ],
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_019_CURRENT_PAIRED_PHASE2"
+}

@@ -1,0 +1,47 @@
+{
+  "schema": "er9.historical-native-proof-manifest.v1",
+  "created_utc": "2026-10-06T03:03:09.436643+00:00",
+  "proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/NATIVE_PROOF.json",
+    "sha256": "701cd3baebffa5738ec367d2d38699e9490921e12761a61430c34dca210e0f73"
+  },
+  "status_projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/NATIVE_GOAL_STATUS.json",
+    "sha256": "945a679a54d00685a9b03e4cd82ac1c119fa9cf8f0cc7ae130909ddc65738133"
+  },
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/REPORT.md",
+    "sha256": "0d9b69daf546effb908d614d5c0eabe098410a76fcd18bd261993ac3dda9ef4c"
+  },
+  "projector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/project.py",
+    "sha256": "3cac24af648fb498c9443ac72d9be06c89552f9528dc9737f154a281ddf5bbb2"
+  },
+  "reused_saved_status_abi": "er9.direct-native-goal-status.v1",
+  "reused_status_exporter": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/export.py",
+    "sha256": "921ef67204e4d4116b7e63a9c755fd20599379e819bdda1d659f6d67fbee5e82"
+  },
+  "source_request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_HISTORICAL_PROOF_REQUEST_001.json",
+    "sha256": "19fae4878ac926a691f31176019eb8b973ed3f71749a48d627265af1c9b84150"
+  },
+  "accounting011_exact_bindings": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/native-proof-bindings-001.json",
+    "sha256": "b10be3926873bedcc65da5c86f446ca0684f80ba4d5af50f781bdb6a197962d4"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/VERIFICATION.json",
+    "sha256": "f429bf8839be0933aee47bf6802391e636e2286434c2614e7e9ad044d44f3b3b"
+  },
+  "companion_join_keys": [
+    "attempt_id",
+    "original_native_receipt.sha256",
+    "session_id",
+    "goal_id"
+  ],
+  "no_duplicate_charge_or_campaign_count_increment": true,
+  "original_011_and_earlier_exports_preserved": true,
+  "runtime_export_omission_found": false,
+  "actual_issue": "Older savedstatuscohort002 did not cover newly terminal12; directUI/RPC objects already existed. Source-only additive coverage correction."
+}

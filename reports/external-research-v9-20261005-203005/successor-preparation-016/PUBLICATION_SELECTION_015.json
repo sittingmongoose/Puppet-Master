@@ -1,0 +1,1669 @@
+{
+  "candidate_role_or_captured_source_bodies_selected": false,
+  "checkpoint_utc": "2026-10-06T02:56:07.320654+00:00",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/DEFERRED_SIX_FAMILY_SOURCE_CERTIFICATE_001.json",
+      "sha256": "288c5fd00c7cd160f6731f02d9ebdd68ec2a2c290f50f9430083cc9f8736dbdd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ROLE_BIRTH_HELPER_PIN_001.json",
+      "sha256": "9b5ca1230023c5f978592ac3ec509b6835d0f5817824eca413e254864a021631"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ROLE_BIRTH_HELPER_PIN_002.json",
+      "sha256": "62af83530d6b95df7546a20c6cfe9ad87a6d7e72ab6c2ca7e2d7652ea1ce23a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/VERIFICATION_002.json",
+      "sha256": "c2147ab6026ad2b2687cb771964da0f83878440896f412d983262291c63d69d4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "6d54eb009f820df72b16deb67db93aba3dfc7311248c3f095125e367d807ef3b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "6975b43f5577ef2ade6339357f1adcf82d41dace0d7a8a74ad2bdb5c419735bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "c61aa0b71721e261b3a13644e1d6add7ab0f77bb4586dc33bb893f9615848e90"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "dfae9d04ae3c1922b36ce77ecc8f9754df843677a737a87686d9cf830b54ed41"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "7148d1a457d63bc86ebee78c5045417ad1fa69169c75347b4cb0e222027406a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "b753ab87b9e32521060df3a432bdccf6b4c78453eafd27a2ae15bc23b572f709"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "aebf9e81ec27da842d30602617de926a3332009af168a5494ea6b327ad974a2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "6d4a080cfa6428dff96bf8a92f7ab3b742347865fe7932a2ff8754df107c83e0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "1024561e25e2e58f92294bed839ad26335a33d864aa9434bb0effd2228dc2565"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "fb0a3a31566c32507bea83fcbe3a5fa81a35ba22e2a48b495fd6dccfb871f6a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "2d37b57870077330cb0c9376fd9b5aac830b3d0938494b898964f22e4367ce7c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "0909f18d01e40841286c383cd2fe72a63bee8c237326ba896b44a84b0871cb62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "eb1a4be8d81254cb66b05e9d5f75009a766a077a1e36597e124b886980b85341"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/bundle-i01-001/OUTBOX.json",
+      "sha256": "c3a08bed196b9a46c14ed86484a3dab9a20a76ae740b9217dd544bce87b4fed0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/d09-resolver-bundle001/D-V09-A-RESOURCE-R001-control-resolve_final-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "0dc7cf1860fb8ce9124c4e3b3459e0c6972fa45bddab58c2e0a9ef5c734154f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/d09-resolver-bundle001/D-V09-A-RESOURCE-R001-treatment-resolve_final-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "37c580557d2f9792f5d898d845b1dd45a9473795133946f7090102f790c60437"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/d09-resolver-bundle001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "8a3211282cdd568f623f3d235ccc3dd4d45bb8ab58acbf5ec7d6fb0b21bd13e6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/d09-resolver-bundle001/OUTBOX.json",
+      "sha256": "c40198fb88b8f888dd643a5c90433827638c18dd4161dceefbb2def5a1e3e501"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/prepared-stage.json",
+      "sha256": "9899d7ec7a28a7652aa5de2cbe68c9d92564ec26c63e39a76d332087a88bea68"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "10497db261f5fd5848351857a87daecb40114e880f13d4685b8700dad29a5ed3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "6a57b72dc20a76a5001bde07edff74d1b5fa1ede9baff760d94bf6718ec93a34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/prepared-stage.json",
+      "sha256": "dc5240fe8c66991291f4a550e0d878d566b2e74ba296535e04c80962b6240719"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "c8279a3650820bd5f56e21790f54a515016542939b44fd3c7bedc2ff0aba706b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "1bb65519477730c3d8b064a4eaca306f7eb341e117d64561bc0cd43903137c06"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/card.json",
+      "sha256": "21efe6309dd123591da4596dea97d3c4a632087942e24c64d79a60a99415804c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/registration.json",
+      "sha256": "d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "d4866ca0022b4bd33f27c8f4f5ae4972902eaed97541a33a8cb5fc183e0b0567"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "d382359e35d1accffc84e6bfb52ee8c1da984d786b5bd449f120aec4f0569249"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "6a57b72dc20a76a5001bde07edff74d1b5fa1ede9baff760d94bf6718ec93a34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "22765077e8b5628bcffd3c78ad1d51c9f7254e1580fc35b55077c0570a1c4697"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "fb1a81c179cb313776f8554917b67e362648b0e02d8dc6b99d01e22db5c9695b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "71e33c7153bb08aeeb89986f29f553c1af4c9e6fb8d4256dd118015b05cde522"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "c8279a3650820bd5f56e21790f54a515016542939b44fd3c7bedc2ff0aba706b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "22765077e8b5628bcffd3c78ad1d51c9f7254e1580fc35b55077c0570a1c4697"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "e930b4a18e55ff0e44a6d37e3a68f4945862bf39bafdf01868a03143cb10b615"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/card.json",
+      "sha256": "9fafad7c74a99f7d866da30d9c5f50989d81fd8c8301acf47e593142b8c2f5ab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/registration.json",
+      "sha256": "4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "accc23e803313a2f5962d955fa6a5c3a81efb99dc593959339ac4100dd79a58f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "4b041f8dcf4343ea430c455f40980faba6a589733128613b408ac5509d4c3e33"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "aa3159f5d2c00ec8a9124531159826128f5ce5228bf0c12bb7b38e312713b47a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "b8f87005491a674d8d78136849fe5457f90e1a22d3c2216d6f83e6c31104e92c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "d7d427f02026a85ecf0ac74a44200b9363bc8566b03c50beb68fe97e6127bb46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "6ec40b3123bc31e22a9808f1066c8e609831f33cf5d0f1cf85658284f7d47370"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "a2b8b0004d99ac7599e0ac452213ec9bd695bed10c9baa8059b2cca74f42ef48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "b8f87005491a674d8d78136849fe5457f90e1a22d3c2216d6f83e6c31104e92c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "21a330a0cb8b54de5068db4b9e9eb213dd829e0baf11a02e76a01a5b78f9e247"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/card.json",
+      "sha256": "45feb32171e2146e1607dadbd8c7ad7f9997e90138cd3d5debc971b0a515660d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/registration.json",
+      "sha256": "304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "7cc08ccf02f94c779aaaa3d0dab8dab5e4545afd7e1cb8696181fa8773755635"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "ae5c4bcf774ebf2526a4da48bf36b496718f88b455d0b33699d7324194fc722c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "aa3159f5d2c00ec8a9124531159826128f5ce5228bf0c12bb7b38e312713b47a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "3d25b851b88eb9575c9c7b1ed6e9d8bba22f4f6a54dc22de976d71afcc202020"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "e8cd3e38eca02c39ea1f8146198ddf5920577f3257f4f3d5d79be5a232d7fbff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "fbf0034ee8e9881925ea1483a6a8088d819278e12b2920a575621b8f9c3828f3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "a2b8b0004d99ac7599e0ac452213ec9bd695bed10c9baa8059b2cca74f42ef48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "3d25b851b88eb9575c9c7b1ed6e9d8bba22f4f6a54dc22de976d71afcc202020"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "ceb2a129e4dd87dd527c8d1806f30c23e8fc0a6d714d19b62436ad9fe4da79f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/card.json",
+      "sha256": "5dbb92609457e0161a4f750dcc5a2296628500a7ca5025debb3e990ce1b5f09b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-B-BUNDLE-R001/registration.json",
+      "sha256": "207ac630eec15ae8177ddec51ff37f6b9d30e4b912b91d903780fddf21e54478"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/prepared-stage.json",
+      "sha256": "514ba40d37db71f37a5df5a0323e291e25b65994bde7fbaae4a133b76dc04fc1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "c864809f11fbe1c70cdefcaeed32575ce5eb03b623f01c295a5111ffc192d4c1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "511fdacb47d9900da5975de451ecc9ccb0ee376f62fddfa04012f8e5d9675f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/prepared-stage.json",
+      "sha256": "d9139b76ece58eceae93d2caafb9986d8c625a2793b509c339366c500439256f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "8a3d0506439cbb5ad67e163bde9e1178a140147d4ac3ec06da6e6117a1a81d13"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "092a67d8894fc43a16a1103849808b54d9b2b8e180597e988fd4c4a50ac2c125"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "eadbc15122d01378b91c116d11752f199dddfe5bad35075bf3acd011051fcc13"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/card.json",
+      "sha256": "bcd6103140d6287b370c33e66ec11805c0eb274ae23f23b7589d82dd5218b255"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-A-BUNDLE-R001/registration.json",
+      "sha256": "8f45e376c88c28ba4afd8fe59ba6ba1678e710047b57fd4148103d0ec99fd3b2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "c7b0bbc7baff1679593fc5e30faf61ab6adffaaaf084c573877224d68f6c43c9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "22ab9415d6ff9fa349b8bed9e5a4aa9a7d4a7929b8f68f0df07da25d87216436"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "511fdacb47d9900da5975de451ecc9ccb0ee376f62fddfa04012f8e5d9675f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7c522b1745399afc25b7603c0634c4aae38cab1e35ab348bc2f0aba1e11ec51b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "4a9d64c080030f4c790709389d2683643992ba55e1b9bac09f14ddfa1185383d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "142652f47215f9c0d755ee595ed77f90f89042fdd8bb247650fec69f3ffec49e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "092a67d8894fc43a16a1103849808b54d9b2b8e180597e988fd4c4a50ac2c125"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "7c522b1745399afc25b7603c0634c4aae38cab1e35ab348bc2f0aba1e11ec51b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "c2ce88878ddc84d13f970e7c32a96aa6d15d1fa28b920b5721837f9d51ec0288"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/card.json",
+      "sha256": "d3f09b802d90b0e7977c56cfd98c2b0aafda03a10db24d7ecc5e7cd34a5e78a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V07-B-BUNDLE-R001/registration.json",
+      "sha256": "0959eff90824ae71e6c8772d840d0272187a1d479ab8dfd85c3a9b4e6872189a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "fcfc6450d30ce31d9cc584cc85060f9cd8eccadf2c215c7a684dc29dd0c59114"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "3f959f3375066e0bd5e266cbddc689ad2537f49f9ad34244ab8ba45f8cc3556e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "08bcdb894e9cfdd27d2fc98a8e177e71e63f43f04dcf1227dfa043050cd82318"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "cd5dc4b97d766b3d48e16979432ca84362f6e9074cbe2cd56c9c1b889373d073"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "59a31ab07795e4bf7b7e1f97afc6c8c36f314e1b4e3b58ef4404deb70251f91d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "aec0f7491ca7444c49221d5dfa34312051d544a2c7535201c54458c186d96b5e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "ef06e4aa7f6a2638e9197a8270a8611889a7980cb1d89f7831ef8a60e480e457"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "cd5dc4b97d766b3d48e16979432ca84362f6e9074cbe2cd56c9c1b889373d073"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "a2ce8e388f01ea741ddf602458b747c7e1f0a69c601a3fee9c619b4bed39a53e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/card.json",
+      "sha256": "a73225b3648e913b898e460ce7f3503ec7d8d563d1a577314a9b6eb53d3d8a4e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-A-BUNDLE-R001/registration.json",
+      "sha256": "84d163abda1f8d0c1d7e91c7eee0139948deed63f26d118394ab076037377076"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "7fffa220754819162b53c5e107fb779444f12c9f184cfdcad3b96b98866c2a7f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "8b34abeade4fd6b9c797ebae0b2502a77fb7b0ae3315b455768421eb9770fdaa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "08bcdb894e9cfdd27d2fc98a8e177e71e63f43f04dcf1227dfa043050cd82318"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "5274b7e4d4e16300ea29e7d05168281428e84189233fbb2a64c87ca84ec7cb53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "16e3b4b455e3d1c4cf3ac07fdb946ac7da09f6d70699c62bc6bf2b2ec52fcb4d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "c7d45dbbd5d024911a6c874a3b21b79b058b844e3b5e4601044a38aabf553c4e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "ef06e4aa7f6a2638e9197a8270a8611889a7980cb1d89f7831ef8a60e480e457"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "5274b7e4d4e16300ea29e7d05168281428e84189233fbb2a64c87ca84ec7cb53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "5eecbf82a860b0a3d17fd4a932aa43ed96344473c526ead281bc24a7f8427e57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/card.json",
+      "sha256": "c66b09fe88934d00f719343db1a7c258c4b442db290a4738f937cd38da9359bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/registration.json",
+      "sha256": "2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "bcd7b5c31f1a2cc402f2c056a256a3d6f0d86824e9f1250c2c8b35afe03fa871"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "85eb4f0ebbb4fa80ab7302c5325b2be2f84446101dcaeef39f8f0e69e0955e79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "3921096471d87712f7679897181cd319ae773a32da1dc76e521f36388a549310"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "739fbc8adfc6953c1ea3fe85d94e73d5b50300d92e3cf10d57ae940a22942f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "52ebe1aef2f404092f8412b18aa90d27d70c46fd0d431dcdd984611caae7095f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "e33780940db3055a08a72c2ca21b2a1608137f1cdac6d636c31b2fcd98f2a998"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "f6f0ac755d76f45b7befc7a781028d2ee369d65e9d1cc59d7e44fe1b895ab71b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "739fbc8adfc6953c1ea3fe85d94e73d5b50300d92e3cf10d57ae940a22942f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "c7c0c02ade281b95a0dbbd0627cfd7c9b923c61f279e30642d848c3be46c0467"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/card.json",
+      "sha256": "89c2f88df7e42eddb7110642cee85eb3bc494b33c146be1f4744687dcf6ce832"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/registration.json",
+      "sha256": "b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "72e4b1a348298229bb688b3af558951c08a9c664ba96026b7fe348ab82b4b927"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "ab4651333e640dc9e083ca4a6013b86c5958703c2b709e4fba8f31dc8fa0c2c5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "3921096471d87712f7679897181cd319ae773a32da1dc76e521f36388a549310"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "e1f3c82c2a7a89c3fbcd567bb5f36552152cbdcca2fe8030136cd4363a6a5281"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "52558df424578e9ead4a8471bead3895880ee7b3e0bd3d35aa27775003594d46"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "e9061824141f1ae8ba80f49e88fbc99e7951c224a88719b5bb23427042616c4e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "f6f0ac755d76f45b7befc7a781028d2ee369d65e9d1cc59d7e44fe1b895ab71b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "e1f3c82c2a7a89c3fbcd567bb5f36552152cbdcca2fe8030136cd4363a6a5281"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "13fc155ec256c55e238e3507437340c9da297cb07161d6b22bfa804d31a1c925"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/card.json",
+      "sha256": "02a332297267b5dbaa0d014b13a861f6da985f22e2b7d5b84cb1c509f2633f87"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/registration.json",
+      "sha256": "e6501a988dd548a64acd7efb6073380c16c630de0267f1df6c5d2cc3d5be2ffd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "9ea89ee57c2b51c8baed3f8f7d0bb74245018aba83394e2c892c5cad74894191"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "2e0b848eb7db7c364cb58197b2d8f9d176426797ea352ee368f9ce46f77a22bc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "52075a9f4af33c8b86177637563ac8a5fe3974c11782993a3fb33e5e269eb0ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "ba40e7d61a4f8557aa0419b55a3e8cd1e2cbf6183d042aa7e43194d3b3fb3a98"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "5d6e7b8af21523595974090ceca459ddd34656ceeb6e01c55dcf8d203bf75539"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "d53f56e27a3de3b393acc921536756ec45e8fc2c6d76690cb081f59a3241649b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "e4d8e2c090c2d1f144a173ec92c2ca51b723b18837f6b92c165b98ff4d65fe2c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "ba40e7d61a4f8557aa0419b55a3e8cd1e2cbf6183d042aa7e43194d3b3fb3a98"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "c68eac2475e9839bb6f2bc327b0dfbb9d58ce4349ede83ff0c73db1de8b5d35c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/card.json",
+      "sha256": "fc8c20aec4c87b22edec0f3c07c16c6e4c0a9f29581ff988ebe6f77f0dedea20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-A-BUNDLE-R001/registration.json",
+      "sha256": "9394254772251f4912e5056fd4f46bda4e7da72371ad8e3da89194a5feca6b6d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "2d478588683ae456990e5d2d01dacf8d24532a50ef87b37fb6e391f19d191ca4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "37ac319b82d53e80dcad284196d4129d3054e66b4c87aee521dca653bfb3dca5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "52075a9f4af33c8b86177637563ac8a5fe3974c11782993a3fb33e5e269eb0ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "1f261f0ea94962063e94ae6dcce72e9d175794e5f4c33c150fd8468680b8bf39"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "sha256": "ff820e8d861b96f48255f151fee68f3fe52d115688f323c411d9bb1b425e31a0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "cf473a72bf485aafd6e7f8093924eca80e52d44da6bc2fede9cd12c5cb44e96f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "e4d8e2c090c2d1f144a173ec92c2ca51b723b18837f6b92c165b98ff4d65fe2c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "1f261f0ea94962063e94ae6dcce72e9d175794e5f4c33c150fd8468680b8bf39"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "79cecf0d73f2ba258d848b8ff4b05b019d19971d70d27bf2bc0ce2073aead70c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/card.json",
+      "sha256": "3f26582f0aca0f06eb4092556e2a7db50effb99de4f09970f3365c3c7e6085aa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V12-B-BUNDLE-R001/registration.json",
+      "sha256": "44922c7cdd42654eca9579b1b903621db1dd438b5fe4f7c9a1e44b0fabb8a02f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "c94ecb7ef993771672cd50d4cabd7c995c99d925c3e7bb5af04bd8a7dc181499"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "6b88ada3be9b5d3f3770046c084680a6acc6e0c2d10bec9535e001dc114725ec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "033eb0977df892081855e6750e8c94d3ede77a0beddac1b672fc50dcdc6ff396"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "26efad1f4a93ba79fafc4f927d0ed0dcacdafc362ec202a31da8eba7d5009787"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/workspace/inputs/arm_instruction.md",
+      "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/workspace/inputs/diagnostic_task.md",
+      "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/PIPELINE_CLOSURE.json",
+      "sha256": "a9a6a379562fc1857a8da5cb9efb518d8404c7a9924d380b739340b22bd56fd2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "d1f159f58f568cee4eb31ad2ee9928b9d51421629fe20f8aca82252371626411"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V14-B-SCOPE-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "f797e141c587ce2988417f93b68024cfe868f1cce3cd5859ef239c391ee86f24"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+      "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/PRESERVATION.json",
+      "sha256": "8cb61d9646630d408f4981c322a9da955fbcd770f8ad6b0c4ea22f98d8192f55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "5aabc37b1df5b1e5aa3d8213174e180b661864e9a2e7055caf0aa18f2952104e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "70331d5584d261eb11d9df63b45f93c35b4766166ea98475aed5bcd15b8a09f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "fdf3efb569a5ba7892564d8d88b48a22564dd8aeea9e831052487eca6fcc71d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "14835a5fb462b25ed2a549e6e86edb5af531940aaf5a72b4703e90bc8b523037"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "e48efa91f3c08bc72772394d33ea6ed21cd30992a31549b65064102dbde11d11"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "6dacfa68f740756f483db2cad55eb7b064310fad47f26a53c4d52e8c1f757838"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "6d76d13afc8db0db3b665212da391b8882a6c80bd476c4f57339d1c54dadb7cf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "c79c36e6c2b1478fc0501792c73872830bb095552e960a6a579c73e3633b5352"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "fc39c53919007db2b436f2cfd55d77eb00d53c21a5785c96a213b2150cf5d917"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "ec8e01c3833e4f61072721ee6b61809d45ca8bad65509f7d48dfe1508aa0a16c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "4edd33bb4586a539aad51cc0e152f5e6d9af6a6d9c5d87d4857d8f2d15c1d1a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "478084c03fa5a3dbc6aa2ed92248ca412061be48d1bc3f2dcaaa3978af2d0e34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "6aed576999dbf6085416ac0eadb0794c43cd16d4ad94366e079f2c988a6ee2c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "45dd5fd0689ad54876c0f4cc6e55eefe8f1c60657f33a3281070196319734d20"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "aecffe19b5a82220eac845d65236978e3172e6074b71d621db323ec4009cd9d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "6c12ff4e45b17416ac65aea557d0268d8375546756f820ecd52912429111bdff"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "e1299b6ca2a083006760a9c837c13625b27628f0f508aeb5841915218a76d5e4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "5131a229df185185ba12353289a44127b7c8edbc7b69290eecc27a5eeda4a388"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "be649abba435dbeee394bee270ff926eabde7b5d8dd15df17b9ef1f6e3542bad"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "a2f01b56b4c51354fb1ad063b87533fab9d6d2618c6f1a62000a96c53ee3189e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "93ac626e5d1211c0884d7eba7881f817569f74d5378ebf97c7dd3519322a47bb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "112ca8bc1b5bb1c7c01df1db0c3d2ce5a5ed7b26be1aa3b1ec150afd02706416"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "e8c7676b65fc262769866124be45a8e206dd14b7a1ec65c283b0ed6343918b2e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "19413482c0999c5f0ab545faec9d87c940d3aea00a714a0ea50b3546b83f3574"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "6318c92c146e82b00bab3e39340619460203a358cb03dde3fff73c6f2c8dcbcb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "4bff5b659f588d5ee04210d781cd6f44e2ffd326074bce6de3ae86890fb849fe"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "fea13975ce8d013386f525900d6ddc5037dda21248b47903b84dfee1651075ce"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "a2058e554443023a380fd03ea61d853601ed48a58bd9565b1f877d118e51f4d0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "8a6e58c3ad2b6b79121e266898d3a7a528f0c55f6779a594a6d9c28da72a1f55"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "526501316da1edc57473ab6e33b061b4b2168a8e176be169d1ca5b0379fe988e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "bae80c5c7f72fc199c64d58fc7315f7c3a68e371f99da4043249e35eecb3b257"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "e8a38ae0671193d379bf558d19268a8e3d730952ed2aa5a7afd6cd150e774f70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "92fc68659f966004cf99719ef4781a4c909de54275d13b78fa338b265ba2119e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "d31bcc6495b71b57f719d54b5c65830129bdcb065e5be882e71b079d59a0ef7d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "1dea9336ef92a8360ea9b9f43d2df880845ba8d1640ec8a5c77e1499a4bb6fd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "58cf16394769f9558c595e3b0923a6e8dd91c15e70d54da87ee6442e86425d0b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "1f5de5cb40337fd7056d7458015013542b5c39f361b2298a23fce9345c10a427"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "757ea44b60dc3ceaf031e5cef214a34cfdb5798ec3a2c37f3d78ddcf931a5091"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "72abd3b88201c1c581343976bf9ba79ba0059cf5558bd9367be2f9e7cb370f91"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "8d5ee837b9420c77b2a9e26fdcb26fde23a508e4ff79a6979fe69de9ae4b6a75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "c8ed4b596106d175ce57dc153ffacfc44c655c58bf6b27b00986d1b47a933961"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "5b1d80e9aea6151f84daa05870dad903cd2e2cf0521fe8ae28e13ec56ed82194"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "30d339fe79369a419c8376bd6bda9b0dd16717cc69d454a51a2f87af4ac2cf9c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "1e258e37345738dab84d6e55e2a78f23e7ee6d5ef29c4b19ae200efafd789dc1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "cdbf73e3dd8abc51803403347bf29ec2c11b2c71531e8ab912d49549149ad760"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "670fcddf27735b14015898074aa34ea22d1b67236cc10015d277cb7e80009dc4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "3f81d8f8eead6efdb15769376eff066b9235a89609cb35f0780230108f9b2cbf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "949e70db12f0ac7ae9b0b938b896c0309403be5b9d71d0666cbb838722f42200"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "bb0b1d5a31161159c34875a0a3bc2ad3e879168ba2f7ee0b3908a8f6434d2c37"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "afb249ec953526355bc2c0a8dc339bd7d69b4bfdcdb0e2ab07409e05ef42436a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "a6075e01a0ef451bdf1cd697916f02b68d063421697425bab78ff695c38dcac7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "b0ac3e9831b69f8526f7b373194a53040d48e20dda6355552011326dd0151303"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "e851308cf236e251291cfa9d6d45d62c1c3264887e0a39b254f27430f1ea1408"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "e4360f797fd861dcb33a553b881546dafdb8f9918f217cf66932a3d822b9fed4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "c2b61f6076ce136c367eae83a997dfed5bbbe0a4a87e327adec2dd55f13ab19c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "a0f8c9df73246f1a13e934466468fe30853f03f2dbf756647dba901a4ce2a371"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "2a626356128f32cd965d5ddde863216eec0ead8f0c6104ccdf648b77c76a7998"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "f9708c648366af0275a8b3317941c8ec2a1cf1a286ff195fe9b408ce93a33df0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "9d617007ad577271c85b8ef975cba1a4e858130c97e31860bf5fefc241e99c9a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "5baec3665741c3752741619a45ca111df9cd5adf18417dbca7512883dcbd548e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "d60b6d4c41b0d43a1fe569e118bb604464404439ff4eae1b9e515309e8f3b32b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "0155196b8f345c5d365ad4dd596dd79b5e97a85f277499b1068ec0c9196ba4b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "e4b9233583704c5930d09934fb0e4cd0283a8eb1f44f3e69d290a42b3224c64e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "a6f3a4ee05a488e05e8a943173425034946cedbfd843cecfe512b882c7f182b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "1e21e203368f7f2fa725150d4f5c29ec217a5da03e86e91fef9aaa7d636a6c76"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "d207071ed8bb3c2f4183dffae0e2dfe75c4ece6d8135892f02f355dba8e6b96e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "5614b31ccfb895ae8e28992e5aa442e36e79cfa47d239835667f2d0ccd3a1cbd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "bf21588d817930f4a9d80ff608a4cd211b90b9b33e86d6af5eccb68b51ef5d08"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "c24e2f79c022a7c59f4f1a2ec4116e713ab137b111884a6367edb79ff3864cf9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "27eec02477fb03503e134da16bce4641d6823b9594e49f203ecc5f1d183aec27"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "c16a489aa59a260cd4037eac65440719814ca87cfdfa0ffdf18937c0f17aa740"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "043ac10767b7e89cb20513ff13ea853adde0535072e7f896ff05c3a55c76f827"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "ba342807e630f1b515fb161c149b06b13bce9bd3ab7c739f5d3fda6e3095c132"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "7c5a2dac558990b04b624381d5e80c5ecb7b7dd276f4e76ada16b47e27fa2c30"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "4acfb768639f6a96c70c28d9acb6008289273c02914b3061aa2b06b04eb29b37"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "6dfe85ca92aa2337a79eaff09ae7d3d815888ecde38d2733e4722b580eb82bca"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "3f47ca07d37922e2aace0eefabef12e35b4485ea2fdd9d6b44c9c92bb36431a6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "cc7b63c17e41dbdf67eb0d5fc207dce3e7156440012ee2128b04e629509f169c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "555ec911edefb08c6f6474acb451bc701f94ef58a461cb6dfc82fb999eae6379"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "2eb270ccb3b7928368f6b6a2a605fa47b31e8157bebd5f8394b95f244d221edd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "1d1f02e32298ca91a400fcc2660717fdf72dcc91ed51c7c213afab059ad4ffdc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "508bde829abcfece265f7fb11769edefce5014176e88e823dfa9b29210e7be75"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "bee18f17fed24c9e65627d5e4aeb64563ecde9606540cbdc9e60a9e3765d5325"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "e81087e21874e006f1933c1fbf2d7f00ab3943a5f67307d6445b0bb192aaf206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+      "sha256": "b53e240a10f4c661ef38bea8f4ada0244de536e27fb1b8704d67be299b8d1a9f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+      "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "66a567014f1697d2c95a491a5345d351f2dfbabb7ba18bd9e8f2332b55c6c756"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "0295322f3b2594440230de90e036617d30b6f4ec4da5f6c77e5c64e166e4a8f4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "481b54de1362321b93a963c1414e5f02011cd3ae135c715a69e3941103d0394f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "fc8dc3871b80006a5dc1c3107189b5127631626b382acc9224b75931d10d3ac3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/TRANSPORT_ADDENDUM.json",
+      "sha256": "431ff330f51f64dc742a44c9b4a4c22530d0f6bccfbc63c489856049eca9e3e1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/prepared-stage.json",
+      "sha256": "e69059c8a39766cead606bd49b9a83b2c9b6afe742a4e36c1b49f0ebea7acc2f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "sha256": "b3c92f60eeedb50f066db167c5e3ed03b2661f26910dbf00fd74cc305936d5c1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/TASK.md",
+      "sha256": "26c1f12d42bc45bd397a8a2a2ce011885f8adbf10c289bd6ab66c7da1f1e36b6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/workspace/inputs/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+      "sha256": "3632082abc2203e10e2a6d8c64c633c672b3909a62d1356c6104d76a90bcfca3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/card.json",
+      "sha256": "50f2e60de833896ed0383cedea3ddc55d0dc99b95bf1fe0b186a9101940f1889"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/registration.json",
+      "sha256": "4d9cd12aba656bef0324cdd7c876f056244b3e14be20cce6102663f7852232bf"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-12-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+      "sha256": "c2abc1ca5d08ca44db17c0d7c617a1f563b8e10ff8908b4fcbb85e39695880a2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/OUTBOX.json",
+      "sha256": "f439768d805c535a5b1f32d2263a52277e8d714d472de07d0392fd611d675a47"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/role_birth_binding.py",
+      "sha256": "8e155ca444ba119ebca71fd074318ce06be1e271c90cb7795df4f6fb07611a53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/role_birth_binding_v002.py",
+      "sha256": "37d3ad17b5d4d496fc26280ba80f3142a7211c5423919ae3348ea2b2bcbb168c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/hydrate_role_proofs.py",
+      "sha256": "27f6239790387b026c6e22352bbc56594fe3658e15a952dce9a7137df2cb09b7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/hydrate_role_proofs_v002.py",
+      "sha256": "b7f9200f7cbbb447b224a7a68c0b67572e70966b30059060879411819e00cd4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/prepare_successors.py",
+      "sha256": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/prepare_bundle_transport.py",
+      "sha256": "854c5c8f77da3981e767adc3e48c22dd0404896aec5faccba9ae768f43d1584b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/prepare_ordinary_bundle.py",
+      "sha256": "698f00e1bc2a148e795eb7bfa6a3de662f494a289c40bd3b935f652049217868"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/prepare_warm_bundle.py",
+      "sha256": "a1f317a717b0050e3393c970e886792c04a5e905ed45e3d1ec57a9c8880509be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/prepare_i01_bundle.py",
+      "sha256": "fc26827173c00af5647a9f3616700d2a874d5d66bdf4a35bb7fe578fed1136f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/inline_final_binding.py",
+      "sha256": "08e8addfab7eaa8102cc5a72672c7196b6064b338fc83ab839f14077e808119e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_ordinary_bundle.py",
+      "sha256": "536401e04cb69e8f46a065fe085773214b3710577ee902bf35aae624ce5f9945"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_warm_bundle.py",
+      "sha256": "71ccc71c5010d1a6351910b94e4494229b656321d77f75a44485fd9b17ad0c53"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_i01_bundle.py",
+      "sha256": "f04cfb2593a903ce3903684718c6b99d856b9789e59112d5e3db7062cc5dce4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_d09_resolver_contract.py",
+      "sha256": "522b3da55328d742728f90a00de90b4362db5801529248ac1e4f9be15b5155ef"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_launched_card_binding.py",
+      "sha256": "c590eee90cad3cedbaffc35fce3c88ed9171df6bab0371333d3d5652f780fb82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/test_role_birth_binding.py",
+      "sha256": "3204d7e8ee55145a034b0768d557cdaa3954a0ff32d030ff473f7af9a99dab29"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/public-source-015/PIN.json",
+      "sha256": "5dd5f019b51358136d2cdb176c6fd6ab8905e678699d10261a22489d37fb6e65"
+    }
+  ],
+  "native_raw_output_auth_private_evaluator_selected": false,
+  "published_source_is_immutable_snapshot": true,
+  "publisher_only_adds_listed_exact_sha_files": true,
+  "quality_or_pipeline_completion_claimed": false,
+  "schema": "er9.positive-publication-selection.v1",
+  "scope_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001",
+  "source_owner_native_starts": 0
+}

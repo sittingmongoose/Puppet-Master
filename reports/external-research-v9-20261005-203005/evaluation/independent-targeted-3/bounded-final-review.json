@@ -1,0 +1,48 @@
+{
+  "schema": "er9.bounded-final-review.v1",
+  "evaluation_id": "independent-targeted-3",
+  "review_utc": "2026-10-06T02:58:58.832481+00:00",
+  "review_monotonic_ns": 85957689498323,
+  "source_frozen_hashes_unchanged": true,
+  "own_final_JSON_valid": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+      "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998",
+      "bytes": 25593,
+      "valid_json": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/public-source-summary.json",
+      "sha256": "ef8cb9a3a2e06733ea52fa91d1df4406781bf8a02b042e76360f7f866adb9fb6",
+      "bytes": 1066,
+      "valid_json": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase2-assessment.json",
+      "sha256": "cc2bc6fe87e9c872b9322b867eae887ec8583274fb537fa4a82afa9c31b5b9b8",
+      "bytes": 9917,
+      "valid_json": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/neutral-cost-lifecycle.json",
+      "sha256": "7aa55dcf55ad4f608038639fd490ff6cb3d75d9c2e5330beae3866a1d0b99964",
+      "bytes": 6479,
+      "valid_json": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/public-phase2-projection.json",
+      "sha256": "5ad8ac50a96ec3a0f1bf5ea7b64488b65e93bb9f18123d936a96cd9c02ebf6e7",
+      "bytes": 82552,
+      "valid_json": true
+    }
+  ],
+  "public_private_current_projection_matches": 44,
+  "canonical_variants_substituted": false,
+  "raw_body_private_key_OS_proofs_selected": false,
+  "whole_elapsed_seconds": 1216.054470201,
+  "whole_overrun_seconds": 0,
+  "source_overrun_seconds": 0,
+  "phase2_overrun_seconds": 0,
+  "evaluator_spawned_processes_or_native_goals": "NONE; transient own read/fetch scripts completed, no persistent session left",
+  "owner_handoff_ack_requirement": "No waiting for acknowledgments; missing ack UNKNOWN"
+}

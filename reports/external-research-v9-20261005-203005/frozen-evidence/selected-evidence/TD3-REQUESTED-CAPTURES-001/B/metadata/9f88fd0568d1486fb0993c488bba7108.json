@@ -1,0 +1,36 @@
+{
+  "schema": "er9.actual-primary-source-capture-projection.v1",
+  "actual_acquisition_fields": {
+    "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+    "actual_url": "https://api.github.com/repos/napari/napari/issues/8353/comments?per_page=100",
+    "body_complete": true,
+    "capture_format": "exact-http-response-body-bytes",
+    "capture_id": "9f88fd0568d1486fb0993c488bba7108",
+    "captured_bytes": 40697,
+    "captured_utc": "2026-10-06T01:25:42.194860+00:00",
+    "content_encoding": null,
+    "content_length_header": null,
+    "content_type": "application/json; charset=utf-8",
+    "etag": "W/\"2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57\"",
+    "incomplete_http_body": false,
+    "last_modified": null,
+    "redirects": [],
+    "requested_url": "https://api.github.com/repos/napari/napari/issues/8353/comments?per_page=100",
+    "response_bytes_observed": 40697,
+    "sha256": "2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57",
+    "source_version": "sha256:2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57",
+    "status": 200,
+    "truncated": false,
+    "url": "https://api.github.com/repos/napari/napari/issues/8353/comments?per_page=100",
+    "utf8_bytes": 40697,
+    "utf8_valid": true
+  },
+  "original_metadata_sha256": "f6f73a10380508cd756ce0dc9257e60174b2db6725e7941e246f118a2da407c1",
+  "omitted_original_fields": [
+    "capture_path",
+    "llm_read",
+    "public_pinned_ip"
+  ],
+  "model_comprehension": "UNKNOWN; byteacquisition notcomprehension",
+  "interpretation": "NONE; originalfailure/non200/truncated limits retained"
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "er9.actual-primary-source-capture-projection.v1",
+  "actual_acquisition_fields": {
+    "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+    "actual_url": "https://api.github.com/repos/cgohlke/tifffile/commits/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9",
+    "body_complete": true,
+    "capture_format": "exact-http-response-body-bytes",
+    "capture_id": "857bd88141c149f78c85afa540a70d5f",
+    "captured_bytes": 7806,
+    "captured_utc": "2026-10-06T01:26:00.558739+00:00",
+    "content_encoding": null,
+    "content_length_header": "7806",
+    "content_type": "application/json; charset=utf-8",
+    "etag": "W/\"2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d\"",
+    "incomplete_http_body": false,
+    "last_modified": "Tue, 15 Sep 2026 16:09:17 GMT",
+    "redirects": [],
+    "requested_url": "https://api.github.com/repos/cgohlke/tifffile/commits/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9",
+    "response_bytes_observed": 7806,
+    "sha256": "2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d",
+    "source_version": "sha256:2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d",
+    "status": 200,
+    "truncated": false,
+    "url": "https://api.github.com/repos/cgohlke/tifffile/commits/6e0a02f10fc763abd94aee0a0ab8225b4b8860a9",
+    "utf8_bytes": 7806,
+    "utf8_valid": true
+  },
+  "original_metadata_sha256": "e84f1f68777175fc607001a11c7d0dd21294e067a747b74dd497fbe7e2f7202c",
+  "omitted_original_fields": [
+    "capture_path",
+    "llm_read",
+    "public_pinned_ip"
+  ],
+  "model_comprehension": "UNKNOWN; byteacquisition notcomprehension",
+  "interpretation": "NONE; originalfailure/non200/truncated limits retained"
+}

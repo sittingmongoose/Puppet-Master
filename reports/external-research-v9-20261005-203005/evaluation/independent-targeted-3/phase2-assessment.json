@@ -1,0 +1,218 @@
+{
+  "schema": "er9.independent-current-phase2-assessment.v1",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "resource_cell": "resource-v13-a002",
+  "assessed_utc": "2026-10-06T02:56:50.803721+00:00",
+  "assessed_monotonic_ns": 85829660736453,
+  "source_judgment_sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998",
+  "source_judgment_unchanged": true,
+  "phase2_elapsed_seconds": 303.877923843,
+  "phase2_overrun_seconds": 0,
+  "whole_elapsed_seconds": 1088.025708331,
+  "whole_overrun_seconds": 0,
+  "arms": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "selected_native_model_identity": {
+        "model": "gpt-6-luna",
+        "effort": "max"
+      },
+      "physical_provider_payload": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; session/thread target not opaqueGoalID",
+      "native_activation": "DIRECT_NATIVE_ACTIVATION_RECEIPT",
+      "fresh_session": true,
+      "native_goal_starts": 1,
+      "goal_replacements": 0,
+      "direct_goal_status_before_cleanup": "active",
+      "direct_goal_status_final": "paused",
+      "router_outcome": "HOLD",
+      "router_error_class": "TimeoutError",
+      "operational_complete": false,
+      "job_status": "FAILED",
+      "native_elapsed_seconds": 885.617925648,
+      "output_freeze_elapsed_seconds": 885.688269176,
+      "occupied_seconds": 885.617925648,
+      "closed_before_original_total_stop": true,
+      "all_original_quiet_flags": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "quiet_proof_scope": "Exact trusted named units, original cgroups, exact PIDs; no PGID ownership inference. Hashes verified in current original pins.",
+      "native_model_response_cap_enforced": false,
+      "http_attempts": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "ui_usage_separate": "UNKNOWN",
+      "cleanup_seconds": "UNKNOWN",
+      "outer_permit_release_confirmation": "UNKNOWN; external outer-slice release required in output freeze, no confirmation in exact accountant row",
+      "known_usage": {
+        "cached_input_included": 5555968,
+        "input": 6027843,
+        "output": 65372,
+        "reasoning_output_subset": 37167,
+        "total": 6093215
+      },
+      "usage_basis": "native_thread_cumulative",
+      "usage_definitions": "Cached input is included in input; reasoning output is subset of output. Total is reported native-thread cumulative, not independent increments. Do not sum overlapping counters or infer prices.",
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 25,
+        "pm_boundary.public_https_get": 22,
+        "pm_boundary.write_file": 11,
+        "pm_execution.python_execute": 2,
+        "pm_boundary.mechanical": 1
+      },
+      "failed_boundary_receipt_count": 9,
+      "actual_execution_ids": [
+        "exec-623h11vb",
+        "exec-ebrqbav2"
+      ],
+      "current_input_count": 4,
+      "original_wall_allowance_seconds": 900,
+      "aggregate_memory_max_bytes": 2415919104,
+      "memory_swap_max_bytes": 0,
+      "component_memory_max_bytes": {
+        "outer_worker": 805306368,
+        "native": 805306368,
+        "pm_boundary": 268435456,
+        "pm_execution": 268435456,
+        "sandbox": 268435456
+      },
+      "resource_oom_observed": false,
+      "resource_fit": "UNKNOWN; creation-time zeros are not runtime peak evidence",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "job_id": "D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "selected_native_model_identity": {
+        "model": "gpt-6-luna",
+        "effort": "max"
+      },
+      "physical_provider_payload": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; session/thread target not opaqueGoalID",
+      "native_activation": "DIRECT_NATIVE_ACTIVATION_RECEIPT",
+      "fresh_session": true,
+      "native_goal_starts": 1,
+      "goal_replacements": 0,
+      "direct_goal_status_before_cleanup": "complete",
+      "direct_goal_status_final": "complete",
+      "router_outcome": "native_goal_complete",
+      "router_error_class": null,
+      "operational_complete": true,
+      "job_status": "COMPLETED",
+      "native_elapsed_seconds": 618.531000025,
+      "output_freeze_elapsed_seconds": 618.615601748,
+      "occupied_seconds": 618.531000025,
+      "closed_before_original_total_stop": true,
+      "all_original_quiet_flags": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "quiet_proof_scope": "Exact trusted named units, original cgroups, exact PIDs; no PGID ownership inference. Hashes verified in current original pins.",
+      "native_model_response_cap_enforced": false,
+      "http_attempts": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "ui_usage_separate": "UNKNOWN",
+      "cleanup_seconds": "UNKNOWN",
+      "outer_permit_release_confirmation": "UNKNOWN; external outer-slice release required in output freeze, no confirmation in exact accountant row",
+      "known_usage": {
+        "cached_input_included": 6350592,
+        "input": 6787792,
+        "output": 51982,
+        "reasoning_output_subset": 29556,
+        "total": 6839774
+      },
+      "usage_basis": "native_thread_cumulative",
+      "usage_definitions": "Cached input is included in input; reasoning output is subset of output. Total is reported native-thread cumulative, not independent increments. Do not sum overlapping counters or infer prices.",
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 17,
+        "pm_boundary.public_https_get": 42,
+        "pm_boundary.mechanical": 1,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.write_file": 4
+      },
+      "failed_boundary_receipt_count": 2,
+      "actual_execution_ids": [
+        "exec-icoxtwr_"
+      ],
+      "current_input_count": 4,
+      "original_wall_allowance_seconds": 900,
+      "aggregate_memory_max_bytes": 2415919104,
+      "memory_swap_max_bytes": 0,
+      "component_memory_max_bytes": {
+        "outer_worker": 805306368,
+        "native": 805306368,
+        "pm_boundary": 268435456,
+        "pm_execution": 268435456,
+        "sandbox": 268435456
+      },
+      "resource_oom_observed": false,
+      "resource_fit": "UNKNOWN; creation-time zeros are not runtime peak evidence",
+      "full_pipeline_quality": "UNASSESSED"
+    }
+  ],
+  "current_pair_admissibility": {
+    "identity_and_stage_exact": true,
+    "fresh_native_activations_verified": true,
+    "nominal_wall_resource_brief_source_access_matched": true,
+    "same_selected_native_model_effort": true,
+    "physical_provider_and_actual_inference_tool_payload": "UNKNOWN",
+    "response_count_cap_enforcement": false,
+    "direct_B_native_complete": true,
+    "direct_A_native_complete": false,
+    "both_arm_source_PASS_and_native_complete_credit": false,
+    "current_targeted_observed_contrast_admissible": true,
+    "general_or_causal_method_benefit_established": false,
+    "scope": "One actual current targeted diagnostic pair with asymmetric operational completion; no full pipeline/development-domain/general autonomous-discovery or model-rank conclusion."
+  },
+  "artifact_rules": {
+    "all_four_designated_present_each": true,
+    "all_six_catalogs_valid_JSON": true,
+    "A_canonical_final_bytes": 275,
+    "B_canonical_final_bytes": 20735,
+    "A_proposal_complete_variant_and_corrected_catalogs_substituted": false,
+    "alternate_artifact_body_read": false,
+    "A_actual_execution_source_quality_credit": "UNASSESSED_AFTER_PHASE1_SCREEN",
+    "B_claimed_W1_exact_current_execution_verified": true
+  },
+  "native_interpretation_limits": [
+    "A held process exit0 does not mean native completion; output freeze held runner exit126 and HOLD/TimeoutError are distinct layers.",
+    "B direct Goal complete and operational_complete true do not require a turn/completed completed label; the captured final turn is interrupted during cleanup.",
+    "B metrics component_outcome HOLD is retained as a metrics field, not substituted for direct Goal status or router native_goal_complete.",
+    "Opaque Goal IDs are UNKNOWN; session/thread identity does not prove opaque nativeGoalID.",
+    "Saved exact unit/cgroup/PID quiet observations support quiescence, not an inferred global process sweep or confirmed outer permit release."
+  ],
+  "economics_boundary": "Only exact current cohort-011 rows; provider HTTP attempts, billing, tail, UI allocation and cleanup durations UNKNOWN. No pricing, overlapping usage sum, older receipt or aggregate campaign cost substitution.",
+  "phase2_blinding_leaks": [
+    "Courier Phase2 release receipt includes a second evaluator release metadata row with hashes/pointers. No sibling file followed, no sibling source body/grade/history read, and no use in judgment. This occurred after immutable Phase1."
+  ],
+  "source_findings_sent_to_candidate_case_tools_ops": false,
+  "evidence_indexes": [
+    "phase2-evidence-pins.json",
+    "phase2-current-original-pins.json",
+    "phase2-public-release-pins.json",
+    "phase2-public-private-comparison.json"
+  ],
+  "public_private_comparisons": {
+    "count": 44,
+    "all_match": true
+  },
+  "source_grade_rewrite": false
+}

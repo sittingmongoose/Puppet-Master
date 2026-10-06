@@ -1,0 +1,1445 @@
+{
+  "arms": [
+    {
+      "actual_admitted_input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "alias": "A",
+      "arm": "control",
+      "current_actual_execution_ids": [
+        "exec-mv__hfa5"
+      ],
+      "exact_current_accountant_row": {
+        "actual_family": "Luna",
+        "all_owned_scopes_quiet": null,
+        "arm": "control",
+        "attempt_id": "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "client_tool_cgroups_quiet": true,
+        "client_tool_owned_processes_quiet": null,
+        "client_tool_process_groups_absent": true,
+        "end_utc": null,
+        "execution_units_quiet": true,
+        "held_owned_processes_quiet": null,
+        "held_process_groups_absent": true,
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 5287936,
+          "input": 5623539,
+          "output": 34311,
+          "reasoning_output_subset": 21756,
+          "total": 5657850
+        },
+        "native_cgroup_quiet": true,
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "active",
+        "native_goal_status_before_cleanup": "active",
+        "native_goal_status_observation_time": null,
+        "native_goal_status_selector": null,
+        "native_goal_status_source_sha256": null,
+        "native_start_proof_basis": "DIRECT_NATIVE_ACTIVATION_RECEIPT",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 883.350651443,
+        "operator_declared_native_goal_starts": 1,
+        "owned_scope_observation_epoch": null,
+        "owned_scope_supplement_quiet": null,
+        "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_sha256": [
+          "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad"
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "supplemental_permit_release_confirmed": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": null,
+        "turn_status_counts": {},
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 59
+      },
+      "freeze_sha256": "ebd9564065a1b84f3d798405c7bbe16ec6e0675dcb52bc66844a8a945506eacb",
+      "history_rule": "onlyexactCURRENT selectedstage metadata; no priororiginalreview/grade/native/exec substitutions",
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001",
+      "native_positive_projection": {
+        "all_failed_boundary_calls": [
+          {
+            "argument_sha256": "8bdb324d678b7f1bfea8584675e5669e04cd8061dba905ecf2f666ecc3a06d07",
+            "call_id": "call_zBfJayTbnaEXHBCljdNw5x9I",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "10ce796a72dcaf0f937f347f1729b94e00b1d925a77a0b20157d05d6e97efa0a",
+            "call_id": "call_TTzp3KvClmAl8jabJj1S8LEk",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "2f433830b39f9b2ea877165ae4ba934b24ba4704e9b992753cc24ebe5605f7be",
+            "call_id": "call_ucps0UsOrRsVbRzZrhd5cQCn",
+            "namespace": "pm_boundary",
+            "response_bytes": 87,
+            "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+            "success": false,
+            "tool": "mechanical"
+          },
+          {
+            "argument_sha256": "a634ee56a61f8639e8ee4f801e4c85ce3fcfc8832cf52df26a13edf403874128",
+            "call_id": "call_f1YKJCfwmLCz9HYM2eJAPpyL",
+            "namespace": "pm_boundary",
+            "response_bytes": 82,
+            "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "aee14753b3618a5efb1a8539841d0ca923e3254a17c6f143368fbc5c8ee995c9",
+            "call_id": "call_l0udoqSGbeSFPLaFWddfqIxU",
+            "namespace": "pm_boundary",
+            "response_bytes": 82,
+            "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+            "success": false,
+            "tool": "mechanical"
+          },
+          {
+            "argument_sha256": "e66572c0477bd2f54dbfa5a03e45a21ff104fede4736507ebced6ba3e76cc76f",
+            "call_id": "call_zfl4Votq6W1EljPRc9mWItwg",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          }
+        ],
+        "all_owned_scopes_quiet_if_saved": null,
+        "boundary_call_metadata": [
+          {
+            "argument_sha256": "a5a052ab831d424437b84455c4f1a8322a369ba239262cff944761e47411fdb2",
+            "call_id": "call_rnalcw6XXbYqjOcU1i3RCKKi",
+            "namespace": "pm_boundary",
+            "response_bytes": 1013,
+            "response_sha256": "84f8e12335cb795ea0dd7d4d075704fd313c0081510cc76cd2b5576d75ea2455",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "cff35cd44f50388530220ee067abb5ef7a85aaeae7e02cfb6e14e6f744d80447",
+            "call_id": "call_qrzlYdaREdP2WqIq0rygmn2G",
+            "namespace": "pm_boundary",
+            "response_bytes": 2244,
+            "response_sha256": "bbbd9456e4916c8f48761cd72a57cd48f4ac92addada36c304798a9c151a99be",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "48f1dbcfc720b4ca8d17e1983b6a47d5424f06121b8c43f217e4265623e2c90c",
+            "call_id": "call_rRfmMzdkLXMoSxC1ViFeIpHK",
+            "namespace": "pm_boundary",
+            "response_bytes": 2826,
+            "response_sha256": "4504eaf2fb354c1b4aa182ef31148fed0ce22dd38abc04556878609ff77d2c8e",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "64ce59a96f6cfb6f9a2781a2836b845d03d1de3002c0699c98edc890fb855d56",
+            "call_id": "call_Frq3h4EmfPbkWNV6fnlTmTje",
+            "namespace": "pm_boundary",
+            "response_bytes": 6119,
+            "response_sha256": "27f99118bc10b819e9e3b195fd5c691266b600fead25849bbb339f2d22b16b58",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "8bdb324d678b7f1bfea8584675e5669e04cd8061dba905ecf2f666ecc3a06d07",
+            "call_id": "call_zBfJayTbnaEXHBCljdNw5x9I",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "10ce796a72dcaf0f937f347f1729b94e00b1d925a77a0b20157d05d6e97efa0a",
+            "call_id": "call_TTzp3KvClmAl8jabJj1S8LEk",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "e4238f5c3207cd9e85054e238525c2e712af05d0103b9059a31c99a54431569f",
+            "call_id": "call_0V41yZf04lDqlnKa4GZsTwu6",
+            "namespace": "pm_boundary",
+            "response_bytes": 42050,
+            "response_sha256": "6b739a13b437aa4bcf7eb2f016558846e488dd5cf0506ae527fb70eff46cda9c",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "d45e04cd1586c21758c850f6c10516d4706e5142001748d312f0dcd084b4fb1a",
+            "call_id": "call_8JSuTJbg3qpCqFMCVXIJa3yo",
+            "namespace": "pm_boundary",
+            "response_bytes": 9635,
+            "response_sha256": "5d81b9f0b149f8f178242bab51753d79da58c1b60897ddc61bfa441bd2246aaa",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "5f861e6b5a7d4c6fdef5849b1edcb3bbab0e448337febffd2671915165758b0f",
+            "call_id": "call_I6b5jcfSfNgz1VA88L1syevl",
+            "namespace": "pm_boundary",
+            "response_bytes": 4432,
+            "response_sha256": "07d334f3fa4cc8e69fd9a9c14f58e21d6e93b54dc79ae83e703aad6c865d6e12",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "9742917fec1f91f240fd46ce4dd58d7c4d64ac20a83a07ba31ba8908aab3ecc2",
+            "call_id": "call_JskIM6P7XshItijyHNgCE7uo",
+            "namespace": "pm_boundary",
+            "response_bytes": 40428,
+            "response_sha256": "064ee49f75d8f74ffa8578274622e793b75d63fe8553a336cddaca006d63fb3d",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "138e6b3b557948e16663683d131211633c3f31fb7b63f6006f53151898885db6",
+            "call_id": "call_d8f5becZDXlYRZMuCMRTUGsV",
+            "namespace": "pm_boundary",
+            "response_bytes": 2117,
+            "response_sha256": "fcdcd7b5d6bdea30fca4140d626346fab4a8a6cf028b35a12aceae0079c5c35d",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "85f174b033e1a847be41bd8411e9946d2bfc1f3e74caedb5e3bf078c3a97ac0e",
+            "call_id": "call_yNeWXjnbnGqtn0kImw62PJCp",
+            "namespace": "pm_boundary",
+            "response_bytes": 2120,
+            "response_sha256": "cba35694494c430c43215865c49cf75ce8ccd0dba8f2ae00fa948c022f7f5d3d",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "2f433830b39f9b2ea877165ae4ba934b24ba4704e9b992753cc24ebe5605f7be",
+            "call_id": "call_ucps0UsOrRsVbRzZrhd5cQCn",
+            "namespace": "pm_boundary",
+            "response_bytes": 87,
+            "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+            "success": false,
+            "tool": "mechanical"
+          },
+          {
+            "argument_sha256": "a4b99663664a8f2c1582c1ee1f2c22526fb7134b07155655063e605b75233476",
+            "call_id": "call_TczivQQDlDUNcJOYgykjWlYo",
+            "namespace": "pm_boundary",
+            "response_bytes": 2274,
+            "response_sha256": "8aa9760356190e940539804c1791ebbe42e2bdfca0905d0b85918b011065e43b",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "4a760d8cb91030456c7ca4bc5ad98dd0bbfeece5bfedf258a506669a888a2368",
+            "call_id": "call_X1TPFrlsv4TSRTbziuGLu6sz",
+            "namespace": "pm_boundary",
+            "response_bytes": 31527,
+            "response_sha256": "5b5b1e13a1c95d8eb26c30a5b6da5f01d82c15f37acf391d343c06046c0c1bf6",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "e96df8b6d53814b5c254f91283a19b8c4eb96af27c4e1efa11257c504d9f2391",
+            "call_id": "call_dB9OW9fQE9gxS2tLXZvK3eW1",
+            "namespace": "pm_boundary",
+            "response_bytes": 40763,
+            "response_sha256": "9e260fda177d57008f61f0954db2643af54f33ded5d41cae7934fec1740646fd",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "a634ee56a61f8639e8ee4f801e4c85ce3fcfc8832cf52df26a13edf403874128",
+            "call_id": "call_f1YKJCfwmLCz9HYM2eJAPpyL",
+            "namespace": "pm_boundary",
+            "response_bytes": 82,
+            "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "52b5d12da082262d0530b20ee0b557254279eddb9fa8ef1638e090534f9882fe",
+            "call_id": "call_PgemjCLI7mW5UN3CErSvqXdb",
+            "namespace": "pm_boundary",
+            "response_bytes": 14914,
+            "response_sha256": "1c88c446f6eff48b78869baf114bce8d5f68c5d92830196a80e9bbcfdf0a9009",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "37c2f5f9091b92fa15d6832a27d94d6e6d0ca0220f0810196f22cd55104bef87",
+            "call_id": "call_sAJ26r3YN5CQypV9kmMg6Dos",
+            "namespace": "pm_boundary",
+            "response_bytes": 21376,
+            "response_sha256": "f1e01de09abd97217ea7f52bae327c5f131311107b4a07dfa8ab58a0b0e0844e",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "c6b2eb9f6254104b544aaf3518041f086439419b9ea06485279efbd8181bacdc",
+            "call_id": "call_ho8iC1LvLhXAXHjix1ZArvPw",
+            "namespace": "pm_boundary",
+            "response_bytes": 17289,
+            "response_sha256": "5034244624f9ddc719aafb0827afbd7c6239c01b9180cc4181946864b2e3d480",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "b23b077f6533dee3f62af890cbabdaa9242be7382a9939522ca73898c978c569",
+            "call_id": "call_NTbmhgavmoZtJwZaQo1mm6eW",
+            "namespace": "pm_boundary",
+            "response_bytes": 26339,
+            "response_sha256": "ed2a732d60dabb211d42d76cb52d40b8ebf3218106c254bd0ca8de84a36e91fb",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "1bb173f26e33495db27cdd8a7ddc325283900572eb07ff609d645de783118aa2",
+            "call_id": "call_GTU8ViWHCBJaF3VO6CDlXnKm",
+            "namespace": "pm_boundary",
+            "response_bytes": 22764,
+            "response_sha256": "f737f6408874ad73521a56289766fd9f0774981cba92d20035af7246e7478ce7",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "e7c6946fd7e9dc273afd0100e26fa56a86efa305b9764f99e12a771c8dd2de6c",
+            "call_id": "call_bJuMYmmUx7QPLWAHqOpiHKB1",
+            "namespace": "pm_boundary",
+            "response_bytes": 2117,
+            "response_sha256": "3b9ac17a182df948c08771451fbefc798113de82c356ea179891cd1688cd86ea",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "ebaddbcae1405b5a7436bba263e8f563de509070402cf8df56bcb0e393e30c9a",
+            "call_id": "call_8je46juZ1LCkj6aAfNnzjEFI",
+            "namespace": "pm_boundary",
+            "response_bytes": 4816,
+            "response_sha256": "069565aa99c6e4f43e445796fa67a1e00823e5f5d1950b8792aa4dbc5902cc39",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "0b86c4809858edc31b981bb41324102a32fadfddb3e11edbd81dbb4ab99a4694",
+            "call_id": "call_dYeKAHlnv8BTNg4bhxdmjN7R",
+            "namespace": "pm_boundary",
+            "response_bytes": 2232,
+            "response_sha256": "d2e9d966835338b5ccafe1f91c1dae9fcd6f38d8bc03a64d3f2e7b5a1d5380b5",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "e370d0ef91d90645b042f0d029cbf96394170a486ca104e88c6f4e721a75d8b9",
+            "call_id": "call_cI0rJBCoJc0FIbteJybOOk2c",
+            "namespace": "pm_boundary",
+            "response_bytes": 40912,
+            "response_sha256": "7a5a236da86c5e659c510c98de63cadabe07ff99da22763952ebd7c225969a32",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "1fbb5ea21a9db4071c8662d65f67d399fcb1c7122424aab2d2e58ea6e88ef8eb",
+            "call_id": "call_6gNKi429nqgruwenuN6OOEpp",
+            "namespace": "pm_boundary",
+            "response_bytes": 6460,
+            "response_sha256": "8ffc37094fb3f8cea559706a3c014a247b5087db92aeb333814d9cf051812481",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "7ae6e1b1bfe83251f8a3a3c1f0a4c3ae135490b9f372bddc171f727982290324",
+            "call_id": "call_5UPlpURNxH6hFP1bRoPpwA7v",
+            "namespace": "pm_boundary",
+            "response_bytes": 2195,
+            "response_sha256": "aa3ccb98e333ab2d117498b9e198dd860346003f7eca7bd685fe541ebc77db7f",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "d5388585137756a3ba197d5a647541a81ff78e6c611b127abae90f61f323aa61",
+            "call_id": "call_HWMihFkOyII7vWxg2U42YQVh",
+            "namespace": "pm_boundary",
+            "response_bytes": 18793,
+            "response_sha256": "7ee2749e7746ff457499fdef336d5884d63296822d7f1b6c653fbc6ef59bd648",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "64266179fafe6033ec61c2cc1794706b4a6baff243c7e15a15cec36e29955733",
+            "call_id": "call_Z1jwesyMCs8c3bfaXy1wBEN3",
+            "namespace": "pm_boundary",
+            "response_bytes": 37140,
+            "response_sha256": "4806cd96bd5e7abe7f685653cc901cfcd26028eb0bd4c1aace950d8127a0b02b",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "5f3fa4c634896f268ec8ff52736985d0186e8ec21384276689bfdd46ab23e4ff",
+            "call_id": "call_PRW46bvguTWIJmMLHMr2rwnb",
+            "namespace": "pm_boundary",
+            "response_bytes": 5117,
+            "response_sha256": "2beea3b84b6a4e80d299be6df264484978d1789845238add38534499360b3f01",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "c7a468113d9cc0ffdef77428f52bfdf92503faa80899669c26f90dd1bf765868",
+            "call_id": "call_1VBJqIL1bBevHMDmbciXXC8X",
+            "namespace": "pm_boundary",
+            "response_bytes": 37227,
+            "response_sha256": "bfa24365bfc953783165467505dc128d2ce74039a3269329dce54993df458763",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "1e2ea8a3c2c9dc18a5cbc7e6c46b15ccadf175021fd3abe62dea971b03ec4655",
+            "call_id": "call_riOcs3njMZphY9CqSVr0yIdn",
+            "namespace": "pm_boundary",
+            "response_bytes": 8602,
+            "response_sha256": "6e7937d888c4d67218d70f7bb925697cc37cd51e2e97d2578154763831d8ce78",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "a6e4f7cacb5641865139e02e57a6f4b51c20096ec3d2dffcd1dc3c4dfe744869",
+            "call_id": "call_pdLJ4APKi5i4O2wqqSy5lzvi",
+            "namespace": "pm_boundary",
+            "response_bytes": 11008,
+            "response_sha256": "778adbe309fa36abfb92810aaa7e9d5770a13b27469681c0c3072b33c2b1269f",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "ee9b5e18aeba95ede0c011acbf4bc9cc2d4105be7fb98b997f43b3d9546b9ff1",
+            "call_id": "call_mPITzv5Aw8d0VFA74Rg4wDWf",
+            "namespace": "pm_boundary",
+            "response_bytes": 36794,
+            "response_sha256": "e7eaead377b1b7bccea13ce6066bc3e9c48e0a370fd242aa29928c63e773a37d",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "aee14753b3618a5efb1a8539841d0ca923e3254a17c6f143368fbc5c8ee995c9",
+            "call_id": "call_l0udoqSGbeSFPLaFWddfqIxU",
+            "namespace": "pm_boundary",
+            "response_bytes": 82,
+            "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+            "success": false,
+            "tool": "mechanical"
+          },
+          {
+            "argument_sha256": "e972c297582b2ccc97ba60ccc247a727ee3077b3c4cf48de2c7e67511a24f554",
+            "call_id": "call_PG9T56DukGiRAR2gTVQh87u6",
+            "namespace": "pm_boundary",
+            "response_bytes": 2376,
+            "response_sha256": "7b163b699d0f9d385a881a5b5bf639c5f924cff9f04caac1431d6160b40bb832",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "7141e2f8add26fad0e2adc98baa12eecbc946b846c9faee399bc082ac8ab9c67",
+            "call_id": "call_X2lQecDytA1sRFz6GwkVd6EP",
+            "namespace": "pm_boundary",
+            "response_bytes": 26196,
+            "response_sha256": "113acb2f8903175a9ba0879b9760965c97f012f9338766cc93211aa5841d0e97",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "ea3158e15d070e9709da3e61ee0d929396fa963b5d84aaa9000a8890c60360a4",
+            "call_id": "call_kJ22tRJ9q6bCnGXDeHYE9mW5",
+            "namespace": "pm_boundary",
+            "response_bytes": 11647,
+            "response_sha256": "21b809fc48c9da3383d7f389b982db91af78ebbfc30c78076af9b3dfd0b82117",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "120d8217dc2d9de19e51500114e6d1f94f9a47ad3d8ac75a867fe2adb9e3094c",
+            "call_id": "call_2HLdy1GlGd0ch6zxYcZ9dZBu",
+            "namespace": "pm_boundary",
+            "response_bytes": 40075,
+            "response_sha256": "fa9350580afa6d8a868b3b270d7aa62a9603c6da6d9469a2830ff46af416c347",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "ea2312036fca1daf90c90404e12ff0f186224bf97bbd0425a110991af6085664",
+            "call_id": "call_hVDzRB0YVjveRqgWIrvZ9cje",
+            "namespace": "pm_boundary",
+            "response_bytes": 40316,
+            "response_sha256": "2170b516b9307a0fd961df1a8ff3b36a0a58165366f4160bd7f6a5d058c613d2",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "a0cec664aa62e1af87756350745067adbe87d06018f6ce882fbd30d56ba3783d",
+            "call_id": "call_G6mtcyovAbwGYuUO4MjLI0ok",
+            "namespace": "pm_boundary",
+            "response_bytes": 25229,
+            "response_sha256": "a314589b84546bd703162a631fd9f08a1cc514ee1698e30c90be01ba2fe40cb3",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "a1dbf074690d1e32b7d6537571d7428cf87b17866cb7fe7f2416ca8dc31d9007",
+            "call_id": "call_ohm8QY8DSXr3NBA6lO1SPZ3s",
+            "namespace": "pm_boundary",
+            "response_bytes": 11647,
+            "response_sha256": "65b7b58ba19e87c1029fcac643a8a160898eb22fc7f37ff5d1a4015e51e2a958",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "46768aaaffa7a1eba0fa8041f33ac14acc08729485568f86068bb679da592810",
+            "call_id": "call_fgu0vZXm9eUw2DlnMdfhVRBW",
+            "namespace": "pm_execution",
+            "response_bytes": 2607,
+            "response_sha256": "c5b06158ebe23898044db2977f5f8a5500554398969e7d3ecb89bb1d999de097",
+            "success": true,
+            "tool": "python_execute"
+          },
+          {
+            "argument_sha256": "9ee43e46e9af2b383cb4f063e1541d1271a059b4f324a19c8439a56e4c459732",
+            "call_id": "call_szuTqArWNuIEFAOkrXAYiRvQ",
+            "namespace": "pm_boundary",
+            "response_bytes": 37647,
+            "response_sha256": "5307581150bad0709471be131a7d19ae8177485ad3844da023a5e90c8ca670ea",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "242cb05fce8228895f9448c851cc1e880795abc846f0ee8a69e5e290c36497cf",
+            "call_id": "call_MmUtUjtb21LiSLrSSToxSeTR",
+            "namespace": "pm_boundary",
+            "response_bytes": 10459,
+            "response_sha256": "94204795708ca8595b7cfe050ee635f2d757946fda5c332fcf0423b4070917a3",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "ddf85d02258928e96e6132baf303ea3a8a578b52a85f9b974d7e449cfc16395c",
+            "call_id": "call_A7NZk1tsgCYZLAhVfjWOmpZ1",
+            "namespace": "pm_boundary",
+            "response_bytes": 7386,
+            "response_sha256": "f8e88a919a651394c91aa2375e693fc8094aedd344bec3b81ead1ca862d86bc5",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "6663f529ebdbc54158d2bd3d35afb6a1afa9cc564df83deada44088871028496",
+            "call_id": "call_tKIrN5Iu5t4QaUv9K1YYu8Xa",
+            "namespace": "pm_boundary",
+            "response_bytes": 31371,
+            "response_sha256": "c8fd09a5a0b3d9445014721a82ce39ff3e6a12569667a9f4731f7e20edaf5361",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "6c6c064da65c41b5b3e489f70016184e8a42b0dcfaba9a58ccd6bedd6ad99f0e",
+            "call_id": "call_9RK2atIiCAfFKyrw6NIWPImN",
+            "namespace": "pm_boundary",
+            "response_bytes": 10765,
+            "response_sha256": "7517200be66c11747a60ebf0f3f8acb76a3f6a70722d3184d9c449af41440468",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "c4e729ded70f4c2cf6d0c05d699ae12e9a820546de77172e0fb817d83dd00c2d",
+            "call_id": "call_NiYejJOFY0U1ZTopi5vpRneG",
+            "namespace": "pm_boundary",
+            "response_bytes": 7088,
+            "response_sha256": "45d3362ae431256f9dbe55b61d564165d4dc8e355d57482aad78ed68bfaf98e3",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "e66572c0477bd2f54dbfa5a03e45a21ff104fede4736507ebced6ba3e76cc76f",
+            "call_id": "call_zfl4Votq6W1EljPRc9mWItwg",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "446b6ead6a4babf7b1f240571566e14542dbff9609289fcdf85a7c83deb5409e",
+            "call_id": "call_XDOi3m6Z97ufU07U27MOex93",
+            "namespace": "pm_boundary",
+            "response_bytes": 36492,
+            "response_sha256": "8fc6d941e4bb8b2b7b35524206e647dc8f03eb91f71f3ed362d0087236a7c62e",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "95dbc07655a67869cbcdd71676442d7f28de4355d7bb3d6ae9b5b748a547125e",
+            "call_id": "call_GPBhLI2gHWrov58Do2baOQQQ",
+            "namespace": "pm_boundary",
+            "response_bytes": 248,
+            "response_sha256": "49659cf70ff8eb3be8a47735a8b629f774b4da9de0990218af2ee6dcbe6da8f8",
+            "success": true,
+            "tool": "write_file"
+          },
+          {
+            "argument_sha256": "31d44109a0c2449816dfd6384590aac96ae1051e0a26482d01ad9c61f6818fd8",
+            "call_id": "call_zXEWDcUtear4mNTksIIzXPw5",
+            "namespace": "pm_boundary",
+            "response_bytes": 249,
+            "response_sha256": "16718b929aeed678bdc46e699aaf28d05a5962efffa1c5532a39521c9e8aedc8",
+            "success": true,
+            "tool": "write_file"
+          },
+          {
+            "argument_sha256": "6c6c064da65c41b5b3e489f70016184e8a42b0dcfaba9a58ccd6bedd6ad99f0e",
+            "call_id": "call_iCXMOOQATD6HdQc7MKvhrjL1",
+            "namespace": "pm_boundary",
+            "response_bytes": 10765,
+            "response_sha256": "5d816774cd72b03ff08939bed080f7b37409cc72376573955771301744f06720",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "242cb05fce8228895f9448c851cc1e880795abc846f0ee8a69e5e290c36497cf",
+            "call_id": "call_vJauge9t6jHxi3tiW7pJdZOd",
+            "namespace": "pm_boundary",
+            "response_bytes": 10459,
+            "response_sha256": "e9e4fa38e6dfaaac1b4f16feb3aa35e964f70de7a33cd8f7e0a451eff260f7a8",
+            "success": true,
+            "tool": "public_https_get"
+          }
+        ],
+        "closed_before_original_total_stop": true,
+        "direct_native_goal_status_before_cleanup": "active",
+        "direct_native_goal_status_final": "active",
+        "elapsed_seconds": 883.350651443,
+        "error": "bounded RPC thread/goal/get",
+        "error_class": "TimeoutError",
+        "held_process_exit_code": 0,
+        "host_record_sha256": [
+          {
+            "component": "host-process",
+            "sha256": "de6feb6ccb8d11c638295ac10ca771709d2f5c844c908f3c84f651ad1090bee6"
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "sha256": "d2eecb10ec8f0365dddc3a0ab587b026bbc1bd6d1a69a545187e9c5d948cf4b6"
+          },
+          {
+            "component": "pm_execution-host-process",
+            "sha256": "7f97ff0e1a13cad902512997f3d3d4026028e631b66d501dda2254b4715b2766"
+          }
+        ],
+        "last_direct_goal_status": "active",
+        "metrics_positive_projection": {
+          "candidate_goals_set_by_host": 1,
+          "component_outcome": "HOLD",
+          "cost": "UNKNOWN",
+          "fresh_session": true,
+          "goal_replacements_observed": 0,
+          "goal_status_final": "active",
+          "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+          "goal_tool_completed_counts": {},
+          "host_followup_turns_started": 0,
+          "host_initial_turns_started": 1,
+          "native_http_attempts": "UNKNOWN",
+          "native_model_response_cap_enforced": false,
+          "native_owned_continuation_observed": false,
+          "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+          "native_response_policy": "wall-goal-token-observation-v1",
+          "native_responses": "UNKNOWN",
+          "native_turns_completed": 0,
+          "native_turns_started": 1,
+          "requested_effort": "max",
+          "requested_model": "gpt-6-luna",
+          "tool_attempt_counts": {
+            "pm_boundary.mechanical": 2,
+            "pm_boundary.public_https_get": 42,
+            "pm_boundary.read_file": 9,
+            "pm_boundary.write_file": 2,
+            "pm_execution.python_execute": 1
+          },
+          "tool_completed_counts": {
+            "pm_boundary.public_https_get": 42,
+            "pm_boundary.read_file": 5,
+            "pm_boundary.write_file": 2,
+            "pm_execution.python_execute": 1
+          },
+          "tool_failed_counts": {
+            "pm_boundary.mechanical": 2,
+            "pm_boundary.read_file": 4
+          },
+          "usage_notification_count": 59,
+          "usage_totals": {
+            "cachedInputTokens": 5287936,
+            "inputTokens": 5623539,
+            "outputTokens": 34311,
+            "reasoningOutputTokens": 21756,
+            "totalTokens": 5657850
+          }
+        },
+        "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; session/thread target not opaqueGoalID",
+        "original_actual_quiet_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "outcome": "HOLD",
+        "owned_quiet_proof_projection": {},
+        "physical_provider_payload": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "saved_goal_set_fields": {
+          "createdAt": 1791240858,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791240858
+        },
+        "selected_native_model_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "turn_statuses": [
+          {
+            "method": "turn/started",
+            "status": "inProgress"
+          }
+        ]
+      },
+      "native_sha256": "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad",
+      "stage_sha256": "b1b4f2199a5d6055723e99c785bc78011d45d735d858451401d34fae05ad2a10"
+    },
+    {
+      "actual_admitted_input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "6f60c2a231666d0e3bf29462b6338f71e6af268f334d4f6c4897cbe6b2a40f83"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "alias": "B",
+      "arm": "treatment",
+      "current_actual_execution_ids": [
+        "exec-355qspvm"
+      ],
+      "exact_current_accountant_row": {
+        "actual_family": "Luna",
+        "all_owned_scopes_quiet": null,
+        "arm": "treatment",
+        "attempt_id": "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "client_tool_cgroups_quiet": true,
+        "client_tool_owned_processes_quiet": null,
+        "client_tool_process_groups_absent": true,
+        "end_utc": null,
+        "execution_units_quiet": true,
+        "held_owned_processes_quiet": null,
+        "held_process_groups_absent": true,
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 5581056,
+          "input": 5888629,
+          "output": 29643,
+          "reasoning_output_subset": 23139,
+          "total": 5918272
+        },
+        "native_cgroup_quiet": true,
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "native_goal_status_observation_time": null,
+        "native_goal_status_selector": null,
+        "native_goal_status_source_sha256": null,
+        "native_start_proof_basis": "DIRECT_NATIVE_ACTIVATION_RECEIPT",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.452693902,
+        "operator_declared_native_goal_starts": 1,
+        "owned_scope_observation_epoch": null,
+        "owned_scope_supplement_quiet": null,
+        "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_sha256": [
+          "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895"
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "supplemental_permit_release_confirmed": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 50
+      },
+      "freeze_sha256": "2ba514f1c9b5596ea8c3cb10aff1d499ffd79ef381508c7d6b9a40b2b6899130",
+      "history_rule": "onlyexactCURRENT selectedstage metadata; no priororiginalreview/grade/native/exec substitutions",
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001",
+      "native_positive_projection": {
+        "all_failed_boundary_calls": [
+          {
+            "argument_sha256": "f2f650c59d8181a5e462936d96f8445101da9492183a78ef729acf76cbf6cd30",
+            "call_id": "call_UQevekSyMbMbVbubI1HGLS5R",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "86a39cd13ac364f28dedc7bad22ea06137319d78e69f1899698f544e99fff080",
+            "call_id": "call_c55S6oQ0XTtbRZ2h0cL6Llwn",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "c676c7aeff35fb9c953d0717bb64ea1e25b4008fcc312e5858f422057e46c39e",
+            "call_id": "call_BdoFp3VqyEUyZ4uv7tN6dnZ9",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "e0c2c2ca7b5400345339d4031173c8ce3baaecc1d8792fb14b166fef604226d6",
+            "call_id": "call_Y4O3Lt3lUxsGPIKssVjO8ygq",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          }
+        ],
+        "all_owned_scopes_quiet_if_saved": null,
+        "boundary_call_metadata": [
+          {
+            "argument_sha256": "ebc9e126a404aa2f57ab30e2a6bb9e7afce545ab10e768a9deea8893d1682865",
+            "call_id": "call_nf4rpVbkifHD2jDN94EbNrzF",
+            "namespace": "pm_boundary",
+            "response_bytes": 1133,
+            "response_sha256": "2f9f73af5ce66d727d0e73e2dd0f3839d19d42eca4e0cc83ae5282cbe878c914",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "ec83e1860774cf6b77b715626f9157839d352edbafbacc319b6a75e165a946d6",
+            "call_id": "call_8w2WAUGmvoX9OHHr2EavoMkQ",
+            "namespace": "pm_boundary",
+            "response_bytes": 6118,
+            "response_sha256": "bb1dd176748baa26bfe48abdcbd1354ff4eccadca75dfdd9d85d563b23d35288",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "ff7c453128c20c2b20218c17daaec7b8410dcec761b9531c2c84739c3cd359ed",
+            "call_id": "call_uJeGrpZ4HIiROcCBQ5Hr8nSL",
+            "namespace": "pm_boundary",
+            "response_bytes": 2243,
+            "response_sha256": "f3951504b15ac2755f7d988b12481370c9b6918728521e3f62a96e7cb59dd367",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "e36a12253fd3834eb0e93a375c0856ba9b68799f223452c2261076379bb23f17",
+            "call_id": "call_Yghczlo8HvrY84ajFaeP9Oen",
+            "namespace": "pm_boundary",
+            "response_bytes": 2825,
+            "response_sha256": "4f3a8171c289312e37c0f87518524a25b0b185699cdc9da922173982338330fc",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "a0f76be1212c2b695cd82373c182a025336cab2bda68c323bab3d925f288b537",
+            "call_id": "call_h5EarDb6Gc6psr5Je255MIbh",
+            "namespace": "pm_boundary",
+            "response_bytes": 21923,
+            "response_sha256": "6c4109fe5ff0a5c83ad740ab1eddfa8ae5a03bb921583cb48ce56cfe0e24940f",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "6b539808176d09a2e86c92c12f1d643380ed8f36aca7577e30a641b1732ec488",
+            "call_id": "call_olsSs6bkUxEVEfY7MR8ZoWVD",
+            "namespace": "pm_boundary",
+            "response_bytes": 6772,
+            "response_sha256": "b02e8d351a6ba0701496cf39cf221dd0a465c377d63a489760261313628f1ecb",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "1472ff431e67ba648c2d0be3e9ba832bc2c571a0688998fc5eef0e3ffb7b130b",
+            "call_id": "call_4tudVkw4vYATc0K9EKp0IN8G",
+            "namespace": "pm_boundary",
+            "response_bytes": 44365,
+            "response_sha256": "015739fa0a036e8ef7d3848a720479c4fc59140ac93965cc8aa94a89151d5ffb",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "f304d3fa5ebdca94e5dfe52696785f680dea122b7e115478e30caf59305973d1",
+            "call_id": "call_cKgDtVwc7OUwv0bXSformDjj",
+            "namespace": "pm_boundary",
+            "response_bytes": 37660,
+            "response_sha256": "1d3487a48d9cb59af0a1655c38230d1797ae8925ec1f63454374dfbfaec18a45",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "937e8eb25f205c3faca31af34ad153d7d05e0cec755daaf0bed68407999c9371",
+            "call_id": "call_KYD7SxH5G0XEkzzbExAl088d",
+            "namespace": "pm_boundary",
+            "response_bytes": 34356,
+            "response_sha256": "7dca6685a1f38e9a9288632a5689a870a2cca26fd305956c29d76980d34e61da",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "005cb0779510cbcef44c444c0910db52859a13757dfa4b715c0e9e261a5b1397",
+            "call_id": "call_ybLTi9oxvPujD7luqimAwW2p",
+            "namespace": "pm_boundary",
+            "response_bytes": 7127,
+            "response_sha256": "a6c70ece755792bfdf6fef66e8c0a26269e516e781ef3d3983eb651c98b5ca49",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "22c84ccc7963705b2eb53006637c7d3f67aa4aa99ba6413f29f5c71a7a773f11",
+            "call_id": "call_vWJAXfYuX3tP4mt0kOi9wanc",
+            "namespace": "pm_boundary",
+            "response_bytes": 30982,
+            "response_sha256": "ae0040ac6dd3404131fb2b3f1e1f23f94fc6d8465a3ef6c2b27be4abcfdba832",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "bacc6936b5700fee694cbbe98506082a5df3f17efc23c94b990726fe1c742709",
+            "call_id": "call_YZKhEwqICArmp7nHmeKXfiJ2",
+            "namespace": "pm_boundary",
+            "response_bytes": 26965,
+            "response_sha256": "dcd95a545e7f5abe68470e9c0092d281f47e483d0e29fc71fd34c69436b249a7",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "56646729050eac8fbc10baa3a9d5537a4a2e5e6c5a146c4da97694c6e8ccacc9",
+            "call_id": "call_v2PDwXE6tQiGlXQKxwJKsla3",
+            "namespace": "pm_boundary",
+            "response_bytes": 35329,
+            "response_sha256": "c7269aef5a6d2ad535d763679a94d2515c4d040f4cbdf2c54065c097a5cbf93e",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "048606fe2cf048da30a4f93ece487d42c8d13628eb4577fa9d0dd49b1799abb8",
+            "call_id": "call_r0eD5IcBxQyFPOCwVQd0oaET",
+            "namespace": "pm_boundary",
+            "response_bytes": 7299,
+            "response_sha256": "ee933ece17bdb845e63622e2cb22afd94f6f87a4eb0dbeb336a4d082c4b02fe5",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "5e77ef30fe68e48ce5ee41ebc954566f8d6c3c1bebf17fc71c2cf99d352f80c1",
+            "call_id": "call_sAS0vzTn4VOUt3grvXcfADPm",
+            "namespace": "pm_boundary",
+            "response_bytes": 39487,
+            "response_sha256": "9b1b6195b37a6ccc5889476268829462b83fbd952a8a09d66ad3b54cdeb0a47b",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "2deba2b09728100d85331cbce4d613d47403a4fbfd83ea626a6ebd60ebb391c8",
+            "call_id": "call_AGkNMyexTYVPuWMuZbU4zMOP",
+            "namespace": "pm_boundary",
+            "response_bytes": 40456,
+            "response_sha256": "db4e8e462107e4a14e65463b4cda8e70e7f391cb41d60cce533cf3e5e8b6f903",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "243e115e70358db799444ea2bdca738fe64985d47568b73cbcfc98c45122c52f",
+            "call_id": "call_neWPIpD36MQ6ZCiefAh9eUw6",
+            "namespace": "pm_boundary",
+            "response_bytes": 7073,
+            "response_sha256": "8e7ae197523f6a214293908075e51ef62e8efd4732ecf41ee4368b5aef2440b6",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "7f06f4c5c574495310134ad930a2659a541ffd629ed6dd12a86cc5dd23fe779d",
+            "call_id": "call_sVe3dOxogghl2mRnRMdNef3U",
+            "namespace": "pm_boundary",
+            "response_bytes": 2072,
+            "response_sha256": "6458b6f5816f34621e077e456a431aef374ddd3547dd5729dceeaade154a31ac",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "8b123ab3ccbb1a88563b32c4f7ec7b748d093a3497173e551345433f61106ee6",
+            "call_id": "call_PHGAPfNldVl1UiombOMtbkVz",
+            "namespace": "pm_boundary",
+            "response_bytes": 17751,
+            "response_sha256": "02a1b905f2c78c50487b6fec0afde07ee888ade63ea3a5ae94c3b5eee5d5a080",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "c891c346982e75e4f8488f0cdf37e3045e3195f4d3d1e76d2de1b8e37aeac350",
+            "call_id": "call_li8CrdO3UZR2SgGxSV77LFns",
+            "namespace": "pm_boundary",
+            "response_bytes": 4132,
+            "response_sha256": "f9ec15b0fe55abab72bddd14ed1ad199d081c2721ea05b271047545b38eecdd9",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "3c4069b4affbaab258de96769b125c3db6f88300953342f753597f8cf5db8818",
+            "call_id": "call_nMtYp9azpcoJSKwIdmjq5mqT",
+            "namespace": "pm_boundary",
+            "response_bytes": 10712,
+            "response_sha256": "af17a0548d3c9eca8565dede2d2c57c9a502a5e075d1f1593d2cec5119273c22",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "4c42668840806e3f3b55e9c8ec52a7b1f571096d2e91aea1c77f3fe14f7b26f3",
+            "call_id": "call_Jx3H6xifYB9XaiWtgWPjfsX9",
+            "namespace": "pm_boundary",
+            "response_bytes": 16432,
+            "response_sha256": "51d8f7138282b78d93679d1985f4b5d7195745895ebca8cac0f24789f217f5c5",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "17d9dd09649d3412d15dc09bbc63fa18fcd32dc155fc34857ca28a8c8eeb7296",
+            "call_id": "call_uMpNOUheZOO9WT7oREdDHvK8",
+            "namespace": "pm_boundary",
+            "response_bytes": 38269,
+            "response_sha256": "4b1cd1c0bb73872830e386d468a8c472864dd957783ab221a95799ea4060ca77",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "a7bfa3263c76a5958710404ea8f3c3a33b453765fd7a6c996b58871fe93df969",
+            "call_id": "call_19n2GlU2K1WnYFMnDU0PiAIV",
+            "namespace": "pm_boundary",
+            "response_bytes": 16288,
+            "response_sha256": "dacb5f16e2404b081c7ec1690c125d6b9544a7ffbfbef9be907a30f1c172a0d3",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "fd92248411bf7d49fb22a28a5724a0a3d08c1929e6c6fa26df197d07b1db5748",
+            "call_id": "call_ZxiKVaylHmVbDJi9R03wySew",
+            "namespace": "pm_boundary",
+            "response_bytes": 39239,
+            "response_sha256": "57aa42020e660920422b4bea1f5be1877950296be952cd11e83e3933c4260fbe",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "0c5022c5ee8e63cf703a9fe2202c141452e8addce9ea3d782016320085fcf7cc",
+            "call_id": "call_Z9mHPwQ1kVvGZlopmnaURSuQ",
+            "namespace": "pm_boundary",
+            "response_bytes": 390,
+            "response_sha256": "948204b14ee4f3116d8ab96aad25d4350dd222fb36a7b7ea6d9b4530908f0cb1",
+            "success": true,
+            "tool": "mechanical"
+          },
+          {
+            "argument_sha256": "77ed7157a598f99a2b6eaf9c145f96bf6f1de3aad22f6cabc05963adfc7d0cda",
+            "call_id": "call_7uPHmPWllvuzz3zmMcoF3PYS",
+            "namespace": "pm_boundary",
+            "response_bytes": 730,
+            "response_sha256": "40d38286c1500a366f387a3eac9cc3968a968a15c0f224a3f127afa343f5aef8",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "9fba1e7c317c783c5777034b6e42e3e2489dec1ac32645ca74c185790a968ad6",
+            "call_id": "call_bkel7Ks4j9Ygaelf4qdzbk7F",
+            "namespace": "pm_boundary",
+            "response_bytes": 4690,
+            "response_sha256": "918117c7d8342a72a3cbc118ff16826ef160ceceeff89ef085c1ac0349a02811",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "1089f690988f07f273631e7c80b20896f6fba8e49e8c93d46f87edc1311b45b9",
+            "call_id": "call_QYC6uVBULG83rtqAq47esa9l",
+            "namespace": "pm_boundary",
+            "response_bytes": 11834,
+            "response_sha256": "9e74a8aa5764a13c2fbd911930f1d980ad5191d833537f4ab3f3abd7ee0864ad",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "aca69cc1e8859dc287c0043d61be4212282eb025b94db45644510bec82f0606d",
+            "call_id": "call_2TSmHXJp2GwsR3VbmqbglKSc",
+            "namespace": "pm_boundary",
+            "response_bytes": 36704,
+            "response_sha256": "a9cff9a3d20f9319ebb056665382834fc2ed96bc255a681aabde7595ec738b43",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "6b77bb4e672fdbb4133c593a4363312cd9c079e1e16d0de2ade83235b50523e4",
+            "call_id": "call_EAzw3957B2DPVg1C50gniwM0",
+            "namespace": "pm_boundary",
+            "response_bytes": 17490,
+            "response_sha256": "e4918d8168841c292859d28cc0ecd8a8787df2b890526071280eefbcba5e9b14",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "7bf99e7ab3fa956030a4fd1b004a5c57aa4606b967f21c5b8d1c4fc427904ae5",
+            "call_id": "call_ontSq7DoawFZ4rX0AmQiViHX",
+            "namespace": "pm_boundary",
+            "response_bytes": 37267,
+            "response_sha256": "c2a33731fdb43d30c608e0b8a815e68ffb2ea8c67a900de9569613dbb1f1e499",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "f51033b1af02a090595666761e49ea940754571c7c9289c86e051e9e727ad013",
+            "call_id": "call_VpsXXcsjPRVtKFh4cfB7DFBM",
+            "namespace": "pm_boundary",
+            "response_bytes": 5032,
+            "response_sha256": "52c6d23641dfd3812df4846bea3620ee715456fdcc3216f08ca9fac7c4ca5117",
+            "success": true,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "407d4e462561aa412e2b5628cec6d5c63686be11f1fd66d61bc961a218c415a0",
+            "call_id": "call_fmh5hPO4FITGf8kaRndL3Xo4",
+            "namespace": "pm_boundary",
+            "response_bytes": 6580,
+            "response_sha256": "3cdc13edd2d4739f917009899ee47f495151cb4e4a90f260ddd04207b1e8affc",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "9ee43e46e9af2b383cb4f063e1541d1271a059b4f324a19c8439a56e4c459732",
+            "call_id": "call_ChMdqMj4OlbxglJjFiLvEtvl",
+            "namespace": "pm_boundary",
+            "response_bytes": 37647,
+            "response_sha256": "dcfae1c8b27f8f14956d6ac66f0972c953f0c8f930b047fe01efdc67616fc6d7",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "76ccbdb2a298fb39659553ffad095e2625fc1f79b4966a155465eca696293d69",
+            "call_id": "call_AzfD2GvBpruOqSKZ8GiNF0Xk",
+            "namespace": "pm_boundary",
+            "response_bytes": 37202,
+            "response_sha256": "1b1fd772b355e667b75600510fdd860c58513ad396e7563e9c530b63b4b6f430",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "49eadd035ae5eba30914f578ec9741687b3d9eccdfa188a8bb5679fc9c408246",
+            "call_id": "call_BFOkq063m2xWCBEcvRBO9O0z",
+            "namespace": "pm_execution",
+            "response_bytes": 2412,
+            "response_sha256": "e3a20b87c68e123e0881d3f8d8ab768d11a55e0b023b7b34710e5e00d214cad9",
+            "success": true,
+            "tool": "python_execute"
+          },
+          {
+            "argument_sha256": "70fec6ca981e1ca0a720d94647f4274b52b5de211f6b9be6ccbe853753b7e0d2",
+            "call_id": "call_OAUjj90ijJtZqdRSuGaA5nfL",
+            "namespace": "pm_boundary",
+            "response_bytes": 6061,
+            "response_sha256": "cfa7d10845d820dcf627d9d48a344f0e7eec7fa3ea877a1aefe1890ede51ca05",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "315f41299189ec5c1f5e3f3d5494d76f01aea52a002e43c0b07809df9075f4d0",
+            "call_id": "call_kjGTCg8NwRCUbdv15HVFuQOA",
+            "namespace": "pm_boundary",
+            "response_bytes": 24192,
+            "response_sha256": "c269870584cef1e8ba42c78c5011b4ec0ef8f026e49e805aefa4a1788d384006",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "f2f650c59d8181a5e462936d96f8445101da9492183a78ef729acf76cbf6cd30",
+            "call_id": "call_UQevekSyMbMbVbubI1HGLS5R",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "86a39cd13ac364f28dedc7bad22ea06137319d78e69f1899698f544e99fff080",
+            "call_id": "call_c55S6oQ0XTtbRZ2h0cL6Llwn",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "c676c7aeff35fb9c953d0717bb64ea1e25b4008fcc312e5858f422057e46c39e",
+            "call_id": "call_BdoFp3VqyEUyZ4uv7tN6dnZ9",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "e0c2c2ca7b5400345339d4031173c8ce3baaecc1d8792fb14b166fef604226d6",
+            "call_id": "call_Y4O3Lt3lUxsGPIKssVjO8ygq",
+            "namespace": "pm_boundary",
+            "response_bytes": 89,
+            "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+            "success": false,
+            "tool": "read_file"
+          },
+          {
+            "argument_sha256": "f8b24de115db7dd7ce35e11f7bed5988a80534330feddb71df6c5317e90cacfe",
+            "call_id": "call_kyD0AOxYwTTHWOsJoHgT57zJ",
+            "namespace": "pm_boundary",
+            "response_bytes": 40434,
+            "response_sha256": "c872fb1d55d6405fbb0383a3ed5d7f930993cbd69b9c87c66720481584788211",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "afcb589b58382562ee344a5f4f8f0d33eb598c3d87833b8033183469c5ff2f1f",
+            "call_id": "call_aZk3WXtTJYGSJIsRlVYCZVax",
+            "namespace": "pm_boundary",
+            "response_bytes": 2120,
+            "response_sha256": "7e8466dcdd4858ce4d0b6153b98d5db34f515fcb4b6bfce67643d125f196072f",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "35fde45757c6a7859a48bc9997a27971391647df6d54dbe3ebf95a91f544bf3a",
+            "call_id": "call_y5LYTHbZf19Dx94q2DMnHvid",
+            "namespace": "pm_boundary",
+            "response_bytes": 10745,
+            "response_sha256": "105e1f426944ee7c24befa99ae0d2026eb8cc9318ca4beda211e64bc30448872",
+            "success": true,
+            "tool": "public_https_get"
+          },
+          {
+            "argument_sha256": "458dea333262451508e4ab8f94d2ad38bac86b4aef84042c33dd2138e29b3670",
+            "call_id": "call_MYNR7uhzJ69ZixKxNNZWQsSc",
+            "namespace": "pm_boundary",
+            "response_bytes": 248,
+            "response_sha256": "1e5dc3ac6bd616211d1d8a479bc5a50ae1fa95772dd49bb728df2df746c95bfa",
+            "success": true,
+            "tool": "write_file"
+          }
+        ],
+        "closed_before_original_total_stop": true,
+        "direct_native_goal_status_before_cleanup": "active",
+        "direct_native_goal_status_final": "paused",
+        "elapsed_seconds": 885.452693902,
+        "error": "original native stop reached",
+        "error_class": "TimeoutError",
+        "held_process_exit_code": 0,
+        "host_record_sha256": [
+          {
+            "component": "host-process",
+            "sha256": "3bd138c67628e2fae9b46248527bcf8ef7c47395507f3e05c36303bf1819c719"
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "sha256": "27567ae80dc53ccb8157e4c18a4d717f32fa2558e2a6982da9735bed32886dbb"
+          },
+          {
+            "component": "pm_execution-host-process",
+            "sha256": "12eefbe98c203b184059a912c2ca47e98ef967e831357a43b70d671b073350f0"
+          }
+        ],
+        "last_direct_goal_status": "paused",
+        "metrics_positive_projection": {
+          "candidate_goals_set_by_host": 1,
+          "component_outcome": "HOLD",
+          "cost": "UNKNOWN",
+          "fresh_session": true,
+          "goal_replacements_observed": 0,
+          "goal_status_final": "paused",
+          "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+          "goal_tool_completed_counts": {},
+          "host_followup_turns_started": 0,
+          "host_initial_turns_started": 1,
+          "native_http_attempts": "UNKNOWN",
+          "native_model_response_cap_enforced": false,
+          "native_owned_continuation_observed": false,
+          "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+          "native_response_policy": "wall-goal-token-observation-v1",
+          "native_responses": "UNKNOWN",
+          "native_turns_completed": 1,
+          "native_turns_started": 1,
+          "requested_effort": "max",
+          "requested_model": "gpt-6-luna",
+          "tool_attempt_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 34,
+            "pm_boundary.read_file": 10,
+            "pm_boundary.write_file": 1,
+            "pm_execution.python_execute": 1
+          },
+          "tool_completed_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 34,
+            "pm_boundary.read_file": 6,
+            "pm_boundary.write_file": 1,
+            "pm_execution.python_execute": 1
+          },
+          "tool_failed_counts": {
+            "pm_boundary.read_file": 4
+          },
+          "usage_notification_count": 50,
+          "usage_totals": {
+            "cachedInputTokens": 5581056,
+            "inputTokens": 5888629,
+            "outputTokens": 29643,
+            "reasoningOutputTokens": 23139,
+            "totalTokens": 5918272
+          }
+        },
+        "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; session/thread target not opaqueGoalID",
+        "original_actual_quiet_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "outcome": "HOLD",
+        "owned_quiet_proof_projection": {},
+        "physical_provider_payload": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "saved_goal_set_fields": {
+          "createdAt": 1791243100,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791243100
+        },
+        "selected_native_model_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "turn_statuses": [
+          {
+            "method": "turn/started",
+            "status": "inProgress"
+          },
+          {
+            "method": "turn/completed",
+            "status": "interrupted"
+          }
+        ]
+      },
+      "native_sha256": "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895",
+      "stage_sha256": "fd54e01b6b4d3ab448e30786e19d0a498a0b9ef3aecc1e1c8343b1d65d38401e"
+    }
+  ],
+  "counter_rule": "preserveprovider/cache/UI/rootdefinitions; notdoublecount/sum/priceUNKNOWN",
+  "evaluation_id": "independent-targeted-2",
+  "no_clock_reset": true,
+  "no_source_grade_rewrite": true,
+  "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+  "phase1_freeze_sha256": "951be103b98ccea4cda0a4984efdf686f317aef62b342cfd9490649f5a2e20cf",
+  "private_projection_sha256": "51032b9eb8b714b678720568acc1cd1068530f0171073d533267ca99f8661ae4",
+  "redactions": [
+    "private absolute paths",
+    "unit/cgroup/PID ownership identifiers",
+    "native session/thread identity",
+    "private key locator"
+  ],
+  "released_utc": "2026-10-06T02:52:37.867481+00:00",
+  "schema": "er9.public-current-paired-phase2-projection.v1",
+  "source_accounting_cohort": "cohort-011",
+  "source_accounting_sha256": "1a1093611b3243c14391a16b62fb35096a194f3befbb46c6a57bd8ab58b7bf0b",
+  "source_judgment_sha256": "88b0818fcd1de0c85b545a5fd87c28f00c18d732d23242a233bb9aab0ac354bd"
+}

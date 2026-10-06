@@ -1,0 +1,96 @@
+{
+  "clock_reset": false,
+  "evaluation_id": "independent-targeted-2",
+  "events": [
+    {
+      "event": "outgoing_handoff_before_tool",
+      "monotonic_ns": 85960711748353,
+      "selector_sha256": "3454f73fb7b066668af5c3b9f01d5cba3fbd77650cbfa46a14a0f14104cd7d38",
+      "target": "/root/publisher",
+      "utc": "2026-10-06T02:59:01.854691+00:00"
+    },
+    {
+      "event": "outgoing_handoff_tool_completed",
+      "monotonic_ns": 85976825587484,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root/publisher",
+      "tool_send_returned_success": true,
+      "utc": "2026-10-06T02:59:17.968543+00:00"
+    },
+    {
+      "event": "outgoing_handoff_before_tool",
+      "monotonic_ns": 85976825654527,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root/cost_accounting",
+      "tool_send_returned_success": false,
+      "utc": "2026-10-06T02:59:17.968652+00:00"
+    },
+    {
+      "event": "outgoing_handoff_tool_completed",
+      "monotonic_ns": 85993315127877,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root/cost_accounting",
+      "tool_send_returned_success": true,
+      "utc": "2026-10-06T02:59:34.458076+00:00"
+    },
+    {
+      "event": "outgoing_handoff_before_tool",
+      "monotonic_ns": 85993315203060,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root/frozen_exports",
+      "tool_send_returned_success": false,
+      "utc": "2026-10-06T02:59:34.458200+00:00"
+    },
+    {
+      "event": "outgoing_handoff_tool_completed",
+      "monotonic_ns": 86010686962213,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root/frozen_exports",
+      "tool_send_returned_success": true,
+      "utc": "2026-10-06T02:59:51.829902+00:00"
+    },
+    {
+      "event": "outgoing_handoff_before_tool",
+      "monotonic_ns": 86010687062994,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root",
+      "tool_send_returned_success": false,
+      "utc": "2026-10-06T02:59:51.830057+00:00"
+    },
+    {
+      "event": "outgoing_handoff_tool_completed",
+      "monotonic_ns": 86071066102380,
+      "owner_acknowledgment": "UNKNOWN",
+      "target": "/root",
+      "tool_send_returned_success": true,
+      "utc": "2026-10-06T03:00:52.209000+00:00"
+    }
+  ],
+  "final_required_handoff_complete_measured_utc": "2026-10-06T03:00:52.209621+00:00",
+  "final_required_handoff_complete_monotonic_ns": 86071066610244,
+  "no_ack_wait_past_deadline": true,
+  "original_start_utc": "2026-10-06T02:38:16.910800+00:00",
+  "original_whole_deadline_utc": "2026-10-06T03:08:16.910800+00:00",
+  "owner_acknowledgments": {
+    "/root": "UNKNOWN",
+    "/root/cost_accounting": "UNKNOWN",
+    "/root/frozen_exports": "UNKNOWN",
+    "/root/publisher": "UNKNOWN"
+  },
+  "phase2_overrun_seconds": 0,
+  "required_outgoing_handoffs_completed": true,
+  "required_targets": [
+    "/root/publisher",
+    "/root/cost_accounting",
+    "/root/frozen_exports",
+    "/root"
+  ],
+  "schema": "er9.neutral-final-handoff-clocks.v1",
+  "source_assessments_or_findings": false,
+  "source_overrun_seconds": 0,
+  "supplement_notifications_and_final_response": "Will follow immediately within remaining original whole time; exact harness final delivery timestamp UNKNOWN.",
+  "timestamp_interpretation": "Before-call and immediate next clock capture after collaboration.send_message returned success bound the actual outgoing transmission. Exact internal transport timestamps and owner acknowledgment times are not exposed; not invented.",
+  "whole_elapsed_at_final_required_handoff_seconds": 1355.298821009,
+  "whole_limit_seconds": 1800,
+  "whole_overrun_seconds": 0
+}

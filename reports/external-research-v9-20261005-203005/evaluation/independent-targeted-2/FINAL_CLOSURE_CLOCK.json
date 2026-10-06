@@ -1,0 +1,39 @@
+{
+  "browser_or_worker_created_by_evaluator": false,
+  "candidate_or_primary_test_rerun_by_evaluator": false,
+  "clock_reset": false,
+  "closed_measured_monotonic_ns": 86194562835885,
+  "closed_measured_utc": "2026-10-06T03:02:55.705849+00:00",
+  "evaluation_id": "independent-targeted-2",
+  "exact_internal_transport_timestamps": "UNKNOWN; preceding primary individual before/completion bounds preserved in HANDOFF_CLOCKS.json",
+  "final_response_delivery_utc": "UNKNOWN; follows immediately after this receipt",
+  "nativeGoal_created_or_reused_by_evaluator": false,
+  "original_whole_deadline_utc": "2026-10-06T03:08:16.910800+00:00",
+  "own_background_sessions": "NONE; sole yielded retrieval session23945 completedexit0",
+  "owner_acknowledgments": "UNKNOWN; not waited for",
+  "phase2_elapsed_seconds": 401.588477843,
+  "phase2_overrun_seconds": 0,
+  "report_ready_whole_seconds": 1209.864674521,
+  "repository_changes": "NONE; evaluation ownership only new external tree",
+  "required_primary_handoff_whole_seconds": 1355.298821009,
+  "schema": "er9.final-evaluator-closure-clock.v1",
+  "source_and_phase2_reads_closed": true,
+  "source_assessments_or_findings": false,
+  "source_elapsed_seconds": 681.905497813,
+  "source_grades_rewritten": false,
+  "source_overrun_seconds": 0,
+  "supplemental_notices_tool_success_targets": [
+    "/root/publisher",
+    "/root/cost_accounting",
+    "/root/frozen_exports",
+    "/root/projection_keeper",
+    "/root"
+  ],
+  "supplemental_outgoing_transmission_bounds_utc": [
+    "2026-10-06T03:00:52.209621+00:00",
+    "2026-10-06T03:02:55.705849+00:00"
+  ],
+  "whole_elapsed_at_closure_seconds": 1478.79504665,
+  "whole_limit_seconds": 1800,
+  "whole_overrun_seconds": 0
+}

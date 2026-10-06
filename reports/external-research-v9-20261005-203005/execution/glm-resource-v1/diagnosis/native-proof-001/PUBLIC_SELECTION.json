@@ -1,0 +1,54 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T03:03:09.436643+00:00",
+  "owner": "execution_engine",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/project.py",
+      "sha256": "3cac24af648fb498c9443ac72d9be06c89552f9528dc9737f154a281ddf5bbb2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/test_project.py",
+      "sha256": "d1a956ff7357558d28c5c5a44ef6ba0730dc5f36e727b753914d56e4e00de1c5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/README.md",
+      "sha256": "e82c51c11f5110fb409b24d0db92b6f7846fcf915b5f22a32d6eb6ceef49bbb9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/REPORT.md",
+      "sha256": "0d9b69daf546effb908d614d5c0eabe098410a76fcd18bd261993ac3dda9ef4c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/NATIVE_PROOF.json",
+      "sha256": "701cd3baebffa5738ec367d2d38699e9490921e12761a61430c34dca210e0f73"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/NATIVE_GOAL_STATUS.json",
+      "sha256": "945a679a54d00685a9b03e4cd82ac1c119fa9cf8f0cc7ae130909ddc65738133"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/VERIFICATION.json",
+      "sha256": "f429bf8839be0933aee47bf6802391e636e2286434c2614e7e9ad044d44f3b3b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/MANIFEST.json",
+      "sha256": "e924d7746a54227c4fc6c7ed5216a7eea68ec96b2932e6a958034147dec74aa0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/native-proof-001/PIN.json",
+      "sha256": "5799a78c5bee4dbf561332b1b811825f93800f97a8f2e16237481f39bff44b62"
+    }
+  ],
+  "excluded": [
+    "__pycache__",
+    "all original native protocol/UI/private/runtime/model IO/operation profiles",
+    "candidate/source/evaluator bodies",
+    "mutable registry/live jobs",
+    "accounting011 files"
+  ],
+  "owner_files_quiescent": true,
+  "additive_only": true,
+  "model_or_goal_calls": 0,
+  "original_records_preserved": true
+}

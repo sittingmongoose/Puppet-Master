@@ -1,0 +1,540 @@
+{
+  "schema": "er9.positive-credential-free-publication-selector.v1",
+  "owner_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/README.md",
+      "sha256": "b752c24e62fb40638fb13968e0a9462ff657102f2f58a039417845271b6cae3a",
+      "relative_path": "README.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/prepare_deferred.py",
+      "sha256": "6594b15cb756613318e1807c84556f39942922efa84f90ef2f1dc1a606cff9f1",
+      "relative_path": "prepare_deferred.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/bind_at_birth.py",
+      "sha256": "aa3bf370b308ede1b81a1a14d37c7520f8e7e56960df6769a9b5c8623a4f15d9",
+      "relative_path": "bind_at_birth.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/test_deferred.py",
+      "sha256": "a47ddfb058d872bbed603afe7560dd91b484402254967386c97d8ec2eeafdeee",
+      "relative_path": "test_deferred.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/SOURCE_PIN.json",
+      "sha256": "5928facb7dc078eaff905f31eb0b0c82f65af78aa4c1a8a5bd7e123c6b9b0635",
+      "relative_path": "SOURCE_PIN.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/VERIFICATION.json",
+      "sha256": "54eb685e88da96fdec8e8ab61abaa7727345be41733cada8b5e55e2f7cec3957",
+      "relative_path": "VERIFICATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/OUTBOX.json",
+      "sha256": "c9b7fdbe54d9a6a07296ec2517f005c5dd7892fce493f6d916efc6b96942b0fa",
+      "relative_path": "OUTBOX.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/FULL_QUEUE_FREEZE.json",
+      "sha256": "53ca813852067aad377dec6607f214be4768eaca08d3aa050e05444145b2424c",
+      "relative_path": "FULL_QUEUE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/CORE_RESOURCE_BINDING.json",
+      "sha256": "69fa0d9cb6a026263bc30b58b9d0aa20f96217806463d78ed226adf3eec181b1",
+      "relative_path": "CORE_RESOURCE_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/FINAL_RESOURCE_BINDING.json",
+      "sha256": "6b79341235f9bc4e2a22d691997bba199df0ce54029b2aca49ba7a96b78d214b",
+      "relative_path": "FINAL_RESOURCE_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/SOURCE_PREREQUISITE_CARD.json",
+      "sha256": "ac2018d248aa5c3f0de1f724e3d2df0f20d4fce4a138ad638073ce92f4d47632",
+      "relative_path": "SOURCE_PREREQUISITE_CARD.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/B_DEPENDENCY_IMPORT_CHECK.json",
+      "sha256": "94e9d4667ab92fae80369230cd6005031320521547659e0b80dbeebf990519b7",
+      "relative_path": "B_DEPENDENCY_IMPORT_CHECK.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/CONFIG_COMPOSITION_VERIFICATION.json",
+      "sha256": "ebc358e881428ab707a3500da1ac5e470f36a0105d88fb4fa9acd1a15f8c577a",
+      "relative_path": "CONFIG_COMPOSITION_VERIFICATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/registration/SEED-DEV-A-DEFERRED-R001-r001.json",
+      "sha256": "136efe2553a3831e7551334d1d56de326ca087971fe11aac89da5f874ed75213",
+      "relative_path": "registration/SEED-DEV-A-DEFERRED-R001-r001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/registration/SEED-DEV-B-DEFERRED-R001-r001.json",
+      "sha256": "168f35e544bc1748a25b75dc366e8d8ef468652aa06680cf94a64e2d6e21b77e",
+      "relative_path": "registration/SEED-DEV-B-DEFERRED-R001-r001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/card.json",
+      "sha256": "5568edb982bbc2682cd0fd8f267b38ec6df0700e749e90ae7157377591acdd6c",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/registration.json",
+      "sha256": "bc88c5521b7f82a68624b544065b1d00d0b5662ae7def43c20e8746d6c1dc498",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "25fae8bd6cea3e0ee6ce9ec756fe9fd3075881ae6799dc7369fa518ab7959494",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/prospective-stage.json",
+      "sha256": "3f1a350b0bb0601d983c8d1b2946748b57e1ad934f625455abfdd6854492f922",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/TASK.md",
+      "sha256": "922ef58198c44aa3b7194c7c3356212e662a235c585fe239831d3dd608f79e71",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/TASK.current.md",
+      "sha256": "de367cb613545bb06d2ceb80c322984a72379a87b5b5fbb213f0015ac18d4809",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/operator-profile/bundle_profile.json",
+      "sha256": "7129223050a36547c2058f5d5cfd13baddfeca2d6f6fb1d5bbae0348abd99c27",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "3bafc7da40dbd312c7b53155582ea1909497ef92b891b0255494d1187ced3ba2",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/prospective-stage.json",
+      "sha256": "ffb25ea8f2833c26df687b43fe91fc94f081357d888757e2aca98f5dc66f257f",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.md",
+      "sha256": "ba38dfa6c3fed3d565845c019b5140c859a7ac22cf45a63da89885495aeb0535",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.current.md",
+      "sha256": "ba38dfa6c3fed3d565845c019b5140c859a7ac22cf45a63da89885495aeb0535",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/prospective-stage.json",
+      "sha256": "c717d5eb7288398d145ee277ad16756a7972dae60f941befdaea48aa679783dd",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.md",
+      "sha256": "77ab7d92f22c3d84e34d73064f6de9f78ab8c2bccce5d4231045d01d6a8511f0",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.current.md",
+      "sha256": "817ce6af6bc9840076d27ab5541c26af58badfb9d3dcb97cee821733613c4783",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/operator-profile/bundle_profile.json",
+      "sha256": "92e69666b56266c699c66e3f071ee6b92bef11f0f289ed5b8b9754bf92d3856b",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "2dabe5c333ca54e0838d6f03145f12f0f919bceacd6f5c0600b79c13acd7652d",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/card.json",
+      "sha256": "8f34629f66b5af2961abbb4b39f51de168105fe9cf3e2555f5d2e3985d03e8c2",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/registration.json",
+      "sha256": "882318b4e718d8bb1aac1c6e1cc7a183571f93ef59f8a5513642682a37a9b30a",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "2c77e9cb6232bca72100b5f75fee36d66d371485739edb9d80f7c53ace4388e3",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/prospective-stage.json",
+      "sha256": "cad91e12b95c0dbc66d79103c021284ba6195c837038f587ceccac0fcba3671f",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/TASK.md",
+      "sha256": "f8ebd0dae0f04b84a507538c843e50c51680ad4d0147e6f2a52779cfb790df8c",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/TASK.current.md",
+      "sha256": "4e6795b206087d5f534c1d383c2554e1669484574cfc42e65970eb10221ea9cf",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/operator-profile/bundle_profile.json",
+      "sha256": "c0ef3c2b77b09f44d2a6eaa4b7dd699115e664f5ca61738a307cae1e273eecc5",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "c0d4e21a146fdac8b6fdcf75556162ff6954dbd71a0a2d886b494b95f949687e",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/prospective-stage.json",
+      "sha256": "d47571c4c22eb39263fea0f5284a341cd077a70870bebd9d857077e0ed526aaf",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.md",
+      "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.current.md",
+      "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/prospective-stage.json",
+      "sha256": "c91dbf9cded6193677fcc87c1cb0ea3bef98801037dfe11789ccaf0a74143d0a",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.md",
+      "sha256": "5eb8c6ab91da9e5df4402ba64622ca75fd211372629605d49dddb1c2fb883fa5",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.current.md",
+      "sha256": "fff83eeeec7e9fff34613dab39f45412f766a1059ff4fb12283139aa7f801b21",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/operator-profile/bundle_profile.json",
+      "sha256": "74a684d20dca9c7effba0dcde1cac3f80aa288779c4ca0ca5d55b4986e5a4e74",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "49bed4ec9f2dc090d0c2c2a8d56314134e0ee729e437fe96f5a8e7feb1d17a95",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/card.json",
+      "sha256": "f9cd60790075c92e0e7dccfc350e29f4df3d2cc69186ae2e1e75f792ac8eee44",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/registration.json",
+      "sha256": "a2f68f9a13ad87303e3ba245915a5a82d9c7d6b1e5a0cb334977fcfd3ff2886d",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "977cf0c954596940aec224f00e9db223c4ac5960a11ae949017137e9999c20bf",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json",
+      "sha256": "ad2e752cbd886307dba04fe33006c7b5ba3a77e63c033d6243af807fb3a07f90",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "fc6caecfa9e77f8884b2618b21c2567cbf746e0067b7c0784dd329740c94cf7c",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "fc6caecfa9e77f8884b2618b21c2567cbf746e0067b7c0784dd329740c94cf7c",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json",
+      "sha256": "c29e2d878ef136a121e1acdda1fcc8916afd3cf27252558fb3a82ddddd86db3e",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "bc0edf51161d97cfee5783f495923169f0b70ebf667b5e166605890c90a89b68",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "bc0edf51161d97cfee5783f495923169f0b70ebf667b5e166605890c90a89b68",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/card.json",
+      "sha256": "32e66a887f02fe815bedd4948488adb9c7af87fdbf3e52c6ff49ac7e590a4ac3",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/registration.json",
+      "sha256": "5a2d62c81422a47147556877bd0acfc344f99abdec2affc15196af5448e6e092",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "4fd68dffb1390d02b65163eccb604a0112479e1d09b8ee916aea6d16fb9f6667",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json",
+      "sha256": "560dd78bc38a814b33bb01f885ec4bc5250052021461aa96f781cd7417b51411",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json",
+      "sha256": "dd6cdc4b8c2e997871d86046e7dc864f590c0010afac9b22d35f81b582f70ef9",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/card.json",
+      "sha256": "fd26f6155b0a76971e63e799f28823422b6d3fcf565da49df93b22293761a505",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/registration.json",
+      "sha256": "058b4a0e115bc55626524181f8bc3e2d466948b138cebabf25d72ecca7502d1c",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "5a56aa5d7f69042c5b22d008064c3afc7f79c0d9fced3ee2d579306ad8401175",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json",
+      "sha256": "eed05b8a9e959701a31077d2cd9c5553ac7ac1806f62d983b49fb43d9157410b",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "0d1bda31ad2cc94af5f2e9a3637389adfae7674c30e8d8eaa17346212a23538e",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "377afe73c988efaa1a175e7e486544445df676cb32d485bf67e8053ca743f83b",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/operator-profile/bundle_profile.json",
+      "sha256": "1d562207cfa4091e21c8dd617a049f8f9c3b0a71f3e20e51d61975521aa55468",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "446d0fec030fa1b90fde335cfec3bd1be029d5f5748827efe2a6482b94603363",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-control-diagnostic-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json",
+      "sha256": "e1674632e167fa9611df8f3c44aa758e3f29ab61a4e88d2330c0c6956a4139a7",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "21d0268f72fce747887634c8bebaa16d2d9133231c3f0e9d74bc6f68a33e9881",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "1f991c173df83abcfded333c0050df32bed437f05014ee8bd06ec164255f90d6",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/operator-profile/bundle_profile.json",
+      "sha256": "79be04a898e6cc68f09b92fea7474a074b1d05ac2a3d00a08ab85931c9597991",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "b963ae22ac8ac9cd4117b77203bdcd8294d6144f5b4726fe8c66cc5664baf8c0",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/card.json",
+      "sha256": "e5df3a760c36f9dd140c90b6988137d6fae8eaa76bcf5c1b7cd4c4bc50db490a",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/registration.json",
+      "sha256": "19c44bdf4e70f325f8f7ff7b4e0b53a4aef2d5d75a62ee67b43fd50acb44d2a1",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "2452bf6265d215ba504f8bcdd21029030cae378699bcc6fa66dca83b6f43c215",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json",
+      "sha256": "d03e00f3ac074bb21d81dcf326a0c15f818bc788ff7654cb4aec8349ee61c833",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md",
+      "sha256": "7639bc75420bb30a6fc48578547e1621dc7c10819804070fd5ef83b6f64ead52",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "fae4e1de9a771be3a1a2494a6651929726205c897f217675f600d4397dad5bc7",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/operator-profile/bundle_profile.json",
+      "sha256": "fe1c4fd23c093f4047ad922558cb170af591f24628b246a5e3e0095e3f73a3fa",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "1b69c06b1828cac9e2303b8dfa380c40518cfbd57e4df369be90912a9b85d13c",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-control-diagnostic-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json",
+      "sha256": "6dfce59d0a0e50eb0ea56f72cf679cb0a32a8dacf8ec0042f6964c76924ce66d",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/prospective-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "sha256": "3a4777ffe812a115ce21fa2db0c233843ab0e291df855575d29ed5ad9d54c639",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md",
+      "sha256": "c79893bb696fe4bc7c4d69aa471bfeff750e6a72ed3f1fcf55d299c0c1c29d07",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.current.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/operator-profile/bundle_profile.json",
+      "sha256": "8292d5d43197dfb4c8219b5a13d2903b4872e38b9a235d49b55c218ef964ff62",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "c4f544518289be5b739450ef814260e3e07574b3d45e2899227e8ef8e9beb257",
+      "relative_path": "pairs/D-V13-B-DEFERRED-R001/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/prepared-stage.json",
+      "sha256": "588b474da39d25ceda2fb7af6fc570decf292f3a2bec470fff25904608f8dec5",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "b80598536b399f1f5cd800377f18b6913c9213929d0f0f174ce3536da2473619",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/FIXED_BASE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/workspace/TASK.md",
+      "sha256": "4fbb08f9975b80c1ec7da82289dfe38a2ac299c6f1be4f3c0a34d2d2280a2995",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/prepared-stage.json",
+      "sha256": "cb1fc164087903bbe22952ebda6fab97a2e07fe96d4d8e9b81872f5f4c47a43a",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "b80598536b399f1f5cd800377f18b6913c9213929d0f0f174ce3536da2473619",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/FIXED_BASE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/workspace/TASK.md",
+      "sha256": "3564b7e67740675e31bcde6cdc9864a5d5bbd5cddc050782b1e98e1fd02fd1b4",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/prepared-stage.json",
+      "sha256": "50803700f8ba8b1d110882d061d728bf8e9654a983c65e6c2c416c2652772556",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "b80598536b399f1f5cd800377f18b6913c9213929d0f0f174ce3536da2473619",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/FIXED_BASE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/workspace/TASK.md",
+      "sha256": "458e79280fd988d849c6b449ec5267cf2cd6257ae40bd14bcf2aba6a33c693f9",
+      "relative_path": "source-prerequisites/SEED-DEV-A-DEFERRED-R001-seed-revision-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/prepared-stage.json",
+      "sha256": "e5b07f3eabc65d595350cbf4542a1b9cbebdaef755a03f9df06261aa270b66d3",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "d49231e28b16bdee8b221958a021cbfd48f19b74cc69b933e50b5c103b54d859",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/FIXED_BASE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/workspace/TASK.md",
+      "sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/prepared-stage.json",
+      "sha256": "a29bc1bb552b2de1e51c5905cdd3fcd05479f930f093505655dd93ccf6a4ae70",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "d49231e28b16bdee8b221958a021cbfd48f19b74cc69b933e50b5c103b54d859",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/FIXED_BASE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/workspace/TASK.md",
+      "sha256": "7c0a8adb06f20847fec78aa45a6f3142c7bfc11b3bd172e1296f45314f712980",
+      "relative_path": "source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/workspace/TASK.md"
+    }
+  ],
+  "selection_mode": "POSITIVE_EXACT_FILES_ONLY_NO_RECURSION",
+  "candidate_seed_bodies_source_captures_and_native_evaluator_outputs_selected": false,
+  "private_runtime_auth_or_provider_material_selected": false,
+  "never_follow_symlinks": true
+}

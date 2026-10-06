@@ -1,0 +1,30 @@
+{
+  "schema": "er9.historical-native-proof-source-pins.v1",
+  "created_utc": "2026-10-06T03:03:09.436643+00:00",
+  "files": {
+    "project.py": "3cac24af648fb498c9443ac72d9be06c89552f9528dc9737f154a281ddf5bbb2",
+    "test_project.py": "d1a956ff7357558d28c5c5a44ef6ba0730dc5f36e727b753914d56e4e00de1c5",
+    "README.md": "e82c51c11f5110fb409b24d0db92b6f7846fcf915b5f22a32d6eb6ceef49bbb9",
+    "REPORT.md": "0d9b69daf546effb908d614d5c0eabe098410a76fcd18bd261993ac3dda9ef4c",
+    "NATIVE_PROOF.json": "701cd3baebffa5738ec367d2d38699e9490921e12761a61430c34dca210e0f73",
+    "NATIVE_GOAL_STATUS.json": "945a679a54d00685a9b03e4cd82ac1c119fa9cf8f0cc7ae130909ddc65738133",
+    "VERIFICATION.json": "f429bf8839be0933aee47bf6802391e636e2286434c2614e7e9ad044d44f3b3b",
+    "MANIFEST.json": "e924d7746a54227c4fc6c7ed5216a7eea68ec96b2932e6a958034147dec74aa0"
+  },
+  "source_request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_HISTORICAL_PROOF_REQUEST_001.json",
+    "sha256": "19fae4878ac926a691f31176019eb8b973ed3f71749a48d627265af1c9b84150"
+  },
+  "accounting_bindings": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/native-proof-bindings-001.json",
+    "sha256": "b10be3926873bedcc65da5c86f446ca0684f80ba4d5af50f781bdb6a197962d4"
+  },
+  "runtime_no_changes_proof": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+  },
+  "model_or_goal_calls": 0,
+  "scope": "Historical exact12 metadata only; no native/private/candidate body copies; original cohort011 untouched"
+}

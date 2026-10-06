@@ -1,0 +1,77 @@
+{
+  "schema": "er9.targeted-requested-public-source-captures.v1",
+  "evaluation_id": "independent-targeted-2",
+  "unavailable": [],
+  "selection": "ONLYexact reviewerrequested captureIDs/currentcatalog sourceIDs; no newsourceanswers orsemanticfilter",
+  "phase2_history_native_identity_economics_key": "EXCLUDED",
+  "rawbodies": "LAB/Evidenceonly notpublicrepo",
+  "files": [
+    {
+      "alias": "A",
+      "capture_id": "61d421ae1eee4e48aa06183d5a110ddb",
+      "source_ids": [],
+      "body_sha256": "6b5651cf32b79e433a8cb4cb41517d549e539b1166eb09a9875aa6410f490550",
+      "body_bytes": 7432,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/61d421ae1eee4e48aa06183d5a110ddb.json",
+      "metadata_sha256": "e258d2b6d7d9d7dd11e7690ca3afc62e9fb977424dd440b84ef994eb61369ac3",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "A",
+      "capture_id": "816c433fee264338852b48fa102e61ae",
+      "source_ids": [],
+      "body_sha256": "40f958a0f57f3e137ea8e8d1964f1c86541d521f22985d10489816d6ba44d46e",
+      "body_bytes": 19809,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/816c433fee264338852b48fa102e61ae.json",
+      "metadata_sha256": "cbd185047b4168f0ee3d8735a758c5a44a1d06e85496d14838fcec05920408c2",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "A",
+      "capture_id": "540e13a7a8904188ba7bdf3f9629cfeb",
+      "source_ids": [],
+      "body_sha256": "eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+      "body_bytes": 18823,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/540e13a7a8904188ba7bdf3f9629cfeb.json",
+      "metadata_sha256": "30b03b90b0078a51c3908137c234f52507bf5c33f5b086547c2b89ac7b5b6e35",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "A",
+      "capture_id": "23f3725f02df448f93804ced1ea1776a",
+      "source_ids": [],
+      "body_sha256": "e99f27d54592c2034b2828189493aaa58bc1ed4933eb78da24fca370513f4bb7",
+      "body_bytes": 18678,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/23f3725f02df448f93804ced1ea1776a.json",
+      "metadata_sha256": "6de0dfcedbdf430c4b0c92632ce2e6cea75b461137cfe5b7431105312a1b3272",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "A",
+      "capture_id": "e98add86ad9f4914b8cd76db35f7d656",
+      "source_ids": [],
+      "body_sha256": "671309b12c10d1046c26de74180e2fe128a6ef00cc595908fc076750d9773a70",
+      "body_bytes": 4509,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/e98add86ad9f4914b8cd76db35f7d656.json",
+      "metadata_sha256": "e33c933ce3fcf62df965ca80eff63411b6d60b8222f247ef21d3fdb4f6ef2371",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "A",
+      "capture_id": "893146d2ba3b42e6801c987ea9c4e34b",
+      "source_ids": [],
+      "body_sha256": "7c74d2319b188421260f4c4e3c2a662b3555298c1ff8ab7ce138e9f5a5754ba1",
+      "body_bytes": 524288,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD2-REQUESTED-CAPTURES-001/A/metadata/893146d2ba3b42e6801c987ea9c4e34b.json",
+      "metadata_sha256": "9378a772cd27b759246a80920f568210e44ec8797159f251de0c8e2bb26a2490",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    }
+  ],
+  "raw_bodies": "explicitlyexcluded publicrepo; rawLab/Evidenceonly"
+}

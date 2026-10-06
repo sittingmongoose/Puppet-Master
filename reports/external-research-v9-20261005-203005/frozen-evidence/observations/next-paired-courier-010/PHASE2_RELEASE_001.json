@@ -1,0 +1,38 @@
+{
+  "mutations_to_jobs_outputs_evaluator_grades": false,
+  "releases": [
+    {
+      "evaluation_id": "independent-targeted-2",
+      "no_reset": true,
+      "original_whole_deadline_utc": "2026-10-06T03:08:16.910800Z",
+      "phase1_freeze_sha256": "951be103b98ccea4cda0a4984efdf686f317aef62b342cfd9490649f5a2e20cf",
+      "phase2_max_seconds": 600,
+      "private_current_projection_sha256": "51032b9eb8b714b678720568acc1cd1068530f0171073d533267ca99f8661ae4",
+      "private_key_sha256": "5b67969de1e94f2e3dd2f65d40e138b714149205181c425e554e002e49b8549f",
+      "public_projection": {
+        "path": "LAB_ROOT/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-2_PUBLIC_PHASE2_001.json",
+        "relative_path": "phase2/INDEPENDENT-TARGETED-2_PUBLIC_PHASE2_001.json",
+        "sha256": "409f5bccae1ccea0ce80fc3b0bcca1586bd0c64054df1375506d6953cb93b121"
+      },
+      "released_utc": "2026-10-06T02:52:37.867481+00:00",
+      "source_judgment_sha256": "88b0818fcd1de0c85b545a5fd87c28f00c18d732d23242a233bb9aab0ac354bd"
+    },
+    {
+      "evaluation_id": "independent-targeted-3",
+      "no_reset": true,
+      "original_whole_deadline_utc": "2026-10-06T03:08:42.777982Z",
+      "phase1_freeze_sha256": "0b42dc5fd521d5bbd8889047b3253699488e99a1c6d9bcf3024491f9b8578ea8",
+      "phase2_max_seconds": 600,
+      "private_current_projection_sha256": "2e31e6f65ab7f1ca47163553cbaab7b3cacc4d6b05363813f8c4080f9fcf7d22",
+      "private_key_sha256": "6bfa43368d517e8691b0db3c6c6bfe3c0f6e71299468eb8049f8eae1467fa1b3",
+      "public_projection": {
+        "path": "LAB_ROOT/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-3_PUBLIC_PHASE2_001.json",
+        "relative_path": "phase2/INDEPENDENT-TARGETED-3_PUBLIC_PHASE2_001.json",
+        "sha256": "5ad8ac50a96ec3a0f1bf5ea7b64488b65e93bb9f18123d936a96cd9c02ebf6e7"
+      },
+      "released_utc": "2026-10-06T02:52:37.867481+00:00",
+      "source_judgment_sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998"
+    }
+  ],
+  "schema": "er9.current-paired-phase2-release.v1"
+}

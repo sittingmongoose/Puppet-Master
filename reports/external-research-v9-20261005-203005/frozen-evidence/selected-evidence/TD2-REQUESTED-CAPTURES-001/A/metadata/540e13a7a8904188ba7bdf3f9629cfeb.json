@@ -1,0 +1,36 @@
+{
+  "schema": "er9.actual-primary-source-capture-projection.v1",
+  "actual_acquisition_fields": {
+    "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+    "actual_url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+    "body_complete": true,
+    "capture_format": "exact-http-response-body-bytes",
+    "capture_id": "540e13a7a8904188ba7bdf3f9629cfeb",
+    "captured_bytes": 18823,
+    "captured_utc": "2026-10-05T22:56:18.015157+00:00",
+    "content_encoding": null,
+    "content_length_header": null,
+    "content_type": "application/json; charset=utf-8",
+    "etag": "W/\"eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591\"",
+    "incomplete_http_body": false,
+    "last_modified": "Wed, 12 Aug 2026 13:44:24 GMT",
+    "redirects": [],
+    "requested_url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+    "response_bytes_observed": 18823,
+    "sha256": "eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+    "source_version": "sha256:eb7367ab4f8e991a5ab17d07913d257cbc2911e14bf9a70413f58d14b0516591",
+    "status": 200,
+    "truncated": false,
+    "url": "https://api.github.com/repos/napari/napari/pulls/9059/files",
+    "utf8_bytes": 18823,
+    "utf8_valid": true
+  },
+  "original_metadata_sha256": "fb506dfebc3a27a4af5c6532137f1dcdcf14abd84cb21dc45fa0ffc6f5d253b7",
+  "omitted_original_fields": [
+    "capture_path",
+    "llm_read",
+    "public_pinned_ip"
+  ],
+  "model_comprehension": "UNKNOWN; byteacquisition notcomprehension",
+  "interpretation": "NONE; originalfailure/non200/truncated limits retained"
+}

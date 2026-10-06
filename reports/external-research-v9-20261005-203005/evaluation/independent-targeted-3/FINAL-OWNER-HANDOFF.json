@@ -1,0 +1,53 @@
+{
+  "schema": "er9.final-required-owner-handoff-clock.v1",
+  "evaluation_id": "independent-targeted-3",
+  "utc": "2026-10-06T03:01:53.332862+00:00",
+  "monotonic_ns": 86132189888999,
+  "clock_scope": "Observation immediately after successful required root/courier/publisher/accountant send_message tool returns; final receipt/selector pointer notices and final-channel delivery telemetry not included, UNKNOWN if unobserved.",
+  "required_outgoing_notices": [
+    {
+      "recipient": "/root",
+      "dispatch_tool_return_observed": true,
+      "acknowledgment": "UNKNOWN; not awaited",
+      "body_policy": "source findings to root; positive selection to publisher; neutral cost/lifecycle/clocks to accountant; neutral technical closure to courier"
+    },
+    {
+      "recipient": "/root/frozen_exports",
+      "dispatch_tool_return_observed": true,
+      "acknowledgment": "UNKNOWN; not awaited",
+      "body_policy": "source findings to root; positive selection to publisher; neutral cost/lifecycle/clocks to accountant; neutral technical closure to courier"
+    },
+    {
+      "recipient": "/root/publisher",
+      "dispatch_tool_return_observed": true,
+      "acknowledgment": "UNKNOWN; not awaited",
+      "body_policy": "source findings to root; positive selection to publisher; neutral cost/lifecycle/clocks to accountant; neutral technical closure to courier"
+    },
+    {
+      "recipient": "/root/cost_accounting",
+      "dispatch_tool_return_observed": true,
+      "acknowledgment": "UNKNOWN; not awaited",
+      "body_policy": "source findings to root; positive selection to publisher; neutral cost/lifecycle/clocks to accountant; neutral technical closure to courier"
+    }
+  ],
+  "required_dispatch_start_utc": "2026-10-06T03:00:25.701777+00:00",
+  "required_dispatch_seconds": 87.631052136,
+  "source_seconds": 613.484033444,
+  "phase1_to_phase2_gap_seconds": 170.663751044,
+  "phase2_checking_seconds": 303.878679353,
+  "phase2_to_report_ready_seconds": 128.02800636,
+  "report_ready_whole_seconds": 1216.054470201,
+  "report_ready_to_required_handoff_seconds": 174.500390676,
+  "whole_through_required_handoff_seconds": 1390.554860877,
+  "phase2_start_through_required_handoff_seconds": 606.407076389,
+  "source_overrun_seconds": 0,
+  "phase2_checking_overrun_seconds": 0,
+  "phase2_through_required_handoff_overrun_seconds": 6.407076389,
+  "whole_overrun_seconds": 0,
+  "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00",
+  "source_judgment_unchanged": true,
+  "native_jobs_or_goals_created_by_evaluator": 0,
+  "own_persistent_processes_remaining": 0,
+  "clean_restart_scope": "Evaluator workspace clean; candidate saved owned scopes quiet. Infrastructure outer permit release confirmation remains UNKNOWN.",
+  "source_grade_reasons_sourcefacts_in_this_receipt": "EXCLUDED"
+}

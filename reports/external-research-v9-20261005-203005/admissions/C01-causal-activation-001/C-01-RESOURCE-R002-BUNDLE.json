@@ -1,0 +1,157 @@
+{
+  "schema": "er9.actual-both-arm-prospective-closure.v1",
+  "utc": "2026-10-06T02:30:47.739345+00:00",
+  "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+  "native_starts_at_seal": 0,
+  "source_closure": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+    "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+  },
+  "roles": [
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+        "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.3/SOURCE_PINS.json",
+        "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+        "sha256": "99ab419771efb8dd92e79d8e7d5a0cb5dc2571a0ed56925ec9a3775b2ef495e6"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+        "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.3/SOURCE_PINS.json",
+        "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-critique-a001/workspace/TASK.md",
+        "sha256": "a832f04e6edd2f44d3c28fb50a2a300bfa4f82b8aa40f8990d556a636ad3fdfc"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+        "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+        "sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+        "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-revision-a001/workspace/TASK.md",
+        "sha256": "f2a181204fb2e0083260058c8134a5a56e0feb19c0ec963cefe49dbacd9ab0f6"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+        "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.3/SOURCE_PINS.json",
+        "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/workspace/TASK.md",
+        "sha256": "7bd65920953137b41b9375f9c1d58e5211520f95276230495c93dfc641816d6c"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+        "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.3/SOURCE_PINS.json",
+        "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001/workspace/TASK.md",
+        "sha256": "a832f04e6edd2f44d3c28fb50a2a300bfa4f82b8aa40f8990d556a636ad3fdfc"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+      "runtime": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+        "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+      },
+      "worker_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "native_source_pin": {
+        "path": "LAB_ROOT/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+        "sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+      },
+      "tools": {
+        "path": "LAB_ROOT/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+        "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2"
+      },
+      "task": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001/workspace/TASK.md",
+        "sha256": "d4dd4d16f4ca05393d65042565ac40188d0891965ce97c45a6954736c3efbda2"
+      },
+      "dynamic_linking_rules": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/ROLE_LINKING_RULES.json",
+        "sha256": "b227bd801a54c97e38589f3fc4061ff6c5875e5dfc516219360e8073691c6031"
+      }
+    }
+  ],
+  "future_role_input_hashes_bind_at_birth_under_fixed_rules": true
+}

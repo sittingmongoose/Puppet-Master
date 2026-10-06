@@ -1,0 +1,55 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+  "pair_id": "I-06-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "research",
+  "operational_status": "FAILED",
+  "native_outcome": "HOLD",
+  "native_goal_status_final": "paused",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:26:48.264947+00:00",
+  "original_birth_monotonic_ns": 84027121931134,
+  "elapsed_seconds": 1185.696972327,
+  "original_max_seconds": 1200,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "86933eefe092d36f8f2dc15a9fad1a8487599202003af43cb62a20087f26c1c4"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "8bdd37afa0c03009e918d3e062fa48388e4c78025253dac17bbf035cb6818002",
+  "native_receipt_sha256": "f81d1827bd1bf8ca02981834a92d1aefb73cbc28401246412f9f37fbb1a8605c",
+  "artifact_inventory": [
+    {
+      "relative_path": "research/proposal.md",
+      "sha256": "36b656f9c3b037fdaa8c58ea7811f1c41a1849823eec49caa53419c27d6430c9",
+      "bytes": 24105
+    },
+    {
+      "relative_path": "research/source-notes/cache-test.txt",
+      "sha256": "ae0787d424805aa282c03ce8963f2abf8c97d79c95e27c2aca9c0d877e379a13",
+      "bytes": 372286
+    },
+    {
+      "relative_path": "research/sources.copy.json",
+      "sha256": "f76b9f630008d9b12f192c65ff4fd272061af971d7b477df49ab25d89a0de0f2",
+      "bytes": 21704
+    },
+    {
+      "relative_path": "research/sources.json",
+      "sha256": "f76b9f630008d9b12f192c65ff4fd272061af971d7b477df49ab25d89a0de0f2",
+      "bytes": 21704
+    },
+    {
+      "relative_path": "research/witnesses.json",
+      "sha256": "cc55d2bf7e048027bc172e1244b09a86ab3887a4b2ef5f0643484b0041914936",
+      "bytes": 7468
+    }
+  ],
+  "missing_required_artifacts": [
+    "out/research/leads.json"
+  ],
+  "full_pipeline_completion_inferred": false
+}

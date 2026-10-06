@@ -1,0 +1,53 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+  "pair_id": "I-08-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "research",
+  "operational_status": "COMPLETED",
+  "native_outcome": "native_goal_complete",
+  "native_goal_status_final": "complete",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:27:18.477666+00:00",
+  "original_birth_monotonic_ns": 84057334649311,
+  "elapsed_seconds": 1149.048217319,
+  "original_max_seconds": 1200,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "ad3be385bf1b054b5ceef9d74d78bccf92ae2f91245913d16a7bb49c0fd98699"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "0a6ecdd2bb0a724532b96ac3db6bedb386cf9db4f431a3d266022c1456c955e8",
+  "native_receipt_sha256": "a2ce7bb0765a5098ba6ac2ad9a21ae11af5564a463b7526f55ec7d66e6d7ea74",
+  "artifact_inventory": [
+    {
+      "relative_path": "research/duckdb_csv_overview.md",
+      "sha256": "1491db681275d8be1cedb2e400466c0090a62c8b321deb65f0da3eaf16a546f1",
+      "bytes": 21344
+    },
+    {
+      "relative_path": "research/leads.json",
+      "sha256": "8cf12bc43efab45cd39500d7eb1c9180b836a0728c8e839baa0948ae23c128a6",
+      "bytes": 8641
+    },
+    {
+      "relative_path": "research/proposal.md",
+      "sha256": "e5c728c455da999661fd2a77d03aad58c07ad1899c168c4982728ffc8c3e6ba4",
+      "bytes": 24928
+    },
+    {
+      "relative_path": "research/sources.json",
+      "sha256": "9c5fa4a53e311d635d43c74e0b5bd7b14482235b20848959c3662adbc131963f",
+      "bytes": 19488
+    },
+    {
+      "relative_path": "research/witnesses.json",
+      "sha256": "02f4975c943ed19d2b467a24ce2c30822dcb953beb92331854e973d89b5eed57",
+      "bytes": 9741
+    }
+  ],
+  "missing_required_artifacts": [],
+  "full_pipeline_completion_inferred": false
+}

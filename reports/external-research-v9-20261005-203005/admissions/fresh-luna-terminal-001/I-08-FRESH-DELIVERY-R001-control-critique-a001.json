@@ -1,0 +1,33 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-08-FRESH-DELIVERY-R001-control-critique-a001",
+  "pair_id": "I-08-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "critique",
+  "operational_status": "COMPLETED",
+  "native_outcome": "native_goal_complete",
+  "native_goal_status_final": "complete",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:46:33.408298+00:00",
+  "original_birth_monotonic_ns": 85212265283841,
+  "elapsed_seconds": 301.531304111,
+  "original_max_seconds": 900,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-critique-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "42190fad75f61ac7126db7a4d126eaa81b7fbc2e56fac69a9e1a2bb0a4499a55"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "163a9a2a8aa97591506bd09b904ad3590458700f570985ce72c5956f1d20d998",
+  "native_receipt_sha256": "d623314857c441bea7961c3babf18311577f590fdff334fe087e21d2392eb7b4",
+  "artifact_inventory": [
+    {
+      "relative_path": "critique/review.md",
+      "sha256": "d1d9ff153d91bfc2c7a8ae0d17cc969c483922b836136ebb688b17c598a77b9e",
+      "bytes": 24415
+    }
+  ],
+  "missing_required_artifacts": [],
+  "full_pipeline_completion_inferred": false
+}

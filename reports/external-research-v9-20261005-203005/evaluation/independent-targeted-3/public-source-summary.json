@@ -1,0 +1,30 @@
+{
+  "schema": "er9.public-targeted-source-summary.v1",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "source_scope": "Exact current designated paired outputs under frozen targeted diagnostic criteria",
+  "rubric_counts": {
+    "common_dimensions": 8,
+    "full_A_obligations": 12,
+    "important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "A": {
+    "outcome": "FAIL_SCREEN",
+    "coverage": "PARTIAL",
+    "missing_file": false,
+    "malformed_json": false,
+    "remaining_source_quality": "UNASSESSED"
+  },
+  "B": {
+    "outcome": "PASS",
+    "scope": "Targeted current-source/content screen only",
+    "full_pipeline_quality": "UNASSESSED"
+  },
+  "fresh_matched_or_causal_credit": "UNASSESSED_PHASE1",
+  "physical_provider_telemetry": "UNKNOWN",
+  "source_elapsed_seconds": 613.483111513,
+  "phase1_overrun_seconds": 0,
+  "blinding": "Partial unavoidable task/method hints; no pre-freeze key/history/economics/old grades.",
+  "details_publication": "No evaluator-only source counterexample or raw source body selected."
+}

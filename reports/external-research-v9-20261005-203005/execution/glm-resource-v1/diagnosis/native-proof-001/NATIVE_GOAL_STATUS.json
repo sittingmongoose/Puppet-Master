@@ -1,0 +1,223 @@
+{
+  "schema": "er9.direct-native-goal-status.v1",
+  "created_utc": "2026-10-06T02:54:30.847774+00:00",
+  "status_source_policy": "Matching direct saved native target.status/targetId/update time only; null target remains UNKNOWN status enum and separate proven0activation.",
+  "jobs": [
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_9ee18698-2289-4808-b037-34418e41e660"
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_7984804a-9686-4c1f-9fdf-0a8fb69292f0"
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_c5078ec3-57c7-41f6-b88b-fe93c7420702"
+    },
+    {
+      "job_id": "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_f1910c95-0e60-42de-8054-27c41ed7a147"
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_f16e08ae-6d0c-4902-86eb-9db246462061"
+    },
+    {
+      "job_id": "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_f206c1cb-e093-44f6-8ad6-9c7c7798ee15"
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_7f9291b9-db1a-4e9a-94e3-392a578d3372"
+    },
+    {
+      "job_id": "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_7942fe76-d3af-45ee-a27c-c001eb0e93ce"
+    },
+    {
+      "job_id": "I-12-RESOURCE-R001-control-critique-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_98d2ecb7-6b43-4efd-95fd-a4e2756eb0eb"
+    },
+    {
+      "job_id": "I-12-RESOURCE-R001-treatment-research-a001",
+      "native_goal_status": "UNKNOWN",
+      "goal_id": null,
+      "native_goal_record_update_utc": null,
+      "unknown_reason": "NO_DIRECT_NATIVE_GOAL_STATUS_RECEIPT",
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "source_evidence": null,
+      "native_goal_starts": 0,
+      "activation": null,
+      "session_id": "sess_e5cedb8a-26f1-4460-bad6-06a57d559017"
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "native_goal_status": "complete",
+      "goal_id": "target_muw1roh1_c3ecf8c4-8fe5-4306-9395-af645fd24ee1",
+      "native_goal_record_update_utc": "2026-10-06T02:26:03.904000+00:00",
+      "unknown_reason": null,
+      "registry_operational_status": "COMPLETED",
+      "router_terminal_status": "completed",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/final-session.redacted.json",
+        "sha256": "4742e493fc100cd358127d7b81df14c2ad583db78f7e159c63f85ca57aeeffa6",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "native_goal_starts": 1,
+      "activation": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/activation.json",
+          "sha256": "72b759126b026c6d384d12b6361c5768e4ef6d854e1856409503d944ab090dad"
+        },
+        "startedTurn": true,
+        "startedTurn_selector": "/startedTurn",
+        "native_goal_target_id": "target_muw1roh1_c3ecf8c4-8fe5-4306-9395-af645fd24ee1",
+        "goal_id_selector": "/snapshot/session/target/targetId",
+        "session_id": "sess_20dca4ef-2de2-42c3-9da1-83799d2df45a",
+        "status": "active",
+        "status_selector": "/snapshot/session/target/status",
+        "created_at_ms": 1791252968869,
+        "created_at_utc": "2026-10-06T02:16:08.869000+00:00",
+        "created_time_selector": "/snapshot/session/target/createdAt",
+        "updated_at_ms": 1791252968978,
+        "updated_at_utc": "2026-10-06T02:16:08.978000+00:00",
+        "kind_field": "UNEXPOSED",
+        "identity_definition": "Opaque native target returned by session/goal action=set; session ID is separate, no prefix or router-label inference."
+      },
+      "session_id": "sess_20dca4ef-2de2-42c3-9da1-83799d2df45a"
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw1rktm_78613281-cbe8-4b87-ab03-d8d11e479578",
+      "native_goal_record_update_utc": "2026-10-06T02:30:28.144000+00:00",
+      "unknown_reason": null,
+      "registry_operational_status": "FAILED",
+      "router_terminal_status": "cap_seconds",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/final-session.redacted.json",
+        "sha256": "6a3acd1e150a39805ed851bb14721d58ddcdc709ec9eda173207285f826c52d5",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "native_goal_starts": 1,
+      "activation": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/activation.json",
+          "sha256": "4346f696c4710a10518517b00d5ee97bb85c1b7c82c8a7ad975301e44f2e7982"
+        },
+        "startedTurn": true,
+        "startedTurn_selector": "/startedTurn",
+        "native_goal_target_id": "target_muw1rktm_78613281-cbe8-4b87-ab03-d8d11e479578",
+        "goal_id_selector": "/snapshot/session/target/targetId",
+        "session_id": "sess_174892aa-0970-4eab-9942-a8f48e37c459",
+        "status": "active",
+        "status_selector": "/snapshot/session/target/status",
+        "created_at_ms": 1791252964138,
+        "created_at_utc": "2026-10-06T02:16:04.138000+00:00",
+        "created_time_selector": "/snapshot/session/target/createdAt",
+        "updated_at_ms": 1791252964227,
+        "updated_at_utc": "2026-10-06T02:16:04.227000+00:00",
+        "kind_field": "UNEXPOSED",
+        "identity_definition": "Opaque native target returned by session/goal action=set; session ID is separate, no prefix or router-label inference."
+      },
+      "session_id": "sess_174892aa-0970-4eab-9942-a8f48e37c459"
+    }
+  ],
+  "counts_by_last_direct_native_goal_status": {
+    "UNKNOWN": 10,
+    "complete": 1,
+    "paused": 1
+  },
+  "additive_companion_only": true
+}

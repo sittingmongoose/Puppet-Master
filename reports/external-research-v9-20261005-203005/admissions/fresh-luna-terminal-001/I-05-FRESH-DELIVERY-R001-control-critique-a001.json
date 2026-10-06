@@ -1,0 +1,38 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-05-FRESH-DELIVERY-R001-control-critique-a001",
+  "pair_id": "I-05-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "critique",
+  "operational_status": "COMPLETED",
+  "native_outcome": "native_goal_complete",
+  "native_goal_status_final": "complete",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:43:30.998615+00:00",
+  "original_birth_monotonic_ns": 85029855598150,
+  "elapsed_seconds": 232.844116769,
+  "original_max_seconds": 900,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-critique-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "e1889310c2159e9bd833ebdef7d491c49765166ec6078d591b4ef91aa8e69c5b"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "2386d0ea070c4fc38cd0295baf235ea50edd7ba270af49f955d6ccac6ae7fa59",
+  "native_receipt_sha256": "712e5aacbeb61e83fdd77ba83587d3bc8532c6df50a523a4171baad1bd9de1b1",
+  "artifact_inventory": [
+    {
+      "relative_path": "critique/review.md",
+      "sha256": "75007b82671c0bc9b1f288f966969930790299053d743fe0035e5f57d0a68dfe",
+      "bytes": 19720
+    },
+    {
+      "relative_path": "critique/source-line-map-ngff.txt",
+      "sha256": "e7132c6ef2e4d7b7676f1fdea79e8246dbc195bef29e6a645027d286ccc4de61",
+      "bytes": 271949
+    }
+  ],
+  "missing_required_artifacts": [],
+  "full_pipeline_completion_inferred": false
+}

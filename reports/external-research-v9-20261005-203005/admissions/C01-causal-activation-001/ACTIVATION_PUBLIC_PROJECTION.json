@@ -1,0 +1,37 @@
+{
+  "schema": "er9.public-native-activation-proof.v1",
+  "observed_utc": "2026-10-06T02:37:05.339785+00:00",
+  "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+  "source_activation_sha256": "32bd1fb8272cb5d240172285454af891290ed422a5872f57b012e5d45c3f6d02",
+  "startedTurn": true,
+  "actual_model": {
+    "modelId": "GLM-5.3-Flash",
+    "providerId": "builtin:zai-coding-plan"
+  },
+  "actual_session_id": "sess_4ebff80b-1dfc-4f9f-8e37-c4200d943703",
+  "effort_fields": [],
+  "native_goal_target_id": "target_muw2b1o3_c507c1d9-07b8-481b-b055-1967bc56914d",
+  "native_goal_state": "active",
+  "native_thought_level": {
+    "selector": "/snapshot/settings/thoughtLevel",
+    "value": {
+      "available": [
+        {
+          "label": "low",
+          "value": "low"
+        },
+        {
+          "label": "high",
+          "value": "high"
+        },
+        {
+          "label": "max",
+          "value": "max"
+        }
+      ],
+      "current": "max",
+      "defaultLevel": "max",
+      "enabled": true
+    }
+  }
+}

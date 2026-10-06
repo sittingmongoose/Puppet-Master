@@ -1,0 +1,78 @@
+{
+  "schema": "er9.targeted-requested-public-source-captures.v1",
+  "evaluation_id": "independent-targeted-3",
+  "unavailable": [
+    {
+      "capture_id": "4ad1eb8d65fc4c47afdb5742d3610be5",
+      "source_ids": [
+        "S1"
+      ],
+      "status": "UNLOCATED; notneverfetched"
+    },
+    {
+      "capture_id": "c7e8feac7a704b99a640f4f82ed9f4eb",
+      "source_ids": [
+        "S1"
+      ],
+      "status": "UNLOCATED; notneverfetched"
+    }
+  ],
+  "selection": "ONLYexact reviewerrequested captureIDs/currentcatalog sourceIDs; no newsourceanswers orsemanticfilter",
+  "phase2_history_native_identity_economics_key": "EXCLUDED",
+  "rawbodies": "LAB/Evidenceonly notpublicrepo",
+  "files": [
+    {
+      "alias": "B",
+      "capture_id": "9f88fd0568d1486fb0993c488bba7108",
+      "source_ids": [
+        "S7"
+      ],
+      "body_sha256": "2829dbffe5336db00320034af6527c6b5049d08dcdf75d7d8d110ff450787b57",
+      "body_bytes": 40697,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD3-REQUESTED-CAPTURES-001/B/metadata/9f88fd0568d1486fb0993c488bba7108.json",
+      "metadata_sha256": "5ca73adf580aaa08616f0f64cfd18d6898622c8ba99d8ada764a0b1b18ce8eeb",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "B",
+      "capture_id": "3bb8683a9f7b49fcb229cebbd34a8de7",
+      "source_ids": [
+        "S8"
+      ],
+      "body_sha256": "21da7b09412320162dfafc7a609dda69cf143c926ce64bee0829d1049a697f2e",
+      "body_bytes": 329,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD3-REQUESTED-CAPTURES-001/B/metadata/3bb8683a9f7b49fcb229cebbd34a8de7.json",
+      "metadata_sha256": "eced7a9fba8d2ba46e699589ace73d465545e5651234f17f3d08d19ee478ccdd",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "B",
+      "capture_id": "de16873d341f4fbc8529c160f6ab14b5",
+      "source_ids": [
+        "S8"
+      ],
+      "body_sha256": "38d3dfb254f17550f376578f69ceb05e39b79ffb99caed22ac17f27db1f302e3",
+      "body_bytes": 7105,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD3-REQUESTED-CAPTURES-001/B/metadata/de16873d341f4fbc8529c160f6ab14b5.json",
+      "metadata_sha256": "c4964e13c6d4756d2d869ce4937dca8e81ee05ae7a15d51b1c29a15a9688bc07",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "alias": "B",
+      "capture_id": "857bd88141c149f78c85afa540a70d5f",
+      "source_ids": [
+        "S12"
+      ],
+      "body_sha256": "2a57c0c607c7f34c78d5afabf91d6c5fd0cf3e746870fbabf7408b6bcf6a398d",
+      "body_bytes": 7806,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD3-REQUESTED-CAPTURES-001/B/metadata/857bd88141c149f78c85afa540a70d5f.json",
+      "metadata_sha256": "7c8eb3b5f3df29c687d7ecd70386ea8e96e9f8f1c10f7316c70b42eb7bde3441",
+      "actual_status": 200,
+      "byte_policy": "exact originalpublicsource bytes matched SHA+length; rawbodiesLAB/Evidenceonly"
+    }
+  ],
+  "raw_bodies": "explicitlyexcluded publicrepo; rawLab/Evidenceonly"
+}

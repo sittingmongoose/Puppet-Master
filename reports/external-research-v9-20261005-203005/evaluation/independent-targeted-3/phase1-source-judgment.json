@@ -1,0 +1,646 @@
+{
+  "schema": "er9.independent-targeted-source-judgment.v1",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "resource_cell": "resource-v13-a002",
+  "START_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/START.json",
+  "source_judgment_ready_utc": "2026-10-06T02:48:56.261124+00:00",
+  "source_judgment_ready_monotonic_ns": 85355118139635,
+  "source_elapsed_seconds": 613.483111513,
+  "phase1_deadline_overrun_seconds": 0,
+  "rubric": {
+    "task_and_fullbrief": "Exact frozen original task, launched tasks, common8, fullA12, important5 and targetscope3; no weighted/invented rubric.",
+    "targeted_scope": "Single-stage source-discovery diagnostic with all four current artifacts. Broader development-domain/full pipeline PASS not claimed.",
+    "same_matched_checks": true,
+    "optional_adoption_not_required": true
+  },
+  "provenance": {
+    "assigned_model": "gpt-6.1-sol",
+    "assigned_reasoning": "xhigh",
+    "assignment_source": "root",
+    "physical_provider_telemetry": "UNKNOWN"
+  },
+  "outcomes": {
+    "A": {
+      "current_source_outcome": "FAIL_SCREEN",
+      "coverage": "PARTIAL",
+      "defect_id": "TD3-A-DELIVERY-01",
+      "severity": "decisive required delivery failure",
+      "missing_file": false,
+      "malformed_catalog": false,
+      "source_semantics": "UNASSESSED_AFTER_SCREEN",
+      "source_research_catalogs": "PRESENT_VALID_JSON_NOT_QUALITY_CREDIT",
+      "canonical_final_bytes": 275,
+      "alternate_variant_read": false,
+      "native_completion": "UNASSESSED_PHASE1",
+      "operational_completion": "UNASSESSED_PHASE1",
+      "full_pipeline_quality": "UNASSESSED",
+      "fresh_matched_credit": "UNASSESSED"
+    },
+    "B": {
+      "current_source_outcome": "PASS",
+      "pass_scope": "Targeted current-final source/content screen only",
+      "coverage": "COMPLETE_TARGETED_SOURCE_CONTENT",
+      "canonical_final_bytes": 20735,
+      "missing_file": false,
+      "malformed_catalog": false,
+      "native_completion": "UNASSESSED_PHASE1",
+      "operational_completion": "UNASSESSED_PHASE1",
+      "full_pipeline_quality": "UNASSESSED",
+      "development_domain_PASS": "NOT_CLAIMED",
+      "fresh_matched_credit": "UNASSESSED",
+      "critical_dependencies": "Explicit conditional investigation targets, not promised runtime compatibility or performance.",
+      "followup_ids": [
+        "TD3-B-DEP-01",
+        "TD3-B-CATALOG-01"
+      ]
+    }
+  },
+  "defects": [
+    {
+      "id": "TD3-A-DELIVERY-01",
+      "alias": "A",
+      "category": "REQUIRED_SCOPED_DELIVERY",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-3-PAIRED-001/outputs/A/final/proposal.md",
+        "sha256": "144cdc9cd941e34731629eae9a0b32f5e041a36bb9321a72cf80048be6124838",
+        "bytes": 275
+      },
+      "finding": "Designated final has only draft heading and in-progress coordinate mechanism; it establishes no two precedents, real issue/fix/regression chain, source locators, useful alternatives or standalone completed task result. Exact alternate proposal.complete.md was not read or substituted.",
+      "affected_checks": [
+        "A-P1",
+        "A-P4",
+        "D-V15-A-P2"
+      ],
+      "stop_rule": "Remaining source claims/checks explicitly UNASSESSED after cheap decisive failed screen."
+    }
+  ],
+  "nonfatal_followups": [
+    {
+      "id": "TD3-B-DEP-01",
+      "alias": "B",
+      "finding": "Pinned tifffile README already declares zarr>=3.2.0 for its Zarr support, while proposed research pin is3.1.3. Surface this known lower-bound condition and choose/test a compatible environment before adopting the TIFF-backed lazy reader.",
+      "primary": [
+        "S10",
+        "S12-code"
+      ],
+      "severity": "Qualified architecture dependency followup; no false compatible-lockfile assertion credited because current final explicitly disclaims compatibility and requires environment validation.",
+      "required_optional_distinction": "This is a required dependency check if that adapter is adopted, not optional product adoption."
+    },
+    {
+      "id": "TD3-B-CATALOG-01",
+      "alias": "B",
+      "finding": "Two S1 captureUUIDs were UNLOCATED in exact current trusted store; this does not mean never fetched. Fresh independent official issue HTML supports the reported semantics, but does not supply missing candidate capture provenance. Several catalog byte lengths are null.",
+      "primary": [
+        "selected-capture-manifest-pin.json",
+        "S1-html"
+      ],
+      "severity": "Reproducibility/provenance limitation; neither source correctness failure nor invented candidate retrieval credit."
+    }
+  ],
+  "claim_assessments": [
+    {
+      "id": "B-C01",
+      "claim": "Zarr issue 3169 reports shard/chunk CRC failure, with reported version 3.0.8",
+      "assessment": "SUPPORTED_AS_REPORT",
+      "primary": [
+        "S1-html"
+      ],
+      "limits": "Issue body reports 3.0.8, while repro script selects mutable main; no exact failing commit or candidate reproduction is established."
+    },
+    {
+      "id": "B-C02",
+      "claim": "3299 distinguishes chunk/shard iteration; 3422 changes second copy branch",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S2-extra",
+        "S2-html",
+        "S3-extra",
+        "S3-code",
+        "S3-html"
+      ],
+      "locators": "3422 array.py 4402-4427; patch first hunk; PR body explicitly completes 3299 and closes 3169."
+    },
+    {
+      "id": "B-C03",
+      "claim": "3422 regression test counts metadata plus per-shard GETs for NumPy/Zarr inputs and one/three shards; not CRC/equality proof",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S3-extra",
+        "S3-test"
+      ],
+      "locators": "tests/test_array.py 2125-2147 at merge commit 27d689c632a01162a1209c21fc80f7c00485cb98"
+    },
+    {
+      "id": "B-C04",
+      "claim": "Zarr v3.1.3 includes 3422",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S4-html"
+      ],
+      "limits": "Release inclusion, not demonstrated full application/data-integrity guarantee."
+    },
+    {
+      "id": "B-C05",
+      "claim": "Inner chunks/shards differ and parallel inner-chunk writes need coordination",
+      "assessment": "SUPPORTED_WITH_IMPLEMENTATION_LIMIT",
+      "primary": [
+        "S5"
+      ],
+      "limits": "Specification implementation notes; plan avoids inventing actual RAM/throughput/crash guarantees."
+    },
+    {
+      "id": "B-C06",
+      "claim": "napari8353 reports origin100 spacing2 GUI Points CSV around50/57; layers/world/table differ; creation order matters; no finished fix claimed",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S6-S7-html",
+        "selected:S7"
+      ],
+      "limits": "Issue-specific napari0.6.4/ITK-reader path, open captured state; not all exports or readers."
+    },
+    {
+      "id": "B-C07",
+      "claim": "napari0.6.4 annotated tag resolves to specified commit",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "selected:S8"
+      ],
+      "limits": "Source research pin only; not verified embedding/dependency lockfile."
+    },
+    {
+      "id": "B-C08",
+      "claim": "NGFF0.5 axes, version3 storage, ordered identity/scale/translation model; limited supported multiscale profile",
+      "assessment": "SUPPORTED_WITH_PROFILE_CONDITION",
+      "primary": [
+        "S9"
+      ],
+      "locators": "sections2.1/2.3/2.4; multiscale transforms require exactly one scale, optional translation after scale; candidate initial profile uses scale/translation, not arbitrary affine."
+    },
+    {
+      "id": "B-C09",
+      "claim": "Pinned tifffile docs show predecode series metadata and TIFF-backed Zarr region access; not all layouts bounded",
+      "assessment": "SUPPORTED_WITH_DEPENDENCY_FOLLOWUP",
+      "primary": [
+        "S10"
+      ],
+      "limits": "README explicitly requires zarr>=3.2.0 for Zarr support; final calls research pins provisional and library compatibility unverified, so no false compatible-lockfile assertion is credited."
+    },
+    {
+      "id": "B-C10",
+      "claim": "MMStack numeric-string source fix2026.9.15 coerces calibration floats and defaults invalid values to0; captured commit has no added automated regression test",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S11",
+        "S12-patch",
+        "S12-code",
+        "selected:S12"
+      ],
+      "limits": "Single implementation fix; neither universal MMStack support nor complete issue/fix/test chain credited."
+    },
+    {
+      "id": "B-C11",
+      "claim": "Zarr Vectors draft/API opportunity is optional and evolving",
+      "assessment": "SUPPORTED_AS_OPTIONAL_LEAD",
+      "primary": [
+        "S13",
+        "S14"
+      ],
+      "limits": "No adoption/conformance/compatibility or runtime execution claim."
+    },
+    {
+      "id": "B-C12",
+      "claim": "W1 candidate executed isolated affine arithmetic; remaining app checks unexecuted",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "witness-source-evidence-pins.json"
+      ],
+      "limits": "Exact code/input/stdout/stderr/result pins verified; expected100/114 and inverse0/7 justified independently by arithmetic. No library/app proof inferred."
+    }
+  ],
+  "full_A12_obligation_coverage": [
+    {
+      "alias": "A",
+      "id": "A01",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A02",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A03",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A04",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A05",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A06",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A07",
+      "coverage": "PARTIAL",
+      "assessment": "FAIL_REQUIRED_CURRENT_FINAL_DELIVERY",
+      "reason": "Canonical 275-byte final remains an investigation-in-progress draft; catalogs and alternate files do not substitute."
+    },
+    {
+      "alias": "A",
+      "id": "A08",
+      "coverage": "PARTIAL",
+      "assessment": "FAIL_REQUIRED_CURRENT_FINAL_DELIVERY",
+      "reason": "Canonical 275-byte final remains an investigation-in-progress draft; catalogs and alternate files do not substitute."
+    },
+    {
+      "alias": "A",
+      "id": "A09",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A10",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A11",
+      "coverage": "UNASSESSED",
+      "assessment": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "reason": "Stopped after decisive designated-final screen; no quality equivalence inferred."
+    },
+    {
+      "alias": "A",
+      "id": "A12",
+      "coverage": "PARTIAL",
+      "assessment": "FAIL_REQUIRED_CURRENT_FINAL_DELIVERY",
+      "reason": "Canonical 275-byte final remains an investigation-in-progress draft; catalogs and alternate files do not substitute."
+    },
+    {
+      "alias": "B",
+      "id": "A01",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A02",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A03",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A04",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A05",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A06",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A07",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A08",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A09",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A10",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A11",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    },
+    {
+      "alias": "B",
+      "id": "A12",
+      "coverage": "COMPLETE",
+      "assessment": "SATISFIED_AS_PROPOSAL_OR_TARGETED_SOURCE_RESEARCH",
+      "limits": "Coverage is of stated current proposal content and checked source facts, not executed app acceptance or full pipeline. Discovery/execution lifecycle provenance and matched causal credit remain Phase2."
+    }
+  ],
+  "common8_coverage": [
+    {
+      "id": "Q1",
+      "A": {
+        "coverage": "PARTIAL",
+        "assessment": "FAIL_CURRENT_DELIVERY"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q2",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q3",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q4",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q5",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q6",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q7",
+      "A": {
+        "coverage": "UNASSESSED",
+        "assessment": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    },
+    {
+      "id": "Q8",
+      "A": {
+        "coverage": "PARTIAL",
+        "assessment": "FAIL_CURRENT_DELIVERY"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "assessment": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+        "limits": "Broader full development/domain/pipeline quality and matched causal credit not established."
+      }
+    }
+  ],
+  "matched_important5_and_target3": [
+    {
+      "check_id": "A-P1",
+      "A": {
+        "coverage": "PARTIAL",
+        "outcome": "FAIL_SCREEN"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_SCREEN",
+        "limits": "No full app, compatible lockfile, resource benchmark or crash recovery execution inferred."
+      }
+    },
+    {
+      "check_id": "A-P2",
+      "A": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_SCREEN",
+        "limits": "No full app, compatible lockfile, resource benchmark or crash recovery execution inferred."
+      }
+    },
+    {
+      "check_id": "A-P3",
+      "A": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_SCREEN",
+        "limits": "No full app, compatible lockfile, resource benchmark or crash recovery execution inferred."
+      }
+    },
+    {
+      "check_id": "A-P4",
+      "A": {
+        "coverage": "PARTIAL",
+        "outcome": "FAIL_SCREEN"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_SCREEN",
+        "limits": "No full app, compatible lockfile, resource benchmark or crash recovery execution inferred."
+      }
+    },
+    {
+      "check_id": "A-P5",
+      "A": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_SCREEN",
+        "limits": "No full app, compatible lockfile, resource benchmark or crash recovery execution inferred."
+      }
+    },
+    {
+      "check_id": "D-V15-A-P1",
+      "A": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_CONTENT",
+        "limits": "Method uptake visible in current traces and honest W1/proposed labels; actual native lifecycle, resource matching and causal contrast deferred Phase2."
+      }
+    },
+    {
+      "check_id": "D-V15-A-P2",
+      "A": {
+        "coverage": "PARTIAL",
+        "outcome": "FAIL_SCREEN"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_CONTENT",
+        "limits": "Method uptake visible in current traces and honest W1/proposed labels; actual native lifecycle, resource matching and causal contrast deferred Phase2."
+      }
+    },
+    {
+      "check_id": "D-V15-A-P3",
+      "A": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED"
+      },
+      "B": {
+        "coverage": "COMPLETE",
+        "outcome": "PASS_CURRENT_SOURCE_CONTENT",
+        "limits": "Method uptake visible in current traces and honest W1/proposed labels; actual native lifecycle, resource matching and causal contrast deferred Phase2."
+      }
+    }
+  ],
+  "targeted_obligations": [
+    {
+      "id": "D-V15-A-01",
+      "A": "UNASSESSED_AFTER_DELIVERY_SCREEN",
+      "B": "COMPLETE_CURRENT_SOURCE_TRACE"
+    },
+    {
+      "id": "D-V15-A-02",
+      "A": "UNASSESSED_AFTER_DELIVERY_SCREEN",
+      "B": "COMPLETE_CONDITIONS_AND_CURRENT_FACTS"
+    },
+    {
+      "id": "D-V15-A-03",
+      "A": "FAIL_CURRENT_COMPLETE_RESULT",
+      "B": "COMPLETE_RESULT_AND_HONEST_VALIDATION_LABELS"
+    },
+    {
+      "id": "D-V15-A-04",
+      "A": "UNASSESSED_AFTER_SCREEN",
+      "B": "CURRENT_SOURCE_SET_USEFUL; ACTUAL_BRIEF_ONLY_DISCOVERY_PROVENANCE_AND_MATCHED_CREDIT_DEFERRED_PHASE2"
+    }
+  ],
+  "supported_preservation": [
+    "B limits request-count regression to GET granularity rather than original CRC/equality proof.",
+    "B keeps napari open issue and tifffile no-test fix out of claimed completed repair chains.",
+    "B retains raw metadata, explicit coordinate frame/transform/export sidecar, conditional bounded readers and original immutability.",
+    "B keeps resource/recovery/portability app checks proposed/UNEXECUTED and optional vector-format opportunity separate."
+  ],
+  "comparison": "Observed current output A is decisively incomplete while B passes this bounded current-source screen. No source-quality equality from labels, no model ranking or method causality, no autonomous/generalized discovery or full-pipeline quality inferred.",
+  "blindness": {
+    "prior_reviews_results_campaign_aggregate_inventory_historical_outputs_read": false,
+    "key_identity_native_general_history_cost_disclosed_before_freeze": false,
+    "unavoidable_hints": [
+      "Root assignment names pair, resource cell and requested evaluator provenance.",
+      "Exact launched task bodies reveal docs-first versus tracing arm instructions.",
+      "B witness_catalog.stage contains treatment label; this was seen during Phase1 catalog read."
+    ],
+    "perfect_blinding_claim": false,
+    "sourcefacts_sent_to_candidate_case_tools_ops": false
+  },
+  "evidence_indexes": [
+    "dispatch-pin.json",
+    "task-evidence-pins.json",
+    "candidate-evidence-pins.json",
+    "catalog-structure.json",
+    "primary-evidence-pins.json",
+    "primary-evidence-pins-2.json",
+    "witness-source-manifest-pin.json",
+    "witness-source-evidence-pins.json",
+    "selected-capture-manifest-pin.json",
+    "selected-primary-evidence-pins.json"
+  ],
+  "verification_limits": [
+    "No candidate libraries installed or complete application run.",
+    "GitHub API returned403 rate limits to evaluator; independently fetched official HTML/raw/spec material and exact courier-positive captures used.",
+    "Issue source reports do not prove root cause or every release path.",
+    "Native statuses/cost/key and actual resource matching remain withheld until immutable source freeze.",
+    "Raw primary source bodies remain evaluator-owned LAB evidence and are not positively selected for publication."
+  ]
+}

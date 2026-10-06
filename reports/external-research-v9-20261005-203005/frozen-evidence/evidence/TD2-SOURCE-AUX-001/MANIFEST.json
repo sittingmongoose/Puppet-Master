@@ -1,0 +1,130 @@
+{
+  "schema": "er9.targeted-requested-phase1-positive-evidence.v1",
+  "evaluation_id": "independent-targeted-2",
+  "files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-mv__hfa5",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/A/exec-mv__hfa5/code.py",
+      "sha256": "4e50b220e8e0297de9158f08835f053cd09496a31dd0c3b89eb3c82efefcf41e",
+      "original_sha256": "4e50b220e8e0297de9158f08835f053cd09496a31dd0c3b89eb3c82efefcf41e",
+      "evidence_kind": "candidate_code",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-mv__hfa5",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/A/exec-mv__hfa5/data.json",
+      "sha256": "d7e59f0f04d2d7c622ed704ff5d1b596dbeea4d759ae202165ce7120cd0c35d4",
+      "original_sha256": "d7e59f0f04d2d7c622ed704ff5d1b596dbeea4d759ae202165ce7120cd0c35d4",
+      "evidence_kind": "candidate_input",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-mv__hfa5",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/A/exec-mv__hfa5/stdout.bin",
+      "sha256": "d54c6ce9a69b6fdbfd39e8a107dcc97d0ac8e06b0bfd9f14fc68cbfd8374381b",
+      "original_sha256": "d54c6ce9a69b6fdbfd39e8a107dcc97d0ac8e06b0bfd9f14fc68cbfd8374381b",
+      "evidence_kind": "candidate_stdout",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-mv__hfa5",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/A/exec-mv__hfa5/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-mv__hfa5",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/A/exec-mv__hfa5/execution-facts.json",
+      "sha256": "6d40ab2243a817cd6ff08be1011b33c064a25df14965ba63326458af2fa45306",
+      "original_sha256": "692ad705eb69ac4f149f115809281cf07bc577317c997526aa8b70fb36e4f7cb",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positiveactor/code/input/stream/exit/bootstrap/cleanup/scope/limits projection; omitprivateunit/path/history/economics/timing",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ]
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-355qspvm",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/exec-355qspvm/code.py",
+      "sha256": "f31a3fc3d76a3db7d29881160b11aafc6b13176481950b933fee46211a05ce6c",
+      "original_sha256": "f31a3fc3d76a3db7d29881160b11aafc6b13176481950b933fee46211a05ce6c",
+      "evidence_kind": "candidate_code",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-355qspvm",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/exec-355qspvm/data.json",
+      "sha256": "eb89b1d7518245e98f32504f2f6b488526938299054044796657721e649686d3",
+      "original_sha256": "eb89b1d7518245e98f32504f2f6b488526938299054044796657721e649686d3",
+      "evidence_kind": "candidate_input",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-355qspvm",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/exec-355qspvm/stdout.bin",
+      "sha256": "67901057d146d9e30ea8afc09284ea7bc91ac5030e9893cb9e0e129cbc37f293",
+      "original_sha256": "67901057d146d9e30ea8afc09284ea7bc91ac5030e9893cb9e0e129cbc37f293",
+      "evidence_kind": "candidate_stdout",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-355qspvm",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/exec-355qspvm/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-355qspvm",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/exec-355qspvm/execution-facts.json",
+      "sha256": "e09b2ec291da45d8078b48c78df8779cb05c4f0ec19888e9b7c3da8956e4bca5",
+      "original_sha256": "35d0510fae9e884859a5ffec206a0bf9421aa10d4a736ef656a691ff52790141",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positiveactor/code/input/stream/exit/bootstrap/cleanup/scope/limits projection; omitprivateunit/path/history/economics/timing",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ]
+    },
+    {
+      "alias": "B",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD2-SOURCE-AUX-001/B/research/ome-zarr-test-writer-lines.json",
+      "sha256": "766e6e08f2a3307608cf108894ec577c2b398c8c17b515b447de6c9820f92d68",
+      "evidence_kind": "candidate_submitted_source_locator",
+      "byte_policy": "exactfrozenauxiliary, notindependentprimarycapture orsubstitute for missingfinalcatalog"
+    }
+  ],
+  "mapping_boundary": "W1correspondence UNKNOWN: no executionID inproposal orcatalog. Thesearethe onlyactualcurrentstage receipts, not operational-status inference.",
+  "phase1_only_scope": "currentclaimedsource/execution evidence, no generalnativeGoal/history/cost/aliases/privatekey",
+  "candidate_or_evaluator_code_executed_by_courier": false
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "er9.phase1-immutable-freeze.v1",
+  "evaluation_id": "independent-targeted-3",
+  "frozen_utc": "2026-10-06T02:48:56.262064+00:00",
+  "frozen_monotonic_ns": 85355119061566,
+  "source_elapsed_seconds": 613.484033444,
+  "source_overrun_seconds": 0,
+  "whole_elapsed_seconds": 613.484033444,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+      "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998",
+      "bytes": 25593
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/public-source-summary.json",
+      "sha256": "ef8cb9a3a2e06733ea52fa91d1df4406781bf8a02b042e76360f7f866adb9fb6",
+      "bytes": 1066
+    }
+  ],
+  "source_judgment_rewrite_after_phase2_forbidden": true,
+  "phase2_disclosure_before_freeze": false
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-05-FRESH-DELIVERY-R001-control-research-a001",
+  "pair_id": "I-05-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "research",
+  "operational_status": "COMPLETED",
+  "native_outcome": "native_goal_complete",
+  "native_goal_status_final": "complete",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:26:33.375444+00:00",
+  "original_birth_monotonic_ns": 84012232411811,
+  "elapsed_seconds": 768.181469112,
+  "original_max_seconds": 1200,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "1ac9030ddd0712a6fba7fce6fcc781e078b62ab30a0113a7babca7f7f3456e2f"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "a0126125e490b841976c89bd438fdfb532d3c330160f53e5c0a908023cd66d83",
+  "native_receipt_sha256": "6927b010b6c9fc56abef015fe0a63bdce72372aa44e715773194b5b3d7a374f0",
+  "artifact_inventory": [
+    {
+      "relative_path": "research/leads.json",
+      "sha256": "943ba46ddb79291d6a86744d1abfbf8d9927fce587e70fc19392b1d5910f65ee",
+      "bytes": 8983
+    },
+    {
+      "relative_path": "research/proposal.md",
+      "sha256": "f3bc5f9147dba8dd8bb368c227329f8a94fa74c59f801ee1a1d34693edac1efe",
+      "bytes": 29573
+    },
+    {
+      "relative_path": "research/sources.json",
+      "sha256": "a621d264a11fc4e8f9d5bd44b6ca5f9402b1dbae361ec1316c05aa91a1ff606f",
+      "bytes": 11348
+    },
+    {
+      "relative_path": "research/witnesses.json",
+      "sha256": "a11c1f0a5713c78b25f047f7a0ab6b9399ecac8fc440d25dd7409645095398e3",
+      "bytes": 8039
+    }
+  ],
+  "missing_required_artifacts": [],
+  "full_pipeline_completion_inferred": false
+}

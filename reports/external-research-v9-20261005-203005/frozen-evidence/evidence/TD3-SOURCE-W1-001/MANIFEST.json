@@ -1,0 +1,70 @@
+{
+  "schema": "er9.targeted-requested-phase1-positive-evidence.v1",
+  "evaluation_id": "independent-targeted-3",
+  "files": [
+    {
+      "alias": "B",
+      "execution_id": "exec-icoxtwr_",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD3-SOURCE-W1-001/B/exec-icoxtwr_/code.py",
+      "sha256": "0b5df29b39ccf80a5d7cf2b3ef12208e7cdbd86947554c399ecea1adf3025327",
+      "original_sha256": "0b5df29b39ccf80a5d7cf2b3ef12208e7cdbd86947554c399ecea1adf3025327",
+      "evidence_kind": "candidate_code",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-icoxtwr_",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD3-SOURCE-W1-001/B/exec-icoxtwr_/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "evidence_kind": "candidate_input",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-icoxtwr_",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD3-SOURCE-W1-001/B/exec-icoxtwr_/stdout.bin",
+      "sha256": "885a91052780a1bc865039f804ff3d04d9ae4fa8bfd8069e26f831c7496b2353",
+      "original_sha256": "885a91052780a1bc865039f804ff3d04d9ae4fa8bfd8069e26f831c7496b2353",
+      "evidence_kind": "candidate_stdout",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-icoxtwr_",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD3-SOURCE-W1-001/B/exec-icoxtwr_/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-icoxtwr_",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD3-SOURCE-W1-001/B/exec-icoxtwr_/execution-facts.json",
+      "sha256": "67d09f2d52f4ced0ec6ea28070657f085665cd2cdb01c2cf120df33c004da8d3",
+      "original_sha256": "db145230ed54a3a3f482d99b835984c1e239f2fa0603d2aa3eaaf52ff9ed57bf",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positiveactor/code/input/stream/exit/bootstrap/cleanup/scope/limits projection; omitprivateunit/path/history/economics/timing",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "resource_aggregate_after_execution",
+        "resource_aggregate_observation_error",
+        "resource_placement",
+        "resource_profile_sha256",
+        "stderr",
+        "stdout"
+      ]
+    }
+  ],
+  "mapping_boundary": "Positiveexactclaimed executionID selected byreviewer; no evaluator substitute/no oldreceipt.",
+  "phase1_only_scope": "currentclaimedsource/execution evidence, no generalnativeGoal/history/cost/aliases/privatekey",
+  "candidate_or_evaluator_code_executed_by_courier": false
+}

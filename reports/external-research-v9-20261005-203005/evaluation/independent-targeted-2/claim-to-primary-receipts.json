@@ -1,0 +1,478 @@
+{
+  "candidate_test_execution_by_evaluator": false,
+  "claims": [
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            9,
+            15,
+            25,
+            27,
+            43,
+            49,
+            101
+          ],
+          "locator_substring": "tifffile",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        },
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            7,
+            11
+          ],
+          "locator_substring": "tifffile",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R01",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.417562+00:00",
+          "bytes": 32898,
+          "complete": true,
+          "exact_locator": "README.rst lines 17-35, 73-86, 760-782",
+          "id": "N10",
+          "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/a14e516c4fa3c0c9ede980ebb3111260347dd213/README.rst"
+        }
+      ],
+      "reason": "The pinned TIFF reader documentation demonstrates array/Zarr access and tile slicing; this supports a reader mechanism, not bounded memory, latency or full compatibility for the proposed application."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            9,
+            15,
+            27,
+            55,
+            83,
+            91
+          ],
+          "locator_substring": "scale",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        },
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            9,
+            23,
+            33,
+            55,
+            67
+          ],
+          "locator_substring": "scale",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R02",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.415764+00:00",
+          "bytes": 32266,
+          "complete": true,
+          "exact_locator": "index.md lines 247-264, 287, 309-319, 389-401",
+          "id": "N9",
+          "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+          "url": "https://raw.githubusercontent.com/ome/ngff-spec/0.5/index.md"
+        },
+        {
+          "access_utc": "2026-10-06T02:44:32.796979+00:00",
+          "bytes": 37464,
+          "complete": true,
+          "exact_locator": "0.5/index.bs lines 252-266, 290, 312-322, 393-405",
+          "id": "B-spec-raw",
+          "sha256": "eb007bba48e6b359906a1b5f289a4d6f5965a7fc0e8f50fd3bcfaeb765fef685",
+          "url": "https://raw.githubusercontent.com/ome/ngff-spec/5cdf83b6806b5e500477c7af69dae9ed2adcf77d/0.5/index.bs"
+        }
+      ],
+      "reason": "Dataset transforms require one scale then optional translation; axes correspond to array dimension order, and label samples are integers. The proposals correctly retain a richer affine/vector model for unsupported transformations."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            33
+          ],
+          "locator_substring": "#9247",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        }
+      ],
+      "claim_id": "R03",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:42:00.341401+00:00",
+          "bytes": 310849,
+          "complete": true,
+          "exact_locator": "issue #9247 body; derived A-issue-html.txt lines 143-183",
+          "id": "A-issue-html",
+          "sha256": "4f672235f7892e48d098f964ec4412ef1dda5518c8450a105c0f70071e4b67ed",
+          "url": "https://github.com/napari/napari/issues/9247"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.343343+00:00",
+          "bytes": 521757,
+          "complete": true,
+          "exact_locator": "PR body Closes #9247 and merge commit de87bdd0be61a3f63e643865553277ab22a04ac8",
+          "id": "A-pr-html",
+          "sha256": "6b90b78e1c025ae5e859b6ebc4d943e03476c691e7ab7f86a2ceb7077a76202e",
+          "url": "https://github.com/napari/napari/pull/9059"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.344129+00:00",
+          "bytes": 17181,
+          "complete": true,
+          "exact_locator": "src/napari/layers/shapes/_tests/test_shapes.py diff lines 11-50; selected-in-view helper lines 261 onward",
+          "id": "A-diff",
+          "sha256": "a9d9e67da09f76722da6a288e349968ac115e4e93280cafe3eda3abcfd123d24",
+          "url": "https://github.com/napari/napari/pull/9059.diff"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.344691+00:00",
+          "bytes": 343564,
+          "complete": true,
+          "exact_locator": "PR #9399 body and merge commit 1c0f90fb55b424cc78d97a3e3acc45fd3555ccf6",
+          "id": "A-followup-html",
+          "sha256": "4f563f06a5002edf84c5dd070e013ab8a99aa8fe347ec4040bcde68dc3f365cb",
+          "url": "https://github.com/napari/napari/pull/9399"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.345759+00:00",
+          "bytes": 3656,
+          "complete": true,
+          "exact_locator": "changed implementation/test references lines 9-17, 36-50",
+          "id": "A-followup-diff",
+          "sha256": "57887eb495a4791d8ef5623590d739adee1a1b2f5f5b1a1c6498b5fb29ff63ba",
+          "url": "https://github.com/napari/napari/pull/9399.diff"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.348588+00:00",
+          "bytes": 92530,
+          "complete": true,
+          "exact_locator": "test_outline_not_drawn_off_slice lines 2771-2810",
+          "id": "A-shapes-test",
+          "sha256": "0ce384062ceb2f9d9096d1dd445747938641dbfbca2eb64030bb1976fb986fe5",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/src/napari/layers/shapes/_tests/test_shapes.py"
+        },
+        {
+          "access_utc": "2026-10-06T02:44:32.795837+00:00",
+          "bytes": 131764,
+          "complete": true,
+          "exact_locator": "_selected_data_in_view lines 1637-1645; _outline_shapes lines 2542 onward",
+          "id": "A-shapes-code",
+          "sha256": "4e7ac1b7b1c4b3163b34b6e2688e81745beea3a9043629594046894d57247a30",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/src/napari/layers/shapes/shapes.py"
+        }
+      ],
+      "reason": "The public issue reproduces stale off-slice outlines. The associated PR filters view-local selection/hover and adds on/off-slice selection and hover assertions; the follow-up repairs renamed references. Current pinned test/code retains the lesson."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            49
+          ],
+          "locator_substring": "#8962",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R04",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:42:00.349892+00:00",
+          "bytes": 283278,
+          "complete": true,
+          "exact_locator": "issue #8962 body; derived B-issue-html.txt lines 143-203",
+          "id": "B-issue-html",
+          "sha256": "e18771b83a7313c4321b87ee95b6c32c0c7167ea3b4fa7cc8f678285fdb448e9",
+          "url": "https://github.com/napari/napari/issues/8962"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.535382+00:00",
+          "bytes": 487129,
+          "complete": true,
+          "exact_locator": "PR #8968 body, merge commit 5c700d1424ba18689b74646e813f31753421610c",
+          "id": "B-pr-html",
+          "sha256": "1c35577f4d089193ed7656b6b49576063633f42313a22db6ccf336eb74ccbcc3",
+          "url": "https://github.com/napari/napari/pull/8968"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.778729+00:00",
+          "bytes": 3357,
+          "complete": true,
+          "exact_locator": "test parameterization/rank assertions lines 25-37; set_slice_input fix lines 51-67",
+          "id": "B-diff",
+          "sha256": "0b2afa7437d28c9cfca9e1cb206015dc632fc3748dea7a963a7eedc77970149a",
+          "url": "https://github.com/napari/napari/pull/8968.diff"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:00.792088+00:00",
+          "bytes": 290284,
+          "complete": true,
+          "exact_locator": "v0.7.1 release notes list #8968; derived B-release-html.txt line 225",
+          "id": "B-release-html",
+          "sha256": "3f8b1345f0df49f1c7d92dec7a77bb43f7db99d22b373ede72edd02167bf4823",
+          "url": "https://github.com/napari/napari/releases/tag/v0.7.1"
+        },
+        {
+          "access_utc": "2026-10-06T02:44:32.793484+00:00",
+          "bytes": 20174,
+          "complete": true,
+          "exact_locator": "test_invisible_layer_keeps_placeholder_rank_in_3d lines 163-175",
+          "id": "B-scalar-test",
+          "sha256": "88f191beae452c286c8d64fc83ce18ae6b4b875c53c2d35a88997c5c378d6cec",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/src/napari/layers/_scalar_field/_tests/test_scalar_field.py"
+        },
+        {
+          "access_utc": "2026-10-06T02:44:32.794837+00:00",
+          "bytes": 39508,
+          "complete": true,
+          "exact_locator": "set_slice_input lines 910-928",
+          "id": "B-scalar-code",
+          "sha256": "50d0f2c6adb4412589394dde4a55a8b156799b89ed55610a57496ef6d0d2a0b4",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/src/napari/layers/_scalar_field/scalar_field.py"
+        }
+      ],
+      "reason": "The issue, fix and regression source chain is real. The fix refreshes invisible-layer placeholder rank while preserving the no-fetch branch. The test uses Image and Labels with a 3D array and ndisplay=3; it is not a full 4D GUI or large-data test."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            11
+          ],
+          "locator_substring": "writing not supported",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R05",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.505975+00:00",
+          "bytes": 12703,
+          "complete": true,
+          "exact_locator": "FormatV05 and CurrentFormat lines 344-364",
+          "id": "B-format",
+          "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca",
+          "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/ome_zarr/format.py"
+        },
+        {
+          "access_utc": "2026-10-06T02:40:46.513839+00:00",
+          "bytes": 56459,
+          "complete": true,
+          "exact_locator": "check_group_fmt lines 228-242; write_multiscale lines 349-385; write_image lines 565 onward",
+          "id": "B-writer",
+          "sha256": "9ac51ec29f05bebe83f3b87d072390e237c7eee13e689ce1066147b52b436363",
+          "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/ome_zarr/writer.py"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:01.023801+00:00",
+          "bytes": 83800,
+          "complete": true,
+          "exact_locator": "FORMAT_VERSIONS lines 57-62; test_write_image_current lines 344-393; test_write_image_dask lines 395-444",
+          "id": "B-writer-test",
+          "sha256": "2451038511aa0f8a6100c029c6b2bfa7c077be99350dc656ecbbb7ced75c4043",
+          "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/tests/test_writer.py"
+        },
+        {
+          "access_utc": "2026-10-06T02:44:32.798152+00:00",
+          "bytes": 3513,
+          "complete": true,
+          "exact_locator": "requires-python/dependencies lines 21-34",
+          "id": "B-package",
+          "sha256": "d79b5825c98f8ebd6b56c6b08086465476565b26354f5eba45665cedec72f8ab",
+          "url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/pyproject.toml"
+        }
+      ],
+      "reason": "A dated FormatV05 changelog comment says writing was unsupported, while CurrentFormat and active writer/test paths cover v0.5/Zarr3 and NumPy/Dask. Treating qualification as pending is legitimate; the comment alone cannot prove no writer support. B preserves the opportunity and reports the discrepancy rather than asserting writing never works."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            63,
+            65,
+            99
+          ],
+          "locator_substring": "SQLite",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        },
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            17,
+            35,
+            36
+          ],
+          "locator_substring": "SQLite",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R06",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.419650+00:00",
+          "bytes": 42143,
+          "complete": true,
+          "exact_locator": "WAL disadvantages lines 176-183; checkpoint lines 299 onward",
+          "id": "N11",
+          "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e",
+          "url": "https://www.sqlite.org/wal.html"
+        },
+        {
+          "access_utc": "2026-10-06T02:40:46.420233+00:00",
+          "bytes": 77968,
+          "complete": true,
+          "exact_locator": "Hardware Assumptions section; flush/commit/recovery sections",
+          "id": "N12",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+          "url": "https://www.sqlite.org/atomiccommit.html"
+        },
+        {
+          "access_utc": "2026-10-06T02:46:17.295921+00:00",
+          "bytes": 28195,
+          "complete": true,
+          "exact_locator": "Using the SQLite Online Backup API lines 143-189",
+          "id": "B-backup",
+          "sha256": "306b6cca5c7c2f93b648040ae139f14d7d3221c0d16d79b5749e69d808382e04",
+          "url": "https://www.sqlite.org/backup.html"
+        },
+        {
+          "access_utc": "2026-10-06T02:46:17.297266+00:00",
+          "bytes": 46737,
+          "complete": true,
+          "exact_locator": "Copying database during transaction and File locking problems sections",
+          "id": "B-corrupt",
+          "sha256": "e00709e3f37e95332d8e6df243510665e9cab1d7938d4fd85cbf5f47648a50bf",
+          "url": "https://www.sqlite.org/howtocorrupt.html"
+        }
+      ],
+      "reason": "Local editing, tested filesystem assumptions and closed snapshots preserve the source limitations. SQLite WAL requires same-host shared memory; DB atomicity does not imply complete multi-file bundle atomicity. B's backup alternative is documented."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            85
+          ],
+          "locator_substring": "bioformats2raw",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        }
+      ],
+      "claim_id": "R07",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.425817+00:00",
+          "bytes": 27462,
+          "complete": true,
+          "exact_locator": "README.md tuning/memory lines 365-387; noexec caveat lines 29-34; converter license lines 515-518",
+          "id": "N13",
+          "sha256": "2371379e32804870b1b997e6af1c6300c0081a686789f16a401a2f29b7575860",
+          "url": "https://raw.githubusercontent.com/glencoesoftware/bioformats2raw/a525d9e9106c9cb29cd001d6a12d353636759a36/README.md"
+        },
+        {
+          "access_utc": "2026-10-06T02:46:17.298243+00:00",
+          "bytes": 4727,
+          "complete": true,
+          "exact_locator": "build.gradle line 9",
+          "id": "A-converter-build",
+          "sha256": "dc83573d05aadac45ee9dc272fdb797df47b12683fdaac52e51de6df8a95c13d",
+          "url": "https://raw.githubusercontent.com/glencoesoftware/bioformats2raw/a525d9e9106c9cb29cd001d6a12d353636759a36/build.gradle"
+        },
+        {
+          "access_utc": "2026-10-06T02:46:17.298851+00:00",
+          "bytes": 17987,
+          "complete": true,
+          "exact_locator": "LICENSE.txt GPL version header",
+          "id": "A-converter-license",
+          "sha256": "ab15fd526bd8dd18a9e77ebc139656bf4d33e97fc7238cd11bf60e2b9b8666c6",
+          "url": "https://raw.githubusercontent.com/glencoesoftware/bioformats2raw/a525d9e9106c9cb29cd001d6a12d353636759a36/LICENSE.txt"
+        }
+      ],
+      "reason": "The bounded alternative is useful and retains performance/memory and packaging limits. Pinned build.gradle identifies 0.13.0-SNAPSHOT; license is GPLv2. The source catalog incorrectly attributes the snapshot identity to README alone; this is a minor locator defect, not evidence of a wrong converter behavior."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_LIMITS",
+      "candidate_locators": [
+        {
+          "alias": "A",
+          "bytes": 23113,
+          "line_hits": [
+            7,
+            15,
+            23,
+            25,
+            27,
+            33
+          ],
+          "locator_substring": "napari",
+          "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+        },
+        {
+          "alias": "B",
+          "bytes": 18173,
+          "line_hits": [
+            7,
+            21,
+            49,
+            51,
+            57
+          ],
+          "locator_substring": "napari",
+          "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+        }
+      ],
+      "claim_id": "R08",
+      "primary_receipts": [
+        {
+          "access_utc": "2026-10-06T02:40:46.344602+00:00",
+          "bytes": 9073,
+          "complete": true,
+          "exact_locator": "README.md What is napari? and Features",
+          "id": "N1",
+          "sha256": "2fa719bc206415554cef6e1016b3bad68bf9f0aa26713a5aa5ca650db7df5d13",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/README.md"
+        },
+        {
+          "access_utc": "2026-10-06T02:42:01.029355+00:00",
+          "bytes": 89848,
+          "complete": true,
+          "exact_locator": "base.py Layer transform/affine/axis labels/units parameters and data-to-world transform",
+          "id": "B-layer",
+          "sha256": "2c9e08f2cf0508fdf2399abf49eea42ecb545adb81ac4c8422b57103b57eefa4",
+          "url": "https://raw.githubusercontent.com/napari/napari/595639295a153c84bcb127a9e07d801355440a35/src/napari/layers/base/base.py"
+        }
+      ],
+      "reason": "napari is a relevant viewer/layer precedent separate from decoding and persistence. It does not supply the project-level guarantees, which both proposals own and qualify."
+    }
+  ],
+  "mechanical_capture_reuse": "Six exact source captures supplied by courier on positively requested capture IDs; no shared interpretations.",
+  "public_tests_inspected_not_run": true,
+  "schema": "er9.claim-primary-receipts.v1"
+}

@@ -1,0 +1,496 @@
+{
+  "alias_judgments": {
+    "A": {
+      "common_dimensions": [
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q1",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q2",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q3",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q4",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q5",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q6",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q7",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q8",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "check_id": "A-P1",
+          "coverage": "COMPLETE",
+          "result": "Useful independent mechanisms and regression chain independently corroborated; exact final source locator delivery incomplete for B."
+        },
+        {
+          "check_id": "A-P2",
+          "coverage": "PARTIAL",
+          "result": "Inspected consequential metadata, reader and persistence claims supported/qualified. Every possible current assertion and dependency was not exhaustively audited; optional pin qualification and full app behavior remain UNASSESSED."
+        },
+        {
+          "check_id": "A-P3",
+          "coverage": "PARTIAL",
+          "result": "Arithmetic receipts have actor candidate, code/input/stream hashes and exit0; narrow values independently justified by source transform rules and arithmetic. W1 explicit ID mapping UNKNOWN; missing witness catalogs."
+        },
+        {
+          "check_id": "A-P4",
+          "coverage": "PARTIAL",
+          "result": "Supported conditions retained in current final; no consequential semantic error/false rejection identified in inspected subset. No prior answer or critic record opened, so correction history UNASSESSED; no full completeness verdict."
+        },
+        {
+          "check_id": "A-P5",
+          "coverage": "COMPLETE",
+          "result": "Proposal text covers minimum workflow, support boundary, recovery/portability, resources/cancel/progress, usability, opportunity and alternative; qualifications remain explicit."
+        }
+      ],
+      "coverage": [
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A01"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A02"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A03"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A04"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A05"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A06"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Independent viewer/decoder/metadata mechanisms and actual issue/fix/test/release lineage corroborated by primary receipts.",
+          "obligation_id": "A07"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Independent viewer/decoder/metadata mechanisms and actual issue/fix/test/release lineage corroborated by primary receipts.",
+          "obligation_id": "A08"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A09"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A10"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Exact current candidate arithmetic code/input/output/exit is consistent with stated scope; no explicit W1 receipt ID linkage or required witness catalog, and no application/component-library behavior was run.",
+          "obligation_id": "A11"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Useful current proposal preserved, but required lead/witness catalogs absent; B source catalog absent and S/L citations unresolved; A atomiccommit capture SHA malformed.",
+          "obligation_id": "A12"
+        }
+      ],
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "identified_critical_semantic_defects_in_screen": 0,
+      "semantic_screen": "NO_DECISIVE_CONSEQUENTIAL_SEMANTIC_ERROR_IDENTIFIED_IN_INSPECTED_SUBSET",
+      "source_quality": "PARTIAL",
+      "target_scope_checks": [
+        {
+          "check_id": "D-V14-A-LUNA-R1-P1",
+          "coverage": "PARTIAL",
+          "note": "Inspected current source claims supported/preserved; correction-history comparison not opened."
+        },
+        {
+          "check_id": "D-V14-A-LUNA-R1-P2",
+          "coverage": "PARTIAL",
+          "note": "Useful content and legitimate uncertainty retained; final required catalog delivery incomplete."
+        },
+        {
+          "check_id": "D-V14-A-LUNA-R1-P3",
+          "coverage": "PARTIAL",
+          "note": "Distinct breadth/storage lessons and honest narrow arithmetic scopes observed. Actual mechanism uptake/budget/causality UNASSESSED before Phase2."
+        }
+      ],
+      "task_outcome": "INCOMPLETE",
+      "total_critical_semantic_defects": "UNKNOWN_NOT_EXHAUSTIVE",
+      "whole_case_PASS": false
+    },
+    "B": {
+      "common_dimensions": [
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q1",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q2",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q3",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q4",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q5",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q6",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q7",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        },
+        {
+          "coverage": "PARTIAL",
+          "dimension_id": "Q8",
+          "note": "Bounded source review plus complete minimum proposal-text inspection; no aggregate score or full-case inference."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "check_id": "A-P1",
+          "coverage": "PARTIAL",
+          "result": "Useful independent mechanisms and regression chain independently corroborated; exact final source locator delivery incomplete for B."
+        },
+        {
+          "check_id": "A-P2",
+          "coverage": "PARTIAL",
+          "result": "Inspected consequential metadata, reader and persistence claims supported/qualified. Every possible current assertion and dependency was not exhaustively audited; optional pin qualification and full app behavior remain UNASSESSED."
+        },
+        {
+          "check_id": "A-P3",
+          "coverage": "PARTIAL",
+          "result": "Arithmetic receipts have actor candidate, code/input/stream hashes and exit0; narrow values independently justified by source transform rules and arithmetic. W1 explicit ID mapping UNKNOWN; missing witness catalogs."
+        },
+        {
+          "check_id": "A-P4",
+          "coverage": "PARTIAL",
+          "result": "Supported conditions retained in current final; no consequential semantic error/false rejection identified in inspected subset. No prior answer or critic record opened, so correction history UNASSESSED; no full completeness verdict."
+        },
+        {
+          "check_id": "A-P5",
+          "coverage": "COMPLETE",
+          "result": "Proposal text covers minimum workflow, support boundary, recovery/portability, resources/cancel/progress, usability, opportunity and alternative; qualifications remain explicit."
+        }
+      ],
+      "coverage": [
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A01"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A02"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A03"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A04"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A05"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A06"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Independently corroborated useful mechanisms/real chain; B's absent source catalog leaves S references and exact final locators unresolved.",
+          "obligation_id": "A07"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Independently corroborated useful mechanisms/real chain; B's absent source catalog leaves S references and exact final locators unresolved.",
+          "obligation_id": "A08"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A09"
+        },
+        {
+          "coverage": "COMPLETE",
+          "note": "Complete proposal-text coverage; product choices/proposed validation are not claimed implemented behavior.",
+          "obligation_id": "A10"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Exact current candidate arithmetic code/input/output/exit is consistent with stated scope; no explicit W1 receipt ID linkage or required witness catalog, and no application/component-library behavior was run.",
+          "obligation_id": "A11"
+        },
+        {
+          "coverage": "PARTIAL",
+          "note": "Useful current proposal preserved, but required lead/witness catalogs absent; B source catalog absent and S/L citations unresolved; A atomiccommit capture SHA malformed.",
+          "obligation_id": "A12"
+        }
+      ],
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "identified_critical_semantic_defects_in_screen": 0,
+      "semantic_screen": "NO_DECISIVE_CONSEQUENTIAL_SEMANTIC_ERROR_IDENTIFIED_IN_INSPECTED_SUBSET",
+      "source_quality": "PARTIAL",
+      "target_scope_checks": [
+        {
+          "check_id": "D-V14-A-LUNA-R1-P1",
+          "coverage": "PARTIAL",
+          "note": "Inspected current source claims supported/preserved; correction-history comparison not opened."
+        },
+        {
+          "check_id": "D-V14-A-LUNA-R1-P2",
+          "coverage": "PARTIAL",
+          "note": "Useful content and legitimate uncertainty retained; final required catalog delivery incomplete."
+        },
+        {
+          "check_id": "D-V14-A-LUNA-R1-P3",
+          "coverage": "PARTIAL",
+          "note": "Distinct breadth/storage lessons and honest narrow arithmetic scopes observed. Actual mechanism uptake/budget/causality UNASSESSED before Phase2."
+        }
+      ],
+      "task_outcome": "INCOMPLETE",
+      "total_critical_semantic_defects": "UNKNOWN_NOT_EXHAUSTIVE",
+      "whole_case_PASS": false
+    }
+  },
+  "artifact_validity": {
+    "A": {
+      "designated_final": {
+        "bytes": 23113,
+        "sha256": "8aa128cf496211153bd3dde355d15a7996d120db72389bf98d4207275fd06563"
+      },
+      "missing": [
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "present_files": 2,
+      "required_files": 4,
+      "source_catalog": {
+        "bytes": 15901,
+        "sha256": "34290a7ef97e36df227bf20caed475b550a443228897abde6f3f6be89314945c"
+      },
+      "validity": "FAIL"
+    },
+    "B": {
+      "designated_final": {
+        "bytes": 18173,
+        "sha256": "f876408ca870d7821b0c1f3a768c5d3db10bb3609fcea46247739f32ac0fac1c"
+      },
+      "missing": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "present_files": 1,
+      "required_files": 4,
+      "source_catalog": null,
+      "validity": "FAIL"
+    }
+  },
+  "auxiliary_pins": "phase1/auxiliary-pins.json",
+  "blinding": {
+    "agent_inventories_read": false,
+    "held_before_freeze": [
+      "native Goal IDs/status/history",
+      "aliases to current lineages",
+      "family/authorship/economics",
+      "private key",
+      "old grades and old source answers"
+    ],
+    "historical_root_context_read": false,
+    "perfect_blinding": false,
+    "prior_reviews_read": false,
+    "unavoidable_leaks": [
+      "Parent neutral locator contains LUNA and V14 labels.",
+      "Courier initial readiness disclosed both actual native quiet flags true; no Goal state, grade or economics was opened.",
+      "Actual launched tasks reveal ordinary versus protected breadth mechanism per alias.",
+      "Frozen output catalog presence metadata disclosed before bodies."
+    ]
+  },
+  "clerical_disclosure": "Frozen N12 malformed hash length called63; actual already-read literal length62. Classification/grades unchanged; separate evaluator-clerical-disclosure.json.",
+  "decisive_delivery_defects": [
+    {
+      "alias": "A",
+      "fact": "Required out/final/witnesses.json and leads.json absent.",
+      "id": "DEL-A-01",
+      "obligations": [
+        "A11",
+        "A12"
+      ],
+      "severity": "MAJOR_DELIVERY"
+    },
+    {
+      "alias": "B",
+      "fact": "Required sources.json, witnesses.json and leads.json absent; proposal [S1-S15] and [L4-L6] labels cannot resolve within delivered final artifacts.",
+      "id": "DEL-B-01",
+      "obligations": [
+        "A07",
+        "A08",
+        "A11",
+        "A12"
+      ],
+      "severity": "MAJOR_DELIVERY"
+    },
+    {
+      "alias": "A",
+      "fact": "N12 records malformed 63-character atomiccommit capture SHA; actual 64-character primary capture SHA differs. N3 bytes0 is qualified as not retained, while exact capture is7432 bytes.",
+      "id": "CAT-A-02",
+      "obligations": [
+        "A12"
+      ],
+      "severity": "MINOR_REPRODUCIBILITY"
+    }
+  ],
+  "evaluation_id": "independent-targeted-2",
+  "exact_primary_capture_pins": "phase1/requested-public-capture-pins.json",
+  "model": {
+    "assignment_provenance": "parent task and courier dispatch",
+    "physical_provider_telemetry": "UNKNOWN",
+    "reasoning": "xhigh",
+    "requested": "gpt-6.1-sol"
+  },
+  "no_candidate_or_primary_test_code_rerun": true,
+  "pair_id": "D-V14-A-LUNA-R1-SCOPE-R002",
+  "phase2_limit_seconds": 600,
+  "phase2_metadata_opened_before_freeze": false,
+  "projection_of_source_judgment_sha256": "88b0818fcd1de0c85b545a5fd87c28f00c18d732d23242a233bb9aab0ac354bd",
+  "protocol": "ER9-independent-output-v1",
+  "receipts": "phase1/claim-to-primary-receipts.json",
+  "schema": "er9.independent-targeted-source-judgment.v1",
+  "scope": "CURRENT_PAIRED_TARGETED_DIAGNOSTIC_ONLY",
+  "screen_stopping_rule": "Required final artifact incompleteness is decisive for INCOMPLETE delivery; semantic remainder stays UNASSESSED rather than inventing a source FAIL or PASS.",
+  "source_elapsed_seconds": 681.905497813,
+  "source_freeze_monotonic_ns": 85397673287048,
+  "source_freeze_utc": "2026-10-06T02:49:38.816299+00:00",
+  "source_grade_values_unchanged": true,
+  "source_limit_seconds": 1200,
+  "source_overrun_seconds": 0,
+  "source_started_utc": "2026-10-06T02:38:16.910800+00:00",
+  "sources_manifest": "phase1/primary-captures.json",
+  "unassessed_remainder": [
+    "All current claims not explicitly mapped in claim receipts.",
+    "Native operational state, authorship and acquisition-history proof until Phase2.",
+    "Full app correctness, performance, accessibility, storage crash consistency and export fidelity; proposals label these unexecuted.",
+    "Prior correction/repair history, full development pipeline, comparative cost effectiveness and fresh causal mechanism credit."
+  ],
+  "whole_limit_seconds": 1800,
+  "witnesses": {
+    "A": {
+      "W1_explicit_correspondence": "UNKNOWN; body content consistent with sole current-stage receipt.",
+      "actor": "candidate",
+      "code_bytes": 786,
+      "execution_id": "exec-mv__hfa5",
+      "exit": 0,
+      "expected_basis": "Scale then translation from pinned NGFF plus integer cache arithmetic, checked independently by arithmetic reasoning.",
+      "observed_values": {
+        "cache_bytes": 33554432,
+        "inverse": [
+          3.0,
+          4.0,
+          8.0
+        ],
+        "physical": [
+          16.0,
+          0.0,
+          102.0
+        ],
+        "tile_bytes": 524288
+      },
+      "scope": "Hypothetical arithmetic only, no actual reader/cache/persistence/export/application.",
+      "stderr_bytes": 0,
+      "stdout_bytes": 243
+    },
+    "B": {
+      "W1_explicit_correspondence": "UNKNOWN; body content consistent with sole current-stage receipt.",
+      "actor": "candidate",
+      "code_bytes": 624,
+      "execution_id": "exec-355qspvm",
+      "exit": 0,
+      "expected_basis": "Pinned NGFF transform order and direct arithmetic; alternate order yields different values.",
+      "observed_values": {
+        "inverse": [
+          2.0,
+          3.0,
+          4.0
+        ],
+        "scale_then_translation": [
+          14,
+          29,
+          46
+        ],
+        "translation_then_scale": [
+          24,
+          69,
+          136
+        ]
+      },
+      "scope": "Coordinate arithmetic only; no library, file, renderer or project behavior.",
+      "stderr_bytes": 0,
+      "stdout_bytes": 110
+    }
+  }
+}

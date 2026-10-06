@@ -1,0 +1,29 @@
+{
+  "authority_selector_sha256": "0ded000e316f0be54014c7cc82f72dfa565885854ae41293c25fdbc12c02f2a5",
+  "body_bytes": 649476,
+  "body_count": 10,
+  "coverage": "PARTIAL_EXACT_TD2_TD3_018_AUX_TEN_LOCATED_PUBLIC_BODIES_NOT_QUEUE_RECONCILED",
+  "exclusions": [
+    "native I/O/private/auth/account data/vendor",
+    "unlocated UUID bodies",
+    "new network/research/evaluation"
+  ],
+  "files_count": 42,
+  "http_status_counts": {
+    "200": 10
+  },
+  "independent_archive_reread": "ALL42_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/d3fb43bfde19b36c634c3151c0d27c5802581c19f0b1fbcdde8026b41a124a46/MANIFEST.json",
+  "manifest_sha256": "dd1a2bb56e895fc6a91075af47054bbf3c854265f1de6a64de0556996de3cc49",
+  "overlap_policy": "cohort file counts; overlap with earlier archives not claimed as new unique sources",
+  "positive018_files_count": 30,
+  "prior_archives": "UNCHANGED",
+  "raw_locator_manifest_count": 2,
+  "raw_repository_policy": "bodies/raw locators external only; reviewed compact manifest locator and pins may publish",
+  "restart": "This exact selector is complete. Further TD2/TD3 final-evaluator positive selectors must be separately pinned and appended as new cohorts; wholequeue reconciliation remains pending.",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 847262,
+  "selection_sha256": "d3fb43bfde19b36c634c3151c0d27c5802581c19f0b1fbcdde8026b41a124a46",
+  "unlocated_policy": "UNKNOWN_NOT_NEVER_FETCHED_OR_GUESSED",
+  "unlocated_reference_count": 2
+}

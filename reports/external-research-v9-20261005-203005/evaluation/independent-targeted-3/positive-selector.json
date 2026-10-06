@@ -1,0 +1,112 @@
+{
+  "schema": "er9.owner-positive-public-selector.v1",
+  "owner": "/root/targeted_eval_3",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "resource_cell": "resource-v13-a002",
+  "created_utc": "2026-10-06T03:00:10.994121+00:00",
+  "selection": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/review.md",
+      "sha256": "358bc72a2e6ff94343334ac9413fbb4490cdef5647e58804fe69484fe3353633",
+      "bytes": 4818,
+      "role": "bounded_public_review"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+      "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998",
+      "bytes": 25593,
+      "role": "immutable_current_source_judgment_root_publisher_only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/public-source-summary.json",
+      "sha256": "ef8cb9a3a2e06733ea52fa91d1df4406781bf8a02b042e76360f7f866adb9fb6",
+      "bytes": 1066,
+      "role": "public_source_scope_summary"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase2-assessment.json",
+      "sha256": "cc2bc6fe87e9c872b9322b867eae887ec8583274fb537fa4a82afa9c31b5b9b8",
+      "bytes": 9917,
+      "role": "current_execution_native_cost_assessment"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/public-phase2-projection.json",
+      "sha256": "5ad8ac50a96ec3a0f1bf5ea7b64488b65e93bb9f18123d936a96cd9c02ebf6e7",
+      "bytes": 82552,
+      "role": "courier_public_safe_current_projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/neutral-cost-lifecycle.json",
+      "sha256": "7aa55dcf55ad4f608038639fd490ff6cb3d75d9c2e5330beae3866a1d0b99964",
+      "bytes": 6479,
+      "role": "neutral_cost_and_lifecycle"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/START.json",
+      "sha256": "9767a97dc4651d4550636476dbaf591db6ec1a93b667cf4464e060339b7a65fb",
+      "bytes": 498,
+      "role": "original_immutable_clock"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE1-FROZEN.json",
+      "sha256": "0b42dc5fd521d5bbd8889047b3253699488e99a1c6d9bcf3024491f9b8578ea8",
+      "bytes": 962,
+      "role": "source_freeze_receipt"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE2-START.json",
+      "sha256": "3fb96cfbdf8acf480323d9c4421abc54a4f67641491378298fabd64fc2d5f3bc",
+      "bytes": 381,
+      "role": "phase2_clock_start"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE2-COMPLETE.json",
+      "sha256": "acd6c6f03507c353807e4412259a99fc4b9f86beb0c3b867b96248d2d5afc491",
+      "bytes": 355,
+      "role": "phase2_clock_complete"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/REPORT-READY.json",
+      "sha256": "c7052fb11aca9843029c1992aecd9a73ac65e36a4307680e62ada7eb0b6bb061",
+      "bytes": 523,
+      "role": "report_ready_clock"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/bounded-final-review.json",
+      "sha256": "485859a3b98d56d33c2a3e30035f235d78ce43bc0a00b75f94ba9d1baf76de2c",
+      "bytes": 2236,
+      "role": "bounded_final_review_checks"
+    }
+  ],
+  "positive_only": true,
+  "no_broad_scan_or_reference_follow": true,
+  "not_selected": [
+    "raw primary/source/witness bodies",
+    "private Phase2 key/package",
+    "resource profile and OS unit/cgroup/PID/session proof",
+    "sibling evaluator artifacts",
+    "original alternate complete/cached/probe/corrected candidate artifact bodies"
+  ],
+  "source_judgment_immutable": true,
+  "source_counterexamples_owner_scope": "root/publisher positive files only; no candidate/case/tools/ops",
+  "source_outcomes_scope": {
+    "A": "FAIL_SCREEN; remaining source checks UNASSESSED",
+    "B": "PASS targeted current-source/content only; full pipeline UNASSESSED"
+  },
+  "clock_contract": {
+    "source_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "reset": false,
+    "final_required_handoff_clock": "will be delivered as separate exact neutral receipt after outgoing notices; no ack wait"
+  },
+  "accountant_selection_only": [
+    "neutral-cost-lifecycle.json",
+    "START.json",
+    "PHASE1-FROZEN.json",
+    "PHASE2-START.json",
+    "PHASE2-COMPLETE.json",
+    "REPORT-READY.json"
+  ]
+}

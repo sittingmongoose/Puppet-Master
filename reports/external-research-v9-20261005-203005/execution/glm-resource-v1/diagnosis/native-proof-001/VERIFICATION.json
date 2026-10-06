@@ -1,0 +1,35 @@
+{
+  "schema": "er9.historical-native-proof-verification.v1",
+  "created_utc": "2026-10-06T03:02:27.001416+00:00",
+  "status": "PASS",
+  "tests": 3,
+  "test_command": "python3 -m unittest -v test_project.py",
+  "test_scope": "Pure offline decision-rule tests, not native/model proof manufacture",
+  "exact_historical_rows": 12,
+  "zero_controlled_stage_activations_supported": 10,
+  "positive_native_activations": 2,
+  "unknown_activation_count": 0,
+  "native_status_counts": {
+    "UNKNOWN": 10,
+    "complete": 1,
+    "paused": 1
+  },
+  "source_receipt_pin_checks": "All12 exact original native/stage/freeze/runtime marker/PIN hashes and full selected runtime/source closure match",
+  "independent_scope_checks": "provider exports SHA match saved receipt; attempt rows all exact session_id; positiveTargetIDs match originalactivatedtarget and differ fromsession; no onlymissing/label/flag zero inference",
+  "unknowns": [
+    "nativeGoalkind enum field",
+    "finalouterexitlatency",
+    "cancelled/unexposedprovider tails",
+    "absoluteaccountactivity and dollarbilling",
+    "physicalCPU/GPU/energy"
+  ],
+  "runtime_original_source_pins_unchanged": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+  },
+  "model_or_goal_calls": 0,
+  "candidate_body_exports": 0,
+  "active_jobs_or_old_accounting_edits": 0
+}

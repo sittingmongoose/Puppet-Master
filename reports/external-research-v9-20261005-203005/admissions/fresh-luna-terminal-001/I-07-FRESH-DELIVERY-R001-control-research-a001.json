@@ -1,0 +1,63 @@
+{
+  "schema": "er9.terminal-native-stage-public-metadata.v1",
+  "job_id": "I-07-FRESH-DELIVERY-R001-control-research-a001",
+  "pair_id": "I-07-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "research",
+  "operational_status": "COMPLETED",
+  "native_outcome": "native_goal_complete",
+  "native_goal_status_final": "complete",
+  "native_goal_starts": 1,
+  "original_start_utc": "2026-10-06T02:27:03.258560+00:00",
+  "original_birth_monotonic_ns": 84042115544793,
+  "elapsed_seconds": 975.181976348,
+  "original_max_seconds": 1200,
+  "native_oom_observed": false,
+  "native_quiescent": true,
+  "private_release": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "c1d96242609c7387cf0f26c4684bbcbfaa3d9b16b75ccfd3df3a8a80db81a6d5"
+  },
+  "permit_release_confirmed": true,
+  "freeze_sha256": "70df30eb3a6348a0250101c79558fd9614818eaad72914b28e709ca41b717080",
+  "native_receipt_sha256": "69bc65779c5d40d1fb7f7adc669b8144aba480d5286b15d79ac9ab179416a3b9",
+  "artifact_inventory": [
+    {
+      "relative_path": "research/evidence/ome-ngff-04-line-map.txt",
+      "sha256": "7a68bf2d4aa7881eb6623bcbdbd0092ef4714562fdcfd76377ab256ef6305274",
+      "bytes": 276329
+    },
+    {
+      "relative_path": "research/evidence/ome-ngff-04.html",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "bytes": 163120
+    },
+    {
+      "relative_path": "research/leads.json",
+      "sha256": "307012dd96c09bcaaa0075ec449275853fb61a14887aedefca9bb584951b82c8",
+      "bytes": 10137
+    },
+    {
+      "relative_path": "research/proposal-citation-errata.md",
+      "sha256": "25b7f6e5fc2dae1ffbc89aa51207105e63003130550f5923cff292937d3c4691",
+      "bytes": 1133
+    },
+    {
+      "relative_path": "research/proposal.md",
+      "sha256": "0910028efe04f603c4f0c4237cb7b034997487ad912153ee0f35ddbf0869c30e",
+      "bytes": 35626
+    },
+    {
+      "relative_path": "research/sources.json",
+      "sha256": "b7177510f7e5012e26a6ad7d7f9da30363cb4b9c97c9cbe45801e71b58a0d921",
+      "bytes": 19563
+    },
+    {
+      "relative_path": "research/witnesses.json",
+      "sha256": "9423df6a7fc098612450422a2bfa854996da08269d9e28e0441eb94f45fcd402",
+      "bytes": 11681
+    }
+  ],
+  "missing_required_artifacts": [],
+  "full_pipeline_completion_inferred": false
+}
