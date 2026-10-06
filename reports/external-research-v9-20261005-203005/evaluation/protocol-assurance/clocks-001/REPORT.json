@@ -1,0 +1,215 @@
+{
+  "schema": "er9.original-clock-scope-clarification.v1",
+  "audit_id": "ER9-clock-protocol-001",
+  "finished_utc": "2026-10-06T03:20:15.700994Z",
+  "scope": "Original protocol/actual frozen case clock contracts and exact neutral timing checkpoints only; no source/scientific/grade bodies, reruns or live mutations",
+  "requested_assurance_model": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_assurance_model": null,
+  "authority": {
+    "original_generic_protocol": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/ORIGINAL_PROTOCOL_EVIDENCE.json",
+      "sha256": "6e398fc5ae9713673404550ea3d7bb8fcc8c4f68cd19b32e626d02057c75f120"
+    },
+    "actual_numeric_bounds": "Frozen TD2/TD3 START records bind1200 source/600Phase2/1800whole. Generic template4200 is explicitly illustrative, not a campaign ceiling.",
+    "root_authorial_clarification": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/ROOT_AUTHORIAL_CLARIFICATION.json",
+      "sha256": "fc266a7102b65b17b2ce913986d90a0fd898242c2e5a86685e58f966707c1a52"
+    },
+    "max_structural_corroboration": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/MAX_STRUCTURAL_CORROBORATION.json",
+      "sha256": "794bb68a42e467fbecfb27dd956b1311e0d9b5b1b13dd4aaacc59a3c73f925ed"
+    },
+    "interpretation_date_status": "Current dated clarification of root original dispatch intent; not evidence that original wording was perfectly explicit. No cap/clock/grade is retrospectively changed."
+  },
+  "original_caps_and_coverage": {
+    "source_1200": "From original first-body/source clock to immutable source freeze; current-output/source checking ends before Phase2 material is opened.",
+    "phase2_required_checks_600": "From separately recorded Phase2 opening to completion of required history/execution/economics checks, per original prompt13 and root authorial intent. Later report/handoff metadata is not additional authorized checking.",
+    "whole_1800": "Original first-body clock remains live through reporting, outgoing owner handoffs and final metadata/publication closure; source-to-Phase2 gaps and clerical overhead are included, no reset.",
+    "ambiguity": "Original phase reserve endpoint was not expressly all notices/metadata; TD3 broad START scope by itself could be read more widely. Preserve inclusive comparisons as well as the adjudicated checking-only boundary.",
+    "no_continuation_license": "Clarification does not permit required checking after600 or whole-review work after1800; any unobserved final transport remains unknown."
+  },
+  "intervals": {
+    "schema": "er9.clock-interval-comparison.v1",
+    "definition": "Checking-only phase intervals and inclusive post-Phase2 horizons are different overlapping quantities; never add an inclusive whole horizon to its constituent slices.",
+    "limits_interpretation": "Root authorial clarification: 1200 source,600 required Phase2 checks,1800whole including reports/outgoing handoffs/metadata; inclusive +600 arithmetic remains visible, not checking-cap violations under that intended scope.",
+    "rows": {
+      "TD2": {
+        "source_phase": {
+          "elapsed_seconds": 681.905497813,
+          "comparison_limit_seconds": 1200,
+          "seconds_above_limit": 0.0
+        },
+        "phase2_checking_reported": {
+          "elapsed_seconds": 401.588477843,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 0.0
+        },
+        "phase1_to_phase2_gap": {
+          "elapsed_seconds": 126.366163,
+          "basis": "UTC-microsecond fields; no permitted TD2 phase2-start monotonic anchor supplied yet"
+        },
+        "inclusive_phase2_start_to_report_ready": {
+          "elapsed_seconds": 401.593011,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 0.0,
+          "basis": "UTC-derived comparison; not required-check duration"
+        },
+        "inclusive_phase2_start_to_required_notices": {
+          "elapsed_seconds": 547.027159,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 0.0,
+          "basis": "UTC-derived comparison; not required-check duration"
+        },
+        "inclusive_phase2_start_to_metadata_closure": {
+          "elapsed_seconds": 670.523387,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 70.523387,
+          "basis": "UTC-derived comparison; not required-check duration"
+        },
+        "whole_to_report_ready": {
+          "elapsed_seconds": 1209.864674521,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "whole_to_required_notices": {
+          "elapsed_seconds": 1355.298821009,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "whole_to_metadata_closure": {
+          "elapsed_seconds": 1478.79504665,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "ordering": "firstbody/source start < source freeze < Phase2 start < Phase2-check finish < report ready < required notice completion < metadata closure",
+        "final_channel_delivery_timestamp": "UNKNOWN; follows immediately after this receipt",
+        "original_phase2_overrun_fields_preserved": {
+          "checking_operational_cost": 0,
+          "handoff_record_field": 0,
+          "closure_record_checking_field": 0
+        },
+        "no_precision_fabrication": "UTC-derived inclusive values differ by microseconds from differences mixing whole-monotonic elapsed with UTC-derived phase2 offset; no missing monotonic anchor invented."
+      },
+      "TD3": {
+        "source_phase": {
+          "elapsed_seconds": 613.484033444,
+          "comparison_limit_seconds": 1200,
+          "seconds_above_limit": 0.0
+        },
+        "phase2_checking_complete": {
+          "elapsed_seconds": 303.878679353,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 0.0
+        },
+        "earlier_neutral_cost_checking_seconds": 303.877923843,
+        "earlier_vs_completion_checkpoint_difference_seconds": 0.00075551,
+        "earlier_duration_boundary_disposition": "Preserve both earlier/later reported measurements. Exact reason for 0.000755510 difference UNKNOWN; all existing checking measures <600.",
+        "phase1_to_phase2_gap": {
+          "elapsed_seconds": 170.663751044,
+          "basis": "monotonic anchors"
+        },
+        "phase2_check_end_to_report_ready": {
+          "elapsed_seconds": 128.02800636
+        },
+        "inclusive_phase2_start_to_report_ready": {
+          "elapsed_seconds": 431.906685713,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 0.0,
+          "basis": "Monotonic inclusive comparison; not required-check duration"
+        },
+        "inclusive_phase2_start_to_required_notices": {
+          "elapsed_seconds": 606.407076389,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 6.407076389,
+          "basis": "Monotonic inclusive comparison; preserve recorded +6.407076389"
+        },
+        "inclusive_phase2_start_to_metadata_closure": {
+          "elapsed_seconds": 702.683637118,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 102.683637118,
+          "basis": "Monotonic inclusive comparison; preserve recorded +102.683637118"
+        },
+        "whole_to_report_ready": {
+          "elapsed_seconds": 1216.054470201,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "whole_to_required_notices": {
+          "elapsed_seconds": 1390.554860877,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "whole_to_metadata_closure": {
+          "elapsed_seconds": 1486.831421606,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0
+        },
+        "later_outgoing_metadata_horizon_root_reported": {
+          "elapsed_seconds": 1699.593613692,
+          "comparison_limit_seconds": 1800,
+          "seconds_above_limit": 0.0,
+          "basis": "Owner-recorded supplementary selector903b9924338accc13007dd97627b3b42b1fb2e49a6e68d87feca4e51e02cb044; separate later metadata horizon, not replacement of d9c8 closure",
+          "evidence_clock_kind": "Supplement selector creation, not a measured subsequent outgoing tool completion",
+          "later_tool_delivery_or_final_channel_timestamp": "UNKNOWN"
+        },
+        "ordering": "firstbody/source start < source freeze < Phase2 start < required-check completion < report ready < four required notices < metadata closure < later outgoing metadata grant horizon",
+        "final_channel_delivery_timestamp": "UNKNOWN; closure explicitly excludes final-channel telemetry",
+        "original_phase2_overrun_fields_preserved": {
+          "checking_complete": 0,
+          "handoff_checking": 0,
+          "handoff_inclusive": 6.407076389,
+          "closure_inclusive": 102.683637118
+        },
+        "separate_one_file_closure_supplement": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/final-closure-positive-selector.json",
+          "sha256": "903b9924338accc13007dd97627b3b42b1fb2e49a6e68d87feca4e51e02cb044",
+          "selected_file_count": 1,
+          "original_final13_unchanged": true,
+          "closure_d9c8_unchanged": true
+        },
+        "inclusive_phase2_start_to_supplement_selector_creation": {
+          "elapsed_seconds": 915.445829204,
+          "comparison_limit_seconds": 600,
+          "seconds_above_limit": 315.445829204,
+          "basis": "Exact monotonic source anchor and supplement creation point; additional inclusive overhead comparison, not required-check duration"
+        },
+        "metadata_closure_to_supplement_creation_seconds": 212.762192086
+      }
+    },
+    "end_to_end_final_transport": "UNKNOWN for both if not observed; checkpoint comparisons do not manufacture final-channel delivery times.",
+    "grade_changes_or_new_gates": false
+  },
+  "preservation": {
+    "TD2_original_final11_sha256": "a988a2c171d0baa3499c549747fb6d9856f86ff59b96d800ae92030024c73300",
+    "TD3_original_final13_sha256": "30d49dd327d2608080c12058347828490a3da8e7b3e413b18cef9960c75c4085",
+    "TD3_earlier_closure_sha256": "d9c8a6f003d8023437a3fa19a9b14e9ef8a945c6ef9bf95e6f623b6136abe978",
+    "TD3_separate_supplement_selector_sha256": "903b9924338accc13007dd97627b3b42b1fb2e49a6e68d87feca4e51e02cb044",
+    "supplement_selects_only_one_file": true,
+    "original_files_rewritten": false,
+    "source_grade_or_causal_pipeline_credit_changed": false
+  },
+  "explicit_unknowns": [
+    "Exact final-channel delivery time for both reviewers is not measured in the supplied closing records. Observed endpoints under1800 do not certify an unknown later delivery timestamp.",
+    "TD2 Phase2-start monotonic anchor was not supplied at cutoff; inclusive TD2 ranges use original UTC microsecond precision, not fabricated nanoseconds.",
+    "TD3 earlier neutral duration303.877923843 differs by0.000755510 from later completion303.878679353. Preserve both; exact cause/measurement boundary is not specified in allowed metadata.",
+    "Metadata clock labels do not independently inspect all actual semantic tool activity; this audit neither opens scientific records nor validates/regrades their findings.",
+    "The late TD3 supplement1699.593613692 point is selector creation. Subsequent outgoing send/ack/final-channel time is not established by that creation stamp."
+  ],
+  "actions": {
+    "source_body_or_judgment_summary_read": false,
+    "native_candidates_goals_canaries_or_tests": 0,
+    "new_gate_or_campaign_stop": false,
+    "ack_wait": false,
+    "clock_reset": false,
+    "retroactive_numeric_rule_or_scoring_rubric": false,
+    "grading_or_original_receipt_edits": false
+  },
+  "input_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/INPUT_PINS.json",
+    "sha256": "6d2edcfafe667847a024750ff35bfc3c55cc60ec60328d1acb490401f5e7917b"
+  },
+  "prospective_note": "Future bindings may label source-checking, Phase2-required-checking, report-ready, required notices, metadata/supplement and whole end scopes explicitly before first read, keeping the same caps and common criteria. This does not alter live bindings."
+}

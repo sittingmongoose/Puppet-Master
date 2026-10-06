@@ -1,0 +1,27 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.json",
+      "sha256": "4e4c9ac6e1d35f84b15c6f64e7eee8cbe01796325f54271be48bffd1f816c263"
+    },
+    {
+      "path": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.schema.json",
+      "sha256": "10db65498543717d8a472ed354499d7643130fe9dcc7dd1f4c9d803af08f4cc4"
+    },
+    {
+      "path": "accounting/cohort-011-native-proof-001/VERIFICATION.json",
+      "sha256": "62774251680b4b450ee56cb745c960ac07c4d9e370b3fc18a7bb6e621cc17368"
+    },
+    {
+      "path": "accounting/cohort-011-native-proof-001/NATIVE_PROOF_COMPANION.md",
+      "sha256": "bc017cb53a4e6a1ae6bcd580af45e0a31612f6c7d4396982e3555284b52c231a"
+    },
+    {
+      "path": "accounting/cohort-011-native-proof-001/DIRECT_METER_VERIFICATION.json",
+      "sha256": "8d45a5710cc260bcecc971b760d0bc05eec6b7a639eb2c9ddacbbff4522fc00c"
+    }
+  ],
+  "cohort": "011-native-proof-001",
+  "exclusion": "Selected lifecycle/usage/source-pin/clock metadata only; no raw protocol bodies, candidate/evaluator/scientific bodies, private runtime/auth or unlisted files.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

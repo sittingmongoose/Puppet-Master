@@ -1,0 +1,585 @@
+{
+  "schema": "er9.clock-only-projection.v1",
+  "metadata_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/PUBLIC_FINAL_SELECTOR.json",
+      "sha256": "a988a2c171d0baa3499c549747fb6d9856f86ff59b96d800ae92030024c73300",
+      "kind": "selector",
+      "positive_file_count": 11
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/STARTED.json",
+      "sha256": "4bfd493735aa992101cb6ae3ee13bc61f8a14604c9652122c1e6cad285fd2a84",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/no_clock_reset",
+          "value": true
+        },
+        {
+          "json_pointer": "/phase2_max_seconds",
+          "value": 600
+        },
+        {
+          "json_pointer": "/source_deadline_monotonic_ns",
+          "value": 85915767789235
+        },
+        {
+          "json_pointer": "/source_deadline_utc",
+          "value": "2026-10-06T02:58:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/start_monotonic_ns",
+          "value": 84715767789235
+        },
+        {
+          "json_pointer": "/start_utc",
+          "value": "2026-10-06T02:38:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/whole_deadline_monotonic_ns",
+          "value": 86515767789235
+        },
+        {
+          "json_pointer": "/whole_deadline_utc",
+          "value": "2026-10-06T03:08:16.910800+00:00"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/SOURCE_FREEZE_LOCK.json",
+      "sha256": "951be103b98ccea4cda0a4984efdf686f317aef62b342cfd9490649f5a2e20cf",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/never_rewrite_source_grades_after_phase2",
+          "value": true
+        },
+        {
+          "json_pointer": "/phase1_freeze_monotonic_ns",
+          "value": 85397673287048
+        },
+        {
+          "json_pointer": "/phase1_freeze_utc",
+          "value": "2026-10-06T02:49:38.816299+00:00"
+        },
+        {
+          "json_pointer": "/phase2_opened",
+          "value": false
+        },
+        {
+          "json_pointer": "/source_elapsed_seconds",
+          "value": 681.905497813
+        },
+        {
+          "json_pointer": "/source_limit_seconds",
+          "value": 1200
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/operational-cost-clock.json",
+      "sha256": "827f65661429767f914e6051cfede84bbc6ddf983fcfe970994e47202fa8fe84",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/clock_reset",
+          "value": false
+        },
+        {
+          "json_pointer": "/final_handoff_clocks",
+          "value": "Separate HANDOFF_CLOCKS.json supplement after actual outgoing transmissions."
+        },
+        {
+          "json_pointer": "/phase2_elapsed_seconds",
+          "value": 401.588477843
+        },
+        {
+          "json_pointer": "/phase2_finish_utc",
+          "value": "2026-10-06T02:58:26.770940+00:00"
+        },
+        {
+          "json_pointer": "/phase2_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/phase2_start_utc",
+          "value": "2026-10-06T02:51:45.182462+00:00"
+        },
+        {
+          "json_pointer": "/report_ready_monotonic_ns",
+          "value": 85925632463756
+        },
+        {
+          "json_pointer": "/report_ready_utc",
+          "value": "2026-10-06T02:58:26.775473+00:00"
+        },
+        {
+          "json_pointer": "/source_elapsed_seconds",
+          "value": 681.905497813
+        },
+        {
+          "json_pointer": "/source_freeze_utc",
+          "value": "2026-10-06T02:49:38.816299+00:00"
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/source_start_monotonic_ns",
+          "value": 84715767789235
+        },
+        {
+          "json_pointer": "/source_start_utc",
+          "value": "2026-10-06T02:38:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/whole_deadline_utc",
+          "value": "2026-10-06T03:08:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/whole_elapsed_at_report_ready_seconds",
+          "value": 1209.864674521
+        },
+        {
+          "json_pointer": "/whole_limit_seconds",
+          "value": 1800
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/HANDOFF_CLOCKS.json",
+      "sha256": "00d54bc21f85ae2ceb39ee5db9bafa52ff190c8a62d6217620fbb938151b2fbc",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/clock_reset",
+          "value": false
+        },
+        {
+          "json_pointer": "/events/0/monotonic_ns",
+          "value": 85960711748353
+        },
+        {
+          "json_pointer": "/events/0/utc",
+          "value": "2026-10-06T02:59:01.854691+00:00"
+        },
+        {
+          "json_pointer": "/events/1/monotonic_ns",
+          "value": 85976825587484
+        },
+        {
+          "json_pointer": "/events/1/utc",
+          "value": "2026-10-06T02:59:17.968543+00:00"
+        },
+        {
+          "json_pointer": "/events/2/monotonic_ns",
+          "value": 85976825654527
+        },
+        {
+          "json_pointer": "/events/2/utc",
+          "value": "2026-10-06T02:59:17.968652+00:00"
+        },
+        {
+          "json_pointer": "/events/3/monotonic_ns",
+          "value": 85993315127877
+        },
+        {
+          "json_pointer": "/events/3/utc",
+          "value": "2026-10-06T02:59:34.458076+00:00"
+        },
+        {
+          "json_pointer": "/events/4/monotonic_ns",
+          "value": 85993315203060
+        },
+        {
+          "json_pointer": "/events/4/utc",
+          "value": "2026-10-06T02:59:34.458200+00:00"
+        },
+        {
+          "json_pointer": "/events/5/monotonic_ns",
+          "value": 86010686962213
+        },
+        {
+          "json_pointer": "/events/5/utc",
+          "value": "2026-10-06T02:59:51.829902+00:00"
+        },
+        {
+          "json_pointer": "/events/6/monotonic_ns",
+          "value": 86010687062994
+        },
+        {
+          "json_pointer": "/events/6/utc",
+          "value": "2026-10-06T02:59:51.830057+00:00"
+        },
+        {
+          "json_pointer": "/events/7/monotonic_ns",
+          "value": 86071066102380
+        },
+        {
+          "json_pointer": "/events/7/utc",
+          "value": "2026-10-06T03:00:52.209000+00:00"
+        },
+        {
+          "json_pointer": "/final_required_handoff_complete_measured_utc",
+          "value": "2026-10-06T03:00:52.209621+00:00"
+        },
+        {
+          "json_pointer": "/final_required_handoff_complete_monotonic_ns",
+          "value": 86071066610244
+        },
+        {
+          "json_pointer": "/no_ack_wait_past_deadline",
+          "value": true
+        },
+        {
+          "json_pointer": "/original_start_utc",
+          "value": "2026-10-06T02:38:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/original_whole_deadline_utc",
+          "value": "2026-10-06T03:08:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/phase2_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/whole_elapsed_at_final_required_handoff_seconds",
+          "value": 1355.298821009
+        },
+        {
+          "json_pointer": "/whole_limit_seconds",
+          "value": 1800
+        },
+        {
+          "json_pointer": "/whole_overrun_seconds",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/FINAL_CLOSURE_CLOCK.json",
+      "sha256": "cb7db178cb6ba7dd56698c5a38f02b9e9016507c28b2233021cac44f753621a9",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/clock_reset",
+          "value": false
+        },
+        {
+          "json_pointer": "/closed_measured_monotonic_ns",
+          "value": 86194562835885
+        },
+        {
+          "json_pointer": "/closed_measured_utc",
+          "value": "2026-10-06T03:02:55.705849+00:00"
+        },
+        {
+          "json_pointer": "/final_response_delivery_utc",
+          "value": "UNKNOWN; follows immediately after this receipt"
+        },
+        {
+          "json_pointer": "/original_whole_deadline_utc",
+          "value": "2026-10-06T03:08:16.910800+00:00"
+        },
+        {
+          "json_pointer": "/phase2_elapsed_seconds",
+          "value": 401.588477843
+        },
+        {
+          "json_pointer": "/phase2_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/report_ready_whole_seconds",
+          "value": 1209.864674521
+        },
+        {
+          "json_pointer": "/required_primary_handoff_whole_seconds",
+          "value": 1355.298821009
+        },
+        {
+          "json_pointer": "/source_and_phase2_reads_closed",
+          "value": true
+        },
+        {
+          "json_pointer": "/source_elapsed_seconds",
+          "value": 681.905497813
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/whole_elapsed_at_closure_seconds",
+          "value": 1478.79504665
+        },
+        {
+          "json_pointer": "/whole_limit_seconds",
+          "value": 1800
+        },
+        {
+          "json_pointer": "/whole_overrun_seconds",
+          "value": 0
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/final-positive-selector.json",
+      "sha256": "30d49dd327d2608080c12058347828490a3da8e7b3e413b18cef9960c75c4085",
+      "kind": "selector",
+      "positive_file_count": 13
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/START.json",
+      "sha256": "9767a97dc4651d4550636476dbaf591db6ec1a93b667cf4464e060339b7a65fb",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/utc",
+          "value": "2026-10-06T02:38:42.777982+00:00"
+        },
+        {
+          "json_pointer": "/monotonic_ns",
+          "value": 84741635028122
+        },
+        {
+          "json_pointer": "/source_deadline_monotonic_ns",
+          "value": 85941635028122
+        },
+        {
+          "json_pointer": "/whole_deadline_monotonic_ns",
+          "value": 86541635028122
+        },
+        {
+          "json_pointer": "/source_deadline_utc",
+          "value": "2026-10-06T02:58:42.777982+00:00"
+        },
+        {
+          "json_pointer": "/whole_deadline_utc",
+          "value": "2026-10-06T03:08:42.777982+00:00"
+        },
+        {
+          "json_pointer": "/source_seconds",
+          "value": 1200
+        },
+        {
+          "json_pointer": "/whole_seconds",
+          "value": 1800
+        },
+        {
+          "json_pointer": "/phase2_max_seconds",
+          "value": 600
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE1-FROZEN.json",
+      "sha256": "0b42dc5fd521d5bbd8889047b3253699488e99a1c6d9bcf3024491f9b8578ea8",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/frozen_utc",
+          "value": "2026-10-06T02:48:56.262064+00:00"
+        },
+        {
+          "json_pointer": "/frozen_monotonic_ns",
+          "value": 85355119061566
+        },
+        {
+          "json_pointer": "/source_elapsed_seconds",
+          "value": 613.484033444
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/whole_elapsed_seconds",
+          "value": 613.484033444
+        },
+        {
+          "json_pointer": "/phase2_disclosure_before_freeze",
+          "value": false
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/neutral-cost-lifecycle.json",
+      "sha256": "7aa55dcf55ad4f608038639fd490ff6cb3d75d9c2e5330beae3866a1d0b99964",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/clock_receipts/phase1_frozen",
+          "value": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE1-FROZEN.json"
+        },
+        {
+          "json_pointer": "/clock_receipts/phase2_start",
+          "value": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE2-START.json"
+        },
+        {
+          "json_pointer": "/source_seconds",
+          "value": 613.484033444
+        },
+        {
+          "json_pointer": "/phase1_to_phase2_gap_seconds",
+          "value": 170.663751044
+        },
+        {
+          "json_pointer": "/phase2_assessment_seconds",
+          "value": 303.877923843
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/phase2_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/original_whole_deadline_utc",
+          "value": "2026-10-06T03:08:42.777982+00:00"
+        },
+        {
+          "json_pointer": "/no_clock_reset",
+          "value": true
+        },
+        {
+          "json_pointer": "/final_handoff_clock",
+          "value": "pending, same original clock"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/FINAL-OWNER-HANDOFF.json",
+      "sha256": "8384912d79c19a6ff1dd075ae00a9f10cd56680bf64d5ca40aa05455bf11154e",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/utc",
+          "value": "2026-10-06T03:01:53.332862+00:00"
+        },
+        {
+          "json_pointer": "/monotonic_ns",
+          "value": 86132189888999
+        },
+        {
+          "json_pointer": "/clock_scope",
+          "value": "Observation immediately after successful required root/courier/publisher/accountant send_message tool returns; final receipt/selector pointer notices and final-channel delivery telemetry not included, UNKNOWN if unobserved."
+        },
+        {
+          "json_pointer": "/required_dispatch_start_utc",
+          "value": "2026-10-06T03:00:25.701777+00:00"
+        },
+        {
+          "json_pointer": "/required_dispatch_seconds",
+          "value": 87.631052136
+        },
+        {
+          "json_pointer": "/source_seconds",
+          "value": 613.484033444
+        },
+        {
+          "json_pointer": "/phase1_to_phase2_gap_seconds",
+          "value": 170.663751044
+        },
+        {
+          "json_pointer": "/phase2_checking_seconds",
+          "value": 303.878679353
+        },
+        {
+          "json_pointer": "/phase2_to_report_ready_seconds",
+          "value": 128.02800636
+        },
+        {
+          "json_pointer": "/report_ready_whole_seconds",
+          "value": 1216.054470201
+        },
+        {
+          "json_pointer": "/report_ready_to_required_handoff_seconds",
+          "value": 174.500390676
+        },
+        {
+          "json_pointer": "/whole_through_required_handoff_seconds",
+          "value": 1390.554860877
+        },
+        {
+          "json_pointer": "/phase2_start_through_required_handoff_seconds",
+          "value": 606.407076389
+        },
+        {
+          "json_pointer": "/source_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/phase2_checking_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/phase2_through_required_handoff_overrun_seconds",
+          "value": 6.407076389
+        },
+        {
+          "json_pointer": "/whole_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/original_whole_deadline_utc",
+          "value": "2026-10-06T03:08:42.777982+00:00"
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/FINAL-CLOSURE.json",
+      "sha256": "d9c8a6f003d8023437a3fa19a9b14e9ef8a945c6ef9bf95e6f623b6136abe978",
+      "kind": "clock",
+      "clock_fields": [
+        {
+          "json_pointer": "/utc",
+          "value": "2026-10-06T03:03:29.609433+00:00"
+        },
+        {
+          "json_pointer": "/monotonic_ns",
+          "value": 86228466449728
+        },
+        {
+          "json_pointer": "/whole_seconds",
+          "value": 1486.831421606
+        },
+        {
+          "json_pointer": "/whole_overrun_seconds",
+          "value": 0
+        },
+        {
+          "json_pointer": "/phase2_checking_seconds",
+          "value": 303.878679353
+        },
+        {
+          "json_pointer": "/phase2_start_to_this_final_metadata_observation_seconds",
+          "value": 702.683637118
+        },
+        {
+          "json_pointer": "/phase2_start_to_this_final_metadata_observation_over_600_seconds",
+          "value": 102.683637118
+        },
+        {
+          "json_pointer": "/clock_scope",
+          "value": "After required owner content notices and subsequent final-selector/clock-pointer notices to root/publisher/accountant. Final-channel delivery timestamp UNKNOWN, not included."
+        }
+      ]
+    }
+  ],
+  "semantic_fields_excluded": true,
+  "path_correction": "Accounting supplied TD2 two clock names without public/ prefix; exact positive selector/projection owner supplied canonical public/ paths. No bytes changed."
+}

@@ -1,0 +1,75 @@
+{
+  "schema": "er9.original-clock-contract-evidence.v1",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol/PROTOCOL.md",
+      "sha256": "7d5994d09557e8f94ec554f548b379fb5bda98b1a4c374bbaf0ba18fd4bc569c",
+      "original_quotes": [
+        {
+          "line": 11,
+          "exact_text": "- Evaluators receive finite scope and time limits with reserved capacity for full coverage. A screen budget cannot certify a complete output. Scope/budget changes after a running review starts require a separately declared continuation; preserve the first result and consumed cost. A timeout is partial evaluation, not automatic candidate failure."
+        },
+        {
+          "line": 17,
+          "exact_text": "Phase 1 uses the designated current outputs, shared task obligations and anonymous evidence needed to verify their claims. Phase 2 opens necessary stage/history receipts to assess method uptake, candidate execution and any history-dependent preservation obligations. Economics are reported separately after the Phase 1 judgment is saved. Neither phase converts evaluator work into candidate work. New evidence that changes an earlier judgment requires a dated additive erratum, not a silent rewrite."
+        },
+        {
+          "line": 53,
+          "exact_text": "The reviewer reports current-output semantics first, then candidate method uptake/execution and economics after unblinding. Publication, later development and recipe selection belong to the coordinator. Fresh holdout truth notes remain evaluator-only until the locked block is over. Findings may guide a declared later development version, never alter a frozen original or leak into a locked candidate."
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol/EVALUATOR_PROMPT.md",
+      "sha256": "2a8f7f6bd74097358133ebfd0052f86680b1ada0cfa5bf34a3b0cb9fceb3e7ff",
+      "original_quotes": [
+        {
+          "line": 13,
+          "exact_text": "Save `current_output_judgment.json` before requesting/unblinding method/history/economics. If history-dependent preservation or execution obligations remain, Phase 1 eligibility does not yet constitute whole-case PASS. Finish any required Phase 2 checks within the separately bound reserve and report their evidence separately. Costs and missing counters are separate economic findings. A budget expiry with incomplete coverage yields partial FAIL if a decisive failure was established, otherwise HOLD; never certify from a screen."
+        },
+        {
+          "line": 15,
+          "exact_text": "Produce `report.json` following `REPORT_TEMPLATE.json` and a concise source-backed `REVIEW.md`, including exact locators, key supported findings, defect severity, coverage limits and blinding hints. No majority voting or extra review hierarchy. Escalate only a concrete unresolved consequential dispute, with its source evidence. Preserve received snapshots and identify any later erratum explicitly."
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol/README.md",
+      "sha256": "e07dac8a9dc3bca255836f779256768abc8cd70cdf45eee00c77304d95f8b917",
+      "original_quotes": [
+        {
+          "line": 4,
+          "exact_text": "2. Assign one independent xhigh evaluator the filled manifest, `PROTOCOL.md`, `EVALUATOR_PROMPT.md`, `REPORT_TEMPLATE.json`, and its owned result directory. Scope a coherent output/pair, common checks, finite screen budget and genuine full-coverage reserve. Template seconds are examples, not a campaign ceiling."
+        }
+      ]
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol/DISPATCH_TEMPLATE.json",
+      "sha256": "2eaf8877de301df5c1140ff15e1b0fc75a5bf1706f4e2162ee14da1844723687",
+      "original_quotes": [
+        {
+          "line": 40,
+          "exact_text": "    \"screen_max_seconds\": 1200,"
+        },
+        {
+          "line": 41,
+          "exact_text": "    \"full_coverage_reserve_seconds\": 2400,"
+        },
+        {
+          "line": 42,
+          "exact_text": "    \"history_execution_reserve_seconds\": 600,"
+        },
+        {
+          "line": 43,
+          "exact_text": "    \"hard_max_seconds\": 4200,"
+        },
+        {
+          "line": 45,
+          "exact_text": "    \"limits_note\": \"Illustrative finite budget. Coordinator fits actual scope before dispatch; no running expansion or screen-only PASS.\""
+        }
+      ]
+    }
+  ],
+  "template_binding_status": "Template is illustrative (4200 whole/2400 coverage reserve), not evidence of a universal1800 cap. Actual case START receipts bind1200/600/1800.",
+  "original_end_boundary": "Original prompt expressly refers to required Phase2 checks within reserve; full reporting/handoff scope is clearer at whole level and root supplies intended authorial interpretation."
+}

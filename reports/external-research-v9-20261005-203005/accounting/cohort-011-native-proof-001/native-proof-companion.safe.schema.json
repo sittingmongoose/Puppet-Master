@@ -1,0 +1,3407 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_cohort_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "boundary_disclosure_selector_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "corrected_011_view_only": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_attempts_unchanged": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "known_candidate_tokens_unchanged": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "new_charge_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "positive_known_Goal_starts_unchanged": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unknown_start_rows_after": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unknown_start_rows_before": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unknown_usage_rows_after_reported_zero_scope_correction": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "unknown_usage_rows_before": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "candidate_attempts_unchanged",
+        "positive_known_Goal_starts_unchanged",
+        "unknown_start_rows_before",
+        "unknown_start_rows_after",
+        "unknown_usage_rows_before",
+        "unknown_usage_rows_after_reported_zero_scope_correction",
+        "known_candidate_tokens_unchanged",
+        "new_charge_tokens"
+      ],
+      "type": "object"
+    },
+    "counter_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "created_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "original_selected_native_occupied_seconds_sum": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "owner_positive_selector_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_proof_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_status_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "input": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "output": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "reasoning_output_subset": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "total": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "confirmed_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_model_requests": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "direct_ui_reported_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "native_goal_api_identity": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_kind_enum": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_goal_record_update_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "native_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "new_candidate_charge_tokens": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "null_target_source_path": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "null_target_source_sha256": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "observed_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_goal_starts": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_known_candidate_usage": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "input": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "output": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "reasoning_output_subset": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "total": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "original_native_goal_status": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "original_resource_error_class": {
+                "type": [
+                  "string",
+                  "number",
+                  "object",
+                  "null"
+                ]
+              },
+              "outer_clock_additive_to_native": {
+                "type": "boolean"
+              },
+              "outer_freeze_occupied_seconds_original": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "proof_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "provider_known_tokens_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "provider_logged_attempts_reference_only": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "reported_zero_candidate_scope_confirmed": {
+                "type": "boolean"
+              },
+              "session_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_selector": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_source_path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "status_source_sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "unexposed_or_cancelled_platform_tail": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "attempt_id",
+              "original_receipt_pin",
+              "session_id",
+              "original_goal_starts",
+              "confirmed_goal_starts",
+              "native_goal_id",
+              "native_goal_kind_enum",
+              "native_goal_api_identity",
+              "original_native_goal_status",
+              "observed_native_goal_status",
+              "native_goal_record_update_utc",
+              "status_source_path",
+              "status_source_sha256",
+              "status_selector",
+              "null_target_source_path",
+              "null_target_source_sha256",
+              "direct_ui_reported_tokens",
+              "direct_ui_reported_model_requests",
+              "provider_logged_attempts_reference_only",
+              "provider_known_tokens_reference_only",
+              "original_known_candidate_usage",
+              "reported_zero_candidate_scope_confirmed",
+              "native_occupied_seconds_original",
+              "outer_freeze_occupied_seconds_original",
+              "original_resource_error_class",
+              "outer_clock_additive_to_native",
+              "new_candidate_charge_tokens",
+              "billing_dollars",
+              "unexposed_or_cancelled_platform_tail",
+              "proof_pin"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "selected_outer_freeze_seconds_sum_reference_not_added": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "status_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "verification_scope": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "created_utc",
+    "base_cohort_selection_pin",
+    "owner_positive_selector_pin",
+    "owner_proof_pin",
+    "owner_status_pin",
+    "rows",
+    "corrected_011_view_only",
+    "original_selected_native_occupied_seconds_sum",
+    "selected_outer_freeze_seconds_sum_reference_not_added",
+    "counter_rule",
+    "status_rule",
+    "verification_scope",
+    "boundary_disclosure_selector_pin",
+    "validation_errors"
+  ],
+  "type": "object"
+}

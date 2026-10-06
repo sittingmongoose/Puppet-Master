@@ -1,0 +1,83 @@
+{
+  "schema": "er9.clock-assurance-positive-selection.v1",
+  "state": "OWNER_FROZEN",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/STARTED.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/STARTED.json",
+      "sha256": "6802cd658b6ee61fe2d6ed37e92cc6b7aa34a5d80f517e2e7a013bdec99de6b6",
+      "bytes": 244
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/OWNER_CLOCK_PROJECTION.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/OWNER_CLOCK_PROJECTION.json",
+      "sha256": "034a54771210ff64775794371d220a5843782044fc5ad503d9042dd93a02843b",
+      "bytes": 18249
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/ORIGINAL_PROTOCOL_EVIDENCE.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/ORIGINAL_PROTOCOL_EVIDENCE.json",
+      "sha256": "6e398fc5ae9713673404550ea3d7bb8fcc8c4f68cd19b32e626d02057c75f120",
+      "bytes": 5053
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/ROOT_AUTHORIAL_CLARIFICATION.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/ROOT_AUTHORIAL_CLARIFICATION.json",
+      "sha256": "fc266a7102b65b17b2ce913986d90a0fd898242c2e5a86685e58f966707c1a52",
+      "bytes": 2023
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/MAX_STRUCTURAL_CORROBORATION.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/MAX_STRUCTURAL_CORROBORATION.json",
+      "sha256": "794bb68a42e467fbecfb27dd956b1311e0d9b5b1b13dd4aaacc59a3c73f925ed",
+      "bytes": 1628
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/TD3_INTERMEDIATE_CLOCKS.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/TD3_INTERMEDIATE_CLOCKS.json",
+      "sha256": "8cdbdcd5ed2d7adf33768c849130eaa2cb42a7bc967d40ab4dc972d43df1eaff",
+      "bytes": 1962
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/TD3_LATER_SELECTOR_PROJECTION.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/TD3_LATER_SELECTOR_PROJECTION.json",
+      "sha256": "13c6699f79a5199cf480867d396ed979caef1ffabae84c1546f66aef8bcaa4b7",
+      "bytes": 1921
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/INTERVAL_COMPARISONS.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/INTERVAL_COMPARISONS.json",
+      "sha256": "73dbb522f311df403b5aab11a807988d09a4d6fa9b79be7aec4f7be084b9a8e7",
+      "bytes": 7179
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/INPUT_PINS.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/INPUT_PINS.json",
+      "sha256": "6d2edcfafe667847a024750ff35bfc3c55cc60ec60328d1acb490401f5e7917b",
+      "bytes": 5595
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/REPORT.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/REPORT.json",
+      "sha256": "fab803f60285106452e5ffb6c4d6b030c2cb903de700bcde73daf205fd4478af",
+      "bytes": 12634
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/README.md",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/README.md",
+      "sha256": "bb2974e457950a3c45c07855af05111266ec7a60ff5e000b03566e5c25caf854",
+      "bytes": 4381
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/VERIFICATION.json",
+      "relative_path": "evaluation/protocol-assurance/clocks-001/VERIFICATION.json",
+      "sha256": "0381fe6759f8d501bcd2719575c016d1941413e3e0a8bff067e5cab52b1bf4a1",
+      "bytes": 867
+    }
+  ],
+  "file_count": 12,
+  "bytes": 61736,
+  "scope": "Safe typed metadata/protocol quotation/authorial-clarification projections only; excludes scientific and source bodies. No original file rewritten.",
+  "created_utc": "2026-10-06T03:20:15.709418Z",
+  "candidate_source_answers": false
+}

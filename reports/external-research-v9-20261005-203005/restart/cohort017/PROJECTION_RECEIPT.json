@@ -1,0 +1,37 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T03:23:45.180607+00:00",
+  "source_observed_utc": "2026-10-06T03:22:42.812591+00:00",
+  "meaningful_update_count": 12,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "ops/dispatcher/FINAL_STAGE_TRANSITION_CHECKPOINT_001.json",
+      "sha256": "d0c6f0131316811597a91c2a628831ad73081f0b4864b82f29aa485c1179b595",
+      "bytes": 12646
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T032345.180607Z/BACKUP_RECEIPT.json",
+    "sha256": "07194ad697767c973891cd154375bff67f0d2d7b97a179d3ed0ccb47f60a30be",
+    "bytes": 877
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "4346d32da5d8e3c7f8dac05dc1d96d2952dafd83ac364c820bd5237d0afff60d",
+      "bytes": 75431
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "4346d32da5d8e3c7f8dac05dc1d96d2952dafd83ac364c820bd5237d0afff60d",
+      "bytes": 75431
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "93b4c91a4ce541e0afa997b087e5f2e45cbd5594e2f9dbb98ed837fb5e90a533",
+      "bytes": 6491
+    }
+  ],
+  "scope": "Selected actual native final terminal lifecycle/missingcanonical4/quiet/private release only; previous observations retained, no scratchsemantic/body or pipelinecredit"
+}

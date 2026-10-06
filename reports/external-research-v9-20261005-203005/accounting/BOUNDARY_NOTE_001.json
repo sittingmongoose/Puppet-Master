@@ -1,0 +1,10 @@
+{
+  "containment": "Do not use or quote those summaries; continue exact lifecycle/clock/usage metadata only. Avoid inventory calls that expose completed agent finals.",
+  "findings_forwarded_to_ops_repairs_or_candidates": false,
+  "purpose": "Check whether proof owner was still active while awaiting its positive selector",
+  "recorded_utc": "2026-10-06T02:57:20.379303+00:00",
+  "schema": "er9.accounting.boundary-note.v1",
+  "tool": "collaboration.list_agents",
+  "unexpected_content": "Inventory result included unrelated evaluator final summaries, including substantive findings. No judgment/key/candidate artifact body was opened.",
+  "used_for_accounting_or_proof": false
+}

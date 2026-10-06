@@ -1,0 +1,214 @@
+{
+  "cohort": "native-proof-overlay-and-clock-scope-017",
+  "snapshot_at": "2026-10-06T03:25:07.854979+00:00",
+  "sources": [
+    {
+      "source": "accounting/cohort-011-native-proof-001/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-011-native-proof-001/PUBLIC_SELECTION.json",
+      "source_sha256": "82e29b049fe8effbaaa6e29ce10d4e09bd65ffa6dccaf00daa894ee51a161426",
+      "public_sha256": "82e29b049fe8effbaaa6e29ce10d4e09bd65ffa6dccaf00daa894ee51a161426",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.json",
+      "published": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.json",
+      "source_sha256": "4e4c9ac6e1d35f84b15c6f64e7eee8cbe01796325f54271be48bffd1f816c263",
+      "public_sha256": "4e4c9ac6e1d35f84b15c6f64e7eee8cbe01796325f54271be48bffd1f816c263",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.schema.json",
+      "published": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.schema.json",
+      "source_sha256": "10db65498543717d8a472ed354499d7643130fe9dcc7dd1f4c9d803af08f4cc4",
+      "public_sha256": "10db65498543717d8a472ed354499d7643130fe9dcc7dd1f4c9d803af08f4cc4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-011-native-proof-001/VERIFICATION.json",
+      "published": "accounting/cohort-011-native-proof-001/VERIFICATION.json",
+      "source_sha256": "62774251680b4b450ee56cb745c960ac07c4d9e370b3fc18a7bb6e621cc17368",
+      "public_sha256": "62774251680b4b450ee56cb745c960ac07c4d9e370b3fc18a7bb6e621cc17368",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-011-native-proof-001/NATIVE_PROOF_COMPANION.md",
+      "published": "accounting/cohort-011-native-proof-001/NATIVE_PROOF_COMPANION.md",
+      "source_sha256": "bc017cb53a4e6a1ae6bcd580af45e0a31612f6c7d4396982e3555284b52c231a",
+      "public_sha256": "bc017cb53a4e6a1ae6bcd580af45e0a31612f6c7d4396982e3555284b52c231a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-011-native-proof-001/DIRECT_METER_VERIFICATION.json",
+      "published": "accounting/cohort-011-native-proof-001/DIRECT_METER_VERIFICATION.json",
+      "source_sha256": "8d45a5710cc260bcecc971b760d0bc05eec6b7a639eb2c9ddacbbff4522fc00c",
+      "public_sha256": "8d45a5710cc260bcecc971b760d0bc05eec6b7a639eb2c9ddacbbff4522fc00c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/BOUNDARY_NOTE_001_PUBLIC_SELECTION.json",
+      "published": "accounting/BOUNDARY_NOTE_001_PUBLIC_SELECTION.json",
+      "source_sha256": "eb666b0c6ed675cd334774df3e9d0a878e505c389bf44b49740e5c163330473c",
+      "public_sha256": "eb666b0c6ed675cd334774df3e9d0a878e505c389bf44b49740e5c163330473c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/BOUNDARY_NOTE_001.json",
+      "published": "accounting/BOUNDARY_NOTE_001.json",
+      "source_sha256": "be389f5220680ef7412a4794f803811f881119df8665dfb3a358eab8e6822eee",
+      "public_sha256": "be389f5220680ef7412a4794f803811f881119df8665dfb3a358eab8e6822eee",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-3/final-closure-positive-selector.json",
+      "published": "evaluation/independent-targeted-3/final-closure-positive-selector.json",
+      "source_sha256": "903b9924338accc13007dd97627b3b42b1fb2e49a6e68d87feca4e51e02cb044",
+      "public_sha256": "903b9924338accc13007dd97627b3b42b1fb2e49a6e68d87feca4e51e02cb044",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-3/FINAL-CLOSURE.json",
+      "published": "evaluation/independent-targeted-3/FINAL-CLOSURE.json",
+      "source_sha256": "d9c8a6f003d8023437a3fa19a9b14e9ef8a945c6ef9bf95e6f623b6136abe978",
+      "public_sha256": "d9c8a6f003d8023437a3fa19a9b14e9ef8a945c6ef9bf95e6f623b6136abe978",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/PUBLICATION_SELECTION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/PUBLICATION_SELECTION.json",
+      "source_sha256": "ac14a7ad32d11fca936a71979fa5b11e228b51eb93233307263d5307175cf2e7",
+      "public_sha256": "ac14a7ad32d11fca936a71979fa5b11e228b51eb93233307263d5307175cf2e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/STARTED.json",
+      "published": "evaluation/protocol-assurance/clocks-001/STARTED.json",
+      "source_sha256": "6802cd658b6ee61fe2d6ed37e92cc6b7aa34a5d80f517e2e7a013bdec99de6b6",
+      "public_sha256": "6802cd658b6ee61fe2d6ed37e92cc6b7aa34a5d80f517e2e7a013bdec99de6b6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/OWNER_CLOCK_PROJECTION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/OWNER_CLOCK_PROJECTION.json",
+      "source_sha256": "034a54771210ff64775794371d220a5843782044fc5ad503d9042dd93a02843b",
+      "public_sha256": "034a54771210ff64775794371d220a5843782044fc5ad503d9042dd93a02843b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/ORIGINAL_PROTOCOL_EVIDENCE.json",
+      "published": "evaluation/protocol-assurance/clocks-001/ORIGINAL_PROTOCOL_EVIDENCE.json",
+      "source_sha256": "6e398fc5ae9713673404550ea3d7bb8fcc8c4f68cd19b32e626d02057c75f120",
+      "public_sha256": "6e398fc5ae9713673404550ea3d7bb8fcc8c4f68cd19b32e626d02057c75f120",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/ROOT_AUTHORIAL_CLARIFICATION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/ROOT_AUTHORIAL_CLARIFICATION.json",
+      "source_sha256": "fc266a7102b65b17b2ce913986d90a0fd898242c2e5a86685e58f966707c1a52",
+      "public_sha256": "fc266a7102b65b17b2ce913986d90a0fd898242c2e5a86685e58f966707c1a52",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/MAX_STRUCTURAL_CORROBORATION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/MAX_STRUCTURAL_CORROBORATION.json",
+      "source_sha256": "794bb68a42e467fbecfb27dd956b1311e0d9b5b1b13dd4aaacc59a3c73f925ed",
+      "public_sha256": "794bb68a42e467fbecfb27dd956b1311e0d9b5b1b13dd4aaacc59a3c73f925ed",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/TD3_INTERMEDIATE_CLOCKS.json",
+      "published": "evaluation/protocol-assurance/clocks-001/TD3_INTERMEDIATE_CLOCKS.json",
+      "source_sha256": "8cdbdcd5ed2d7adf33768c849130eaa2cb42a7bc967d40ab4dc972d43df1eaff",
+      "public_sha256": "8cdbdcd5ed2d7adf33768c849130eaa2cb42a7bc967d40ab4dc972d43df1eaff",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/TD3_LATER_SELECTOR_PROJECTION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/TD3_LATER_SELECTOR_PROJECTION.json",
+      "source_sha256": "13c6699f79a5199cf480867d396ed979caef1ffabae84c1546f66aef8bcaa4b7",
+      "public_sha256": "13c6699f79a5199cf480867d396ed979caef1ffabae84c1546f66aef8bcaa4b7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/INTERVAL_COMPARISONS.json",
+      "published": "evaluation/protocol-assurance/clocks-001/INTERVAL_COMPARISONS.json",
+      "source_sha256": "73dbb522f311df403b5aab11a807988d09a4d6fa9b79be7aec4f7be084b9a8e7",
+      "public_sha256": "73dbb522f311df403b5aab11a807988d09a4d6fa9b79be7aec4f7be084b9a8e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/INPUT_PINS.json",
+      "published": "evaluation/protocol-assurance/clocks-001/INPUT_PINS.json",
+      "source_sha256": "6d2edcfafe667847a024750ff35bfc3c55cc60ec60328d1acb490401f5e7917b",
+      "public_sha256": "6d2edcfafe667847a024750ff35bfc3c55cc60ec60328d1acb490401f5e7917b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/REPORT.json",
+      "published": "evaluation/protocol-assurance/clocks-001/REPORT.json",
+      "source_sha256": "fab803f60285106452e5ffb6c4d6b030c2cb903de700bcde73daf205fd4478af",
+      "public_sha256": "fab803f60285106452e5ffb6c4d6b030c2cb903de700bcde73daf205fd4478af",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/README.md",
+      "published": "evaluation/protocol-assurance/clocks-001/README.md",
+      "source_sha256": "bb2974e457950a3c45c07855af05111266ec7a60ff5e000b03566e5c25caf854",
+      "public_sha256": "bb2974e457950a3c45c07855af05111266ec7a60ff5e000b03566e5c25caf854",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/protocol-assurance/clocks-001/VERIFICATION.json",
+      "published": "evaluation/protocol-assurance/clocks-001/VERIFICATION.json",
+      "source_sha256": "0381fe6759f8d501bcd2719575c016d1941413e3e0a8bff067e5cab52b1bf4a1",
+      "public_sha256": "0381fe6759f8d501bcd2719575c016d1941413e3e0a8bff067e5cab52b1bf4a1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/PUBLIC_SELECTION.json",
+      "published": "restart/cohort017/PUBLIC_SELECTION.json",
+      "source_sha256": "48c9d4ace91de753c85640bff2b70f2752d6ecf3159ecbb452572ffc079857ef",
+      "public_sha256": "48c9d4ace91de753c85640bff2b70f2752d6ecf3159ecbb452572ffc079857ef",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/frozen-state--current.json",
+      "published": "restart/cohort017/frozen-state--current.json",
+      "source_sha256": "4346d32da5d8e3c7f8dac05dc1d96d2952dafd83ac364c820bd5237d0afff60d",
+      "public_sha256": "be3d4b06dd4cfd26533bc328e423d0e3863990f934f47e39864d55788faecdb3",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/frozen-state--campaign.json",
+      "published": "restart/cohort017/frozen-state--campaign.json",
+      "source_sha256": "4346d32da5d8e3c7f8dac05dc1d96d2952dafd83ac364c820bd5237d0afff60d",
+      "public_sha256": "be3d4b06dd4cfd26533bc328e423d0e3863990f934f47e39864d55788faecdb3",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/frozen-CURRENT.md",
+      "published": "restart/cohort017/frozen-CURRENT.md",
+      "source_sha256": "93b4c91a4ce541e0afa997b087e5f2e45cbd5594e2f9dbb98ed837fb5e90a533",
+      "public_sha256": "93b4c91a4ce541e0afa997b087e5f2e45cbd5594e2f9dbb98ed837fb5e90a533",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/PROJECTION_RECEIPT.json",
+      "published": "restart/cohort017/PROJECTION_RECEIPT.json",
+      "source_sha256": "83e1de4e321beca9c5bbb9473d12cf778dde38bdf9bc758fa90d39288e1d6162",
+      "public_sha256": "83e1de4e321beca9c5bbb9473d12cf778dde38bdf9bc758fa90d39288e1d6162",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/history/projection-20261006T032345.180607Z/BACKUP_RECEIPT.json",
+      "published": "restart/cohort017/BACKUP_RECEIPT.json",
+      "source_sha256": "07194ad697767c973891cd154375bff67f0d2d7b97a179d3ed0ccb47f60a30be",
+      "public_sha256": "07194ad697767c973891cd154375bff67f0d2d7b97a179d3ed0ccb47f60a30be",
+      "transform": "byte-identical"
+    }
+  ],
+  "accounting_overlay": "Original011 immutable; counts/tokens unchanged; unknownstarts10to0/reportedzero scoped unknownusage13to3. No billing/platformzero/unknowncancelledtail inference.",
+  "clock_scope": "Original600 bounds requiredPhase2checks;1800 includes reporting/handoffs/metadatafromfirstbody; inclusive>600 arithmetic retained as overhead, not erased/regraded",
+  "TD3_supplement_created_seconds": 1699.593613692,
+  "TD3_supplement_creation_is_transport_timestamp": false,
+  "whole_pipeline_or_winner_claim": false
+}

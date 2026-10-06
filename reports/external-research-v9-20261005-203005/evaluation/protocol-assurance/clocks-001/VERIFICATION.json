@@ -1,0 +1,18 @@
+{
+  "status": "PASS_METADATA_CLOCK_RECONCILIATION_ONLY",
+  "scientific_grade_reassessment": false,
+  "checks": [
+    "actualSTART1200/600/1800 bounds match monotonic differences",
+    "source/Phase2/whole checkpoints preserved separately",
+    "original final11/final13/d9c8 and supplementary903b992 identities unchanged",
+    "inclusive >600 arithmetic retained, not substituted for checking-only duration",
+    "root exact authorial clarification and original source quotes retained",
+    "TD2 precision limit and final transport UNKNOWN retained"
+  ],
+  "input_count": 20,
+  "checked_utc": "2026-10-06T03:20:15.704230Z",
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/protocol-assurance/clocks-001/REPORT.json",
+    "sha256": "fab803f60285106452e5ffb6c4d6b030c2cb903de700bcde73daf205fd4478af"
+  }
+}

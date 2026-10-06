@@ -1,0 +1,45 @@
+{
+  "metadata_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE2-START.json",
+      "sha256": "3fb96cfbdf8acf480323d9c4421abc54a4f67641491378298fabd64fc2d5f3bc",
+      "clock_fields": {
+        "utc": "2026-10-06T02:51:46.925790+00:00",
+        "monotonic_ns": 85525782812610,
+        "phase2_deadline_monotonic_ns": 86125782812610,
+        "phase2_max_seconds": 600,
+        "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00",
+        "whole_elapsed_seconds_at_start": 784.147784488,
+        "phase1_to_phase2_gap_seconds": 170.663751044
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/PHASE2-COMPLETE.json",
+      "sha256": "acd6c6f03507c353807e4412259a99fc4b9f86beb0c3b867b96248d2d5afc491",
+      "clock_fields": {
+        "utc": "2026-10-06T02:56:50.804495+00:00",
+        "monotonic_ns": 85829661491963,
+        "phase2_elapsed_seconds": 303.878679353,
+        "phase2_overrun_seconds": 0,
+        "whole_elapsed_seconds": 1088.026463841,
+        "whole_overrun_seconds": 0
+      }
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/REPORT-READY.json",
+      "sha256": "c7052fb11aca9843029c1992aecd9a73ac65e36a4307680e62ada7eb0b6bb061",
+      "clock_fields": {
+        "utc": "2026-10-06T02:58:58.832481+00:00",
+        "monotonic_ns": 85957689498323,
+        "source_seconds": 613.484033444,
+        "phase1_to_phase2_gap_seconds": 170.663751044,
+        "phase2_seconds": 303.878679353,
+        "phase2_to_report_ready_seconds": 128.02800636,
+        "whole_report_ready_seconds": 1216.054470201,
+        "whole_overrun_seconds": 0,
+        "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00"
+      }
+    }
+  ],
+  "no_source_or_grade_fields": true
+}

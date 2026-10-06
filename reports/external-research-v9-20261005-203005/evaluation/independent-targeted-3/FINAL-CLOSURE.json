@@ -1,0 +1,22 @@
+{
+  "schema": "er9.evaluator-final-closure-observation.v1",
+  "evaluation_id": "independent-targeted-3",
+  "utc": "2026-10-06T03:03:29.609433+00:00",
+  "monotonic_ns": 86228466449728,
+  "whole_seconds": 1486.831421606,
+  "whole_overrun_seconds": 0,
+  "phase2_checking_seconds": 303.878679353,
+  "phase2_start_to_this_final_metadata_observation_seconds": 702.683637118,
+  "phase2_start_to_this_final_metadata_observation_over_600_seconds": 102.683637118,
+  "clock_scope": "After required owner content notices and subsequent final-selector/clock-pointer notices to root/publisher/accountant. Final-channel delivery timestamp UNKNOWN, not included.",
+  "source_judgment_unchanged": true,
+  "final_positive_selector_sha256": "30d49dd327d2608080c12058347828490a3da8e7b3e413b18cef9960c75c4085",
+  "all_13_positive_file_pins_match": true,
+  "required_owner_content_notices_delivered_to_tools": true,
+  "final_pointer_notices_delivered_to_tools": true,
+  "acknowledgments": "UNKNOWN unless separately observed; none awaited",
+  "own_persistent_processes_remaining": 0,
+  "evaluator_native_jobs_goals_created": 0,
+  "sourcefacts_to_candidate_case_tools_ops": false,
+  "clean_restart_scope": "Evaluator tree complete, no persistent evaluator process; candidate saved owned scopes quiet, outer permit release confirmation UNKNOWN"
+}

@@ -1,0 +1,32 @@
+{
+  "schema": "er9.owner-supplementary-positive-public-selector.v1",
+  "owner": "/root/targeted_eval_3",
+  "evaluation_id": "independent-targeted-3",
+  "pair_id": "D-V15-A-SCOPE-R002",
+  "selection": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/FINAL-CLOSURE.json",
+      "sha256": "d9c8a6f003d8023437a3fa19a9b14e9ef8a945c6ef9bf95e6f623b6136abe978",
+      "bytes": 1323,
+      "role": "neutral_later_final_metadata_clock_observation"
+    }
+  ],
+  "positive_only": true,
+  "no_broad_scan_or_reference_follow": true,
+  "preserves_original_13_file_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/final-positive-selector.json",
+    "sha256": "30d49dd327d2608080c12058347828490a3da8e7b3e413b18cef9960c75c4085",
+    "bytes": 5879,
+    "unchanged": true
+  },
+  "created_utc": "2026-10-06T03:07:02.371631+00:00",
+  "created_monotonic_ns": 86441228641814,
+  "original_clock_not_reset": true,
+  "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00",
+  "supplement_creation_whole_seconds": 1699.593613692,
+  "supplement_creation_whole_overrun_seconds": 0,
+  "clock_scope": "This later selector creation is supplementary publication metadata. It does not replace source, Phase2, required handoff, or FINAL-CLOSURE measurements; no clock reset or source-grade rewrite.",
+  "source_or_grade_bodies_read_for_supplement": false,
+  "raw_source_private_key_OS_proof_selected": false,
+  "ack_wait": false
+}
