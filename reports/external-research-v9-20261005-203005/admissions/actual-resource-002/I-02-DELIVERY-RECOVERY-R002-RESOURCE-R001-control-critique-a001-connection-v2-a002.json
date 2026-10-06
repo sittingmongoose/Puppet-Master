@@ -1,0 +1,23 @@
+{
+  "schema": "er9.positive-actual-admission-metadata.v1",
+  "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+  "pair_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+  "arm": "control",
+  "stage": "critique",
+  "observed_family": "UNKNOWN",
+  "observed_model": null,
+  "native_goal_starts": 1,
+  "native_session_id": "sess_20dca4ef-2de2-42c3-9da1-83799d2df45a",
+  "start_utc": "2026-10-06T02:16:02.402311+00:00",
+  "status_at_snapshot": "COMPLETED",
+  "actual_resource_profile": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/RESOURCE_PROFILE.json",
+    "sha256": "5adaa36211208c5a5fc044f9d09bc16b78d6097b4e20bf18504bc6f5c064bfa9"
+  },
+  "resource_observations": {
+    "resource_oom_observed": false
+  },
+  "native_source_receipt_sha256": "b1b2e34bd8ec5a95ee059adfda3e573c39b54a032d74fa3121e48aad957105e1",
+  "stage_sha256": "7e21462bda08c71ae729543440d408d8fe81a90bf08b60a35adb420791b1c494",
+  "full_pipeline_completion_claimed": false
+}

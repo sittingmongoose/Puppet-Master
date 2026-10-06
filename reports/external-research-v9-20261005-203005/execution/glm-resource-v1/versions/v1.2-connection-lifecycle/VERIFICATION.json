@@ -1,0 +1,36 @@
+{
+  "schema": "er9.glm.mcp-lifecycle-repair-verification.v1",
+  "created_utc": "2026-10-06T02:10:59.312616+00:00",
+  "status": "PASS",
+  "test_command": "ER9_OLD_REPRO_PATH=OLD_LIFECYCLE_REPRO.json ER9_DISPATCH_PROOF_PATH=DISPATCH_REPAIR_PROOF.json python3 -m unittest -v test_dispatch.py",
+  "test_methods": 2,
+  "actual_dispatch_fixture_runs": 3,
+  "elapsed_seconds": 13.777,
+  "assertions": [
+    "old first-clientEOF exact error reproduced beforeGoal",
+    "actual production stage-worker preparation pins/private profile/config/original birth/output freeze",
+    "actual dispatcher-shaped outer service caps/remaining original RuntimeMax",
+    "native768 component with native-spawned proxies exact cgroup",
+    "real MCP discovery disconnect+reconnect/read/write/execution for both1.3 and1.4",
+    "unchanged strict live source/adapter parent/caps/helper gates after both disconnects",
+    "sandbox256 actual kernel parent/child gate",
+    "exact original clocks30/5 reserves; no+45",
+    "outerterminal then exactparent recursivequiet",
+    "honest synthetic freeze operational_complete false and Goal0"
+  ],
+  "old_reproduction": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/OLD_LIFECYCLE_REPRO.json",
+    "sha256": "4e9c744a018c95eebc7588a24b9cf29dcf72b9137da0d16a94ce0e3a51e99657"
+  },
+  "repair_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/REPAIR_PROOF.json",
+    "sha256": "a4343d512eb7bf989ffa83213a3ea5bf315dff170f42ade8f73167c94378c43d"
+  },
+  "base_resource_mechanics_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/VERIFICATION.json",
+    "sha256": "39b668c90b265a7b89ffe3625dcf07ee6bb1ae585d4a9f3fd1bc21840312b000"
+  },
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "research_fit": "UNKNOWN"
+}

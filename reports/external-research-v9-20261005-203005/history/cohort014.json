@@ -1,0 +1,631 @@
+{
+  "cohort": "actual-admission-and-finite-fresh-policy-014",
+  "snapshot_at": "2026-10-06T02:31:01.317732+00:00",
+  "sources": [
+    {
+      "source": "supervision/DECISIONS-011-publication.json",
+      "published": "supervision/DECISIONS-011-publication.json",
+      "source_sha256": "566abfc7db79402e35c87df86fda8dc820226c7fb83c15c29d5118d8b7b5f5cb",
+      "public_sha256": "566abfc7db79402e35c87df86fda8dc820226c7fb83c15c29d5118d8b7b5f5cb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-011.md",
+      "published": "supervision/DECISIONS-011.md",
+      "source_sha256": "5d5ae1e69c187e624ed5f76638f2e7626b212860ad2b7d734b8e1aad37a4c934",
+      "public_sha256": "5d5ae1e69c187e624ed5f76638f2e7626b212860ad2b7d734b8e1aad37a4c934",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-011.json",
+      "published": "supervision/DECISIONS-011.json",
+      "source_sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea",
+      "public_sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-011-FRESH12-INVENTORY.json",
+      "published": "supervision/DECISIONS-011-FRESH12-INVENTORY.json",
+      "source_sha256": "e9554e46b6510d372fcd4b1e178495e625ae10e3f7934c20200d2cffc70238b6",
+      "public_sha256": "e9554e46b6510d372fcd4b1e178495e625ae10e3f7934c20200d2cffc70238b6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-011-evidence.json",
+      "published": "supervision/DECISIONS-011-evidence.json",
+      "source_sha256": "056df6e0a20c08fded6825714ae839dcee1be1cd2550afb33576aea54ed3d9fd",
+      "public_sha256": "056df6e0a20c08fded6825714ae839dcee1be1cd2550afb33576aea54ed3d9fd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-publication-ops-attestation.json",
+      "published": "supervision/DECISIONS-010-publication-ops-attestation.json",
+      "source_sha256": "dbda13758f8efb51ab768e37cf90fecb0633d1db81ff5c14e14e9d5b734fe78c",
+      "public_sha256": "dbda13758f8efb51ab768e37cf90fecb0633d1db81ff5c14e14e9d5b734fe78c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.md",
+      "published": "supervision/DECISIONS-010.md",
+      "source_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "public_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.json",
+      "published": "supervision/DECISIONS-010.json",
+      "source_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "public_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-evidence.json",
+      "published": "supervision/DECISIONS-010-evidence.json",
+      "source_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "public_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "source_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "public_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "source_sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+      "public_sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "published": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "source_sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be",
+      "public_sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-WHOLE-PIPELINE-PROSPECTIVITY-ADDENDUM-003.json",
+      "published": "supervision/DECISIONS-010-WHOLE-PIPELINE-PROSPECTIVITY-ADDENDUM-003.json",
+      "source_sha256": "9872a15cd9bb8d748d726fa299e2a14e9dd7b2162da2dc950a2e376c17debc45",
+      "public_sha256": "9872a15cd9bb8d748d726fa299e2a14e9dd7b2162da2dc950a2e376c17debc45",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-PROSPECTIVITY-OPS-ATTESTATION-004.json",
+      "published": "supervision/DECISIONS-010-PROSPECTIVITY-OPS-ATTESTATION-004.json",
+      "source_sha256": "a75ab6855a6fc2ad1c0bc176710e6910571395f6b3858964c36a74e19687488b",
+      "public_sha256": "a75ab6855a6fc2ad1c0bc176710e6910571395f6b3858964c36a74e19687488b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-010-p4-clocks-001/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-010-p4-clocks-001/PUBLIC_SELECTION.json",
+      "source_sha256": "5506becc95f2847984794d28123dbd0036354daaa741977d895f2a5d9dd65669",
+      "public_sha256": "5506becc95f2847984794d28123dbd0036354daaa741977d895f2a5d9dd65669",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.json",
+      "published": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.json",
+      "source_sha256": "310df52e0ca8502c58c0ec385af293f89792ed181f03222116022eb1fd0d96df",
+      "public_sha256": "310df52e0ca8502c58c0ec385af293f89792ed181f03222116022eb1fd0d96df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.schema.json",
+      "published": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.schema.json",
+      "source_sha256": "8291e91f309f7a19c54661b0cb9e37f79dd49b6092f574e77f19ffda3cd7baaa",
+      "public_sha256": "8291e91f309f7a19c54661b0cb9e37f79dd49b6092f574e77f19ffda3cd7baaa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-010-p4-clocks-001/P4_CLOCKS.md",
+      "published": "accounting/cohort-010-p4-clocks-001/P4_CLOCKS.md",
+      "source_sha256": "1690975ce6511115448a3198b0f2a838dae68d89aeaa6f141467942409817a3b",
+      "public_sha256": "1690975ce6511115448a3198b0f2a838dae68d89aeaa6f141467942409817a3b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PUBLIC_SELECTION.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PUBLIC_SELECTION.json",
+      "source_sha256": "ab7d7ca3d075e286843f584c54f257c3ba50cbc4b9183f3f836411b1b6dc5046",
+      "public_sha256": "ab7d7ca3d075e286843f584c54f257c3ba50cbc4b9183f3f836411b1b6dc5046",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/stage_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/stage_worker.py",
+      "source_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "public_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/glm_stage.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/glm_stage.py",
+      "source_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "public_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_support.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_support.py",
+      "source_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "public_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_guard.py",
+      "source_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "public_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_gate.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_gate.py",
+      "source_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "public_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_guard.py",
+      "source_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "public_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_bridge.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_bridge.py",
+      "source_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "public_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_proxy.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_proxy.py",
+      "source_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "public_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/external_release.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/external_release.py",
+      "source_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "public_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/profile.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/profile.py",
+      "source_sha256": "2dbce693d3b6ff143059ff5fa13c8f8f186bc6eed29ea00dcae9681857593623",
+      "public_sha256": "2dbce693d3b6ff143059ff5fa13c8f8f186bc6eed29ea00dcae9681857593623",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/README.md",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/README.md",
+      "source_sha256": "e81f4e05b482a616659f31165cb9c7030780f2d2f4b53874c5f0cd172ef9594c",
+      "public_sha256": "e81f4e05b482a616659f31165cb9c7030780f2d2f4b53874c5f0cd172ef9594c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "source_sha256": "5f38d4c0b871fd75da5d6e0e03f27f1997be77d9ee3ffc9192b7959b18ac4676",
+      "public_sha256": "5f38d4c0b871fd75da5d6e0e03f27f1997be77d9ee3ffc9192b7959b18ac4676",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_native.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_native.py",
+      "source_sha256": "517841ac4a999555150c1305f42dd47044bae116960965d5cc3912793febbe6d",
+      "public_sha256": "517841ac4a999555150c1305f42dd47044bae116960965d5cc3912793febbe6d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_worker.py",
+      "source_sha256": "378552398d281716c52b496fb278fc925b44bf324b07cad934f5f4ece276ba3a",
+      "public_sha256": "378552398d281716c52b496fb278fc925b44bf324b07cad934f5f4ece276ba3a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/test_dispatch.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/test_dispatch.py",
+      "source_sha256": "8cb1f631723ffac014a847f1915c3bd33d715e2443bdb63d242ef83c532ca8f9",
+      "public_sha256": "8cb1f631723ffac014a847f1915c3bd33d715e2443bdb63d242ef83c532ca8f9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/FAILURE_DIAGNOSIS.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/FAILURE_DIAGNOSIS.json",
+      "source_sha256": "d993759a0d194054a3ca5ef1a0b1949615912274fd3459ccb591650d027f3e0c",
+      "public_sha256": "d993759a0d194054a3ca5ef1a0b1949615912274fd3459ccb591650d027f3e0c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/REPAIR_PROOF.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/REPAIR_PROOF.json",
+      "source_sha256": "a4343d512eb7bf989ffa83213a3ea5bf315dff170f42ade8f73167c94378c43d",
+      "public_sha256": "a4343d512eb7bf989ffa83213a3ea5bf315dff170f42ade8f73167c94378c43d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/VERIFICATION.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/VERIFICATION.json",
+      "source_sha256": "407c917e779f1f425400bdeebb86b4b5920491a69aa66b3ec717e7393dc47422",
+      "public_sha256": "407c917e779f1f425400bdeebb86b4b5920491a69aa66b3ec717e7393dc47422",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+      "source_sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da",
+      "public_sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "source_sha256": "1ef87d7f6b74a39be7303150eb457dbfa76b6761d8621c3a576c5a56d48d15a4",
+      "public_sha256": "1ef87d7f6b74a39be7303150eb457dbfa76b6761d8621c3a576c5a56d48d15a4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/stage_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/stage_worker.py",
+      "source_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "public_sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/glm_stage.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/glm_stage.py",
+      "source_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "public_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_support.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_support.py",
+      "source_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "public_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_guard.py",
+      "source_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "public_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_gate.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_gate.py",
+      "source_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "public_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_guard.py",
+      "source_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "public_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_bridge.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_bridge.py",
+      "source_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "public_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_proxy.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_proxy.py",
+      "source_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "public_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/external_release.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/external_release.py",
+      "source_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "public_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/profile.py",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/profile.py",
+      "source_sha256": "a14d7fd76936bbe3c8434c3eb25923aae98b487051ecdea4c4a940404cb17137",
+      "public_sha256": "a14d7fd76936bbe3c8434c3eb25923aae98b487051ecdea4c4a940404cb17137",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/README.md",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/README.md",
+      "source_sha256": "298a602750d270f398d6875caa0a803d028fc67af099b3afa038261eb4492ea1",
+      "public_sha256": "298a602750d270f398d6875caa0a803d028fc67af099b3afa038261eb4492ea1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "source_sha256": "5ef5dfe40b60b7b2418fbf5bd740a21a6cec16a2bc6e9ea40fe425a52d985669",
+      "public_sha256": "5ef5dfe40b60b7b2418fbf5bd740a21a6cec16a2bc6e9ea40fe425a52d985669",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+      "source_sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7",
+      "public_sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "published": "execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "source_sha256": "50a04a6e89fc208881fed92bfbf0a9b63d8d4776cfadda9a62cb21cdfa74a201",
+      "public_sha256": "50a04a6e89fc208881fed92bfbf0a9b63d8d4776cfadda9a62cb21cdfa74a201",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/PUBLICATION_SELECTION.json",
+      "published": "assurance/source-separation-001/PUBLICATION_SELECTION.json",
+      "source_sha256": "9551cb6c957d318eedddb499b1f93ef763978bccf6b9711f2ad568e0fb56a646",
+      "public_sha256": "9551cb6c957d318eedddb499b1f93ef763978bccf6b9711f2ad568e0fb56a646",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/STARTED.json",
+      "published": "assurance/source-separation-001/STARTED.json",
+      "source_sha256": "90e4340bbcdf2c3ee2dce4a4015e2d5a945527ec1e27a8cb612300a7ad01825e",
+      "public_sha256": "90e4340bbcdf2c3ee2dce4a4015e2d5a945527ec1e27a8cb612300a7ad01825e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/TOOL_CODE_PINS.json",
+      "published": "assurance/source-separation-001/TOOL_CODE_PINS.json",
+      "source_sha256": "2414f1b65b16ae2f283d84acf55fd131f33e6e4df1e2d3559146a61a614cdaee",
+      "public_sha256": "2414f1b65b16ae2f283d84acf55fd131f33e6e4df1e2d3559146a61a614cdaee",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/INPUT_PINS.json",
+      "published": "assurance/source-separation-001/INPUT_PINS.json",
+      "source_sha256": "b0fa52ef52f68fbd2851fc815f43ca10349ec7e77c38c4d24dc6095bf8642fb2",
+      "public_sha256": "b0fa52ef52f68fbd2851fc815f43ca10349ec7e77c38c4d24dc6095bf8642fb2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/URL_OBSERVATIONS.json",
+      "published": "assurance/source-separation-001/URL_OBSERVATIONS.json",
+      "source_sha256": "de603b9470e467d2c3c00208daf9a9ded32ed802b054eaacfd8a29bb612a9237",
+      "public_sha256": "de603b9470e467d2c3c00208daf9a9ded32ed802b054eaacfd8a29bb612a9237",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/PROPOSAL.json",
+      "published": "assurance/source-separation-001/PROPOSAL.json",
+      "source_sha256": "f83337a3c91597f158b6826fc24bc6851a87435397a8a9740c8fd3a195a1cfca",
+      "public_sha256": "f83337a3c91597f158b6826fc24bc6851a87435397a8a9740c8fd3a195a1cfca",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/PROPOSED_TASK_SOURCE_SEPARATION.md",
+      "published": "assurance/source-separation-001/PROPOSED_TASK_SOURCE_SEPARATION.md",
+      "source_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "public_sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/REPORT.json",
+      "published": "assurance/source-separation-001/REPORT.json",
+      "source_sha256": "de13a45fd30f6cea43169c730154bdb5eceaa22ea778d3fe6d7f58265513d587",
+      "public_sha256": "de13a45fd30f6cea43169c730154bdb5eceaa22ea778d3fe6d7f58265513d587",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/README.md",
+      "published": "assurance/source-separation-001/README.md",
+      "source_sha256": "3fb45746e933926e6514b102c8dbc13afb5cefdf8e2d2d2a470b36a2c25572f6",
+      "public_sha256": "3fb45746e933926e6514b102c8dbc13afb5cefdf8e2d2d2a470b36a2c25572f6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "assurance/source-separation-001/VERIFICATION.json",
+      "published": "assurance/source-separation-001/VERIFICATION.json",
+      "source_sha256": "f01649f643bb156ef7f7bc80336d1899c28ae14ffb9fccee4cf0454fb6041143",
+      "public_sha256": "f01649f643bb156ef7f7bc80336d1899c28ae14ffb9fccee4cf0454fb6041143",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/MANIFEST.json",
+      "published": "admissions/actual-resource-002/MANIFEST.json",
+      "source_sha256": "ebcdea835bb58da8e87b8144b28fab1ec3625f241a94e719a32baa102ef21d0f",
+      "public_sha256": "ebcdea835bb58da8e87b8144b28fab1ec3625f241a94e719a32baa102ef21d0f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002.json",
+      "published": "admissions/actual-resource-002/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002.json",
+      "source_sha256": "e3a8f7999776962be783d048d0d30a9487e5511eabc050958dc339bf5392f285",
+      "public_sha256": "738807cf2d9bbedce45e56b045de905e0f25b5703a1ccc396dd90b78ac4635a0",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002.json",
+      "published": "admissions/actual-resource-002/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002.json",
+      "source_sha256": "1695b19b0e0615640650b0daacfa2a0a2e3fc74cf250140dcd6a67fcdb319897",
+      "public_sha256": "0e832f841c061b64030233ca09595e20ebd7912509037642a7c06e068f14c6b9",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-05-FRESH-DELIVERY-R001-control-research-a001.json",
+      "published": "admissions/actual-resource-002/I-05-FRESH-DELIVERY-R001-control-research-a001.json",
+      "source_sha256": "593cb5e9a5bdde5b79f1094f50d9a3866f9d29b5f8ba2c12edd0b6ba56fb2bc1",
+      "public_sha256": "f480df445e1999af4760dfab7651720101c5b74d040b7a3ba42e747d58bbe27d",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-05-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "published": "admissions/actual-resource-002/I-05-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "source_sha256": "5408939425af24be0f27d34e6342bdf358de102e998752ee017ff64a71871485",
+      "public_sha256": "ba157fd934a954d04e975fe6b2df26bb31ac8984fdc7f785ef6d62f0bf608cde",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-06-FRESH-DELIVERY-R001-control-research-a001.json",
+      "published": "admissions/actual-resource-002/I-06-FRESH-DELIVERY-R001-control-research-a001.json",
+      "source_sha256": "ec9ae6b7b5a13f60cd50371e654be5defaa60774b6d617692801a5f7fc8d0f02",
+      "public_sha256": "2cef01f8ba459cc937b7da79d1bfc693a60edf47baa614a37c4f5c9651154daf",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-06-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "published": "admissions/actual-resource-002/I-06-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "source_sha256": "a7d51782f67bccffb79a4c387a822b030aeebdc5fc22cc95f96f87b8f3231111",
+      "public_sha256": "597ae3540a3658a77bd6cbc4d95332432ec6cc9f0edfe3ff6c7179d7e7697d09",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-07-FRESH-DELIVERY-R001-control-research-a001.json",
+      "published": "admissions/actual-resource-002/I-07-FRESH-DELIVERY-R001-control-research-a001.json",
+      "source_sha256": "8b9618947ce76c7c4e68c180260105d408f3b02f9c626854079c14349999ad2a",
+      "public_sha256": "104591db0a0141bf6d7cf1688ba3c0f6e68e9f15ea9220b6f4f9b5747b450870",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-07-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "published": "admissions/actual-resource-002/I-07-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "source_sha256": "bc79e0e9af8cddb0e3304472a80ca6fbad0470a5e294e85d1a2216e42961feff",
+      "public_sha256": "bf3bc54149beb899a46def2b3e857a096115f0455a387f34ebca6b8de0a77f57",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-08-FRESH-DELIVERY-R001-control-research-a001.json",
+      "published": "admissions/actual-resource-002/I-08-FRESH-DELIVERY-R001-control-research-a001.json",
+      "source_sha256": "f7e8b2bc73db48e56656a9040a4ed52e950aeef23983a49d58787dafd2e41d22",
+      "public_sha256": "c44d6dad1384c6acec6d9f59579b251646713dcf66996494feaf25feb1d98989",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/I-08-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "published": "admissions/actual-resource-002/I-08-FRESH-DELIVERY-R001-treatment-research-a001.json",
+      "source_sha256": "d79ccfccba0bd8fe3c384b122987a3166a87f58f4c78e246624a8db71bebd601",
+      "public_sha256": "4b5931d3143474010209e7c2dfb15ee355087d94cefa6008ba34e0bea41d812c",
+      "transform": "LAB_ROOT host labels"
+    },
+    {
+      "source": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/CHECKPOINT.json",
+      "published": "admissions/actual-resource-002/CHECKPOINT.json",
+      "source_sha256": "bf176ef6949cbfa7d2b440aa8cfd63b1574ed169c1b6aef3c71653562e388670",
+      "public_sha256": "bf176ef6949cbfa7d2b440aa8cfd63b1574ed169c1b6aef3c71653562e388670",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/current.json",
+      "published": "restart/cohort014/current.json",
+      "source_sha256": "d7f9d7d1c4c1b701f3da1654772aca712db260ccc4f422a0d1b595c446ff55c2",
+      "public_sha256": "d7f9d7d1c4c1b701f3da1654772aca712db260ccc4f422a0d1b595c446ff55c2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/campaign.json",
+      "published": "restart/cohort014/campaign.json",
+      "source_sha256": "d7f9d7d1c4c1b701f3da1654772aca712db260ccc4f422a0d1b595c446ff55c2",
+      "public_sha256": "d7f9d7d1c4c1b701f3da1654772aca712db260ccc4f422a0d1b595c446ff55c2",
+      "transform": "byte-identical"
+    }
+  ],
+  "source_eligibility_vs_tool_capability": "Source-separation audit is partial URL/code metadata, not domain-source validity proof.",
+  "actual_resource_admission": "Selected pre-inference kernel placements/positive Goalstarts; G1/L8 checkpoint, not complete pipelines/native fit",
+  "repair_scope": "Old0Goal temporary discoverydisconnect failure reproduced mechanically,2testPASS0modelGoals; exact owned repair source",
+  "whole_pipeline_or_winner_claim": false,
+  "old_failures_costs_and_unknowns_unchanged": true,
+  "fresh12_preparation": {
+    "selector_source": "dev/diagnostic-runner/resource-successors-001/PUBLICATION_SELECTION_014.json",
+    "selector_sha256": "89c7f323c38203eda5177ef0a5c0261b096e9c4e105a37db8629a3d6180844e6",
+    "neutral_locators": 1244,
+    "unique_contents": 454,
+    "code": [
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/prepare_fresh_cohort.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/prepare_fresh_cohort.py",
+        "sha256": "f24a7e3c0f470196fecd1ff3ae08bb760055ccb9be30baba79abcdc027ec6c44",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/bind_fresh_runtime.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/bind_fresh_runtime.py",
+        "sha256": "4193894e051ec23290a497e0d1ae9533e793681e6cde998459bcecb6811f4049",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/prepare_confirmation_closure.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/prepare_confirmation_closure.py",
+        "sha256": "3b77ce3b1c214986fdfd4968809be3d5ea17c5d68e46e9e13787f7b1dd1ceddf",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/prepare_bundle_transport.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/prepare_bundle_transport.py",
+        "sha256": "854c5c8f77da3981e767adc3e48c22dd0404896aec5faccba9ae768f43d1584b",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/prepare_i08_bundle.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/prepare_i08_bundle.py",
+        "sha256": "6b02f687577dee1721b75c8a04fd125d5236bd0fb20ff1b9d5658a08463adebf",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/hydrate_role_proofs.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/hydrate_role_proofs.py",
+        "sha256": "a88f05c0bbb7308b4fc6bd39d9357ce3a9473bd08b3005f07caabeea19fd63c8",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/prepare_successors.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/prepare_successors.py",
+        "sha256": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/test_fresh_cohort.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/test_fresh_cohort.py",
+        "sha256": "d08a13b935fe7bd0ea424d6d3d8bf07d3c18c583c461e779e7088f84e3e5e0ab",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/test_confirmation_closure.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/test_confirmation_closure.py",
+        "sha256": "237e2a422f9087536a284ddc1e447e77ac44bd5e708e7b607f8bcf07001e2371",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/test_role_bundle.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/test_role_bundle.py",
+        "sha256": "d7308662dde1038cae7b8b7d2828eb5c0deb9cfaf1d5d37f47e67afd965ae2ab",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/build_publication.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/build_publication.py",
+        "sha256": "a4287a173489815da61f37770632e7ba09cce53fabec97f3ff060c35564e9ef8",
+        "byte_identical": true
+      },
+      {
+        "source": "dev/diagnostic-runner/resource-successors-001/public-source-014/build_cohort_publication.py",
+        "published": "fresh12-preparation/code/resource-successors-001/public-source-014/build_cohort_publication.py",
+        "sha256": "d1d88232ec186fa778c1814d6ddbb50bd93cf4f5a7bc1d98cf4bb72ae021c423",
+        "byte_identical": true
+      }
+    ],
+    "quality_or_native_completion_claim": false
+  }
+}

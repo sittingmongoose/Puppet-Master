@@ -1,0 +1,15 @@
+# Finite fresh delivery-repair cohort 011
+
+Freeze one deterministic all12 fresh paired successor cohort, `ER9-FRESH12-DELIVERY-R001`, to pursue the original12 fresh integrated comparisons/24 complete pipelines. Root reports no verified complete whole pipeline or full matched completion; current warm/asymmetric repairs cannot fill a fresh matched target. This is ordinary authorized ER9 repair, not a new campaign or a requirement to achieve quality PASS.
+
+The exact inventory preserves I01–I12 briefs, source access, V01/V05/V14/V08/V10/V16 across both domains and original role caps. I01–I04/I09–I12 use GLM5.3Flash Max; I05–I08 preserve the already-declared Luna alternatives and their replacement references. Both arms use the same assigned native family throughout. Source-card hashes, exact model/effort/topology and brief/coverage hashes are in `DECISIONS-011-FRESH12-INVENTORY.json` (12 pairs,24 arms,74 native stages). No old candidate/catalog/critic/evaluator/seed inputs enter new research.
+
+Owners can prepare immediately, sealing each complete actual BOTH-arm runtime/tool/carrier/profile closure before either first research Goal. The new honest-delivery/native-bundle mechanism is common mechanical repair; it changes no source requirements or role budget. Future same-arm source/output hashes bind at the dependent role birth under the already-fixed rules. All native assigned stages and exact V05/V08 roles remain.
+
+Run the fixed cohort regardless of source-quality outcomes. Count actual complete fresh arm delivery and two-arm matched completion separately from starts, terminal failures, blocked slots and warm recovered delivery. Source FAIL can coexist with actual completed delivery; valid file serialization is not proof of useful full coverage or a winner. Finish useful current warm roles for descriptive evidence and charge all ancestry, but do not call them new fresh matched pipelines or overwrite old results.
+
+One scheduled cohort prevents automatic quality-chasing/best-of repetition. It is **not a numeric repair cap**: necessary ordinary engineering repairs and finite prospective retests after concrete faults remain authorized without a new Go. Quality FAIL alone does not trigger another all12 cohort. Genuine service/permission blocks stay honest gaps; ready unrelated work continues under actual resource/account capacity and the unchanged host reserve.
+
+The four locked confirmations remain separate/eight further pipelines, with the existing initial12-terminal trigger. Do not add a fresh-cohort-complete/PASS/all32/Go barrier, replace development slots with confirmation results, or use confirmation feedback to tune this fixed cohort. Record actual ordering and inclusive costs. The workload target is unmet wherever actual fresh pipeline delivery remains absent; terminal failures are not renamed complete.
+
+Only neutral structural metadata/contracts and source-owner mappings were used. No candidate/source/evaluation bodies or sealed brief details, model calls, native Goals, case starts or live edits by Max. Earlier records remain unchanged.

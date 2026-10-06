@@ -1,0 +1,70 @@
+{
+  "schema": "er9.glm.mcp-lifecycle-repair-contract.v1",
+  "version": "glm_complete2304_v2",
+  "created_utc": "2026-10-06T02:10:59.312616+00:00",
+  "family": "Z",
+  "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "effort": "max",
+  "worker_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/stage_worker.py",
+  "predecessor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+    "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+  },
+  "complete_resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+    "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+  },
+  "diagnosis": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/FAILURE_DIAGNOSIS.json",
+    "sha256": "d993759a0d194054a3ca5ef1a0b1949615912274fd3459ccb591650d027f3e0c"
+  },
+  "repair_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/REPAIR_PROOF.json",
+    "sha256": "a4343d512eb7bf989ffa83213a3ea5bf315dff170f42ade8f73167c94378c43d"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/VERIFICATION.json",
+    "sha256": "407c917e779f1f425400bdeebb86b4b5920491a69aa66b3ec717e7393dc47422"
+  },
+  "only_changed_runtime_files": [
+    "profile.py",
+    "pipe_bridge.py"
+  ],
+  "unchanged_runtime_file_hashes": {
+    "stage_worker.py": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+    "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+    "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+    "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+  },
+  "shared_repaired_bridge_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+  "transport_lifetime": "one stage-owned stateless backend, sequential same-UID exact-owned-parent proxy connections; temporary proxyEOF never closes backend stdin; ownerclose/death/deadline remains enforced",
+  "no_json_or_result_rewrite": true,
+  "strict_actual_kernel_placement_gate_retained": true,
+  "aggregate_memory_max_bytes": 2415919104,
+  "memory_swap_max_bytes": 0,
+  "component_memory_max_bytes": {
+    "outer_worker": 805306368,
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "original_clocks": "opsbirth+allocation, native totalminus30, guard totalminus5, outertotalstop; no+45",
+  "fit": "UNKNOWN",
+  "tools_config_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+    "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/SOURCE_PINS.json",
+    "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+  },
+  "adoption": "fresh symmetric a002 same critic900/input/prompt/model/caps/factor; future wholly-unstarted exact resourceversions; preserve both faileda001 histories",
+  "role_and_pipeline_seals": "unchanged full both-arm per-role closure before freshresearch; future actual hashes bound at rolebirth under frozen rules",
+  "model_calls": 0,
+  "native_goal_starts": 0
+}

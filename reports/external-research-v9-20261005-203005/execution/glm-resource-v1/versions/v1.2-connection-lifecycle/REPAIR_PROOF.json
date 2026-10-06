@@ -1,0 +1,123 @@
+{
+  "schema": "er9.glm.mcp-lifecycle-repair-proof.v1",
+  "created_utc": "2026-10-06T02:10:59.312616+00:00",
+  "synthetic_only": true,
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "old_reproduction": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/OLD_LIFECYCLE_REPRO.json",
+    "sha256": "4e9c744a018c95eebc7588a24b9cf29dcf72b9137da0d16a94ce0e3a51e99657"
+  },
+  "old_exact_error": "owned component outside private aggregate",
+  "new_source_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/DISPATCH_REPAIR_PROOF.json",
+    "sha256": "b5568a0fb292c94707e1ca17b73a568717c64e795edee24833f5ede4644553bf"
+  },
+  "dispatcher_launch_same_options": true,
+  "actual_stage_worker_run_used": true,
+  "substitute_native_cli": "synthetic client fixture only, no production substitute argument",
+  "proofs": [
+    {
+      "tool_transport": "v1.3",
+      "actual_outer_cap_bytes": 805306368,
+      "aggregate_cap_bytes": 2415919104,
+      "swap_max_bytes": 0,
+      "components_after_discovery": [
+        {
+          "component": "native",
+          "memory_max_bytes": 805306368,
+          "actual_private_parent": true
+        },
+        {
+          "component": "pm_boundary",
+          "memory_max_bytes": 268435456,
+          "actual_private_parent": true
+        },
+        {
+          "component": "pm_execution",
+          "memory_max_bytes": 268435456,
+          "actual_private_parent": true
+        }
+      ],
+      "strict_gate_after_discovery_disconnect": true,
+      "strict_gate_after_second_connection": true,
+      "retained_helper_pids_checked": 9,
+      "native_spawned_proxy_placements_checked": 4,
+      "actual_real_mcp_read_write_execution": true,
+      "actual_sandbox_memory_max_bytes": [
+        268435456
+      ],
+      "temporary_proxy_connections": [
+        2,
+        2
+      ],
+      "temporary_proxy_disconnects": [
+        2,
+        2
+      ],
+      "exact_original_birth_ns": 82745805927091,
+      "exact_original_total_stop_ns": 82805805927091,
+      "clock_proof": [
+        82805805927091,
+        82775805927091,
+        82800805927091
+      ],
+      "components_quiet": true,
+      "outer_terminal_then_parent_recursively_quiet": true,
+      "fixture_output_freeze_native_goal_starts": 0,
+      "fixture_operational_complete": false
+    },
+    {
+      "tool_transport": "v1.4-bundle",
+      "actual_outer_cap_bytes": 805306368,
+      "aggregate_cap_bytes": 2415919104,
+      "swap_max_bytes": 0,
+      "components_after_discovery": [
+        {
+          "component": "native",
+          "memory_max_bytes": 805306368,
+          "actual_private_parent": true
+        },
+        {
+          "component": "pm_boundary",
+          "memory_max_bytes": 268435456,
+          "actual_private_parent": true
+        },
+        {
+          "component": "pm_execution",
+          "memory_max_bytes": 268435456,
+          "actual_private_parent": true
+        }
+      ],
+      "strict_gate_after_discovery_disconnect": true,
+      "strict_gate_after_second_connection": true,
+      "retained_helper_pids_checked": 9,
+      "native_spawned_proxy_placements_checked": 4,
+      "actual_real_mcp_read_write_execution": true,
+      "actual_sandbox_memory_max_bytes": [
+        268435456
+      ],
+      "temporary_proxy_connections": [
+        2,
+        2
+      ],
+      "temporary_proxy_disconnects": [
+        2,
+        2
+      ],
+      "exact_original_birth_ns": 82751054941680,
+      "exact_original_total_stop_ns": 82811054941680,
+      "clock_proof": [
+        82811054941680,
+        82781054941680,
+        82806054941680
+      ],
+      "components_quiet": true,
+      "outer_terminal_then_parent_recursively_quiet": true,
+      "fixture_output_freeze_native_goal_starts": 0,
+      "fixture_operational_complete": false
+    }
+  ],
+  "fit": "UNKNOWN",
+  "no_budget_caps_ancestry_or_candidate_content_changes": true
+}

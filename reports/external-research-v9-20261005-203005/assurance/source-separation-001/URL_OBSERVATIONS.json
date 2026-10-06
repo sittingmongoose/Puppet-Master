@@ -1,0 +1,367 @@
+{
+  "schema": "er9.url-only-source-separation-observation.v1",
+  "checked_utc": "2026-10-06T02:08:23.195218Z",
+  "owner_provided_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/MANIFEST.json",
+    "sha256": "4bdb50f0222c2f58b7762ab6a503252a0129b97c8d4e983bd0406ba02cc95e62",
+    "owner": "/root/frozen_exports; exact earlier positively selected current R001 capture metadata, reused only for URL fields"
+  },
+  "selected_records_count": 20,
+  "selected_scope": "20 exact catalog-linked captures from I01-R001 control research; not all ER9 captures or fresh12 launch history",
+  "raw_public_response_bodies_read": false,
+  "candidate_or_evaluator_semantic_outputs_read": false,
+  "broad_capture_store_scan": false,
+  "own_repository_url_indicator_count": 0,
+  "campaign_url_indicator_count": 0,
+  "observed_direct_self_report_retrieval_in_this_selection": "NOT_OBSERVED",
+  "whole_campaign_or_fresh12_contamination": "UNKNOWN_OUTSIDE_SELECTED_METADATA",
+  "semantic_comprehension": "UNKNOWN",
+  "limitations": [
+    "One source-catalog capture reference S8 unresolved in owner selector; not guessed.",
+    "This does not rule out unselected captures, public search snippets, opaque mirrors, unsaved traffic or latent training exposure.",
+    "URL-only records do not establish what source content a model read, retained or used.",
+    "No fresh12 actual execution/capture metadata was supplied to this bounded check."
+  ],
+  "rows": [
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/02a10a8eec6841449f13b046fbd056f2.json",
+        "sha256": "adb0c4df5930fbc4eb07e93671269239ccd7836e5c01fedfd04debad3a8d0d95"
+      },
+      "capture_id": "02a10a8eec6841449f13b046fbd056f2",
+      "captured_utc": "2026-10-05T22:49:59.592462+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://ngff.openmicroscopy.org/0.4/index.html",
+        "actual_url": "https://ngff.openmicroscopy.org/0.4/index.html",
+        "url": "https://ngff.openmicroscopy.org/0.4/index.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/0bef0fed2311412481c267d245d1668d.json",
+        "sha256": "f183736b8566c66bdab266597993d48bf3a44300d874ac8c1983186a2b43d439"
+      },
+      "capture_id": "0bef0fed2311412481c267d245d1668d",
+      "captured_utc": "2026-10-05T22:56:48.522899+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://zarr-specs.readthedocs.io/en/latest/v2/v2.0.html",
+        "actual_url": "https://zarr-specs.readthedocs.io/en/latest/v2/v2.0.html",
+        "url": "https://zarr-specs.readthedocs.io/en/latest/v2/v2.0.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/17bfc978a08c405486abec2e292678a6.json",
+        "sha256": "071b44252592b21dd44ee8756aa0dc0da2f59937eae7195824863f5a0d889c69"
+      },
+      "capture_id": "17bfc978a08c405486abec2e292678a6",
+      "captured_utc": "2026-10-05T22:53:29.389202+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://napari.org/stable/howtos/layers/image.html",
+        "actual_url": "https://napari.org/stable/howtos/layers/image.html",
+        "url": "https://napari.org/stable/howtos/layers/image.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/299dd0b61406455ea7920a773356734f.json",
+        "sha256": "8e511892d193691c05c41a539838c6c29b75650d1c21d7ca06fc9c48c0b0befa"
+      },
+      "capture_id": "299dd0b61406455ea7920a773356734f",
+      "captured_utc": "2026-10-05T22:50:45.268497+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6390.diff",
+        "actual_url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6390.diff",
+        "url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6390.diff"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/2ca73571a3fb49bebd62e421f4ab6d91.json",
+        "sha256": "d461a85c906838c9e76ebe799ab7857df6becb500e91ad1da9eed20a088ceb2b"
+      },
+      "capture_id": "2ca73571a3fb49bebd62e421f4ab6d91",
+      "captured_utc": "2026-10-05T22:52:18.524617+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://pypi.org/pypi/tifffile/json",
+        "actual_url": "https://pypi.org/pypi/tifffile/json",
+        "url": "https://pypi.org/pypi/tifffile/json"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/32307d722e574cd38924405e07da963a.json",
+        "sha256": "36515270e208296ba744acdfae9b841571d808701742675e77f3051eb2087044"
+      },
+      "capture_id": "32307d722e574cd38924405e07da963a",
+      "captured_utc": "2026-10-05T22:52:18.012797+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+        "actual_url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+        "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/4602d1ba788646bfa23a6f8b41556a71.json",
+        "sha256": "4b3e6f834b5caeb808f6f732d4acd042be3d482eeefbf2a8fb57cf1f9e271753"
+      },
+      "capture_id": "4602d1ba788646bfa23a6f8b41556a71",
+      "captured_utc": "2026-10-05T22:54:12.791918+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://qupath.readthedocs.io/en/stable/docs/concepts/images.html",
+        "actual_url": "https://qupath.readthedocs.io/en/stable/docs/concepts/images.html",
+        "url": "https://qupath.readthedocs.io/en/stable/docs/concepts/images.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/54aad79079fc4c52a5208dfd7eb3bf10.json",
+        "sha256": "5c6cf7ce815832be63a49cb5d80744004f3aa146b561be8021cce4bf8b60492d"
+      },
+      "capture_id": "54aad79079fc4c52a5208dfd7eb3bf10",
+      "captured_utc": "2026-10-05T22:50:44.894497+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://github.com/napari/napari/issues/6382",
+        "actual_url": "https://github.com/napari/napari/issues/6382",
+        "url": "https://github.com/napari/napari/issues/6382"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/6252b458a5ce4ea3ba64d07e1fb80b0d.json",
+        "sha256": "71da456b2d50f02eaf4713ca66bc9d45b1954bb0aaf0ed3e6a95753e6316649c"
+      },
+      "capture_id": "6252b458a5ce4ea3ba64d07e1fb80b0d",
+      "captured_utc": "2026-10-05T22:53:28.787679+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://github.com/cgohlke/tifffile/commits/master/tests/test_tifffile.py.atom",
+        "actual_url": "https://github.com/cgohlke/tifffile/commits/master/tests/test_tifffile.py.atom",
+        "url": "https://github.com/cgohlke/tifffile/commits/master/tests/test_tifffile.py.atom"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/68b9f7603a5c40d19aaf4f4ec53df12a.json",
+        "sha256": "55037fde9ed93fab664b10ff9f8d07c6a7837f8fd331261ec5cdd32554b12e5e"
+      },
+      "capture_id": "68b9f7603a5c40d19aaf4f4ec53df12a",
+      "captured_utc": "2026-10-05T22:51:42.588413+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+type%3Apr+6631&per_page=10",
+        "actual_url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+type%3Apr+6631&per_page=10",
+        "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+type%3Apr+6631&per_page=10"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/6a56285a720c4c3d8fec93564007007a.json",
+        "sha256": "ed034a01e2c7cb6ebd4633432c56f01a55d06c6700effef4203c0a9d0e4b67e4"
+      },
+      "capture_id": "6a56285a720c4c3d8fec93564007007a",
+      "captured_utc": "2026-10-05T22:51:43.093833+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://qupath.readthedocs.io/en/stable/index.html",
+        "actual_url": "https://qupath.readthedocs.io/en/stable/index.html",
+        "url": "https://qupath.readthedocs.io/en/stable/index.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/8ce6662574234aae9a6dc34253760215.json",
+        "sha256": "2a2163cb69a7b38c421a0f6fb0ff91b8f77b59c8bed043f37629b540f9695104"
+      },
+      "capture_id": "8ce6662574234aae9a6dc34253760215",
+      "captured_utc": "2026-10-05T22:49:58.939275+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+in%3Atitle+scale+transform+linked%3Apr+type%3Aissue&per_page=30",
+        "actual_url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+in%3Atitle+scale+transform+linked%3Apr+type%3Aissue&per_page=30",
+        "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+in%3Atitle+scale+transform+linked%3Apr+type%3Aissue&per_page=30"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/90ae60a312ca4e26a5cabdefe5c61e9b.json",
+        "sha256": "5c9ce2fa920a4fde711ec079a7789a01b9ef10440b8c32fd4d448acc9c2cdcc1"
+      },
+      "capture_id": "90ae60a312ca4e26a5cabdefe5c61e9b",
+      "captured_utc": "2026-10-05T22:53:27.772927+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+in%3Atitle+MMStack+type%3Aissue&per_page=10",
+        "actual_url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+in%3Atitle+MMStack+type%3Aissue&per_page=10",
+        "url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+in%3Atitle+MMStack+type%3Aissue&per_page=10"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/9e3ecbc2f47643e8b56843d92dd5cd2b.json",
+        "sha256": "f82a6d242e0a2fab86c5ac9b4f62c7bc497848fd1298eca587b3645e020d16fc"
+      },
+      "capture_id": "9e3ecbc2f47643e8b56843d92dd5cd2b",
+      "captured_utc": "2026-10-05T22:49:59.350003+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://api.github.com/search/issues?q=repo%3Aqupath%2Fqupath+in%3Atitle+annotation+linked%3Apr+type%3Aissue&per_page=30",
+        "actual_url": "https://api.github.com/search/issues?q=repo%3Aqupath%2Fqupath+in%3Atitle+annotation+linked%3Apr+type%3Aissue&per_page=30",
+        "url": "https://api.github.com/search/issues?q=repo%3Aqupath%2Fqupath+in%3Atitle+annotation+linked%3Apr+type%3Aissue&per_page=30"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/ab53c1388a5f426dad0f57f73d1fcc84.json",
+        "sha256": "b74d72c77c5a5581cea723b826469d9db16def1306b3ad927d995852d9922c17"
+      },
+      "capture_id": "ab53c1388a5f426dad0f57f73d1fcc84",
+      "captured_utc": "2026-10-05T22:54:11.302260+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://github.com/cgohlke/tifffile/commit/ed361c575930474938b5552c6745fbf2fa513cee.patch",
+        "actual_url": "https://github.com/cgohlke/tifffile/commit/ed361c575930474938b5552c6745fbf2fa513cee.patch",
+        "url": "https://github.com/cgohlke/tifffile/commit/ed361c575930474938b5552c6745fbf2fa513cee.patch"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c246aa2f3f2949daa98eb3faa0d0b257.json",
+        "sha256": "14d1df56d50b1c7e7ee42630ed2c74b7e9c019a0f228c3a5b5a0e1123e520f0b"
+      },
+      "capture_id": "c246aa2f3f2949daa98eb3faa0d0b257",
+      "captured_utc": "2026-10-05T22:53:29.078240+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/layers/base.py",
+        "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/layers/base.py",
+        "url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/layers/base.py"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c2cbb57547c74908963b16061334eac0.json",
+        "sha256": "7d2b713672f18ef352b4edea019c192d184f7fc90443541a87d0014766f16391"
+      },
+      "capture_id": "c2cbb57547c74908963b16061334eac0",
+      "captured_utc": "2026-10-05T22:54:12.434123+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://openslide.org/api/python/",
+        "actual_url": "https://openslide.org/api/python/",
+        "url": "https://openslide.org/api/python/"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c6659a83006b4c1c8674d47eb28c406c.json",
+        "sha256": "4d2e8d04525f194de75e8dc2c6a10e714fe02f8f4e720898715e7dbb5fd5bea9"
+      },
+      "capture_id": "c6659a83006b4c1c8674d47eb28c406c",
+      "captured_utc": "2026-10-05T22:48:59.806139+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://nipy.org/nibabel/coordinate_systems.html",
+        "actual_url": "https://nipy.org/nibabel/coordinate_systems.html",
+        "url": "https://nipy.org/nibabel/coordinate_systems.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/d26884647b5f40b2989071f577cc6e62.json",
+        "sha256": "158456390cd3777a6d9252f099aff9618dc2389581a9a7c4f1ebb86a46e9a79f"
+      },
+      "capture_id": "d26884647b5f40b2989071f577cc6e62",
+      "captured_utc": "2026-10-05T22:52:18.350471+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+        "actual_url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+        "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    },
+    {
+      "metadata_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/f976a4f84e0c4906806d11c110a42d09.json",
+        "sha256": "b4db9b029971a79fccf8a954ce754c56ffe19e8241bed457ea63b1ba99235ac5"
+      },
+      "capture_id": "f976a4f84e0c4906806d11c110a42d09",
+      "captured_utc": "2026-10-05T22:52:17.508696+00:00",
+      "http_status": 200,
+      "url_fields": {
+        "requested_url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6633.diff",
+        "actual_url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6633.diff",
+        "url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6633.diff"
+      },
+      "redirects": [],
+      "own_repository_url_indicator": false,
+      "campaign_url_indicator": false
+    }
+  ]
+}

@@ -1,0 +1,370 @@
+{
+  "schema": "er9.positive-actual-admission-metadata.v1",
+  "job_id": "I-07-FRESH-DELIVERY-R001-control-research-a001",
+  "pair_id": "I-07-FRESH-DELIVERY-R001",
+  "arm": "control",
+  "stage": "research",
+  "observed_family": "UNKNOWN",
+  "observed_model": null,
+  "native_goal_starts": 1,
+  "native_session_id": "01a10f09-44ae-7a80-86d1-007fa23894d1",
+  "start_utc": "2026-10-06T02:27:03.258560+00:00",
+  "status_at_snapshot": "RUNNING",
+  "actual_resource_profile": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/RESOURCE_PROFILE.json",
+    "sha256": "c4cd2c06ea20303b921ad9ee3a3ae5ad666a23e5bd27303a5751a3dc55df0968"
+  },
+  "resource_observations": {
+    "outer_resource_placement": {
+      "component": "outer_worker",
+      "unit": "er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+      "unit_observation": {
+        "LoadState": "loaded",
+        "ActiveState": "active",
+        "SubState": "running",
+        "MainPID": "2338131",
+        "Result": "success",
+        "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "MemoryPeak": "30953472",
+        "MemoryMax": "805306368",
+        "MemorySwapMax": "0"
+      },
+      "component_kernel_limits": {
+        "memory.max": "805306368",
+        "memory.swap.max": "0",
+        "memory.current": "29683712",
+        "memory.peak": "30953472",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "aggregate_kernel_limits": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "29904896",
+        "memory.peak": "30859264",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "verified_monotonic_ns": 84043396968869,
+      "actual_component_under_private_aggregate": true,
+      "actual_limits_match": true
+    },
+    "resource_placements_before_inference": [
+      {
+        "component": "outer_worker",
+        "unit": "er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2338131",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+          "MemoryPeak": "30953472",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "29683712",
+          "memory.peak": "30953472",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "29904896",
+          "memory.peak": "30859264",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 84043396968869,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      {
+        "component": "native",
+        "unit": "er9-luna-b282efc243f2499ca24e6481a165fc37.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2338210",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-b282efc243f2499ca24e6481a165fc37.service",
+          "MemoryPeak": "43458560",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "42930176",
+          "memory.peak": "43458560",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "125648896",
+          "memory.peak": "363917312",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 84047021116801,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      {
+        "component": "pm_boundary",
+        "unit": "er9-luna-fa85ffbc2a7b43f9bc3e608637aff9aa.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2338161",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-fa85ffbc2a7b43f9bc3e608637aff9aa.service",
+          "MemoryPeak": "11075584",
+          "MemoryMax": "268435456",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "268435456",
+          "memory.swap.max": "0",
+          "memory.current": "10678272",
+          "memory.peak": "11075584",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "125816832",
+          "memory.peak": "363917312",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 84047056116730,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      {
+        "component": "pm_execution",
+        "unit": "er9-luna-27ab7b9b51e44e3ab12741159dab4a00.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2338177",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-27ab7b9b51e44e3ab12741159dab4a00.service",
+          "MemoryPeak": "11288576",
+          "MemoryMax": "268435456",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "268435456",
+          "memory.swap.max": "0",
+          "memory.current": "11051008",
+          "memory.peak": "11288576",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "125911040",
+          "memory.peak": "363917312",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 84047090512394,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      }
+    ],
+    "retained_helper_placements_before_inference": [
+      {
+        "pid": 2338193,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047090915717
+      },
+      {
+        "pid": 2338205,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047091114321
+      },
+      {
+        "pid": 2338210,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-b282efc243f2499ca24e6481a165fc37.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-b282efc243f2499ca24e6481a165fc37.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047091230648
+      },
+      {
+        "pid": 2338154,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047091613340
+      },
+      {
+        "pid": 2338159,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047091721105
+      },
+      {
+        "pid": 2338161,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-fa85ffbc2a7b43f9bc3e608637aff9aa.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-fa85ffbc2a7b43f9bc3e608637aff9aa.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047091843946
+      },
+      {
+        "pid": 2338167,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047092254985
+      },
+      {
+        "pid": 2338175,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-203005-i-07-fresh-delivery-r001-control-research-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047092348908
+      },
+      {
+        "pid": 2338177,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-27ab7b9b51e44e3ab12741159dab4a00.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc6ef8d6559114164a150bc99a7b6bdfd.slice/er9-luna-27ab7b9b51e44e3ab12741159dab4a00.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 84047092438459
+      }
+    ],
+    "resource_oom_observed": "UNKNOWN"
+  },
+  "native_source_receipt_sha256": "5450d96523fd03924c37a62ee459668b6f587b7719521c17e8c5dbaade4f0610",
+  "stage_sha256": "321af43e73b188931cc1a261cbf6a8ac3fbc69dd330fb778134f364774162a4c",
+  "full_pipeline_completion_claimed": false
+}

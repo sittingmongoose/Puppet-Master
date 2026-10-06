@@ -1,0 +1,954 @@
+{
+  "schema": "er9.fixed-fresh12-delivery-repair-inventory.v1",
+  "cohort_id": "ER9-FRESH12-DELIVERY-R001",
+  "frozen_utc": "2026-10-06T02:00:29.529401+00:00",
+  "author": "/root/max_supervision (GPT-6.1 Sol Max)",
+  "source_owner_inventory_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/FRESH12_SOURCE_OWNER_INVENTORY_001.json",
+    "sha256": "cded38a9467221c291e6f0770ebc8e1d45103ebd90797d858f7f07605e215141",
+    "bytes": 28348,
+    "scope": "neutral metadata/source pin"
+  },
+  "pair_count": 12,
+  "arm_count": 24,
+  "native_stage_count": 74,
+  "new_native_starts_by_supervisor": 0,
+  "all_slots_selected_before_any_new_cohort_quality_read": true,
+  "prior_candidate_or_evaluator_payloads_supplied": false,
+  "pairs": [
+    {
+      "new_pair_id": "I-01-FRESH-DELIVERY-R001",
+      "source_slot": "I-01",
+      "method_id": "V01",
+      "domain": "A",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-01.json",
+        "sha256": "e71dc26f223802b2ca318941274b3fde67dd86797d234317aa24ccbfb402094b"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": null,
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-02-FRESH-DELIVERY-R001",
+      "source_slot": "I-02",
+      "method_id": "V01",
+      "domain": "B",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-02.json",
+        "sha256": "9ec73ea921de70d8b9798e028cdee87bc835d076397d00db8a208f942e33742b"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": null,
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-03-FRESH-DELIVERY-R001",
+      "source_slot": "I-03",
+      "method_id": "V05",
+      "domain": "A",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-03.json",
+        "sha256": "4ce65caf2c3b5aadf7fc31f683ac40beb82e0f1ddae42372f9602f67f7393371"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": null,
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 105,
+            "max_seconds": 1050,
+            "stage": "research"
+          },
+          {
+            "max_responses": 75,
+            "max_seconds": 750,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 45,
+            "max_seconds": 450,
+            "stage": "revision"
+          },
+          {
+            "max_responses": 30,
+            "max_seconds": 300,
+            "stage": "flash_check"
+          },
+          {
+            "max_responses": 30,
+            "max_seconds": 150,
+            "stage": "final_resolution"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-04-FRESH-DELIVERY-R001",
+      "source_slot": "I-04",
+      "method_id": "V05",
+      "domain": "B",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-04.json",
+        "sha256": "f460f9076fbe146140df5862bb2a254dd48b83952f086cd9895bee55301d5a0b"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": null,
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 105,
+            "max_seconds": 1050,
+            "stage": "research"
+          },
+          {
+            "max_responses": 75,
+            "max_seconds": 750,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 45,
+            "max_seconds": 450,
+            "stage": "revision"
+          },
+          {
+            "max_responses": 30,
+            "max_seconds": 300,
+            "stage": "flash_check"
+          },
+          {
+            "max_responses": 30,
+            "max_seconds": 150,
+            "stage": "final_resolution"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-05-FRESH-DELIVERY-R001",
+      "source_slot": "I-05",
+      "method_id": "V14",
+      "domain": "A",
+      "native_family_both_arms": "Luna",
+      "requested_model_both_arms": "GPT-6 Luna",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-05-LUNA-S1.json",
+        "sha256": "69423050785ca4eea6d15ffed950cc18670dcb8e409c1cad133bfa11dcec4c39"
+      },
+      "already_declared_route_replacement": true,
+      "replacement_source_preserved": {
+        "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/cards/I-05.json",
+        "card_sha256": "cf58d8c386dd017548334f449dad940b6ea5a0643728031a1abeb56f58dfbd09",
+        "pair_id": "I-05",
+        "planned_status": "NOT_RUN",
+        "requested_family": "GLM"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.4-bundle/PIN.json",
+        "sha256": "f1f0ad061b347ac24a4b8e678f60a6d697e35b98cabcb63c1018817b0372edfa",
+        "bytes": 4759,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-06-FRESH-DELIVERY-R001",
+      "source_slot": "I-06",
+      "method_id": "V14",
+      "domain": "B",
+      "native_family_both_arms": "Luna",
+      "requested_model_both_arms": "GPT-6 Luna",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-06-LUNA-S1.json",
+        "sha256": "a69fe9caefe0bcd29b7b8651de6888ecee206d847040a6afcbf32da59abd7792"
+      },
+      "already_declared_route_replacement": true,
+      "replacement_source_preserved": {
+        "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/cards/I-06.json",
+        "card_sha256": "2da7194d1a4501cf393d20d44c78683946f8f1b6bf5b3415332f8a203b156c35",
+        "pair_id": "I-06",
+        "planned_status": "NOT_RUN",
+        "requested_family": "GLM"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.4-bundle/PIN.json",
+        "sha256": "f1f0ad061b347ac24a4b8e678f60a6d697e35b98cabcb63c1018817b0372edfa",
+        "bytes": 4759,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-07-FRESH-DELIVERY-R001",
+      "source_slot": "I-07",
+      "method_id": "V08",
+      "domain": "A",
+      "native_family_both_arms": "Luna",
+      "requested_model_both_arms": "GPT-6 Luna",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-07-LUNA-S1.json",
+        "sha256": "29d1cbc18a3245e59a3d41abe2c9af6aabf9b03ee2d51715a81917beca8af429"
+      },
+      "already_declared_route_replacement": true,
+      "replacement_source_preserved": {
+        "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/cards/I-07.json",
+        "card_sha256": "0ccfe26b3d206246c2d64047ac4c96b13f84e7656044b9b1929eb7aead3880f6",
+        "pair_id": "I-07",
+        "planned_status": "NOT_RUN",
+        "requested_family": "GLM"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 1500,
+            "stage": "critic_final"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.4-bundle/PIN.json",
+        "sha256": "f1f0ad061b347ac24a4b8e678f60a6d697e35b98cabcb63c1018817b0372edfa",
+        "bytes": 4759,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-08-FRESH-DELIVERY-R001",
+      "source_slot": "I-08",
+      "method_id": "V08",
+      "domain": "B",
+      "native_family_both_arms": "Luna",
+      "requested_model_both_arms": "GPT-6 Luna",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/Luna-alternatives/cards/I-08-LUNA-S1.json",
+        "sha256": "74a632a89e1fb8c471923b4366df6e1c8b90697c0ccedec94109898f574b2f0c"
+      },
+      "already_declared_route_replacement": true,
+      "replacement_source_preserved": {
+        "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/cards/I-08.json",
+        "card_sha256": "fc0b6b0038013196d6afd343b576ce3634720712560f733cb145fdfe1f83fce0",
+        "pair_id": "I-08",
+        "planned_status": "NOT_RUN",
+        "requested_family": "GLM"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": null,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": null,
+            "max_seconds": 1500,
+            "stage": "critic_final"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.4-bundle/PIN.json",
+        "sha256": "f1f0ad061b347ac24a4b8e678f60a6d697e35b98cabcb63c1018817b0372edfa",
+        "bytes": 4759,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-09-FRESH-DELIVERY-R001",
+      "source_slot": "I-09",
+      "method_id": "V10",
+      "domain": "A",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-09.json",
+        "sha256": "7400fb8e4d8a34c6210b37e9cba74f3f0478a8e430337cd513912b185a061921"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-09-reservation.json",
+        "sha256": "3d0be73498a37ac966961e3463688c760c12e19f4643b4715cd2aaf3d2a13336"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-10-FRESH-DELIVERY-R001",
+      "source_slot": "I-10",
+      "method_id": "V10",
+      "domain": "B",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-10.json",
+        "sha256": "59024ee762877e2ab440e0fb2ef03eacd23acd3eb16a16b5a33b7bf63dae528a"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-10-reservation.json",
+        "sha256": "fdd2d879a93b2454a4a26a6d8f08e290d18d312de65c05a535130cd120d8296d"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-11-FRESH-DELIVERY-R001",
+      "source_slot": "I-11",
+      "method_id": "V16",
+      "domain": "A",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-11.json",
+        "sha256": "93d69c906061aa8eab00b2b42fccedf6ac60728cc4212c0f0c6c990d94519dba"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-11-reservation.json",
+        "sha256": "29f6eb56185ca18deaca681c99c534d12f67b95c072dd9c2b0a40bc968b7c499"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-A-biomedical.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-A.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    },
+    {
+      "new_pair_id": "I-12-FRESH-DELIVERY-R001",
+      "source_slot": "I-12",
+      "method_id": "V16",
+      "domain": "B",
+      "native_family_both_arms": "GLM",
+      "requested_model_both_arms": "GLM 5.3 Flash",
+      "requested_effort_both_arms": "Max",
+      "source_card_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-12.json",
+        "sha256": "0e48d93b24013f8dc5a6794d33e5214b47e325dabd42bd77298d61f33da4f002"
+      },
+      "already_declared_route_replacement": false,
+      "replacement_source_preserved": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-12-reservation.json",
+        "sha256": "a6c8f091c91d836725a704c42373b55e820109f5b6020597f4743dafa3aa9fb6"
+      },
+      "brief_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/briefs/development-B-notebook.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      "coverage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/coverage/development-B.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+      },
+      "stage_budget_topology": {
+        "control": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ],
+        "treatment": [
+          {
+            "max_responses": 120,
+            "max_seconds": 1200,
+            "stage": "research"
+          },
+          {
+            "max_responses": 90,
+            "max_seconds": 900,
+            "stage": "critique"
+          },
+          {
+            "max_responses": 60,
+            "max_seconds": 600,
+            "stage": "revision"
+          }
+        ]
+      },
+      "original_allocation": {
+        "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+        "critical_path_candidate_seconds_per_arm": 2700,
+        "default_stage_maximum": 1800,
+        "occupied_candidate_seconds_per_arm": 5400,
+        "per_stage_allocations_sum": 2700,
+        "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+      },
+      "first_research_inputs": "Brief/frozen ordinary public-source access/neutral method+role instructions ONLY; no prior candidate/catalog/critic/evaluator/seed payloads",
+      "common_native_runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json",
+        "sha256": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e",
+        "bytes": 6887,
+        "scope": "Owner-reported READY source binding; pair profile/actual configuration still sealed before first research"
+      }
+    }
+  ]
+}

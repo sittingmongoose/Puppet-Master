@@ -1,0 +1,609 @@
+{
+  "I05_Eval2_last_verified": {
+    "cost_receipt": {
+      "path": "evaluation/independent-pipeline-2/review0001/COST_RECEIPT.json",
+      "sha256": "6351a085c8a7cf87fcd1b627ad92f3f7b2e02fdfa1f8768dcb015bb997a35dcd"
+    },
+    "coverage": "PARTIAL",
+    "finished_utc": "2026-10-06T00:28:35.363866Z",
+    "full_matched_comparison_credit": false,
+    "full_pipeline_credit": false,
+    "overlap_rule": "Whole includes phase slices; do not add them again. Native/operator failures are separate from quality.",
+    "phase2_seconds": 527.175318055,
+    "quality": "FAIL_SCREEN",
+    "source_screen_seconds": 457.105438333,
+    "whole_including_report_seconds": 1743.470693741
+  },
+  "accounting_checkpoint": {
+    "candidate_deployments": 65,
+    "candidate_unknown_usage_rows": 3,
+    "counter_scope": "Failure-inclusive known snapshot; cancelled/unexposed tails and billing UNKNOWN. Cache included once; UI/provider/root meters separate. Not live counts or full campaign totals.",
+    "eval2_clock_companion": {
+      "path": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
+      "sha256": "27c389487f28481abd75950625e33e3d04fe6801afec985bfb72810897dd737b"
+    },
+    "finished_evaluator_clock_companion": {
+      "path": "accounting/cohort-006-evaluator-clocks-001/PUBLIC_SELECTION.json",
+      "sha256": "994f8933553b4ef621f40df5bdb0bc5c2665d6c6764549022efeb0b1c93d51f1"
+    },
+    "known_candidate_tokens": 161759973,
+    "known_native_candidate_Goals": 57,
+    "selection": {
+      "path": "accounting/cohort-007/PUBLIC_SELECTION.json",
+      "sha256": "73b28586ac0b67965347fa2b58130a4569f4dbc06a9692fa1d9b3010a51ff610"
+    },
+    "snapshot_utc": "2026-10-06T00:20:43.478360+00:00"
+  },
+  "admission_owner": "Root standing authority; sole candidate admission/deployment custody /root/ops_recovery",
+  "authority": "2026-10-05 user /goal; input/ER9/ER9_EXECUTE_HANDOFF.md",
+  "branch": "research/external-research-v9-20261005-203005",
+  "campaign_id": "external-research-v9-20261005-203005",
+  "candidate_caps": {
+    "glm_active_goals": 2,
+    "luna": "actual capacity, no policy cap",
+    "muse_active_goals": 4
+  },
+  "confirmation_recipe_lock": {
+    "A_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "B_seconds": [
+      1200,
+      1500
+    ],
+    "actual_family": "GLM",
+    "all32_or_PASS_prerequisite": false,
+    "all_four_pairs_execute_even_after_early_failure": true,
+    "budget_addendum": {
+      "path": "supervision/DECISIONS-007-BUDGET-DEFINITION-ADDENDUM-001.json",
+      "sha256": "60f649b39f58dda101ca4e7cee599c43d15680d93c12a745632da58f75fb5c79"
+    },
+    "control_seconds": [
+      1200,
+      900,
+      600
+    ],
+    "effort": "max",
+    "execution_gate": "All initial I-01..I-12 slots have terminal development outcomes, verified by sole ops; recovery accounting separate",
+    "locked_utc": "2026-10-05 23:56:07 UTC",
+    "original_lock_bytes_unchanged": true,
+    "original_occupied_scalar_definition": "Inherited outer occupied-work ceiling; no extra executable stage/recovery allowance; not observed cost.",
+    "original_occupied_seconds_per_arm": 5400,
+    "outside_locked_allowance_recovery_separate": true,
+    "pairs": 4,
+    "pin": {
+      "path": "supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+    },
+    "pipelines": 8,
+    "requested_model": "GLM 5.3 Flash",
+    "stage_allowance_seconds_per_arm": 2700,
+    "stage_allowance_seconds_per_pair": 5400,
+    "status": "LOCKED"
+  },
+  "delivery_recovery_policy": {
+    "cumulative_failed_and_recovery_costs_retained": true,
+    "decision": {
+      "path": "supervision/DECISIONS-007.json",
+      "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+    },
+    "frozen_utc": "2026-10-05 23:56:07 UTC",
+    "independent_PASS_native_completion_prerequisite": false,
+    "original_status_bytes_costs_preserved": true,
+    "recovery_selection": {
+      "path": "supervision/DECISIONS-007-RECOVERY-SELECTION.json",
+      "sha256": "675f9020644865a7c0361b595187de1ba5833faeba356b07bd1c5a4e0d8cd5de"
+    },
+    "unpaired_recovery_fresh_matched_credit": false,
+    "use_exact_source_card_role_and_pipeline_allocations": true
+  },
+  "goal_thread_id": "01a10dc1-6ddf-7c11-9e16-cb928aed5640",
+  "historical_v8_closed_commit": "873dc5996a78ffbb7017e4d5a862fc56921f668c",
+  "history": {
+    "exact_previous_bytes_receipt": {
+      "path": "state/history/projection-20261006T023041.464861Z/BACKUP_RECEIPT.json",
+      "sha256": "0fc8ba012c16dc12e3ac0b1c9d450b83ebfec6c5c6308fb2917eb2bc09e68a51"
+    },
+    "historical_projections_preserved": true
+  },
+  "last_verified_delivery_counts": {
+    "authority": "Root supplied last verified counts; this metadata rewrite performs no assessment",
+    "full_matched_quality_comparisons_verified_complete": 0,
+    "recorded_utc": "2026-10-06T00:40:01.769181+00:00",
+    "scope": "No completion credit inferred from terminal stages, Goal statuses, partial reviews, imports, archive coverage or publication.",
+    "whole_pipelines_verified_complete": 0
+  },
+  "latest_publication": {
+    "commit": "30f847131daa3b30c6bf798e5d20ac356ce61562",
+    "cohort": "013 finishedP4 I08review/currentW02receipt/sourcearchive",
+    "github_verified": true,
+    "verification_receipt": "ops/publication/cohort013-verification.json",
+    "selected_files": 1547,
+    "scope": "FAIL_SCREEN andremainingUNASSESSED; fourfilenames+reviewpresenceseparatefrommalformedsourcecatalog/nativeFAILED/no freshmatched credit; no main/PR"
+  },
+  "live_dispatch_pointer": {
+    "authority": "ops sole custody; read actual current pointer on resume",
+    "captured_pointer_utc": "2026-10-06T00:40:01.769181+00:00",
+    "path": "state/queue_cursor.json",
+    "queue_record_updated_utc": "2026-10-06T00:39:57.510485+00:00",
+    "timestamp_policy": "No stage counts or active-family counts copied into this projection"
+  },
+  "next_actions": [
+    "Ops continues finite targeted/warm queue underactualfamily/service/kernel bounds; no arbitrary pending_eval6 blanketgate.",
+    "Seal/consume exact GLM reconnect successors afterzero-inference realproductionfixture; preserveoriginalfailed0Goalstarts/costs and allactiveversions.",
+    "Case freezes actual wholebotharm closures for DEC01112freshpairs74stages; L4pairs independentofGrepair, firstRbrief/accessonly.",
+    "Execute separate4locked diagnosticconfirmation pairs aftertheir actualwholeclosures; initialterminaltriggerreleased/no PASS/all12/Go barrier.",
+    "Freeze/assess finishedoutputs immediately viafreshindependent sourcedispatch; publish positivefinishedreviews/costs/restart/evidence, no factsfedcandidates.",
+    "Finishlargefinitequeue+coverage/cost/nativecleanup+verifiedGitHubcommitpinnedrecommendation; no automaticcanonadoption/furthercampaign orcheckpointGoalcompletion."
+  ],
+  "no_global_stops": [
+    "12-hour cutoff",
+    "144 starts",
+    "token total",
+    "helper start ceiling",
+    "two-repair cap"
+  ],
+  "operating_sources": {
+    "attempts": "state/attempts.jsonl",
+    "decisions": {
+      "path": "supervision/DECISIONS-007-evidence.json",
+      "sha256": "3911dc0b920c60017db084a34db8c72c7d5f34a050080feaf99f17bca4e4f3f2"
+    },
+    "events": "state/events.jsonl",
+    "jobs": "state/jobs.json",
+    "supervisor_counters": "state/supervisor_goal_counters.jsonl"
+  },
+  "owners": {
+    "cases": "/root/case_resource_successors; neutral setup repairs /root/case_repairs",
+    "evaluation_protocol": "/root/eval_protocol",
+    "execution": "/root/execution_engine",
+    "luna": "/root/luna_route",
+    "muse": "/root/muse_route",
+    "ops": "/root/ops_recovery",
+    "tools": "/root/generic_tools",
+    "evaluation_current": "Fresh next-output reviewer pending courier identity; completed prior evaluators on call",
+    "publication": "/root/publisher",
+    "accounting": "/root/cost_accounting"
+  },
+  "partial_archive": {
+    "cohorts": [
+      {
+        "cohort": "selected_artifacts_001_005",
+        "coverage": "PARTIAL_FROZEN_SELECTIONS_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 265,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/d4d821ac105528766e49adbc390413f3770006df1a184561fadf7168eecf69ba/MANIFEST.json",
+        "manifest_sha256": "f519f01268b2d84f525998181267a5b1f7b1454b99ffd79f8938b50b9746e908",
+        "selected_bytes": 1252478
+      },
+      {
+        "cohort": "selected_I02_D14_public_bodies",
+        "coverage": "PARTIAL_SELECTED_I02_D14_CAPTURES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 86,
+        "incomplete_count": 1,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/response-bodies/949aae0057c9c63e84bfa47fbb1b18af9299a731acca9ee46563ffed235db0c5/MANIFEST.json",
+        "manifest_sha256": "5b716b0abca338cfa7f420a3c96d346614192ca02ef252cde6a9cd153b4699fc",
+        "non200_count": 1,
+        "selected_bytes": 5956423,
+        "truncated_count": 1
+      },
+      {
+        "coverage": "PARTIAL_EXACT_EVAL2_PUBLIC_BODIES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 15,
+        "http_status_non200_count": 0,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/fef51aa8c38d93e0c82763e827a13343fed4cdbd96f016e48dc811d963e80be6/MANIFEST.json",
+        "manifest_sha256": "e9f4b13561f3e426e7b9737b8d41ca94108d0f09bf38369b399e4c41b37e842e",
+        "selected_bytes": 848425,
+        "selection_sha256": "fef51aa8c38d93e0c82763e827a13343fed4cdbd96f016e48dc811d963e80be6",
+        "truncated_count": 0
+      },
+      {
+        "coverage": "PARTIAL_EXACT_NEXT003_PUBLIC_BODIES_ONLY_NOT_QUEUE_RECONCILED",
+        "files_count": 20,
+        "http_status_non200_count": 0,
+        "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/61ad8e68f6cc94784fbdea76f035e82c2a30cb179b29e45814d2af3c2fcae197/MANIFEST.json",
+        "manifest_sha256": "9e2f81402de61b37043e0bb0b98e2d434a09008627fb86cd9cdbcdddf38c0ab8",
+        "selected_bytes": 1767923,
+        "selection_sha256": "61ad8e68f6cc94784fbdea76f035e82c2a30cb179b29e45814d2af3c2fcae197",
+        "truncated_count": 1
+      }
+    ],
+    "coverage": "PARTIAL_POSITIVE_SELECTIONS_NOT_FINAL_QUEUE_RECONCILIATION",
+    "coverage_pin": {
+      "path": "ops/evidence-archive/public/ARCHIVE_TOOL_001/COVERAGE.json",
+      "sha256": "0b9b55b24b83366c51fc44c675c057f89aa0c464e6e83e129a89c0c3780074d4"
+    },
+    "scope": "Four partial selected archive cohorts, not full queue/corpus reconciliation or final cleanup. Raw bodies were not read by this updater.",
+    "selection_pin": {
+      "path": "ops/evidence-archive/PUBLIC_TOOL_SELECTION_001.json",
+      "sha256": "97768c49a79489aee38963f42a83343e652fb1107406f69f36da33177ac7a7fb"
+    }
+  },
+  "projection_rule": "Restart/source pointers only. Queue and observations are timestamped source records, not live occupancy. Saved native Goal enums do not establish current processes; no extra cutoff or Goal stop.",
+  "protected": [
+    "canon Plans",
+    "main",
+    "WorkNodes",
+    "sibling campaign",
+    "historical ER8 grades/state"
+  ],
+  "resource_and_tools": {
+    "host_reserve_bytes": 3221225472,
+    "mechanical_readiness_only": true,
+    "oom_policy": "charge failures; no automatic resource/model/clock escalation",
+    "original_active_or_frozen_versions_retained": true,
+    "outer_exact_slice_release_required": true,
+    "research_fit": "UNKNOWN; consult actual native/version-specific receipts, no prospective success inference",
+    "route_v1_3_pin": {
+      "path": "dev/luna-route/versions/v1.3/PIN.json",
+      "sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227"
+    },
+    "scope": "wholly unstarted symmetric pairs/new explicitly declared lineages only; old/live bytes/statuses/costs unchanged",
+    "tools_v1_2_source_pins": {
+      "path": "dev/tools/versions/v1.2/SOURCE_PINS.json",
+      "sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34"
+    },
+    "tools_v1_3_source_pins": {
+      "path": "dev/tools/versions/v1.3/SOURCE_PINS.json",
+      "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+    },
+    "whole_job_max_bytes": 2415919104
+  },
+  "schema": "er9.restart-projection.v2",
+  "status": "EXECUTING",
+  "targets": {
+    "confirmation_pairs": 4,
+    "confirmation_pipelines": 8,
+    "diagnostic_arms": 64,
+    "diagnostic_pairs": 32,
+    "hypotheses": 16,
+    "integrated_pairs": 12,
+    "integrated_pipelines": 24
+  },
+  "updated_at": "2026-10-06T02:30:41.464797+00:00",
+  "worktree": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005",
+  "resource_growth_addendum": {
+    "path": "supervision/DECISIONS-008-ALL-OWNED-GROWTH-ADDENDUM-001.json",
+    "sha256": "cbc5bb1e208bd885c25d364f12867233070ec3abab414d3e9bcdeefe4653b76e",
+    "scope": "All active/retained ER9-owned families; unknown legacy growth gates admission; original clocks/live caps/3GiB reserve unchanged"
+  },
+  "prospective_neutral_setup_repair": {
+    "path": "supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+    "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70",
+    "pairs": [
+      "D-V02-A",
+      "D-V07-A"
+    ],
+    "owner": "/root/case_repairs",
+    "integration_owner": "/root/ops_recovery",
+    "no_old_or_live_edits": true
+  },
+  "accounting_latest": {
+    "path": "accounting/cohort-010/PUBLIC_SELECTION.json",
+    "sha256": "daedc9f5bc84c5309c3ba253899e705f4d4c2c52f0d36b2f7279cb22c9e0ac46",
+    "deployment_attempts": 92,
+    "positive_native_candidate_Goals": 84,
+    "known_candidate_provider_tokens": 266957508,
+    "unknown_usage_jobs": 1,
+    "scope": "Frozenfailure-inclusivecheckpoint, notcurrentlivecost. Cacheincludedonce, canceledtails/billingunknown. Root/helper/provider countersnotadded, nopolicy stop.",
+    "mandatory_Eval3_late_clock_companion": {
+      "path": "accounting/cohort-010-eval3-final-clock-001/PUBLIC_SELECTION.json",
+      "sha256": "864e1df206dd0d91088561409fd51f896eeb63dcc4b659b0704ef65e2a4d9c85"
+    }
+  },
+  "resource_admission_instruction": {
+    "recorded_utc": "2026-10-06T00:50:08.508275+00:00",
+    "new_unbounded_envelope_admissions_allowed": false,
+    "existing_legacy_Goals": "Continue unchanged through original bounded stages and exact owned cleanup",
+    "prospective_GLM_complete_envelope_owner": "/root/execution_engine dev/execution/glm-resource-v1",
+    "midpair_resource_pin_rule": "Preserve originals; use explicit new symmetric resource versions instead of unilateral live changes"
+  },
+  "method_fidelity_audit": {
+    "path": "assurance/method-fidelity-001",
+    "publication_selector_sha256": "937bf607fec5c91c9db8115cf18805a4f2324e1d307cab9a2d7a9eab8864a619",
+    "scope": "All16factor structural bounded audit; no source quality or candidate uptake claim",
+    "findings": [
+      "family field schema prelaunch blocker",
+      "D02A shared treatment procedure",
+      "D07A shared ranking ambiguity"
+    ]
+  },
+  "initial_integrated_terminal_milestone": {
+    "utc": "2026-10-06T00:53:32.990631+00:00",
+    "event": "TWELVE_INITIAL_INTEGRATED_SLOTS_TERMINAL_CONFIRMATION_GATE_RELEASED",
+    "owner_transition_utc": "2026-10-06T00:52:16Z",
+    "initial_slots_terminal": 12,
+    "I12_control_research": {
+      "status": "COMPLETED",
+      "native_Goals": 1,
+      "occupied_seconds": 1041.267,
+      "owned_quiet_owner_report": true
+    },
+    "I12_treatment_research": {
+      "status": "FAILED",
+      "occupied_seconds": 1174.879,
+      "owned_quiet_owner_report": true
+    },
+    "I12_original_control_descendants": "BLOCKED_RESOURCE_FROZEN_UNBOUNDED,0starts",
+    "I12_original_treatment_descendants": "BLOCKED_PREDECESSOR",
+    "complete_pipeline_credit": 0,
+    "confirmation": {
+      "locked_pairs": 4,
+      "stages_registered": 22,
+      "initial_terminal_gate": "RELEASED",
+      "qualification_or_all32_gate": false,
+      "remaining_prerequisites": [
+        "Prospectively symmetric verified complete GLM resource profiles",
+        "Actual safe headroom including all owned remaining growth",
+        "Exact native family/model/tool/task/clock pins"
+      ]
+    },
+    "source": "/root/ops_recovery transition checkpoint, direct frozen owner proofs retained under ops"
+  },
+  "confirmation_execution_gate": {
+    "status": "RELEASED_ACTUAL_ALL4_WHOLE_CLOSURES_READY_SENT_OPS",
+    "owner_transition_utc": "2026-10-06T00:52:16Z",
+    "all_four_locked_pairs_must_run_diagnostically": true,
+    "remaining": "Ops import/hydration and actual safe service/memory admission; no all12/PASS/Go gate",
+    "whole_closure_outbox_path": "dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/OUTBOX.json",
+    "whole_closure_outbox_sha256": "a4b2c1a82dcbda46def1cac647eaa396f2e95391046fdede4e9eca691770f172",
+    "native_starts_at_last_owner_checkpoint": 0,
+    "checkpoint_utc": "2026-10-06T02:28:00Z"
+  },
+  "neutral_targeted_setup_repair": {
+    "status": "SOURCE_PACKETS_READY_PENDING_OPS_SYMMETRIC_REGISTRATION",
+    "pairs": [
+      "D-V02-A",
+      "D-V07-A"
+    ],
+    "PIN_sha256": "2c84af44ccbe89b0037f2fbf6195f68a5e5fcb55895ea87ab5aebe7b3ef12bb8",
+    "PUBLICATION_SELECTION_sha256": "78e58450ce9f74d362404baa5de68fa0ed47427761c687fc91b64fd1973648fe",
+    "tests_reported_passed": 9,
+    "native_calls": 0,
+    "scope": "Oldbytes/zeroGoalproof/commoncriteria/solearmfactors/budgets/model/tool/resource retained; D07ambiguity notproven erasedcontrast."
+  },
+  "latest_native_transition": {
+    "owner": "/root/ops_recovery",
+    "checkpoint_utc": "2026-10-06T02:28:00Z",
+    "active_family_Goals": {
+      "GLM": 1,
+      "Luna": 8
+    },
+    "retained_permits_last_verified": {
+      "utc": "2026-10-06T02:23:58Z",
+      "count": 0
+    },
+    "actual_fresh_Luna_research_activations": 8,
+    "repaired_I02_control_critic": "COMPLETE exact owned private-slice release; treatment critic stilllive",
+    "checkpoint_rule": "Owner timestamped lifecycle observations, not permanent current occupancy; read sole ops queue on resume",
+    "safe_activation_selection_sha256": "ebcdea835bb58da8e87b8144b28fab1ec3625f241a94e719a32baa102ef21d0f"
+  },
+  "targeted_D08A_evaluation": {
+    "status": "FINISHED",
+    "phase1_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+    "publication_selection": "evaluation/independent-targeted/D-V08-A/PUBLICATION_SELECTION_001.json",
+    "publication_selection_sha256": "166b8297268d9ba92bbb20e20c1a99130f11a21d0e214ac960c7557bf26db82c",
+    "finished_utc": "2026-10-06T01:04:16.852110Z",
+    "source_seconds": 690.912547327,
+    "phase2_seconds": 472.10482734,
+    "whole_seconds": 1163.017374667,
+    "available": "INCOMPLETE/PARTIAL",
+    "missing_partner_baseline_full_pipeline_full_matched_winner": "UNASSESSED",
+    "source_grade_changed_by_Phase2": false,
+    "candidate_feedback": "NONE"
+  },
+  "prospective_delivery_policy": {
+    "path": "supervision/DECISIONS-010.json",
+    "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+    "scope_addendum": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+    "scope_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+    "status": "ACTUAL_TOOL_LUNA_GLM_RECONNECT_BINDINGS_FROZEN_AND_USEFUL_NATIVE_RESEARCH_CRITIC_RUNNING",
+    "required": "Native final author explicitly adopts all required outputs; same admitted writer; strict lossless atomic rendering only. No automatic research fallback final credit, Goal completion fabrication, source pass claim or old grade rewrite.",
+    "V06": "Both arms keep existing zero-fuzz native amendment+hostrender workflow; no generic carrier opt-in.",
+    "source_and_critic_stages": "No bundle gate",
+    "provenance_addendum_sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+    "clock_convention_sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be",
+    "actual_native_binding_required": "Actual versioned tool/route profile consumed per role; research/critic1.3, explicitly adopted final/combined1.4. Both-arm whole closure fixed before fresh firstR; future actual input hashes bound at role birth.",
+    "tool_PIN_sha256": "7c8de6299ab871c973abea68d92897772f331499386b459b4a1d9eac35ee9299",
+    "tool_SOURCE_PINS_sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+    "Luna_actual_binding_PIN_sha256": "f1f0ad061b347ac24a4b8e678f60a6d697e35b98cabcb63c1018817b0372edfa",
+    "GLM_actual_binding_PIN_sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+  },
+  "latest_source_archive": {
+    "external_manifest": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/f0f8f22c6ed73e6ed4515e06dfaf086a129852020507896b793347e46be3ccaf/MANIFEST.json",
+    "sha256": "02639eee1e4e973ce55b27daad0d5731f61d7bd047cc14e632e7b84fbf0d96c5",
+    "D08A_response_bodies": 19,
+    "neutral_metadata": 19,
+    "total_bytes": 2165597,
+    "all_selected_bytes_owner_verified": true,
+    "campaign_coverage": "PARTIAL; prior archives retained, overlaps not new unique evidence"
+  },
+  "supervisor_native_latest": {
+    "observed_utc": "2026-10-06T02:29:51Z",
+    "recorded_utc": "2026-10-06T02:30:41.464797+00:00",
+    "status": "active",
+    "tokensUsed": 13517130,
+    "timeUsedSeconds": 21641,
+    "remainingTokens": null,
+    "helper_inclusion": "UNKNOWN",
+    "scope": "Separate root native Goal counter, not added to candidate/provider counters or used as a stop"
+  },
+  "first_complete_envelope_native_candidate": {
+    "owner_report": "/root/ops_recovery",
+    "start_utc": "2026-10-06T01:14:41Z",
+    "stage": "I07-FRESH-DELIVERY-R002 control research",
+    "native_thread": "01a10ec7-04f3-7563-b66a-b3315f63e048",
+    "genuine_native_Goals": 1,
+    "observed_request_model": "gpt-6-luna/max",
+    "aggregate_kernel_max_bytes": 2415919104,
+    "swap_max_bytes": 0,
+    "kernel_proof_path": "ops/dispatcher/resource-proofs/I07-FIRST-V13-KERNEL.json",
+    "fit_for_complete_research": "UNKNOWN",
+    "additional_service_admission": "Requires actual after-birth native usage+confinedtoolacceptance, no labelguess/canary"
+  },
+  "native_complete_envelope_transition": {
+    "owner_report_received_utc": "2026-10-06T01:35:22.386562+00:00",
+    "owner": "/root/ops_recovery",
+    "actual_native_service_acceptance": "positive after-birth tool and usage proof; exact owner selector pending",
+    "new_Luna_native_Goals_admitted_owner_report": 9,
+    "model": "gpt-6-luna/max",
+    "scope": "Timestamped owner transition, not permanent live occupancy. Complete kernel2304MiB envelope, all-owned remaining growth, 3GiB host reserve; no policy Luna thread ceiling. Original births/clocks/versions retained."
+  },
+  "I08_R002_current_full_bundle": {
+    "selection_path": "dev/diagnostic-runner/resource-successors-001/I08_TERMINAL_ROLE_SELECTION_001.json",
+    "selection_sha256": "5b8d426aa1d9a063ff62073f1c31e2da1db3666de0167083c45c3d00a76eee00",
+    "owner_report": "T combined actual review plus canonical final4; original native PAUSED/operational FAILED/service capacity",
+    "native_status_rewritten": false,
+    "duplicate_T_forbidden": true,
+    "source_evaluator": "/root/pipeline_eval_4",
+    "evaluation_scope": "Actual delivered complete bundle can be source-assessed independently of operational native failure; no automatic source PASS, pipeline COMPLETE or fresh matched credit. C final600 future unpaired warm continuation, no T inputs in C."
+  },
+  "engineering_scope_incident": {
+    "owner": "/root/luna_route",
+    "declared": "Overbroad ops/dispatcher rg returned truncated unsolicited other-run/publication content; immediately stopped, no semantic facts/grades used. Exact owned incident receipt pending. Avoid broad searches and evaluator inventory summaries.",
+    "path": "dev/luna-route/incidents/engineering-search-001/INCIDENT.json",
+    "sha256": "2ef8b220b2b3aaa7d559c49581abf6a6ebed1890987f7206c07f6cfe62103445",
+    "absolute_search_start": "UNKNOWN; recordUTC01:35:46"
+  },
+  "P3_I05_R002_independent_evaluation": {
+    "status": "FINISHED",
+    "owner": "/root/pipeline_eval_3",
+    "publication_selection_sha256": "7e96f7d015bd7b7c19733f9bd6f8169ee944e7a9bccd9c64bd52851877cd1eeb",
+    "selected_files": 35,
+    "source_phase1_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+    "quality": "FAIL_SCREEN",
+    "coverage": "PARTIAL",
+    "source_seconds": 794.3574254,
+    "phase2_seconds": 403.956776389,
+    "original_budget_limits_seconds": [
+      1200,
+      600,
+      1800
+    ],
+    "remaining_missing_partner_fullpair_effect_winner_pipeline": "UNASSESSED",
+    "blinding": "Limited prior-summary leakage disclosed; no oldsource/grade substitution; physicalmodelUNKNOWN",
+    "native_status": "actual active->paused; opaqueGoalIDUNKNOWN, session identity separate; HOLD/TimeoutError retained, all5ownedquiet positive",
+    "accounting": "Existingcohort0092094737tokens; no new inference or doublecount",
+    "candidate_feedback": "NONE",
+    "review_and_selector_ready_seconds": 1762.552529925,
+    "whole_to_final_handoff_seconds": 1850.358101297,
+    "whole_budget_seconds": 1800,
+    "handoff_overrun_seconds": 50.358101297,
+    "whole_budget_status": "EXCEEDED_BY_HANDOFF; source/report preparation beforedeadline, no newsource/execreads orgrading afterreviewclosed",
+    "FINISHED_sha256": "db81d32d567a86904f8a20106e69fee464e2bbea27dd65dc76b2c62f00482e37",
+    "PUBLIC_FINISH_SELECTION_sha256": "a00127a5f9ea075d17a56ccd657b343b9c808e754eff4705735b79688a03a8ac"
+  },
+  "GLM_complete_envelope": {
+    "status": "REPAIRED_SUCCESSOR_NATIVE_GOALS_ACTIVE_AND_FIRST_CRITIC_COMPLETE_OWNER_REPORTED",
+    "owner": "/root/execution_engine",
+    "pin_path": "dev/execution/glm-resource-v1/PIN.json",
+    "pin_sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0",
+    "integration_outbox_sha256": "0d8f137168579d7bd334458c33533baa2981240742b2269f733c52f0c803b80b",
+    "public_selection_sha256": "ab7d7ca3d075e286843f584c54f257c3ba50cbc4b9183f3f836411b1b6dc5046",
+    "tests": "3actualzero-inference8.340s directsimultaneous2sandbox/caps/parent/EOF/deadline/OOM/terminalonlyrelease, oldenginebytes unchanged",
+    "native_research_fit": "UNKNOWN",
+    "current_tool_version": "Per-role exact1.3 research/critic; separately frozen actual1.4 final/combined carrier",
+    "v1_4_actual_binding": "Exact repaired bundle successor1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7; no paper swap",
+    "actual_model_or_Goals_started_by_tests": 0,
+    "actual_dispatch_status": "Ops02:28UTC repaired I02C900 critic COMPLETE and exact owned quiet; I02T900 still live. Both had positive genuine native Goal activation. Original0Goal lifecycle failures/costs retained.",
+    "actual_failure_cause": "Zero-inference production reproduction proved original discovery-client EOF closed stage backend before activation; placement/caps valid. Persistent backend lifecycle repaired prospectively; strict guard unchanged.",
+    "resource_successor_PIN": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da",
+    "bundle_successor_PIN": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+  },
+  "prospectivity_clarification": {
+    "scope": "Fresh whole matched pipelines freeze botharmcommon tool/runtime/final-carrier versionclosures before firstresearchnative start. Actualfuture roleinputhashes bind atrolebirth. No unspecified1.4retrofitting withfreshmatchedcredit. Existingentereddescriptivewarm stages and whole targetedroleDAGfully1.3 mayrun now.",
+    "immediate_root_correction": "Prior suggestion allowing a futureundefinedfinalbinding supersededbefore confirmedlaunch; Maxindependent receipt checks0launch chronology.",
+    "no_quality_or_user_approval_gate": true,
+    "addendum_path": "supervision/DECISIONS-010-WHOLE-PIPELINE-PROSPECTIVITY-ADDENDUM-003.json",
+    "addendum_sha256": "9872a15cd9bb8d748d726fa299e2a14e9dd7b2162da2dc950a2e376c17debc45",
+    "actual_cumulative_firstconfirmation_start_absence": "UNKNOWN until exactopsreceipt, no inferfromcutoff",
+    "later_ops_attestation": {
+      "path": "supervision/DECISIONS-010-PROSPECTIVITY-OPS-ATTESTATION-004.json",
+      "sha256": "a75ab6855a6fc2ad1c0bc176710e6910571395f6b3858964c36a74e19687488b",
+      "scope": "Actual22registered confirmation rows/journal0starts/events through01:46:48Z; earlierUNKNOWNretainedhistorically"
+    }
+  },
+  "P4_I08_R002_fullbundle_evaluation": {
+    "status": "FINISHED",
+    "owner": "/root/pipeline_eval_4",
+    "source_start_utc": "2026-10-06T01:40:29.989809+00:00",
+    "source_start_monotonic_ns": 81248846810539,
+    "source_deadline_utc": "2026-10-06T02:00:29.989809+00:00",
+    "whole_deadline_utc": "2026-10-06T02:10:29.989809Z",
+    "Phase2_max_seconds": 600,
+    "dispatch_path": "ops/frozen-exports/packets/P4-I08-R002-COMBINED-001",
+    "dispatch_sha256": "43e83870e49403d22c641b683c3782144cf5c677a9d74ba7c340f3974e07eff7",
+    "source_packet_verified_files": 16,
+    "source_scope": "Actualreview+allcanonicalfinal4+actualTASK/fullB12/common8/important5/access/cardproof. No sourcegrade yet.",
+    "quiet_scope": "Courier independentlyverified exact3hostrecordSHAs/unit/cgroup/PIDsets+execrequestSHA, ALL5ownedquiet/all_ownedtrue; nativeFAILED/PAUSED/capacityretained.",
+    "leak_disclosure": "ActualtaskcontainsLuna/treatmentlabels; no perfectblinding. Priorrootstructural/lifecycleknowledge disclosed.",
+    "held_Phase2": "identity/history/economics/key; releaseonlyafterimmutablePhase1",
+    "publication_selection_sha256": "5477483b31cefd9d500692123f6b2c82e66bc7ed514eef8fbcf971bc1eaaea55",
+    "phase1_sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+    "phase1_seconds": 511.314386838,
+    "source_outcome": "FAIL_SCREEN withexplicitUNASSESSEDremainder; structural4+reviewdeliveryseparate",
+    "Phase2_start_utc": "2026-10-06T01:50:08.451295Z",
+    "Phase2_deadline_utc": "2026-10-06T02:00:08.451295Z",
+    "Phase2_courier_selection_sha256": "80bbea9207766ffbfc7a49aeaabc8987326ade6e95e9f2ce0b52cde03b42e318",
+    "actualnew_execution": "CurrentW02exec-3zkld739 exact5files plusrequestpolicy; nooldexecution substitution",
+    "source_archive_manifest": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/33e9c28f771ccc1c56be71ae4754f599ca8532a260adaf63103439ff42d87907/MANIFEST.json",
+    "source_archive_sha256": "d79d8e93c190e222361e555720145775467a9119c6d7a2209abc6d2b1910891c",
+    "final_review_selector_sha256": "31cde8630087d00901b1e14506428156db01bd76410326e5bf0e8915f97aa23a",
+    "phase2_seconds": 566.439320408,
+    "review_report_handoff_ready_seconds": 1144.900827376,
+    "owner_receipt_handoff_seconds": 1370.790134364,
+    "postreview_ownerreceipt_collection_seconds": 225.889306988,
+    "alloriginal_limits": "Source511.314386838<1200, Phase2566.439320408<600, finalhandoff1370.790134364<1800; no reset/sourcegradechange. Reviewwholecontainsphase slices, ownerreceiptlaterenclosingclocknotaddedagain.",
+    "handoff_receipt_sha256": "ae4a4b28bdd5d844f34e64c538a4bbcced09f28d4c736cb2e7ee6b7591c5cd28",
+    "accounting_clock_selector_sha256": "5506becc95f2847984794d28123dbd0036354daaa741977d895f2a5d9dd65669",
+    "candidate_existing_token_charge": 5251639,
+    "new_duplicate_charge": 0,
+    "source_quality_vs_delivery": "FAIL_SCREEN/remainingUNASSESSED; canonicalfourfilenames+review present, sourcesJSONsyntacticallymalformed. No validcompleteproposal/nativeCOMPLETE/freshmatchedcredit inferred."
+  },
+  "fixed_fresh12_repair_cohort": {
+    "status": "ALL12_FULL_CLOSURES_READY_L4_BOTH_ARM_RESEARCH_NATIVE_GOALS_ACTIVE_OWNER_REPORTED",
+    "scope": "Same original12briefs/methods/nativefamily mappings/stagebudgets. Freshresearch briefs/access only, no oldcandidate/evaluator inputs. BOTHarm actualfullrolecode/carrier closuresbeforefirstR. Warm/asymmetric recoveries do notfillfreshmatchedtarget.",
+    "source_owner_inventory_path": "dev/diagnostic-runner/resource-successors-001/FRESH12_SOURCE_OWNER_INVENTORY_001.json",
+    "source_owner_inventory_sha256": "cded38a9467221c291e6f0770ebc8e1d45103ebd90797d858f7f07605e215141",
+    "declared_family_map": "I01–I04 GLM; I05–I08 Luna; I09–I12 GLM, allmax; exactmodels sourcecards retain",
+    "pairs": 12,
+    "arms": 24,
+    "quality_selection": "NONE, all12regardlessofFAIL",
+    "automatic_quality_chasing_fullcohort_repeat": false,
+    "ordinary_engineering_repair_count_ceiling": null,
+    "four_locked_confirmations": "Separate alreadyreleased queue; no all12completion/PASS/Go barrier orconfirmationtuning offixedcohort",
+    "native_stages": 74,
+    "policy_path": "supervision/DECISIONS-011.json",
+    "policy_sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea",
+    "inventory_path": "supervision/DECISIONS-011-FRESH12-INVENTORY.json",
+    "inventory_sha256": "e9554e46b6510d372fcd4b1e178495e625ae10e3f7934c20200d2cffc70238b6",
+    "Luna_preparation": "I05–I08 mayseal/runindependentlyofGrepair underactualwholeclosure; no globalG-ready/admissiongate",
+    "common_source_separation": "Campaign/evaluator/priorcohort/otherarm publications ineligible regardlessofpubliclocation; authorizedcurrentroleinputs/explicitsharedseedexceptionsretain; firstRbrief/accessonly",
+    "complete_outbox_path": "dev/diagnostic-runner/resource-successors-001/fresh-cohort002/OUTBOX.json",
+    "complete_outbox_sha256": "61d0529fe93a9290ef0434f4a77507179f4f2106d52ca1a0f01fb06242fd45f8",
+    "unchanged_from_source001": "Same74jobIDs/task/inputbytes/budgets, noaddedjobs; originaloutboxretained",
+    "actual_native_fit": "Native activation observed for all8 Lresearch; full pipeline fit/completion/source quality not yet assessed",
+    "administrative_approval_gate": "None; inheritedroot_scopeconditionexplicitlyremoved, standinguser/rootauthority sufficient",
+    "observed_transition_utc": "2026-10-06T02:28:00Z",
+    "Luna_positive_fresh_research_Goals": 8,
+    "Luna_pairs_started": [
+      "I05",
+      "I06",
+      "I07",
+      "I08"
+    ],
+    "GLM_pairs": "8 ready source descriptors; import/admission pending at02:28UTC"
+  },
+  "source_separation_check": {
+    "owner": "/root/eval_protocol",
+    "status": "FROZEN_BOUNDED_REPORT_NO_HOLD",
+    "mechanical_fetch_exclusion": "Absentfromfrozen1.4 fetch; publicreachability alone notread/contaminationproof",
+    "existing_contract": "Alreadyforbidsotherarm/evaluator/v8answers, no locationexception; fresh12 no priorinputartifacts",
+    "prospective_safeguard": "Identicalnegativeaccess/taskclarification beforenewfreshfirstR, no facthints/livepatch/hold",
+    "URL_only_observation": "20exactR001metadatarecords frompreviouspositiveownerselector4bdb50f0222c2f58b7762ab6a503252a0129b97c8d4e983bd0406ba02cc95e62;0ownrepo/campaignURLindicators, partialcoverage only. Unselectedtraffic/mirrors/modeluse/freshactualcapturesUNKNOWN.",
+    "report_sha256": "de13a45fd30f6cea43169c730154bdb5eceaa22ea778d3fe6d7f58265513d587",
+    "positive_selector_sha256": "9551cb6c957d318eedddb499b1f93ef763978bccf6b9711f2ad568e0fb56a646",
+    "actual_fresh_task_adoption": "Casecohort001/002 uniformpublication-neutraloverlayfrozen botharms; scopepreservescurrentroleinputs/sharedseedexceptions"
+  }
+}

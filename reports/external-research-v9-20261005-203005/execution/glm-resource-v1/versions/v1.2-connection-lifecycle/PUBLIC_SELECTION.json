@@ -1,0 +1,157 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T02:10:59.312616+00:00",
+  "owner": "execution_engine",
+  "freeze": "coherent resource1.3 andbundle1.4 stage-owned connection lifecycle repair",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/stage_worker.py",
+      "sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/glm_stage.py",
+      "sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_support.py",
+      "sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_guard.py",
+      "sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_gate.py",
+      "sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_guard.py",
+      "sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_bridge.py",
+      "sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_proxy.py",
+      "sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/external_release.py",
+      "sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/profile.py",
+      "sha256": "2dbce693d3b6ff143059ff5fa13c8f8f186bc6eed29ea00dcae9681857593623"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/README.md",
+      "sha256": "e81f4e05b482a616659f31165cb9c7030780f2d2f4b53874c5f0cd172ef9594c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "sha256": "5f38d4c0b871fd75da5d6e0e03f27f1997be77d9ee3ffc9192b7959b18ac4676"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_native.py",
+      "sha256": "517841ac4a999555150c1305f42dd47044bae116960965d5cc3912793febbe6d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/fixture_worker.py",
+      "sha256": "378552398d281716c52b496fb278fc925b44bf324b07cad934f5f4ece276ba3a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/test_dispatch.py",
+      "sha256": "8cb1f631723ffac014a847f1915c3bd33d715e2443bdb63d242ef83c532ca8f9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/FAILURE_DIAGNOSIS.json",
+      "sha256": "d993759a0d194054a3ca5ef1a0b1949615912274fd3459ccb591650d027f3e0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/REPAIR_PROOF.json",
+      "sha256": "a4343d512eb7bf989ffa83213a3ea5bf315dff170f42ade8f73167c94378c43d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/VERIFICATION.json",
+      "sha256": "407c917e779f1f425400bdeebb86b4b5920491a69aa66b3ec717e7393dc47422"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+      "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "sha256": "1ef87d7f6b74a39be7303150eb457dbfa76b6761d8621c3a576c5a56d48d15a4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/stage_worker.py",
+      "sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/glm_stage.py",
+      "sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_support.py",
+      "sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_guard.py",
+      "sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/component_gate.py",
+      "sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/native_guard.py",
+      "sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_bridge.py",
+      "sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/pipe_proxy.py",
+      "sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/external_release.py",
+      "sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/profile.py",
+      "sha256": "a14d7fd76936bbe3c8434c3eb25923aae98b487051ecdea4c4a940404cb17137"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/README.md",
+      "sha256": "298a602750d270f398d6875caa0a803d028fc67af099b3afa038261eb4492ea1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/RESOURCE_CONTRACT.json",
+      "sha256": "5ef5dfe40b60b7b2418fbf5bd740a21a6cec16a2bc6e9ea40fe425a52d985669"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+      "sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/INTEGRATION_OUTBOX.json",
+      "sha256": "50a04a6e89fc208881fed92bfbf0a9b63d8d4776cfadda9a62cb21cdfa74a201"
+    }
+  ],
+  "excluded": [
+    "OLD_LIFECYCLE_REPRO.json",
+    "DISPATCH_REPAIR_PROOF.json",
+    "__pycache__",
+    "any private operator/resource profile/raw native/modelIO/candidate/workspace/live stage/dispatcher file"
+  ],
+  "owner_files_quiescent": true,
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "original_versions_preserved": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e"
+  }
+}

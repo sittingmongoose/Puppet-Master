@@ -1,0 +1,73 @@
+{
+  "assessment_boundary": "Clock and existing-cost metadata only; no source judgments, quality findings, or completion/whole-pipeline credit inferred.",
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "clock_rule": "Whole1144.900827376 contains source511.314386838, Phase2566.439320408 and interphase67.14712013. Never add slices to whole or convert wall limits/durations into provider cost. Original clocks/deadlines unchanged; later owner harvesting separately timed.",
+  "evaluation_id": "P4-I08-R002",
+  "evaluator_physical_provider": "UNKNOWN",
+  "evaluator_provider_tokens": "UNKNOWN",
+  "existing_candidate_reference_only": {
+    "attempt_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+    "global_candidate_charge_added_by_reference": 0,
+    "native_Goal_id": "01a10ead-e433-7300-804f-d984e8a71dca",
+    "native_Goal_status": "paused",
+    "native_receipt_pins": [
+      {
+        "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+        "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+      }
+    ],
+    "operator_status": "FAILED",
+    "rule": "Existing actual actor/Goal charged once. Cache included in input; reasoning is output subset; notifications do not establish native response count.",
+    "usage": {
+      "cached_input_included": 4911104,
+      "input": 5193444,
+      "output": 58195,
+      "reasoning_output_subset": 27419,
+      "total": 5251639
+    }
+  },
+  "interphase_elapsed_seconds": 67.14712013,
+  "model_occupied_seconds": "UNKNOWN",
+  "original_phase2_allowance_seconds": 600,
+  "original_phase2_deadline_utc": "2026-10-06T02:00:08.451295+00:00",
+  "original_phase2_start_utc": "2026-10-06T01:50:08.451295+00:00",
+  "original_source_allowance_seconds": 1200,
+  "original_source_deadline_utc": "2026-10-06T02:00:29.989809+00:00",
+  "original_source_start_utc": "2026-10-06T01:40:29.989809+00:00",
+  "original_whole_allowance_seconds": 1800,
+  "original_whole_deadline_utc": "2026-10-06T02:10:29.989809+00:00",
+  "phase2_elapsed_seconds": 566.439320408,
+  "phase2_finished_utc": "2026-10-06T01:59:34.890626+00:00",
+  "provider_http_attempts": "UNKNOWN",
+  "requested_evaluator_effort": "xhigh",
+  "requested_evaluator_model": "gpt-6.1-sol",
+  "schema": "er9.accounting.p4-clocks.v1",
+  "source_elapsed_seconds": 511.314386838,
+  "source_finished_utc": "2026-10-06T01:49:01.304173+00:00",
+  "source_pins": [
+    {
+      "path": "evaluation/independent-pipelines/P4-I08-R002/source_start.json",
+      "sha256": "8e2cda6fd42c7b4ab4e8b1a22edcf33b7ddc5a9ff305947fb6df0704b1f4ea3d"
+    },
+    {
+      "path": "evaluation/independent-pipelines/P4-I08-R002/phase1_finish.json",
+      "sha256": "53c5316dc9c0668b15f112423e2f269cc42fdf39e48b7a48a88cad370fdbd5c9"
+    },
+    {
+      "path": "evaluation/independent-pipelines/P4-I08-R002/phase2_start.json",
+      "sha256": "a0f115f78fe6c0c001fcfed33927d667f5bb65c40843d40d7d4d037e409af50a"
+    },
+    {
+      "path": "evaluation/independent-pipelines/P4-I08-R002/phase2_finish.json",
+      "sha256": "7635c98e3f3953b12838a7e658680810adda9ab3a31d956d94a7b8a2bb3922f2"
+    },
+    {
+      "path": "evaluation/independent-pipelines/P4-I08-R002/whole_finish.json",
+      "sha256": "b7aba903ca6c1766e2daf3491cee74266a8bc81b26805c81691fcc44aebc9682"
+    }
+  ],
+  "validation_errors": [],
+  "whole_elapsed_seconds": 1144.900827376,
+  "whole_finished_utc": "2026-10-06T01:59:34.890626+00:00"
+}

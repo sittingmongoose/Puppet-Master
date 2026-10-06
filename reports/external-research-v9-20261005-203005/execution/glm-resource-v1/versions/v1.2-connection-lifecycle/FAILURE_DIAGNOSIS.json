@@ -1,0 +1,277 @@
+{
+  "schema": "er9.glm.mcp-lifecycle-failure-diagnosis.v1",
+  "created_utc": "2026-10-06T02:10:59.312616+00:00",
+  "actual_original_attempts": [
+    {
+      "arm": "control",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/receipt.json",
+        "sha256": "0aab8c1f49cd4b51e7fb7acb7366d96a6a03865f4d4ff71d5f9a1530389aa1cb"
+      },
+      "receipt_selector": "$.[status,error_class,error,goal_activated,elapsed_seconds,observed_model,observed_effort]",
+      "router_status": "execution_error",
+      "error_class": "ValueError",
+      "error": "owned component outside private aggregate",
+      "goal_activated": false,
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "elapsed_seconds": 7.966552787009277,
+      "protocol_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/protocol.redacted.jsonl",
+        "sha256": "c6ae4d32031cefeef9a7055ed50cd8571b5549be3f68f7a3184cf5857666a9ac"
+      },
+      "protocol_selector": "$.message.method / $.message.params.action; no bodies selected",
+      "goal_actions": [
+        "pause"
+      ],
+      "goal_set_rpc_count": 0,
+      "rpc_chronology": [
+        {
+          "at": "2026-10-06T01:49:16.783073+00:00",
+          "direction": "out",
+          "request_id": "research-host-3",
+          "method": "session/create",
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:18.342218+00:00",
+          "direction": "in",
+          "request_id": "research-host-3",
+          "method": null,
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:18.343158+00:00",
+          "direction": "out",
+          "request_id": "research-host-4",
+          "method": "session/read",
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:18.712587+00:00",
+          "direction": "in",
+          "request_id": "research-host-4",
+          "method": null,
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:18.793460+00:00",
+          "direction": "out",
+          "request_id": "research-host-5",
+          "method": "session/goal",
+          "goal_action": "pause"
+        },
+        {
+          "at": "2026-10-06T01:49:19.588713+00:00",
+          "direction": "in",
+          "request_id": "research-host-5",
+          "method": null,
+          "goal_action": null
+        }
+      ],
+      "resource_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/RESOURCE_PROFILE.json",
+        "sha256": "4eeb2709c84c37120d379d4075dfb711d62b05b776d70e4d17f12bb1e513c27e"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/RESOURCE_BINDING.json",
+        "sha256": "3de41726fb872bee68fe5dfb3b0fdc8a3aef3727a7c4ca56e5ac5a3680684752"
+      },
+      "components": [
+        {
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/native-host.json",
+            "sha256": "3e8d5be00a84c23487567a1bb3026c8d2f8f31bcf635b38d6d7567f0266972d2"
+          },
+          "selector": "$.kernel_proof",
+          "component": "native",
+          "verified_before_command_exec": true,
+          "actual_parent_cap": "2415919104",
+          "actual_component_cap": "805306368",
+          "actual_swap_max": "0",
+          "actual_private_parent_at_exec": true,
+          "stop_reason": "owner_eof_or_component_exit",
+          "service_runner_exit_code": 0,
+          "closed_monotonic_ns": 81779109904433,
+          "closed_since_birth_seconds": 7.578725908009801,
+          "terminal_cgroup_quiet": true
+        },
+        {
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/pm_boundary-resource.json",
+            "sha256": "9e45911bc75157a028fe2ee0f5a17d64949a6b6571d64b32d636b56b90c60ebc"
+          },
+          "selector": "$.kernel_proof",
+          "component": "pm_boundary",
+          "verified_before_command_exec": true,
+          "actual_parent_cap": "2415919104",
+          "actual_component_cap": "268435456",
+          "actual_swap_max": "0",
+          "actual_private_parent_at_exec": true,
+          "stop_reason": "owner_eof_or_component_exit",
+          "service_runner_exit_code": 0,
+          "closed_monotonic_ns": 81777733377188,
+          "closed_since_birth_seconds": 6.202198662998853,
+          "terminal_cgroup_quiet": true
+        }
+      ]
+    },
+    {
+      "arm": "treatment",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/receipt.json",
+        "sha256": "0b60e1b376ddab00e4593e07a1eb76ab894a46f74a099348d1d186ecefe18c3f"
+      },
+      "receipt_selector": "$.[status,error_class,error,goal_activated,elapsed_seconds,observed_model,observed_effort]",
+      "router_status": "execution_error",
+      "error_class": "ValueError",
+      "error": "owned component outside private aggregate",
+      "goal_activated": false,
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "elapsed_seconds": 8.41894843999762,
+      "protocol_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/protocol.redacted.jsonl",
+        "sha256": "4661163790e906ee577b7d26de6ccb8f048b568aa9e4f3237d52225a6a9687e8"
+      },
+      "protocol_selector": "$.message.method / $.message.params.action; no bodies selected",
+      "goal_actions": [
+        "pause"
+      ],
+      "goal_set_rpc_count": 0,
+      "rpc_chronology": [
+        {
+          "at": "2026-10-06T01:49:10.869813+00:00",
+          "direction": "out",
+          "request_id": "research-host-3",
+          "method": "session/create",
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:12.677361+00:00",
+          "direction": "in",
+          "request_id": "research-host-3",
+          "method": null,
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:12.678794+00:00",
+          "direction": "out",
+          "request_id": "research-host-4",
+          "method": "session/read",
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:13.069000+00:00",
+          "direction": "in",
+          "request_id": "research-host-4",
+          "method": null,
+          "goal_action": null
+        },
+        {
+          "at": "2026-10-06T01:49:13.156168+00:00",
+          "direction": "out",
+          "request_id": "research-host-5",
+          "method": "session/goal",
+          "goal_action": "pause"
+        },
+        {
+          "at": "2026-10-06T01:49:13.973703+00:00",
+          "direction": "in",
+          "request_id": "research-host-5",
+          "method": null,
+          "goal_action": null
+        }
+      ],
+      "resource_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/RESOURCE_PROFILE.json",
+        "sha256": "c21eb3361a166646c12915a20f584b8967b6282900a5ad1362aafcbf843a07d5"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/RESOURCE_BINDING.json",
+        "sha256": "e4c168be5b0fb1fc1b310fa150dc3607cf9c474d2dff84a4997446b8692f749a"
+      },
+      "components": [
+        {
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/native-host.json",
+            "sha256": "d860e1a3c6a28db4723b1cb14213d5916c52396aae875387d2f6fb02058368a3"
+          },
+          "selector": "$.kernel_proof",
+          "component": "native",
+          "verified_before_command_exec": true,
+          "actual_parent_cap": "2415919104",
+          "actual_component_cap": "805306368",
+          "actual_swap_max": "0",
+          "actual_private_parent_at_exec": true,
+          "stop_reason": "owner_eof_or_component_exit",
+          "service_runner_exit_code": 0,
+          "closed_monotonic_ns": 81773663190902,
+          "closed_since_birth_seconds": 8.006304990005447,
+          "terminal_cgroup_quiet": true
+        },
+        {
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/pm_boundary-resource.json",
+            "sha256": "c63aafd254bb6922f141b42877a412d3729490d5783f5b4cb112dc7d3717c4f8"
+          },
+          "selector": "$.kernel_proof",
+          "component": "pm_boundary",
+          "verified_before_command_exec": true,
+          "actual_parent_cap": "2415919104",
+          "actual_component_cap": "268435456",
+          "actual_swap_max": "0",
+          "actual_private_parent_at_exec": true,
+          "stop_reason": "owner_eof_or_component_exit",
+          "service_runner_exit_code": 0,
+          "closed_monotonic_ns": 81772068140825,
+          "closed_since_birth_seconds": 6.411254912993172,
+          "terminal_cgroup_quiet": true
+        },
+        {
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/pm_execution-resource.json",
+            "sha256": "65989a18d8ade74e115e6c633f43d8c2d5eb949dddfd5bd33ac7c1bdaf5e6deb"
+          },
+          "selector": "$.kernel_proof",
+          "component": "pm_execution",
+          "verified_before_command_exec": true,
+          "actual_parent_cap": "2415919104",
+          "actual_component_cap": "268435456",
+          "actual_swap_max": "0",
+          "actual_private_parent_at_exec": true,
+          "stop_reason": "owner_eof_or_component_exit",
+          "service_runner_exit_code": 0,
+          "closed_monotonic_ns": 81772076836701,
+          "closed_since_birth_seconds": 6.419950789000723,
+          "terminal_cgroup_quiet": true
+        }
+      ]
+    }
+  ],
+  "classification": "PREACTIVATION_MCP_DISCOVERY_EOF_CLOSED_STAGE_BACKEND",
+  "cause": "Old bridge owned backend stdin by first temporary proxy connection. Native session-create discovery disconnects normally; backend then exits0, and unchanged strict live gate rejects absent unit with empty ControlGroup.",
+  "ancestry_or_cap_escape_observed": false,
+  "gate_bypass": false,
+  "genuine_goal_set_calls": 0,
+  "no_candidate_body_read": true,
+  "actual_resource_limits_unchanged": true,
+  "old_failure_reproduction": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/OLD_LIFECYCLE_REPRO.json",
+    "sha256": "4e9c744a018c95eebc7588a24b9cf29dcf72b9137da0d16a94ce0e3a51e99657"
+  },
+  "repaired_actual_dispatch_fixture": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/DISPATCH_REPAIR_PROOF.json",
+    "sha256": "b5568a0fb292c94707e1ca17b73a568717c64e795edee24833f5ede4644553bf"
+  },
+  "original_receipts_and_code_preserved": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/PIN.json": "114c5dbcc79becaa79c3e8913dc77c7a2a3c0684cceb0b2dd8b71d4b9a535e9e"
+  }
+}

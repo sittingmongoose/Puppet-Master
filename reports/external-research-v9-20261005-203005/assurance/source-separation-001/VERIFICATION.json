@@ -1,0 +1,25 @@
+{
+  "status": "PASS_BOUNDED_METADATA_REPORT_INTEGRITY",
+  "checks": [
+    "all10 exact owner/source policy/code/inventory pins match",
+    "all12 declared first-R input rows retain no-prior-payload rule",
+    "20 owner-selected metadata pins verified and projected only URL/provenance fields",
+    "raw response rows skipped; no broad scan",
+    "proposal excludes public campaign material while preserving current authorized imports/seed cards/third-party breadth",
+    "capability/eligibility/observed reads/semantic contamination distinguished; UNKNOWN facets retained",
+    "no live edits/native calls/new hold"
+  ],
+  "verified_utc": "2026-10-06T02:12:06.652302Z",
+  "report_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/source-separation-001/REPORT.json",
+    "sha256": "de13a45fd30f6cea43169c730154bdb5eceaa22ea778d3fe6d7f58265513d587"
+  },
+  "proposal_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/source-separation-001/PROPOSAL.json",
+    "sha256": "f83337a3c91597f158b6826fc24bc6851a87435397a8a9740c8fd3a195a1cfca"
+  },
+  "url_observation_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/source-separation-001/URL_OBSERVATIONS.json",
+    "sha256": "de603b9470e467d2c3c00208daf9a9ded32ed802b054eaacfd8a29bb612a9237"
+  }
+}

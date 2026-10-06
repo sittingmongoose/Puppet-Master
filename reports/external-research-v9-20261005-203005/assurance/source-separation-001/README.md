@@ -1,0 +1,19 @@
+# ER9 source separation — bounded check 001
+
+The public fetch tool does **not** block this campaign's public reports. That makes public report URL classes mechanically admissible; it does not make evaluator, other-arm or prior-cohort answers eligible research evidence. Existing task prohibitions apply regardless of publication location. The smallest safeguard is the common prospective task/access clarification already accepted by root and sent to the case factory. No live fetch patch, publication withdrawal, new hold or source regrade is recommended.
+
+| Question | Result |
+| --- | --- |
+| Can the inspected fetch policy accept self-report URL classes? | Yes, subject to ordinary public HTTPS/DNS/TLS/redirect guards. Synthetic owner checks made no network call. |
+| Are evaluator/other-arm answers allowed because they are public? | No. The output contract forbids inspection; source eligibility and HTTP capability are distinct. |
+| Can fresh12 research import old proposals/catalogs/seeds? | No. All twelve frozen inventory rows specify brief/access/neutral role input only. Later authorized same-arm inputs and separately authorized frozen shared seeds are preserved where their cards permit. |
+| Were actual direct self-report reads found? | None among twenty exact owner-selected R001 URL metadata records. This is partial coverage; all other/fresh12 access and semantic use remain UNKNOWN. |
+| Are actual newly launched task/config bytes certified? | No launch/adoption receipt was supplied at cutoff; case/ops retain their existing prospective input/runtime closure duties. |
+
+The inspected v1.4 fetch implementation checks public credential-free HTTPS443, globally routable DNS, pinned connections/TLS and every redirect, with bounded raw capture/first text delivery. It has no campaign/repository/path exclusion. Local filesystem isolation omits evaluator paths but does not extend that omission to public copies. Code/config/source policy and prospective inventory hashes are in `INPUT_PINS.json`; exact function locators are `tool_server.py:203` / `:241`, `boundary.py:52` and `config.py:27`. No source response, candidate proposal or evaluation body was opened for this check.
+
+`URL_OBSERVATIONS.json` is a URL-only projection from an earlier courier-owned positive selector: twenty catalog-linked R001 control captures, zero own-repository/campaign URL indicators, one unresolved original reference. Three raw-body rows in that selector were skipped. No capture-store scan was performed. URLs cannot establish model comprehension, use of answers, snippets embedded in other responses, opaque mirrors, unselected/unsaved traffic or latent knowledge. Public reachability alone is not observed contamination.
+
+`PROPOSED_TASK_SOURCE_SEPARATION.md` and `PROPOSAL.json` clarify the excluded campaign/evaluator/other-arm/prior-cohort publication class without supplying domain facts, repositories to investigate or source answers. They preserve authorized current same-arm role imports, card-authorized frozen shared seeds, independently chosen third-party primaries and same-byte mechanical capture reuse. Fresh12 first research still starts from brief/access alone. Case owner applies the same clarification prospectively to both wholly unstarted arms; original/live versions are untouched. This report does not claim that future packets have already adopted it.
+
+Requested evaluator configuration was gpt-6.1-sol/xhigh; no direct observed model/effort receipt was supplied. The agent had prior evaluator context but did not reread or reproduce old findings. Publication remains authorized and creates no exception to candidate source eligibility. `REPORT.json` preserves the distinctions and UNKNOWN facets; no native candidate/canary/Goal, external network request, code patch or new gate was made by this check.

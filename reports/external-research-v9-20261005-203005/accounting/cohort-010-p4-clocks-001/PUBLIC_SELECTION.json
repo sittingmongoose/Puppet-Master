@@ -1,0 +1,19 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.json",
+      "sha256": "310df52e0ca8502c58c0ec385af293f89792ed181f03222116022eb1fd0d96df"
+    },
+    {
+      "path": "accounting/cohort-010-p4-clocks-001/p4-clocks.safe.schema.json",
+      "sha256": "8291e91f309f7a19c54661b0cb9e37f79dd49b6092f574e77f19ffda3cd7baaa"
+    },
+    {
+      "path": "accounting/cohort-010-p4-clocks-001/P4_CLOCKS.md",
+      "sha256": "1690975ce6511115448a3198b0f2a838dae68d89aeaa6f141467942409817a3b"
+    }
+  ],
+  "cohort": "010-p4-clocks-001",
+  "exclusion": "Exact neutral clock and existing actor-cost reference metadata only; no judgment/key/result bodies or unlisted artifacts.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

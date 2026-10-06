@@ -1,0 +1,56 @@
+{
+  "check_id": "ER9-source-separation-001",
+  "exact_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "role": "original source eligibility contract"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "role": "location-unqualified evaluator/other-arm prohibition"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-011.json",
+      "sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea",
+      "role": "fixed fresh cohort authority and first-role freshness"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-011-FRESH12-INVENTORY.json",
+      "sha256": "e9554e46b6510d372fcd4b1e178495e625ae10e3f7934c20200d2cffc70238b6",
+      "role": "12 exact prospective first-R input contracts"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/tool_server.py",
+      "sha256": "70ceac49f4985fad11e36d770d0ee59ed31f5305a69a55a9f161fb835f78a135",
+      "role": "public_url203/fetch241 URL guards and bounded first delivery"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "role": "public_get tool bit"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+      "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e",
+      "role": "mount boundaries/admitted tool config"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+      "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+      "role": "frozen tool implementation identities"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/diagnosis/source-separation-001/OWNER_FACTS.json",
+      "sha256": "87ad34f1c495ddf62ed199dfc7b6a6c04a72a4baacb9364c4cbc8713580ab43c",
+      "role": "tool owner source policy facts, synthetic nonnetwork URL acceptance only"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/MANIFEST.json",
+      "sha256": "4bdb50f0222c2f58b7762ab6a503252a0129b97c8d4e983bd0406ba02cc95e62",
+      "role": "earlier owner-selected20 URL-metadata records only; 3 body rows not read"
+    }
+  ],
+  "scope": "policy/code/typed URL provenance only, no response/candidate/evaluator semantic bodies"
+}

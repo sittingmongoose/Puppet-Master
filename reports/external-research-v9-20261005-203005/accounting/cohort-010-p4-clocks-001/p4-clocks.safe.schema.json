@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assessment_boundary": {
+      "type": "string"
+    },
+    "billing_dollars": {
+      "type": "string"
+    },
+    "clock_reset": {
+      "type": "boolean"
+    },
+    "clock_rule": {
+      "type": "string"
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "evaluator_physical_provider": {
+      "type": "string"
+    },
+    "evaluator_provider_tokens": {
+      "type": "string"
+    },
+    "existing_candidate_reference_only": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "type": "string"
+        },
+        "global_candidate_charge_added_by_reference": {
+          "type": "number"
+        },
+        "native_Goal_id": {
+          "type": "string"
+        },
+        "native_Goal_status": {
+          "type": "string"
+        },
+        "native_receipt_pins": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "operator_status": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "usage": {
+          "additionalProperties": false,
+          "properties": {
+            "cached_input_included": {
+              "type": "number"
+            },
+            "input": {
+              "type": "number"
+            },
+            "output": {
+              "type": "number"
+            },
+            "reasoning_output_subset": {
+              "type": "number"
+            },
+            "total": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "cached_input_included",
+            "input",
+            "output",
+            "reasoning_output_subset",
+            "total"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "native_Goal_id",
+        "usage",
+        "native_receipt_pins",
+        "native_Goal_status",
+        "operator_status",
+        "global_candidate_charge_added_by_reference",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "interphase_elapsed_seconds": {
+      "type": "number"
+    },
+    "model_occupied_seconds": {
+      "type": "string"
+    },
+    "original_phase2_allowance_seconds": {
+      "type": "number"
+    },
+    "original_phase2_deadline_utc": {
+      "type": "string"
+    },
+    "original_phase2_start_utc": {
+      "type": "string"
+    },
+    "original_source_allowance_seconds": {
+      "type": "number"
+    },
+    "original_source_deadline_utc": {
+      "type": "string"
+    },
+    "original_source_start_utc": {
+      "type": "string"
+    },
+    "original_whole_allowance_seconds": {
+      "type": "number"
+    },
+    "original_whole_deadline_utc": {
+      "type": "string"
+    },
+    "phase2_elapsed_seconds": {
+      "type": "number"
+    },
+    "phase2_finished_utc": {
+      "type": "string"
+    },
+    "provider_http_attempts": {
+      "type": "string"
+    },
+    "requested_evaluator_effort": {
+      "type": "string"
+    },
+    "requested_evaluator_model": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "source_elapsed_seconds": {
+      "type": "number"
+    },
+    "source_finished_utc": {
+      "type": "string"
+    },
+    "source_pins": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "whole_elapsed_seconds": {
+      "type": "number"
+    },
+    "whole_finished_utc": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "evaluation_id",
+    "source_pins",
+    "original_source_start_utc",
+    "source_finished_utc",
+    "original_phase2_start_utc",
+    "phase2_finished_utc",
+    "whole_finished_utc",
+    "original_source_deadline_utc",
+    "original_phase2_deadline_utc",
+    "original_whole_deadline_utc",
+    "source_elapsed_seconds",
+    "phase2_elapsed_seconds",
+    "interphase_elapsed_seconds",
+    "whole_elapsed_seconds",
+    "original_source_allowance_seconds",
+    "original_phase2_allowance_seconds",
+    "original_whole_allowance_seconds",
+    "clock_reset",
+    "requested_evaluator_model",
+    "requested_evaluator_effort",
+    "evaluator_physical_provider",
+    "evaluator_provider_tokens",
+    "billing_dollars",
+    "model_occupied_seconds",
+    "provider_http_attempts",
+    "existing_candidate_reference_only",
+    "clock_rule",
+    "assessment_boundary",
+    "validation_errors"
+  ],
+  "type": "object"
+}

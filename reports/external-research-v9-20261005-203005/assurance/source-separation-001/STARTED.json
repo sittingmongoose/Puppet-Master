@@ -1,0 +1,27 @@
+{
+  "check_id": "ER9-source-separation-001",
+  "started_utc": "2026-10-06T02:02:16.043404Z",
+  "scope": "metadata/code and exact fresh input contracts only",
+  "candidate_or_evaluator_source_bodies_read": false,
+  "native_candidates_or_canaries_spawned": false,
+  "ownership": "report/proposal only",
+  "original_common_policy_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "role": "original common policy reference, not asserted newly launched version"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "role": "original common policy reference, not asserted newly launched version"
+    }
+  ],
+  "owner_selectors_pending": [
+    "generic_tools fetch policy and typed URL-only captures",
+    "case fixed12 fresh input contract pins",
+    "ops admitted version and owner provided capture selectors"
+  ],
+  "observed_contamination": "UNKNOWN_PENDING_ALLOWED_METADATA",
+  "public_reachability_is_not_contamination": true
+}
