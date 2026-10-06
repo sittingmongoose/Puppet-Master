@@ -1,0 +1,83 @@
+{
+  "leads_version": "ER9-lead-inventory/1.0",
+  "stage": "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "Whether any DuckDB 1.0.x release backported fix #12596",
+      "status": "unresolved",
+      "detail": "Issue #12596 reports the bug on 1.0.0/nightly; PR #12679 merged to main; compare evidence establishes the merge commit is an ancestor of v1.1.0. The v1.0.0 tag predates the fix. No evidence here identifies a 1.0.x backport or the first release containing the fix. [S12-S18]",
+      "next_step": "Inspect immutable v1.0.x tag ancestry or release notes and, if behavior matters, run the regression fixture on each candidate binary."
+    },
+    {
+      "id": "L2",
+      "title": "DuckDB CSV null_padding default by release",
+      "status": "unresolved",
+      "detail": "The captured PR #6765 body says null_padding defaults true; the captured current CSV error parameter block prints null_padding=0. The production design avoids depending on this default by pinning an explicit option, but the release discrepancy remains. [S2, S12]",
+      "next_step": "Inspect versioned configuration/code or run a short-row fixture against the exact supported DuckDB builds; keep the option explicit in every run record."
+    },
+    {
+      "id": "L3",
+      "title": "Preserving absent JSON keys separately from explicit null",
+      "status": "unverified",
+      "detail": "DuckDB’s current JSON table-reader docs say missing keys become SQL NULL. The proposed typed-table contract cannot preserve presence without raw-record or presence metadata. The exact selected release and adapter behavior for JSON null, heterogeneous values and round-trip exports has not been executed. [S3]",
+      "next_step": "Run V1 on pinned NDJSON reader/library versions; decide per column whether absence is distinct, canonicalized to NULL or rejected, and version the policy."
+    },
+    {
+      "id": "L4",
+      "title": "Persistent malformed-record ledger across CSV, NDJSON and Parquet ingestion",
+      "status": "unverified",
+      "detail": "CSV reject tables are temporary and scanner-specific; projection pushdown can avoid casts in unselected columns. The captured NDJSON docs expose ignore_errors for newline-delimited input but do not establish a common durable ledger. Parquet corruption/error localization is not covered by these captures. [S2, S3, S11]",
+      "next_step": "Implement format adapters and run malformed, truncated, bad-cast and invalid-encoding fixtures; persist source hash, position, raw bytes/excerpt and error classification where the format permits."
+    },
+    {
+      "id": "L5",
+      "title": "Canonical result equality and numeric reproducibility",
+      "status": "unverified",
+      "detail": "A rolling row hash is an ordered-sequence fingerprint unless canonicalized. Order-free comparison needs typed canonical encoding and duplicate multiplicity; floating reductions are order-sensitive in DuckDB docs. Collision bounds and cross-version/architecture behavior have not been measured. [S4, S5]",
+      "next_step": "Implement separate sequence and multiset comparison modes; test null/type/timezone/Unicode/duplicate rows and floating reductions under each supported engine/runtime combination."
+    },
+    {
+      "id": "L6",
+      "title": "Completeness of notebook dependency tracking and freshness status",
+      "status": "unverified",
+      "detail": "nbformat stores document/output fields but no output-run association. Static refs/defs analysis is useful but marimo documents that mutation is not tracked; arbitrary Python may also depend on dynamic imports, external files and side effects. [S1, S6]",
+      "next_step": "Define the supported tracked subset, record cell/session/event identities, and test mutation, restart, hidden state, file access, error and cancellation in a real kernel. Unknown dependencies must become unverified."
+    },
+    {
+      "id": "L7",
+      "title": "5 GB memory, spill and latency behavior on the workstation envelope",
+      "status": "unverified",
+      "detail": "File scanning and pushdown documentation supports an implementation direction, not measured 5 GB performance. The frozen W2 witness is a candidate-reported in-memory synthetic check with application-side row accounting. [S3, S11]",
+      "next_step": "Run proposed V4 on 8-core/16 GB hardware and record peak RSS, temporary disk, latency and explicit bounds for global operations."
+    },
+    {
+      "id": "L8",
+      "title": "Production OS sandbox and platform coverage",
+      "status": "unverified",
+      "detail": "The proposal requires a real filesystem/network/resource boundary, but this stage did not execute sandbox tests and the frozen W4 says subprocess isolation was not used. Candidate mechanism, child-process termination behavior and Windows/macOS support are undecided.",
+      "next_step": "Select a platform-scoped OS isolation mechanism, run escape/resource/cancellation tests, and document unavailable platforms rather than treating an import filter as isolation."
+    },
+    {
+      "id": "L9",
+      "title": "Crash-safe save, stale-lock recovery and shared-filesystem behavior",
+      "status": "unverified",
+      "detail": "Temp-write/fsync/rename and project writer locking are product choices; their guarantees depend on platform/filesystem. DuckDB documents file locking and cautions about shared/network directories. No fault-injection or multi-machine tests ran. [S10]",
+      "next_step": "Run proposed V5 on supported local filesystems, test process crash at each save boundary, and explicitly reject or qualify unsupported network-share locking."
+    },
+    {
+      "id": "L10",
+      "title": "Dependency-lock reproducibility and external access inventory",
+      "status": "unverified",
+      "detail": "PEP 723 standardizes inline dependency/Python metadata but does not define environment resolution or a runner; auto-installing untrusted metadata can download and execute package code. The chosen lockfile manager, wheel/source identity policy and file/network audit are critical dependencies. [S8]",
+      "next_step": "Select a lock/resolver, record exact environment inputs, keep installs explicit, and test that sandboxed replay cannot read undeclared paths or use undeclared network access."
+    },
+    {
+      "id": "L11",
+      "title": "Python support matrix at product release",
+      "status": "to_recheck",
+      "detail": "The proposal chooses CPython 3.11–3.13 for initial CI/support and defers 3.14 until package/kernel/engine compatibility passes. Lifecycle dates come from a 2026-10-05 aggregator snapshot plus the devguide's five-year policy and will age. [S9, S19]",
+      "next_step": "At release, compare upstream support status with the actual notebook, DuckDB binding and critical package matrix; publish tested versus opportunistic versions separately."
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "schema": "er9.evaluator-current-W01-receipt-check.v1",
+  "manifest_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/MANIFEST.json",
+    "sha256": "962205ee652d2665975719f1f9a2bacd3417386f493523e75da155c3ef9d27c7"
+  },
+  "execution_id": "exec-q6mffan7",
+  "exact_current_candidate_files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-q6mffan7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/code.py",
+      "sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8",
+      "original_sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8",
+      "evidence_kind": "candidate_code",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation",
+      "verified": true
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-q6mffan7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/data.json",
+      "sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03",
+      "original_sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03",
+      "evidence_kind": "candidate_input",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation",
+      "verified": true
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-q6mffan7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stdout.bin",
+      "sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1",
+      "original_sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1",
+      "evidence_kind": "candidate_stdout",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation",
+      "verified": true
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-q6mffan7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation",
+      "verified": true
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-q6mffan7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/execution-facts.json",
+      "sha256": "c33b8d7be11b18c54ca5a4f892e95948ea3ca776c201dd985376ff3a15acb6a3",
+      "original_sha256": "616403a817c790f125b7be0c1008d807add5c721dd13b114a20dffa606111af5",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positiveactor/code/input/stream/exit/bootstrap/cleanup/scope/limits projection; omitprivateunit/path/history/economics/timing",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ],
+      "verified": true
+    }
+  ],
+  "facts": {
+    "actor": "candidate",
+    "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+    "bootstrap_started": true,
+    "cleanup_classification": "collected_unit_absent",
+    "cleanup_confirmed": true,
+    "cleanup_state_returncode": 0,
+    "cleanup_stop_returncode": 5,
+    "code_sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8",
+    "control_group_absent_after_stop": null,
+    "control_group_populated_after_stop": null,
+    "data_sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03",
+    "execution_id": "exec-q6mffan7",
+    "execution_label": "executed by candidate",
+    "exit_code": 0,
+    "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+    "limits": {
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "network": "new empty namespace",
+      "stream_bytes_each": 32768,
+      "tasks": 16,
+      "wall_seconds": 5
+    },
+    "schema": "er9.execution.result.v1",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 261,
+    "stdout_sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1",
+    "stopped_by_adapter": null,
+    "unit_active_state_after_stop": "inactive",
+    "unit_load_state_after_stop": "not-found"
+  },
+  "candidate_catalog_hashes_match": true,
+  "evaluator_reproduction_is_separate": true,
+  "actual_engine_or_notebook_execution_credit": false
+}

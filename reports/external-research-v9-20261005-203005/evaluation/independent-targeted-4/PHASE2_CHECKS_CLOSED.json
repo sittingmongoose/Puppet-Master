@@ -1,0 +1,17 @@
+{
+  "schema": "er9.phase2-checking-closure.v1",
+  "checking_closed_utc": "2026-10-06T03:48:21.329409+00:00",
+  "checking_closed_monotonic_seconds": 88920.186395999,
+  "phase2_checking_elapsed_seconds": 475.46410856899456,
+  "phase2_inclusive_elapsed_at_checking_close_seconds": 526.6495998280006,
+  "whole_elapsed_at_checking_close_seconds": 1205.3632907580031,
+  "phase2_checking_cap_seconds": 600,
+  "phase2_checking_overrun": false,
+  "whole_cap_seconds": 1800,
+  "whole_overrun_at_checking_close": false,
+  "no_reset": true,
+  "required_phase2_checks_completed": true,
+  "unexposed_failed_call_reasons": "UNKNOWN; courier bounded exact trusted event selection found zero matches, no broad logs or bypass.",
+  "unexposed_native_opaque_goal_id": "UNKNOWN_NOT_EXPOSED; session/thread not substituted.",
+  "unexposed_physical_provider_and_dollar_cost": "UNKNOWN"
+}

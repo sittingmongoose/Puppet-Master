@@ -1,0 +1,433 @@
+{
+  "arms": {
+    "A": {
+      "artifact_presence": {
+        "leads": false,
+        "proposal": true,
+        "sources": true,
+        "witnesses": false
+      },
+      "delivery_outcome": "FAIL_SCREEN",
+      "full_pipeline_quality": "UNASSESSED",
+      "reason": "Limited source assertions supported; mandatory witness/leads missing and all current claims not independently assessed.",
+      "scientific_source_coverage": "PARTIAL",
+      "scientific_whole_case_outcome": "UNASSESSED"
+    },
+    "B": {
+      "artifact_presence": {
+        "leads": false,
+        "proposal": false,
+        "sources": false,
+        "witnesses": false
+      },
+      "delivery_outcome": "FAIL_SCREEN",
+      "full_pipeline_quality": "UNASSESSED",
+      "reason": "No final or required catalogs.",
+      "scientific_source_coverage": "UNASSESSED",
+      "scientific_whole_case_outcome": "UNASSESSED"
+    }
+  },
+  "causal_method_effect": "UNASSESSED",
+  "clocks": {
+    "no_reset": true,
+    "phase2": "NOT_STARTED",
+    "phase2_budget_seconds": 600,
+    "schema": "er9.evaluator-clock.v1",
+    "source_budget_overrun_seconds": 0,
+    "source_budget_seconds": 1200,
+    "source_checking_end_monotonic_ns": 88349343576955,
+    "source_checking_end_utc": "2026-10-06T03:38:50.486589+00:00",
+    "source_checking_seconds": 430.408189862,
+    "source_deadline_monotonic_ns": 89118935387093,
+    "start_monotonic_ns": 87918935387093,
+    "start_unix_ns": 1791257500078387685,
+    "start_utc": "2026-10-06T03:31:40.078340+00:00",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 89718935387093
+  },
+  "common_dimensions": [
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q1"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q2"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q3"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q4"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q5"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q6"
+    },
+    {
+      "A": "PARTIAL",
+      "B": "UNASSESSED",
+      "id": "Q7"
+    },
+    {
+      "A": "FAIL_SCREEN",
+      "B": "UNASSESSED",
+      "id": "Q8"
+    }
+  ],
+  "common_important_checks": [
+    {
+      "A": {
+        "assessment": "PARTIAL",
+        "finding": "Independent mechanisms and #319 chain checked; supplied inputs cannot establish autonomous discovery."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; failed delivery screen"
+      },
+      "check_id": "A-P1",
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "A": {
+        "assessment": "PARTIAL",
+        "finding": "Selected version/condition/data contract claims checked; app feasibility and exhaustive consequential claims remain unassessed."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; failed delivery screen"
+      },
+      "check_id": "A-P2",
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "A": {
+        "assessment": "FAIL_SCREEN",
+        "finding": "Mandatory candidate witness evidence missing; own arithmetic witness provides no candidate credit."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; failed delivery screen"
+      },
+      "check_id": "A-P3",
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "A": {
+        "assessment": "FAIL_SCREEN",
+        "finding": "Promised catalogs missing; selected supported source qualifications preserved in final, seed-to-final repairs not assessed."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; failed delivery screen"
+      },
+      "check_id": "A-P4",
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "A": {
+        "assessment": "PARTIAL",
+        "finding": "Required workflow/resource/recovery/usability/alternatives content is present and conditionally scoped; complete source/behavior assessment stopped at delivery failure."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; failed delivery screen"
+      },
+      "check_id": "A-P5",
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "criteria_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_A_brief_obligations": 12,
+    "target_scope_checks": 3
+  },
+  "defects": [
+    {
+      "alias": "A",
+      "checks": [
+        "Q8",
+        "A11",
+        "A12",
+        "A-P3",
+        "A-P4",
+        "D-V16-A-03",
+        "D-V16-A-P2",
+        "D-V16-A-P3"
+      ],
+      "description": "Mandatory witnesses.json and leads.json are absent. Designated final explicitly claims CHECK W1/W2/W3 and refers to W4 and to preserved receipts/history inventories. No actual candidate code/input/expected/stdout/stderr/exit is available at the required witness path; structured leads/history is unavailable. The assertion that inventories preserve detail is not supported by current delivery. Execution claims are UNVERIFIED, not established fabricated. Evaluator execution cannot repair delivery or confer candidate execution credit.",
+      "evidence": [
+        "dispatch anonymous_outputs[A] witness_catalog=null, leads=null",
+        "proposal lines 3,43,51,83, delivery-form comparison final paragraph"
+      ],
+      "id": "E5-D1",
+      "severity": "CONSEQUENTIAL_DELIVERY"
+    },
+    {
+      "alias": "B",
+      "checks": [
+        "Q8",
+        "D-V16-A-03",
+        "D-V16-A-P2",
+        "D-V16-A-P3"
+      ],
+      "description": "No designated final, sources.json, witnesses.json or leads.json. Delivery screen fails; all scientific/source and semantic remaining scope is UNASSESSED. Empty delivery earns no quality credit.",
+      "evidence": [
+        "dispatch anonymous_outputs[B] all four current artifacts null"
+      ],
+      "id": "E5-D2",
+      "severity": "CONSEQUENTIAL_DELIVERY"
+    },
+    {
+      "alias": "A",
+      "checks": [
+        "Q2",
+        "Q7",
+        "A02",
+        "A10"
+      ],
+      "description": "S4 applicability says this proposal limits volume-mask editing to 2D slices; final body does not explicitly state that precise restriction. The chosen ordinary 2D drawing scope and proposed validation avoid a demonstrated native-3D-editing claim. Treat volume editing as unresolved; do not promote a catalog inference to an established final contract.",
+      "evidence": [
+        "S4 Shapes documentation Non-editable mode",
+        "proposal Decision and workflow Annotate"
+      ],
+      "id": "E5-Q1",
+      "severity": "QUALIFICATION_GAP"
+    }
+  ],
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-5-PAIRED-001/dispatch.json",
+    "sha256": "6fbff23f0909c8ddfe2a607c0075de5b2b9f8ddc5dcab6c05d4d2bb933227547"
+  },
+  "evaluation_id": "independent-targeted-5",
+  "execution": {
+    "actual_tifffile_regression_execution": "UNASSESSED_UNEXECUTED_BY_EVALUATOR",
+    "candidate_execution_claims": "UNVERIFIED",
+    "code_sha256": "e4c5cf3e01147fabc3f468305388f687b0a19abf8e97dcdbf1cc7dadadecaf54",
+    "evaluator_witness": "executed only by evaluator",
+    "permission_denial": false,
+    "result_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/independent-execution-result.json",
+    "stdout_sha256": "c6093ad1a44e776ce535270c634b0abf7a210e87b13c060d1914f2e55cc8fdb4"
+  },
+  "matched_winner": "UNASSESSED_NO_MATCHED_WINNER",
+  "obligation_coverage": [
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Workflow and originals/support boundaries are present; implementation and all current claims not exhaustively assessed.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A01"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Coordinate/frame contract and NGFF transform limitations partly checked; complete application mapping/volume editing unresolved.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A02"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Display-versus-sample distinction and export loss conditions partly source-checked; no application export executed.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A03"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Resource/progress/cancel targets are proposed UNEXECUTED; feasibility and actual resource performance UNASSESSED.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A04"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Identity, reference-versus-portability, relocation and recovery choices present; rename source checked, actual protocol UNASSESSED.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A05"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Styles, command-stack undo/redo, keyboard/accessibility validation present; usability and actual persistence UNASSESSED.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A06"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Napari and tifffile provide independent implementation mechanisms, with NGFF as a complementary specification. Autonomous discovery is outside this supplied-source diagnostic and is not credited.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A07"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "The #319 source/test/fix/release chain is supported with actual test execution unestablished; no discovery credit.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A08"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Alternatives and later NGFF interchange opportunity remain in final; complete optional/lead preservation UNASSESSED because inventory missing and seed body not accessed.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A09"
+    },
+    {
+      "A": {
+        "coverage": "PARTIAL",
+        "finding": "Architecture choice is conditional, with explicit plugin/decode/axis/hash/filesystem gates; feasibility not established.",
+        "outcome": "UNASSESSED_FULL_OBLIGATION"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A10"
+    },
+    {
+      "A": {
+        "coverage": "UNASSESSED",
+        "finding": "FAIL_SCREEN for missing mandatory witness evidence. Arithmetic independently supported only by evaluator; candidate W3/W4 actual execution UNASSESSED.",
+        "outcome": "FAIL_SCREEN"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A11"
+    },
+    {
+      "A": {
+        "coverage": "UNASSESSED",
+        "finding": "FAIL_SCREEN for absent promised witness/lead detail. Input-to-output semantic preservation/repair is UNASSESSED without seed/body comparison.",
+        "outcome": "FAIL_SCREEN"
+      },
+      "B": {
+        "coverage": "UNASSESSED",
+        "outcome": "UNASSESSED_AFTER_DELIVERY_FAIL"
+      },
+      "obligation_id": "A12"
+    }
+  ],
+  "pair_id": "D-V16-A",
+  "prohibited_actions_not_taken": [
+    "No candidate repairs/new candidate/native Goal/model fallback/best-of/regrade",
+    "No prior grades/identity/history/economics/source key before this freeze",
+    "No raw native conversation/auth/proprietary content read or published",
+    "No PM canon/repository edits"
+  ],
+  "protocol_version": "ER9-independent-output-v1",
+  "remainder_rule": "Delivery screen is decisive. Remainder remains UNASSESSED; explicitly requested limited source checks do not turn the partial deliverable into a full review or PASS.",
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/reservation.json",
+    "sha256": "26e587b82de103dba198c6aa281d41066fffc2424f3f4e072befd38ffeefc148"
+  },
+  "schema": "er9.independent-phase1-judgment.v1",
+  "scope": "Current paired targeted diagnostic; no full-pipeline or autonomous discovery claim",
+  "source_identity_and_blinding": {
+    "perfect_blinding_claim": false,
+    "phase2_identity_model_history_economics_keys_opened": false,
+    "unavoidable_hints": [
+      "Root assignment named pair and supplied model selector.",
+      "Exact launched task and A final body expose V16 modifier/stage label."
+    ]
+  },
+  "target_scope_checks": [
+    {
+      "A": {
+        "assessment": "PARTIAL",
+        "finding": "Selected consequential source statements supported; original-to-current correction/preservation and all new claims remain unassessed."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; delivery failure prevents scientific comparison"
+      },
+      "check_id": "D-V16-A-P1",
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "A": {
+        "assessment": "FAIL_SCREEN",
+        "finding": "Supported conditions and explicit dependencies remain in available body, but complete required delivery fails; absent side source quality unassessed."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; delivery failure prevents scientific comparison"
+      },
+      "check_id": "D-V16-A-P2",
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "A": {
+        "assessment": "FAIL_SCREEN",
+        "finding": "Separate structured lead/history inventory absent; current witness execution scope cannot be verified. Matched-budget causal differences unassessed."
+      },
+      "B": {
+        "assessment": "UNASSESSED",
+        "reason": "No current final; delivery failure prevents scientific comparison"
+      },
+      "check_id": "D-V16-A-P3",
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ]
+}

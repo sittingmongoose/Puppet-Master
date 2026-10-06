@@ -1,0 +1,74 @@
+[
+  {
+    "source_ids": "S01",
+    "claim_family": "JupyterLab is an existing notebook UI/document precedent",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Existing .ipynb editor; no product provenance/isolation adoption guarantee."
+  },
+  {
+    "source_ids": "S02",
+    "claim_family": "Cell list, code execution_count/output and optional metadata",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Notebook format supports document interchange; it is not full source/environment/run provenance."
+  },
+  {
+    "source_ids": "S03/S04/E04",
+    "claim_family": "Sequential replay, timeout/hooks, request-parent/session and separate control channel",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "v0.11.0 client.py enumerates notebook cells at lines706-711; docs protocol5.5 distinguishes package version8.10.0; not isolation/reproducibility."
+  },
+  {
+    "source_ids": "S05",
+    "claim_family": "Server access permits arbitrary code execution",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Auth limits access; proposed OS boundary is distinct and unimplemented."
+  },
+  {
+    "source_ids": "S06",
+    "claim_family": "CSV sample20480 and seekable versus compressed sampling; sniff_csv recipe",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Only sampled inference; exact pin1425b30."
+  },
+  {
+    "source_ids": "S07",
+    "claim_family": "JSON sample20480/files32, opt-in schema union, default parse errors, missing->NULL",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Typed projection collapse requires explicit contract; raw absence is preserved only by a proposed path."
+  },
+  {
+    "source_ids": "S08",
+    "claim_family": "Operator-specific order and unstable tied ORDER BY",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Total key needed; reader default order does not extend through joins/grouping."
+  },
+  {
+    "source_ids": "S09/S10",
+    "claim_family": "Spill capabilities, blockers, holistic/list/pivot exceptions and memory-limit scope",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "No benchmark/16GB/5GB runtime success is claimed."
+  },
+  {
+    "source_ids": "S11",
+    "claim_family": "Python path/Arrow/Pandas/Polars inputs, lazy relations and global connection thread safety",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Interop queried inputs read-only; no chosen-wheel compatibility or streaming guarantee."
+  },
+  {
+    "source_ids": "S12-S15/E02/E03",
+    "claim_family": "7789 failure ->8253 merge mechanism -> associated regression",
+    "result": "SUPPORTED",
+    "conditions_and_limits": "Merge3b58 contains test count4980; v0.9.0 adds SAMPLE_SIZE=-1. Exact released-binary/CI pass remains unverified."
+  },
+  {
+    "source_ids": "W01",
+    "claim_family": "Synthetic key/order/absence/null/Unicode assertions",
+    "result": "SUPPORTED_BY_INDEPENDENT_REPRODUCTION",
+    "conditions_and_limits": "Exact code/input/stdout hashes match; duplicate-ID negative exits1. Native candidate receipt authenticity held until Phase2."
+  },
+  {
+    "source_ids": "F01/E05",
+    "claim_family": "Fingerprints plus live read-only references prove recorded-input use",
+    "result": "NOT_SUPPORTED",
+    "conditions_and_limits": "Independent counterexample reads B while before/commit hashes identify A; require stable input epoch or explicit uncertainty."
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T03:57:56.339566+00:00",
+  "source_observed_utc": [
+    "2026-10-06T03:50:48.797520+00:00",
+    "2026-10-06T03:52:40.721286+00:00"
+  ],
+  "meaningful_update_count": 22,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "evaluation/independent-targeted-5/closure.json",
+      "sha256": "5fbbcac5cb0a8d9b55160fb2adec97e8a899e6b8ed84a732a9df189364d4dbfb",
+      "bytes": 2046
+    },
+    {
+      "path": "evaluation/independent-targeted-5/publication-selector-003.json",
+      "sha256": "4a43f8e2d8a8c6d3614c587cb09ec13da414c76e3ca4cde76c69b1ca2d881443",
+      "bytes": 4962
+    },
+    {
+      "path": "ops/assessment-dispatch-001/QUEUE_SNAPSHOT_002.json",
+      "sha256": "689e652969020e457b5dab53894a4c4ba49451d21ac05c0fea00357523233e5a",
+      "bytes": 113502
+    },
+    {
+      "path": "ops/assessment-dispatch-001/CURRENT_REVIEWER_CLOSURE_PINS_001.json",
+      "sha256": "2f48b4d607c96177ef85273db545ce8588a0e4a8c5856697fbb59489d8929eb1",
+      "bytes": 1090
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T035756.339566Z/BACKUP_RECEIPT.json",
+    "sha256": "aa5272708e6d6c94fd5689acf3f8e44dc7417741f38c94d0ecaa42dc888da2c4",
+    "bytes": 878
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "fc468218723c099f33e51d8afba2e28f266adb60ac8f2be5b79953d2e56bc9a0",
+      "bytes": 101208
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "fc468218723c099f33e51d8afba2e28f266adb60ac8f2be5b79953d2e56bc9a0",
+      "bytes": 101208
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "ba8a85c61c9d5a2d51444146fef045a657ede0f2f74f06bda48e46e7ac32fb90",
+      "bytes": 12755
+    }
+  ],
+  "scope": "TD5neutralfinalclock/scheduler002 plus rootlaternormalTD7admission/prospective1.5readycodeonly; formerdenial retained/no sciencebody or deployment inference"
+}

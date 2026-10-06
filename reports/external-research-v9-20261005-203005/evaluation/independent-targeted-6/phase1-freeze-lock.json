@@ -1,0 +1,22 @@
+{
+  "evaluation_id": "independent-targeted-6",
+  "frozen_monotonic_ns": 88620760782545,
+  "frozen_utc": "2026-10-06T03:43:21.903795+00:00",
+  "immutable_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-judgment.json",
+      "sha256": "31c238783469bc12acea861ac3331d486af3843c7d5719bceb19430d6abf78aa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-report.md",
+      "sha256": "2e07f8eb0f6fe020f3d4fa783a14011f1ef4c0fda6fbf9b644eb8a088cb71e24"
+    }
+  ],
+  "no_grade_rewrite": true,
+  "original_start_monotonic_ns": 88116291718721,
+  "phase2_received_before_lock": false,
+  "schema": "er9.phase1-freeze-lock.v1",
+  "source_deadline_monotonic_ns": 89316291718721,
+  "source_end_monotonic_ns": 88620760782545,
+  "whole_deadline_monotonic_ns": 89916291718721
+}

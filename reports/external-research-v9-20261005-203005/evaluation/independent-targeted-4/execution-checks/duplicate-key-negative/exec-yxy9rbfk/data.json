@@ -1,0 +1,1 @@
+{"environment":{"lock":"lock-a","runtime":"candidate-isolated-python"},"rows":[{"id":3,"note":"café 東京","timestamp":"2025-02-03T11:00:00Z"},{"id":3,"note":null,"timestamp":"2025-02-01T09:30:00Z"},{"id":2,"timestamp":"2025-02-02T18:15:00Z"}],"transform_code":"sort by unique id; preserve missing versus null; project id,timestamp,note"}

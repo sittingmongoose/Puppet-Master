@@ -1,0 +1,74 @@
+[
+  {
+    "label": "current_native_result",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/native/result.json",
+    "expected_sha256": "6bf88c11e74055cb5da6e0d2ae8a46ab832b4851a010c4533cfd2378fff42110",
+    "actual_sha256": "6bf88c11e74055cb5da6e0d2ae8a46ab832b4851a010c4533cfd2378fff42110",
+    "verified": true,
+    "method": "byte hash only; no broad native/model body display"
+  },
+  {
+    "label": "current_original_freeze",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/OUTPUT_FREEZE.json",
+    "expected_sha256": "1d2da01abe5211480b74428f47cf977c1f6616046537e9197dfa748330a69755",
+    "actual_sha256": "1d2da01abe5211480b74428f47cf977c1f6616046537e9197dfa748330a69755",
+    "verified": true,
+    "method": "byte hash only; no broad native/model body display"
+  },
+  {
+    "label": "current_stage",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/stage.json",
+    "expected_sha256": "590fb115171e86b19670b814ba6c31fbb9f324af643a51833800d446049bb35e",
+    "actual_sha256": "590fb115171e86b19670b814ba6c31fbb9f324af643a51833800d446049bb35e",
+    "verified": true,
+    "method": "byte hash only; no broad native/model body display"
+  },
+  {
+    "label": "current_card",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/cards/D-V14-B-SCOPE-R002.json",
+    "expected_sha256": "1f502dd5ff4beb129231aa61350342899e11990ad63b78905b467a03b1ca1cd7",
+    "actual_sha256": "1f502dd5ff4beb129231aa61350342899e11990ad63b78905b467a03b1ca1cd7",
+    "verified": true,
+    "method": "byte hash only; no broad native/model body display"
+  },
+  {
+    "label": "current_designated_or_auxiliary_artifact",
+    "relative_path": "final/leads.json",
+    "expected_sha256": "7199947116c2fa50330e0f9d0eab64a710341b6e115f17f50dcda2cd7a54d8c1",
+    "actual_sha256": "7199947116c2fa50330e0f9d0eab64a710341b6e115f17f50dcda2cd7a54d8c1",
+    "verified": true,
+    "method": "byte hash only; no history substitution"
+  },
+  {
+    "label": "current_designated_or_auxiliary_artifact",
+    "relative_path": "final/proposal.md",
+    "expected_sha256": "ebc4bf26767bb226a8b1d2a76915d3f0aa47166c3515c4cac584ea0e8d053c49",
+    "actual_sha256": "ebc4bf26767bb226a8b1d2a76915d3f0aa47166c3515c4cac584ea0e8d053c49",
+    "verified": true,
+    "method": "byte hash only; no history substitution"
+  },
+  {
+    "label": "current_designated_or_auxiliary_artifact",
+    "relative_path": "final/sources.json",
+    "expected_sha256": "9e7aabebefce92696bb6dea49f41d2f3d9735b994c954d28f03996408111f58e",
+    "actual_sha256": "9e7aabebefce92696bb6dea49f41d2f3d9735b994c954d28f03996408111f58e",
+    "verified": true,
+    "method": "byte hash only; no history substitution"
+  },
+  {
+    "label": "current_designated_or_auxiliary_artifact",
+    "relative_path": "final/witnesses.json",
+    "expected_sha256": "d5c024e5c80d360aff14c69911cecb64cad8ae87862375a5525d6c229980f1a2",
+    "actual_sha256": "d5c024e5c80d360aff14c69911cecb64cad8ae87862375a5525d6c229980f1a2",
+    "verified": true,
+    "method": "byte hash only; no history substitution"
+  },
+  {
+    "label": "current_designated_or_auxiliary_artifact",
+    "relative_path": "research/test.map",
+    "expected_sha256": "b14a49f31d22ddbf5898229ab513335a6211e9356220b949c57c73a006fd9dc3",
+    "actual_sha256": "b14a49f31d22ddbf5898229ab513335a6211e9356220b949c57c73a006fd9dc3",
+    "verified": true,
+    "method": "byte hash only; no history substitution"
+  }
+]

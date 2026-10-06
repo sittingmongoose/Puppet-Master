@@ -1,0 +1,74 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_025_CURRENT_TD4_TD5_TD6_PHASE2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-4_CURRENT_RUNTIME_001.json",
+      "sha256": "c8594a230ea83d4238f4d9a60b8294fd89b5a59ae3a29bf8deaf92492e9ff3d8",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-4_CURRENT_RUNTIME_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-5_CURRENT_RUNTIME_001.json",
+      "sha256": "5b2f2df4151fe0e8fc19c2258d2c6c9384b3e428d2a9bdc76d6c3ae72942f1e0",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-5_CURRENT_RUNTIME_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-6_CURRENT_RUNTIME_001.json",
+      "sha256": "392f16c9302f034a56791fa6ef8fc2ba8d0598d1730fd9469012acec847ef81a",
+      "relative_path": "phase2/INDEPENDENT-TARGETED-6_CURRENT_RUNTIME_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD5_TD6_OWNED_PROOF_ENRICHMENT_CHAIN_001.json",
+      "sha256": "5c4118852c7fba70516b7854586915f824eea609e32f85459c08f2bd87046350",
+      "relative_path": "phase2/TD5_TD6_OWNED_PROOF_ENRICHMENT_CHAIN_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD5_SELECTED_RUNNER_CHAIN_ADDENDUM_002.json",
+      "sha256": "dca55db046d621941384ae19c1298ee8cacfd6d402834d580d49c9f358dc7f45",
+      "relative_path": "phase2/TD5_SELECTED_RUNNER_CHAIN_ADDENDUM_002.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD6_CURRENT_RESOURCE_EXECUTION_CHAIN_001.json",
+      "sha256": "775f4a148f8003957294cee76f829ee0f1bc6832dc7f8ad6efc9ee43b8e2bf81",
+      "relative_path": "phase2/TD6_CURRENT_RESOURCE_EXECUTION_CHAIN_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/code.py",
+      "sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/code.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/data.json",
+      "sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/data.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/execution-facts.json",
+      "sha256": "c33b8d7be11b18c54ca5a4f892e95948ea3ca776c201dd985376ff3a15acb6a3",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/execution-facts.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stderr.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stdout.bin",
+      "sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/A/exec-q6mffan7/stdout.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TD4-CURRENT-W01-001/MANIFEST.json",
+      "sha256": "962205ee652d2665975719f1f9a2bacd3417386f493523e75da155c3ef9d27c7",
+      "relative_path": "evidence/TD4-CURRENT-W01-001/MANIFEST.json"
+    }
+  ],
+  "exclusions": [
+    "private keys",
+    "raw native modelIO",
+    "privateOS/path/session identifiers",
+    "prior candidate outputs/grades",
+    "raw sourcecapture bodies"
+  ],
+  "scope": "current-only positive source-frozen Phase2 metadata/exactcandidate W01 proof"
+}

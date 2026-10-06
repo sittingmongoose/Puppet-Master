@@ -1,0 +1,47 @@
+[
+  {
+    "id": "E01-nbclient-module",
+    "url": "https://nbclient.readthedocs.io/en/latest/_modules/nbclient/client.html",
+    "access_utc": "2026-10-06T03:32:47.157248+00:00",
+    "error": "<HTTPError 404: 'Not Found'>"
+  },
+  {
+    "id": "E02-fix-commit",
+    "url": "https://api.github.com/repos/duckdb/duckdb/commits/3b58f4490f4c9192a8ff4dbd4fcea134be3106a2",
+    "access_utc": "2026-10-06T03:32:47.160276+00:00",
+    "http_status": 200,
+    "bytes": 519489,
+    "sha256": "71ee4c947c313788120835bb458f96ae917da3a3940717eb64da835476a5c007",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/primary-captures/E02-fix-commit.body",
+    "complete": true
+  },
+  {
+    "id": "E03-fix-files",
+    "url": "https://api.github.com/repos/duckdb/duckdb/pulls/8253/files?per_page=100",
+    "access_utc": "2026-10-06T03:32:47.161600+00:00",
+    "http_status": 200,
+    "bytes": 436767,
+    "sha256": "da4504320cff249fc4af1def3cf2894d9b1e9718939e24f114ca372aa66d6e75",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/primary-captures/E03-fix-files.body",
+    "complete": true
+  },
+  {
+    "id": "E04-nbclient-v0.11.0",
+    "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.11.0/nbclient/client.py",
+    "access_utc": "2026-10-06T03:34:01.340619+00:00",
+    "http_status": 200,
+    "bytes": 49883,
+    "sha256": "5a61fded74a94fd0851c8a85d55d12a9e9fb44be34324a44583efe48e874da8a",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/primary-captures/E04-nbclient-v0.11.0.body",
+    "body_complete": true
+  },
+  {
+    "id": "E05-mount",
+    "url": "https://man7.org/linux/man-pages/man8/mount.8.html",
+    "access_utc": "2026-10-06T03:35:12.443825+00:00",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/primary-captures/E05-mount.body",
+    "sha256": "0fd3413f4fb073c6d083925a7ad04ac24af5235be2c28ee73da2f66a54bb16f9",
+    "bytes": 150865,
+    "complete": true
+  }
+]

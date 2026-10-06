@@ -1,0 +1,194 @@
+{
+  "schema": "er9.selected-runtime-hash-enrichment-chain.v1",
+  "source_pins": [
+    {
+      "relative_path": "dev/luna-route/versions/v1.2/dynamic_stage_runner.py",
+      "sha256": "8b1c5f057cf7fa0892c684f5ff3de8cfc98152dfef3fda102dc3743da9d11ece",
+      "exact_source_excerpts": [
+        {
+          "line": 179,
+          "text": "                save()  # structural config/identity is available to exact proof reader"
+        },
+        {
+          "line": 180,
+          "text": "                result['owned_scope_proof']=owned_scope_prove(args.out,args.workspace,total_stop)"
+        },
+        {
+          "line": 181,
+          "text": "                result['held_owned_processes_quiet']=result['owned_scope_proof']['native_owned_processes_quiet']"
+        },
+        {
+          "line": 182,
+          "text": "                result['client_tool_owned_processes_quiet']=result['owned_scope_proof']['client_tool_owned_processes_quiet']"
+        },
+        {
+          "line": 183,
+          "text": "                result['all_owned_scopes_quiet']=result['owned_scope_proof']['all_owned_scopes_quiet']"
+        },
+        {
+          "line": 188,
+          "text": "        result['elapsed_seconds']=(time.monotonic_ns()-birth_ns)/1e9"
+        },
+        {
+          "line": 189,
+          "text": "        result['closed_before_original_total_stop']=time.monotonic_ns()<total_stop"
+        },
+        {
+          "line": 190,
+          "text": "        result['raw_native_output_persisted_by_driver']=False"
+        },
+        {
+          "line": 195,
+          "text": "        save()"
+        }
+      ]
+    },
+    {
+      "relative_path": "dev/luna-route/owned_scope_proof.py",
+      "sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "exact_source_excerpts": [
+        {
+          "line": 108,
+          "text": "    receipt={'schema':'er9.luna.owned-scope-proof.v1','observation_monotonic_ns':time.monotonic_ns(),"
+        },
+        {
+          "line": 109,
+          "text": "        'observation_epoch':time.time(),'thread_id':result.get('thread_id'),"
+        },
+        {
+          "line": 110,
+          "text": "        'reader_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),"
+        },
+        {
+          "line": 111,
+          "text": "        'native_receipt_sha256':hashlib.sha256((native_out/'result.json').read_bytes()).hexdigest(),"
+        },
+        {
+          "line": 112,
+          "text": "        'services':rows,'execution_units':executions,"
+        },
+        {
+          "line": 113,
+          "text": "        'native_owned_processes_quiet':rows[0]['quiet'],"
+        },
+        {
+          "line": 114,
+          "text": "        'client_tool_owned_processes_quiet':all(r['quiet'] for r in rows[1:]),"
+        },
+        {
+          "line": 115,
+          "text": "        'execution_units_quiet':all(r['quiet'] for r in executions),"
+        }
+      ]
+    }
+  ],
+  "current_selected_receipts": [
+    {
+      "evaluation_id": "independent-targeted-5",
+      "alias": "A",
+      "current_job_id": "D-V16-A-treatment-diagnostic-a001",
+      "final_native_result_sha256": "a3496415df9842049345fc300059a227a141c81ae724bea1547bbeba8448befd",
+      "runtime_source_sha256": {
+        "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+        "native_driver.py": "1bad76d4db8a39c9b3deb216088fe9d23e961bf000fdb076c15b5aac36da8d1e",
+        "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+        "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+        "stage_runner.py": "16fb13546650d45ec24cbcf21407925ded8fa7415765d7fdfc7b92ca9dd1e5ad",
+        "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+        "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4",
+        "client_tool_relay.py": "36ec0aec231a8fc8665914e4577958d85e35f5dd45c43d919e36286318a835ed",
+        "dynamic_driver.py": "8e5ee43ea1e90fffd472f2c6006ccdfb2b1a4a8b12d95d49923577cee6c1e70b",
+        "dynamic_projector.py": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b",
+        "dynamic_stage_runner.py": "7991ce8c1a68a09a167a054a93cda14f6b9a2ade387ba0bf6e70cc4a5d460911",
+        "tool_release.py": "148bd9e688ae674690d3d130f750d2d782aaf0814163d47f8cc6e6f7ae515ddc",
+        "owned_scope_proof.py": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed"
+      },
+      "proof_reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "embedded_pre_enrichment_native_sha256": "165a4d73dcc3c57a1292fee1728db9b02b78251216baf441fb25fa7f4517dd37",
+      "runner_pin_matches": false,
+      "reader_pin_matches": true,
+      "separately_retained_pre_enrichment_bytes": "UNKNOWN_NOT_LOCATED_OR_RECONSTRUCTED"
+    },
+    {
+      "evaluation_id": "independent-targeted-5",
+      "alias": "B",
+      "current_job_id": "D-V16-A-control-diagnostic-a001",
+      "final_native_result_sha256": "09a3d353b40aef0353d2e1f95fb2c66ff6eca53371643954a3db427a2df7c18a",
+      "runtime_source_sha256": {
+        "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+        "native_driver.py": "1bad76d4db8a39c9b3deb216088fe9d23e961bf000fdb076c15b5aac36da8d1e",
+        "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+        "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+        "stage_runner.py": "16fb13546650d45ec24cbcf21407925ded8fa7415765d7fdfc7b92ca9dd1e5ad",
+        "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+        "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4",
+        "client_tool_relay.py": "36ec0aec231a8fc8665914e4577958d85e35f5dd45c43d919e36286318a835ed",
+        "dynamic_driver.py": "8e5ee43ea1e90fffd472f2c6006ccdfb2b1a4a8b12d95d49923577cee6c1e70b",
+        "dynamic_projector.py": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b",
+        "dynamic_stage_runner.py": "7991ce8c1a68a09a167a054a93cda14f6b9a2ade387ba0bf6e70cc4a5d460911",
+        "tool_release.py": "148bd9e688ae674690d3d130f750d2d782aaf0814163d47f8cc6e6f7ae515ddc",
+        "owned_scope_proof.py": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed"
+      },
+      "proof_reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "embedded_pre_enrichment_native_sha256": "f165e0eb2d4ffdd9efa3b26265b9df672e9d54cd5a3874e005cd509d89765af1",
+      "runner_pin_matches": false,
+      "reader_pin_matches": true,
+      "separately_retained_pre_enrichment_bytes": "UNKNOWN_NOT_LOCATED_OR_RECONSTRUCTED"
+    },
+    {
+      "evaluation_id": "independent-targeted-6",
+      "alias": "A",
+      "current_job_id": "D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+      "final_native_result_sha256": "f6475ad897ca4bba1d0c2d0290eef59e4612e4face038353e01aad6367e14764",
+      "runtime_source_sha256": {
+        "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+        "native_driver.py": "1bad76d4db8a39c9b3deb216088fe9d23e961bf000fdb076c15b5aac36da8d1e",
+        "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+        "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+        "stage_runner.py": "16fb13546650d45ec24cbcf21407925ded8fa7415765d7fdfc7b92ca9dd1e5ad",
+        "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+        "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4",
+        "client_tool_relay.py": "36ec0aec231a8fc8665914e4577958d85e35f5dd45c43d919e36286318a835ed",
+        "dynamic_driver.py": "8e5ee43ea1e90fffd472f2c6006ccdfb2b1a4a8b12d95d49923577cee6c1e70b",
+        "dynamic_projector.py": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b",
+        "dynamic_stage_runner.py": "7991ce8c1a68a09a167a054a93cda14f6b9a2ade387ba0bf6e70cc4a5d460911",
+        "tool_release.py": "148bd9e688ae674690d3d130f750d2d782aaf0814163d47f8cc6e6f7ae515ddc",
+        "owned_scope_proof.py": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed"
+      },
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_sha256": "b1922288517780e30b84b9adc7face2a6a619bef7ca8f419590e87251313bc7e",
+      "runner_pin_matches": false,
+      "reader_pin_matches": false,
+      "separately_retained_pre_enrichment_bytes": "UNKNOWN_NOT_LOCATED_OR_RECONSTRUCTED"
+    },
+    {
+      "evaluation_id": "independent-targeted-6",
+      "alias": "B",
+      "current_job_id": "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+      "final_native_result_sha256": "aa52c7889879caf8098d5876c98aa6d21dbb89cfbcef422930d53df5dda61192",
+      "runtime_source_sha256": {
+        "controls.py": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34",
+        "native_driver.py": "1bad76d4db8a39c9b3deb216088fe9d23e961bf000fdb076c15b5aac36da8d1e",
+        "projector.py": "74c1084659a919097864f1a31afa2c9ed3744c1f99511a86d00bdb591903b35f",
+        "host_guard.py": "9428f2a107819128394a4edb3f07c4ce957ad0dbcfe93d967c3c2191a917bf04",
+        "stage_runner.py": "16fb13546650d45ec24cbcf21407925ded8fa7415765d7fdfc7b92ca9dd1e5ad",
+        "restricted-luna-catalog.json": "8a4b241efd51025bdf39ba0b7e6ca39ad94b5a25efff5f98b8a330ab08c992f3",
+        "item-contract.json": "c14555752205eae3994f831016f269f7e6c066ea6ddf8c11774dced4acb45da4",
+        "client_tool_relay.py": "36ec0aec231a8fc8665914e4577958d85e35f5dd45c43d919e36286318a835ed",
+        "dynamic_driver.py": "8e5ee43ea1e90fffd472f2c6006ccdfb2b1a4a8b12d95d49923577cee6c1e70b",
+        "dynamic_projector.py": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b",
+        "dynamic_stage_runner.py": "7991ce8c1a68a09a167a054a93cda14f6b9a2ade387ba0bf6e70cc4a5d460911",
+        "tool_release.py": "148bd9e688ae674690d3d130f750d2d782aaf0814163d47f8cc6e6f7ae515ddc",
+        "owned_scope_proof.py": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed"
+      },
+      "proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_sha256": "06256957cde222933d2ef1ad4bfa6aa627ac5059bcd24c94d67fda6078e61206",
+      "runner_pin_matches": false,
+      "reader_pin_matches": false,
+      "separately_retained_pre_enrichment_bytes": "UNKNOWN_NOT_LOCATED_OR_RECONSTRUCTED"
+    }
+  ],
+  "source_order_proof": "runner saves result before proof call; reader hashes currently saved result; returned proof appended alongside quiet fields/elapsed/route; final save serializes enriched result. Inline preembedding hash does not purport to hash final enriched bytes.",
+  "old_pre_enrichment_byte_identity": "UNKNOWN; no reconstruction/no separately retained bytes claimed",
+  "no_grade_or_quiet_flag_rewrite": true
+}

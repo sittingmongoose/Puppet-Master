@@ -1,0 +1,561 @@
+{
+  "comparison": "No winner or causal conclusion. Current original time and memory envelopes match; both native Goals paused/interrupted and both four-artifact deliveries incomplete. Scientific difference remains exactly frozen in Phase1.",
+  "evaluation_id": "independent-targeted-6",
+  "evaluator_physical_provider_runtime_attestation": "UNKNOWN",
+  "evaluator_requested_effort": "xhigh",
+  "evaluator_requested_model": "gpt-6.1-sol",
+  "no_clock_reset": true,
+  "original_whole_deadline_monotonic_ns": 89916291718721,
+  "pair_id": "D-V15-B-SCOPE-R002",
+  "phase2_inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-6_PHASE2_KEY_001.json",
+      "sha256": "82363b47261f808beb5c8cc50d9af15bbfdb7676bc78085fde490aaedf39ec72"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-6_CURRENT_RUNTIME_001.json",
+      "sha256": "392f16c9302f034a56791fa6ef8fc2ba8d0598d1730fd9469012acec847ef81a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD6_CURRENT_RESOURCE_EXECUTION_CHAIN_001.json",
+      "sha256": "775f4a148f8003957294cee76f829ee0f1bc6832dc7f8ad6efc9ee43b8e2bf81"
+    }
+  ],
+  "required_checking_end_monotonic_ns": 89124724488481,
+  "required_checking_end_utc": "2026-10-06T03:51:45.867501+00:00",
+  "required_phase2_budget_seconds": 600,
+  "required_phase2_inclusive_elapsed_seconds": 480.519745351,
+  "required_phase2_overrun_seconds": 0,
+  "rows": [
+    {
+      "actual_admitted_input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "alias": "A",
+      "arm": "control",
+      "artifact_presence_validity": [
+        {
+          "bytes": 22421,
+          "designation": "designated_final",
+          "present": true,
+          "semantic_PASS_inferred": false,
+          "sha256": "b39dcd616a7468a06d901a927bb1f70cfdb59abb04186dfce4febcb2661c4ffd",
+          "validity": "PRESENT_NONEMPTY_UTF8"
+        },
+        {
+          "designation": "source_catalog",
+          "present": false,
+          "validity": "MISSING"
+        },
+        {
+          "designation": "witness_catalog",
+          "present": false,
+          "validity": "MISSING"
+        },
+        {
+          "designation": "leads",
+          "present": false,
+          "validity": "MISSING"
+        }
+      ],
+      "candidate_execution_operational_receipt": {
+        "catalog_required_delivery_missing_if_A": true,
+        "exact_file_hashes_match_inventory": true,
+        "positive_fields": {
+          "actor": "candidate",
+          "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+          "bootstrap_started": true,
+          "cleanup_classification": "collected_unit_absent",
+          "cleanup_confirmed": true,
+          "cleanup_state_returncode": 0,
+          "cleanup_stop_returncode": 5,
+          "code_sha256": "8d936a846c86732bc7123295e6c6b256408ef536c97c60602d5511d231a81a92",
+          "control_group_absent_after_stop": null,
+          "control_group_populated_after_stop": null,
+          "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "execution_id": "exec-jqawkxvm",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "schema": "er9.execution.result.v1",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 350,
+          "stdout_sha256": "7561efcf9c36070d12da02b6d6fd217ceec24d36299222dbd14161941f0549a3",
+          "stopped_by_adapter": null,
+          "unit_active_state_after_stop": "inactive",
+          "unit_load_state_after_stop": "not-found"
+        },
+        "semantic_new_checks_performed_in_phase2": false
+      },
+      "economics": {
+        "billing_dollars": "UNKNOWN",
+        "model_response_count_cap_enforced": false,
+        "money_estimate_added": false,
+        "native_http_attempts": "UNKNOWN",
+        "native_model_responses": "UNKNOWN",
+        "scope": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "usage_notification_count": 45,
+        "usage_totals": {
+          "cachedInputTokens": 3971328,
+          "inputTokens": 4256452,
+          "outputTokens": 31510,
+          "reasoningOutputTokens": 24123,
+          "totalTokens": 4287962
+        }
+      },
+      "hash_chain": {
+        "final_native_sha256": "f6475ad897ca4bba1d0c2d0290eef59e4612e4face038353e01aad6367e14764",
+        "matches_exact_runtime_final": true,
+        "matches_original_proof_pre_embedding": true,
+        "pre_embedding_bytes_independently_reconstructed": "UNKNOWN",
+        "pre_embedding_native_sha256": "b1922288517780e30b84b9adc7face2a6a619bef7ca8f419590e87251313bc7e",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "runner_sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6",
+        "scope": "Distinct pre-embedding and final hash namespaces are explained by exact selected v1.3 source order. Pre-bytes unavailable, not claimed fully reconstructed.",
+        "source_order_provenance": "v1.3 runner save line201 before proofline202; resource proof reader hashes savedresult line116; runner finalsave line222. Exactlaunchsealpins+actualproofreaders matched; no oldv1.2 substitution. PREbytes separately UNKNOWN."
+      },
+      "job_id": "D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+      "model": {
+        "not_inferred_from_generic_developer_text": true,
+        "observed_declared": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "physical_provider_runtime_attestation": "UNKNOWN",
+        "requested": "gpt-6-luna",
+        "requested_effort": "max"
+      },
+      "native_goal": {
+        "activation_observed": true,
+        "completion_established": false,
+        "evidence": "Exact safe current native direct saved Goal set / first active / last paused and turn-status projections",
+        "first_direct": {
+          "createdAt": 1791249682,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791249682
+        },
+        "goal_replacements_observed": 0,
+        "last_direct": {
+          "createdAt": 1791249682,
+          "status": "paused",
+          "timeUsedSeconds": 879,
+          "tokenBudget": null,
+          "tokensUsed": 316634,
+          "updatedAt": 1791250562
+        },
+        "native_outcome": "HOLD",
+        "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+        "saved": {
+          "createdAt": 1791249682,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791249682
+        },
+        "terminal_turn_status": "interrupted",
+        "thread_session_identifier_is_not_opaque_goal_id": true
+      },
+      "operational_delivery": "INCOMPLETE",
+      "operational_failure": {
+        "error": "original native stop reached",
+        "error_class": "TimeoutError",
+        "exit_scope_distinguished": true,
+        "failed_boundary_cause": "UNKNOWN beyond scoped metadata",
+        "held_process_exit_code": 0,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "ef53191a774923a51ea0062ab7e78e6a2ca50df56f9addd75af249330463ee52",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "2ca765299b0d5108211552fc843d3a7a4ec142d765b18524b4a082c0d8adb9eb",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "f2e7d8744b2bdbbc11475c32586ec13ddc593bec4c2b323dd915202a99d17793",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "outer_held_runner_exit_code": 126,
+        "tool_failed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 1
+        }
+      },
+      "quiet": {
+        "PGID_not_used_for_ownership_or_cleanup": true,
+        "all_five_flags_true": true,
+        "all_private_slice_descendants_quiet_at_release": true,
+        "checks_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase2-operational-checks.json",
+        "current_exact_units_mainpid0_and_empty_cgroup": true,
+        "current_original_PIDs_absent": true,
+        "mutations_performed": false,
+        "original_cgroups_empty": true,
+        "original_exact_pid_proof_terminated": true,
+        "proof_self_hash_matches": true,
+        "three_host_records_match": true
+      },
+      "scientific_judgment_pointer": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-judgment.json",
+        "rewritten": false,
+        "sha256": "31c238783469bc12acea861ac3331d486af3843c7d5719bceb19430d6abf78aa"
+      },
+      "time_resource": {
+        "Goal_time_used_seconds": 879,
+        "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_RESOURCE_PROFILE",
+        "aggregate_memory_max_bytes": 2415919104,
+        "component_memory_max_bytes": {
+          "native": 805306368,
+          "outer_worker": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "fit": "UNKNOWN",
+        "freeze_elapsed_seconds": 885.661634737,
+        "launch_seal_sha256": "5427042c09b04a044ed38fbb39b73b626dd6d21f3b0f6311c8863c41c83518b2",
+        "memory_events": {
+          "high": "0",
+          "low": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_group_kill": "0",
+          "oom_kill": "0",
+          "sock_throttled": "0"
+        },
+        "memory_swap_max_bytes": 0,
+        "native_elapsed_seconds": 885.608802079,
+        "observed_aggregate_peak_bytes": 362258432,
+        "original_allowance_seconds": 900.0,
+        "private_slice_release_sha256": "73d41ad991f3277b861040c16696fb3d8279667223fc0960fbf7503c046cc00d",
+        "release_before_original_stop": true,
+        "release_elapsed_from_original_birth_seconds": 888.264444256,
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "9f705334c30e7f457eab6ad0678fb8fab9e126c61fb686462c48348c10557e7e",
+        "source_scope": "complete owned job including controller/guards, sibling services and all execution overlap"
+      }
+    },
+    {
+      "actual_admitted_input_pins": [
+        {
+          "filename": "diagnostic_task.md",
+          "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "arm_instruction.md",
+          "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      ],
+      "alias": "B",
+      "arm": "treatment",
+      "artifact_presence_validity": [
+        {
+          "designation": "designated_final",
+          "present": false,
+          "validity": "MISSING"
+        },
+        {
+          "bytes": 14833,
+          "designation": "source_catalog",
+          "present": true,
+          "semantic_PASS_inferred": false,
+          "sha256": "ab8792ccf87dc4d7ccfdcf0ac4f8dbbef2054df6685a5dbbaf5b588b93901741",
+          "validity": "VALID_JSON_OBJECT"
+        },
+        {
+          "bytes": 6795,
+          "designation": "witness_catalog",
+          "present": true,
+          "semantic_PASS_inferred": false,
+          "sha256": "ba5b2cb7fcea7b2bb522f20f8a164e07a91eb4bd0452aa12ea7b6c56412b7ab7",
+          "validity": "VALID_JSON_OBJECT"
+        },
+        {
+          "bytes": 3949,
+          "designation": "leads",
+          "present": true,
+          "semantic_PASS_inferred": false,
+          "sha256": "1a95f22049bec3ad45556ae21721b629c6f57b168785115fa713804c5af9cb0a",
+          "validity": "VALID_JSON_OBJECT"
+        }
+      ],
+      "candidate_execution_operational_receipt": {
+        "catalog_required_delivery_missing_if_A": false,
+        "exact_file_hashes_match_inventory": true,
+        "positive_fields": {
+          "actor": "candidate",
+          "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+          "bootstrap_started": true,
+          "cleanup_classification": "collected_unit_absent",
+          "cleanup_confirmed": true,
+          "cleanup_state_returncode": 0,
+          "cleanup_stop_returncode": 5,
+          "code_sha256": "5defe05b5daddf10f50eb89d5909dfc728fe54d3c43358f6fe7063cce6e9f11d",
+          "control_group_absent_after_stop": null,
+          "control_group_populated_after_stop": null,
+          "data_sha256": "35a3cd2848dd5ba63d3e6165d31711d4540e35b24eee2a1513bb83da29f199d0",
+          "execution_id": "exec-6uodj87q",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "schema": "er9.execution.result.v1",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_bytes": 120,
+          "stdout_sha256": "22e6c3c7e455e1eae0677ff6dc7dbb0d4230de273cf624731d302c3e4386e912",
+          "stopped_by_adapter": null,
+          "unit_active_state_after_stop": "inactive",
+          "unit_load_state_after_stop": "not-found"
+        },
+        "semantic_new_checks_performed_in_phase2": false
+      },
+      "economics": {
+        "billing_dollars": "UNKNOWN",
+        "model_response_count_cap_enforced": false,
+        "money_estimate_added": false,
+        "native_http_attempts": "UNKNOWN",
+        "native_model_responses": "UNKNOWN",
+        "scope": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "usage_notification_count": 62,
+        "usage_totals": {
+          "cachedInputTokens": 5552128,
+          "inputTokens": 5950316,
+          "outputTokens": 34260,
+          "reasoningOutputTokens": 23471,
+          "totalTokens": 5984576
+        }
+      },
+      "hash_chain": {
+        "final_native_sha256": "aa52c7889879caf8098d5876c98aa6d21dbb89cfbcef422930d53df5dda61192",
+        "matches_exact_runtime_final": true,
+        "matches_original_proof_pre_embedding": true,
+        "pre_embedding_bytes_independently_reconstructed": "UNKNOWN",
+        "pre_embedding_native_sha256": "06256957cde222933d2ef1ad4bfa6aa627ac5059bcd24c94d67fda6078e61206",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "runner_sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6",
+        "scope": "Distinct pre-embedding and final hash namespaces are explained by exact selected v1.3 source order. Pre-bytes unavailable, not claimed fully reconstructed.",
+        "source_order_provenance": "v1.3 runner save line201 before proofline202; resource proof reader hashes savedresult line116; runner finalsave line222. Exactlaunchsealpins+actualproofreaders matched; no oldv1.2 substitution. PREbytes separately UNKNOWN."
+      },
+      "job_id": "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+      "model": {
+        "not_inferred_from_generic_developer_text": true,
+        "observed_declared": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "physical_provider_runtime_attestation": "UNKNOWN",
+        "requested": "gpt-6-luna",
+        "requested_effort": "max"
+      },
+      "native_goal": {
+        "activation_observed": true,
+        "completion_established": false,
+        "evidence": "Exact safe current native direct saved Goal set / first active / last paused and turn-status projections",
+        "first_direct": {
+          "createdAt": 1791249854,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791249854
+        },
+        "goal_replacements_observed": 0,
+        "last_direct": {
+          "createdAt": 1791249854,
+          "status": "paused",
+          "timeUsedSeconds": 879,
+          "tokenBudget": null,
+          "tokensUsed": 432448,
+          "updatedAt": 1791250734
+        },
+        "native_outcome": "HOLD",
+        "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+        "saved": {
+          "createdAt": 1791249854,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791249854
+        },
+        "terminal_turn_status": "interrupted",
+        "thread_session_identifier_is_not_opaque_goal_id": true
+      },
+      "operational_delivery": "INCOMPLETE",
+      "operational_failure": {
+        "error": "original native stop reached",
+        "error_class": "TimeoutError",
+        "exit_scope_distinguished": true,
+        "failed_boundary_cause": "UNKNOWN beyond scoped metadata",
+        "held_process_exit_code": 0,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "d69a6ca784baa1b162aed3cfbbc6737d0c9999eea74a50a381935ad3faab8c59",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "2305905a6700a26e1e41bd6f41d052f13b59e603303f8af7736ab3af922ccaff",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "59d9ca7d5837e874a224f174c5fedd6f6618c539e5f3de406384fa94ee424b6e",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "outer_held_runner_exit_code": 126,
+        "tool_failed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.read_file": 2
+        }
+      },
+      "quiet": {
+        "PGID_not_used_for_ownership_or_cleanup": true,
+        "all_five_flags_true": true,
+        "all_private_slice_descendants_quiet_at_release": true,
+        "checks_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase2-operational-checks.json",
+        "current_exact_units_mainpid0_and_empty_cgroup": true,
+        "current_original_PIDs_absent": true,
+        "mutations_performed": false,
+        "original_cgroups_empty": true,
+        "original_exact_pid_proof_terminated": true,
+        "proof_self_hash_matches": true,
+        "three_host_records_match": true
+      },
+      "scientific_judgment_pointer": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-judgment.json",
+        "rewritten": false,
+        "sha256": "31c238783469bc12acea861ac3331d486af3843c7d5719bceb19430d6abf78aa"
+      },
+      "time_resource": {
+        "Goal_time_used_seconds": 879,
+        "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_RESOURCE_PROFILE",
+        "aggregate_memory_max_bytes": 2415919104,
+        "component_memory_max_bytes": {
+          "native": 805306368,
+          "outer_worker": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "fit": "UNKNOWN",
+        "freeze_elapsed_seconds": 885.629212015,
+        "launch_seal_sha256": "8d1945649275146d27c675680453561984e8cca19d97449bd4f6ba3e93a20135",
+        "memory_events": {
+          "high": "0",
+          "low": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_group_kill": "0",
+          "oom_kill": "0",
+          "sock_throttled": "0"
+        },
+        "memory_swap_max_bytes": 0,
+        "native_elapsed_seconds": 885.578460034,
+        "observed_aggregate_peak_bytes": 364851200,
+        "original_allowance_seconds": 900.0,
+        "private_slice_release_sha256": "d86f3c71d8caa0770685a268594eb909ccfa465aed3b764af5933f6542306ca5",
+        "release_before_original_stop": true,
+        "release_elapsed_from_original_birth_seconds": 888.479010817,
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "edbb10e3d1514a94b99ee230958f4681f99aa8e565c78085000b43e6c6281b3b",
+        "source_scope": "complete owned job including controller/guards, sibling services and all execution overlap"
+      }
+    }
+  ],
+  "schema": "er9.independent-phase2-report.v1",
+  "source_first_release_order_verified": true,
+  "source_judgment_immutable": true,
+  "whole_elapsed_through_required_checking_seconds": 1008.43276976
+}

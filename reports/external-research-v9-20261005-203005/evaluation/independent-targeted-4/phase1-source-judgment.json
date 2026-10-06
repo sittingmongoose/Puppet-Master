@@ -1,0 +1,247 @@
+{
+  "schema": "er9.independent-source-judgment.v1",
+  "evaluation_id": "independent-targeted-4",
+  "candidate_alias": "A",
+  "pair_id": "D-V14-B-SCOPE-R002",
+  "source_outcome": "FAIL_SCREEN",
+  "source_correctness": "Cited primary-source factual claims supported; consequential engineering guarantee F01 unsupported under an allowed concurrent-source schedule.",
+  "useful_discovery": "SUPPORTED: independent useful Jupyter and DuckDB mechanisms plus real issue/fix/test chain and bounded opportunities.",
+  "delivery": "FOUR_DESIGNATED_FILES_PRESENT_SHA_VERIFIED",
+  "coverage": [
+    {
+      "id": "B01",
+      "assessment": "COMPLETE",
+      "evidence": "Minimum workflow table covers create/import/preview/author/interactive/clean/compare/save/reopen/export; narrow CPython and optional DuckDB SQL support.",
+      "important_check": "B-P5"
+    },
+    {
+      "id": "B02",
+      "assessment": "PARTIAL",
+      "evidence": "Schema, null/absence, Unicode, timestamp, malformed-input and original-retention policies are explicit and supported. The source-byte identity used by a run lacks an immutable input epoch or an exclusion condition for concurrent source writers (F01).",
+      "important_check": "B-P2"
+    },
+    {
+      "id": "B03",
+      "assessment": "PARTIAL",
+      "evidence": "Cell/document order, actual request/session history, hidden kernel state and saved outputs are separated. Fresh replay limits are honest except the recorded-input-use guarantee implicated by F01.",
+      "important_check": "B-P2"
+    },
+    {
+      "id": "B04",
+      "assessment": "PARTIAL",
+      "evidence": "Current/stale/failed/unverified and suffix/data/environment/restart/cancel invalidation are explicit. Matching fingerprints do not exclude F01, so current status can attribute an output to bytes the consumer did not read.",
+      "important_check": "B-P2"
+    },
+    {
+      "id": "B05",
+      "assessment": "PARTIAL",
+      "evidence": "Portable project/data/environment/run/output identities and manifest are explicit. Live referenced data plus before/commit fingerprints do not establish run-input identity under F01.",
+      "important_check": "B-P5"
+    },
+    {
+      "id": "B06",
+      "assessment": "PARTIAL",
+      "evidence": "Bounded previews, spill caveats, caching scope, ordering, cancellation, staging/recovery, per-worker SQL connections and project locks are covered without a 5 GB claim. Concurrent mutation of referenced source data is not constrained by project-write serialization (F01).",
+      "important_check": "B-P5"
+    },
+    {
+      "id": "B07",
+      "assessment": "COMPLETE",
+      "evidence": "Arbitrary code is recognized; proposed OS boundary, default permissions/resource/cancel policy and disabled execution on unqualified platforms are explicit. Accessible status/error and rich-output restrictions are proposed, not claimed implemented.",
+      "important_check": "B-P5"
+    },
+    {
+      "id": "B08",
+      "assessment": "COMPLETE",
+      "evidence": "Jupyter notebook/kernel/replay components and independently maintained DuckDB supply different useful mechanisms. Source pins and concrete implications are present; actual process/autonomous-discovery provenance remains for Phase2 metadata.",
+      "important_check": "B-P1"
+    },
+    {
+      "id": "B09",
+      "assessment": "COMPLETE",
+      "evidence": "Issue7789 -> PR8253/merge3b58 -> associated test_7789 is independently verified. The merge contains the regression test, and v0.9.0 changes it to SAMPLE_SIZE=-1 with count4980. Released binary behavior is correctly left unverified.",
+      "important_check": "B-P1"
+    },
+    {
+      "id": "B10",
+      "assessment": "COMPLETE",
+      "evidence": "CSV sniffing import recipes and bounded Arrow interoperability are useful opportunities; CLI/nbclient-first delivery is a credible alternative. Optional leads are retained without requiring their adoption; runtime/sandbox/performance dependencies are exposed.",
+      "important_check": "B-P5"
+    },
+    {
+      "id": "B11",
+      "assessment": "COMPLETE",
+      "evidence": "W01 exact code/input/output hashes reproduce under the admitted isolation. A duplicate-key negative control fails as expected. Only synthetic key/data assertions are credited; all Jupyter/DuckDB/parser/5GB/product tests remain UNEXECUTED. Historical candidate execution receipt validity remains Phase2.",
+      "important_check": "B-P3"
+    },
+    {
+      "id": "B12",
+      "assessment": "PARTIAL",
+      "evidence": "The current four-file final preserves qualified source findings, useful leads and real execution limits, but introduces or retains the consequential unqualified run-input guarantee in F01.",
+      "important_check": "B-P4"
+    }
+  ],
+  "common_dimensions": [
+    {
+      "id": "Q1",
+      "assessment": "PARTIAL",
+      "evidence": "Most required plan content is present; F01 affects input/replay/current/concurrency obligations."
+    },
+    {
+      "id": "Q2",
+      "assessment": "COMPLETE",
+      "evidence": "All cited documentation and issue/fix/test factual families were independently checked; fifteen exact recaptures match candidate hashes, mutable S14 fields independently corroborated at its merge commit."
+    },
+    {
+      "id": "Q3",
+      "assessment": "PARTIAL",
+      "evidence": "Component choices are reasonable and bounded; F01 defeats a consequential inference from read-only references plus fingerprints to recorded-input use."
+    },
+    {
+      "id": "Q4",
+      "assessment": "COMPLETE",
+      "evidence": "Independent Jupyter/DuckDB mechanisms, real parser regression and optional recipe/interop/CLI leads provide useful breadth."
+    },
+    {
+      "id": "Q5",
+      "assessment": "COMPLETE",
+      "evidence": "Exact W01 and falsifying duplicate-key control verified. Independent F01 simulation records its own code/stdout/limits; no product execution is claimed."
+    },
+    {
+      "id": "Q6",
+      "assessment": "PARTIAL",
+      "evidence": "No false rejection of source facts; current-input guarantee lacks a supported consistency condition (F01)."
+    },
+    {
+      "id": "Q7",
+      "assessment": "PARTIAL",
+      "evidence": "Most critical runtime/isolation/performance limits are explicit. F01 source-epoch dependency is not named or gated."
+    },
+    {
+      "id": "Q8",
+      "assessment": "COMPLETE",
+      "evidence": "Designated four-file bytes verified; source judgment is delivered with pins and independently captured/executed evidence. Native/economics provenance is held for separate Phase2."
+    }
+  ],
+  "common_important_checks": [
+    {
+      "id": "B-P1",
+      "assessment": "COMPLETE",
+      "result": "PASS",
+      "evidence": "Two independent component precedents are useful; issue/fix/test chain is real and bounded. S01-S05/S11/S12-S15/E02/E03/E04."
+    },
+    {
+      "id": "B-P2",
+      "assessment": "PARTIAL",
+      "result": "FAIL",
+      "evidence": "Consequential recorded-input/current-output guarantee lacks required source-epoch consistency or writer-exclusion condition (F01). Sample/schema/order/engine facts otherwise supported."
+    },
+    {
+      "id": "B-P3",
+      "assessment": "COMPLETE",
+      "result": "PASS",
+      "evidence": "Exact W01 semantics and hashes reproduced; negative control discriminates uniqueness. Candidate receipt authenticity deferred to Phase2; no full-runtime credit."
+    },
+    {
+      "id": "B-P4",
+      "assessment": "PARTIAL",
+      "result": "FAIL",
+      "evidence": "Supported facts are preserved, but F01 is an unexposed critical design dependency in the current final."
+    },
+    {
+      "id": "B-P5",
+      "assessment": "PARTIAL",
+      "result": "FAIL",
+      "evidence": "Workflow, exchange, resources, usability and optional lanes are present; required concurrency/run-input identity remains incomplete under F01."
+    }
+  ],
+  "target_scope_checks": [
+    {
+      "id": "D-V14-B-P1",
+      "assessment": "PARTIAL",
+      "result": "FAIL",
+      "evidence": "Supported consequential documentation claims are preserved, but the chosen data/provenance boundary leaves F01."
+    },
+    {
+      "id": "D-V14-B-P2",
+      "assessment": "PARTIAL",
+      "result": "FAIL",
+      "evidence": "Useful required content, conditions and legitimate uncertainty are retained. The particular source-epoch dependency needed for its guarantee is not qualified."
+    },
+    {
+      "id": "D-V14-B-P3",
+      "assessment": "PARTIAL",
+      "result": "UNASSESSED",
+      "evidence": "Source/execution scope in the final is honest at the reproduced synthetic component level. Actual mechanism uptake/native authorship/input-only scope require Phase2 metadata. Matched budgets/differences are UNASSESSED because there is only one actual final and no started partner."
+    }
+  ],
+  "findings": [
+    {
+      "id": "F01",
+      "kind": "unsupported critical engineering guarantee / missing run-input consistency condition",
+      "severity": "CONSEQUENTIAL",
+      "candidate_locators": [
+        {
+          "file": "proposal.md",
+          "lines": [
+            56,
+            73,
+            116,
+            136,
+            146
+          ]
+        }
+      ],
+      "claim": "A clean replay can promise use of the recorded declared inputs and mark outputs current when input fingerprints still match, while declared data are live references exposed by read-only mounts.",
+      "failure_condition": "An independent writer changes a referenced dataset after its recorded fingerprint, the run reads the changed bytes, and the writer restores original bytes before commit verification. Read-only consumer permissions and project-write locks do not prevent this schedule.",
+      "primary_evidence": {
+        "id": "E05-mount",
+        "url": "https://man7.org/linux/man-pages/man8/mount.8.html",
+        "locator": "Bind mount operation; read-only bind protects the new VFS mountpoint while the original filesystem/path may remain writable.",
+        "capture_sha256": "0fd3413f4fb073c6d083925a7ad04ac24af5235be2c28ee73da2f66a54bb16f9"
+      },
+      "execution_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/execution-checks/input-epoch-counterexample/result.json",
+        "code_sha256": "93b886d93568901922d745e1de5ce4a04906a9000e7d2f20c5191dc4a2cefbe6",
+        "stdout_sha256": "c96a51a03c0af47286350967c839c4ec2752552beba3013d583425b95c1e6cdf",
+        "exit_code": 0,
+        "observed": "pre_and_commit_digest_match=true; consumer_used_recorded_bytes=false"
+      },
+      "limits": "A deterministic isolated file schedule tests the proposed fingerprint inference, not a built app, actual bind mount, VM, DuckDB or Jupyter. The mount primary source supplies the live read-only-reference applicability. If a future backend provides immutable data snapshots or enforced exclusion, it can close this gap; the current final does not require that condition or classify mutable inputs unverified.",
+      "required_constraint": "Require one immutable/stable data epoch for the whole run or explicitly exclude uncontrolled live source mutation from current/replay guarantees and keep affected results unverified. Merely comparing digests before and at commit is insufficient.",
+      "affected_obligations": [
+        "B02",
+        "B03",
+        "B04",
+        "B05",
+        "B06",
+        "B12"
+      ],
+      "not_claimed": "No assertion that DuckDB/Jupyter documentation is wrong or that a nonexistent full product was observed failing."
+    }
+  ],
+  "remaining_scope": {
+    "full_pipeline_quality": "UNASSESSED",
+    "broader_full_development_quality": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+    "matched_comparison": "UNASSESSED_NO_STARTED_PARTNER",
+    "winner_or_effect": "UNASSESSED",
+    "candidate_actual_native_execution_and_authorship": "PHASE2_PENDING",
+    "unexecuted_product_validation": "UNASSESSED_NOT_FAILURE_BY_ITSELF"
+  },
+  "screening_rule": "Decisive current guarantee gap; preserve all verified useful positive findings. Content coverage is mapped for every B obligation, but no full product/pipeline/matched causal PASS is asserted.",
+  "blinding": {
+    "role_model_hint": "Stage/control/V14 labels were unavoidable in exact final/task; perfect blinding not claimed.",
+    "not_read": "No held key, native statuses/aliases/history/economics/prior grades before this source freeze."
+  },
+  "clock": {
+    "start_utc": "2026-10-06T03:28:15.966070+00:00",
+    "start_monotonic_seconds": 87714.823105241,
+    "phase1_judgment_utc": "2026-10-06T03:38:48.457868+00:00",
+    "phase1_elapsed_seconds": 632.4918013610004,
+    "source_cap_seconds": 1200,
+    "whole_cap_seconds": 1800,
+    "phase1_source_overrun": false,
+    "whole_overrun_at_judgment": false,
+    "no_reset": true
+  }
+}

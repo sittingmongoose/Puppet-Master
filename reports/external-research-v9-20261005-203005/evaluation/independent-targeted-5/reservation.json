@@ -1,0 +1,19 @@
+{
+  "budgets": {
+    "noreset": true,
+    "phase2_max_seconds": 600,
+    "source_seconds": 1200,
+    "whole_seconds": 1800
+  },
+  "candidate_source_body_opened": false,
+  "evaluation_id": "independent-targeted-5",
+  "pair_id": "D-V16-A",
+  "physical_provider_runtime_attestation": "UNKNOWN",
+  "requested_fork_turns": "none",
+  "requested_model": "gpt-6.1-sol",
+  "requested_reasoning_effort": "xhigh",
+  "reserved_utc": "2026-10-06T03:30:27.002135+00:00",
+  "result_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5",
+  "schema": "er9.independent-evaluator-reservation.v1",
+  "source_clock": "NOT_STARTED"
+}

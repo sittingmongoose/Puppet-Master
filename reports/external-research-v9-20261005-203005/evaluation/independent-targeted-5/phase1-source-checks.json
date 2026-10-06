@@ -1,0 +1,292 @@
+{
+  "checks": [
+    {
+      "finding": "Unique axes and array-dimensional correspondence are required; datasets admit exactly one scale and optional following translation, not a general affine. Label pixels must be integer. The final preserves the restricted export condition and does not claim arbitrary affine interoperability. No writer or full-application validation performed.",
+      "id": "SC01",
+      "locators": [
+        "HTML meta revision at source line 1494: d9164040dd61b3e4688494de1a58a69251b13f24",
+        "sections 2.1, 2.3, 2.4, 2.5, 2.6"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.296621+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S1.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+          "source_id": "S1",
+          "url": "https://ngff.openmicroscopy.org/0.5/index.html"
+        }
+      ],
+      "scope": "OME-NGFF 0.5 axes, multiscales transform order/type restrictions, integer labels, transitional omero",
+      "source_ids": [
+        "S1"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Documentation describes lazy slice computation and multiscale levels; contrast limits change visualization rather than underlying samples. This supports mechanisms only. In 3D the coarsest multiscale level is used; no application performance or complete volume workflow demonstrated. The final makes its choice conditional and its performance targets UNEXECUTED.",
+      "id": "SC02",
+      "locators": [
+        "Markdown lines 159\u2013199, 207\u2013252, 409\u2013418"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.298052+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S2.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+          "source_id": "S2",
+          "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md"
+        }
+      ],
+      "scope": "napari lazy array, multiscale and contrast mechanisms",
+      "source_ids": [
+        "S2"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Layer transforms and unit metadata affect rendering; compatible units can align layers. Units do not rename axes. The source does not validate the proposed persisted frame or annotation mapping implementation.",
+      "id": "SC03",
+      "locators": [
+        "Scale and units live on layers; When units are consistent across layers; What units do not do"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.299443+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S3.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+          "source_id": "S3",
+          "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md"
+        }
+      ],
+      "scope": "napari layer scale/translation, unit-aware rendering and axis-label distinction",
+      "source_ids": [
+        "S3"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "The shapes layer is not editable during 3D rendering. The final chooses ordinary 2D drawing but does not explicitly state the catalog\u2019s stronger claim that volume-mask editing is limited to 2D slices. Volume-mask editing implementation and full persistence remain UNASSESSED; no demonstrated native 3D shape editing is credited.",
+      "id": "SC04",
+      "locators": [
+        "Markdown lines 576\u2013617"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.300797+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S4.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+          "source_id": "S4",
+          "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md"
+        }
+      ],
+      "scope": "napari shapes editing limits",
+      "source_ids": [
+        "S4"
+      ],
+      "status": "PARTIAL"
+    },
+    {
+      "finding": "Pinned README 2026.9.20 describes strip/tile/page/series access and a partial Zarr region-read example, with codec/dependency requirements and vendor stitching limitations. This is an independently useful reader precedent, not evidence the proposed TIFF matrix or 3 GB target works.",
+      "id": "SC05",
+      "locators": [
+        "README version line 40; requirements 70\u201384; limitations 180\u2013270; segment decode 742\u2013757; Zarr region read 759\u2013773"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.302282+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S5.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+          "source_id": "S5",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst"
+        }
+      ],
+      "scope": "tifffile access mechanisms and unsupported cases",
+      "source_ids": [
+        "S5"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "The issue reports PixelSizeX values for 2026.2.20 and 2026.2.24. Test commit 7d9eaedd at 18:56:28Z asserts PixelSizeX 1.4208036661148071 and PhysicalPixelSizeY 15600.0 using TVIPS_bin4.tif. Fix edede600 at 19:06:33Z is its child and disables nm-to-m conversion with an issue link. Release v2026.3.3 is later in the parent chain; the changelog names #319. The test can be skipped when its file is unavailable. No execution of the actual fixture/test is established. The final correctly states test-before-fix order and this execution limit.",
+      "id": "SC06",
+      "locators": [
+        "S6 JSON body and created_at/closed_at",
+        "S7 files[tests/test_tifffile.py].patch lines 49\u201369: test_issue_tvips_pixelsize; skipif(SKIP_FILE)",
+        "S8 files[tifffile/tifffile.py].patch hunk @@ -20115,10 +20211,11 @@ read_tvips_header",
+        "S9 commit parent chain 503cb4eb \u2192 8c91499e \u2192 edede600 \u2192 7d9eaedd",
+        "S14 lines 92\u201396"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.395062+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S6.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+          "source_id": "S6",
+          "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319"
+        },
+        {
+          "access_utc": "2026-10-06T03:34:04.432204+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S7.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+          "source_id": "S7",
+          "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938"
+        },
+        {
+          "access_utc": "2026-10-06T03:34:04.433675+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S8.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+          "source_id": "S8",
+          "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca"
+        },
+        {
+          "access_utc": "2026-10-06T03:34:04.441573+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S9.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+          "source_id": "S9",
+          "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z"
+        },
+        {
+          "access_utc": "2026-10-06T03:34:04.598369+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S14.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+          "source_id": "S14",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst"
+        }
+      ],
+      "scope": "tifffile #319 issue \u2192 regression assertion \u2192 fix \u2192 release chain",
+      "source_ids": [
+        "S6",
+        "S7",
+        "S8",
+        "S9",
+        "S14"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Coordinates are pixel units at the full-resolution top-left origin, and GeoJSON converts ellipses to polygons. The final retains explicit coordinate and loss reporting and defers GeoJSON interoperability instead of implying universal compatibility.",
+      "id": "SC07",
+      "locators": [
+        "QuPath 0.7.0 page Units and origin; Shapes"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.493827+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S10.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+          "source_id": "S10",
+          "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html"
+        }
+      ],
+      "scope": "QuPath annotation export convention and ellipse loss",
+      "source_ids": [
+        "S10"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Project JSON identifies image readers/URIs and entry IDs; different project files can hold different workstation paths. Summaries preview entry data. Documentation warns about duplicate IDs after separate image additions. No automatic hash relocation guarantee is attributed to QuPath by this assessment.",
+      "id": "SC08",
+      "locators": [
+        "QuPath 0.7.0 project.qpproj; data directory; summary.json"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.561648+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S11.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+          "source_id": "S11",
+          "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html"
+        }
+      ],
+      "scope": "QuPath project reader/URI, IDs, per-workstation paths and summary precedent",
+      "source_ids": [
+        "S11"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Same-filesystem replacement is atomic in the documented pathname sense; cross-mount replacement fails EXDEV, and NFS error can follow an already performed rename. The final retains OS/filesystem and power-loss limits and labels shared-drive validation UNEXECUTED. This does not establish the proposed multi-file save protocol.",
+      "id": "SC09",
+      "locators": [
+        "rename(2) DESCRIPTION; ERRORS EXDEV; BUGS NFS"
+      ],
+      "primary_evidence": [
+        {
+          "access_utc": "2026-10-06T03:34:04.591034+00:00",
+          "body_complete": true,
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/public-captures/S12.body",
+          "http_status": 200,
+          "matches_candidate_capture": true,
+          "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+          "source_id": "S12",
+          "url": "https://man7.org/linux/man-pages/man2/rename.2.html"
+        }
+      ],
+      "scope": "Linux rename atomic replacement, EXDEV and NFS ambiguity",
+      "source_ids": [
+        "S12"
+      ],
+      "status": "SUPPORTED_WITHIN_CHECKED_SCOPE"
+    },
+    {
+      "finding": "Independent stdlib isolation returned float32 104857.6015625 with exact error 1/640, scale-then-translate (11,26), reversed order (6,46), and bit-preserving binary64 JSON/scalar CSV round trips. Binary64 does not represent decimal 104857.6 exactly. These validate the stated arithmetic under a preserved-binary64 reading, not candidate authorship/execution, napari/tifffile behavior, CSV application exports, or a full coordinate pipeline.",
+      "id": "SC10",
+      "locators": [
+        "Independent execution receipt exec-em83fjc1; proposal line 43"
+      ],
+      "primary_evidence": [],
+      "scope": "W1/W2 numerical statements and scalar serialization",
+      "source_ids": [],
+      "status": "SUPPORTED_ONLY_BY_EVALUATOR_EXECUTION"
+    }
+  ],
+  "coverage": "PARTIAL",
+  "evaluation_id": "independent-targeted-5",
+  "limitations": [
+    "All selected 13 fresh public captures byte-match candidate pins; hashes alone were not treated as semantic evidence.",
+    "Public retrieval was separate from network-denied evaluator execution.",
+    "Exact issue fixture was not executed; candidate witness code/input/results were not supplied."
+  ],
+  "schema": "er9.independent-source-checks.v1",
+  "unchecked_source_ids": [
+    "S13",
+    "S15"
+  ]
+}

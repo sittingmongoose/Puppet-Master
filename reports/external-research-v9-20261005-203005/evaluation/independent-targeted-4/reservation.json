@@ -1,0 +1,31 @@
+{
+  "reservation_type": "fresh-independent-targeted-source-review",
+  "reviewer_task": "/root/targeted_eval_4",
+  "reviewer_mailbox": "codex-er9-eval4",
+  "created_utc": "2026-10-06T03:26:50.580948+00:00",
+  "owned_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4",
+  "root_declared_accepted_selector": {
+    "agent_type": "worker",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none",
+    "task_name": "targeted_eval_4",
+    "accepted_task_name": "/root/targeted_eval_4"
+  },
+  "selector_provenance": "Root message received in this reviewer chat: exact root spawn toolcall declared selector and accepted tool receipt; selector declaration is not physical model attestation.",
+  "developer_generic_identity": "Codex, an agent based on GPT-6",
+  "physical_provider": "UNKNOWN",
+  "underlying_physical_model": "UNKNOWN",
+  "runtime_model_attestation": "UNKNOWN",
+  "source_read_started": false,
+  "source_facts_inherited": false,
+  "candidate_stage_or_goal_created": false,
+  "clock_contract": {
+    "phase1_sourcechecking_seconds": 1200,
+    "phase2_checking_cap_seconds": 600,
+    "whole_elapsed_seconds": 1800,
+    "whole_origin": "reviewer START immediately before first source body",
+    "phase2_elapsed_includes_reports_and_closure": true
+  },
+  "scope": "Single current frozen four-file final, actual brief and rubric supplied by courier; no old review regrade, no matched comparison or campaign completion."
+}

@@ -1,0 +1,327 @@
+{
+  "schema": "er9.independent-phase2-operational-report.v1",
+  "evaluation_id": "independent-targeted-4",
+  "pair_id": "D-V14-B-SCOPE-R002",
+  "candidate_alias": "A",
+  "candidate_job_id": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+  "written_utc": "2026-10-06T03:48:21.330118+00:00",
+  "source_judgment_immutable": {
+    "outcome": "FAIL_SCREEN",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/phase1-source-judgment.json",
+    "sha256": "beb249873d4386c42ad05ad2933c406326ee52706f36215d45eaa9dd4a3025f7",
+    "changed_after_phase2": false
+  },
+  "operational_delivery": {
+    "status": "COMPLETE",
+    "four_designated_current_files_sha_verified": true,
+    "native_status": "native_goal_complete",
+    "native_goal_status_before_cleanup": "complete",
+    "native_goal_status_final": "complete",
+    "first_goal": {
+      "createdAt": 1791243504,
+      "status": "active",
+      "timeUsedSeconds": 0,
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "updatedAt": 1791243504
+    },
+    "last_goal": {
+      "createdAt": 1791243504,
+      "status": "complete",
+      "timeUsedSeconds": 759,
+      "tokenBudget": null,
+      "tokensUsed": 430756,
+      "updatedAt": 1791244264
+    },
+    "one_fresh_session": true,
+    "goal_starts_observed": 1,
+    "goal_replacements_observed": 0,
+    "opaque_native_goal_id": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+    "session_thread_not_used_as_opaque_goal_id": true,
+    "scored_candidate_native_execution": "Exact current W01 actorcandidate receipt and five positive code/input/streams/facts files are SHA verified; code/input/stdout/stderr match catalog and independent reproduction; bootstrap started, exit0, cleanup confirmed with unit inactive/not-found. No engine/notebook/product inference."
+  },
+  "quiescence": {
+    "original_direct_flags": {
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "held_process_groups_absent": true,
+      "native_cgroup_quiet": true
+    },
+    "three_host_record_sha_verified": true,
+    "three_current_exact_units_absent_inactive": true,
+    "three_current_exact_cgroups_absent": true,
+    "three_current_exact_held_pgids_absent": true,
+    "host_terminal_records": [
+      {
+        "component": "host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "0c4322d189a3b3549b539dbbf2d8413f39620df0f85045bae38401ab07a2ea20",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "inactive",
+          "native_host_pid": 0,
+          "sub_state": "dead"
+        }
+      },
+      {
+        "component": "pm_boundary-host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "e6a794f2a64a490d273ca7a130e0aabf34192c26055eea03860197d7556b5997",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "inactive",
+          "native_host_pid": 0,
+          "sub_state": "dead"
+        }
+      },
+      {
+        "component": "pm_execution-host-process",
+        "original_cgroup_absent_or_empty": true,
+        "service_runner_exit_code": 255,
+        "sha256": "114e2f1e92efb9dc4bab15e8e6e1d930b644d839e4f608f71acd19d8f3eb4606",
+        "terminal_cgroup_empty": true,
+        "terminal_state": {
+          "active_state": "inactive",
+          "native_host_pid": 0,
+          "sub_state": "dead"
+        }
+      }
+    ],
+    "execution_units_quiet_saved_flag": true,
+    "owned_scope_proof_hash_chain": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+    "all_owned_scopes_quiet_field": null,
+    "limit": "all-owned scalar/proof enrichment chain are not exposed; retain UNKNOWN rather than replacing with another job or claiming stronger private ownership attestation.",
+    "candidate_execution_receipt": {
+      "execution_id": "exec-q6mffan7",
+      "manifest_sha256": "962205ee652d2665975719f1f9a2bacd3417386f493523e75da155c3ef9d27c7",
+      "original_result_sha256": "616403a817c790f125b7be0c1008d807add5c721dd13b114a20dffa606111af5",
+      "facts_projection_sha256": "c33b8d7be11b18c54ca5a4f892e95948ea3ca776c201dd985376ff3a15acb6a3",
+      "cleanup_confirmed": true,
+      "unit_active_state_after_stop": "inactive",
+      "unit_load_state_after_stop": "not-found",
+      "cleanup_classification": "collected_unit_absent"
+    }
+  },
+  "candidate_provenance": {
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "observed_model_selector": "gpt-6-luna",
+    "observed_effort_selector": "max",
+    "physical_provider_runtime_attestation": "UNKNOWN",
+    "host_initial_turns": 1,
+    "host_followup_turns": 0,
+    "admitted_input_pins": [
+      {
+        "filename": "diagnostic_task.md",
+        "sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9"
+      },
+      {
+        "filename": "brief.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+      },
+      {
+        "filename": "arm_instruction.md",
+        "sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d"
+      },
+      {
+        "filename": "output_contract.md",
+        "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      }
+    ],
+    "primary_source_get_completed": 30,
+    "mechanism_note": "Current control diagnostic ordinary whole-product/relevant-project research. Exact admitted inputs are brief/task/arm/output contract, not supplied repositories/semantic fixtures. Output and public-get receipts support actual primary retrieval; broader request-payload/complete prohibited-read attestation remains UNKNOWN. No unstarted partner is compared."
+  },
+  "tool_boundary": {
+    "attempt_counts": {
+      "pm_boundary.mechanical": 3,
+      "pm_boundary.public_https_get": 30,
+      "pm_boundary.read_file": 13,
+      "pm_boundary.write_file": 5,
+      "pm_execution.python_execute": 1
+    },
+    "completed_counts": {
+      "pm_boundary.mechanical": 1,
+      "pm_boundary.public_https_get": 30,
+      "pm_boundary.read_file": 13,
+      "pm_boundary.write_file": 4,
+      "pm_execution.python_execute": 1
+    },
+    "failed_counts": {
+      "pm_boundary.mechanical": 2,
+      "pm_boundary.write_file": 1
+    },
+    "failed_call_reason_status": "UNKNOWN: two failed mechanical calls and one failed write; exact safe trusted event lookup found no matching reason/class records. Failures are retained without inventing permission causes or bypass.",
+    "actual_inference_tool_payload_observed": false,
+    "native_mcp_catalog_verified": true,
+    "inventory_verified": false,
+    "deny_handling": "No bypass, widening, model substitution, artifact repair or repeated permission request. Genuine denials will be retained when exposed; unexposed reasons remain UNKNOWN."
+  },
+  "candidate_execution_inventory": [
+    {
+      "execution_id": "exec-q6mffan7",
+      "positive_file_inventory": [
+        {
+          "bytes": 1842,
+          "filename": "code.py",
+          "sha256": "c800a23b62eab7c43dd039c850915859bf5496207058ce14bf30be74cb4201f8"
+        },
+        {
+          "bytes": 340,
+          "filename": "data.json",
+          "sha256": "ff720ac0a501dc9ddc5201777b1b393348223034ca5721ec445bb05fbffadf03"
+        },
+        {
+          "bytes": 261,
+          "filename": "stdout.bin",
+          "sha256": "c84e182ef9139cf05551be2245ffa4ba90db0456f35d696e628944a272e55ca1"
+        },
+        {
+          "bytes": 0,
+          "filename": "stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 2301,
+          "filename": "result.json",
+          "sha256": "616403a817c790f125b7be0c1008d807add5c721dd13b114a20dffa606111af5"
+        },
+        {
+          "bytes": 2535,
+          "filename": "request.json",
+          "sha256": "d2f75ec752c15fd5207896f016ca74e21eb4f92a7efbcb9c0b57bf53128a5469"
+        }
+      ],
+      "scope": "exact current selected terminal trusted execution store; all existing attempt folders enumerated, no evaluator retest"
+    }
+  ],
+  "time_resources": {
+    "predeclared_stage_wall_cap_seconds": 900,
+    "native_elapsed_seconds": 772.078091806,
+    "native_goal_time_used_seconds": 759,
+    "closed_before_original_total_stop": true,
+    "held_process_exit_code": 0,
+    "native_host_cpu_memory_disk_usage": "UNKNOWN_NOT_EXPOSED",
+    "candidate_execution_profile_claim": {
+      "wall_seconds": 5,
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "tasks": 16,
+      "network": "new empty namespace"
+    },
+    "candidate_response_cap": {
+      "requested_parent_response_cap": 100,
+      "enforced": false,
+      "actual_native_responses": "UNKNOWN",
+      "actual_HTTP_attempts": "UNKNOWN"
+    },
+    "candidate_execution_profile_verified": {
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "network": "new empty namespace",
+      "stream_bytes_each": 32768,
+      "tasks": 16,
+      "wall_seconds": 5
+    }
+  },
+  "economics": {
+    "usage_notification_count": 57,
+    "native_usage_totals": {
+      "cachedInputTokens": 5413888,
+      "inputTokens": 5793716,
+      "outputTokens": 68362,
+      "reasoningOutputTokens": 40041,
+      "totalTokens": 5862078
+    },
+    "cached_input_included_in_input": true,
+    "reasoning_output_included_in_output": true,
+    "native_goal_tokens_used_distinct_scope": 430756,
+    "billing_dollars": "UNKNOWN",
+    "additive_to_parent_UI_provider_accounting": false,
+    "physical_provider": "UNKNOWN",
+    "reviewer_cost_and_tokens": "UNKNOWN_NOT_EXPOSED"
+  },
+  "reviewer_provenance": {
+    "reservation_type": "fresh-independent-targeted-source-review",
+    "reviewer_task": "/root/targeted_eval_4",
+    "reviewer_mailbox": "codex-er9-eval4",
+    "created_utc": "2026-10-06T03:26:50.580948+00:00",
+    "owned_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4",
+    "root_declared_accepted_selector": {
+      "agent_type": "worker",
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh",
+      "fork_turns": "none",
+      "task_name": "targeted_eval_4",
+      "accepted_task_name": "/root/targeted_eval_4"
+    },
+    "selector_provenance": "Root message received in this reviewer chat: exact root spawn toolcall declared selector and accepted tool receipt; selector declaration is not physical model attestation.",
+    "developer_generic_identity": "Codex, an agent based on GPT-6",
+    "physical_provider": "UNKNOWN",
+    "underlying_physical_model": "UNKNOWN",
+    "runtime_model_attestation": "UNKNOWN",
+    "source_read_started": false,
+    "source_facts_inherited": false,
+    "candidate_stage_or_goal_created": false,
+    "clock_contract": {
+      "phase1_sourcechecking_seconds": 1200,
+      "phase2_checking_cap_seconds": 600,
+      "whole_elapsed_seconds": 1800,
+      "whole_origin": "reviewer START immediately before first source body",
+      "phase2_elapsed_includes_reports_and_closure": true
+    },
+    "scope": "Single current frozen four-file final, actual brief and rubric supplied by courier; no old review regrade, no matched comparison or campaign completion."
+  },
+  "remaining_scope": {
+    "partner": "UNASSESSED_UNSTARTED_SUPERSEDED",
+    "matched_causal_effect_or_winner": "UNASSESSED",
+    "full_pipeline_quality": "UNASSESSED",
+    "full_product_integration_performance_security_tests": "UNASSESSED_UNEXECUTED",
+    "campaign_completion": "NOT_ASSERTED"
+  },
+  "input_projection_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-4_CURRENT_RUNTIME_001.json",
+    "sha256": "c8594a230ea83d4238f4d9a60b8294fd89b5a59ae3a29bf8deaf92492e9ff3d8"
+  },
+  "phase2_clock": {
+    "schema": "er9.phase2-checking-closure.v1",
+    "checking_closed_utc": "2026-10-06T03:48:21.329409+00:00",
+    "checking_closed_monotonic_seconds": 88920.186395999,
+    "phase2_checking_elapsed_seconds": 475.46410856899456,
+    "phase2_inclusive_elapsed_at_checking_close_seconds": 526.6495998280006,
+    "whole_elapsed_at_checking_close_seconds": 1205.3632907580031,
+    "phase2_checking_cap_seconds": 600,
+    "phase2_checking_overrun": false,
+    "whole_cap_seconds": 1800,
+    "whole_overrun_at_checking_close": false,
+    "no_reset": true,
+    "required_phase2_checks_completed": true,
+    "unexposed_failed_call_reasons": "UNKNOWN; courier bounded exact trusted event selection found zero matches, no broad logs or bypass.",
+    "unexposed_native_opaque_goal_id": "UNKNOWN_NOT_EXPOSED; session/thread not substituted.",
+    "unexposed_physical_provider_and_dollar_cost": "UNKNOWN"
+  },
+  "additional_target_coverage_operational_context": [
+    {
+      "id": "D-V14-B-01",
+      "assessment": "PARTIAL",
+      "reason": "The unchanged immutable source judgment maps full B content and verified useful breadth; one consequential engineering gap remains."
+    },
+    {
+      "id": "D-V14-B-02",
+      "assessment": "PARTIAL",
+      "reason": "Supported full source facts were preserved; F01 remains the immutable source finding."
+    },
+    {
+      "id": "D-V14-B-03",
+      "assessment": "PARTIAL",
+      "reason": "Four-file current final and execution scope are authentic; source-quality failure remains independent of operational completion."
+    },
+    {
+      "id": "D-V14-B-04",
+      "assessment": "COMPLETE",
+      "reason": "Current admitted inputs contain brief/task/arm/output contract only; native public-get calls and exact candidate captures support live primary retrieval. No stronger claim of perfect prohibited-input audit or product autonomous discovery is made."
+    }
+  ]
+}

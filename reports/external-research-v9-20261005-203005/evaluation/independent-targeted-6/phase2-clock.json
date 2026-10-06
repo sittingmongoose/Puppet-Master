@@ -1,0 +1,12 @@
+{
+  "evaluation_id": "independent-targeted-6",
+  "original_start_monotonic_ns": 88116291718721,
+  "original_start_utc": "2026-10-06T03:34:57.434734+00:00",
+  "original_whole_deadline_monotonic_ns": 89916291718721,
+  "phase2_budget_seconds": 600,
+  "phase2_deadline_monotonic_ns": 89244204743130,
+  "schema": "er9.phase2-original-clock.v1",
+  "scope": "Inclusive required P2 checking begins before requesting release, includes courier wait, release reads, native Goal/model/artifact/quiet/time/resource/cost checks plus its report. Original WHOLE additionally includes all notices/handoffs/metadata/closure. No reset.",
+  "start_monotonic_ns": 88644204743130,
+  "start_utc": "2026-10-06T03:43:45.347757+00:00"
+}

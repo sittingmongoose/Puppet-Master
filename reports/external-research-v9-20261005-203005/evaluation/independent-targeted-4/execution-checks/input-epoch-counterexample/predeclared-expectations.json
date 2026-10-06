@@ -1,0 +1,6 @@
+{
+  "written_utc": "2026-10-06T03:36:00.633790+00:00",
+  "expectation": "The referenced file returns to byte-identical A before commit, while the reader observed B. Before/after hashes must match while hash(reader bytes) differs. This falsifies before/commit fingerprint equality as a proof that those were the read bytes. It does not test a product, actual bind mounts, or fault injection in the candidate runtime.",
+  "applicability": "Candidate snapshots notebook/code, references data via read-only mounts, and commits on matching input snapshot. Read-only consumer permissions do not constrain an independent writer through the original path; the proposal contains no immutable input-epoch/exclusion requirement for this race.",
+  "code_sha256": "93b886d93568901922d745e1de5ce4a04906a9000e7d2f20c5191dc4a2cefbe6"
+}

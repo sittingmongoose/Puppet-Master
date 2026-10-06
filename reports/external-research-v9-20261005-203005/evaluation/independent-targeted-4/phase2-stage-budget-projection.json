@@ -1,0 +1,24 @@
+{
+  "max_seconds": 900,
+  "max_responses": null,
+  "requested_parent_response_cap": 100,
+  "response_cap_enforcement": "UNSUPPORTED_ROOT_PROSPECTIVE_WALL_BUDGET_RULING",
+  "runtime_binding_required": true,
+  "execution_enabled": true,
+  "public_get": true,
+  "scored_research": true,
+  "required_artifacts": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "tools_config": null,
+  "tools_config_sha256": null,
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/LAUNCH_SEAL.json",
+    "sha256": "4b9c82200ceb5b7f50ec9aa173c57e1f9b21aae6dd0ef067b5d41ce51c586a7f"
+  },
+  "prompt_sha256": "e2da49d8a41db02912930e0998a4a449376c2dccdc740b6d78e2413cc1c9d7b8",
+  "luna_runtime": {}
+}

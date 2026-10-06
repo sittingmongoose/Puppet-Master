@@ -1,0 +1,23 @@
+{
+  "authority_selector_sha256": "8dfb68e3470a1f61504bedcaf27a8af9e901d7b424f8f42e1238b229b7326ade",
+  "coverage": "PARTIAL_EXACT_TD5_THIRTEEN_PUBLIC_BODIES_ONLY_NOT_QUEUE_RECONCILED",
+  "exclusions": [
+    "native/private/auth/vendor/account data",
+    "recursive discovery/newnetwork/modelcalls",
+    "sourceinterpretation/candidatefeedback"
+  ],
+  "files_count": 13,
+  "independent_archive_reread": "ALL13_NAS_BODY_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/f4deeaca20c662218ff1b0b5fde18a88c0eed2124f604b8f1906651483cb4ba5/MANIFEST.json",
+  "manifest_sha256": "2c21313d067c0b29c9a45f270cce2704362ec1def5266a85a09980dc7e45e4af",
+  "metadata_policy": "13neutralmetadata_SHA_and_length_verified_for_binding; metadata_not_copied",
+  "overlap_policy": "cohort selected counts only; overlap not new unique evidence",
+  "prior_archives": "UNCHANGED",
+  "public_metadata_selector_sha256": "6e0c5d4329ddc76e4689cd3c24ab8e3777b71dfce76dfa13142050be59cb1934",
+  "raw_repository_policy": "bodies_and_raw_manifest_external_only",
+  "restart": "ExactTD5bodyallowlist complete; other positive selectors must append separately. Wholequeue reconciliation remains pending.",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 413580,
+  "selection_sha256": "f4deeaca20c662218ff1b0b5fde18a88c0eed2124f604b8f1906651483cb4ba5",
+  "source_index_sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744"
+}

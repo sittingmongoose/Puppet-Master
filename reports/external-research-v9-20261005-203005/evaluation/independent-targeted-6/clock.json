@@ -1,0 +1,17 @@
+{
+  "clock_reset_permitted": false,
+  "clock_scope": "Literal source checking includes dispatch/task/candidate/public-source reads and meaningful source checks. Required Phase2 checking includes release/identity/native Goal/artifact/quiet/time/resource/cost checks. WHOLE includes all report writing, required outgoing notices, handoffs, metadata and closure from original START. No resets; overruns visible.",
+  "evaluation_id": "independent-targeted-6",
+  "phase2_deadline_monotonic_ns": null,
+  "phase2_start_monotonic_ns": null,
+  "record_role": "clock",
+  "required_phase2_checking_budget_seconds": 600,
+  "schema": "er9.evaluator-original-clock.v1",
+  "source_checking_budget_seconds": 1200,
+  "source_checking_deadline_monotonic_ns": 89316291718721,
+  "start_monotonic_ns": 88116291718721,
+  "start_utc": "2026-10-06T03:34:57.434734+00:00",
+  "state": "STARTED",
+  "whole_budget_seconds": 1800,
+  "whole_deadline_monotonic_ns": 89916291718721
+}

@@ -1,0 +1,9 @@
+{
+  "written_utc": "2026-10-06T03:32:00.827932+00:00",
+  "scope": "Independent evaluator reproduction of exact W01 code/input and a falsifying duplicate-key control using admitted isolated ABI; no Jupyter/DuckDB/parser/large-data/sandbox product inference.",
+  "base_expectation": "Given the exact three records, canonical output has IDs 1,2,3; note for ID1 is null, ID2 has no note property, and ID3 preserves café 東京; code must exit0 with recorded stdout. These follow from input semantics and JSON canonical serialization, independently of candidate assertions.",
+  "negative_expectation": "Duplicate an input ID; the witness claims unique-ID order, so its assertion must fail and exit nonzero.",
+  "server_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/execution_server.py",
+  "server_sha256": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+  "source_deadline_monotonic_ns": 88914823105241
+}

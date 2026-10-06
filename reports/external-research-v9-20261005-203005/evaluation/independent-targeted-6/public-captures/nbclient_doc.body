@@ -1,0 +1,693 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Executing notebooks &#8212; nbclient</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=37fc6485"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'client';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changes in NBClient {#changelog}" href="changelog.html" />
+    <link rel="prev" title="Installation" href="installation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.11" />
+  <script async type="text/javascript" src="/_/static/javascript/readthedocs-addons.js"></script><meta name="readthedocs-project-slug" content="nbclient" /><meta name="readthedocs-version-slug" content="stable" /><meta name="readthedocs-resolver-filename" content="/client.html" /><meta name="readthedocs-http-status" content="200" /></head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">nbclient</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Executing notebooks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changes in NBClient {#changelog}</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Table of Contents</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="reference/index.html">Reference</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="reference/nbclient.html">nbclient package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reference/config_options.html">Config file and command line options</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="reference/modules.html">nbclient</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="reference/nbclient.html">nbclient package</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/jupyter/nbclient/edit/master/docs/client.rst" target="_blank"
+   class="btn btn-sm btn-source-edit-button"
+   title="Suggest edit"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/client.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Executing notebooks</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-python-api-interface">Using the Python API interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-arguments-traitlets">Execution arguments (traitlets)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks-before-and-after-notebook-or-cell-execution">Hooks before and after notebook or cell execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-errors-and-exceptions">Handling errors and exceptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-until-first-error">Execution until first error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-errors">Handling errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-and-save-all-errors">Execute and save all errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#widget-state">Widget state</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-command-line-interface">Using a command-line interface</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-nbclient.client.guide">
+<span id="executing-notebooks"></span><h1>Executing notebooks<a class="headerlink" href="#module-nbclient.client.guide" title="Link to this heading">#</a></h1>
+<p>Jupyter notebooks are often saved with output cells that have been cleared.
+NBClient provides a convenient way to execute the input cells of an
+.ipynb notebook file and save the results, both input and output cells,
+as a .ipynb file.</p>
+<p>In this section we show how to execute a <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code> notebook
+document saving the result in notebook format. If you need to export
+notebooks to other formats, such as reStructured Text or Markdown (optionally
+executing them) see <a class="reference external" href="https://nbconvert.readthedocs.io/en/latest/">nbconvert</a>.</p>
+<p>Executing notebooks can be very helpful, for example, to run all notebooks
+in Python library in one step, or as a way to automate the data analysis in
+projects involving more than one notebook.</p>
+<section id="using-the-python-api-interface">
+<h2>Using the Python API interface<a class="headerlink" href="#using-the-python-api-interface" title="Link to this heading">#</a></h2>
+<p>This section will illustrate the Python API interface.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>Let’s start with a complete quick example, leaving detailed explanations
+to the following sections.</p>
+<p><strong>Import</strong>: First we import nbformat and the <code class="xref py py-class docutils literal notranslate"><span class="pre">NotebookClient</span></code>
+class:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">nbformat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nbclient</span><span class="w"> </span><span class="kn">import</span> <span class="n">NotebookClient</span>
+</pre></div>
+</div>
+<p><strong>Load</strong>: Assuming that <code class="docutils literal notranslate"><span class="pre">notebook_filename</span></code> contains the path to a notebook,
+we can load it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nb</span> <span class="o">=</span> <span class="n">nbformat</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">notebook_filename</span><span class="p">,</span> <span class="n">as_version</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Configure</strong>: Next, we configure the notebook execution mode:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">NotebookClient</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">kernel_name</span><span class="o">=</span><span class="s1">&#39;python3&#39;</span><span class="p">,</span> <span class="n">resources</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;path&#39;</span><span class="p">:</span> <span class="s1">&#39;notebooks/&#39;</span><span class="p">}})</span>
+</pre></div>
+</div>
+<p>We specified two (optional) arguments <code class="docutils literal notranslate"><span class="pre">timeout</span></code> and <code class="docutils literal notranslate"><span class="pre">kernel_name</span></code>, which
+define respectively the cell execution timeout and the execution kernel.
+Usually you don’t need to set these options, but these and other options are
+available to control execution context. Note that <code class="docutils literal notranslate"><span class="pre">path</span></code> specifies
+in which folder to execute the notebook.</p>
+<p><strong>Execute/Run</strong>: To actually run the notebook we call the method
+<code class="docutils literal notranslate"><span class="pre">execute</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Hopefully, we will not get any errors during the notebook execution
+(see the last section for error handling). This notebook will
+now have its cell outputs populated with the result of running
+each cell.</p>
+<p><strong>Save</strong>: Finally, save the resulting notebook with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nbformat</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="s1">&#39;executed_notebook.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That’s all. Your executed notebook will be saved in the current folder
+in the file <code class="docutils literal notranslate"><span class="pre">executed_notebook.ipynb</span></code>.</p>
+</section>
+</section>
+<section id="execution-arguments-traitlets">
+<h2>Execution arguments (traitlets)<a class="headerlink" href="#execution-arguments-traitlets" title="Link to this heading">#</a></h2>
+<p>The arguments passed to <code class="xref py py-class docutils literal notranslate"><span class="pre">NotebookClient</span></code> are configuration options
+called <a class="reference external" href="https://traitlets.readthedocs.io/en/stable">traitlets</a>.
+There are many cool things about traitlets. For example,
+they enforce the input type, and they can be accessed/modified as
+class attributes.</p>
+<p>Let’s now discuss in more detail the two traitlets we used.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">timeout</span></code> traitlet defines the maximum time (in seconds) each notebook
+cell is allowed to run, if the execution takes longer an exception will be
+raised. The default is 30 s, so in cases of long-running cells you may want to
+specify an higher value. The <code class="docutils literal notranslate"><span class="pre">timeout</span></code> option can also be set to <code class="docutils literal notranslate"><span class="pre">None</span></code>
+or <code class="docutils literal notranslate"><span class="pre">-1</span></code> to remove any restriction on execution time.</p>
+<p>The second traitlet, <code class="docutils literal notranslate"><span class="pre">kernel_name</span></code>, allows specifying the name of the kernel
+to be used for the execution. By default, the kernel name is obtained from the
+notebook metadata. The traitlet <code class="docutils literal notranslate"><span class="pre">kernel_name</span></code> allows specifying a
+user-defined kernel, overriding the value in the notebook metadata. A common
+use case is that of a Python 2/3 library which includes documentation/testing
+notebooks. These notebooks will specify either a python2 or python3 kernel in
+their metadata (depending on the kernel used the last time the notebook was
+saved). In reality, these notebooks will work on both Python 2 and Python 3,
+and, for testing, it is important to be able to execute them programmatically
+on both versions. Here the traitlet <code class="docutils literal notranslate"><span class="pre">kernel_name</span></code> helps simplify and
+maintain consistency: we can just run a notebook twice, specifying first
+“python2” and then “python3” as the kernel name.</p>
+</section>
+<section id="hooks-before-and-after-notebook-or-cell-execution">
+<h2>Hooks before and after notebook or cell execution<a class="headerlink" href="#hooks-before-and-after-notebook-or-cell-execution" title="Link to this heading">#</a></h2>
+<p>There are several configurable hooks that allow the user to execute code before and
+after a notebook or a cell is executed. Each one is configured with a function that will be called in its
+respective place in the execution pipeline.
+Each is described below:</p>
+<p><strong>Notebook-level hooks</strong>: These hooks are called with a single extra parameter:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">notebook=NotebookNode</span></code>: the current notebook being executed.</p></li>
+</ul>
+<p>Here is the available hooks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on_notebook_start</span></code> will run when the notebook client is initialized, before any execution has happened.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_notebook_complete</span></code> will run when the notebook client has finished executing, after kernel cleanup.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_notebook_error</span></code> will run when the notebook client has encountered an exception before kernel cleanup.</p></li>
+</ul>
+<p><strong>Cell-level hooks</strong>: These hooks are called with at least two parameters:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cell=NotebookNode</span></code>: a reference to the current cell.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cell_index=int</span></code>: the index of the cell in the current notebook’s list of cells.</p></li>
+</ul>
+<p>Here are the available hooks:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">on_cell_start</span></code> will run for all cell types before the cell is executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_cell_execute</span></code> will run right before the code cell is executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_cell_complete</span></code> will run after execution, if the cell is executed with no errors.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_cell_executed</span></code> will run right after the code cell is executed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">on_cell_error</span></code> will run if there is an error during cell execution.</p></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">on_cell_executed</span></code> and <code class="docutils literal notranslate"><span class="pre">on_cell_error</span></code> are called with an extra parameter <code class="docutils literal notranslate"><span class="pre">execute_reply=dict</span></code>.</p>
+</section>
+<section id="handling-errors-and-exceptions">
+<h2>Handling errors and exceptions<a class="headerlink" href="#handling-errors-and-exceptions" title="Link to this heading">#</a></h2>
+<p>In the previous sections we saw how to save an executed notebook, assuming
+there are no execution errors. But, what if there are errors?</p>
+<section id="execution-until-first-error">
+<h3>Execution until first error<a class="headerlink" href="#execution-until-first-error" title="Link to this heading">#</a></h3>
+<p>An error during the notebook execution, by default, will stop the execution
+and raise a <code class="docutils literal notranslate"><span class="pre">CellExecutionError</span></code>. Conveniently, the source cell causing
+the error and the original error name and message are also printed.
+After an error, we can still save the notebook as before:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nbformat</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="s1">&#39;executed_notebook.ipynb&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The saved notebook contains the output up until the failing cell,
+and includes a full stack-trace and error (which can help debugging).</p>
+</section>
+<section id="handling-errors">
+<h3>Handling errors<a class="headerlink" href="#handling-errors" title="Link to this heading">#</a></h3>
+<p>A useful pattern to execute notebooks while handling errors is the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nbclient.exceptions</span><span class="w"> </span><span class="kn">import</span> <span class="n">CellExecutionError</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">client</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+<span class="k">except</span> <span class="n">CellExecutionError</span><span class="p">:</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="s1">&#39;Error executing the notebook &quot;</span><span class="si">%s</span><span class="s1">&quot;.</span><span class="se">\n\n</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">notebook_filename</span>
+    <span class="n">msg</span> <span class="o">+=</span> <span class="s1">&#39;See notebook &quot;</span><span class="si">%s</span><span class="s1">&quot; for the traceback.&#39;</span> <span class="o">%</span> <span class="n">notebook_filename_out</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+    <span class="k">raise</span>
+<span class="k">finally</span><span class="p">:</span>
+    <span class="n">nbformat</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="n">notebook_filename_out</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This will save the executed notebook regardless of execution errors.
+In case of errors, however, an additional message is printed and the
+<code class="docutils literal notranslate"><span class="pre">CellExecutionError</span></code> is raised. The message directs the user to
+the saved notebook for further inspection.</p>
+</section>
+<section id="execute-and-save-all-errors">
+<h3>Execute and save all errors<a class="headerlink" href="#execute-and-save-all-errors" title="Link to this heading">#</a></h3>
+<p>As a last scenario, it is sometimes useful to execute notebooks which raise
+exceptions, for example to show an error condition. In this case, instead of
+stopping the execution on the first error, we can keep executing the notebook
+using the traitlet <code class="docutils literal notranslate"><span class="pre">allow_errors</span></code> (default is False). With
+<code class="docutils literal notranslate"><span class="pre">allow_errors=True</span></code>, the notebook is executed until the end, regardless of
+any error encountered during the execution. The output notebook, will contain
+the stack-traces and error messages for <strong>all</strong> the cells raising exceptions.</p>
+</section>
+</section>
+<section id="widget-state">
+<h2>Widget state<a class="headerlink" href="#widget-state" title="Link to this heading">#</a></h2>
+<p>If your notebook contains any
+<a class="reference external" href="https://github.com/jupyter-widgets/ipywidgets/">Jupyter Widgets</a>,
+the state of all the widgets can be stored in the notebook’s metadata.
+This allows rendering of the live widgets on for instance nbviewer, or when
+converting to html.</p>
+<p>We can tell nbclient to not store the state using the <code class="docutils literal notranslate"><span class="pre">store_widget_state</span></code>
+argument:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">client</span> <span class="o">=</span> <span class="n">NotebookClient</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span> <span class="n">store_widget_state</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This widget rendering is not performed against a browser during execution, so
+only widget default states or states manipulated via user code will be
+calculated during execution. <code class="docutils literal notranslate"><span class="pre">%%javascript</span></code> cells will execute upon notebook
+rendering, enabling complex interactions to function as expected when viewed by
+a UI.</p>
+<p>If you can’t view widget results after execution, you may need to select
+<span class="menuselection">Trust Notebook</span> under the <span class="menuselection">File</span> menu.</p>
+</section>
+<section id="using-a-command-line-interface">
+<h2>Using a command-line interface<a class="headerlink" href="#using-a-command-line-interface" title="Link to this heading">#</a></h2>
+<p>This section will illustrate how to run notebooks from your terminal. It supports the most basic use case. For more sophisticated execution options, consider the <a class="reference external" href="https://pypi.org/project/papermill/">papermill</a> library.</p>
+<p>This library’s command line tool is available by running <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">execute</span></code>. It expects notebooks as input arguments and accepts optional flags to modify the default behavior.</p>
+<p>Running a notebook is this easy.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">execute</span> <span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+<p>You can pass more than one notebook as well.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">execute</span> <span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span> <span class="n">notebook2</span><span class="o">.</span><span class="n">ipynb</span>
+</pre></div>
+</div>
+<p>By default, notebook errors will be raised and printed into the terminal. You can suppress them by passing the <code class="docutils literal notranslate"><span class="pre">--allow-errors</span></code> flag.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span> <span class="n">execute</span> <span class="n">notebook</span><span class="o">.</span><span class="n">ipynb</span> <span class="o">--</span><span class="n">allow</span><span class="o">-</span><span class="n">errors</span>
+</pre></div>
+</div>
+<p>Other options allow you to modify the timeout length and dictate the kernel in use. A full set of options is available via the help command.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>jupyter execute --help
+
+An application used to execute notebook files (*.ipynb)
+
+Options
+=======
+The options below are convenience aliases to configurable class-options,
+as listed in the &quot;Equivalent to&quot; description-line of the aliases.
+To see all configurable class-options for some &lt;cmd&gt;, use:
+    &lt;cmd&gt; --help-all
+
+--allow-errors
+    Errors are ignored and execution is continued until the end of the notebook.
+    Equivalent to: [--NbClientApp.allow_errors=True]
+--timeout=&lt;Int&gt;
+    The time to wait (in seconds) for output from executions. If a cell
+    execution takes longer, a TimeoutError is raised. ``-1`` will disable the
+    timeout.
+    Default: None
+    Equivalent to: [--NbClientApp.timeout]
+--startup_timeout=&lt;Int&gt;
+    The time to wait (in seconds) for the kernel to start. If kernel startup
+    takes longer, a RuntimeError is raised.
+    Default: 60
+    Equivalent to: [--NbClientApp.startup_timeout]
+--kernel_name=&lt;Unicode&gt;
+    Name of kernel to use to execute the cells. If not set, use the kernel_spec
+    embedded in the notebook.
+    Default: &#39;&#39;
+    Equivalent to: [--NbClientApp.kernel_name]
+
+To see all available configurables, use `--help-all`.
+</pre></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="installation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="changelog.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Changes in NBClient {#changelog}</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-python-api-interface">Using the Python API interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-arguments-traitlets">Execution arguments (traitlets)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hooks-before-and-after-notebook-or-cell-execution">Hooks before and after notebook or cell execution</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-errors-and-exceptions">Handling errors and exceptions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execution-until-first-error">Execution until first error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-errors">Handling errors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execute-and-save-all-errors">Execute and save all errors</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#widget-state">Widget state</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-a-command-line-interface">Using a command-line interface</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Project Jupyter
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2020, Project Jupyter.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+{
+  "schema": "er9.reviewer-neutral-reservation-closure.v1",
+  "evaluation_id": "independent-targeted-4",
+  "closure_utc": "2026-10-06T03:50:51.302399+00:00",
+  "closure_monotonic_seconds": 89070.159384795,
+  "original_start_utc": "2026-10-06T03:28:15.966070+00:00",
+  "original_start_monotonic_seconds": 87714.823105241,
+  "source_elapsed_seconds": 678.7136909300025,
+  "phase2_checking_elapsed_seconds": 475.46410856899456,
+  "inclusive_phase2_elapsed_through_reports_and_issued_handoffs_seconds": 676.622588623999,
+  "whole_elapsed_through_reports_and_issued_handoffs_seconds": 1355.3362795540015,
+  "phase2_checking_overrun": false,
+  "inclusive_phase2_exceeds_600": true,
+  "whole_overrun": false,
+  "whole_cap_seconds": 1800,
+  "clock_reset": false,
+  "required_scientific_handoffs_issued": [
+    "root",
+    "publisher",
+    "cost_accounting"
+  ],
+  "neutral_metadata_handoff_issued": [
+    "projection_keeper"
+  ],
+  "ack_wait": "NONE",
+  "source_judgment_sha256": "beb249873d4386c42ad05ad2933c406326ee52706f36215d45eaa9dd4a3025f7",
+  "phase1_freeze_sha256": "536f50aafcb36594a99fdc102c56837ed88a635ccebbeb906c4830150422336e",
+  "phase2_freeze_sha256": "01ee08dac906ab2399a4cd07261a3bc7676f5344c02e47a575d677f739a37f71",
+  "final_positive_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/PUBLIC_SELECTION_FINAL.json",
+    "sha256": "abf3f2ec2c7634936a16352969ec2314f58de5edab9a2f55fb2cade643a4485c"
+  },
+  "all_owned_candidate_native_scopes_status": "Original5quiet flags and3exact current hosts absent; W01 cleanup absent confirmed; stronger unexposed ownership proof UNKNOWN",
+  "native_opaque_goal_id": "UNKNOWN_NOT_EXPOSED",
+  "physical_provider_attestation": "UNKNOWN",
+  "dollars": "UNKNOWN",
+  "failed_boundary_call_causes": "UNKNOWN",
+  "final_channel_delivery": "UNKNOWN_NOT_YET_EMITTED_AT_CLOSURE",
+  "campaign_completion": "NOT_ASSERTED",
+  "no_scientific_findings_in_this_metadata_receipt": true
+}

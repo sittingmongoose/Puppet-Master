@@ -1,0 +1,242 @@
+{
+  "schema": "er9.phase2-operational-checks.v1",
+  "checked_utc": "2026-10-06T03:47:32.819230+00:00",
+  "checked_monotonic_ns": 88871676272137,
+  "checks": [
+    {
+      "alias": "A",
+      "proof_self_hash_expected": "a475ee95c59891ba3315d047ebf3ff924eb9145dbebf4e045df16bcc4fea0c30",
+      "proof_self_hash_actual": "a475ee95c59891ba3315d047ebf3ff924eb9145dbebf4e045df16bcc4fea0c30",
+      "proof_self_hash_matches": true,
+      "all_five_flags_true": true,
+      "three_original_host_scopes": true,
+      "host_record_hashes_match": true,
+      "original_exact_pid_proof_terminated": true,
+      "original_cgroups_absent_or_empty": true,
+      "execution_request_hashes_match_inventory": true,
+      "goal_saved_active": true,
+      "goal_final_paused": true,
+      "created_at_consistent": true,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "requested_observed_declared_model_match": true,
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "current_owned_status": [
+        {
+          "component": "host-process",
+          "unit": "er9-luna-168333172d7a4a8d87865d3bb1c7757c.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2286239,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286246,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286244,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "pm_boundary-host-process",
+          "unit": "er9-luna-f2ef510a1bb04e2f82e542297023574e.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2286057,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286064,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286062,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "pm_execution-host-process",
+          "unit": "er9-luna-e6ff94e961d244feb2fe3153e42297e5.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2286080,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286166,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2286148,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "original-execution-unit",
+          "unit": "er9-exec-01af3034d3be407fa3103084b8927816.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "read_only": true
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "proof_self_hash_expected": "49f77c0450502c2aa2e4af438cacbbf4e6bde89e724630cd8fa7f27ee9c1572f",
+      "proof_self_hash_actual": "49f77c0450502c2aa2e4af438cacbbf4e6bde89e724630cd8fa7f27ee9c1572f",
+      "proof_self_hash_matches": true,
+      "all_five_flags_true": true,
+      "three_original_host_scopes": true,
+      "host_record_hashes_match": true,
+      "original_exact_pid_proof_terminated": true,
+      "original_cgroups_absent_or_empty": true,
+      "execution_request_hashes_match_inventory": true,
+      "goal_saved_active": true,
+      "goal_final_paused": true,
+      "created_at_consistent": true,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "requested_observed_declared_model_match": true,
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "current_owned_status": [
+        {
+          "component": "host-process",
+          "unit": "er9-luna-bbe474a2dfe74010951031bfe5fd30d1.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2290896,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290906,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290904,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "pm_boundary-host-process",
+          "unit": "er9-luna-9e61a3cb7fd94a57871ea4788cab5f19.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "loaded",
+            "ActiveState": "failed",
+            "SubState": "failed",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2290859,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290866,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290864,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "pm_execution-host-process",
+          "unit": "er9-luna-82a633ec9b65446bb67c5d356db18141.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "original_cgroup_exists_now": false,
+          "exact_pid_metadata": [
+            {
+              "pid": 2290871,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290879,
+              "proc_present_now": false
+            },
+            {
+              "pid": 2290877,
+              "proc_present_now": false
+            }
+          ],
+          "read_only": true
+        },
+        {
+          "component": "original-execution-unit",
+          "unit": "er9-exec-eed5a002ff0145e88bfa4f6e796e6eec.service",
+          "query_exit_code": 0,
+          "fields": {
+            "LoadState": "not-found",
+            "ActiveState": "inactive",
+            "SubState": "dead",
+            "MainPID": "0",
+            "ControlGroup": ""
+          },
+          "read_only": true
+        }
+      ]
+    }
+  ],
+  "limitations": "Exact named original unit/cgroup/PID metadata only. No process killed, no PGID ownership inferred. Independent current status does not recreate historical execution. Proof pre-enrichment native hash-chain currentness remains separate."
+}

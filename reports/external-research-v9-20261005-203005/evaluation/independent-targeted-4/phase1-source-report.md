@@ -1,0 +1,29 @@
+# Independent source review — current single targeted final
+
+The source outcome is **FAIL_SCREEN** for one consequential plan guarantee (F01). The final supplies useful, mostly well qualified primary-source research and all four designated files. It does not establish that a clean replay consumed the recorded source bytes when those data remain mutable external references. This result concerns the actual B targeted task; it supplies no full-product, full-pipeline, matched-comparison, winner or campaign-completion result.
+
+## Consequential finding F01
+
+The proposal gives notebook/code a snapshot, but gives source data read-only mounts to live references (proposal line56). It verifies full source digests and commits when the input snapshot still matches (lines73,146), then says clean replay can promise use of recorded declared inputs and calls matching outputs current (lines116,136). No data-epoch freezing or exclusion of independent concurrent source writers is specified.
+
+Read-only consumer access does not make the original source immutable. The primary mount manual says a read-only bind applies to its mountpoint while the original filesystem/path can remain writable ([mount manual](https://man7.org/linux/man-pages/man8/mount.8.html), Bind mount operation; independent capture E05 SHA256 `0fd3413f4fb073c6d083925a7ad04ac24af5235be2c28ee73da2f66a54bb16f9`). An external writer can change A to B after fingerprinting, let the run read B, and restore A before commit. Both fingerprints then identify A while the output derives from B.
+
+The evaluator's admitted isolated check `input-epoch-counterexample` executed that deterministic file schedule: exit0, `pre_and_commit_digest_match=true`, `consumer_used_recorded_bytes=false`. Code SHA256 `93b886d93568901922d745e1de5ce4a04906a9000e7d2f20c5191dc4a2cefbe6`; stdout SHA256 `c96a51a03c0af47286350967c839c4ec2752552beba3013d583425b95c1e6cdf`. It is a check of the fingerprint inference, not a test of a built product, actual mount, VM, DuckDB or Jupyter. A future immutable input snapshot or enforced writer exclusion can close this gap; the current final must require that condition or limit mutable-reference runs to unverified status. An additional before/after hash alone cannot exclude the schedule.
+
+F01 affects B02/B03/B04/B05/B06/B12, B-P2/B-P4/B-P5 and the consequential-content portions of target P1/P2. It is an unsupported critical engineering guarantee, not a rejection of the cited notebook/engine facts.
+
+## Findings preserved
+
+Jupyter and DuckDB contribute independently useful notebook/kernel/replay and embedded analytical mechanisms. Their proposed integration, exact runtime compatibility and OS sandbox are honestly treated as implementation work. The notebook format, message parent/session association, execution hooks, authentication/isolation distinction, CSV/JSON sample limits, missing-to-NULL projection, order caveats, spill exceptions and connection-thread rules are supported under the selected sources. All 16 public source URLs were independently retrieved. Fifteen bodies exactly match the candidate capture hashes. The mutable PR API body differs, but its material merge/body fields and actual immutable merge source independently corroborate the claims; the hash difference is retained rather than called an exact match.
+
+The real DuckDB issue7789, PR8253 merge3b58, and regression test form a genuine chain. The actual merge source contains `test_7789.test` with count4980; the v0.9.0 source test uses SAMPLE_SIZE=-1. The final properly avoids claiming an executed regression, CI success, first fixed release binary, or universal later-release behavior. See [issue7789](https://github.com/duckdb/duckdb/issues/7789), [PR8253](https://github.com/duckdb/duckdb/pull/8253), and [tagged regression test](https://raw.githubusercontent.com/duckdb/duckdb/v0.9.0/test/sql/copy/csv/parallel/test_7789.test).
+
+W01's precise tiny synthetic claims reproduce in the admitted network-denied bounded execution capability, with matching code/input/stdout hashes. A duplicate-ID control exits1 at its asserted unique-key precondition. This merits only component-level key/data credit. No notebook, physical parser, engine, 5GB path, full runtime or product sandbox was run. V01–V06 remain honestly proposed/UNEXECUTED. Original candidate execution/authorship are not established by evaluator reproduction and remain for separately reported Phase2 metadata.
+
+The proposal covers the full minimum workflow and retains useful CSV-import recipe/interop opportunities plus a credible CLI/nbclient-first alternative. Optional unresearched leads are labelled. Supported conditions and alternatives are preserved, not blanket-rejected. A complete mapping of all12 B obligations, common8 dimensions, Bimportant5 and target3 appears in `phase1-source-judgment.json`; typed factual checks and capture/execution indexes give exact evidence paths and SHA256s.
+
+## Limits and blinding
+
+This is one current designated four-file final. The original partner is unstarted/superseded and unassessed. Broader full development quality, full pipeline, matched effect/winner, and all unexecuted integration checks remain UNASSESSED. Source grade was fixed before held aliases/native Goal status, candidate model/history/economics or previous grades. Exact task/final stage labels made control/V14 hints unavoidable; perfect blinding is not claimed. No candidate repair or stronger-model substitution was performed.
+
+Clock origin is the immutable START at 2026-10-06T03:28:15.966070+00:00 (monotonic87714.823105241). Source cap1200s; whole cap1800s includes reporting, handoffs and metadata closure. The later freeze records actual elapsed time. Phase2 has a separate checking cap600s and inclusive elapsed clock, with no reset of the whole origin.

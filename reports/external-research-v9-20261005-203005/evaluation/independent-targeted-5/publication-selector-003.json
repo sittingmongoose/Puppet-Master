@@ -1,0 +1,97 @@
+{
+  "allowed_scientific_recipients": [
+    "/root",
+    "/root/publisher",
+    "/root/cost_accounting"
+  ],
+  "current_final_report": "final-report-002.md",
+  "evaluation_id": "independent-targeted-5",
+  "later_closure_metadata": "CLOSED_IN_THIS_SELECTOR",
+  "phase1_immutable_sha256": "332c1ae52f06a472acc533260d0d42aefad3636650c655f42c0d3faccf16b489",
+  "phase2_final_metadata_addendum": "phase2-report-addendum-002.json",
+  "positive_files": [
+    {
+      "bytes": 680,
+      "filename": "reservation.json",
+      "sha256": "26e587b82de103dba198c6aa281d41066fffc2424f3f4e072befd38ffeefc148",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/reservation.json"
+    },
+    {
+      "bytes": 388,
+      "filename": "START.json",
+      "sha256": "91abb7d75e1a7c2f18bcfb4910f46c363178da4219ae1e141ec869ca1da7e21c",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/START.json"
+    },
+    {
+      "bytes": 361,
+      "filename": "PHASE2_START.json",
+      "sha256": "885496423a941dba9fcc25cf5f2d0c6526a7ebc3248a5e14b0476315351ad85d",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/PHASE2_START.json"
+    },
+    {
+      "bytes": 16578,
+      "filename": "phase1-judgment.json",
+      "sha256": "332c1ae52f06a472acc533260d0d42aefad3636650c655f42c0d3faccf16b489",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase1-judgment.json"
+    },
+    {
+      "bytes": 4641,
+      "filename": "phase1-report.md",
+      "sha256": "3d9f87b0c37913f9a53d49214047fa48eecd1991d46aaaf7b838d87f7441a24c",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase1-report.md"
+    },
+    {
+      "bytes": 15279,
+      "filename": "phase1-source-checks.json",
+      "sha256": "edda3458f0f9fb5e4f4d42547fa59a0f916d8e0bfbbfd6f29a6deadea1a0d22a",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase1-source-checks.json"
+    },
+    {
+      "bytes": 16472,
+      "filename": "phase2-report.json",
+      "sha256": "8226f1c994ca1d93061d21520964667f3b19ef9025f9743ad7ba61613f1c2844",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase2-report.json"
+    },
+    {
+      "bytes": 4249,
+      "filename": "final-report.md",
+      "sha256": "a07e24a2e8ef35e962e8e1e6820dbf4fd1fe0cf22dbaed34270e57dd889eca7e",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/final-report.md"
+    },
+    {
+      "bytes": 12429,
+      "filename": "source-freeze-lock.json",
+      "sha256": "bacc7013a7ffcf70f92cf0ec2ec7bbef0b783f5900ac6397be46d0c681b99f31",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/source-freeze-lock.json"
+    },
+    {
+      "bytes": 17712,
+      "filename": "phase2-report-addendum-002.json",
+      "sha256": "67cd8b5dbb429061f2927d4910f1869381d98ecb9c90f63d781b1f55221ec65f",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase2-report-addendum-002.json"
+    },
+    {
+      "bytes": 4396,
+      "filename": "final-report-002.md",
+      "sha256": "8087a72bf687307805e7060840f886dac6b62e5f310082c234cc6575d7afcf50",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/final-report-002.md"
+    },
+    {
+      "bytes": 1017,
+      "filename": "handoff-receipts.json",
+      "sha256": "2eca200929fb16f3d795cb2819ff889f88bf16a10360f068860317ab2d2c0020",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/handoff-receipts.json"
+    },
+    {
+      "bytes": 2046,
+      "filename": "closure.json",
+      "sha256": "5fbbcac5cb0a8d9b55160fb2adec97e8a899e6b8ed84a732a9df189364d4dbfb",
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/closure.json"
+    }
+  ],
+  "publication_edition": "003",
+  "schema": "er9.positive-publication-selector.v1",
+  "selector_rule": "Only exact listed bytes; no directory sweep. No raw native conversation/auth/proprietary data. Raw public captures and raw execution receipts remain local outside repository.",
+  "source_freeze_lock_sha256": "bacc7013a7ffcf70f92cf0ec2ec7bbef0b783f5900ac6397be46d0c681b99f31",
+  "supersedes_selector_for_current_report": "publication-selector-002.json; original selectors retained"
+}

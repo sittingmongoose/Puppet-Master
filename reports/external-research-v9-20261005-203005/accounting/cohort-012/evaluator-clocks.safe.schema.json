@@ -1,0 +1,193 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "counter_rule": {
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "clocks": {
+                "additionalProperties": false,
+                "properties": {
+                  "final_closure_whole_seconds": {
+                    "type": "number"
+                  },
+                  "measured_utc": {
+                    "type": "string"
+                  },
+                  "original_whole_deadline_utc": {
+                    "type": "string"
+                  },
+                  "phase2_checking_seconds": {
+                    "type": "number"
+                  },
+                  "report_ready_whole_seconds": {
+                    "type": "number"
+                  },
+                  "required_handoff_whole_seconds": {
+                    "type": "number"
+                  },
+                  "source_elapsed_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "source_elapsed_seconds",
+                  "phase2_checking_seconds",
+                  "report_ready_whole_seconds",
+                  "required_handoff_whole_seconds",
+                  "final_closure_whole_seconds",
+                  "measured_utc",
+                  "original_whole_deadline_utc"
+                ],
+                "type": "object"
+              },
+              "evaluator": {
+                "type": "string"
+              },
+              "new_candidate_charge": {
+                "type": "boolean"
+              },
+              "provider_usage": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "evaluator",
+              "source_pin",
+              "clocks",
+              "provider_usage",
+              "billing_dollars",
+              "new_candidate_charge",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "clocks": {
+                "additionalProperties": false,
+                "properties": {
+                  "measured_utc": {
+                    "type": "string"
+                  },
+                  "original_whole_deadline_utc": {
+                    "type": "string"
+                  },
+                  "phase2_checking_seconds": {
+                    "type": "number"
+                  },
+                  "phase2_inclusive_required_handoff_over600_seconds": {
+                    "type": "number"
+                  },
+                  "phase2_inclusive_required_handoff_seconds": {
+                    "type": "number"
+                  },
+                  "report_ready_whole_seconds": {
+                    "type": "number"
+                  },
+                  "required_handoff_whole_seconds": {
+                    "type": "number"
+                  },
+                  "source_elapsed_seconds": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "source_elapsed_seconds",
+                  "phase2_checking_seconds",
+                  "report_ready_whole_seconds",
+                  "required_handoff_whole_seconds",
+                  "phase2_inclusive_required_handoff_seconds",
+                  "phase2_inclusive_required_handoff_over600_seconds",
+                  "measured_utc",
+                  "original_whole_deadline_utc"
+                ],
+                "type": "object"
+              },
+              "evaluator": {
+                "type": "string"
+              },
+              "new_candidate_charge": {
+                "type": "boolean"
+              },
+              "provider_usage": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "evaluator",
+              "source_pin",
+              "clocks",
+              "provider_usage",
+              "billing_dollars",
+              "new_candidate_charge",
+              "scope"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "rows",
+    "counter_rule"
+  ],
+  "type": "object"
+}

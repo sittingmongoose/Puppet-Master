@@ -1,0 +1,157 @@
+{
+  "schema": "er9.case_coverage.v1",
+  "case_id": "DEV-B-v1",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "brief_path": "briefs/development-B-notebook.md",
+  "criteria_path": "common_criteria.json",
+  "obligations": [
+    {
+      "id": "B01",
+      "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B02",
+      "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B03",
+      "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B04",
+      "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B05",
+      "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B06",
+      "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B07",
+      "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B08",
+      "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B09",
+      "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B10",
+      "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q4",
+        "Q7"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B11",
+      "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+      "dimensions": [
+        "Q2",
+        "Q5",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    },
+    {
+      "id": "B12",
+      "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+      "dimensions": [
+        "Q1",
+        "Q2",
+        "Q6",
+        "Q7",
+        "Q8"
+      ],
+      "required": true,
+      "assessment": "NOT_RUN"
+    }
+  ],
+  "consequential_current_claims": "Evaluator additionally assesses all consequential claims introduced in the designated final, not only these headings.",
+  "optional_choice_rule": "A useful opportunity/alternative is required research coverage; adopting it is optional.",
+  "predeclared_matched_screen": "Inspect source/applicability correctness of design-critical claims, actual independent precedents/issue chain, and support for each claimed executed witness in both arms; preserve remainder UNASSESSED on decisive screen."
+}

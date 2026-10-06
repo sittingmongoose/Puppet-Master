@@ -1,0 +1,25 @@
+{
+  "schema": "er9.selected-runner-chain-addendum.v1",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "D-V16-A-treatment-diagnostic-a001",
+      "stage_sha256": "c9d453cd5e3dff85b3dc79b0fb62e1d4bffa8f7e5f0c3e6662358f6583fc7731",
+      "launch_seal_sha256": "26cc71cf181528538eb0f8c26c0df3211a0acf18efb4f5b437875f22cc1e939d",
+      "selected_runner_sha256": "8b1c5f057cf7fa0892c684f5ff3de8cfc98152dfef3fda102dc3743da9d11ece",
+      "exact_runner_matches_owner_code": true
+    },
+    {
+      "alias": "B",
+      "job_id": "D-V16-A-control-diagnostic-a001",
+      "stage_sha256": "ab1482dca0c800a29d922cc753e30fe220d00c589fa98198bf3cef96e301663c",
+      "launch_seal_sha256": "473c7f29b1918e7310294b6b64821cf75703cb53096d7dbd591e37c52ae5bd74",
+      "selected_runner_sha256": "8b1c5f057cf7fa0892c684f5ff3de8cfc98152dfef3fda102dc3743da9d11ece",
+      "exact_runner_matches_owner_code": true
+    }
+  ],
+  "prior_chain_receipt_sha256": "5c4118852c7fba70516b7854586915f824eea609e32f85459c08f2bd87046350",
+  "field_scope": "runtime_source_sha256 is distinct hostruntime source field; selected dynamicrunner established exactLAUNCH_SEAL.runtime_source_pins, not assumed samefield",
+  "pre_enrichment_bytes": "UNKNOWN_NOT_RETAINED",
+  "aggregate_resource_profile": "NOT_EXPOSED_FOR_LEGACY_v1.2; per-unit caps not total peaks; no TD6profile substitution"
+}

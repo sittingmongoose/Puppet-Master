@@ -1,0 +1,30 @@
+{
+  "all_notices_precede_this_observation": true,
+  "evaluation_id": "independent-targeted-5",
+  "handoff_content_selector": "publication-selector-002.json",
+  "handoff_content_selector_sha256": "071e3aebc9af5a38cd47a8c724a14c529b4ef9d70cccd94da19610e14c813a41",
+  "receipt_observed_monotonic_ns": 89067654508240,
+  "receipt_observed_utc": "2026-10-06T03:50:48.797520+00:00",
+  "required_scientific_recipients": [
+    {
+      "ack_wait_performed": false,
+      "actual_read_or_ack": "UNKNOWN",
+      "notice_tool_result": "accepted",
+      "target": "/root"
+    },
+    {
+      "ack_wait_performed": false,
+      "actual_read_or_ack": "UNKNOWN",
+      "notice_tool_result": "accepted",
+      "target": "/root/publisher"
+    },
+    {
+      "ack_wait_performed": false,
+      "actual_read_or_ack": "UNKNOWN",
+      "notice_tool_result": "accepted",
+      "target": "/root/cost_accounting"
+    }
+  ],
+  "schema": "er9.evaluator-required-handoff-receipts.v1",
+  "science_sent_to_ops_engineering_cases_candidates": false
+}

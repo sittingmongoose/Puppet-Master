@@ -1,0 +1,659 @@
+{
+  "blinding": {
+    "candidate_identity_model_family_history_economics_private_role_key": "NOT_READ",
+    "phase2_release_read": false,
+    "source_first": true,
+    "unavoidable_hints": "Exact actual launched tasks expose method descriptions; root assignment provides diagnostic label; A/B are anonymous output aliases, not identity mapping. Perfect blinding is not claimed."
+  },
+  "common_dimension_coverage": [
+    {
+      "A": "UNASSESSED_FOR_COMPLETE_DIMENSION",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "dimension_id": "Q1"
+    },
+    {
+      "A": "PARTIAL_WITH_VERIFIED_DEFECT",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "dimension_id": "Q2"
+    },
+    {
+      "A": "PARTIAL_WITH_VERIFIED_DEFECT",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "dimension_id": "Q3"
+    },
+    {
+      "A": "UNASSESSED_FOR_COMPLETE_DIMENSION",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "dimension_id": "Q4"
+    },
+    {
+      "A": "UNASSESSED_FOR_COMPLETE_DIMENSION",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "dimension_id": "Q5"
+    },
+    {
+      "A": "PARTIAL_WITH_VERIFIED_DEFECT",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "dimension_id": "Q6"
+    },
+    {
+      "A": "PARTIAL_WITH_VERIFIED_DEFECT",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "dimension_id": "Q7"
+    },
+    {
+      "A": "UNASSESSED_FOR_COMPLETE_DIMENSION",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "dimension_id": "Q8"
+    }
+  ],
+  "common_important_checks": [
+    {
+      "A": "PARTIAL: open/unmerged Jupyter chain and dereferenced release/base metadata independently supported; complete precedent/release/runtime assessment UNASSESSED",
+      "B": "PARTIAL_CATALOG_ONLY: DuckDB merged fix branch, exact guard, release mismatch and regression fixture independently supported; no designated proposal",
+      "check_id": "B-P1"
+    },
+    {
+      "A": "FAIL_SCREEN: verified mutable-input provenance counterexample; remaining design claims UNASSESSED",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL: catalog explicitly qualifies critical release/runtime uncertainty",
+      "check_id": "B-P2"
+    },
+    {
+      "A": "UNASSESSED: W1 code/input/receipt catalog absent; claimed scope is narrow but actual witness unverified",
+      "B": "PARTIAL_CATALOG_ONLY: W01 fixture geometry independently verified and runtime claims honestly UNEXECUTED; native receipt authenticity held for Phase2",
+      "check_id": "B-P3"
+    },
+    {
+      "A": "PARTIAL_WITH_DEFECT: supported chain metadata retained; provenance guarantee fails; remaining preservation/claims UNASSESSED",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "check_id": "B-P4"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "check_id": "B-P5"
+    }
+  ],
+  "comparison": "No winner. A has a verified consequential inference defect and incomplete catalogs; B has supported catalog fragments and missing final. These are different findings, not equivalent FAILs. Delivery and native operations will be reported separately in Phase2.",
+  "criteria_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_B_brief_obligations": 12,
+    "target_obligations": 4,
+    "target_scope_checks": 3
+  },
+  "defects": [
+    {
+      "basis": "Default import retains an external source reference and managed immutable copies are optional. A read-only worker view does not make the underlying externally writable data immutable.",
+      "candidate_locator": "outputs/A/final/proposal.md line 23, Identity and mutation",
+      "candidate_sha256": "b39dcd616a7468a06d901a927bb1f70cfdb59abb04186dfce4febcb2661c4ffd",
+      "checked_expected": {
+        "actual_read_digest_differs": true,
+        "original_value": 10,
+        "pre_post_hash_equal": true,
+        "worker_observed_value": 99
+      },
+      "claim": "Pre-run and post-run byte hashes prevent associating a concurrently replaced mutable source with the wrong output.",
+      "cleanup_confirmed": true,
+      "code_sha256": "fef1ce5ea402ceadfadae700d675c0d77e1059a31e5332a0ce14a126f9490d07",
+      "counterexample": "Original value 10 hashed; underlying file changed to value 99 before worker read; worker output uses 99; original bytes restored before final hash. Pre/post hashes match original despite actual consumed input digest differing.",
+      "data_sha256": "259a80a6f4a4f2f0d6bbdefef689563739d4a9550b70f384293a9c155ae54347",
+      "defect_id": "E6-A-IDENTITY-001",
+      "exit_code": 0,
+      "isolated_evaluator_execution_id": "exec-_uc89627",
+      "kind": "CONSEQUENTIAL_ENGINEERING_INFERENCE_ERROR",
+      "mapped_check_ids": [
+        "B-P2",
+        "B-P4",
+        "D-V15-B-P1"
+      ],
+      "plan_consequence": "A provenance-current decision needs an actually immutable input view or a synchronization/consumption identity contract, not only endpoint hashes. No candidate repair was performed.",
+      "remainder": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "scope": "Deterministic filesystem interleaving witness of the stated guarantee, not a product exploit or whole runtime test. Immutable byte snapshot control returns 10.",
+      "severity": "consequential",
+      "stdout_sha256": "4f6905006dbc3e91f34057ea5328521913ba46d4a7630e621743ba60b19b2702"
+    }
+  ],
+  "evaluation_id": "independent-targeted-6",
+  "evaluator_checks": {
+    "successful_isolated_execution": {
+      "cleanup_confirmed": true,
+      "code_sha256": "fef1ce5ea402ceadfadae700d675c0d77e1059a31e5332a0ce14a126f9490d07",
+      "execution_id": "exec-_uc89627",
+      "exit_code": 0,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/checks/catalog-B-and-identity-interleaving-result.json",
+      "stdout_sha256": "4f6905006dbc3e91f34057ea5328521913ba46d4a7630e621743ba60b19b2702",
+      "typed_checks": [
+        {
+          "actual": [
+            true,
+            "v2.0-cyanoptera",
+            "59ae0c6fb3f29369cfd0df124c76e9232181ef86"
+          ],
+          "check_id": "B-PR-APPLICABILITY",
+          "expected": [
+            true,
+            "v2.0-cyanoptera",
+            "59ae0c6fb3f29369cfd0df124c76e9232181ef86"
+          ],
+          "scope": "Exact public merged PR fields; not stable release behavior",
+          "status": "PASS"
+        },
+        {
+          "actual": true,
+          "check_id": "B-MERGE-EXACT-GUARD",
+          "expected": true,
+          "scope": "Exact ProcessOverBufferValue source text",
+          "status": "PASS"
+        },
+        {
+          "actual": false,
+          "check_id": "B-RELEASE-EXACT-GUARD-ABSENT",
+          "expected": false,
+          "scope": "Exact guard absence; equivalent fix/runtime not assessed",
+          "status": "PASS"
+        },
+        {
+          "actual": 404,
+          "check_id": "B-RELEASE-TEST-404",
+          "expected": 404,
+          "scope": "Exact regression path only",
+          "status": "PASS"
+        },
+        {
+          "actual": [
+            26,
+            25,
+            1526,
+            1023,
+            "0d0d0a"
+          ],
+          "check_id": "B-W01-INDEPENDENT-FIXTURE-GEOMETRY",
+          "expected": [
+            26,
+            25,
+            1526,
+            1023,
+            "0d0d0a"
+          ],
+          "scope": "Actual evaluator-generated bytes from upstream literals; no DuckDB execution",
+          "status": "PASS"
+        },
+        {
+          "actual": 1022,
+          "check_id": "B-W01-NEGATIVE-CONTROL",
+          "expected": 1022,
+          "scope": "One shorter header moves terminator; arithmetic is not release behavior",
+          "status": "PASS"
+        },
+        {
+          "actual": true,
+          "check_id": "A-IDENTITY-COUNTEREXAMPLE-HASHES",
+          "expected": true,
+          "scope": "Filesystem interleaving: pre/post hashes accept original bytes",
+          "status": "PASS"
+        },
+        {
+          "actual": 99,
+          "check_id": "A-IDENTITY-COUNTEREXAMPLE-OUTPUT",
+          "expected": 99,
+          "scope": "Worker observed transient changed bytes; original manifest value is 10",
+          "status": "PASS"
+        },
+        {
+          "actual": true,
+          "check_id": "A-IDENTITY-COUNTEREXAMPLE-MISASSOCIATION",
+          "expected": true,
+          "scope": "Refutes stated cannot-associate-wrong-output guarantee for mutable original references",
+          "status": "PASS"
+        },
+        {
+          "actual": 10,
+          "check_id": "A-IDENTITY-SNAPSHOT-CONTROL",
+          "expected": 10,
+          "scope": "An actually immutable byte snapshot avoids this particular interleaving; no product fix tested",
+          "status": "PASS"
+        }
+      ]
+    },
+    "unexecuted_attempt": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/checks/source-applicability-A-result.json",
+      "reason": "ValueError: code/data cap exceeded",
+      "scope": "No bootstrap/candidate code executed; no retry or host fallback; planned A AST checks remain UNEXECUTED."
+    }
+  },
+  "frozen_monotonic_ns": 88620760782545,
+  "frozen_utc": "2026-10-06T03:43:21.903795+00:00",
+  "full_brief_obligation_coverage": [
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B01"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B02"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B03"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B04"
+    },
+    {
+      "A": "FAIL_SCREEN_LIMITED_CURRENT_CLAIM",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B05"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B06"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B07"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B08"
+    },
+    {
+      "A": "PARTIAL_CHAIN_METADATA_ONLY",
+      "B": "PARTIAL_CATALOG_CHAIN_ONLY",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B09"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B10"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "PARTIAL_CATALOG_WITNESS_GEOMETRY_ONLY",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B11"
+    },
+    {
+      "A": "UNASSESSED_AFTER_DECISIVE_SCREEN",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "full_brief_PASS_credit": false,
+      "obligation_id": "B12"
+    }
+  ],
+  "original_clock": {
+    "clock_reset_permitted": false,
+    "clock_scope": "Literal source checking includes dispatch/task/candidate/public-source reads and meaningful source checks. Required Phase2 checking includes release/identity/native Goal/artifact/quiet/time/resource/cost checks. WHOLE includes all report writing, required outgoing notices, handoffs, metadata and closure from original START. No resets; overruns visible.",
+    "evaluation_id": "independent-targeted-6",
+    "phase2_deadline_monotonic_ns": null,
+    "phase2_start_monotonic_ns": null,
+    "record_role": "clock",
+    "required_phase2_checking_budget_seconds": 600,
+    "schema": "er9.evaluator-original-clock.v1",
+    "source_checking_budget_seconds": 1200,
+    "source_checking_deadline_monotonic_ns": 89316291718721,
+    "start_monotonic_ns": 88116291718721,
+    "start_utc": "2026-10-06T03:34:57.434734+00:00",
+    "state": "STARTED",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 89916291718721
+  },
+  "outputs": {
+    "A": {
+      "defects": [
+        "E6-A-IDENTITY-001"
+      ],
+      "delivery": "INCOMPLETE",
+      "designated_proposal_present": true,
+      "important_limit": "No finding that Jupyter chain correction is false; supporting source metadata retained. No inference of candidate-executed runtime.",
+      "lead_inventory_present": false,
+      "scientific_coverage": "PARTIAL",
+      "scientific_outcome": "FAIL_SCREEN",
+      "source_catalog_present": false,
+      "whole_pipeline": "UNASSESSED",
+      "witness_catalog_present": false
+    },
+    "B": {
+      "catalog_source_quality": "PARTIAL_SUPPORTED_SUBSET",
+      "defects": [],
+      "delivery": "INCOMPLETE",
+      "designated_proposal_present": false,
+      "important_limit": "Catalog source claims can be checked as scoped evidence but never substitute for missing final, establish component choice or obtain whole-task PASS.",
+      "lead_inventory_present": true,
+      "scientific_outcome": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "source_catalog_present": true,
+      "whole_pipeline": "UNASSESSED",
+      "witness_catalog_present": true
+    }
+  },
+  "pair_id": "D-V15-B-SCOPE-R002",
+  "public_primary_captures": [
+    {
+      "access_utc": "2026-10-06T03:37:19.304370+00:00",
+      "bytes": 5608,
+      "final_url": "https://api.github.com/repos/jupyter/nbclient/issues/312",
+      "http_status": 200,
+      "label": "A_nbclient_issue",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_nbclient_issue.body",
+      "sha256": "261b68398b835c25cddab06dcf6f410a7d180175f0312c32750b48f32a7965d6",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/nbclient/issues/312"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.307066+00:00",
+      "bytes": 15781,
+      "final_url": "https://api.github.com/repos/jupyter/nbclient/pulls/311",
+      "http_status": 200,
+      "label": "A_nbclient_pr",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_nbclient_pr.body",
+      "sha256": "dc2a82ece4acc0176dfa83af64645b324cacac8fcfae8da3666a4844d92709d5",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/nbclient/pulls/311"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.308320+00:00",
+      "bytes": 1924,
+      "final_url": "https://api.github.com/repos/jupyter/nbclient/pulls/311/files",
+      "http_status": 200,
+      "label": "A_nbclient_pr_files",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_nbclient_pr_files.body",
+      "sha256": "057fb60d9dd7738871ca5dec23e92dc95abb6eae59f5142b90dcb0421310392e",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/nbclient/pulls/311/files"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.309513+00:00",
+      "bytes": 337,
+      "final_url": "https://api.github.com/repos/jupyter/nbclient/git/ref/tags/v0.10.0",
+      "http_status": 200,
+      "label": "A_nbclient_tag",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_nbclient_tag.body",
+      "sha256": "52d5f066552fa3edfde162eec13df65cb262db307f47e7bcd5e9d683821145c3",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/nbclient/git/ref/tags/v0.10.0"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.310365+00:00",
+      "bytes": 16948,
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/1145",
+      "http_status": 200,
+      "label": "A_jupyter_pr",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_pr.body",
+      "sha256": "084847ceda4c4c793fbba596114fbfc99c27534f6407ff9d1bbf1f724bbd86a5",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/1145"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.311561+00:00",
+      "bytes": 5363,
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/1145/files",
+      "http_status": 200,
+      "label": "A_jupyter_pr_files",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_pr_files.body",
+      "sha256": "3bb7f6d68e649b394e87ae28cc337ba4b6976546c83ecabea5f19e5645d14210",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/pulls/1145/files"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.482303+00:00",
+      "bytes": 349,
+      "final_url": "https://api.github.com/repos/jupyter/jupyter_client/git/ref/tags/v8.10.0",
+      "http_status": 200,
+      "label": "A_jupyter_tag",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_tag.body",
+      "sha256": "edddf85feca9feeffe5a6a0a4f2da7f75ad3ba1fa23574eff42e8c32c2dd5997",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/git/ref/tags/v8.10.0"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.508490+00:00",
+      "bytes": 38165,
+      "final_url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.10.0/jupyter_client/session.py",
+      "http_status": 200,
+      "label": "A_jupyter_release_session",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_release_session.body",
+      "sha256": "1136752e651282c094b836cf2a5b1012b11dc3ccfab236c706f3541da84c6c5a",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.10.0/jupyter_client/session.py"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.611940+00:00",
+      "bytes": 21325,
+      "final_url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.10.0/tests/test_session.py",
+      "http_status": 200,
+      "label": "A_jupyter_release_test",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_release_test.body",
+      "sha256": "708d462c90a176f9c7154924697c2e667abf9a9154c97174f4d0ccc190513111",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/jupyter/jupyter_client/v8.10.0/tests/test_session.py"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.612876+00:00",
+      "bytes": 8110,
+      "final_url": "https://api.github.com/repos/duckdb/duckdb/issues/25164",
+      "http_status": 200,
+      "label": "B_duckdb_issue",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_issue.body",
+      "sha256": "5486aac86d6778c4aa01c5f81e25f061420aa55983842f3c20cb496cffbb739c",
+      "truncated": false,
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/25164"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.634321+00:00",
+      "bytes": 18724,
+      "final_url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232",
+      "http_status": 200,
+      "label": "B_duckdb_pr",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_pr.body",
+      "sha256": "3b91c06e44040d5e5275c600e629230aee1c75913173939402616ca1e9894a58",
+      "truncated": false,
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/25232"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.644106+00:00",
+      "bytes": 86169,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "http_status": 200,
+      "label": "B_duckdb_fix_code",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_fix_code.body",
+      "sha256": "37addaf32ef7d1ddeb7fcb6d949e873790ff7b8401307e7414b672014034c3aa",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.691305+00:00",
+      "bytes": 3714,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "http_status": 200,
+      "label": "B_duckdb_fix_test",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_fix_test.body",
+      "sha256": "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.767540+00:00",
+      "bytes": 83185,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp",
+      "http_status": 200,
+      "label": "B_duckdb_release_code",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_release_code.body",
+      "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.770750+00:00",
+      "bytes": 14,
+      "final_url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+      "http_status": 404,
+      "label": "B_duckdb_release_test",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/B_duckdb_release_test.body",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "truncated": false,
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.788582+00:00",
+      "bytes": 50850,
+      "final_url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html",
+      "http_status": 200,
+      "label": "nbformat_doc",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/nbformat_doc.body",
+      "sha256": "d09bb699e755c2d4d277028b2e92ced7cb441f12ac4b00872a1e5af1bb4e18cf",
+      "truncated": false,
+      "url": "https://nbformat.readthedocs.io/en/v5.10.4/format_description.html"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.801106+00:00",
+      "bytes": 36686,
+      "final_url": "https://nbclient.readthedocs.io/en/stable/client.html",
+      "http_status": 200,
+      "label": "nbclient_doc",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/nbclient_doc.body",
+      "sha256": "f4bc1460415ea1abac5667099a71ef422272697401d96527d9b97c03897a85a2",
+      "truncated": false,
+      "url": "https://nbclient.readthedocs.io/en/stable/client.html"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.863511+00:00",
+      "bytes": 356137,
+      "final_url": "https://duckdb.org/docs/current/data/multiple_files/combining_schemas",
+      "http_status": 200,
+      "label": "duckdb_schema_doc",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/duckdb_schema_doc.body",
+      "sha256": "13123fabb59077100a318965fff8fe1468534b95d756c509997458b6d769845d",
+      "truncated": false,
+      "url": "https://duckdb.org/docs/current/data/multiple_files/combining_schemas"
+    },
+    {
+      "access_utc": "2026-10-06T03:37:19.869347+00:00",
+      "bytes": 375645,
+      "final_url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files",
+      "http_status": 200,
+      "label": "duckdb_csv_doc",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/duckdb_csv_doc.body",
+      "sha256": "e98b6615a85e6fe31ae3404aaee49c5d628d9634773b6ee17d701dd70a344c6c",
+      "truncated": false,
+      "url": "https://duckdb.org/docs/current/data/csv/reading_faulty_csv_files"
+    },
+    {
+      "access_utc": "2026-10-06T03:38:31.435889+00:00",
+      "bytes": 676,
+      "http_status": 200,
+      "label": "A_nbclient_tag_object",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_nbclient_tag_object.body",
+      "sha256": "b07c5e6b98db1ddbd3880a57b59df9f9f7b557e9ed6ee53df34e382bb9a0b94f",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/nbclient/git/tags/c8081e61962290e29e0ee9871784e96f32d2099e"
+    },
+    {
+      "access_utc": "2026-10-06T03:38:31.570800+00:00",
+      "bytes": 684,
+      "http_status": 200,
+      "label": "A_jupyter_tag_object",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/public-captures/A_jupyter_tag_object.body",
+      "sha256": "fbbbdbbbc0aa94dffb7741c48cdd35da5e576ec578528f10d1f48387127ea675",
+      "truncated": false,
+      "url": "https://api.github.com/repos/jupyter/jupyter_client/git/tags/27d61458c6494bbe5b8c2cc9c8ea13b4c3ad19f7"
+    }
+  ],
+  "schema": "er9.independent-phase1-judgment.v1",
+  "scope": "Actual available current targeted diagnostic artifacts only; four required artifacts assessed as present/absent without substitution; no full-pipeline/general/causal PASS or winner",
+  "selection": "Earliest whole-pair READY by maximum of two terminal stamps as supplied in frozen dispatch; prospective selection, no quality choice; chronology authenticity held for Phase2",
+  "source_budget_overrun_seconds": 0,
+  "source_budget_rules": "Literal 1200-second source clock honored from original START; required P2 inclusive <=600 seconds and report/handoffs/closure <=1800 seconds from same START. No clock resets or hidden overruns.",
+  "source_literal_elapsed_seconds": 504.469063824,
+  "source_remainder": "UNASSESSED: full implementation precedent mechanisms, notebook/data/invalidation/recovery/security/performance/runtime package tuple and other consequential current claims not fully checked after decisive screen. Captured docs are not counted as semantic verification merely because hashes exist.",
+  "state": "IMMUTABLE_SOURCE_JUDGMENT",
+  "supported_findings": [
+    {
+      "claim_scope": "nbclient #311 and jupyter_client #1145 are open/unmerged; dereferenced nbclient v0.10.0 and jupyter_client v8.10.0 tags match their PR bases; #311 changed-files response changes client.py only.",
+      "id": "E6-A-JUPYTER-METADATA",
+      "source_labels": [
+        "A_nbclient_pr",
+        "A_nbclient_pr_files",
+        "A_nbclient_tag_object",
+        "A_jupyter_pr",
+        "A_jupyter_tag_object"
+      ],
+      "verification": "Independent public primary metadata inspection. Attempted combined isolated AST witness was refused before execution by data cap; helper/test-release absence was not credited by that witness. Runtime reproduction and root cause remain UNASSESSED."
+    },
+    {
+      "claim_scope": "#25232 merged into v2.0-cyanoptera at 59ae0c6; exact early-return guard appears in merge source and is absent from inspected v1.5.6 function; exact regression path at release returns 404.",
+      "id": "E6-B-DUCKDB-APPLICABILITY",
+      "source_labels": [
+        "B_duckdb_pr",
+        "B_duckdb_fix_code",
+        "B_duckdb_release_code",
+        "B_duckdb_fix_test",
+        "B_duckdb_release_test"
+      ],
+      "verification": "Primary source comparison plus isolated typed source-text checks. No inference of equivalent-fix absence or reproduced release defect."
+    },
+    {
+      "claim_scope": "Fixture generated independently from upstream literals is 1526 bytes; header 26, rows 25; row39 first CR at 1023 and CRCRLF crosses 1024.",
+      "id": "E6-B-W01-GEOMETRY",
+      "source_labels": [
+        "B_duckdb_fix_test"
+      ],
+      "verification": "Isolated evaluator-created byte fixture and shifted-header control; validates W01 arithmetic only. Candidate native execution authenticity held for Phase2."
+    }
+  ],
+  "target_obligation_coverage": [
+    {
+      "A": "INCOMPLETE_OR_UNASSESSED",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "id": "D-V15-B-01"
+    },
+    {
+      "A": "PARTIAL_WITH_VERIFIED_DEFECT",
+      "B": "PARTIAL_CATALOG_ONLY",
+      "id": "D-V15-B-02"
+    },
+    {
+      "A": "INCOMPLETE_OR_UNASSESSED",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "id": "D-V15-B-03"
+    },
+    {
+      "A": "INCOMPLETE_OR_UNASSESSED",
+      "B": "UNASSESSED_NO_DESIGNATED_FINAL",
+      "id": "D-V15-B-04"
+    }
+  ],
+  "target_scope_checks": [
+    {
+      "A": "FAIL_SCREEN for consequential provenance behavior guarantee; independently supported open/unmerged chain metadata is preserved",
+      "B": "PARTIAL_CATALOG_ONLY for DuckDB guard/release/test applicability; no final and no whole target PASS",
+      "check_id": "D-V15-B-P1"
+    },
+    {
+      "A": "INCOMPLETE_DELIVERY: source/witness/lead catalogs absent; source remainder UNASSESSED after decisive counterexample",
+      "B": "INCOMPLETE_DELIVERY: designated proposal absent; catalogs not promoted to final; source remainder UNASSESSED",
+      "check_id": "D-V15-B-P2"
+    },
+    {
+      "A": "UNASSESSED_PENDING_PHASE2 for actual native Goal/method uptake and matched budget; W1 authenticity unverified",
+      "B": "UNASSESSED_PENDING_PHASE2 for actual native Goal/method uptake and matched budget; catalog scope distinguishes arithmetic from runtime",
+      "check_id": "D-V15-B-P3"
+    }
+  ]
+}
