@@ -119,5 +119,13 @@
   "Eval2_clock_companion": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
   "D08A_role_packet": "Available frozen roles; review STARTED, source quality UNASSESSED, incomplete pair",
   "method_audit": "Frozen cutoff; prospective repair selections are not repair completion proof",
-  "dispatcher_kernel_envelope_admission": "NOT_OBSERVED_IN_THIS_COHORT"
+  "dispatcher_kernel_envelope_admission": "NOT_OBSERVED_IN_THIS_COHORT",
+  "initial_slots_terminal_gate": {
+    "initial_slots_terminal": 12,
+    "target": 12,
+    "confirmation_gate": "RELEASED",
+    "remaining_admission_requirements": "Actual safe complete GLM resource profile and real headroom; not quality/all32 approval",
+    "source": "restart/cohort010/initial-terminal-gate/current.json",
+    "whole_pipeline_credit": false
+  }
 }

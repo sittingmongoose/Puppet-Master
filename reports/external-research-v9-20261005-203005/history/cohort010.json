@@ -688,5 +688,23 @@
       "sha256": "737ceba68aee106f00a200c6d5174d2f481ed64c44688f096180e1550eb1d7f6",
       "byte_identical": true
     }
+  ],
+  "initial_terminal_gate_addendum": [
+    {
+      "source": "state/current.json",
+      "original_sha256": "a18715805d5dad591f236f9ac94899a96340d3e962d38d6c851f98e65794bb01",
+      "public_sha256": "a18715805d5dad591f236f9ac94899a96340d3e962d38d6c851f98e65794bb01",
+      "published": "restart/cohort010/initial-terminal-gate/current.json",
+      "source_updated_at": "2026-10-06T00:53:32.990631+00:00",
+      "normalization": "LAB_ROOT host labels"
+    },
+    {
+      "source": "state/campaign.json",
+      "original_sha256": "a18715805d5dad591f236f9ac94899a96340d3e962d38d6c851f98e65794bb01",
+      "public_sha256": "a18715805d5dad591f236f9ac94899a96340d3e962d38d6c851f98e65794bb01",
+      "published": "restart/cohort010/initial-terminal-gate/campaign.json",
+      "source_updated_at": "2026-10-06T00:53:32.990631+00:00",
+      "normalization": "LAB_ROOT host labels"
+    }
   ]
 }
