@@ -1,0 +1,23 @@
+{
+  "schema": "er9.luna.service-acceptance-reader-pin.v1",
+  "status": "MECHANICALLY_READY",
+  "files": {
+    "service_acceptance_projection.py": "6e5c8e6a5c055788ced67fadda72fadfb74c916ba80e424d82daa80327b72a43",
+    "test_service_acceptance_projection.py": "133fd116353e83cd47c849894cdb6c0c055f741d0c71daab3990741a1c993bae",
+    "SERVICE_ACCEPTANCE_REGRESSION.json": "7250c51487b9f7fcc4cb05f67f1957f13e894a8a3d9e38a36a99b6088d77c137",
+    "SERVICE_ACCEPTANCE_README.md": "b55922739547a14b9fadd9afdd49181372775bfb1fbec4acaefe5f06291d8810"
+  },
+  "dependency": {
+    "native_error_projection.py": "8e8994c72f78ede01d791e3c8414d38a9360f8891331bdbff4661e2e81a70d04"
+  },
+  "telemetry_source_hashes": {
+    "dynamic_projector.py": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b",
+    "completion_projection.py": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5"
+  },
+  "native_goal_starts": 0,
+  "tests": 8,
+  "scope": "read-only additive structural acceptance metadata; ops owns admission; existing live/runtime/status/cost unchanged",
+  "after_birth_proof": "fresh empty-State/thread binding + native activation original monotonic birth; per-call timestamps unsupported",
+  "acceptance_field": "active_attempt_acceptance_observed is true; exit0 alone is insufficient",
+  "unknown_counters": "HTTP and parent-response counts UNKNOWN; usage notifications are not responses"
+}

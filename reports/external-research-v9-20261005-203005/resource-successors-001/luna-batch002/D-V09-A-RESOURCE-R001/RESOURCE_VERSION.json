@@ -1,0 +1,25 @@
+{
+  "both_arms_coupled": true,
+  "classification": "entered_matched_lineage",
+  "fresh_matched_comparison_credit": false,
+  "new_native_starts": 0,
+  "original_attempts_results_flags_and_all_costs_preserved": true,
+  "pair_id": "D-V09-A-RESOURCE-R001",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch002/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "schema": "er9.resource-version-scientific-card-envelope.v1",
+  "scientific_card_bytes_changed": false,
+  "source_brief_common_criteria_outputs_method_budgets_changed": false,
+  "source_cards": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V09-A.json",
+      "sha256": "8c87948f0409d7c6052dbf9f05ad72bd3619d3dcd07eb35386165bcc3cb1ba4f"
+    }
+  ],
+  "source_pair_id": "D-V09-A",
+  "task_bytes_changed": false
+}

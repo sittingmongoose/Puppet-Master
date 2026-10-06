@@ -1,0 +1,25 @@
+{
+  "deferred_stages": 0,
+  "new_native_starts": 0,
+  "pipeline_delivery_or_quality_claimed": false,
+  "requests": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+      "sha256": "168e009daceb9b3db9b2ce77dfb450a26198598405c232e6bbc2f7eda7fa75fc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/registration.json",
+      "sha256": "ff35d9c523f8dc2e4a716ed8e367c91477d1c52b9d6cc1e6bc2e28d26946d1a3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/registration.json",
+      "sha256": "b6f557190a6955ce71ed652fddbe6abc11dd661c46db183d14cc6c5004773cec"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/registration.json",
+      "sha256": "bbf82bd338ce84eaf37332096c762c13c1ff6ac52ae81a907dae753bf282d51e"
+    }
+  ],
+  "schema": "er9.resource-successor-outbox.v1",
+  "stage_packets": 12
+}

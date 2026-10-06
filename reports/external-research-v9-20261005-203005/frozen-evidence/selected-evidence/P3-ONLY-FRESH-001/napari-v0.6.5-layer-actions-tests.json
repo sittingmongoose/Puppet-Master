@@ -1,0 +1,24 @@
+{
+  "schema": "er9.independent-primary-capture.v1",
+  "capture_name": "napari-v0.6.5-layer-actions-tests",
+  "requested_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+  "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+  "status": 200,
+  "captured_utc": "2026-10-06T01:12:44.848241+00:00",
+  "started_utc": "2026-10-06T01:12:44.687864+00:00",
+  "captured_bytes": 11419,
+  "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+  "capture_limit_bytes": 2097152,
+  "body_complete": true,
+  "truncated": false,
+  "headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Content-Length": "11419",
+    "Content-Encoding": null,
+    "ETag": "\"473e102c1b31a818e90ae3fc311c449815f5f0ffcf005193977078060a9d1274\"",
+    "Last-Modified": null
+  },
+  "actor": "independent evaluator requested mechanical public fetch; no candidate use",
+  "semantic_interpretation": "NONE",
+  "model_comprehension": "UNKNOWN"
+}

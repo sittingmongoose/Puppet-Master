@@ -1,0 +1,29 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S3",
+  "body_sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+  "body_bytes": 34722,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/0015.body",
+    "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+    "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+    "version_or_commit": "sha256:d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+  "catalog_asserted_capture_identity": {
+    "capture_id": "d259edb7ccf847cf88c44a68781e3ae2",
+    "path": "inputs/source_context/0015.body",
+    "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+    "captured_at": "2026-10-05T22:18:12.475198+00:00",
+    "bytes": 34722,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b"
+}

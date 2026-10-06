@@ -1,0 +1,34 @@
+{
+  "schema": "er9.delivery-repair.provenance-clock-convention.v1",
+  "addendum_id": "ER9-DEC010-PROVENANCE-CLOCK-002",
+  "author": "/root/max_supervision (GPT-6.1 Sol Max)",
+  "frozen_utc": "2026-10-06T01:26:35.453169+00:00",
+  "authority": "Bounded truthful-provenance follow-up; tools owner reported positive native Goal activation proof but exact activation clock unexposed. This defines honest receipt/time convention without inventing a native field.",
+  "provenance_addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+    "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+    "bytes_modified": false
+  },
+  "time_proof_required": true,
+  "acceptable_conventions": [
+    {
+      "kind": "native_activation_timestamp",
+      "meaning": "Use actual exposed native Goal activation time with source receipt SHA/path/selector and its observed precision. Do not claim finer precision or substitute an updatedAt/completion timestamp."
+    },
+    {
+      "kind": "host_observed_activation_receipt",
+      "meaning": "Use actual host observation/receipt time for positive activation, explicitly labeled observation time rather than exact native event time, with receipt SHA/path/selector."
+    },
+    {
+      "kind": "observed_enclosing_window",
+      "meaning": "If exact activation/observation time is genuinely unavailable, retain it as null/UNKNOWN with non-exposure reason. Preserve actual observed same-job stage/native-start lower anchor and actual immutable artifact/proof-freeze upper anchor, source receipt SHA/path/selectors and their clock basis. Positive native Goal activation count/evidence must belong to that job and be bound by those observed anchors. This establishes chronology only; it does not establish exact activation time or elapsed Goal duration."
+    }
+  ],
+  "window_validation": "Verify actual anchors and ordering on a stated comparable clock basis and their binding to the positive same-job activation/freeze receipt. Do not use guessed timestamps, model assertions, current file mtime, a later import timestamp mislabeled as original freeze, or ungrounded cross-clock arithmetic. Label any actual later import/proof-freeze anchor as such. A coarse or longer observed window is not an exact event timestamp.",
+  "absent_or_unsupported_time_proof": "Reject reference admission if no truthful native/host timestamp or supported enclosing observed window is available. Positive Goal count, separate session identity, role/family and exact receipt/data hashes remain mandatory; session alone or an arbitrary time anchor is insufficient.",
+  "completion_and_economics": "This provenance window is not native COMPLETE-before-deadline evidence, an original stage success, a source grade or observed usage/duration. Retain original failure/HOLD, precise deadline/completion rules and cost unknowns. Never widen a controller clock from this convention.",
+  "owner_schema": "Tools/ops bind actual exposed receipt fields into the pinned neutral capsule and test explicit unknown exact time with valid window, invented/absent/reversed anchors, session-only evidence and required positive Goal proof. No source/candidate/evaluation bodies, new Goal/probe or extra review gate are required.",
+  "original_policy_and_caps_modified": false,
+  "new_sharing_or_adoption_relaxation": false,
+  "native_Goals_or_live_changes_by_supervisor": 0
+}

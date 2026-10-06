@@ -1,0 +1,35 @@
+{
+  "schema": "er9.neutral-evaluator-source-clock.v1",
+  "pair_id": "D-V08-A",
+  "projection_created_utc": "2026-10-06T00:58:15.985995+00:00",
+  "started": {
+    "utc": "2026-10-06T00:44:53.834732+00:00",
+    "epoch_ns": 1791247493834732395,
+    "monotonic_ns": 77912691736392
+  },
+  "phase1_finished": {
+    "utc": "2026-10-06T00:56:24.747283+00:00",
+    "epoch_ns": 1791248184747282534,
+    "monotonic_ns": 78603604283719
+  },
+  "source_screen_elapsed_seconds": 690.912547327,
+  "whole_FINISHED": null,
+  "clock_phase": "source subset; not extra beyond total pair",
+  "model_inference_cost": "UNKNOWN",
+  "physical_provider_telemetry": "UNKNOWN",
+  "authorized_budgets_not_observed_cost": {
+    "source_screen_seconds": 1200,
+    "pair_elapsed_seconds": 1800,
+    "reset_allowed": false
+  },
+  "source_selectors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+    }
+  ]
+}

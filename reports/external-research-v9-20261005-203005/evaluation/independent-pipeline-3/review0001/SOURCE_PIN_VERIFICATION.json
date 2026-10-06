@@ -1,0 +1,218 @@
+{
+  "source_manifest_sha256": "22f37ad5e77574765f15246711948ede5ff55aa8d2092d1ff23c7807af71a1d4",
+  "rows": [
+    {
+      "source_id": "S1",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "body_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "body_bytes": 163120,
+      "metadata_sha256": "c22d75ee7b81a30ed5138e1f01e3c2a50b9a52cd1b0d12a7efdcc57f6b7f4b17",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "OME-NGFF 0.4",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "HTML sections2/2.1,3.1,3.3/3.4,3.6/3.7 rendered text"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S2",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "body_sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "body_bytes": 48745,
+      "metadata_sha256": "13017f1e07759e783cd3a45664e3aac0288327db213044c9006e34a53229b2a5",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "OME Model documentation 6.2.2",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "rendered DimensionOrder/TiffData defaults and explicit mapping examples through first8500chars"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S3",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "body_sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "body_bytes": 34722,
+      "metadata_sha256": "4ee411a26d52d888a2e0244d12124b75c531370fea4281f85fd9142883e10290",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "tifffile 2025.5.10",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "JSON info/version,requires_python,requires_dist; description Requirements through Notes and regional Zarr example"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S4",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "body_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "body_bytes": 15402,
+      "metadata_sha256": "ed7b2551bb617839d8d1ca9d6c20c09f46d70c4249fa10b94fdfb5a3f9ed5111",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "napari tag v0.6.5",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "lines 1-166 and 249-265 slice_from_axis/split_channels/split_rgb",
+        "full split_rgb function AST lines, supplement earlier snippet"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "body_sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "body_bytes": 11419,
+      "metadata_sha256": "35a78b9e68c92af79d79d187985023456d405899528c35995769ed99c354072b",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "napari v0.6.5; associated with PR #8256",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "lines 1-70 test_split_rgb",
+        "full parametrized test_split_rgb lines41-74"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S6",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "body_sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "body_bytes": 5801,
+      "metadata_sha256": "259a5a63c1bc2c9242d15496b6d6df620b84177ea9a678bc8ea2a16a82617f48",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "selected JSON fields title,state,body,created_at,closed_at,merged_at,merge_commit_sha,milestone"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S7",
+      "url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/8256.patch",
+      "body_sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "body_bytes": 5042,
+      "metadata_sha256": "f85f1807ce7645e543c1c9ab80b55cb8eab923ba133a2f5b9017cb4b7ec0d562",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Code-bearing commits 2b51110e65af469863697797921ff12aa668d301; 3f994d36130e5d673ce059a1a0d66fac9cca03b0; 9f262998cbe464e0ec826eae691e487af752658c",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "full patch"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S8",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "body_sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "body_bytes": 20154,
+      "metadata_sha256": "9c8dfe0f74ef7aefbc77b10870f164784944209ce8a88ab23ee0e80f32250faf",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Merged 2025-09-26; merge SHA afd1bb88f296726fe98bc0a94119a51bba6870c4; milestone 0.6.5",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "selected JSON fields title,state,body,created_at,closed_at,merged_at,merge_commit_sha,milestone"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S9",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "body_sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "body_bytes": 8505,
+      "metadata_sha256": "1b98035219192695f368f51b40b84e1ca9241c22ca2a00cb9320efc0ee4416d7",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Issue #9515, opened 2026-09-16; open in 2026-10-05 capture",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "JSON issue title/state/opening timestamp/full body"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S10",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515/comments",
+      "body_sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "body_bytes": 14404,
+      "metadata_sha256": "5debe58aecd90363a86d95f180583de354be5f0d6299f7ca5945fcc03c2f3458",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Comments captured 2026-10-05",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "all returned issue comment bodies/timestamps/URLs; no pagination completeness inferred"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S11",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "body_sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "body_bytes": 31495,
+      "metadata_sha256": "bf2990380117a1529ff49e7c798386c99bbd0f9a674582017dd91bf2b231d07f",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "napari tag v0.6.5",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "project.requires-python/dependencies/Qt extras/optional-base"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S12",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "body_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "body_bytes": 77968,
+      "metadata_sha256": "67439a1883d8d9ffe3aa5c617b680fd0e8db697c62ea759afdb27e181e1bd84a",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "Live documentation page captured 2026-10-05; unversioned",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "rendered selected locking/flush/assumptions/failure headings; heuristic extracted sections"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S13",
+      "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "body_sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "body_bytes": 261500,
+      "metadata_sha256": "ff06a023401aa22d6705ca889b274cb2adf01ec4c8440b1f04572d5fd6b3ddd3",
+      "capture_metadata_schema": "er9.pinned-imported-public-source-metadata.v1",
+      "catalog_claimed_pin": "OME XML schema namespace 2016-06; schema version 2",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "schema namespace/version; Pixels and Plane named dimension/calibration/time/stage attributes, documentation/defaults"
+      ],
+      "original_http_time_independently_verified": false
+    },
+    {
+      "source_id": "S14",
+      "url": "https://pypi.org/pypi/zarr/2.18.7/json",
+      "body_sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+      "body_bytes": 8011,
+      "metadata_sha256": "0f2faea0df9560ea9b88ab2e45eaae8d1bf6bb52a9d9284b002dd7c0e82bd634",
+      "capture_metadata_schema": "er9.actual-public-capture-metadata-projection.v1",
+      "catalog_claimed_pin": "Zarr Python 2.18.7",
+      "body_digest_verified": true,
+      "body_length_verified": true,
+      "read_scopes": [
+        "JSON info/name,version,requires_python,requires_dist"
+      ],
+      "original_http_time_independently_verified": "SEE_CAPTURE_METADATA"
+    }
+  ],
+  "raw_bodies_not_selected_for_Git": true
+}

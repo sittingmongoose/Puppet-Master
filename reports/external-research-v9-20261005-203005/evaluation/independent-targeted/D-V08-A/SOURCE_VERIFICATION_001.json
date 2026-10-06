@@ -1,0 +1,397 @@
+{
+  "schema": "er9.targeted-primary-verification.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T00:54:13.828544+00:00",
+  "phase": "SOURCE_PHASE1_BEFORE_HISTORY",
+  "primary_capture_records": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "source_url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "access_utc": "2026-10-06T00:46:49.651194+00:00",
+      "http_status": 200,
+      "bytes": 32266,
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "candidate_reported_capture_sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S1.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"dc866b48c549cf308a05d7f3b89050c0a27bc8fa388d9a50b362ceb0f8e85979\""
+      }
+    },
+    {
+      "id": "S2",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "access_utc": "2026-10-06T00:46:49.635061+00:00",
+      "http_status": 200,
+      "bytes": 20309,
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "candidate_reported_capture_sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S2.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"3e99404afb6e7cb8dbaccb4fa29994afd046ac31bb0402b2b62a2b186fa23958\""
+      }
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "access_utc": "2026-10-06T00:46:49.652584+00:00",
+      "http_status": 200,
+      "bytes": 4294,
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "candidate_reported_capture_sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S3.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"1290c9a1c0f698fb7ac301ccc526e754ea886ed7843581214b9b1b05c559b351\""
+      }
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "access_utc": "2026-10-06T00:46:49.669528+00:00",
+      "http_status": 200,
+      "bytes": 24597,
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "candidate_reported_capture_sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S4.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"7928d75876f99b8bb27df13f912b1cb84d0cfe3a9bf422a97867dad1c345aebe\""
+      }
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "access_utc": "2026-10-06T00:46:49.641312+00:00",
+      "http_status": 200,
+      "bytes": 32898,
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "candidate_reported_capture_sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S5.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"51198551b82008b749d5546aa3f99615eb5557921ea2f37ca0900948d9ea30a5\""
+      }
+    },
+    {
+      "id": "S6",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "access_utc": "2026-10-06T00:46:49.657841+00:00",
+      "http_status": 200,
+      "bytes": 45003,
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "candidate_reported_capture_sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S6.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"9f0447deca290354fce83860c5f91bc68bd8fcc1d25f55ad60f10bb1798fbdb4\""
+      }
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "source_url": "https://github.com/cgohlke/tifffile/issues/319",
+      "access_utc": "2026-10-06T00:46:49.720215+00:00",
+      "http_status": 200,
+      "bytes": 3952,
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "candidate_reported_capture_sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S7.body",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"2756ec0b8d36473e2794632e124979ecc685f2ef1d9695ca62889364cd0b310d\"",
+        "Last-Modified": "Thu, 01 Oct 2026 13:48:27 GMT"
+      }
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "source_url": "https://github.com/cgohlke/tifffile/commit/edede6002c817f056d75125ade0b20332d549cca",
+      "access_utc": "2026-10-06T00:46:49.754281+00:00",
+      "http_status": 200,
+      "bytes": 15123,
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "candidate_reported_capture_sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S8.body",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"31ba244f03b6bbf05afae3f17c1e9e0705214926800bc29e8ab1f6c7b1e7fdf7\"",
+        "Last-Modified": "Tue, 03 Mar 2026 19:06:33 GMT"
+      }
+    },
+    {
+      "id": "S9",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "source_url": "https://github.com/cgohlke/tifffile/commit/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "access_utc": "2026-10-06T00:46:49.850209+00:00",
+      "http_status": 200,
+      "bytes": 18687,
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "candidate_reported_capture_sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S9.body",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"550715d5ba448739b9b0e06fcbd01f13d36583f7396d2001fed1b63cd23a8f46\"",
+        "Last-Modified": "Tue, 03 Mar 2026 18:56:28 GMT"
+      }
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "access_utc": "2026-10-06T00:46:49.799253+00:00",
+      "http_status": 200,
+      "bytes": 12844,
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "candidate_reported_capture_sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613daa",
+      "matches_candidate_capture": false,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S10.body",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"b5b9fae00b01de19f019b92c7c6a312bab123a5a8a118dfcccc6beb92e047664\"",
+        "Last-Modified": "Tue, 03 Mar 2026 19:14:38 GMT"
+      }
+    },
+    {
+      "id": "S11",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/54",
+      "source_url": "https://github.com/cgohlke/tifffile/issues/54",
+      "access_utc": "2026-10-06T00:46:49.835281+00:00",
+      "http_status": 200,
+      "bytes": 4817,
+      "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "candidate_reported_capture_sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S11.body",
+      "headers": {
+        "Content-Type": "application/json; charset=utf-8",
+        "ETag": "W/\"e7a6e17a9139d5ab5ebc9217730cbfeea7f00411a0abaf0fd6b1309b875575e8\"",
+        "Last-Modified": "Wed, 10 Jun 2026 22:42:27 GMT"
+      }
+    },
+    {
+      "id": "S12",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "source_url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "access_utc": "2026-10-06T00:46:49.805726+00:00",
+      "http_status": 200,
+      "bytes": 114084,
+      "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "candidate_reported_capture_sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S12.body",
+      "headers": {
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"595b725bfbccb4a36a85fe410ba9cabde54e8027c421f82fe1f6bc31402decc1\""
+      }
+    },
+    {
+      "id": "S13",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "source_url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "access_utc": "2026-10-06T00:46:49.882579+00:00",
+      "http_status": 200,
+      "bytes": 40941,
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "candidate_reported_capture_sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S13.body",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"2ff311244ddd3d54e7116ec1d626010f\"",
+        "Last-Modified": "Tue, 18 Aug 2026 15:22:41 GMT"
+      }
+    },
+    {
+      "id": "S14",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "source_url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "access_utc": "2026-10-06T00:46:49.844963+00:00",
+      "http_status": 200,
+      "bytes": 12770,
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "candidate_reported_capture_sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S14.body",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"35b97c0fc152165de492b95a016b77ed\"",
+        "Last-Modified": "Mon, 02 Mar 2026 13:04:29 GMT"
+      }
+    },
+    {
+      "id": "S15",
+      "url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "source_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "access_utc": "2026-10-06T00:46:50.254928+00:00",
+      "http_status": 200,
+      "bytes": 23571,
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "candidate_reported_capture_sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S15.body",
+      "headers": {
+        "Last-Modified": "Mon, 05 Oct 2026 17:59:03 GMT",
+        "ETag": "\"5c13-65d1ba326e7c0\"",
+        "Content-Type": "text/html"
+      }
+    },
+    {
+      "id": "S16",
+      "url": "https://qupath.readthedocs.io/en/stable/",
+      "source_url": "https://qupath.readthedocs.io/en/stable/",
+      "access_utc": "2026-10-06T00:46:49.842577+00:00",
+      "http_status": 200,
+      "bytes": 14855,
+      "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "candidate_reported_capture_sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "matches_candidate_capture": true,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S16.body",
+      "headers": {
+        "Content-Type": "text/html; charset=utf-8",
+        "ETag": "W/\"2ab8a95cbc6f85c50ad026bf66827418\"",
+        "Last-Modified": "Mon, 02 Mar 2026 13:04:29 GMT"
+      }
+    }
+  ],
+  "checked_claims": [
+    {
+      "id": "SV1",
+      "claim": "NGFF 0.5 ordered dataset scale/translation then multiscales transform list; no arbitrary affine multiscales feature",
+      "assessment": "SUPPORTED",
+      "candidate_locators": [
+        "proposal.md sections 1,3,5",
+        "critique/review.md correction"
+      ],
+      "primary": "S1.body",
+      "source_locator": "coordinateTransformations/multiscales sections; immutable d9164040 pin",
+      "limits": "Native affine, frame IDs and export/reopen rules are product choices, not normative NGFF features."
+    },
+    {
+      "id": "SV2",
+      "claim": "Viewer display limits separated from underlying sample values; lazy input documented; shape editing limited in 3D",
+      "assessment": "SUPPORTED_WITH_STATED_VERSION_LIMIT",
+      "primary": [
+        "S2.body",
+        "S3.body",
+        "S4.body"
+      ],
+      "limits": "Moving main docs hash-match supplied catalog; no release-pinned napari integration, persistence or performance was executed."
+    },
+    {
+      "id": "SV3",
+      "claim": "TIFF page/tile/SubIFD/pyramid and eligible mmap/Zarr-backed region access; testable format boundary",
+      "assessment": "SUPPORTED_AS_COMPONENT_PRECEDENT",
+      "primary": [
+        "S5.body",
+        "S8_full_reader.body"
+      ],
+      "limits": "No application benchmark; mmap reader pin inspected is 2026.3.3, while README capture states 2026.9.20. Full current reader API audit remains unassessed."
+    },
+    {
+      "id": "SV4",
+      "claim": "tifffile #319 numerical regression follows actual fix, regression assertions and 2026.3.3 release",
+      "assessment": "SUPPORTED",
+      "primary": [
+        "S7.body",
+        "S8.body",
+        "S9.body",
+        "S10.body",
+        "S9_full_test.body",
+        "S8_full_reader.body",
+        "S10_release_changes.body"
+      ],
+      "chain": [
+        "issue #319: 2026.2.20 versus 2026.2.24 output",
+        "7d9eaedd: test_issue_tvips_pixelsize with PixelSizeX/PhysicalPixelSizeY assertions",
+        "edede600: child of test commit; read_tvips_header removes /1e9 conversion and references #319",
+        "8c91499e: changes commit",
+        "503cb4eb: release v2026.3.3 with #319 changelog"
+      ],
+      "limits": "Actual regression binary or test rerun not performed. #54 chain not claimed; honest limitation retained."
+    },
+    {
+      "id": "SV5",
+      "claim": "QuPath full-resolution top-left pixel export convention, ellipses-to-polygons, labeled-image class draw order, project URI/per-entry data and per-machine references",
+      "assessment": "SUPPORTED_AS_PRECEDENT",
+      "primary": [
+        "S13.body",
+        "S14.body",
+        "S16.body"
+      ],
+      "limits": "No half-pixel adapter equivalence or workspace persistence inferred; original delivered 32768-byte source range includes class draw-order and geometry details."
+    },
+    {
+      "id": "SV6",
+      "claim": "One-path rename replacement, cross-mount EXDEV and NFS reported-failure ambiguity",
+      "assessment": "SUPPORTED_WITH_STATED_SCOPE",
+      "primary": "S15.body",
+      "limits": "No application multi-file transaction, actual share, power-loss or SMB behavior established."
+    },
+    {
+      "id": "SV7",
+      "claim": "W4 arithmetic expectations and submitted-code/catalog stdout consistency",
+      "assessment": "SUPPORTED_BY_INSPECTION; ACTUAL_EXECUTION_RECEIPT_PENDING",
+      "derivation": "world = (0.5*2+100, 2*3-7) = (101,-1); derived = (5-3,2+2) = (2,4); inverse = (4-2,5-2) = (2,3); reversed translation/scale = (51,-8)",
+      "code_sha256_computed": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "stdout_sha256_computed": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "limits": "Pure arithmetic only; no candidate code executed by evaluator and no application behavior credit."
+    }
+  ],
+  "observed_defects": [
+    {
+      "id": "DELIVERY-LEADS",
+      "kind": "missing_required_artifact",
+      "severity": "delivery/coverage gap",
+      "claim_locator": "proposal.md section 9 refers to leads.json; actual card requires lead_inventory",
+      "finding": "final/leads.json absent from positively selected frozen inventory",
+      "quality_for_absent_catalog": "UNASSESSED; current delivery completeness INCOMPLETE"
+    },
+    {
+      "id": "PIN-S10",
+      "kind": "malformed_source_pin",
+      "severity": "reproducibility defect; does not falsify independently verified chain",
+      "finding": "S10 reported capture SHA-256 has 63 hex characters and differs from independently fetched exact response SHA-256",
+      "declared": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613daa",
+      "actual": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a"
+    },
+    {
+      "id": "PIN-W4-DATA",
+      "kind": "malformed_execution_data_pin",
+      "severity": "reproducibility defect",
+      "finding": "W4 execution.data_sha256 ends in question mark and is incomplete; internal code/input/constants and stdout are inspectable but this field is not a valid SHA-256",
+      "declared": "74234e98afe749f28bf0fae816d19089b?"
+    },
+    {
+      "id": "SOURCE-FIXTURE-PRIVACY",
+      "kind": "unsupported_source_condition",
+      "severity": "qualification defect; no chosen-design coordinate error established",
+      "finding": "Proposal/critique characterize #319 regression fixture as private and say test commit source identifies that status. Exact test function/loader records local tests/data and skip policy, not privacy; issue #319 exposes a public attachment link. Privacy claim is not established by inspected evidence. Lack of an actual rerun remains honestly stated."
+    }
+  ],
+  "remaining_unassessed": [
+    "Supplied seed suitability, actual need for correction and preservation against that baseline: positively selected input inventory is empty.",
+    "Control critic and control final source quality: no artifacts supplied.",
+    "Autonomous discovery or newly discovered useful unknowns: supplied-source method prohibits that conclusion.",
+    "All application/reader/export/reopen/3GB/accessibility behavior remains proposed, not executed.",
+    "Whole pipeline/matched comparative quality and winner: incomplete pair.",
+    "Actual W4 tool receipt pending positive locator; catalog alone is not execution proof."
+  ],
+  "candidate_history_economics_read": false
+}

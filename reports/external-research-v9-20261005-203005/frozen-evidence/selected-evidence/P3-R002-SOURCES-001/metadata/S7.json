@@ -1,0 +1,27 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S7",
+  "body_sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+  "body_bytes": 5042,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/0006.body",
+    "url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/8256.patch",
+    "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+    "version_or_commit": "sha256:8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+  "catalog_asserted_capture_identity": {
+    "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0008.body",
+    "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+    "bytes": 5042,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df"
+}

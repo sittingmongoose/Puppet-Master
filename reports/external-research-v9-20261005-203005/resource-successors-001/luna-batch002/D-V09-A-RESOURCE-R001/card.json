@@ -1,0 +1,157 @@
+{
+  "allocation": {
+    "V09_note": "Parallel critics occupy400 total and one family slot each; treatment critical path400, no free extra work.",
+    "critical_path_candidate_seconds_per_arm": 600,
+    "occupied_candidate_seconds_per_arm": 600,
+    "parent_responses_per_arm": 100,
+    "per_stage_parent_response_cap": 100,
+    "startup_and_service_waits": "measured/charged within original allowance"
+  },
+  "arm_modifier_paths": {
+    "control": "diagnostics/D-V09-A-CONTROL.md",
+    "treatment": "diagnostics/D-V09-A-TREATMENT.md"
+  },
+  "brief_path": "briefs/development-A-biomedical.md",
+  "candidate_artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "lead_inventory": "out/final/leads.json",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json"
+  },
+  "candidate_authorship": "All substantive scored candidate checking, integration and code remain affordable candidate-native Goal work; Sol only scenario/protocol/evaluator infrastructure.",
+  "card_version": "v1",
+  "case_id": "D-V09-A-v1",
+  "common_criteria_path": "common_criteria.json",
+  "control": "One fresh critic handles the whole evidence/coverage/derivation review.",
+  "coverage_path": "diagnostics/D-V09-A-coverage.json",
+  "discovery_conclusion_allowed": false,
+  "domain": "A",
+  "economics_fields": [
+    "actual_starts_and_stage_models",
+    "wall_and_critical_path_seconds",
+    "occupied_candidate_seconds",
+    "parent_responses",
+    "native_retries_and_waits",
+    "known_input_cache_output_counters_and_definitions",
+    "unknown_child/cancelled_usage",
+    "tool/source_traffic",
+    "cold_seed_development_cost_separate"
+  ],
+  "evaluate_before_history": true,
+  "execution_policy": {
+    "control_execution_enabled": true,
+    "factor_enforcement": "V01 control critic physically lacks execution, not only text prohibition; otherwise tools equal unless documented factor is retrieval ordering/representation.",
+    "isolation_config_pin": null,
+    "public_get": true,
+    "retrieval_config_pin": null,
+    "treatment_execution_enabled": true
+  },
+  "family_binding_rule": "Within pair identical actual supported family/model/effort. Root may version an unstarted card prospectively if route unavailable; preserve original planned family and reason. No substitution attributed as same-model replication.",
+  "fixture_prerequisites": [
+    "Freeze an authentic affordable-candidate unscored development seed appropriate to this task, with complete relevant source captures. Do not have Sol write candidate findings or a source-answer key.",
+    "Independent fixture-admission evaluator verifies task suitability/source versions and any required mix privately; candidate receives no truth labels or corrected answers.",
+    "Record seed provenance, actual candidate model/native job, creation cost and SHA-256; seed is development input, never scored arm completion."
+  ],
+  "freeze_state": "PROSPECTIVE_UNLAUNCHED",
+  "frozen_seed_manifest_path": null,
+  "important_checks": [
+    {
+      "id": "D-V09-A-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V09-A-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V09-A-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+  "integration_limit": "Both critics consume this campaign's family slots and the pipeline's total budget. A recipe requiring two concurrent Goals on one account must disclose that requirement.",
+  "measure": "Critical-path latency, aggregate occupied time, duplicate work, disagreement quality, coverage seams and final corrections. No majority-vote truth rule.",
+  "method_id": "V09",
+  "method_name": "Parallel complementary flash critics",
+  "neutral_task_prompt_path": "diagnostics/D-V09-A-TASK.md",
+  "no_truth_key_in_candidate": true,
+  "observed_effort": null,
+  "observed_model": null,
+  "original_attempts_and_costs_preserved": true,
+  "outcome": {
+    "assessed": 0,
+    "attempted": 0,
+    "completed": 0,
+    "quality": "NOT_RUN"
+  },
+  "pair_id": "D-V09-A-RESOURCE-R001",
+  "question": "Include cross-boundary errors so splitting cannot earn credit just by ignoring interactions. Both critics have the brief and sufficient common context.",
+  "requested_effort": "Max",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_route": "fresh standalone native Codex /goal",
+  "required_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch002/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "resource_version": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/RESOURCE_VERSION.json",
+    "sha256": "996a1ed7da0c2dcc3958fc1085a3cfd7d072c7b9ce13a7ddbfdede281b722dd0"
+  },
+  "schema": "er9.diagnostic_method_card.v1",
+  "source_access_path": "source_access.json",
+  "source_card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V09-A.json",
+    "sha256": "8c87948f0409d7c6052dbf9f05ad72bd3619d3dcd07eb35386165bcc3cb1ba4f"
+  },
+  "source_pair_id": "D-V09-A",
+  "source_scope": "Both treatment critics receive exact brief/full proposal; source-applicability and implementation/derivation scopes overlap on cross-boundary dependencies.",
+  "stages": {
+    "control": [
+      {
+        "fresh_same_family": true,
+        "max_native_seconds": 400,
+        "max_parent_responses": 66,
+        "native_goal": true,
+        "stage": "whole_critic"
+      },
+      {
+        "fresh_same_family": true,
+        "max_native_seconds": 200,
+        "max_parent_responses": 33,
+        "native_goal": true,
+        "stage": "resolve_final"
+      }
+    ],
+    "treatment": [
+      {
+        "fresh_same_family": true,
+        "max_native_seconds": 200,
+        "max_parent_responses": 33,
+        "native_goal": true,
+        "parallel_group": "critic",
+        "stage": "source_critic"
+      },
+      {
+        "fresh_same_family": true,
+        "max_native_seconds": 200,
+        "max_parent_responses": 33,
+        "native_goal": true,
+        "parallel_group": "critic",
+        "stage": "implementation_critic"
+      },
+      {
+        "fresh_same_family": true,
+        "max_native_seconds": 200,
+        "max_parent_responses": 33,
+        "native_goal": true,
+        "stage": "resolve_final"
+      }
+    ]
+  },
+  "status": "NOT_RUN",
+  "task": "Use a candidate report containing an error crossing source coordinate conventions and actual export implementation, plus supported unrelated claims. Both complementary critics need common context; candidate resolves evidence, not votes.",
+  "task_name": "Source-coordinate and implementation-export coverage seam",
+  "track": "A",
+  "treatment": "Split a fixed critic budget between two fresh same-family critics with complementary, overlapping responsibilities, such as source applicability and implementation/derivation behavior. The candidate resolves both into one result."
+}

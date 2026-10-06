@@ -1,0 +1,1779 @@
+{
+  "cohort": "D08-finished-review-and-resource-successors-011",
+  "snapshot_at": "2026-10-06T01:39:36.242983+00:00",
+  "sources": [
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PUBLICATION_SELECTION_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PUBLICATION_SELECTION_001.json",
+      "source_sha256": "166b8297268d9ba92bbb20e20c1a99130f11a21d0e214ac960c7557bf26db82c",
+      "public_sha256": "166b8297268d9ba92bbb20e20c1a99130f11a21d0e214ac960c7557bf26db82c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/RESERVATION.json",
+      "published": "evaluation/independent-targeted/D-V08-A/RESERVATION.json",
+      "source_sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792",
+      "public_sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/INPUT_INTERFACE.json",
+      "published": "evaluation/independent-targeted/D-V08-A/INPUT_INTERFACE.json",
+      "source_sha256": "df60bd650d0ccb9b3262d400f119cd2fdaf07a9004a513b7aecbdca7de2e8978",
+      "public_sha256": "df60bd650d0ccb9b3262d400f119cd2fdaf07a9004a513b7aecbdca7de2e8978",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/ADMISSION_HOLD_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/ADMISSION_HOLD_001.json",
+      "source_sha256": "1e9f727ed24ffb8270c8c8d370247f65402d9b8bfa9cffbd049000ffdb4c1db6",
+      "public_sha256": "1e9f727ed24ffb8270c8c8d370247f65402d9b8bfa9cffbd049000ffdb4c1db6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/EFFECTIVE_FREEZE.json",
+      "published": "evaluation/independent-targeted/D-V08-A/EFFECTIVE_FREEZE.json",
+      "source_sha256": "402d63ec82d742bec196696e7e6095c20337aac5910834725b4bb0041d84a360",
+      "public_sha256": "402d63ec82d742bec196696e7e6095c20337aac5910834725b4bb0041d84a360",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "published": "evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "source_sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c",
+      "public_sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/SOURCE_VERIFICATION_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/SOURCE_VERIFICATION_001.json",
+      "source_sha256": "2e7def73dee06650740bb1dac8cd653f5d8c19dee8287bbe9559a436feca5105",
+      "public_sha256": "2e7def73dee06650740bb1dac8cd653f5d8c19dee8287bbe9559a436feca5105",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "source_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+      "public_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/CLOCK_PHASE1_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/CLOCK_PHASE1_001.json",
+      "source_sha256": "65c8be9e5ffc08b90c7a556309018ce034a761250fc334f06414ade6a9cf92ee",
+      "public_sha256": "65c8be9e5ffc08b90c7a556309018ce034a761250fc334f06414ade6a9cf92ee",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PHASE2_EXECUTION_SUPPLEMENT_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PHASE2_EXECUTION_SUPPLEMENT_001.json",
+      "source_sha256": "0aeb9c35d06d52524528c79981e8ce63dbe2d1b0878de44c8a8e55d93eb1e067",
+      "public_sha256": "0aeb9c35d06d52524528c79981e8ce63dbe2d1b0878de44c8a8e55d93eb1e067",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PHASE2_NATIVE_ECONOMICS_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PHASE2_NATIVE_ECONOMICS_001.json",
+      "source_sha256": "cffdc26e561a019ee1ec97144c17fa7366ca3aca831a12b5a3d349e4d1180fd2",
+      "public_sha256": "cffdc26e561a019ee1ec97144c17fa7366ca3aca831a12b5a3d349e4d1180fd2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PHASE2_LINEAGE_COST_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PHASE2_LINEAGE_COST_001.json",
+      "source_sha256": "e36c7cc4d9dca0c11367c64f52a944ef60f4fa1fae360a702dd2637d0507b354",
+      "public_sha256": "e36c7cc4d9dca0c11367c64f52a944ef60f4fa1fae360a702dd2637d0507b354",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/ASSESSMENT_001.md",
+      "published": "evaluation/independent-targeted/D-V08-A/ASSESSMENT_001.md",
+      "source_sha256": "496f44f596d63d48ec389c3f0bb6f87d85f03ce970e3d3263de49b20553052e3",
+      "public_sha256": "496f44f596d63d48ec389c3f0bb6f87d85f03ce970e3d3263de49b20553052e3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/PUBLIC_PRIMARY_SELECTION_001.json",
+      "published": "evaluation/independent-targeted/D-V08-A/PUBLIC_PRIMARY_SELECTION_001.json",
+      "source_sha256": "7411f8fc4323ad6c54f08f696fc349e9078aeab97b4fa2757b16a1fae251daec",
+      "public_sha256": "7411f8fc4323ad6c54f08f696fc349e9078aeab97b4fa2757b16a1fae251daec",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted/D-V08-A/FINISHED.json",
+      "published": "evaluation/independent-targeted/D-V08-A/FINISHED.json",
+      "source_sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096",
+      "public_sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/PUBLIC_SELECTION_012.json",
+      "published": "frozen-evidence/PUBLIC_SELECTION_012.json",
+      "source_sha256": "059196fe451a91fb041147cf91cde3496c7f51501c8d0d33feaab05f6c954aed",
+      "public_sha256": "059196fe451a91fb041147cf91cde3496c7f51501c8d0d33feaab05f6c954aed",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/code.py",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/code.py",
+      "source_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "public_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/data.json",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/data.json",
+      "source_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "public_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/execution-facts.json",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/execution-facts.json",
+      "source_sha256": "7eb2666fbc42b785fe015c63d80299e78c34422f2f9dbd6b727d2ad2dcc06e24",
+      "public_sha256": "7eb2666fbc42b785fe015c63d80299e78c34422f2f9dbd6b727d2ad2dcc06e24",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/request-policy.json",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/request-policy.json",
+      "source_sha256": "cdebc628bb98c17a1810b2143896eb6d3397771fbc6e16f7019e2bcfaf8e4e2f",
+      "public_sha256": "cdebc628bb98c17a1810b2143896eb6d3397771fbc6e16f7019e2bcfaf8e4e2f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stderr.bin",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stdout.bin",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stdout.bin",
+      "source_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "public_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/MANIFEST.json",
+      "published": "frozen-evidence/evidence/TARGET-D08A-EXECUTION-001/MANIFEST.json",
+      "source_sha256": "6cf2fa0750bf87f89ffd4eee5356ebddfef9b42dc5f2379b8b9005fedcda91ec",
+      "public_sha256": "6cf2fa0750bf87f89ffd4eee5356ebddfef9b42dc5f2379b8b9005fedcda91ec",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/TARGET-D08A-LINEAGE-ACCOUNTING-001/MANIFEST.json",
+      "published": "frozen-evidence/phase2/TARGET-D08A-LINEAGE-ACCOUNTING-001/MANIFEST.json",
+      "source_sha256": "c8938abe7804f3e2e8fa382465dd3b120c2dc4730432d4c28efd38d6369311e9",
+      "public_sha256": "7b68ad3df78f35723b49905350aafb0a76307e772331baa04270634a559f0eba",
+      "transform": "LAB_ROOT path labels"
+    },
+    {
+      "source": "ops/frozen-exports/PUBLIC_SELECTION_013.json",
+      "published": "frozen-evidence/PUBLIC_SELECTION_013.json",
+      "source_sha256": "403d44af3968199aaac62f35ba0c85b92bc0977a873998d3d4b63e4bd7188a80",
+      "public_sha256": "403d44af3968199aaac62f35ba0c85b92bc0977a873998d3d4b63e4bd7188a80",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/dispatch.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/dispatch.json",
+      "source_sha256": "9a466a66b78b8d28e3ae011f0eccfae5a6726febb6f8bb30c16e23376c1c4bf2",
+      "public_sha256": "70e7d4d0101d313c7741cae4a409356add0143c0c5193a89c53cbbfd101a4598",
+      "transform": "LAB_ROOT path labels"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/integrity-proof.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/integrity-proof.json",
+      "source_sha256": "7569815bb713be2685e7ba5617a30f2ca0341a208169c24c56e55404f40b3c84",
+      "public_sha256": "7569815bb713be2685e7ba5617a30f2ca0341a208169c24c56e55404f40b3c84",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "source_sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+      "public_sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "source_sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+      "public_sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/brief.md",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/common_criteria.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/coverage_map.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/coverage_map.json",
+      "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "public_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/important_checks.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/important_checks.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/output_contract.md",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/source_access.json",
+      "published": "frozen-evidence/packets/P3-R002-SINGLE-FINAL-001/task/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/task-only/P3-R002-NEUTRAL-001/NEUTRAL_CARD.json",
+      "published": "frozen-evidence/task-only/P3-R002-NEUTRAL-001/NEUTRAL_CARD.json",
+      "source_sha256": "2f8bae5fa13bcb346e859b6ff232abf69919f8fcd4d075731b07306ff44dd562",
+      "public_sha256": "2f8bae5fa13bcb346e859b6ff232abf69919f8fcd4d075731b07306ff44dd562",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/PUBLIC_METADATA_MANIFEST.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/PUBLIC_METADATA_MANIFEST.json",
+      "source_sha256": "36d7970820395647c91ceabed8b7bad7b3f784f4916f1d91dffc7c237e54de6c",
+      "public_sha256": "391702781d687c63c63461701c4d1390c7115904947231d5c8e2b2d40d201686",
+      "transform": "LAB_ROOT path labels"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/PUBLIC_METADATA_MANIFEST.json",
+      "published": "frozen-evidence/selected-evidence/P3-ONLY-FRESH-001/PUBLIC_METADATA_MANIFEST.json",
+      "source_sha256": "356148264b31ae4726308deaad2a2a1ed5a56d840f1b3e55ae2616065c7df26c",
+      "public_sha256": "6f78944dc6a70386270c63864ecf4eab0d17621d65a8e49d36c4975a9963029e",
+      "transform": "LAB_ROOT path labels"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S1.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S1.json",
+      "source_sha256": "c22d75ee7b81a30ed5138e1f01e3c2a50b9a52cd1b0d12a7efdcc57f6b7f4b17",
+      "public_sha256": "c22d75ee7b81a30ed5138e1f01e3c2a50b9a52cd1b0d12a7efdcc57f6b7f4b17",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S10.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S10.json",
+      "source_sha256": "5debe58aecd90363a86d95f180583de354be5f0d6299f7ca5945fcc03c2f3458",
+      "public_sha256": "5debe58aecd90363a86d95f180583de354be5f0d6299f7ca5945fcc03c2f3458",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S11.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S11.json",
+      "source_sha256": "bf2990380117a1529ff49e7c798386c99bbd0f9a674582017dd91bf2b231d07f",
+      "public_sha256": "bf2990380117a1529ff49e7c798386c99bbd0f9a674582017dd91bf2b231d07f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S12.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S12.json",
+      "source_sha256": "67439a1883d8d9ffe3aa5c617b680fd0e8db697c62ea759afdb27e181e1bd84a",
+      "public_sha256": "67439a1883d8d9ffe3aa5c617b680fd0e8db697c62ea759afdb27e181e1bd84a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S13.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S13.json",
+      "source_sha256": "ff06a023401aa22d6705ca889b274cb2adf01ec4c8440b1f04572d5fd6b3ddd3",
+      "public_sha256": "ff06a023401aa22d6705ca889b274cb2adf01ec4c8440b1f04572d5fd6b3ddd3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S14.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S14.json",
+      "source_sha256": "0f2faea0df9560ea9b88ab2e45eaae8d1bf6bb52a9d9284b002dd7c0e82bd634",
+      "public_sha256": "0f2faea0df9560ea9b88ab2e45eaae8d1bf6bb52a9d9284b002dd7c0e82bd634",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S2.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S2.json",
+      "source_sha256": "13017f1e07759e783cd3a45664e3aac0288327db213044c9006e34a53229b2a5",
+      "public_sha256": "13017f1e07759e783cd3a45664e3aac0288327db213044c9006e34a53229b2a5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S3.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S3.json",
+      "source_sha256": "4ee411a26d52d888a2e0244d12124b75c531370fea4281f85fd9142883e10290",
+      "public_sha256": "4ee411a26d52d888a2e0244d12124b75c531370fea4281f85fd9142883e10290",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S4.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S4.json",
+      "source_sha256": "ed7b2551bb617839d8d1ca9d6c20c09f46d70c4249fa10b94fdfb5a3f9ed5111",
+      "public_sha256": "ed7b2551bb617839d8d1ca9d6c20c09f46d70c4249fa10b94fdfb5a3f9ed5111",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S5.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S5.json",
+      "source_sha256": "35a78b9e68c92af79d79d187985023456d405899528c35995769ed99c354072b",
+      "public_sha256": "35a78b9e68c92af79d79d187985023456d405899528c35995769ed99c354072b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S6.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S6.json",
+      "source_sha256": "259a5a63c1bc2c9242d15496b6d6df620b84177ea9a678bc8ea2a16a82617f48",
+      "public_sha256": "259a5a63c1bc2c9242d15496b6d6df620b84177ea9a678bc8ea2a16a82617f48",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S7.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S7.json",
+      "source_sha256": "f85f1807ce7645e543c1c9ab80b55cb8eab923ba133a2f5b9017cb4b7ec0d562",
+      "public_sha256": "f85f1807ce7645e543c1c9ab80b55cb8eab923ba133a2f5b9017cb4b7ec0d562",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S8.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S8.json",
+      "source_sha256": "9c8dfe0f74ef7aefbc77b10870f164784944209ce8a88ab23ee0e80f32250faf",
+      "public_sha256": "9c8dfe0f74ef7aefbc77b10870f164784944209ce8a88ab23ee0e80f32250faf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S9.json",
+      "published": "frozen-evidence/selected-evidence/P3-R002-SOURCES-001/metadata/S9.json",
+      "source_sha256": "1b98035219192695f368f51b40b84e1ca9241c22ca2a00cb9320efc0ee4416d7",
+      "public_sha256": "1b98035219192695f368f51b40b84e1ca9241c22ca2a00cb9320efc0ee4416d7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-layer-actions-tests.json",
+      "published": "frozen-evidence/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-layer-actions-tests.json",
+      "source_sha256": "432cca93c602ea8b8c58faa26825e0b0adc78c9738b1c9201a597ff174b8f1ed",
+      "public_sha256": "432cca93c602ea8b8c58faa26825e0b0adc78c9738b1c9201a597ff174b8f1ed",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-stack-utils.json",
+      "published": "frozen-evidence/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-stack-utils.json",
+      "source_sha256": "7c47d31f530137b6387c8a3e245ba40ec26018913489a094e42a72d4001d88c2",
+      "public_sha256": "7c47d31f530137b6387c8a3e245ba40ec26018913489a094e42a72d4001d88c2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/tifffile-v2025.5.10.json",
+      "published": "frozen-evidence/selected-evidence/P3-ONLY-FRESH-001/tifffile-v2025.5.10.json",
+      "source_sha256": "bf97c8a5801abcd6dfe052615e2cb4da2b92843af45aaf4ef513c2d73aa2641b",
+      "public_sha256": "bf97c8a5801abcd6dfe052615e2cb4da2b92843af45aaf4ef513c2d73aa2641b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-009/PUBLIC_SELECTION.json",
+      "source_sha256": "7d1a32bdc89a113025e69530c68144350af00f884dfa264e807a85fd14093f18",
+      "public_sha256": "7d1a32bdc89a113025e69530c68144350af00f884dfa264e807a85fd14093f18",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/attempts.safe.json",
+      "published": "accounting/cohort-009/attempts.safe.json",
+      "source_sha256": "b2906e7db6632dda00ce7cee8e75b2949d46ef7124b162667df9821ed5341705",
+      "public_sha256": "b2906e7db6632dda00ce7cee8e75b2949d46ef7124b162667df9821ed5341705",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/snapshot.safe.json",
+      "published": "accounting/cohort-009/snapshot.safe.json",
+      "source_sha256": "49f088e32a7d109bc682774d3ab15ba899b7f208253ddfe37a6e183eaaaafcd3",
+      "public_sha256": "49f088e32a7d109bc682774d3ab15ba899b7f208253ddfe37a6e183eaaaafcd3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/attempts.safe.schema.json",
+      "published": "accounting/cohort-009/attempts.safe.schema.json",
+      "source_sha256": "ebda6b66fe9c5b011c1444d8ab7dc2c2587b8c83d9fea6d857f0660673fb3acd",
+      "public_sha256": "ebda6b66fe9c5b011c1444d8ab7dc2c2587b8c83d9fea6d857f0660673fb3acd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/snapshot.safe.schema.json",
+      "published": "accounting/cohort-009/snapshot.safe.schema.json",
+      "source_sha256": "f3ef20fc595f9701fac499925bd77f69d4c9632f640aa68a050e6d5b9c6f3752",
+      "public_sha256": "f3ef20fc595f9701fac499925bd77f69d4c9632f640aa68a050e6d5b9c6f3752",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-009/COST_SNAPSHOT.md",
+      "published": "accounting/cohort-009/COST_SNAPSHOT.md",
+      "source_sha256": "83e9c06c53529f78335936186a196e659acce57e90a65c3b823e03d3ecec4b62",
+      "public_sha256": "83e9c06c53529f78335936186a196e659acce57e90a65c3b823e03d3ecec4b62",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-publication-provenance-clock-addendum.json",
+      "published": "supervision/DECISIONS-010-publication-provenance-clock-addendum.json",
+      "source_sha256": "380b228b1ea836af43d3206379defadc82f31200feef8e80ce80695a0ff4eb51",
+      "public_sha256": "380b228b1ea836af43d3206379defadc82f31200feef8e80ce80695a0ff4eb51",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.md",
+      "published": "supervision/DECISIONS-010.md",
+      "source_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "public_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.json",
+      "published": "supervision/DECISIONS-010.json",
+      "source_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "public_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-evidence.json",
+      "published": "supervision/DECISIONS-010-evidence.json",
+      "source_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "public_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "source_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "public_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "source_sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+      "public_sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "published": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "source_sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be",
+      "public_sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-publication-scope-addendum.json",
+      "published": "supervision/DECISIONS-010-publication-scope-addendum.json",
+      "source_sha256": "a5deafe1653f34a81037c7942c5ad273fe21dfa69752ad52d93f0818faecaae4",
+      "public_sha256": "a5deafe1653f34a81037c7942c5ad273fe21dfa69752ad52d93f0818faecaae4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.md",
+      "published": "supervision/DECISIONS-010.md",
+      "source_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "public_sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010.json",
+      "published": "supervision/DECISIONS-010.json",
+      "source_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "public_sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-evidence.json",
+      "published": "supervision/DECISIONS-010-evidence.json",
+      "source_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "public_sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "published": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "source_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "public_sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/PUBLICATION_SELECTION_001.json",
+      "published": "resource-successors-001/PUBLICATION_SELECTION_001.json",
+      "source_sha256": "ab130caf2c071de2c81f6acec21396d7d0608b6c3afc7be4c4073cc7e6ff9491",
+      "public_sha256": "ab130caf2c071de2c81f6acec21396d7d0608b6c3afc7be4c4073cc7e6ff9491",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/BLUEPRINT.json",
+      "published": "resource-successors-001/BLUEPRINT.json",
+      "source_sha256": "8fad3b5690313ef7809ffae28ca76dead0b0091b6825152ac38c666973d494c6",
+      "public_sha256": "8fad3b5690313ef7809ffae28ca76dead0b0091b6825152ac38c666973d494c6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/ENTERED_LINEAGE_PLAN.json",
+      "published": "resource-successors-001/ENTERED_LINEAGE_PLAN.json",
+      "source_sha256": "c60fd6dd2c43bc3f28ba5ff93b32e2e48f873869f4e9d5ca6d10a0b44be8b03d",
+      "public_sha256": "c60fd6dd2c43bc3f28ba5ff93b32e2e48f873869f4e9d5ca6d10a0b44be8b03d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/LEGACY_FIELD_CLARIFICATION_001.json",
+      "published": "resource-successors-001/LEGACY_FIELD_CLARIFICATION_001.json",
+      "source_sha256": "701cc3985845e71b6ff8b8f7fec7ba434d0c18146010ab69f1f0651d827f60d9",
+      "public_sha256": "701cc3985845e71b6ff8b8f7fec7ba434d0c18146010ab69f1f0651d827f60d9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/ORIGINAL_BYTE_SNAPSHOT.json",
+      "published": "resource-successors-001/ORIGINAL_BYTE_SNAPSHOT.json",
+      "source_sha256": "fc941e1f5d5bcef6d628b85215ed55112f59cfb73983c8c074bd7f727472ca4d",
+      "public_sha256": "fc941e1f5d5bcef6d628b85215ed55112f59cfb73983c8c074bd7f727472ca4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/TRANSPORT_BLUEPRINT.json",
+      "published": "resource-successors-001/TRANSPORT_BLUEPRINT.json",
+      "source_sha256": "cfa5f6b4ac55967ecdd5305f34a5e2c063ff22ddb56365f4ebcfa1f6907f1636",
+      "public_sha256": "cfa5f6b4ac55967ecdd5305f34a5e2c063ff22ddb56365f4ebcfa1f6907f1636",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+      "published": "resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+      "source_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "public_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/prepared-stage.json",
+      "source_sha256": "47a6c56a2b7f972063b0f403b04a244feb0c6163933e3bc10d5699fe21836341",
+      "public_sha256": "47a6c56a2b7f972063b0f403b04a244feb0c6163933e3bc10d5699fe21836341",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/TASK.md",
+      "source_sha256": "e2da49d8a41db02912930e0998a4a449376c2dccdc740b6d78e2413cc1c9d7b8",
+      "public_sha256": "e2da49d8a41db02912930e0998a4a449376c2dccdc740b6d78e2413cc1c9d7b8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "source_sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "public_sha256": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "source_sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "public_sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/prepared-stage.json",
+      "source_sha256": "142defb4e9dccc2951c0dd5a88ae95ff33452410752925e7434cf2061c62647d",
+      "public_sha256": "142defb4e9dccc2951c0dd5a88ae95ff33452410752925e7434cf2061c62647d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/TASK.md",
+      "source_sha256": "fbce3dde011b7408e5c0a19dc691b82dae67b11b9a29b14a494404198d386bef",
+      "public_sha256": "fbce3dde011b7408e5c0a19dc691b82dae67b11b9a29b14a494404198d386bef",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/arm_instruction.md",
+      "source_sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "public_sha256": "17b0f281cbabcada5737364d27db929f35a98ad2cd625a3a7d56ce8719a8e618",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/diagnostic_task.md",
+      "source_sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "public_sha256": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "ab47b402f0a292cb117eeb943ded74656116877341624755adc60233f4257ba5",
+      "public_sha256": "ab47b402f0a292cb117eeb943ded74656116877341624755adc60233f4257ba5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "d3a2a669d6a34303a0ef476af68a2f96c259681032354fba69116d46ebc4d01c",
+      "public_sha256": "d3a2a669d6a34303a0ef476af68a2f96c259681032354fba69116d46ebc4d01c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "daabd4072bc28f5083425aa6590cc2523bc70b3fd3ffb0530c8d75d4da32ba38",
+      "public_sha256": "daabd4072bc28f5083425aa6590cc2523bc70b3fd3ffb0530c8d75d4da32ba38",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/card.json",
+      "source_sha256": "e979abc82300512327eca456debe1bd6d9fb97a8716937653f21f143dc1ddbb2",
+      "public_sha256": "e979abc82300512327eca456debe1bd6d9fb97a8716937653f21f143dc1ddbb2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/registration.json",
+      "source_sha256": "bbf82bd338ce84eaf37332096c762c13c1ff6ac52ae81a907dae753bf282d51e",
+      "public_sha256": "bbf82bd338ce84eaf37332096c762c13c1ff6ac52ae81a907dae753bf282d51e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+      "source_sha256": "d19183b4b4c760e9416c20bab567c5dee914aada4efe7b7d8c82eac2b78032b6",
+      "public_sha256": "d19183b4b4c760e9416c20bab567c5dee914aada4efe7b7d8c82eac2b78032b6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/TASK.md",
+      "source_sha256": "816bdb1650d103d044553a4d10fa9ab3dda67f2b489ad4b70a89454e8432a7f4",
+      "public_sha256": "816bdb1650d103d044553a4d10fa9ab3dda67f2b489ad4b70a89454e8432a7f4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/prepared-stage.json",
+      "source_sha256": "933713123f8094296c267da0d5720e2d0fcca6cb0df92e876142211bfa10e531",
+      "public_sha256": "933713123f8094296c267da0d5720e2d0fcca6cb0df92e876142211bfa10e531",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/TASK.md",
+      "source_sha256": "c8650569476efb756fcd311e0b338755eb36866a1be5451fdbe439789f732961",
+      "public_sha256": "c8650569476efb756fcd311e0b338755eb36866a1be5451fdbe439789f732961",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "source_sha256": "20be079119bb9bbe57a622934c6d8aed91af3ca7668d012b836478426933aa57",
+      "public_sha256": "20be079119bb9bbe57a622934c6d8aed91af3ca7668d012b836478426933aa57",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/TASK.md",
+      "source_sha256": "ddb7a6c2ec6ae1b2c4afce946fbdcf9b454fc8e845546c0fbd3152634a6185bc",
+      "public_sha256": "ddb7a6c2ec6ae1b2c4afce946fbdcf9b454fc8e845546c0fbd3152634a6185bc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+      "source_sha256": "d05f3fc30b29a60aae1056e2739378df9850b5234d15a8bffd49c9a2fa834455",
+      "public_sha256": "d05f3fc30b29a60aae1056e2739378df9850b5234d15a8bffd49c9a2fa834455",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/TASK.md",
+      "source_sha256": "c17f7047dc72561f27510f0748754d3576ddef1a1a5763cd46db70a90be971ab",
+      "public_sha256": "c17f7047dc72561f27510f0748754d3576ddef1a1a5763cd46db70a90be971ab",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+      "source_sha256": "641cba8387f66c50cb88c17403c147e0e8ce7ba2a0dc7d085fb6796d345a610a",
+      "public_sha256": "641cba8387f66c50cb88c17403c147e0e8ce7ba2a0dc7d085fb6796d345a610a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/TASK.md",
+      "source_sha256": "eefa9f6d4a92e4b6018cbdb7b6dfe712b848933e4130af01c4c59535c306b8c9",
+      "public_sha256": "eefa9f6d4a92e4b6018cbdb7b6dfe712b848933e4130af01c4c59535c306b8c9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+      "source_sha256": "46f534ac0eba930fa0e8121dc67ebbe68201202185ef6e40ac3a009c30af2602",
+      "public_sha256": "46f534ac0eba930fa0e8121dc67ebbe68201202185ef6e40ac3a009c30af2602",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/TASK.md",
+      "source_sha256": "01e26b2ac8ce409e2a27a717466ab2689189324f0fe49442d8b77bd3444ab7aa",
+      "public_sha256": "01e26b2ac8ce409e2a27a717466ab2689189324f0fe49442d8b77bd3444ab7aa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "c69c7586c39baaf6789075bfc123e2275486beb1352a8592f5b5a587c0edb497",
+      "public_sha256": "c69c7586c39baaf6789075bfc123e2275486beb1352a8592f5b5a587c0edb497",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "af6f30ca6cc79adc6d8263b18ba3e317bc96599d73a75219ed63f5f1ba8ccaf5",
+      "public_sha256": "af6f30ca6cc79adc6d8263b18ba3e317bc96599d73a75219ed63f5f1ba8ccaf5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "4afff50826de9a278f1162744bd4a7684d5dd910eb6f3dfa0e6b32a3e64d5f9f",
+      "public_sha256": "4afff50826de9a278f1162744bd4a7684d5dd910eb6f3dfa0e6b32a3e64d5f9f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/card.json",
+      "source_sha256": "9969ff557399e4d7fedf78c6a3971a981c4f33b6e53cca809b84077fd2c0487a",
+      "public_sha256": "9969ff557399e4d7fedf78c6a3971a981c4f33b6e53cca809b84077fd2c0487a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+      "source_sha256": "168e009daceb9b3db9b2ce77dfb450a26198598405c232e6bbc2f7eda7fa75fc",
+      "public_sha256": "168e009daceb9b3db9b2ce77dfb450a26198598405c232e6bbc2f7eda7fa75fc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/OUTBOX.json",
+      "published": "resource-successors-001/luna-batch001/OUTBOX.json",
+      "source_sha256": "eb5f3e880b2773eb29a59faf43693942bb7c4a945b9b08eefc1f04eaeb82b6b9",
+      "public_sha256": "eb5f3e880b2773eb29a59faf43693942bb7c4a945b9b08eefc1f04eaeb82b6b9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "5b17b8064f0e8ba2bea1263bb1daa4d2733be9b46ec87336d4786f1f7fecd97d",
+      "public_sha256": "5b17b8064f0e8ba2bea1263bb1daa4d2733be9b46ec87336d4786f1f7fecd97d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "9723af66b3566f983e326352aa152c75b9c653671469b9263dc1992797c34f64",
+      "public_sha256": "9723af66b3566f983e326352aa152c75b9c653671469b9263dc1992797c34f64",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "36ef8e6f265e48b0c131a721c56175c9d0fed1c52afb9c0ff1aae62797b74de2",
+      "public_sha256": "36ef8e6f265e48b0c131a721c56175c9d0fed1c52afb9c0ff1aae62797b74de2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/prepared-stage.json",
+      "source_sha256": "4bd983525a13862e1acb5c3382c7237bad380d9e137fa53dec2d1cc858265cc5",
+      "public_sha256": "4bd983525a13862e1acb5c3382c7237bad380d9e137fa53dec2d1cc858265cc5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/workspace/TASK.md",
+      "source_sha256": "b0896f14bdfd2fe3bf81a34647ee7eb40866c3525e1205e3cef646044a116c95",
+      "public_sha256": "b0896f14bdfd2fe3bf81a34647ee7eb40866c3525e1205e3cef646044a116c95",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/prepared-stage.json",
+      "source_sha256": "63292e9e54dfa17bbd1794d20529377a6d36dc1c44088b225dee94e3b2a2a3c3",
+      "public_sha256": "63292e9e54dfa17bbd1794d20529377a6d36dc1c44088b225dee94e3b2a2a3c3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/workspace/TASK.md",
+      "source_sha256": "1387f4fafb164a68cf7ffa1d4b3ef261dbe9dc3ba91dd78b1830a7aafce3f10e",
+      "public_sha256": "1387f4fafb164a68cf7ffa1d4b3ef261dbe9dc3ba91dd78b1830a7aafce3f10e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/SEED-DEV-A-RESOURCE-R001-seed-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/card.json",
+      "source_sha256": "63cb7af6f255a6f9f34380d704f3b571e390dc3996e2725e450f85c9f7853d96",
+      "public_sha256": "63cb7af6f255a6f9f34380d704f3b571e390dc3996e2725e450f85c9f7853d96",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/registration.json",
+      "source_sha256": "ff35d9c523f8dc2e4a716ed8e367c91477d1c52b9d6cc1e6bc2e28d26946d1a3",
+      "public_sha256": "ff35d9c523f8dc2e4a716ed8e367c91477d1c52b9d6cc1e6bc2e28d26946d1a3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "43e7d8cdb8c06a355abef67c12a288e8f076b903f450449d41a90b1f5b68ff29",
+      "public_sha256": "43e7d8cdb8c06a355abef67c12a288e8f076b903f450449d41a90b1f5b68ff29",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "317bef5abe75649a271c6c4513c6a4f9ba8f38a1d35c8086d6baa76830a2acba",
+      "public_sha256": "317bef5abe75649a271c6c4513c6a4f9ba8f38a1d35c8086d6baa76830a2acba",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "e19908ab6cad8bc98006b6c0416da7ad219dd8c6ef7d0b42e9579c417fd70560",
+      "public_sha256": "e19908ab6cad8bc98006b6c0416da7ad219dd8c6ef7d0b42e9579c417fd70560",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/prepared-stage.json",
+      "source_sha256": "03442ade0fdb0151595603ad20b4c1afeeffd8c30d5a895a663cf9195990d22f",
+      "public_sha256": "03442ade0fdb0151595603ad20b4c1afeeffd8c30d5a895a663cf9195990d22f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/workspace/TASK.md",
+      "source_sha256": "55cf1be3207625208fa5c18e00b2abe1554662ba6b7a9c5e1100a7fcf68bb5a7",
+      "public_sha256": "55cf1be3207625208fa5c18e00b2abe1554662ba6b7a9c5e1100a7fcf68bb5a7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/prepared-stage.json",
+      "source_sha256": "45f5489b7ee98ea37f1f7eaf0735482452873937109d5e16149b7bb358d027f3",
+      "public_sha256": "45f5489b7ee98ea37f1f7eaf0735482452873937109d5e16149b7bb358d027f3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/workspace/TASK.md",
+      "source_sha256": "504b28d866f036d9c7f612685da56f5e2412fc4fafdb4f3e45657e9e9b74235f",
+      "public_sha256": "504b28d866f036d9c7f612685da56f5e2412fc4fafdb4f3e45657e9e9b74235f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/SEED-DEV-B-RESOURCE-R001-seed-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/card.json",
+      "source_sha256": "91f2d99f4ca4af8ac88eff258269c21fb3c593e68c59cbc5650f59d6bed4189f",
+      "public_sha256": "91f2d99f4ca4af8ac88eff258269c21fb3c593e68c59cbc5650f59d6bed4189f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch001/SEED-DEV-B-RESOURCE-R001/registration.json",
+      "source_sha256": "b6f557190a6955ce71ed652fddbe6abc11dd661c46db183d14cc6c5004773cec",
+      "public_sha256": "b6f557190a6955ce71ed652fddbe6abc11dd661c46db183d14cc6c5004773cec",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/COMMON_RESOURCE_BINDING.json",
+      "published": "resource-successors-001/luna-batch002/COMMON_RESOURCE_BINDING.json",
+      "source_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "public_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/prepared-stage.json",
+      "source_sha256": "0f196b993f432f0cbf325088397206e080c979b2f5815748fe3fec660067b841",
+      "public_sha256": "0f196b993f432f0cbf325088397206e080c979b2f5815748fe3fec660067b841",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/TASK.md",
+      "source_sha256": "bbf739cd8ff396b8776634d148767ed35137971fd515fa5d1d760cb30f1a7d7b",
+      "public_sha256": "bbf739cd8ff396b8776634d148767ed35137971fd515fa5d1d760cb30f1a7d7b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/arm_instruction.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/arm_instruction.md",
+      "source_sha256": "13025a8e5073f713e1d641ae5b47baea464d51ea0297d7bd9a10eabc4e13709b",
+      "public_sha256": "13025a8e5073f713e1d641ae5b47baea464d51ea0297d7bd9a10eabc4e13709b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/diagnostic_task.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/diagnostic_task.md",
+      "source_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "public_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-control-whole_critic-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/prepared-stage.json",
+      "source_sha256": "c2ba342ce82a82f263736eaa12768938fe0839ff2e5e66ad4ccfb90c83de9e5b",
+      "public_sha256": "c2ba342ce82a82f263736eaa12768938fe0839ff2e5e66ad4ccfb90c83de9e5b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/TASK.md",
+      "source_sha256": "53b4bc72a29df8a5adc10eb90793ef037a95b16837b35d2d1260d212f48a4526",
+      "public_sha256": "53b4bc72a29df8a5adc10eb90793ef037a95b16837b35d2d1260d212f48a4526",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/arm_instruction.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/arm_instruction.md",
+      "source_sha256": "00fd79c8129a73c18657d7d221fd57ce5526faecf6225a9189e2982eb9eab2a2",
+      "public_sha256": "00fd79c8129a73c18657d7d221fd57ce5526faecf6225a9189e2982eb9eab2a2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/diagnostic_task.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/diagnostic_task.md",
+      "source_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "public_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/prepared-stage.json",
+      "source_sha256": "ea8100ff7dc0dd9e6dfe9829e10b5a9c5e4f983cb213d6335717b0c51a6e1eea",
+      "public_sha256": "ea8100ff7dc0dd9e6dfe9829e10b5a9c5e4f983cb213d6335717b0c51a6e1eea",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/TASK.md",
+      "source_sha256": "001efb57455e6ad43d66bea14cb407628bf248369fa67adf4015644802755249",
+      "public_sha256": "001efb57455e6ad43d66bea14cb407628bf248369fa67adf4015644802755249",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/arm_instruction.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/arm_instruction.md",
+      "source_sha256": "00fd79c8129a73c18657d7d221fd57ce5526faecf6225a9189e2982eb9eab2a2",
+      "public_sha256": "00fd79c8129a73c18657d7d221fd57ce5526faecf6225a9189e2982eb9eab2a2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/diagnostic_task.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/diagnostic_task.md",
+      "source_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "public_sha256": "4b23a77240975c3ca57b962dc51c4d4bf5b3b8a09aa86f0f13af2dc20ded70cf",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "a8a58ee940c53775356597d85f3358fcdc85cb7f1cd170a5b63cfb7c4477983b",
+      "public_sha256": "a8a58ee940c53775356597d85f3358fcdc85cb7f1cd170a5b63cfb7c4477983b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "cdff11a22575af6d7fae34d66a6bf0a2fa18bcc8c0d4ce1c9889f53a52945caa",
+      "public_sha256": "cdff11a22575af6d7fae34d66a6bf0a2fa18bcc8c0d4ce1c9889f53a52945caa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "996a1ed7da0c2dcc3958fc1085a3cfd7d072c7b9ce13a7ddbfdede281b722dd0",
+      "public_sha256": "996a1ed7da0c2dcc3958fc1085a3cfd7d072c7b9ce13a7ddbfdede281b722dd0",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/card.json",
+      "source_sha256": "37fd723a5b8b667c3898e35ef920e94455db20dd3372335725b9003703ce0375",
+      "public_sha256": "37fd723a5b8b667c3898e35ef920e94455db20dd3372335725b9003703ce0375",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch002/D-V09-A-RESOURCE-R001/registration.json",
+      "source_sha256": "9c617f6d07f8cff3799775f15f7b79949ab618f8500e4dda169faee2280bc152",
+      "public_sha256": "9c617f6d07f8cff3799775f15f7b79949ab618f8500e4dda169faee2280bc152",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch002/OUTBOX.json",
+      "published": "resource-successors-001/luna-batch002/OUTBOX.json",
+      "source_sha256": "07d6cd90171953f1d0c0851c2f40433348da39d5dac58b9da42c9e9a68043912",
+      "public_sha256": "07d6cd90171953f1d0c0851c2f40433348da39d5dac58b9da42c9e9a68043912",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/COMMON_RESOURCE_BINDING.json",
+      "published": "resource-successors-001/luna-batch003/COMMON_RESOURCE_BINDING.json",
+      "source_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "public_sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "source_sha256": "3f44145e5848ce3b90c372a64518225628d5d00e7012a1637629b252b43a5a06",
+      "public_sha256": "3f44145e5848ce3b90c372a64518225628d5d00e7012a1637629b252b43a5a06",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/TASK.md",
+      "source_sha256": "d35d5410b71c15393bda80810e22771562c02a2b9a86de30116394d1a994d18e",
+      "public_sha256": "d35d5410b71c15393bda80810e22771562c02a2b9a86de30116394d1a994d18e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/prepared-stage.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/prepared-stage.json",
+      "source_sha256": "b25e437743784eb41e22933ae4b3c3c05fc038805ac2a7615aa59a7e040832a2",
+      "public_sha256": "b25e437743784eb41e22933ae4b3c3c05fc038805ac2a7615aa59a7e040832a2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/TASK.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/TASK.md",
+      "source_sha256": "2008b4ab749e3fd146718e45c3613b0a025e1f626937b3bf08d6222a3f8b6aff",
+      "public_sha256": "2008b4ab749e3fd146718e45c3613b0a025e1f626937b3bf08d6222a3f8b6aff",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/brief.md",
+      "source_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "public_sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/delivery_objective.md",
+      "source_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "public_sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critic_final-a001/workspace/inputs/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/OPAQUE_COPY_RECEIPT.json",
+      "source_sha256": "825b53c443d022296fef1075883406c7aa4165b812672a74740e599105000019",
+      "public_sha256": "825b53c443d022296fef1075883406c7aa4165b812672a74740e599105000019",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+      "source_sha256": "35ac251cf21ac8c042368ec1d2c563aed30d4c225c465cc5a41ecef35373b163",
+      "public_sha256": "35ac251cf21ac8c042368ec1d2c563aed30d4c225c465cc5a41ecef35373b163",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+      "source_sha256": "534c1fed8615c496f6ac4b409f2f0e34775c535f76c72d58824b4574cf650ddb",
+      "public_sha256": "534c1fed8615c496f6ac4b409f2f0e34775c535f76c72d58824b4574cf650ddb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/card.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/card.json",
+      "source_sha256": "e9fdda3ee9d10242aceb85bb77a99da5a30d20db5e4032b94e1fcda2d4c7c76e",
+      "public_sha256": "e9fdda3ee9d10242aceb85bb77a99da5a30d20db5e4032b94e1fcda2d4c7c76e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+      "published": "resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+      "source_sha256": "fba6e0d13b678dfed7774a9f6754eb2173ba20abc72a6ab492b2baf9a5b1aa5b",
+      "public_sha256": "fba6e0d13b678dfed7774a9f6754eb2173ba20abc72a6ab492b2baf9a5b1aa5b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/resource-successors-001/luna-batch003/OUTBOX.json",
+      "published": "resource-successors-001/luna-batch003/OUTBOX.json",
+      "source_sha256": "cbaa20ff99c35fcd504d343e6d24d9fa63b14a17fb297b760f7ce07e50a16717",
+      "public_sha256": "cbaa20ff99c35fcd504d343e6d24d9fa63b14a17fb297b760f7ce07e50a16717",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/PUBLIC_SERVICE_ACCEPTANCE_SELECTION.json",
+      "published": "routes/luna/service-acceptance/PUBLIC_SERVICE_ACCEPTANCE_SELECTION.json",
+      "source_sha256": "fd16777b66dda13b707ce7805b08f9080abfa3c30eb283b598eafc135ba7c2dd",
+      "public_sha256": "fd16777b66dda13b707ce7805b08f9080abfa3c30eb283b598eafc135ba7c2dd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/service_acceptance_projection.py",
+      "published": "routes/luna/service-acceptance/service_acceptance_projection.py",
+      "source_sha256": "6e5c8e6a5c055788ced67fadda72fadfb74c916ba80e424d82daa80327b72a43",
+      "public_sha256": "6e5c8e6a5c055788ced67fadda72fadfb74c916ba80e424d82daa80327b72a43",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/test_service_acceptance_projection.py",
+      "published": "routes/luna/service-acceptance/test_service_acceptance_projection.py",
+      "source_sha256": "133fd116353e83cd47c849894cdb6c0c055f741d0c71daab3990741a1c993bae",
+      "public_sha256": "133fd116353e83cd47c849894cdb6c0c055f741d0c71daab3990741a1c993bae",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "published": "routes/luna/service-acceptance/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "source_sha256": "7250c51487b9f7fcc4cb05f67f1957f13e894a8a3d9e38a36a99b6088d77c137",
+      "public_sha256": "7250c51487b9f7fcc4cb05f67f1957f13e894a8a3d9e38a36a99b6088d77c137",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/SERVICE_ACCEPTANCE_README.md",
+      "published": "routes/luna/service-acceptance/SERVICE_ACCEPTANCE_README.md",
+      "source_sha256": "b55922739547a14b9fadd9afdd49181372775bfb1fbec4acaefe5f06291d8810",
+      "public_sha256": "b55922739547a14b9fadd9afdd49181372775bfb1fbec4acaefe5f06291d8810",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/luna-route/SERVICE_ACCEPTANCE_PIN.json",
+      "published": "routes/luna/service-acceptance/SERVICE_ACCEPTANCE_PIN.json",
+      "source_sha256": "7fb461b0a30f89c56bb825a9ab320eab691535f0ef9715341c2e2731beb96049",
+      "public_sha256": "7fb461b0a30f89c56bb825a9ab320eab691535f0ef9715341c2e2731beb96049",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/evidence-archive/DV08A_RECEIPT-f0f8f22c6ed73e6ed4515e06dfaf086a129852020507896b793347e46be3ccaf.json",
+      "published": "archive/cohort011/DV08A_RECEIPT-f0f8f22c6ed73e6ed4515e06dfaf086a129852020507896b793347e46be3ccaf.json",
+      "source_sha256": "6df11b3d341f41a8daa589d2febe7590c89ed94646f9439d0eb0cabc97d0e783",
+      "public_sha256": "6df11b3d341f41a8daa589d2febe7590c89ed94646f9439d0eb0cabc97d0e783",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/evidence-archive/EVAL3_RECEIPT-876715fdefdf8adfbfec9c3596395792a9a632b13dd2b25c31f421d17681a9c9.json",
+      "published": "archive/cohort011/EVAL3_RECEIPT-876715fdefdf8adfbfec9c3596395792a9a632b13dd2b25c31f421d17681a9c9.json",
+      "source_sha256": "4ba9e17949d6cf6fab9583a86b92a1e8503586f402ee6e733582f1e4635b03a9",
+      "public_sha256": "4ba9e17949d6cf6fab9583a86b92a1e8503586f402ee6e733582f1e4635b03a9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/current.json",
+      "published": "restart/cohort011/current.json",
+      "source_sha256": "dfb6a627f13d43055fd4c787bfbfbe1c99874dd98e4473df9499b5f14da26998",
+      "public_sha256": "dfb6a627f13d43055fd4c787bfbfbe1c99874dd98e4473df9499b5f14da26998",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "state/campaign.json",
+      "published": "restart/cohort011/campaign.json",
+      "source_sha256": "dfb6a627f13d43055fd4c787bfbfbe1c99874dd98e4473df9499b5f14da26998",
+      "public_sha256": "dfb6a627f13d43055fd4c787bfbfbe1c99874dd98e4473df9499b5f14da26998",
+      "transform": "byte-identical"
+    }
+  ],
+  "D08A": "Available A critic_and_final INCOMPLETE/PARTIAL; missing Bcritic UNASSESSED. Isolated W4 receipt does not overwrite source grade.",
+  "D08_review_whole_elapsed_seconds": 1163.017374667,
+  "new_I05_R002_packet": "Ungraded current packet; Phase1 partial snapshot and finished review not selected here",
+  "resource_successors": "Prospective neutral preparation, no fit/Goal/kernel evidence inferred",
+  "whole_pipeline_or_winner_claim": false,
+  "raw_archive_coverage": "Partial external exact selection; no raw bodies committed",
+  "additive_finished_I05_R002_sources": [
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/RESERVATION.json",
+      "published": "evaluation/independent-pipeline-3/review0001/RESERVATION.json",
+      "source_sha256": "6dc01d58a8694ae19e5e4eabac8beddf0fd2eb8389760710f29663c9e9ed08cd",
+      "public_sha256": "6dc01d58a8694ae19e5e4eabac8beddf0fd2eb8389760710f29663c9e9ed08cd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/BINDING_CONTRACT.json",
+      "published": "evaluation/independent-pipeline-3/review0001/BINDING_CONTRACT.json",
+      "source_sha256": "755bd9d02a694b891f8d72cffd18f4100d8d0c6208dd73dbea57f111932aba2b",
+      "public_sha256": "755bd9d02a694b891f8d72cffd18f4100d8d0c6208dd73dbea57f111932aba2b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/STARTED",
+      "published": "evaluation/independent-pipeline-3/review0001/STARTED",
+      "source_sha256": "6df2301950acfb7be557b49eaafd7b73daaa45b38ec50118f25ca357e5a4155f",
+      "public_sha256": "6df2301950acfb7be557b49eaafd7b73daaa45b38ec50118f25ca357e5a4155f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/PREBODY_METADATA.json",
+      "published": "evaluation/independent-pipeline-3/review0001/PREBODY_METADATA.json",
+      "source_sha256": "04271115c9db6283be229eae4ad2a9e427db3aa4fd6ab7a4d5ee4eda7abf1291",
+      "public_sha256": "04271115c9db6283be229eae4ad2a9e427db3aa4fd6ab7a4d5ee4eda7abf1291",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/EXPOSURE_ADDENDUM.json",
+      "published": "evaluation/independent-pipeline-3/review0001/EXPOSURE_ADDENDUM.json",
+      "source_sha256": "58f82a5ad10879272112e74b8c9f8c5875657dba429aca6f1f42800a5491e7e5",
+      "public_sha256": "58f82a5ad10879272112e74b8c9f8c5875657dba429aca6f1f42800a5491e7e5",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/PHASE1_FREEZE.json",
+      "published": "evaluation/independent-pipeline-3/review0001/PHASE1_FREEZE.json",
+      "source_sha256": "0aa050d34f5d4b34f1e9f26c01c9d93dff55f49fe1d62c73e871a3d3b364d780",
+      "public_sha256": "0aa050d34f5d4b34f1e9f26c01c9d93dff55f49fe1d62c73e871a3d3b364d780",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/current_output_judgment.json",
+      "published": "evaluation/independent-pipeline-3/review0001/current_output_judgment.json",
+      "source_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+      "public_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/SOURCE_PIN_VERIFICATION.json",
+      "published": "evaluation/independent-pipeline-3/review0001/SOURCE_PIN_VERIFICATION.json",
+      "source_sha256": "ea7e76cce670597c130ab10dcf056a726dea2f4dba641b6e1fa030dba63c123f",
+      "public_sha256": "ea7e76cce670597c130ab10dcf056a726dea2f4dba641b6e1fa030dba63c123f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/READ_COVERAGE.json",
+      "published": "evaluation/independent-pipeline-3/review0001/READ_COVERAGE.json",
+      "source_sha256": "58f573c41bbf219f4747c8b8ce763b53b1429fbfb9220fe0c9dd6d83f04e2c01",
+      "public_sha256": "58f573c41bbf219f4747c8b8ce763b53b1429fbfb9220fe0c9dd6d83f04e2c01",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/PHASE2_REQUEST.json",
+      "published": "evaluation/independent-pipeline-3/review0001/PHASE2_REQUEST.json",
+      "source_sha256": "0dc3d49b3fe4d93acd7581e2fe8b1cdb10707296ef72d99b547570cbe924d18c",
+      "public_sha256": "0dc3d49b3fe4d93acd7581e2fe8b1cdb10707296ef72d99b547570cbe924d18c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/PHASE2_INPUT_PIN_VERIFICATION.json",
+      "published": "evaluation/independent-pipeline-3/review0001/PHASE2_INPUT_PIN_VERIFICATION.json",
+      "source_sha256": "88cdb95cf76673207e258396346b65c924df09d6d686da31562750b015fc1e55",
+      "public_sha256": "88cdb95cf76673207e258396346b65c924df09d6d686da31562750b015fc1e55",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/EXECUTION_ASSESSMENT.json",
+      "published": "evaluation/independent-pipeline-3/review0001/EXECUTION_ASSESSMENT.json",
+      "source_sha256": "d3590b240d28aa1fff93d6dd7626da0d48eea2563e604d411c9f566f8b8d20c1",
+      "public_sha256": "d3590b240d28aa1fff93d6dd7626da0d48eea2563e604d411c9f566f8b8d20c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/ARCHIVE_RECEIPT.json",
+      "published": "evaluation/independent-pipeline-3/review0001/ARCHIVE_RECEIPT.json",
+      "source_sha256": "f77bf1cca2f63f012ff3ec8aa26113a3ab88b2ad062f9f776e2fd814ab2b0526",
+      "public_sha256": "f77bf1cca2f63f012ff3ec8aa26113a3ab88b2ad062f9f776e2fd814ab2b0526",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+      "published": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+      "source_sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b",
+      "public_sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/report.json",
+      "published": "evaluation/independent-pipeline-3/review0001/report.json",
+      "source_sha256": "e2f0a10739a2bd241bd4808998d6803408ea78f8df24936d8619571dbba15cfa",
+      "public_sha256": "e2f0a10739a2bd241bd4808998d6803408ea78f8df24936d8619571dbba15cfa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/REVIEW.md",
+      "published": "evaluation/independent-pipeline-3/review0001/REVIEW.md",
+      "source_sha256": "2e58a8237ad59314fc46f915ff07d1893fd5ffe16c336184ff130c32008d6c7b",
+      "public_sha256": "2e58a8237ad59314fc46f915ff07d1893fd5ffe16c336184ff130c32008d6c7b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/RAW_EVIDENCE_SELECTION.json",
+      "published": "evaluation/independent-pipeline-3/review0001/RAW_EVIDENCE_SELECTION.json",
+      "source_sha256": "c4045f48687396ce8d43731083520a11beeed0a8091191af195e8c5369b3c2d3",
+      "public_sha256": "c4045f48687396ce8d43731083520a11beeed0a8091191af195e8c5369b3c2d3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/PHASE2_RAW_SELECTION.json",
+      "published": "evaluation/independent-pipeline-3/review0001/PHASE2_RAW_SELECTION.json",
+      "source_sha256": "34838b45bc1aa8606e791331e752e1e69ba183616bd9eb482e752f86466faa3e",
+      "public_sha256": "34838b45bc1aa8606e791331e752e1e69ba183616bd9eb482e752f86466faa3e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/dispatch.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/dispatch.json",
+      "source_sha256": "9a466a66b78b8d28e3ae011f0eccfae5a6726febb6f8bb30c16e23376c1c4bf2",
+      "public_sha256": "9a466a66b78b8d28e3ae011f0eccfae5a6726febb6f8bb30c16e23376c1c4bf2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "source_sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+      "public_sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "source_sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+      "public_sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/brief.md",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/brief.md",
+      "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/coverage_map.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/coverage_map.json",
+      "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "public_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/common_criteria.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/common_criteria.json",
+      "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/source_access.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/source_access.json",
+      "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/output_contract.md",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/output_contract.md",
+      "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/important_checks.json",
+      "published": "ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/important_checks.json",
+      "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/task-only/P3-R002-NEUTRAL-001/NEUTRAL_CARD.json",
+      "published": "ops/frozen-exports/task-only/P3-R002-NEUTRAL-001/NEUTRAL_CARD.json",
+      "source_sha256": "2f8bae5fa13bcb346e859b6ff232abf69919f8fcd4d075731b07306ff44dd562",
+      "public_sha256": "2f8bae5fa13bcb346e859b6ff232abf69919f8fcd4d075731b07306ff44dd562",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "source_sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "public_sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "source_sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "public_sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "source_sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "public_sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "source_sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "public_sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "published": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "source_sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "public_sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "published": "ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "source_sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+      "public_sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-3/review0001/FINISHED.json",
+      "published": "evaluation/independent-pipeline-3/review0001/FINISHED.json",
+      "source_sha256": "db81d32d567a86904f8a20106e69fee464e2bbea27dd65dc76b2c62f00482e37",
+      "public_sha256": "db81d32d567a86904f8a20106e69fee464e2bbea27dd65dc76b2c62f00482e37",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "source_sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "public_sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "source_sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "public_sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "source_sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "public_sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "public_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "source_sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "public_sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "published": "frozen-evidence/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "source_sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "public_sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "published": "frozen-evidence/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "source_sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+      "public_sha256": "26158e6c3eac1615c11468c8bd37c583737a7b3be7b157817d6e8109e2176205",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/current.json",
+      "published": "restart/cohort011/root-latest/current.json",
+      "source_sha256": "b99ea83ed5f066c86d45326ff7c396b577f31eb5398840daeb8cc34083fa4d19",
+      "public_sha256": "b99ea83ed5f066c86d45326ff7c396b577f31eb5398840daeb8cc34083fa4d19",
+      "source_updated_at": "2026-10-06T01:42:37.966318+00:00"
+    },
+    {
+      "source": "state/campaign.json",
+      "published": "restart/cohort011/root-latest/campaign.json",
+      "source_sha256": "b99ea83ed5f066c86d45326ff7c396b577f31eb5398840daeb8cc34083fa4d19",
+      "public_sha256": "b99ea83ed5f066c86d45326ff7c396b577f31eb5398840daeb8cc34083fa4d19",
+      "source_updated_at": "2026-10-06T01:42:37.966318+00:00"
+    }
+  ],
+  "I05_R002_finished_review": "FAIL_SCREEN/PARTIAL; bounded review, notification handoff exceeded; limited blinding"
+}

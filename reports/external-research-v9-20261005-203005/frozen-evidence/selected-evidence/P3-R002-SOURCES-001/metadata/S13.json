@@ -1,0 +1,27 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S13",
+  "body_sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+  "body_bytes": 261500,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0015.body",
+    "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+    "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+    "version_or_commit": "sha256:64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "4e68384f2e1a2eada61fa1914fc79a8062b55baf54d5a00216d0102ec81be5c2",
+  "catalog_asserted_capture_identity": {
+    "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0015.body",
+    "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+    "bytes": 261500,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee"
+}

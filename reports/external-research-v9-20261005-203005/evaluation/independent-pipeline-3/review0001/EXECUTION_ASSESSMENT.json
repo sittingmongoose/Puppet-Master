@@ -1,0 +1,212 @@
+{
+  "actual_candidate_execution": {
+    "actor": "candidate",
+    "assessment": "SUPPORTED_ISOLATED_FIXED_ARITHMETIC_EXECUTION",
+    "bootstrap_started": true,
+    "code_sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+    "correspondence_to_final_W1": "Numerical/input/code content matches the inline example. Formal W1 inventory-ID/source-ref binding remains UNASSESSED because final/witnesses.json is absent.",
+    "execution_id": "exec-81tq4_c4",
+    "exit_code": 0,
+    "independent_expectation": {
+      "derived_roundtrip": [
+        4.0,
+        2.0,
+        2.0
+      ],
+      "physical_um": [
+        8.25,
+        22.75,
+        33.0
+      ],
+      "source_from_derived": [
+        11,
+        7,
+        4
+      ],
+      "source_xyz": [
+        11,
+        7,
+        4
+      ]
+    },
+    "independent_reasoning": "Read named x/y/z from t,c,z,y,x; physical=(10-7/4,20+11/4,30+3*4/4). Crop/downsample=(3+2*4,1+3*2,2+1*2). Inverse diagonal factors recover(4,2,2). Values match exact stdout.",
+    "input_sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+    "native_argument_sha256": "2e08310dc50fd3b53ffb51de90a2bd1c9d23037bdfe0e1a841e71cae324f8cc4",
+    "native_client_call_id": "call_YImUIbsNfPCqVe0WslvxZdWm",
+    "native_response_sha256": "ec1a0458960add5f5201b2e7c81fb7af5508fae517bec9559fcc9b1bd144d45f",
+    "receipt_cleanup_classification": "collected_unit_absent",
+    "scope_limits": "No OME/NGFF parser, viewer, reader, SQLite save/reopen, exporter,3GB target or app integration executed. zip-based helper does not validate arbitrary matrix/vector dimensions. The admitted tool supplies global data; raw code.py alone is not a standalone CLI.",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327"
+  },
+  "all_input_pins_mechanically_verified": true,
+  "case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "current_prompt_sha256": "530ead02258f6d1c4fd7f561ac5cc6d16f04a22d69c1a6d91a1b5811891d8667",
+  "current_stage_input_pin_count": 47,
+  "evaluation_execution_accounting": {
+    "candidate_program_replays": 0,
+    "classification": "EVAL only; independent expectation computed in reviewer Python, no candidate model/Goal/new experiment.",
+    "evaluator_dollars": "UNKNOWN",
+    "evaluator_model_effort_physical": "UNKNOWN",
+    "evaluator_token_usage": "UNKNOWN",
+    "independent_fixed_arithmetic_evaluator_checks": 1
+  },
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "execution_manifest_sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+  "frozen_phase1_preserved": true,
+  "full_pair_effect_winner_pipeline_credit": "UNASSESSED/NONE",
+  "historical_input_body_semantic_reads": false,
+  "missing_partner": "UNASSESSED",
+  "native_identity": {
+    "goal_activation": "active",
+    "goal_before_cleanup": "active",
+    "goal_completion_credit": false,
+    "goal_replacements_observed": 0,
+    "goal_status_final_metric": "paused",
+    "last_direct_goal_status": "paused",
+    "native_goal_starts": 1,
+    "native_session_or_thread_id": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+    "opaque_native_Goal_ID": "UNKNOWN_NOT_EXPOSED; do not rename threadId as separate goalId",
+    "physical_provider_identity": "UNKNOWN_NOT_NEWLY_OBSERVED",
+    "requested_effort": "max",
+    "requested_model": "gpt-6-luna",
+    "saved_Goal_API_threadId": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+    "saved_native_client_identity": {
+      "effort": "max",
+      "ephemeral": false,
+      "fresh_empty_history": true,
+      "instruction_sources_empty": true,
+      "model": "gpt-6-luna"
+    }
+  },
+  "native_receipt_sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8",
+  "phase1_judgment_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+  "phase1_outcome_unchanged": "FAIL_SCREEN/PARTIAL",
+  "phase2_elapsed_s": 403.956776389,
+  "phase2_freeze_monotonic_ns": 80900967500371,
+  "phase2_frozen_utc": "2026-10-06T01:34:42.111335+00:00",
+  "read_coverage": "Selective receipt/lifecycle/status/usage/identity/input-pin and actual execution coverage only. One mistaken full goal-receipts print and initial runtime-manifest print were truncated; no full-log coverage claimed.",
+  "runtime_accounting_manifest_sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+  "schema": "er9.independent-current-only-execution-assessment.v1",
+  "scope": "Selected actual new R002 revision-stage receipts only; no full pipeline or historical outcome reassessment",
+  "source_feedback_to_candidate_repair_or_ops": false,
+  "terminal": {
+    "actual_five_quiet_flags": {
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true,
+      "held_process_groups_absent": true,
+      "native_cgroup_quiet": true
+    },
+    "dispatcher_held_runner_exit_code": 126,
+    "exit_scope_rule": "Do not collapse candidate execution exit0, native held process exit, dispatcher runner exit, Goal state and delivery status.",
+    "native_elapsed_s": 585.517392393,
+    "native_error_class": "TimeoutError",
+    "native_held_process_exit_code": 0,
+    "native_outcome": "HOLD",
+    "native_turn_status": "interrupted",
+    "operational_delivery_complete": false,
+    "stage_freeze_elapsed_s": 585.608353739
+  },
+  "tool_uptake": {
+    "actual_inference_tool_payload": "UNKNOWN",
+    "counts": {
+      "pm_boundary.mechanical": 1,
+      "pm_boundary.public_https_get": 1,
+      "pm_boundary.read_file": 24,
+      "pm_boundary.write_file": 2,
+      "pm_execution.python_execute": 1
+    },
+    "failed_counts": {
+      "pm_boundary.mechanical": 3,
+      "pm_boundary.read_file": 1
+    },
+    "scope": "visible item telemetry only; imported bytes/read calls do not prove comprehension or discovery novelty; zero goal-tool counters are not proof of no native Goal activity"
+  },
+  "usage_cost": {
+    "HTTP_attempts": "UNKNOWN",
+    "UI_usage": "UNKNOWN/separate",
+    "accountant_source_sha256": "b2906e7db6632dda00ce7cee8e75b2949d46ef7124b162667df9821ed5341705",
+    "basis": "native_thread_cumulative;35 usage notifications, not35 HTTP attempts/model responses",
+    "billing_dollars": "UNKNOWN",
+    "counter_rules": "total=input+output. cachedInputTokens included in input; reasoningOutputTokens subset of output. Do not add subset fields or count this attempt again from witness/capture rows.",
+    "exact_existing_accountant_row": {
+      "actual_family": "Luna",
+      "all_owned_scopes_quiet": true,
+      "arm": "control",
+      "attempt_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "category": "candidate_attempt",
+      "cleanup_reserve_seconds": 15.0,
+      "cleanup_seconds": "UNKNOWN",
+      "client_tool_cgroups_quiet": true,
+      "client_tool_owned_processes_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "end_utc": null,
+      "execution_units_quiet": true,
+      "goal_identity": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+      "held_owned_processes_quiet": true,
+      "held_process_groups_absent": true,
+      "http_attempts": "UNKNOWN",
+      "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 1927936,
+        "input": 2066729,
+        "output": 28008,
+        "reasoning_output_subset": 15611,
+        "total": 2094737
+      },
+      "native_cgroup_quiet": true,
+      "native_execution_seconds": null,
+      "native_goal_starts": 1,
+      "native_goal_status": "paused",
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_observation_time": null,
+      "native_goal_status_selector": null,
+      "native_goal_status_source_path": null,
+      "native_goal_status_source_sha256": null,
+      "observed_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "occupied_seconds": 585.517392393,
+      "owned_scope_observation_epoch": 1791248233.92929,
+      "owned_scope_supplement_quiet": null,
+      "pair_id": "I-05-DELIVERY-RECOVERY-R002",
+      "provider_request_count": null,
+      "provider_status_counts": {},
+      "quiescent": true,
+      "quota_exhaustion": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "router_terminal_status": "HOLD",
+      "source_pins": [
+        {
+          "path": "ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+          "sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8"
+        }
+      ],
+      "stage": "revision",
+      "start_utc": null,
+      "supplemental_permit_release_confirmed": null,
+      "terminal_error_class": "TimeoutError",
+      "turn_completion_notifications": 1,
+      "turn_status_counts": {
+        "interrupted": 1
+      },
+      "ui_usage_separate": null,
+      "usage_basis": "native_thread_cumulative",
+      "usage_notifications": 35
+    },
+    "exact_saved_native_counters": {
+      "cachedInputTokens": 1927936,
+      "inputTokens": 2066729,
+      "outputTokens": 28008,
+      "reasoningOutputTokens": 15611,
+      "totalTokens": 2094737
+    },
+    "hidden_or_cancelled_tail_usage": "UNKNOWN",
+    "new_candidate_attempts_created_by_this_evaluation": 0,
+    "provider_request_count": "UNKNOWN"
+  }
+}

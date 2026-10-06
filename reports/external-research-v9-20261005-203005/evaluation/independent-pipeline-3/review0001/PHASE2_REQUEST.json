@@ -1,0 +1,30 @@
+{
+  "case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "created_utc": "2026-10-06T01:27:25.640923+00:00",
+  "current_final_sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+  "current_freeze_sha256": "9dd28433486d877b67fcefc5f9a551f4046e3bc6ebbd3a37b17a0d6cf7c01ff1",
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "forbidden": [
+    "old evaluation judgments",
+    "old execution receipt as substitution for new execution",
+    "new candidate experiment/model/Goal",
+    "source findings delivered to candidates/repair/ops"
+  ],
+  "missing_receipt_semantics": "UNKNOWN, not never executed",
+  "phase2_ceiling_s": 600,
+  "requested_minimum": [
+    "new actual stage native Goal activation/terminal receipt",
+    "new direct native family/model/effort observations and requested metadata distinguished",
+    "new actual stage input pins",
+    "new actual stage usage/elapsed/exit receipts; cache/subset semantics",
+    "new actual execute receipt(s) relevant to W1 code,input,stdout,stderr,exit",
+    "held role/alias sidecar sufficient for current single-lineage applicability"
+  ],
+  "reset_allowed": false,
+  "schema": "er9.phase2-current-only-request.v1",
+  "source_judgment_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-3/review0001/current_output_judgment.json",
+  "source_judgment_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+  "whole_deadline_priority": true,
+  "whole_hard_deadline_monotonic_ns": 81071705110340,
+  "whole_hard_deadline_utc": "2026-10-06T01:37:32.848121Z"
+}

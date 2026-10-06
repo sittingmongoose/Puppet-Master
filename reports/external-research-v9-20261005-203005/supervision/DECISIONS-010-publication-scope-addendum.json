@@ -1,0 +1,26 @@
+{
+  "schema": "er9.safe_authored_publication_selector.v1",
+  "recorded_utc": "2026-10-06T01:12:48.537868+00:00",
+  "selector_sha256": "02a15eab0cca41887c44169249ae9827f9567ff56bb8d4ee0bd3af7601b91cf7",
+  "selector_encoding": "UTF-8 compact sorted-key JSON array of path+sha256 in listed order, no newline",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.md",
+      "sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-evidence.json",
+      "sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    }
+  ],
+  "supersedes_selector_only": "DECISIONS-010-publication.json adds this root scope clarification; original source records and selector unchanged",
+  "excluded": "No candidate/source/evaluation bodies, sealed brief contents or private/vendor/live/raw captures"
+}

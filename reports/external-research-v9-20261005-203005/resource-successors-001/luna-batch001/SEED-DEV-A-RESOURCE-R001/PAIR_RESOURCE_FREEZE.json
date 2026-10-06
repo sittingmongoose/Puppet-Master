@@ -1,0 +1,43 @@
+{
+  "actual_runtime_seal_required": true,
+  "classification": "shared_unscored_role",
+  "common_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "full_task_input_byte_identity_required": true,
+  "native_starts": 0,
+  "original_input_freeze_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/FIXED_BASE_INPUT_FREEZE.json",
+      "sha256": "2cb3668125c0fbf12960a81382eb237ba5dc5fe3d146d1fddc95e8186794f4fb"
+    }
+  ],
+  "original_status_costs_and_clocks_preserved": true,
+  "pair_id": "SEED-DEV-A-RESOURCE-R001",
+  "pipeline_completion_claimed": false,
+  "recipe_lock_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+    "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "schema": "er9.opaque-resource-successor-pair-freeze.v1",
+  "semantic_candidate_or_evaluator_contents_read": false,
+  "source_cards": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/FIXED_BASE_CONTINUATIONS.json",
+      "sha256": "4ef536f55482f335948b38bfc7b9b2d9de8dead99ff29a1d1dbccd6a554ac46d"
+    }
+  ],
+  "source_pair_id": "SEED-DEV-A",
+  "source_roles": [],
+  "source_stage_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/SEED-DEV-A-FIXED-BASE-critique-s002/prepared-stage.json",
+      "sha256": "8352e962f4857712f658b84a9e67212d55da89bdb32b603774180f1fee947e2f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/SEED-DEV-A-FIXED-BASE-revision-s002/prepared-stage.json",
+      "sha256": "b242aa976a4dfc46ea5e0502a10657d2d29058905e75660efc2e200a5107f0ee"
+    }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "arm": "control",
+  "freeze_out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/OUTPUT_FREEZE.json",
+  "input_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/arm_instruction.md": "dce8a3f434cae7ac0f82173f684785dc232abd25bbb26bac722944f9a3af643d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/brief.md": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/diagnostic_task.md": "0cb72a9fdae767d211ada4dfb1862708f7ebb057b678dba1676b6c1b4b8dc6a9",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+  },
+  "job_id": "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001",
+  "max_responses": null,
+  "max_seconds": 900,
+  "native_family": "L",
+  "note": "Template cannot run until sole ops admission binds an accepted family-specific runner/tools and immutable launch seal.",
+  "out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/native",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "d3a2a669d6a34303a0ef476af68a2f96c259681032354fba69116d46ebc4d01c"
+  },
+  "pair_id": "D-V14-B-SCOPE-R002-RESOURCE-R001",
+  "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace/TASK.md",
+  "prompt_sha256": "e2da49d8a41db02912930e0998a4a449376c2dccdc740b6d78e2413cc1c9d7b8",
+  "requested_parent_response_cap": 100,
+  "required_artifacts": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "required_common_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "required_resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+    "sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f"
+  },
+  "response_cap_enforcement": "UNSUPPORTED_ROOT_PROSPECTIVE_WALL_BUDGET_RULING",
+  "runtime_binding_required": true,
+  "source_job_id": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+  "source_stage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/diagnosis-live/successors/prepared/D-V14-B-SCOPE-R002/D-V14-B-SCOPE-R002-control-diagnostic-a001/prepared-stage.json",
+    "sha256": "27f544c36dae538963eadcf02013466ee4740020ece353528827433c41710371"
+  },
+  "stage": "diagnostic",
+  "tools_config": null,
+  "tools_config_sha256": null,
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/D-V14-B-SCOPE-R002-RESOURCE-R001/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001/workspace"
+}

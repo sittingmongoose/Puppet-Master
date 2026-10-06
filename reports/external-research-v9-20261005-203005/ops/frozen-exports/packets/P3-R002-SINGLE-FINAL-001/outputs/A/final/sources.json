@@ -1,0 +1,233 @@
+{
+  "catalog_version": 1,
+  "stage": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+  "evidence_reviewed_through": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "kind": "primary specification",
+      "title": "OME-NGFF specification 0.4",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "OME-NGFF 0.4",
+      "locators": ["§2 On-disk format", "§3.1 Axes", "§3.3 Coordinate transformations", "§3.4 Multiscale images", "§3.5 Display settings", "§3.6 Labels", "§3.7 Image labels"],
+      "capture_identity": {
+        "capture_id": "a749ba917eed4428af0bf951d5ad5587",
+        "path": "inputs/source_context/0007.body",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "captured_at": "2026-10-05T22:17:19.871950+00:00",
+        "bytes": 163120,
+        "complete": true
+      },
+      "applicability": "Defines NGFF 0.4/Zarr v2 axes, multiscales, scale/translation transform vocabulary, display hints, and integer image-label conventions. The cited standard does not encode a general rotation/shear affine or the complete application project contract; this does not test any reader."
+    },
+    {
+      "id": "S2",
+      "kind": "primary specification",
+      "title": "OME-TIFF specification",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "OME Model documentation 6.2.2",
+      "locators": ["DimensionOrder", "The TiffData element", "Multi-file OME-TIFF"],
+      "capture_identity": {
+        "capture_id": "9702c124defd4b78b35b42c56e619bb9",
+        "path": "inputs/source_context/0016.body",
+        "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "captured_at": "2026-10-05T22:18:46.379651+00:00",
+        "bytes": 48745,
+        "complete": true
+      },
+      "applicability": "Supports interpreting IFD/plane assignments through OME-XML TiffData and DimensionOrder instead of equating TIFF page order with project axes. Specification only; it does not qualify a particular parser."
+    },
+    {
+      "id": "S3",
+      "kind": "release metadata and documentation",
+      "title": "tifffile 2025.5.10 release metadata and description",
+      "url": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "pin": "tifffile 2025.5.10",
+      "locators": ["/info/version", "Requirements", "Notes", "Use Zarr 2 to read parts of TIFF files", "OME-TIFF"],
+      "capture_identity": {
+        "capture_id": "d259edb7ccf847cf88c44a68781e3ae2",
+        "path": "inputs/source_context/0015.body",
+        "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+        "captured_at": "2026-10-05T22:18:12.475198+00:00",
+        "bytes": 34722,
+        "complete": true
+      },
+      "applicability": "Release documentation describes TIFF/OME-TIFF support and a regional aszarr route using Zarr 2, with stated compatibility/layout limits. It is documentation, not an executed read or 3 GB performance result."
+    },
+    {
+      "id": "S4",
+      "kind": "open-source implementation at release tag",
+      "title": "napari stack and channel utilities",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "pin": "napari tag v0.6.5",
+      "locators": ["slice_from_axis", "split_channels", "split_rgb"],
+      "capture_identity": {
+        "capture_id": "a1ecedac320a4b5a9c82f39a62cbe142",
+        "path": "inputs/source_context/0013.body",
+        "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+        "captured_at": "2026-10-05T22:17:55.840004+00:00",
+        "bytes": 15402,
+        "complete": true
+      },
+      "applicability": "Tagged code wraps direct Zarr arrays in Dask for slicing and routes channel splitting through metadata-aware helpers. This is a component mechanism, not evidence of whole-viewer memory bounds, project persistence or export correctness."
+    },
+    {
+      "id": "S5",
+      "kind": "regression test at release tag",
+      "title": "napari test_layer_actions.py at v0.6.5",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "pin": "napari v0.6.5; associated with PR #8256",
+      "locators": ["test_split_rgb", "assert resulting affine.affine_matrix equals original", "parameters: none, scale, translate, Affine(translate=...)"],
+      "capture_identity": {
+        "capture_id": "8fd6f708e4ad44c1878282967bb655c4",
+        "path": "inputs/source_context/0014.body",
+        "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+        "captured_at": "2026-10-05T22:18:03.054984+00:00",
+        "bytes": 11419,
+        "complete": true
+      },
+      "applicability": "Regression evidence for the listed RGB-split transform cases only. The Affine wrapper case is translation; the test does not assert general rotation/shear, project persistence or export."
+    },
+    {
+      "id": "S6",
+      "kind": "public defect report",
+      "title": "napari issue #7085: Split RGB loses affine",
+      "url": "https://api.github.com/repos/napari/napari/issues/7085",
+      "pin": "Issue #7085; report against napari 0.4.16.dev1413+ga4fa1fa0",
+      "locators": ["opening report body and environment", "issue state/close metadata"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0007.body",
+        "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+        "bytes": 5801,
+        "complete": true
+      },
+      "applicability": "Establishes the reported RGB split failure and environment. It does not establish a fix; patch, PR metadata and tagged test/code are separate sources S7, S8, S4 and S5."
+    },
+    {
+      "id": "S7",
+      "kind": "public fix patch with code and test changes",
+      "title": "napari PR #8256 patch: handle affine layer metadata when splitting RGB images",
+      "url": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/8256.patch",
+      "pin": "Code-bearing commits 2b51110e65af469863697797921ff12aa668d301; 3f994d36130e5d673ce059a1a0d66fac9cca03b0; 9f262998cbe464e0ec826eae691e487af752658c",
+      "locators": ["commit 2b51110: split_rgb uses split_channels and includes rotate/shear metadata", "commit 3f994d3: parameterized transform regression test", "commit 9f26299: rgb metadata update"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0008.body",
+        "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+        "bytes": 5042,
+        "complete": true
+      },
+      "applicability": "Patch directly shows the implementation and test change. Its regression cases remain narrower than the rotate/shear handling in the implementation and do not test app persistence/export."
+    },
+    {
+      "id": "S8",
+      "kind": "public pull-request record",
+      "title": "napari PR #8256 merge metadata",
+      "url": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "pin": "Merged 2025-09-26; merge SHA afd1bb88f296726fe98bc0a94119a51bba6870c4; milestone 0.6.5",
+      "locators": ["merged_at", "merge_commit_sha", "milestone.title", "PR description"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0009.body",
+        "sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+        "bytes": 20154,
+        "complete": true
+      },
+      "applicability": "Confirms merge and release milestone and explains the old path and intended change. Tagged source and test establish presence in v0.6.5; PR metadata alone is not a test."
+    },
+    {
+      "id": "S9",
+      "kind": "open public issue report",
+      "title": "napari issue #9515: slicing nD Zarr arrays in 2D display over-fetches",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515",
+      "pin": "Issue #9515, opened 2026-09-16; open in 2026-10-05 capture",
+      "locators": ["issue body/reproducer", "state", "reproduction dependencies", "attached environment"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0006.body",
+        "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+        "bytes": 8505,
+        "complete": true
+      },
+      "applicability": "Version-specific report about some local multiscale Zarr slicing. The inline reproducer says napari 0.9.1 and Zarr >=3, while the attached environment reports napari 0.6.1rc1.dev1 and Dask 2026.8.0. No repair is established; do not attribute it to the candidate pins."
+    },
+    {
+      "id": "S10",
+      "kind": "public issue comments",
+      "title": "napari issue #9515 discussion capture",
+      "url": "https://api.github.com/repos/napari/napari/issues/9515/comments",
+      "pin": "Comments captured 2026-10-05",
+      "locators": ["reporter comparison of local Zarr shapes", "maintainer discussion of two-stage indexing/materialization", "request for focused measurements"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0011.body",
+        "sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+        "bytes": 14404,
+        "complete": true
+      },
+      "applicability": "Discussion supports read-amplification measurement as a lead. It is not a fix, benchmark, or result for this proposal’s version/configuration."
+    },
+    {
+      "id": "S11",
+      "kind": "release dependency metadata",
+      "title": "napari v0.6.5 pyproject.toml",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "pin": "napari tag v0.6.5",
+      "locators": ["Python requires-python", "dask[array] dependency", "tifffile dependency", "optional Zarr dependency"],
+      "capture_identity": {
+        "capture_id": "69f2ab0de09f4b69b447cfb4445fe052",
+        "path": "inputs/source_context/0017.body",
+        "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+        "captured_at": "2026-10-05T22:20:56.151301+00:00",
+        "bytes": 31495,
+        "complete": true
+      },
+      "applicability": "Shows declared constraints/dependencies at the napari tag; does not resolve or test Qt, codecs, operating systems or the complete proposed environment."
+    },
+    {
+      "id": "S12",
+      "kind": "primary technical documentation",
+      "title": "SQLite Atomic Commit",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "Live documentation page captured 2026-10-05; unversioned",
+      "locators": ["rollback journal", "flushing the rollback journal", "hot rollback journals", "Things that can go wrong"],
+      "capture_identity": {
+        "capture_id": "a2c4db802e824b7cbdea3cabbbdeec6a",
+        "path": "inputs/source_context/0018.body",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "captured_at": "2026-10-05T22:21:12.461917+00:00",
+        "bytes": 77968,
+        "complete": true
+      },
+      "applicability": "Supports a local transactional design subject to filesystem/VFS lock, write and flush assumptions; does not qualify a university network share or artifact/DB cross-resource transaction."
+    },
+    {
+      "id": "S13",
+      "kind": "primary format schema",
+      "title": "OME XML schema June 2016 (OME 2016-06)",
+      "url": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "pin": "OME XML schema namespace 2016-06; schema version 2",
+      "locators": ["Pixels/@DimensionOrder", "Pixels/@PhysicalSizeX/Y/Z and unit attributes", "Pixels/@TimeIncrement and unit", "Plane/@TheZ|TheT|TheC", "Plane/@DeltaT and unit", "Plane/@PositionX/Y/Z and units"],
+      "capture_identity": {
+        "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0015.body",
+        "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+        "bytes": 261500,
+        "complete": true
+      },
+      "applicability": "Schema documents distinct pixel spacing, global time increment, per-plane timing and microscope stage positions, including optional unit attributes/defaults. It does not provide a universal oriented affine; a specific parser’s effective-value behavior still needs fixture tests."
+    },
+    {
+      "id": "S14",
+      "kind": "release metadata and documentation",
+      "title": "Zarr Python 2.18.7 release metadata and description",
+      "url": "https://pypi.org/pypi/zarr/2.18.7/json",
+      "pin": "Zarr Python 2.18.7",
+      "locators": ["/info/version", "/info/requires_python", "/info/requires_dist", "release description"],
+      "capture_identity": {
+        "capture_id": "51109cc25ac64e6b97467f765063db67",
+        "path": "public_captures/da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d.body",
+        "sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+        "captured_at": "2026-10-06T00:53:12.603751+00:00",
+        "bytes": 8011,
+        "complete": true
+      },
+      "applicability": "Release metadata states version 2.18.7, Python >=3.11 and runtime requirements including numcodecs. It supports the candidate pin intersection only; it does not establish integration or performance."
+    }
+  ]
+}

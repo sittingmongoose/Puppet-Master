@@ -1,0 +1,50 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_014_P3_CURRENT_PHASE2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "relative_path": "evidence/P3-R002-EXECUTION-001/MANIFEST.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+      "relative_path": "phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json"
+    }
+  ],
+  "phase1_judgment_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+  "scope": "only NEW R002 currentstage execution and selected savedGoal/nativeModel/inputpins/usage/elapsed/error/quiet projection+onecurrenttypedaccountantrow",
+  "exclusions": [
+    "private/**",
+    "auth/fullrawnative logs/Goalobjective/oldR001exec orgrade/body/rawsourcebodies"
+  ],
+  "identity": "nativeSession/threadId not opaqueGoalID; directGoalstatuses separatelyquoted; opaqueGoalID UNKNOWN",
+  "counts": "provider/cache/rootcounterdefinition exact; notsummed/doublecounted/priced",
+  "budget": "source794.3574254s frozen; phase2<=600 and whole01:37:32.848121 hard noreset; sourcegradeunchanged"
+}

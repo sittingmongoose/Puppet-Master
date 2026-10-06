@@ -1,0 +1,32 @@
+{
+  "case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "clock_start_event": "immediately before first authorized source/task/body read",
+  "clock_started": false,
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "evaluator_requested_effort": "high/xhigh",
+  "evaluator_requested_model": "gpt-6.1-sol",
+  "missing_partner": {
+    "assessment": "UNASSESSED",
+    "designated_partner": "actual final missing",
+    "effect_credit": false,
+    "full_pair_credit": false,
+    "pipeline_credit": false,
+    "winner": null
+  },
+  "old_R001_packet_or_grades_read": false,
+  "owner": "/root/pipeline_eval_3",
+  "phase1_budget_s": 1200,
+  "phase2_budget_s": 600,
+  "physical_model_telemetry": "UNKNOWN",
+  "prior_source_judgments_read": false,
+  "prospective": true,
+  "reservation_monotonic_ns": 79058385645583,
+  "reserved_utc": "2026-10-06T01:03:59.528539+00:00",
+  "reset_allowed": false,
+  "review_dir": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-3/review0001",
+  "schema_version": "er9-independent-review-reservation-v1",
+  "scope": "available actual new authored final, partial pair; missing designated partner UNASSESSED",
+  "source_answer_key_used": false,
+  "source_feedback_to_candidates_prohibited": true,
+  "whole_pair_budget_s": 1800
+}

@@ -1,0 +1,97 @@
+{
+  "schema": "er9.targeted-publication-selection.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T01:04:16.856798+00:00",
+  "immutable_selectors": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/RESERVATION.json",
+      "sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792",
+      "bytes": 4421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/INPUT_INTERFACE.json",
+      "sha256": "df60bd650d0ccb9b3262d400f119cd2fdaf07a9004a513b7aecbdca7de2e8978",
+      "bytes": 2242
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/ADMISSION_HOLD_001.json",
+      "sha256": "1e9f727ed24ffb8270c8c8d370247f65402d9b8bfa9cffbd049000ffdb4c1db6",
+      "bytes": 644
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/EFFECTIVE_FREEZE.json",
+      "sha256": "402d63ec82d742bec196696e7e6095c20337aac5910834725b4bb0041d84a360",
+      "bytes": 6109
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c",
+      "bytes": 454
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/SOURCE_VERIFICATION_001.json",
+      "sha256": "2e7def73dee06650740bb1dac8cd653f5d8c19dee8287bbe9559a436feca5105",
+      "bytes": 20981
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+      "bytes": 9328
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/CLOCK_PHASE1_001.json",
+      "sha256": "65c8be9e5ffc08b90c7a556309018ce034a761250fc334f06414ade6a9cf92ee",
+      "bytes": 1317
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE2_EXECUTION_SUPPLEMENT_001.json",
+      "sha256": "0aeb9c35d06d52524528c79981e8ce63dbe2d1b0878de44c8a8e55d93eb1e067",
+      "bytes": 7014
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE2_NATIVE_ECONOMICS_001.json",
+      "sha256": "cffdc26e561a019ee1ec97144c17fa7366ca3aca831a12b5a3d349e4d1180fd2",
+      "bytes": 9499
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE2_LINEAGE_COST_001.json",
+      "sha256": "e36c7cc4d9dca0c11367c64f52a944ef60f4fa1fae360a702dd2637d0507b354",
+      "bytes": 13687
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/ASSESSMENT_001.md",
+      "sha256": "496f44f596d63d48ec389c3f0bb6f87d85f03ce970e3d3263de49b20553052e3",
+      "bytes": 3138
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PUBLIC_PRIMARY_SELECTION_001.json",
+      "sha256": "7411f8fc4323ad6c54f08f696fc349e9078aeab97b4fa2757b16a1fae251daec",
+      "bytes": 14703
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/FINISHED.json",
+      "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096",
+      "bytes": 1574
+    }
+  ],
+  "quality_selector": "PHASE1_ASSESSMENT_001.json",
+  "available_role_result": "INCOMPLETE/PARTIAL",
+  "missing_partner_result": "UNASSESSED",
+  "full_pipeline": "UNASSESSED",
+  "matched_comparison": "UNASSESSED",
+  "winner": null,
+  "phase1_grade_preserved": true,
+  "post_phase1_receipt_provenance_only": "PHASE2_EXECUTION_SUPPLEMENT_001.json",
+  "external_public_source_archive": {
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/f0f8f22c6ed73e6ed4515e06dfaf086a129852020507896b793347e46be3ccaf/MANIFEST.json",
+    "manifest_sha256": "02639eee1e4e973ce55b27daad0d5731f61d7bd047cc14e632e7b84fbf0d96c5",
+    "body_count": 19,
+    "body_bytes": 2151019,
+    "neutral_metadata_count": 19,
+    "neutral_metadata_bytes": 14578
+  },
+  "clock_selector": "FINISHED.json",
+  "native_money_and_evaluator_model_cost": "UNKNOWN",
+  "source_answers_sent_to_candidate_inputs": false,
+  "sealed_confirmation_briefs_read": false
+}

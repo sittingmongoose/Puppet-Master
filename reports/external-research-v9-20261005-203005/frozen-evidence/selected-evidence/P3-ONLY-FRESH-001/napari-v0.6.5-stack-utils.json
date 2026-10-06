@@ -1,0 +1,24 @@
+{
+  "schema": "er9.independent-primary-capture.v1",
+  "capture_name": "napari-v0.6.5-stack-utils",
+  "requested_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+  "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+  "status": 200,
+  "captured_utc": "2026-10-06T01:12:44.957593+00:00",
+  "started_utc": "2026-10-06T01:12:44.686551+00:00",
+  "captured_bytes": 15402,
+  "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+  "capture_limit_bytes": 2097152,
+  "body_complete": true,
+  "truncated": false,
+  "headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Content-Length": "15402",
+    "Content-Encoding": null,
+    "ETag": "\"b4e872ce70a62ca4e0e80a1a297026a78f1531a150910a44fb6c4789858cab7e\"",
+    "Last-Modified": null
+  },
+  "actor": "independent evaluator requested mechanical public fetch; no candidate use",
+  "semantic_interpretation": "NONE",
+  "model_comprehension": "UNKNOWN"
+}

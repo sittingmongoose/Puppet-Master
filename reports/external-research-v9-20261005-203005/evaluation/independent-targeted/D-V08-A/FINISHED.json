@@ -1,0 +1,46 @@
+{
+  "schema": "er9.neutral-evaluator-finished-clock.v1",
+  "event": "FINISHED",
+  "pair_id": "D-V08-A",
+  "started": {
+    "utc": "2026-10-06T00:44:53.834732+00:00",
+    "epoch_ns": 1791247493834732395,
+    "monotonic_ns": 77912691736392
+  },
+  "phase1_finished": {
+    "utc": "2026-10-06T00:56:24.747283+00:00",
+    "epoch_ns": 1791248184747282534,
+    "monotonic_ns": 78603604283719
+  },
+  "finished": {
+    "utc": "2026-10-06T01:04:16.852110+00:00",
+    "epoch_ns": 1791248656852110179,
+    "monotonic_ns": 79075709111059
+  },
+  "source_screen_elapsed_seconds": 690.912547327,
+  "phase2_elapsed_seconds": 472.10482734,
+  "whole_elapsed_seconds": 1163.017374667,
+  "source_is_subset_of_whole": true,
+  "budgets": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "reset_allowed": false
+  },
+  "observed_budget_compliance": {
+    "source_within1200": true,
+    "whole_within1800": true
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "evaluator_model_inference_cost": "UNKNOWN",
+  "quality_findings_in_clock_projection": false,
+  "clock_source_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+    }
+  ]
+}

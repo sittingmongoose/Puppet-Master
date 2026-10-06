@@ -1,0 +1,57 @@
+{
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "files": [
+    {
+      "bytes": 3481,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d"
+    },
+    {
+      "bytes": 1135,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f"
+    },
+    {
+      "bytes": 391,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905"
+    },
+    {
+      "bytes": 175,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327"
+    },
+    {
+      "bytes": 0,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1487,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544"
+    },
+    {
+      "bytes": 36154,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "publication": "external_evidence_only",
+      "role": "new_current_selected_execution_or_runtime_metadata",
+      "sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d"
+    }
+  ],
+  "publication": "external evidence only; no broad native/private logs",
+  "schema": "er9.positive-raw-evidence-selection.v1",
+  "scope": "new R002 Phase2 only; original source selector remains unchanged"
+}

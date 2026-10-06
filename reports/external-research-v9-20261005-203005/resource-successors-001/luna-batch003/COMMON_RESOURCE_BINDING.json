@@ -1,0 +1,27 @@
+{
+  "actual_runtime_placement_before_inference_required": true,
+  "aggregate_memory_max_bytes": 2415919104,
+  "aggregate_swap_max_bytes": 0,
+  "all_active_and_retained_G_L_growth_required": true,
+  "automatic_resource_model_or_clock_escalation": false,
+  "family": "L",
+  "host_reserve_bytes": 3221225472,
+  "native_stage_runner": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/dynamic_stage_runner.py",
+  "outer_worker_memory_max_bytes": 805306368,
+  "research_fit": "UNKNOWN",
+  "resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+    "sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f"
+  },
+  "resource_oom_failure_charged": true,
+  "schema": "er9.prospective-common-resource-binding.v1",
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/PIN.json",
+    "sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/SOURCE_PINS.json",
+    "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+  },
+  "unknown_legacy_growth_admits": false
+}

@@ -1,0 +1,177 @@
+{
+  "schema": "er9.selected-public-source-allowlist.v1",
+  "case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "source_catalog_sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+  "final_freeze_sha256": "9dd28433486d877b67fcefc5f9a551f4046e3bc6ebbd3a37b17a0d6cf7c01ff1",
+  "actual_input_indexes": [
+    {
+      "source_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+      "name": "index.json"
+    },
+    {
+      "source_index_sha256": "4e68384f2e1a2eada61fa1914fc79a8062b55baf54d5a00216d0102ec81be5c2",
+      "name": "critic-index.json"
+    }
+  ],
+  "unresolved": [],
+  "phase2_history_execution_cost": "EXCLUDED",
+  "candidate_or_source_interpretation": "NONE",
+  "raw_body_publication": "LAB/Evidenceonly notpublicrepo",
+  "files": [
+    {
+      "source_id": "S1",
+      "body_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "body_bytes": 163120,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S1.json",
+      "metadata_sha256": "c22d75ee7b81a30ed5138e1f01e3c2a50b9a52cd1b0d12a7efdcc57f6b7f4b17",
+      "URL": "https://ngff.openmicroscopy.org/0.4/",
+      "version_or_commit": "sha256:ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S2",
+      "body_sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "body_bytes": 48745,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S2.json",
+      "metadata_sha256": "13017f1e07759e783cd3a45664e3aac0288327db213044c9006e34a53229b2a5",
+      "URL": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "version_or_commit": "sha256:fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S3",
+      "body_sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "body_bytes": 34722,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S3.json",
+      "metadata_sha256": "4ee411a26d52d888a2e0244d12124b75c531370fea4281f85fd9142883e10290",
+      "URL": "https://pypi.org/pypi/tifffile/2025.5.10/json",
+      "version_or_commit": "sha256:d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S4",
+      "body_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "body_bytes": 15402,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S4.json",
+      "metadata_sha256": "ed7b2551bb617839d8d1ca9d6c20c09f46d70c4249fa10b94fdfb5a3f9ed5111",
+      "URL": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "version_or_commit": "sha256:e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S5",
+      "body_sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "body_bytes": 11419,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S5.json",
+      "metadata_sha256": "35a78b9e68c92af79d79d187985023456d405899528c35995769ed99c354072b",
+      "URL": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "version_or_commit": "sha256:3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S6",
+      "body_sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "body_bytes": 5801,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S6.json",
+      "metadata_sha256": "259a5a63c1bc2c9242d15496b6d6df620b84177ea9a678bc8ea2a16a82617f48",
+      "URL": "https://api.github.com/repos/napari/napari/issues/7085",
+      "version_or_commit": "sha256:23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S7",
+      "body_sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "body_bytes": 5042,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S7.json",
+      "metadata_sha256": "f85f1807ce7645e543c1c9ab80b55cb8eab923ba133a2f5b9017cb4b7ec0d562",
+      "URL": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/8256.patch",
+      "version_or_commit": "sha256:8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S8",
+      "body_sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "body_bytes": 20154,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S8.json",
+      "metadata_sha256": "9c8dfe0f74ef7aefbc77b10870f164784944209ce8a88ab23ee0e80f32250faf",
+      "URL": "https://api.github.com/repos/napari/napari/pulls/8256",
+      "version_or_commit": "sha256:d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S9",
+      "body_sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "body_bytes": 8505,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S9.json",
+      "metadata_sha256": "1b98035219192695f368f51b40b84e1ca9241c22ca2a00cb9320efc0ee4416d7",
+      "URL": "https://api.github.com/repos/napari/napari/issues/9515",
+      "version_or_commit": "sha256:54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S10",
+      "body_sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "body_bytes": 14404,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S10.json",
+      "metadata_sha256": "5debe58aecd90363a86d95f180583de354be5f0d6299f7ca5945fcc03c2f3458",
+      "URL": "https://api.github.com/repos/napari/napari/issues/9515/comments",
+      "version_or_commit": "sha256:a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S11",
+      "body_sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "body_bytes": 31495,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S11.json",
+      "metadata_sha256": "bf2990380117a1529ff49e7c798386c99bbd0f9a674582017dd91bf2b231d07f",
+      "URL": "https://raw.githubusercontent.com/napari/napari/v0.6.5/pyproject.toml",
+      "version_or_commit": "sha256:b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S12",
+      "body_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "body_bytes": 77968,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S12.json",
+      "metadata_sha256": "67439a1883d8d9ffe3aa5c617b680fd0e8db697c62ea759afdb27e181e1bd84a",
+      "URL": "https://www.sqlite.org/atomiccommit.html",
+      "version_or_commit": "sha256:5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S13",
+      "body_sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "body_bytes": 261500,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S13.json",
+      "metadata_sha256": "ff06a023401aa22d6705ca889b274cb2adf01ec4c8440b1f04572d5fd6b3ddd3",
+      "URL": "https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd",
+      "version_or_commit": "sha256:64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    },
+    {
+      "source_id": "S14",
+      "body_sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+      "body_bytes": 8011,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S14.json",
+      "metadata_sha256": "0f2faea0df9560ea9b88ab2e45eaae8d1bf6bb52a9d9284b002dd7c0e82bd634",
+      "URL": "https://pypi.org/pypi/zarr/2.18.7/json",
+      "version_or_commit": "sha256:da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+      "phase1_kind": "public_source_capture_only",
+      "byte_policy": "exact original currentselected public source bytes; no semantic editing; rawbodiesLAB/Evidenceonly"
+    }
+  ],
+  "raw_body_paths": "excluded; rawsource bytes LAB/Evidenceonly"
+}

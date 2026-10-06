@@ -1,0 +1,38 @@
+{
+  "schema": "er9.actual-public-capture-metadata-projection.v1",
+  "source_id": "S14",
+  "body_sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+  "body_bytes": 8011,
+  "actual_acquisition_fields": {
+    "acquisition_disposition": "PUBLIC_RESPONSE_CAPTURED; semantic acquisition UNKNOWN",
+    "actual_url": "https://pypi.org/pypi/zarr/2.18.7/json",
+    "body_complete": true,
+    "capture_format": "exact-http-response-body-bytes",
+    "capture_id": "51109cc25ac64e6b97467f765063db67",
+    "captured_bytes": 8011,
+    "captured_utc": "2026-10-06T00:53:12.603751+00:00",
+    "content_encoding": null,
+    "content_length_header": "8011",
+    "content_type": "application/json",
+    "etag": "\"PfAtQkD3JIyNwvAhSqD0jQ\"",
+    "incomplete_http_body": false,
+    "last_modified": null,
+    "redirects": [],
+    "requested_url": "https://pypi.org/pypi/zarr/2.18.7/json",
+    "response_bytes_observed": 8011,
+    "sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+    "source_version": "sha256:da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+    "status": 200,
+    "truncated": false,
+    "url": "https://pypi.org/pypi/zarr/2.18.7/json",
+    "utf8_bytes": 8011,
+    "utf8_valid": true
+  },
+  "original_metadata_sha256": "73d158c77b3c6dd747fab04454b418a2c5134876a9c3ff8b0f84b3961436b9fe",
+  "omitted_original_fields": [
+    "capture_path",
+    "llm_read",
+    "public_pinned_ip"
+  ],
+  "model_comprehension": "UNKNOWN"
+}

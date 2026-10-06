@@ -1,0 +1,174 @@
+{
+  "additional_admission_gate": null,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/card.json",
+  "card_sha256": "9969ff557399e4d7fedf78c6a3971a981c4f33b6e53cca809b84077fd2c0487a",
+  "deferred_stages": [],
+  "family": "L",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "af6f30ca6cc79adc6d8263b18ba3e317bc96599d73a75219ed63f5f1ba8ccaf5"
+  },
+  "native_starts": 0,
+  "no_candidate_answers_or_evaluation_supplied": true,
+  "original_attempts_and_costs_preserved": true,
+  "pair_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+  "request_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-r001",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "root_scope_required": true,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "wholly_unstarted_pair",
+  "source_role_imports": [],
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+      "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+    }
+  ],
+  "source_slot": "I-06",
+  "stage_jobs": [
+    {
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "pipeline_final": false,
+      "predecessor_aliases": {},
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+      "source_role_freezes_required": [],
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/prepared-stage.json",
+      "stage_sha256": "933713123f8094296c267da0d5720e2d0fcca6cb0df92e876142211bfa10e531",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+      "max_responses": null,
+      "max_seconds": 900,
+      "pipeline_final": false,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001": "I-06-DELIVERY-RECOVERY-R002-control-research-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "source_role_freezes_required": [],
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "d19183b4b4c760e9416c20bab567c5dee914aada4efe7b7d8c82eac2b78032b6",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES"
+    },
+    {
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001": "I-06-DELIVERY-RECOVERY-R002-control-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "20be079119bb9bbe57a622934c6d8aed91af3ca7668d012b836478426933aa57",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES"
+    },
+    {
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "pipeline_final": false,
+      "predecessor_aliases": {},
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "source_role_freezes_required": [],
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "641cba8387f66c50cb88c17403c147e0e8ce7ba2a0dc7d085fb6796d345a610a",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+      "max_responses": null,
+      "max_seconds": 900,
+      "pipeline_final": false,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001": "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "source_role_freezes_required": [],
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "d05f3fc30b29a60aae1056e2739378df9850b5234d15a8bffd49c9a2fa834455",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES"
+    },
+    {
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001": "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "46f534ac0eba930fa0e8121dc67ebbe68201202185ef6e40ac3a009c30af2602",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES"
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED"
+}

@@ -1,0 +1,596 @@
+{
+  "schema": "er9.positive-current-final-phase2-runtime-accounting.v1",
+  "prepared_utc": "2026-10-06T01:30:40.065746+00:00",
+  "phase1_judgment_sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551",
+  "case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "alias": "A",
+  "current_stage_job_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+  "new_stage_freeze_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/OUTPUT_FREEZE.json",
+    "sha256": "9dd28433486d877b67fcefc5f9a551f4046e3bc6ebbd3a37b17a0d6cf7c01ff1"
+  },
+  "new_native_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+    "sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8"
+  },
+  "new_native_saved_positive_projection": {
+    "requested_model": "gpt-6-luna",
+    "requested_effort": "max",
+    "saved_native_identity_selected_model_effort": {
+      "model": "gpt-6-luna",
+      "effort": "max"
+    },
+    "physical_provider_identity": "UNKNOWN_NOT_NEWLY_OBSERVED",
+    "native_session_or_thread_id": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+    "saved_goal_API_threadId": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+    "separate_native_Goal_ID": "UNKNOWN_NOT_EXPOSED; API exposes threadId not separategoalId",
+    "saved_goal_set_fields": {
+      "status": "active",
+      "tokenBudget": null,
+      "tokensUsed": 0,
+      "timeUsedSeconds": 0,
+      "createdAt": 1791247652,
+      "updatedAt": 1791247652
+    },
+    "direct_goal_status_before_cleanup": "active",
+    "direct_goal_status_final_metric": "paused",
+    "last_direct_goal_status": "paused",
+    "goal_receipt_status_observations": [
+      "active",
+      "active",
+      "active",
+      "active",
+      "paused"
+    ],
+    "native_outcome": "HOLD",
+    "elapsed_seconds": 585.517392393,
+    "closed_before_original_total_stop": true,
+    "held_process_exit_code": 0,
+    "actual_five_quiet_flags": {
+      "native_cgroup_quiet": true,
+      "held_process_groups_absent": true,
+      "client_tool_cgroups_quiet": true,
+      "client_tool_process_groups_absent": true,
+      "execution_units_quiet": true
+    },
+    "metrics_positive_projection": {
+      "fresh_session": true,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "goal_status_final": "paused",
+      "native_responses": "UNKNOWN",
+      "usage_notification_count": 35,
+      "native_response_policy": "wall-goal-token-observation-v1",
+      "native_model_response_cap_enforced": false,
+      "candidate_goals_set_by_host": 1,
+      "goal_replacements_observed": 0,
+      "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+      "native_turns_started": 1,
+      "native_turns_completed": 0,
+      "native_turns_terminal": 1,
+      "native_turns_interrupted": 1,
+      "tail_interruptions_observed": [],
+      "adverse_failure_observed": true,
+      "native_owned_continuation_observed": false,
+      "host_initial_turns_started": 1,
+      "host_followup_turns_started": 0,
+      "usage_totals": {
+        "inputTokens": 2066729,
+        "cachedInputTokens": 1927936,
+        "outputTokens": 28008,
+        "reasoningOutputTokens": 15611,
+        "totalTokens": 2094737
+      },
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 24,
+        "pm_boundary.mechanical": 1,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.public_https_get": 1,
+        "pm_boundary.write_file": 2
+      },
+      "goal_tool_completed_counts": {},
+      "tool_attempt_counts": {
+        "pm_boundary.read_file": 25,
+        "pm_boundary.mechanical": 4,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.public_https_get": 1,
+        "pm_boundary.write_file": 2
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 3,
+        "pm_boundary.read_file": 1
+      },
+      "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+      "native_http_attempts": "UNKNOWN",
+      "cost": "UNKNOWN",
+      "component_outcome": "HOLD"
+    },
+    "turn_status_metadata": [
+      {
+        "method": "turn/started",
+        "status": "inProgress"
+      },
+      {
+        "method": "turn/completed",
+        "status": "interrupted"
+      }
+    ],
+    "boundary_tool_call_metadata": [
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_s406u4A9ZwM1TIhzcuzi5dTa",
+        "argument_sha256": "95ca2e8491555ba3380da309f463ce90360c40762f6ed2d00988c6f16b4d96f6",
+        "response_sha256": "0d0ccf5868096023fafb32477a4199d266a1fa2b6bc7af5b26425fa23b95f8d3",
+        "response_bytes": 14896,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_g392h5wOd4eyBoZq57DubnC5",
+        "argument_sha256": "64ce59a96f6cfb6f9a2781a2836b845d03d1de3002c0699c98edc890fb855d56",
+        "response_sha256": "021e6cf3599f8e65ac11e90c36cc9d69ccfd55912b3baf9c4b79dc716a9f8aef",
+        "response_bytes": 6119,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_zX8l41VEAcDmJgm75W1eT9os",
+        "argument_sha256": "62a6d964b269f037548464c7b00b3a5b71239a94a7406827d7ed69a3e2987103",
+        "response_sha256": "9f5b030dc4fbee81c2ff440df2143e48d2a88c95c3fa16e9668b09aa2a7298e0",
+        "response_bytes": 3042,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_kW5ZeqNl1qNffXAIJfdoFkRR",
+        "argument_sha256": "48f1dbcfc720b4ca8d17e1983b6a47d5424f06121b8c43f217e4265623e2c90c",
+        "response_sha256": "3f689b5653fd7e1b955c76f39e704168b2cf1be5cdc5c46062cf825703bb6aa0",
+        "response_bytes": 2826,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_KY6zO0MoOW7WzKa8lJw2df83",
+        "argument_sha256": "3805ec2c76d83f050e2b10a8a4de8f4ebd4416f2d7ff5a775a984b9ec34bead5",
+        "response_sha256": "9a0b97704788d5ab47ae53cd5dc98c1c69225dbffd4968a62a4fe9ba6789a28a",
+        "response_bytes": 21758,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_mCp37UZwq22f51TuV0hUyM4C",
+        "argument_sha256": "4fece73292166362f8593054bea02cd98be69a0b894144c6a58107b8368ab2bf",
+        "response_sha256": "2f4644004a869677822144ec59fd808abb7c45ad8919f4e5eb75eaf25e3707cc",
+        "response_bytes": 29417,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_1nKv4iBSk9Y6bcVdrubAYJpu",
+        "argument_sha256": "2e810e8d024231b72f90956fa2bd5dc027dcf29940fa6c7e94aea3a5ed732849",
+        "response_sha256": "a27285c4d9076cbb5d0489d39a797a29a0246cfbc22d679dc0f1399fc2f010ec",
+        "response_bytes": 17888,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_pUvt4D5jLxeuLfnA68WAKSkl",
+        "argument_sha256": "d37eeb0714bd06cf12af96feb6abea308b62dbf5b38dfa45baaa877a159967f4",
+        "response_sha256": "4ee6faa478d371b805299fa007badb23d2efb7c1679c5860f7baec1938012b61",
+        "response_bytes": 13809,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_X8jwVze7F627By7HsvBVJY2P",
+        "argument_sha256": "a7ead4941d4cdb381e51844355b73f0efe62299e87a2a915a84a67ff1f911a61",
+        "response_sha256": "2b0a898a925d70f316833ae79a2a39fccb715b6aadd4a7a3be53cd4c34daaf81",
+        "response_bytes": 9940,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_JFgrYm3IUoTnjqhPCPD97uhA",
+        "argument_sha256": "6d3be5125a569799c2c7157a6fab12aa420cb084b11ac4194ac9c6a94e48c9be",
+        "response_sha256": "ca60a560f7501c37a6acd08ea00020266f6868cf82dc9dd10d23ec681bf0f5ee",
+        "response_bytes": 12370,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_hSFsZ6Ln1N0OR11nN0Sbg1F5",
+        "argument_sha256": "1cd98b23ccb054b539f43c750c0b633c842a65b00173a87b8530188133f82a0b",
+        "response_sha256": "e83ac32a741c79421a6da54d53c71517b84c89700fa5278640e6bde486bb37bf",
+        "response_bytes": 11260,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_arXr624vMdgsvRWNaAXz2ald",
+        "argument_sha256": "7f0778bca20c488e48d92b6d6e6641dd7f4c99766c92590894f98492b8fa0bc0",
+        "response_sha256": "d96dcab082d673e61c13733a51b3c7fb61b20c7653f1e97d5f875c52519e7be4",
+        "response_bytes": 73141,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_rwFh0e5DDuWBMEbEMmiKMd1X",
+        "argument_sha256": "6db36ce94d8697573e994d82d52003f136916790004dbbbe01f9e6e1ea148ad1",
+        "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+        "response_bytes": 82,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_XnbZ6yUdgUdfSBM528CTkrIX",
+        "argument_sha256": "03dbc69b419d11b371d1fb1b6d746ad3e6870d21db3dccc481e7c7ddb940c960",
+        "response_sha256": "86f981fa1b162c824062a8519884c3b7819dec60c396c7a2fc4741d113ea7421",
+        "response_bytes": 372,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_9B4toRLEfXCdyJzd8IjAdl8u",
+        "argument_sha256": "e16b8bf8a16167fe390f646fe5108ea269d0f51ce773c33d2fbc226871538606",
+        "response_sha256": "d5dd5a1eea2b1c331caf8a576f7c6c3f4fcec9d55e49662370e3e97a1aa3168d",
+        "response_bytes": 713,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_Njw8GAo4B8hkBS0d3J06l9fv",
+        "argument_sha256": "e6226028e9ef15439f1656b622d901984f4f3d4e4044da75178c5fde11085ac6",
+        "response_sha256": "ad0feb7c7857dd785375090213c99a0af3bd403f8a8ae99b3d5db2a88d74a43f",
+        "response_bytes": 2042,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_doap1QEAuuzWlMxrq28iJvfI",
+        "argument_sha256": "d39edd388751975b98cb7cb25578b03c3e83db8c639de500b72f6260f0368001",
+        "response_sha256": "b4e619ed8b0b9be826aa502a0ef30eac386da8bed539146a9ecab23404edcea3",
+        "response_bytes": 14176,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_g7RHR43W8w8l1FTwep5SGehI",
+        "argument_sha256": "6f7841805cd72e6e00caa6f3edb05f67147f545ac7863ab6c87a4a589de38a4e",
+        "response_sha256": "6e36f5e2d78ba69636c708e90ca6d307d6039b0a032f451619037e3a451d8617",
+        "response_bytes": 7996,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_SlN41DibfYG2qLNcFPksGSqv",
+        "argument_sha256": "da534d1ad079214ae38753332ff7478e32fc3139e852a175887f9d9de1d9cec6",
+        "response_sha256": "d301e48993c0d8884c1337315d1dc64cb9119d479ce09e676e146527d17bbbaf",
+        "response_bytes": 6750,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_F4NLl3s6Oz7pQnmUipuXQRFU",
+        "argument_sha256": "9e36906ea1ee763f32ee9db0040b8bb86f8c3d16f130a007563b6d3d58dc4c07",
+        "response_sha256": "c29f6f60b82db2325e47406851e1b4a8ba4b57fc4a94c9e28f12b8727b3c3ab3",
+        "response_bytes": 25403,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_KUhFsftdhILOvPmC2R9A4gTF",
+        "argument_sha256": "e706e6679733b1dfa2e90700d9885e69ca5df7dafdd877862745ce34669f3a3c",
+        "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_mJWavojBvvHBXBRYHJWIo5rr",
+        "argument_sha256": "7e154ebc2be58017169352b4970bfb158cc0395123a3e15b3057d7310ede7746",
+        "response_sha256": "cc7ed2a077a101d55431dac439e3ffad41d2b17e718e414e02256334033ba1dc",
+        "response_bytes": 1693,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_QIvgbmGac2IfVUaVB7PSxjPH",
+        "argument_sha256": "2423617269e1bfe3fae1ac937b17b3e32863b8b34a795981f492880b8a0a19f3",
+        "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_HXdlvFfcCmQG1B9EPLgET442",
+        "argument_sha256": "1467f7dc4c54b9b5d2c1d6548a459a485804ab2e63912eda4776289939d734af",
+        "response_sha256": "2f0ab8bbff881805beb414935ec65913c8a282071856b8e78d7b7c41e29e1fde",
+        "response_bytes": 3263,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_6Vv8XZuk408hfDsPSqvrU8ho",
+        "argument_sha256": "157e67b0094fad4fdbda5d821c563e92bf3255a9704369140c34ea69dc1e7733",
+        "response_sha256": "cba057c040cf451598bc5856f4ab4562c3d25f36aec44e9498b362bd7646925d",
+        "response_bytes": 10949,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_3PipEiHlNQUOcJ3o3I1Sk4WM",
+        "argument_sha256": "1accd86b2d05481d03237cfa912f060584a3bdb8e46112d5065d47456d347df5",
+        "response_sha256": "799487632191423b38b4f380e732533292dc8f764877efec62d1fcd6b3b4c086",
+        "response_bytes": 17869,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_LLIp1P9nrtrwqaIhdBQwTCuU",
+        "argument_sha256": "d1fcacce4f0072587058555018c3362c53fe48fc2a5be57330c1a4bd7174cb77",
+        "response_sha256": "2aec3b76606e8da8d5e5f9a10545ea16e58ac3bd8d6007975b1a3893919274d6",
+        "response_bytes": 4226,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_SiTCO9VSV1nyAL9KfQisX8K1",
+        "argument_sha256": "4cad1812edc1579e9122fff908b9271db40414f20d1a78df2246977e3c111ace",
+        "response_sha256": "38dbfdf37162a59362500d83e3a216e24b74f01dc78b7ce4240ef4d1bc6e6cce",
+        "response_bytes": 19355,
+        "success": true
+      },
+      {
+        "namespace": "pm_execution",
+        "tool": "python_execute",
+        "call_id": "call_YImUIbsNfPCqVe0WslvxZdWm",
+        "argument_sha256": "2e08310dc50fd3b53ffb51de90a2bd1c9d23037bdfe0e1a841e71cae324f8cc4",
+        "response_sha256": "ec1a0458960add5f5201b2e7c81fb7af5508fae517bec9559fcc9b1bd144d45f",
+        "response_bytes": 2504,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_1nGOSIMybuzwFmQlsNxZfrGc",
+        "argument_sha256": "354ca183fb1fd7737f8881b37e2152778a503a4e01a5d7bf7842b412b7abff27",
+        "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+        "response_bytes": 89,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "public_https_get",
+        "call_id": "call_MGjjznKtwTptrk1sLuba1E1r",
+        "argument_sha256": "935021dd3c12287cae95e963f0ab66dedf36f9e222580dadf5013ecadcd91275",
+        "response_sha256": "d7440d4e9443268540e8549dabbd21e153d18c2adf0a050e80b7ae0ac6852607",
+        "response_bytes": 12041,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_LfOsDqP8wfv9k5tR9TZWyInn",
+        "argument_sha256": "460b01ad5e7d00de0e18a384eed04b597e5c6d33e0b309ca964a4127146cba9d",
+        "response_sha256": "a9c50d2aabe26a8bc37dd7a3df21148708ac1bc40c30b72ae45515c1a75ac9d6",
+        "response_bytes": 248,
+        "success": true
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "write_file",
+        "call_id": "call_1cLeO7VMeEMQKkUOb2xen7xR",
+        "argument_sha256": "4b93628ec5d6867946acdba1e039974c47629f33b5c65fd6687b5e38e9851283",
+        "response_sha256": "bbc04b39ba92ebf22eb25d81e73750ac025adc696ca6d76f128b85edeb1f2f5d",
+        "response_bytes": 249,
+        "success": true
+      }
+    ],
+    "all_failed_boundary_calls": [
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_rwFh0e5DDuWBMEbEMmiKMd1X",
+        "argument_sha256": "6db36ce94d8697573e994d82d52003f136916790004dbbbe01f9e6e1ea148ad1",
+        "response_sha256": "e7e97dcc1fd4a824af3d240c66405c8e473c3637542eb6984628fe48a2d8c0c7",
+        "response_bytes": 82,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_KUhFsftdhILOvPmC2R9A4gTF",
+        "argument_sha256": "e706e6679733b1dfa2e90700d9885e69ca5df7dafdd877862745ce34669f3a3c",
+        "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "mechanical",
+        "call_id": "call_QIvgbmGac2IfVUaVB7PSxjPH",
+        "argument_sha256": "2423617269e1bfe3fae1ac937b17b3e32863b8b34a795981f492880b8a0a19f3",
+        "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+        "response_bytes": 87,
+        "success": false
+      },
+      {
+        "namespace": "pm_boundary",
+        "tool": "read_file",
+        "call_id": "call_1nGOSIMybuzwFmQlsNxZfrGc",
+        "argument_sha256": "354ca183fb1fd7737f8881b37e2152778a503a4e01a5d7bf7842b412b7abff27",
+        "response_sha256": "c1e2f0a77961c5ae82290c1de2d6cf6900353b87be14b108134f0c6c3ad54f46",
+        "response_bytes": 89,
+        "success": false
+      }
+    ],
+    "status_rule": "DirectGoalrecords only; operationalHOLD/deploymentenum notGoalstatus orquality."
+  },
+  "actual_stage_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/stage.json",
+    "sha256": "1a3329881051fd4ce02217a7464e4f01b50c252950dfc537f560218df7deb39b"
+  },
+  "actual_stage_prompt_sha256": "530ead02258f6d1c4fd7f561ac5cc6d16f04a22d69c1a6d91a1b5811891d8667",
+  "actual_stage_input_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/brief.md": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0011.body": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/index.json": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0006.body": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0016.body": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0001.body": "5c604aec3abea40abe9ae644df94ed9a932619e9d56002d1ca7c3d16ee6a45ff",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0018.body": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0010.body": "4cc8c6372859bc035454244c56f814be1b21486e852e424ad6fc486e0d171553",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0012.body": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0004.body": "1ca4e84ac0bf852a023153cd6d4e1b0ecea087f357a90db2a3b019d0c6d6bf05",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0008.body": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0000.body": "912f177e2fa420ae4b08fa419b89dd255bef90914dd7a0fbfb5319cb15e6c95c",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/critic-index.json": "4e68384f2e1a2eada61fa1914fc79a8062b55baf54d5a00216d0102ec81be5c2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0002.body": "8ef2b336028ad55d482d5494627c2a729aa697305c5b2c023501da900e081369",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0007.body": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0005.body": "1c98b7ce20b1b144a879cc0d5a0e317a50c62f3bb8f8fbc247974f0360544aea",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0013.body": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0017.body": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0009.body": "1d611fdbf840b7d321488a995900c2f17c375271d32f6fa03f0d5a732af100d2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0015.body": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0014.body": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/0003.body": "4d6cd55337c62ff3a084799963fd8e97c7d7a4bd8b280cce1ff31d97b75c4503",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-LUNA-S1-control-research-a001/research/scratch_issue_search.txt": "9866367bc57d9cb4ae73f7d21e31239098d30241d10573c278d151f1c366ed84",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-LUNA-S1-control-research-a001/research/leads.json": "efd147ad00fc6f384acb484258dd84f910da2695fe47438ec1c5a0580936d90a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-LUNA-S1-control-research-a001/research/witnesses.json": "fe3d128c40effa5cff344e1dfefd4d65ffa2dedea5a824089810f7b09f24e347",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-LUNA-S1-control-research-a001/research/sources.json": "dd9b900a107afb214a25080c989c60641c197d8db5d80ba1f5ce618d60d04296",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-LUNA-S1-control-research-a001/research/proposal.md": "97f2a95f07774e0209834551de93dc1712d7dcfa0d5f305758b5a3fa4607c3f3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/critique/review.md": "3ee33bf8961cb90d9a8077bb67592dfe48932d1747c7ecda6c060e28ff4d247f",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/prior/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/critique/scratch_issue_search_lines.txt": "da6ed20893bbf8bb94544f47fdd912b0bc7483d67741a04dee09d14fb93279e6",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0011.body": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0006.body": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0001.body": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0010.body": "bdf217ec81537a98b705358f577b3e00311cc5cefbef71d3d19a1b176e0acfc2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0012.body": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0004.body": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0008.body": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0000.body": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0002.body": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0007.body": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0005.body": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0013.body": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0009.body": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0015.body": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0014.body": "657fdb033b0c5c1a39412d8beb7b4543ad75e910f594f13223f3df4dc06fa76d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/workspace/inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0003.body": "ec092234e446b1a7f6e89fe8aeb4d99bd947cdacd15c669dc453588ac2a2ecd5"
+  },
+  "actual_stage_required_artifacts": [
+    "out/final/proposal.md",
+    "out/final/sources.json",
+    "out/final/witnesses.json",
+    "out/final/leads.json"
+  ],
+  "actual_current_execution_store_ids": [
+    "exec-81tq4_c4"
+  ],
+  "source_and_role_provenance": "exact currentadmitted input SHA metadata only; no olderrole body/runtime/grade auditing",
+  "exact_selected_accountant_row": {
+    "actual_family": "Luna",
+    "all_owned_scopes_quiet": true,
+    "arm": "control",
+    "attempt_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+    "billing_dollars": "UNKNOWN",
+    "cancelled_or_unexposed_tail": "UNKNOWN",
+    "category": "candidate_attempt",
+    "cleanup_reserve_seconds": 15.0,
+    "cleanup_seconds": "UNKNOWN",
+    "client_tool_cgroups_quiet": true,
+    "client_tool_owned_processes_quiet": true,
+    "client_tool_process_groups_absent": true,
+    "end_utc": null,
+    "execution_units_quiet": true,
+    "goal_identity": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+    "held_owned_processes_quiet": true,
+    "held_process_groups_absent": true,
+    "http_attempts": "UNKNOWN",
+    "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+    "job_status": "FAILED",
+    "known_usage": {
+      "cached_input_included": 1927936,
+      "input": 2066729,
+      "output": 28008,
+      "reasoning_output_subset": 15611,
+      "total": 2094737
+    },
+    "native_cgroup_quiet": true,
+    "native_execution_seconds": null,
+    "native_goal_starts": 1,
+    "native_goal_status": "paused",
+    "native_goal_status_before_cleanup": "active",
+    "native_goal_status_observation_time": null,
+    "native_goal_status_selector": null,
+    "native_goal_status_source_path": null,
+    "native_goal_status_source_sha256": null,
+    "observed_effort": "max",
+    "observed_model": "gpt-6-luna",
+    "occupied_seconds": 585.517392393,
+    "owned_scope_observation_epoch": 1791248233.92929,
+    "owned_scope_supplement_quiet": null,
+    "pair_id": "I-05-DELIVERY-RECOVERY-R002",
+    "provider_request_count": null,
+    "provider_status_counts": {},
+    "quiescent": true,
+    "quota_exhaustion": "UNKNOWN",
+    "requested_effort": "max",
+    "requested_model": "gpt-6-luna",
+    "router_terminal_status": "HOLD",
+    "source_pins": [
+      {
+        "path": "ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+        "sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8"
+      }
+    ],
+    "stage": "revision",
+    "start_utc": null,
+    "supplemental_permit_release_confirmed": null,
+    "terminal_error_class": "TimeoutError",
+    "turn_completion_notifications": 1,
+    "turn_status_counts": {
+      "interrupted": 1
+    },
+    "ui_usage_separate": null,
+    "usage_basis": "native_thread_cumulative",
+    "usage_notifications": 35
+  },
+  "accountant_source_sha256": "b2906e7db6632dda00ce7cee8e75b2949d46ef7124b162667df9821ed5341705",
+  "bookkeeping_identity_qualifier": "Originaltypedrow identitylabels retainedasquotedsource; nativeGoalopaqueID is not inferredfrom thread/session/goal_targetlabel",
+  "usage_counter_rule": "Keep exact savedcounterdefinitions/cache subset semantics/UIseparation; provider/cache/root totals not summedorpricedbycourier, billing/hidden cancelled tails UNKNOWN where savedunknown",
+  "limits": "originalwhole01:37:32.848121Z,Phase2max600starts01:27:58.153735Z,wholedeadlinepriority noreset",
+  "oldR001_execution_or_source_grade_substitution": false,
+  "candidate_feedback": "NONE; no sourcefacts torepair/ops",
+  "semantic_assessment": "NONE; immutablephase1unchanged"
+}

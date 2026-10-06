@@ -1,0 +1,220 @@
+{
+  "schema": "er9.targeted-phase2-selected-native-economics.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T01:01:54.748287+00:00",
+  "phase1_assessment_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+  "sidecar_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/TARGET_D08A_ALIAS_MAP_001.json",
+    "sha256": "73ea8b8ef685d118e3b97aa14dc52d435102380b1f9eaf0d64e59a520118b878"
+  },
+  "selected_stage_rows": [
+    {
+      "alias": "B",
+      "arm": "control",
+      "actual_stage": "critic",
+      "freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-control-critic-a001/OUTPUT_FREEZE.json",
+        "sha256": "262b4d6b96c172495099b594c65698651f53459591865cf1838069b63c7fddbd"
+      },
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-control-critic-a001/native/result.json",
+        "sha256": "f4fcf7fad216e536e498121ae572a58b249bb746f14538f94ad1f3e154e79bad"
+      },
+      "native_goal_id": "01a10e7a-82fb-7781-b98b-fd639ff0e2ab",
+      "native_goal_starts": 1,
+      "original_birth_epoch": 1791244268.937101,
+      "original_birth_monotonic_ns": 74687794092719,
+      "freeze_elapsed_seconds": 335.610779252,
+      "native_receipt_elapsed_seconds": 335.537769718,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "configured_observed_client_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "physical_provider_model_telemetry": "UNKNOWN; actual inference payload unobserved",
+      "operational_complete": false,
+      "native_outcome": "HOLD",
+      "error_class": "TimeoutError",
+      "error": "original native stop reached",
+      "goal_status_before_cleanup": "active",
+      "last_goal_receipt": {
+        "threadId": "01a10e7a-82fb-7781-b98b-fd639ff0e2ab",
+        "createdAt": 1791244272,
+        "updatedAt": 1791244603,
+        "status": "paused",
+        "tokensUsed": 109208,
+        "timeUsedSeconds": 331,
+        "tokenBudget": null
+      },
+      "held_runner_exit_code": 126,
+      "actual_frozen_artifact_count": 0,
+      "missing_required_artifacts": [
+        "out/critique/review.md"
+      ],
+      "usage_totals": {
+        "inputTokens": 913006,
+        "cachedInputTokens": 812800,
+        "outputTokens": 9002,
+        "reasoningOutputTokens": 7730,
+        "totalTokens": 922008
+      },
+      "usage_notification_count": 23,
+      "uncached_input_plus_output": 109208,
+      "last_goal_tokens_used_equals_uncached_plus_output_in_this_record": true,
+      "tool_attempt_counts": {
+        "pm_boundary.read_file": 20,
+        "pm_execution.python_execute": 1
+      },
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 19,
+        "pm_execution.python_execute": 1
+      },
+      "tool_failed_counts": {
+        "pm_boundary.read_file": 1
+      },
+      "native_responses": "UNKNOWN",
+      "native_http_attempts": "UNKNOWN",
+      "native_response_cap_enforced": false,
+      "actual_inference_tool_payload_observed": false,
+      "money_cost": "UNKNOWN",
+      "goal_replacements_observed": 0,
+      "native_owned_continuation_observed": false,
+      "extra_goal_lifetime_uncertainty": false,
+      "original_quiet_flags": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true
+      },
+      "quiescence_supplement_pin": null
+    },
+    {
+      "alias": "A",
+      "arm": "treatment",
+      "actual_stage": "critic_and_final",
+      "freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "2fe92e1627cdaf7c05f2d3bf571ddce0844e3ab4201bfec98769f6c7f21489ad"
+      },
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/native/result.json",
+        "sha256": "c991d7336a6ef3406ac9788ac3254d20e70929fa7ccbbb34e24c490eff3e296a"
+      },
+      "native_goal_id": "01a10e7a-894b-7ed3-8987-ea6daff289ae",
+      "native_goal_starts": 1,
+      "original_birth_epoch": 1791244270.6392646,
+      "original_birth_monotonic_ns": 74689496256317,
+      "freeze_elapsed_seconds": 585.597676379,
+      "native_receipt_elapsed_seconds": 585.545457253,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "configured_observed_client_identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "physical_provider_model_telemetry": "UNKNOWN; actual inference payload unobserved",
+      "operational_complete": false,
+      "native_outcome": "HOLD",
+      "error_class": "TimeoutError",
+      "error": "original native stop reached",
+      "goal_status_before_cleanup": "active",
+      "last_goal_receipt": {
+        "threadId": "01a10e7a-894b-7ed3-8987-ea6daff289ae",
+        "createdAt": 1791244274,
+        "updatedAt": 1791244855,
+        "status": "paused",
+        "tokensUsed": 171147,
+        "timeUsedSeconds": 581,
+        "tokenBudget": null
+      },
+      "held_runner_exit_code": 126,
+      "actual_frozen_artifact_count": 4,
+      "missing_required_artifacts": [
+        "out/final/leads.json"
+      ],
+      "usage_totals": {
+        "inputTokens": 1518527,
+        "cachedInputTokens": 1376768,
+        "outputTokens": 29388,
+        "reasoningOutputTokens": 13287,
+        "totalTokens": 1547915
+      },
+      "usage_notification_count": 24,
+      "uncached_input_plus_output": 171147,
+      "last_goal_tokens_used_equals_uncached_plus_output_in_this_record": true,
+      "tool_attempt_counts": {
+        "pm_boundary.read_file": 16,
+        "pm_boundary.mechanical": 1,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.write_file": 4
+      },
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 16,
+        "pm_execution.python_execute": 1,
+        "pm_boundary.write_file": 4
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 1
+      },
+      "native_responses": "UNKNOWN",
+      "native_http_attempts": "UNKNOWN",
+      "native_response_cap_enforced": false,
+      "actual_inference_tool_payload_observed": false,
+      "money_cost": "UNKNOWN",
+      "goal_replacements_observed": 0,
+      "native_owned_continuation_observed": false,
+      "extra_goal_lifetime_uncertainty": false,
+      "original_quiet_flags": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": false,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true
+      },
+      "quiescence_supplement_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/quiet-supplements/D-V08-A-treatment-critic_and_final-a001.json",
+        "sha256": "c4bf3f4af387f2dd2f75dc092fd49dbc4280a7c03c4cf079c409e2642f4fea26"
+      }
+    }
+  ],
+  "known_selected_two_stage_usage_totals": {
+    "inputTokens": 2431533,
+    "cachedInputTokens": 2189568,
+    "outputTokens": 38390,
+    "reasoningOutputTokens": 21017,
+    "totalTokens": 2469923
+  },
+  "known_selected_goal_token_counter_sum": 280355,
+  "counter_definitions": [
+    "Metrics inputTokens includes cachedInputTokens; do not add cache again.",
+    "Metrics reasoningOutputTokens is within outputTokens; do not add reasoning again.",
+    "Metrics totalTokens equals inputTokens + outputTokens in these records.",
+    "In these selected records last Goal tokensUsed equals inputTokens - cachedInputTokens + outputTokens; this observed equality is not asserted as a universal counter contract.",
+    "Do not sum repeated Goal polling snapshots or add Goal counter to metrics total."
+  ],
+  "failures_preserved": [
+    "Both actual native selected stages HOLD/TimeoutError/original native stop reached, last Goal paused, one interrupted turn, operational_complete false, exit126",
+    "Available treatment final artifacts do not establish Goal completion or all-pipeline completion; missing lead catalog persists",
+    "Control critic artifact absent; final-author deployment/output not positively selected"
+  ],
+  "comparison_limits": [
+    "Planned per-arm allowance600s is not actual occupied cost or a completed matched recipe",
+    "Only selected control critic and treatment critic_and_final native stages included; no final-author cost inference",
+    "Two operational failures do not establish quality equivalence or winner",
+    "Whole pipeline cost and coldseed allocation pending positive import/original source linkage; no guessed amounts",
+    "Imports reference originals and must incur zero new inference; original/coldseed counted once only"
+  ],
+  "cold_seed_original_cost": "UNKNOWN_PENDING_POSITIVE_LINKAGE",
+  "import_new_inference_cost": 0,
+  "money_cost": "UNKNOWN",
+  "physical_provider_telemetry": "UNKNOWN",
+  "source_grade_changed_after_unblinding": false
+}

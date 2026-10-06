@@ -1,0 +1,44 @@
+{
+  "arm": "control",
+  "freeze_out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/OUTPUT_FREEZE.json",
+  "input_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/brief.md": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+  },
+  "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+  "max_responses": null,
+  "max_seconds": 900,
+  "native_family": "L",
+  "out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "af6f30ca6cc79adc6d8263b18ba3e317bc96599d73a75219ed63f5f1ba8ccaf5"
+  },
+  "pair_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+  "predecessor_binding_required": true,
+  "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace/TASK.md",
+  "prompt_sha256": "816bdb1650d103d044553a4d10fa9ab3dda67f2b489ad4b70a89454e8432a7f4",
+  "required_artifacts": [
+    "out/critique/review.md"
+  ],
+  "required_common_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "required_resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+    "sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f"
+  },
+  "response_cap_enforcement": "UNSUPPORTED_ROOT_PROSPECTIVE_WALL_BUDGET_RULING",
+  "runtime_binding_required": true,
+  "source_job_id": "I-06-DELIVERY-RECOVERY-R002-control-critique-a001",
+  "source_stage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-control-critique-a001/prepared-stage.json",
+    "sha256": "760a416130c1562831acb7ae76b06e468ed486e440770e24ccf60c7d2d7fe610"
+  },
+  "stage": "critique",
+  "tools_config": null,
+  "tools_config_sha256": null,
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/workspace"
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S4",
+  "body_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+  "body_bytes": 15402,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/0013.body",
+    "url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+    "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+    "version_or_commit": "sha256:e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+  "catalog_asserted_capture_identity": {
+    "capture_id": "a1ecedac320a4b5a9c82f39a62cbe142",
+    "path": "inputs/source_context/0013.body",
+    "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+    "captured_at": "2026-10-05T22:17:55.840004+00:00",
+    "bytes": 15402,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572"
+}

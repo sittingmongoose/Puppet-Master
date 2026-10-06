@@ -1,0 +1,43 @@
+{
+  "available_arm_label": "opaque available actual final; role exposure acknowledged only from assignment metadata",
+  "available_body_expected_bytes": 27066,
+  "clock_contract": {
+    "anchor": "first source/task/body read monotonic_ns",
+    "no_resets": true,
+    "phase1_s": 1200,
+    "phase2_s": 600,
+    "whole_deadline_priority": true,
+    "whole_s": 1800
+  },
+  "designated_case_id": "I-05-DELIVERY-RECOVERY-R002",
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "expected_freeze_sha256_prefix": "9dd28433",
+  "model_telemetry": "UNKNOWN unless independently exposed",
+  "partner_status": "DESIGNATED_ACTUAL_FINAL_MISSING_UNASSESSED",
+  "phase1_allowed": [
+    "new designated authored final proposal",
+    "new designated source inventory/captures",
+    "actual brief",
+    "actual common criteria",
+    "actual task card",
+    "source access descriptor",
+    "phase1 packet identity manifest"
+  ],
+  "phase1_forbidden": [
+    "runtime tool call history",
+    "candidate cost",
+    "candidate elapsed receipt",
+    "aliases",
+    "actual tool uptake",
+    "old review judgments",
+    "root grading state",
+    "phase2 key"
+  ],
+  "phase1_freeze_required_before_phase2": true,
+  "prior_R001_inputs_or_judgments_forbidden": true,
+  "publication": "exact positive public compact body selectors; raw external evidence excluded from Git",
+  "receipt_missing_semantics": "UNKNOWN, not never executed",
+  "requested_packet_kind": "fresh actual authored final single lineage",
+  "result_dir": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-3/review0001",
+  "schema_version": "er9-independent-single-final-binding-v1"
+}

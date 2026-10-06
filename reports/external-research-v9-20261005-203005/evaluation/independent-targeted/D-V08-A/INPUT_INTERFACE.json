@@ -1,0 +1,58 @@
+{
+  "schema": "er9.targeted-available-role-packet-request.v1",
+  "pair_id": "D-V08-A",
+  "evaluator_owned_lane": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A",
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/RESERVATION.json",
+    "sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792"
+  },
+  "phase1_allowed": {
+    "criteria": "frozen copies under criteria/",
+    "control": {
+      "freeze_path": "ops/dispatcher/runs/D-V08-A-control-critic-a001/OUTPUT_FREEZE.json",
+      "freeze_sha256": "262b4d6b96c172495099b594c65698651f53459591865cf1838069b63c7fddbd",
+      "role": "critic",
+      "inventory": [],
+      "missing_roles_explicit": "UNASSESSED"
+    },
+    "treatment": {
+      "freeze_path": "ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/OUTPUT_FREEZE.json",
+      "freeze_sha256": "2fe92e1627cdaf7c05f2d3bf571ddce0844e3ab4201bfec98769f6c7f21489ad",
+      "role": "critic_and_final",
+      "artifact_selectors": [
+        "critique/review.md",
+        "final/proposal.md",
+        "final/sources.json",
+        "final/witnesses.json"
+      ],
+      "designated_final": "final/proposal.md",
+      "missing": [
+        "final/leads.json"
+      ]
+    },
+    "supplied_input": "only positively selected actual frozen seed/input body and source bytes with metadata pins; if unavailable preservation/fixture facets UNASSESSED"
+  },
+  "phase2_withhold_until_saved_phase1": [
+    "candidate histories",
+    "native economics/usage",
+    "previous grades",
+    "aliases/model observations",
+    "tool histories"
+  ],
+  "sealed_confirmation_briefs": "PROHIBITED",
+  "packet_result_contract": {
+    "schema": "er9.targeted-available-role-source-packet.v1",
+    "required_fields": [
+      "pair_id",
+      "reservation_pin",
+      "criteria_pins",
+      "actual_roles",
+      "artifact_inventory",
+      "missing_artifacts",
+      "input_inventory",
+      "phase2_withheld",
+      "packet_hashes"
+    ],
+    "content_rule": "Metadata manifest plus exact frozen file copies/locators; no synthesized candidate or expected-answer bodies"
+  }
+}

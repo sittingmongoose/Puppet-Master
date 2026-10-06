@@ -1,0 +1,59 @@
+{
+  "actual_runtime_seal_required": true,
+  "classification": "wholly_unstarted_pair",
+  "common_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "full_task_input_byte_identity_required": true,
+  "native_starts": 0,
+  "original_input_freeze_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/PAIR_INPUT_FREEZE.json",
+      "sha256": "fe163f7508070b1a08948d15e64a7666239d54355a1d56e5097fc6d05b72de15"
+    }
+  ],
+  "original_status_costs_and_clocks_preserved": true,
+  "pair_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+  "pipeline_completion_claimed": false,
+  "recipe_lock_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+    "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "schema": "er9.opaque-resource-successor-pair-freeze.v1",
+  "semantic_candidate_or_evaluator_contents_read": false,
+  "source_cards": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+      "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+    }
+  ],
+  "source_pair_id": "I-06-DELIVERY-RECOVERY-R002",
+  "source_roles": [],
+  "source_stage_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-control-research-a001/prepared-stage.json",
+      "sha256": "e4b29449625ccae6e5c0e30b8c3b469125e2e4e79c65ad6bda5caa303eb31913"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-control-critique-a001/prepared-stage.json",
+      "sha256": "760a416130c1562831acb7ae76b06e468ed486e440770e24ccf60c7d2d7fe610"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-control-revision-a001/prepared-stage.json",
+      "sha256": "549913dbd48044c011eb35f078a6c7be2808df0ab3132859e3b329927458f3b4"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-treatment-research-a001/prepared-stage.json",
+      "sha256": "d685fd176850a4d2dc8ff7f0dfdb7064fce3e82d0a9edd152cdbba5bf7d2f792"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001/prepared-stage.json",
+      "sha256": "0d6d10774915e696eccebaa30b3d5fb8e9865fb2ce0da37be4e59f97372c034f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/I-06-DELIVERY-RECOVERY-R002-treatment-revision-a001/prepared-stage.json",
+      "sha256": "09f696b3bb0afde55d28a8d2efa118407ad2aa7d69ba04f9abf81b6fc296ef22"
+    }
+  ]
+}

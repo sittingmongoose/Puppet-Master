@@ -1,0 +1,45 @@
+{
+  "schema": "er9.evaluator-only-primary-capture-selection.v1",
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "candidate_feedback": "PROHIBITED; no candidate/repair/ops source findings",
+  "raw_publication": "LAB/Evidenceonly; no rawbodyrepo export",
+  "old_grades_or_private_IO": "notread",
+  "files": [
+    {
+      "capture_name": "tifffile-v2025.5.10",
+      "requested_url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2025.5.10/tifffile/tifffile.py",
+      "actual_url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2025.5.10/tifffile/tifffile.py",
+      "status": 200,
+      "body_sha256": "bf36b5000c483ad60a0ba13658d1975e4797002244deeb064cac1e71dd3ad162",
+      "body_bytes": 872866,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/tifffile-v2025.5.10.json",
+      "metadata_sha256": "bf97c8a5801abcd6dfe052615e2cb4da2b92843af45aaf4ef513c2d73aa2641b",
+      "publication": "rawbodyLAB/Evidenceonly",
+      "source_interpretation": "NONE"
+    },
+    {
+      "capture_name": "napari-v0.6.5-stack-utils",
+      "requested_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/utils/stack_utils.py",
+      "status": 200,
+      "body_sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "body_bytes": 15402,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-stack-utils.json",
+      "metadata_sha256": "7c47d31f530137b6387c8a3e245ba40ec26018913489a094e42a72d4001d88c2",
+      "publication": "rawbodyLAB/Evidenceonly",
+      "source_interpretation": "NONE"
+    },
+    {
+      "capture_name": "napari-v0.6.5-layer-actions-tests",
+      "requested_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "actual_url": "https://raw.githubusercontent.com/napari/napari/v0.6.5/src/napari/layers/_tests/test_layer_actions.py",
+      "status": 200,
+      "body_sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "body_bytes": 11419,
+      "metadata_path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/napari-v0.6.5-layer-actions-tests.json",
+      "metadata_sha256": "432cca93c602ea8b8c58faa26825e0b0adc78c9738b1c9201a597ff174b8f1ed",
+      "publication": "rawbodyLAB/Evidenceonly",
+      "source_interpretation": "NONE"
+    }
+  ]
+}

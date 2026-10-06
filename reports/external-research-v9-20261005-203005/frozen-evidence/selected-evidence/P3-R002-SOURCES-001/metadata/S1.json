@@ -1,0 +1,29 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S1",
+  "body_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+  "body_bytes": 163120,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/0007.body",
+    "url": "https://ngff.openmicroscopy.org/0.4/",
+    "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+    "version_or_commit": "sha256:ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+  "catalog_asserted_capture_identity": {
+    "capture_id": "a749ba917eed4428af0bf951d5ad5587",
+    "path": "inputs/source_context/0007.body",
+    "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+    "captured_at": "2026-10-05T22:17:19.871950+00:00",
+    "bytes": 163120,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269"
+}

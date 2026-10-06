@@ -1,0 +1,200 @@
+{
+  "schema": "er9.positive-public-primary-body-selection.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T00:58:16.039637+00:00",
+  "selector_scope": "Exactly the 19 independently retrieved public primary source bodies plus their neutral capture metadata, no candidate/private/native logs or assessment findings",
+  "body_count": 19,
+  "body_bytes": 2151019,
+  "records": [
+    {
+      "source_url": "https://raw.githubusercontent.com/ome/ngff-spec/d9164040dd61b3e4688494de1a58a69251b13f24/index.md",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S1.body",
+      "sha256": "7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0",
+      "bytes": 32266,
+      "access_utc": "2026-10-06T00:46:49.651194+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S1.metadata.json",
+      "metadata_sha256": "777901f32f2ff4aedd5567dbadc747b231a9e45bdcdc22b4d9f6f1f40542e0fa",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/commits?since=2026-02-26T00:00:00Z&until=2026-03-06T00:00:00Z",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S10.body",
+      "sha256": "a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a",
+      "bytes": 12844,
+      "access_utc": "2026-10-06T00:46:49.799253+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S10.metadata.json",
+      "metadata_sha256": "849ac0140605d450f2e404a7c6c73e8fa8fd171d5e266980fc337daebab7ed01",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/503cb4eb74dd28a6acc36a0e4624ba9c2001e021/CHANGES.rst",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S10_release_changes.body",
+      "sha256": "d467bdf3da8cd0685045a4a4eae3cf1e55d4731a0012a6d06da0f7754e1dfd33",
+      "bytes": 41835,
+      "access_utc": "2026-10-06T00:48:00.705336+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S10_release_changes.metadata.json",
+      "metadata_sha256": "98c7e38957c7be86b606b57f4708f59f4e589b62340977c07eaff65a5fb428c7",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/issues/54",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S11.body",
+      "sha256": "654ab708851a88b2c2b4a10129f46a58f1eeefff4374eb0640d80dca5365d4c6",
+      "bytes": 4817,
+      "access_utc": "2026-10-06T00:46:49.835281+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S11.metadata.json",
+      "metadata_sha256": "19bb2a6a03500a4bae7ab83c97af597d73b78bd0cc612d27ac326c8ff589b3d2",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/qupath/qupath/main/CHANGELOG.md",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S12.body",
+      "sha256": "c2ce5425f9d0704c036b7efa3ac73afa1090ec70bbf0664de47c6e1bf2720f55",
+      "bytes": 114084,
+      "access_utc": "2026-10-06T00:46:49.805726+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S12.metadata.json",
+      "metadata_sha256": "43073fbaede4215454d68f8bc81ce63199ec8ffbe90cd1ed11e7d24ff7d4a203",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S13.body",
+      "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420",
+      "bytes": 40941,
+      "access_utc": "2026-10-06T00:46:49.882579+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S13.metadata.json",
+      "metadata_sha256": "939819170a1e8c495c1395d49145384129fcec43a678a65f64ab13b1c7bb26b4",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S14.body",
+      "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f",
+      "bytes": 12770,
+      "access_utc": "2026-10-06T00:46:49.844963+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S14.metadata.json",
+      "metadata_sha256": "5676b5613648aaa31b504fda90da561be05b239c24d053db13fe35d7cb9b4c26",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://man7.org/linux/man-pages/man2/rename.2.html",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S15.body",
+      "sha256": "8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57",
+      "bytes": 23571,
+      "access_utc": "2026-10-06T00:46:50.254928+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S15.metadata.json",
+      "metadata_sha256": "ed440403ebbc5b2008e86d25fcf699642656b499a43646f087ed43b609455358",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://qupath.readthedocs.io/en/stable/",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S16.body",
+      "sha256": "2e5b0725fb785ded16ccd7532399f16af7259e354e2f7f97492b85969415b2a8",
+      "bytes": 14855,
+      "access_utc": "2026-10-06T00:46:49.842577+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S16.metadata.json",
+      "metadata_sha256": "762f55133ccf3dcf88d4c08d65b89bbd7e95d1cebdafca19bbd2f9e79f148dae",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/image.md",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S2.body",
+      "sha256": "2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963",
+      "bytes": 20309,
+      "access_utc": "2026-10-06T00:46:49.635061+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S2.metadata.json",
+      "metadata_sha256": "8e55978e8138c9c5442d8d45e55f6788004d9aa8cc356a29c8f1acc2b6200ac1",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S3.body",
+      "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+      "bytes": 4294,
+      "access_utc": "2026-10-06T00:46:49.652584+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S3.metadata.json",
+      "metadata_sha256": "c97a5257b5d0799bad5f19f3c00cfaff09f7f963c281c4d05d17e7b58ced6805",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/napari/docs/main/docs/howtos/layers/shapes.md",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S4.body",
+      "sha256": "d1c391de505fac2503d033e06607c298ed9a18fb0a5397707a3bf406c27e450e",
+      "bytes": 24597,
+      "access_utc": "2026-10-06T00:46:49.669528+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S4.metadata.json",
+      "metadata_sha256": "ecb5ef36d5401ca3b89e29110ab08f82e119d00f9221c1619fbdcaa95aed7f8f",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.rst",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S5.body",
+      "sha256": "cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48",
+      "bytes": 32898,
+      "access_utc": "2026-10-06T00:46:49.641312+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S5.metadata.json",
+      "metadata_sha256": "1e677f4a26f0024cfe548111936e9a5ee1d2077afff0fd1ddc9ac20e8f724113",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/CHANGES.rst",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S6.body",
+      "sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "bytes": 45003,
+      "access_utc": "2026-10-06T00:46:49.657841+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S6.metadata.json",
+      "metadata_sha256": "27d71476cb71f6383f05d7fe41e327fa323b6b39d0caf9b9c8aa2aa4e4bfdf81",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/issues/319",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S7.body",
+      "sha256": "0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+      "bytes": 3952,
+      "access_utc": "2026-10-06T00:46:49.720215+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S7.metadata.json",
+      "metadata_sha256": "c99caeff2efb4a6128a9fd95c65d3d03f77dd0060291d7b4ee885758acd89a9a",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/commits/edede6002c817f056d75125ade0b20332d549cca",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S8.body",
+      "sha256": "fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+      "bytes": 15123,
+      "access_utc": "2026-10-06T00:46:49.754281+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S8.metadata.json",
+      "metadata_sha256": "0ecd5b2db3e2f3fb4a431b57b353077711ddc134b4ff707fbff51c6b5a372cd8",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/edede6002c817f056d75125ade0b20332d549cca/tifffile/tifffile.py",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S8_full_reader.body",
+      "sha256": "22f5a7aa030e0fd499eace884fb1d56bd05855a5347eafa469056230d3f3fed6",
+      "bytes": 876300,
+      "access_utc": "2026-10-06T00:51:49.696085+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S8_full_reader.metadata.json",
+      "metadata_sha256": "2a2a24f99c2bc2130ea610f28b0a22100015478433b3e29bf33788c5365d1a11",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://api.github.com/repos/cgohlke/tifffile/commits/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S9.body",
+      "sha256": "c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+      "bytes": 18687,
+      "access_utc": "2026-10-06T00:46:49.850209+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S9.metadata.json",
+      "metadata_sha256": "9a3b6f22aa234920a7479c0390f83999c1e3cbc94c7e98912ee002b8519e8ebc",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    },
+    {
+      "source_url": "https://raw.githubusercontent.com/cgohlke/tifffile/7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938/tests/test_tifffile.py",
+      "body_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S9_full_test.body",
+      "sha256": "82eeda9c823926a8d20ac0b506c285e7c9af5fae2725c6227489117ec826ea24",
+      "bytes": 811873,
+      "access_utc": "2026-10-06T00:48:00.544832+00:00",
+      "metadata_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/primary/S9_full_test.metadata.json",
+      "metadata_sha256": "abf493d386022d7382832b1d299ff225dadaba5921704ae4ee18113450cefbf2",
+      "classification": "PUBLIC_PRIMARY_RESPONSE_BODY_ONLY"
+    }
+  ]
+}

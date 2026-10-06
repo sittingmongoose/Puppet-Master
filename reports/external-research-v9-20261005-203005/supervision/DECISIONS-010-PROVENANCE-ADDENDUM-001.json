@@ -1,0 +1,53 @@
+{
+  "schema": "er9.delivery-repair.truthful-provenance-addendum.v1",
+  "addendum_id": "ER9-DEC010-PROVENANCE-001",
+  "author": "/root/max_supervision (GPT-6.1 Sol Max)",
+  "frozen_utc": "2026-10-06T01:24:22.437490+00:00",
+  "authority": "Root explicitly authorized this bounded neutral provenance clarification; no new sharing, scored answers, native ID invention or failure clearance",
+  "original_policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.json",
+    "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+    "bytes_modified": false
+  },
+  "scope_addendum": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+    "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+    "bytes_modified": false
+  },
+  "neutral_seed_authority": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/SEED_PROTOCOL.md",
+    "sha256": "1303735aad31e75a8def72f4cd6895d473287b1b78379593da76843494a9e953",
+    "scope": "Already-frozen affordable native seed reuse/common comparison inputs; no candidate or evaluator body read"
+  },
+  "truthful_origin_identity": {
+    "origin_goal_id": "Keep the actual distinct native Goal ID when exposed. It may be JSON null only if the native route genuinely does not expose a distinct ID; retain that reason. Never substitute a session/thread/job ID, fabricated ID or label-derived alias.",
+    "origin_session_id": "Separate actual native session/thread identity required for a null Goal ID; preserve it as session identity, not Goal identity.",
+    "native_proof": "Required neutral proof capsule referenced as {path: confined inputs-relative path, sha256: exact hash}. The operator admits/seals it from actual native activation and immutable artifact-freeze receipts; a self-description or session-only receipt is not positive Goal proof.",
+    "required_positive_capsule_facts": [
+      "Actual origin job and stage role",
+      "Actual original case/arm and actor/family binding, preserving any genuinely unassigned source metadata",
+      "Positive genuine native Goal activation evidence with receipt path/SHA, observed activation count and time",
+      "Immutable artifact-freeze evidence with receipt path/SHA and observed count/time",
+      "Separate actual native session ID and actual exposed Goal ID or explicit non-exposure reason",
+      "Exact artifact byte SHA/size and original role/provenance/status"
+    ],
+    "validation": "Load the sealed proof capsule and verify positive activation/freeze evidence and consistency with the origin record. Session identity alone, absent/unknown Goal activation evidence, invented counts/times/family or source role mismatch reject the reference closure. Preserve original FAILED/HOLD/COMPLETE and cleanup facts; positive authorship proof is not a new completed-stage or source-quality judgment."
+  },
+  "admission_kinds": {
+    "same_arm_role": "Origin case/arm binding must match the current authorized target case/arm. Retain original job/stage/actor/IDs separately from target stage/profile; do not relabel origin metadata to force a match.",
+    "predeclared_shared_seed": "Permit only an EXACT already-frozen common control/treatment seed import (such as D09), identified by shared_seed_authorization:{path: confined inputs-relative path,sha256: exact hash}. Authorization must bind the original seed and exact artifact IDs/roles/SHA to the declared target case and both arms before their stage dispatch. Verify the existing registered import capsule, not a newly invented generic permission. Unknown seed, new scope/recipient/artifact, unregistered import or manifest drift rejects closure."
+  },
+  "origin_and_target_separation": "Keep actual original case/arm/actor/job/role/session/Goal/status distinct from target case/arm/stage/native adopter. A shared seed can legitimately have a different original case/arm or originally unassigned metadata; preserve the truth rather than copying target IDs into the source record. Costs, original family and cold/warm/common-seed lineage remain disclosed.",
+  "native_adoption_and_hash": {
+    "selector": "Keep exactly {input_id}; no extra native SHA wire field is introduced by this addendum.",
+    "exact_adoption": "Native author explicitly selects the input ID and adopts the current bundle. The candidate-visible operator-sealed import manifest binds that ID to its exact artifact SHA/bytes/provenance; the manifest itself is SHA-pinned and the renderer verifies the actual data at use. No unbound ID, path lookup, automatic catalog fallback, implicit adoption or host quality selection.",
+    "provenance_after_copy": "Publish original proof/authorization/manifest and native bundle-call hashes, unchanged copied output SHA and actual final adopter separately. Native adoption is not proof of private comprehension or semantic alignment."
+  },
+  "unchanged": "First generic B still excludes BOTH V06 arms; no research/ordinary critic/seed/revision auto-activation. Tool names/counts, exact caps/resources/controller clocks, full output roles/common Q1-Q8, current bundle shape and every prior lock/failure/grade/cost remain unchanged.",
+  "owner_evidence": "Tools owner freezes actual manifest/proof-capsule schema and verifies null-ID with positive proof, session-only rejection, strict same-arm matching, exact registered shared-seed acceptance and unknown/drifted seed rejection using finite zero-inference mechanical tests. This is ordinary implementation admission, not a new Max/root/model-canary gate or permission to read source/evaluation bodies.",
+  "actual_import_or_runtime_READY_claimed_by_supervisor": false,
+  "new_cross_arm_or_confirmation_sharing": false,
+  "source_or_grade_selection": false,
+  "candidate_source_evaluation_or_sealed_brief_bodies_read": false,
+  "native_Goals_or_live_or_canonical_changes_by_supervisor": 0
+}

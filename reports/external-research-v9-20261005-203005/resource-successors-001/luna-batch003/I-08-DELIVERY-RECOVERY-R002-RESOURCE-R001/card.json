@@ -1,0 +1,239 @@
+{
+  "activation_precondition": "Ops confirms original requested-GLM identity has not launched. Root selects exactly one same-slot identity before outputs; preserve original unrun lineage. Any already-launched original needs an explicitly declared separate repetition rather than erasure.",
+  "actual_public_source_pins_initial": [],
+  "allocation": {
+    "candidate_children": "accounted against occupied budget and actual family occupancy when exposed",
+    "critical_path_candidate_seconds_per_arm": 2700,
+    "default_stage_maximum": 1800,
+    "occupied_candidate_seconds_per_arm": 5400,
+    "per_stage_allocations_sum": 2700,
+    "startup_and_service_waits": "included in measured total and charged; no clock pauses or backdated expansion"
+  },
+  "artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "lead_inventory": "out/final/leads.json",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json"
+  },
+  "brief_path": "briefs/development-B-notebook.md",
+  "candidate_family": "Luna",
+  "card_version": "DEC007-delivery-recovery-v1",
+  "case_id": "DEV-B-v1",
+  "common_criteria_path": "common_criteria.json",
+  "common_output_contract": "prompts/output_contract.md",
+  "contrast_slot": 4,
+  "control_label": "Competent practical three-stage baseline",
+  "control_stages": [
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1200,
+      "max_parent_responses": null,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/research.md"
+      ],
+      "public_get": true,
+      "requested_parent_response_cap": 120,
+      "required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "stage": "research"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 900,
+      "max_parent_responses": null,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/critique-common.md"
+      ],
+      "public_get": true,
+      "requested_parent_response_cap": 90,
+      "required_artifacts": [
+        "out/critique/review.md"
+      ],
+      "stage": "critique"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 600,
+      "max_parent_responses": null,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/revision.md"
+      ],
+      "public_get": true,
+      "requested_parent_response_cap": 60,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "stage": "revision"
+    }
+  ],
+  "coverage_path": "coverage/development-B.json",
+  "discovery_obligation": {
+    "candidate_selects_sources": true,
+    "independent_implementation_precedents_min": 2,
+    "real_issue_fix_regression_chain_min": 1
+  },
+  "domain": "B",
+  "economics_fields": [
+    "wall_seconds",
+    "critical_path_candidate_seconds",
+    "occupied_candidate_seconds",
+    "native_goal_starts",
+    "parent_responses",
+    "service_wait_seconds",
+    "native_retries",
+    "known_input_cache_output_counters_with_definition",
+    "unknown_child_or_cancelled_usage",
+    "source_bytes_and_tool_traffic_when_exposed",
+    "Sol_development_evaluation_publication_cost_separate"
+  ],
+  "evaluation": "Blind designated current final with exact brief, obligations and source access; judge same predeclared important checks in both arms. Method uptake/history reviewed after saved output judgment.",
+  "evaluator_selected_repositories": false,
+  "exact_factor": "Research -> fresh critic that verifies/corrects and writes complete final, compared with research -> fresh critic -> fresh final author; tools/task/total allowance matched",
+  "freeze_state": "PROSPECTIVE_SAME_SLOT_LUNA_ALTERNATIVE_NOT_ADMITTED",
+  "important_checks_path": "coverage/important-checks-B.json",
+  "initial_input_class": "BRIEF_ONLY_LIVE_DISCOVERY",
+  "method_id": "V08",
+  "observed_effort": null,
+  "observed_model": null,
+  "original_attempts_and_costs_preserved": true,
+  "outcome": {
+    "assessed": 0,
+    "attempted": 0,
+    "completed": 0,
+    "quality": "NOT_RUN"
+  },
+  "pair_id": "I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+  "paired_start_policy": {
+    "otherwise": "counterbalanced order: odd pair control-first, even pair treatment-first",
+    "preferred": "concurrent if real service/account capacity permits",
+    "record": [
+      "actual UTC starts",
+      "load/occupancy",
+      "service waits",
+      "native retries",
+      "deviation reason"
+    ]
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "predecessor_requested_GLM": {
+    "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/cards/I-08.json",
+    "card_sha256": "fc0b6b0038013196d6afd343b576ce3634720712560f733cb145fdfe1f83fce0",
+    "pair_id": "I-08",
+    "planned_status": "NOT_RUN",
+    "requested_family": "GLM"
+  },
+  "prior_candidate_findings_supplied": false,
+  "question": "Can a fresh same-family critic verify/correct and deliver the complete final in two native stages with less duplication and comparable source-correct coverage?",
+  "recovery_mode": "artifact_handoff",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "requested_native_route": "Fresh standalone native Codex Goal through accepted dynamic_stage_runner.py",
+  "required_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch003/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "reservation_lineage": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/integrated/I-08-reservation.json",
+    "sha256": "f8600ca39455894cec8f05e1455de7737c543fcba8466618007570480176cf1b"
+  },
+  "resource_version": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch003/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001/RESOURCE_VERSION.json",
+    "sha256": "534c1fed8615c496f6ac4b409f2f0e34775c535f76c72d58824b4574cf650ddb"
+  },
+  "response_limit_addendum": {
+    "enforcement": "UNSUPPORTED",
+    "max_parent_responses": null,
+    "observed_counts": "UNKNOWN unless supported actual telemetry supplied",
+    "original_wall_and_occupied_limits_unchanged": true
+  },
+  "root_admission_required": [
+    "Bind actual accepted Luna native route/model/max and current owner source/tool pins",
+    "Reference prospective unsupported-response-cap addendum, same matched original wall/occupied limits",
+    "Copy exact per-arm neutral input/role-scope bytes, no source answers/sibling findings",
+    "Freeze complete native same-arm predecessor outputs before fresh subsequent stages",
+    "Preserve original reservation/GLM preparation lineage and reserve full blind current-output evaluation"
+  ],
+  "route_ready_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/ROUTE_STATUS.json",
+    "sha256": "14d5b8511c37e0230b568d2022fbe3ed163571e12791d0dfa2259c325e342e26"
+  },
+  "same_existing_integrated_slot": true,
+  "schema": "er9.integrated_method_card.v1",
+  "selection_authority": "Root standing conditional preference for actual scored-ready Luna in the same I05-I08 reserved slots; GLM remains usable fallback. No silent substitution, no extra four comparisons.",
+  "selection_quality": "NOT_USED",
+  "single_account_concurrency_requirement": 1,
+  "source_access_path": "source_access.json",
+  "source_card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/card.json",
+    "sha256": "048cfaf4b72197cf0114f68fcf30e37b19acf9d4e13181a383926a1566c2f6cb"
+  },
+  "source_pair_id": "I-08-DELIVERY-RECOVERY-R002",
+  "source_pin_rule": "Candidate independently discovers/captures exact public source identities during research. Freeze sources/artifacts between its own fresh stages, never leak discoveries across arms.",
+  "source_slot": "I-08",
+  "stage_artifact_freeze": "Immutable outputs/catalogs between stages, with byte hashes. Fresh next-stage context has exact brief and all needed prior artifacts. No sibling arm or evaluator answer.",
+  "status": "NOT_RUN",
+  "tool_binding_before_launch": {
+    "execution_boundary_pin": null,
+    "real_capacity_required": "One sequential native Goal per arm; actual platform/host capacity and evaluator reserve regulate concurrency. No inherited Luna numerical ceiling.",
+    "retrieval_config_pin": null,
+    "same_tool_access_in_both_arms": true
+  },
+  "track": "B",
+  "treatment_stages": [
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1200,
+      "max_parent_responses": null,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/research.md"
+      ],
+      "public_get": true,
+      "requested_parent_response_cap": 120,
+      "required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "stage": "research"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1500,
+      "max_parent_responses": null,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/critique-common.md",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/prompts/V08-critic-final.md"
+      ],
+      "public_get": true,
+      "requested_parent_response_cap": 150,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "stage": "critic_final"
+    }
+  ]
+}

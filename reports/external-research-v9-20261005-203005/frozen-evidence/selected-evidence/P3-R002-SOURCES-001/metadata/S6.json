@@ -1,0 +1,27 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S6",
+  "body_sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+  "body_bytes": 5801,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0007.body",
+    "url": "https://api.github.com/repos/napari/napari/issues/7085",
+    "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+    "version_or_commit": "sha256:23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "4e68384f2e1a2eada61fa1914fc79a8062b55baf54d5a00216d0102ec81be5c2",
+  "catalog_asserted_capture_identity": {
+    "path": "inputs/source_context/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/0007.body",
+    "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+    "bytes": 5801,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3"
+}

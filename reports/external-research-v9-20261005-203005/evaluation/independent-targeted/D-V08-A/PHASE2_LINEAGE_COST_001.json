@@ -1,0 +1,273 @@
+{
+  "schema": "er9.targeted-phase2-lineage-cost-supplement.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T01:03:03.059496+00:00",
+  "phase1_assessment_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+  "lineage_manifest_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TARGET-D08A-LINEAGE-ACCOUNTING-001/MANIFEST.json",
+    "sha256": "c8938abe7804f3e2e8fa382465dd3b120c2dc4730432d4c28efd38d6369311e9"
+  },
+  "independently_verified_metadata_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-control-critic-a001/stage.json",
+      "sha256": "e04a278eb4b4f865bf50a69c71c43950afdfbfd03f9905856141d0b1e27e7d06",
+      "bytes": 19756
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/stage.json",
+      "sha256": "afdf86ab4c12af75e90b11f994ac91bf41a994d48529edaf40526ffcf72eefc7",
+      "bytes": 20433
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+      "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+      "bytes": 44313
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V08-A.json",
+      "sha256": "cd387327b36d1ef87be004e3a463c9f390a4ae40463ef05b492232f9568b8fc3",
+      "bytes": 6190
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+      "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1",
+      "bytes": 4198
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/provider-usage.redacted.jsonl",
+      "sha256": "57821d4e1dbfe9e99271a9819e7c9b33bf179013a23116b53e65fbd3fec2a030",
+      "bytes": 19471
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+      "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c",
+      "bytes": 37685
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+      "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1",
+      "bytes": 4198
+    }
+  ],
+  "actual_import_linkage": [
+    {
+      "attempt_id": "D-V08-A-control-critic-a001",
+      "stage_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-control-critic-a001/stage.json",
+        "sha256": "e04a278eb4b4f865bf50a69c71c43950afdfbfd03f9905856141d0b1e27e7d06"
+      },
+      "base_roles_actual_input_hash_matches": [
+        "proposal",
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "base_candidate_file_provenance": {
+        "proposal": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/proposal.md",
+          "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/proposal.md",
+          "bytes": 38465
+        },
+        "source_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/sources.json",
+          "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/sources.json",
+          "bytes": 19318
+        },
+        "witness_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/witnesses.json",
+          "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/witnesses.json",
+          "bytes": 7434
+        },
+        "lead_inventory": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/leads.json",
+          "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/leads.json",
+          "bytes": 4731
+        }
+      },
+      "new_inference_for_import_only": 0,
+      "basis": "exact commonbase role SHA occurs in admitted stage.input_pins; metadata only, no seed/sourcebodyread"
+    },
+    {
+      "attempt_id": "D-V08-A-treatment-critic_and_final-a001",
+      "stage_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/stage.json",
+        "sha256": "afdf86ab4c12af75e90b11f994ac91bf41a994d48529edaf40526ffcf72eefc7"
+      },
+      "base_roles_actual_input_hash_matches": [
+        "proposal",
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "base_candidate_file_provenance": {
+        "proposal": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/proposal.md",
+          "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/proposal.md",
+          "bytes": 38465
+        },
+        "source_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/sources.json",
+          "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/sources.json",
+          "bytes": 19318
+        },
+        "witness_catalog": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/witnesses.json",
+          "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/witnesses.json",
+          "bytes": 7434
+        },
+        "lead_inventory": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/leads.json",
+          "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751",
+          "origin_job_id": "I-01-control-research-a001",
+          "original_relative_path": "research/leads.json",
+          "bytes": 4731
+        }
+      },
+      "new_inference_for_import_only": 0,
+      "basis": "exact commonbase role SHA occurs in admitted stage.input_pins; metadata only, no seed/sourcebodyread"
+    }
+  ],
+  "original_cold_source_charge_once": {
+    "actual_family": "GLM",
+    "all_owned_scopes_quiet": null,
+    "arm": "control",
+    "attempt_id": "I-01-control-research-a001",
+    "billing_dollars": "UNKNOWN",
+    "cancelled_or_unexposed_tail": "UNEXPOSED_CHILD_USAGE_UNKNOWN",
+    "category": "candidate_attempt",
+    "cleanup_reserve_seconds": null,
+    "cleanup_seconds": "UNKNOWN",
+    "client_tool_cgroups_quiet": null,
+    "client_tool_owned_processes_quiet": null,
+    "client_tool_process_groups_absent": null,
+    "end_utc": "2026-10-05T21:28:25.612754+00:00",
+    "execution_units_quiet": null,
+    "goal_identity": "target_muvqumhe_ae3a193e-ede2-4c16-8bc1-467c1f7f179a",
+    "held_owned_processes_quiet": null,
+    "held_process_groups_absent": null,
+    "http_attempts": "UNKNOWN",
+    "inference_model_provenance": "NATIVE_PROVIDER_REQUEST_EXPORT",
+    "job_status": "COMPLETED",
+    "known_usage": {
+      "cached_input_included": 1997504,
+      "input": 2468253,
+      "output": 47440,
+      "reasoning_output_subset": 0,
+      "total": 2515693
+    },
+    "native_cgroup_quiet": null,
+    "native_execution_seconds": null,
+    "native_goal_starts": 1,
+    "native_goal_status": "complete",
+    "native_goal_status_before_cleanup": null,
+    "native_goal_status_observation_time": "2026-10-05T21:28:19.403000+00:00",
+    "native_goal_status_selector": "/projection/target/status",
+    "native_goal_status_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/final-session.redacted.json",
+    "native_goal_status_source_sha256": "c5c57b512758ae3712a1656b9486ce161664adee526c91a41b25856316fb7a3c",
+    "observed_effort": "max",
+    "observed_model": "GLM-5.3-Flash",
+    "occupied_seconds": 1079.6023966010034,
+    "owned_scope_observation_epoch": null,
+    "owned_scope_supplement_quiet": null,
+    "pair_id": "I-01",
+    "provider_request_count": 18,
+    "provider_status_counts": {
+      "completed": 18
+    },
+    "quiescent": true,
+    "quota_exhaustion": "UNKNOWN",
+    "requested_effort": "max",
+    "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+    "router_terminal_status": "completed",
+    "source_pins": [
+      {
+        "path": "ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+        "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+      },
+      {
+        "path": "ops/dispatcher/runs/I-01-control-research-a001/native/provider-usage.redacted.jsonl",
+        "sha256": "57821d4e1dbfe9e99271a9819e7c9b33bf179013a23116b53e65fbd3fec2a030"
+      },
+      {
+        "path": "dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+        "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c"
+      }
+    ],
+    "stage": "research",
+    "start_utc": "2026-10-05T21:10:26.057141+00:00",
+    "supplemental_permit_release_confirmed": null,
+    "terminal_error_class": null,
+    "turn_completion_notifications": null,
+    "turn_status_counts": {},
+    "ui_usage_separate": {
+      "cached_input_included": 0,
+      "input": 470260,
+      "output": 47440,
+      "reasoning_output_subset": 0,
+      "total": 517700
+    },
+    "usage_basis": "native_provider_request_sum_known_values",
+    "usage_notifications": null
+  },
+  "original_cold_cost_references": [
+    {
+      "job_id": "I-01-control-research-a001",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+        "sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1"
+      },
+      "original_native_goal_starts": 1,
+      "original_elapsed_seconds": 1079.6402334250015,
+      "reuse_new_native_starts": 0,
+      "accounting_rule": "Charge actual origin once; reuse links that existing cost. Dollars/unknown counters not invented."
+    }
+  ],
+  "import_new_inference_cost": 0,
+  "charge_rule": "One shared original I-01-control-research-a001 source cost reference, not charged again per arm/role. Current selected two native stages charged once each. This is a selected-stage/origin ledger, not full pipeline cost.",
+  "known_selected_plus_shared_origin_totals_counted_once": {
+    "cached_input_included": 4187072,
+    "input": 4899786,
+    "output": 85830,
+    "reasoning_output_subset": 21017,
+    "total": 4985616
+  },
+  "counter_definitions": [
+    "Provider original cold usage input includes cached input; reasoning subset output. UI usage record is separate and must not be added to provider totals.",
+    "Current Luna native cumulative metrics use same overlap rule; last Goal tokensUsed equality to uncached input + output observed only in these current records.",
+    "Original source row is a shared GLM research-role artifact, not a new scored D08A stage or designated final.",
+    "Native origin model identity/provenance here is selected metadata export GLM-5.3-Flash/max, while physical provider telemetry for evaluator/current Luna remains UNKNOWN."
+  ],
+  "source_baseline_bodies_read": false,
+  "fixture_suitability": {
+    "status": "UNASSESSED",
+    "per_facet_private_assessment_required": true,
+    "missing_facets_are_not_tested_coverage": true,
+    "no_answers_in_candidate_inputs": true
+  },
+  "missing_import_roles": [
+    "dependencies",
+    "enrichment",
+    "critique",
+    "revision"
+  ],
+  "suitability_preservation_quality_after_lineage_metadata": "UNASSESSED; authentic input hash linkage does not supply a source-grade oracle or input-body comparison",
+  "missing_final_author_cost_or_deployment": "UNKNOWN_NOT_ESTABLISHED_BY_SELECTED_TWO_RECEIPTS",
+  "whole_pipeline_cost": "UNKNOWN",
+  "cancelled_child_or_unexposed_usage": "UNEXPOSED_CHILD_USAGE_UNKNOWN",
+  "dollars": "UNKNOWN",
+  "source_grade_changed": false
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "er9.independent-primary-capture.v1",
+  "capture_name": "tifffile-v2025.5.10",
+  "requested_url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2025.5.10/tifffile/tifffile.py",
+  "actual_url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2025.5.10/tifffile/tifffile.py",
+  "status": 200,
+  "captured_utc": "2026-10-06T01:12:44.908610+00:00",
+  "started_utc": "2026-10-06T01:12:44.684690+00:00",
+  "captured_bytes": 872866,
+  "sha256": "bf36b5000c483ad60a0ba13658d1975e4797002244deeb064cac1e71dd3ad162",
+  "capture_limit_bytes": 2097152,
+  "body_complete": true,
+  "truncated": false,
+  "headers": {
+    "Content-Type": "text/plain; charset=utf-8",
+    "Content-Length": "872866",
+    "Content-Encoding": null,
+    "ETag": "\"49163b387242619493e38b3c6c5e345d1e10aa37e2a4efda5ab85953e1b4cd11\"",
+    "Last-Modified": null
+  },
+  "actor": "independent evaluator requested mechanical public fetch; no candidate use",
+  "semantic_interpretation": "NONE",
+  "model_comprehension": "UNKNOWN"
+}

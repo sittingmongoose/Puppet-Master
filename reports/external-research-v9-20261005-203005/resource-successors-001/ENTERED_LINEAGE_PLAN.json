@@ -1,0 +1,111 @@
+{
+  "all_original_failed_costs_flags_results_retained": true,
+  "authority": "Root structural approval received before new native starts; metadata/provenance only",
+  "metadata_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/RESOURCE_ENTERED_LINEAGE_METADATA.json",
+    "sha256": "3bea72ad2fde3ba285a665c662e5316d617250ade48f8457bc71bf4acc71cf9b"
+  },
+  "new_native_starts": 0,
+  "rows": [
+    {
+      "control_fresh_seconds": [
+        400,
+        200
+      ],
+      "family": "L",
+      "fresh_matched_credit": false,
+      "missing_resolver_task_status": "DEFERRED_UNTIL_ACTUAL_PREDECESSORS",
+      "new_pair_id": "D-V09-A-RESOURCE-R001",
+      "old_failed_empty_implementation_critic_reused": false,
+      "parallel_treatment_critics": true,
+      "resolver_after_actual_required_critics": true,
+      "source_pair_id": "D-V09-A",
+      "treatment_fresh_seconds": [
+        200,
+        200,
+        200
+      ]
+    },
+    {
+      "control_fresh_seconds": [
+        900
+      ],
+      "family": "L",
+      "fresh_matched_credit": "ONLY_NEW_BOTH_ARM_VERSION_CAN_BE_ASSESSED",
+      "new_pair_id": "D-V14-B-SCOPE-R002-RESOURCE-R001",
+      "old_completed_control_bytes_status_cost_preserved": true,
+      "old_control_final_supplied_to_treatment_or_new_control": false,
+      "source_pair_id": "D-V14-B-SCOPE-R002",
+      "treatment_fresh_seconds": [
+        900
+      ]
+    },
+    {
+      "control_fresh_seconds": [
+        600
+      ],
+      "control_roles_imported": [
+        "research",
+        "critique"
+      ],
+      "family": "L",
+      "fresh_matched_credit": false,
+      "native_origins_required_quiet_before_admission": true,
+      "new_pair_id": "I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+      "source_card_factor": "V08 unchanged",
+      "source_pair_id": "I-08-DELIVERY-RECOVERY-R002",
+      "treatment_fresh_seconds": [
+        1500
+      ],
+      "treatment_roles_imported": [
+        "research"
+      ]
+    },
+    {
+      "control_fresh_seconds": [
+        600
+      ],
+      "control_roles_imported": [
+        "research",
+        "critique"
+      ],
+      "family": "Z",
+      "fresh_matched_credit": false,
+      "missing_critic_action": "Fresh unchanged900 role if original has no genuine review; no alias or completion claim",
+      "native_origins_required_quiet_before_admission": true,
+      "new_pair_id": "I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+      "source_pair_id": "I-01-DELIVERY-RECOVERY-R002",
+      "treatment_fresh_seconds": [
+        600
+      ],
+      "treatment_roles_imported": [
+        "research",
+        "critique_if_actual_genuine_compatible_frozen"
+      ]
+    },
+    {
+      "control_fresh_seconds": [
+        900,
+        600
+      ],
+      "control_roles_imported": [
+        "research4roles"
+      ],
+      "family": "Z",
+      "fresh_matched_credit": false,
+      "new_pair_id": "I-12-RESOURCE-R001",
+      "new_pipeline_delivery_counts_separately": true,
+      "old_descendant_status": "BLOCKED_RESOURCE_FROZEN_UNBOUNDED preserved by ops",
+      "old_treatment_sources_only_qualifies_research": false,
+      "source_pair_id": "I-12",
+      "treatment_fresh_seconds": [
+        1200,
+        900,
+        600
+      ],
+      "treatment_roles_imported": []
+    }
+  ],
+  "schema": "er9.entered-lineage-structural-plan.v1",
+  "semantic_quality_or_source_findings_used": false
+}

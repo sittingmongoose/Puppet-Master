@@ -1,0 +1,184 @@
+{
+  "schema": "er9.independent-targeted-phase1-assessment.v1",
+  "assessment_id": "D-V08-A-PHASE1-001",
+  "pair_id": "D-V08-A",
+  "phase": "SOURCE_AND_QUALITY_SAVED_BEFORE_HISTORY_ALIASES_ECONOMICS_TOOL_HISTORY",
+  "source_started_utc": "2026-10-06T00:44:53.834732+00:00",
+  "phase1_finished_utc": "2026-10-06T00:56:24.747283+00:00",
+  "phase1_finished_epoch_ns": 1791248184747282534,
+  "phase1_finished_monotonic_ns": 78603604283719,
+  "source_screen_elapsed_seconds": 690.912547327,
+  "source_screen_budget_seconds": 1200,
+  "pair_elapsed_budget_seconds": 1800,
+  "budget_reset": false,
+  "frozen_requirement_basis": [
+    "Actual D-V08-A method card/neutral task/targeted coverage and important checks P1/P2/P3",
+    "Actual development-A brief, source_access, common Q1-Q8, matched A-P1 to A-P5; diagnostic scope limits full-domain/autonomous conclusions"
+  ],
+  "private_oracle": "No evaluator-only required-outcome/source-answer map positively located; card outcome procedural counters retained, not a semantic answer key",
+  "source_verification_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/SOURCE_VERIFICATION_001.json",
+    "sha256": "2e7def73dee06650740bb1dac8cd653f5d8c19dee8287bbe9559a436feca5105"
+  },
+  "intake_selectors": {
+    "reservation_sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792",
+    "effective_freeze_sha256": "402d63ec82d742bec196696e7e6095c20337aac5910834725b4bb0041d84a360",
+    "dispatch_sha256": "e08b7a4c9aa90da5e7dd6017e6a685c099f420ced840d64de901016a0944d132",
+    "STARTED_sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+  },
+  "actual_role_results": [
+    {
+      "alias": "A",
+      "actual_role": "critic_and_final",
+      "designated_final": "final/proposal.md",
+      "designated_final_sha256": "28bfa801e56e559999ef6a35bdf10f5f5f72c2a86ff085ccbcc44dd7f7addbfe",
+      "available_source_judgment": "INCOMPLETE",
+      "coverage": "PARTIAL",
+      "reason": "Useful source-backed and internally propagated current transform/frame/export proposal; required lead catalog absent, baseline suitability/preservation absent, and actual executed-witness evidence not positively supplied in Phase1. Current delivery cannot receive complete targeted PASS.",
+      "critic_baseline_correction_and_preservation": "UNASSESSED: supplied seed/input not positively located"
+    },
+    {
+      "alias": "B",
+      "actual_role": "critic",
+      "artifact_inventory": [],
+      "available_source_judgment": "UNASSESSED",
+      "coverage": "UNASSESSED",
+      "reason": "Terminal role artifact missing; no designated final or source body supplied. This is not a scored source-quality failure."
+    }
+  ],
+  "targeted_important_checks": [
+    {
+      "id": "D-V08-A-P1",
+      "coverage": "PARTIAL",
+      "judgment": "Current NGFF transform order and frame/export direction claims independently supported; transformation choices propagate across recommendation, frame service, anchoring, reopen, export and V3/V4. Actual seed error, same predeclared claims and preservation/repair relative to baseline UNASSESSED. No consequential coordinate error found in the inspected current scope.",
+      "evidence": [
+        "SV1",
+        "SV4",
+        "SV5",
+        "SV7"
+      ]
+    },
+    {
+      "id": "D-V08-A-P2",
+      "coverage": "PARTIAL",
+      "judgment": "Current proposal retains minimum workflow, source/sample separation, resource/recovery/portability/UI requirements, an opportunity and plausible alternatives, with explicit proposed gates and limitations. Input-relative preservation UNASSESSED; absent leads catalog is a completion gap; unsupported fixture privacy label and malformed pins recorded.",
+      "evidence": [
+        "SV2",
+        "SV3",
+        "SV5",
+        "SV6",
+        "DELIVERY-LEADS",
+        "PIN-S10",
+        "PIN-W4-DATA",
+        "SOURCE-FIXTURE-PRIVACY"
+      ]
+    },
+    {
+      "id": "D-V08-A-P3",
+      "coverage": "PARTIAL",
+      "judgment": "Available output contains a critique and complete-form final with correction propagated internally. W4 arithmetic is discriminating and source-correct by inspection, code/stdout hashes match their authored catalog, and application tests are clearly UNEXECUTED. Actual W4 execution claim UNASSESSED pending a positively selected actual receipt; matched budget uptake and topology effects UNASSESSED before Phase2 and with missing partner."
+    }
+  ],
+  "common8": [
+    {
+      "id": "Q1",
+      "coverage": "PARTIAL",
+      "finding": "Named targeted task and broad minimum workflow represented; exact baseline correction suitability and required lead-catalog facet absent."
+    },
+    {
+      "id": "Q2",
+      "coverage": "PARTIAL",
+      "finding": "Checked current NGFF, napari, tifffile fix/test/release, QuPath and rename interpretations supported with version/scope caveats; fixture privacy characterization unsupported; full implementation/application semantics not established."
+    },
+    {
+      "id": "Q3",
+      "coverage": "PARTIAL",
+      "finding": "Frame/index authority, direction, single normalized transform, immutable sources and proposed architecture are coherent engineering choices with gates; actual seed repair difference unavailable."
+    },
+    {
+      "id": "Q4",
+      "coverage": "PARTIAL",
+      "finding": "Independent useful format/viewer/reader/project precedents and real #319 chain verified. Autonomous or candidate-new discovery conclusions UNASSESSED and disallowed under supplied-source diagnostic."
+    },
+    {
+      "id": "Q5",
+      "coverage": "PARTIAL",
+      "finding": "W4 expectation/code scope independently justified; actual execution receipt not supplied at Phase1. V1-V7 honestly proposed/UNEXECUTED; no application behavior credit."
+    },
+    {
+      "id": "Q6",
+      "coverage": "PARTIAL",
+      "finding": "No consequential new coordinate/export error established in current inspected proposal. Semantic preservation against missing supplied baseline UNASSESSED; minor source qualification/pin defects retained."
+    },
+    {
+      "id": "Q7",
+      "coverage": "PARTIAL",
+      "finding": "Critical performance, parser/version, share durability, UI and derived-transform dependencies explicit; limits generally honest. Fixture privacy is unsupported.",
+      "not_whole_case_certification": true
+    },
+    {
+      "id": "Q8",
+      "coverage": "PARTIAL",
+      "finding": "Standalone current proposal/source/witness catalogs available, but lead catalog absent and S10/W4-data pins malformed. Native economics/provenance deliberately unassessed until saved judgment."
+    }
+  ],
+  "matched_A_checks_scope": [
+    {
+      "id": "A-P1",
+      "coverage": "PARTIAL",
+      "finding": "Useful independent precedents and a real pinned issue/fix/test/release chain verified; candidate-discovered aspect cannot be concluded from supplied sources."
+    },
+    {
+      "id": "A-P2",
+      "coverage": "PARTIAL",
+      "finding": "Inspected data-contract/behavior interpretations supported with explicit dependencies; whole application not executed."
+    },
+    {
+      "id": "A-P3",
+      "coverage": "PARTIAL",
+      "finding": "Arithmetic expectation/code/output-catalog checked, actual execution proof missing; non-executed checks honestly labeled."
+    },
+    {
+      "id": "A-P4",
+      "coverage": "UNASSESSED",
+      "finding": "Baseline source/preservation unavailable; current proposal inspection is not proof of correction against that baseline."
+    },
+    {
+      "id": "A-P5",
+      "coverage": "PARTIAL",
+      "finding": "Current workflow/resource/recovery/portability/UI/optional-opportunity content present; absent lead catalog and unexecuted validation prevent full completeness."
+    }
+  ],
+  "observed_defect_ids": [
+    "DELIVERY-LEADS",
+    "PIN-S10",
+    "PIN-W4-DATA",
+    "SOURCE-FIXTURE-PRIVACY"
+  ],
+  "decisive_FAIL_SCREEN": false,
+  "whole_targeted_quality_outcome": "INCOMPLETE",
+  "whole_development_domain_quality": "UNASSESSED",
+  "full_pipeline_quality": "UNASSESSED",
+  "matched_comparison": "UNASSESSED",
+  "winner": null,
+  "equivalence_established": false,
+  "scoring": "No weighting, aggregate score or invented rubric. Coverage and specific defects only.",
+  "unassessed_reasons": [
+    "Missing control role/final output",
+    "Missing positively selected supplied input/seed baseline and private suitability",
+    "No private required-outcome map",
+    "W4 actual execution receipt not positively supplied before this save",
+    "No full current application/version-pinned integration or real-workload validation",
+    "No complete matched pair or all-pipeline completion"
+  ],
+  "known_blinding_leakage": [
+    "Actual card exposes method topology and requested Luna identity",
+    "Courier and exact paths/role metadata exposed arm mapping and availability",
+    "Current proposal names treatment stage",
+    "Admission-only quiescence discrepancy and neutral reconciliation exposed before source review; original false flag retained"
+  ],
+  "candidate_history_economics_tool_history_read": false,
+  "physical_provider_telemetry": "UNKNOWN unless positively exposed",
+  "evaluator_rerun_candidate_code": false,
+  "source_answer_transmission_to_candidate_prompts": false
+}

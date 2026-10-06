@@ -1,0 +1,289 @@
+{
+  "base_5file_job_success_claimed": false,
+  "candidate_native_jobs": 6,
+  "dependencies_role_origin": "Actual candidate dependencies.json from the fixed-base enrichment Goal; never a proposal alias.",
+  "genuine_roles_required": {
+    "V05": [
+      "critique",
+      "revision"
+    ],
+    "V06": [
+      "critique"
+    ],
+    "V13": [
+      "dependencies"
+    ]
+  },
+  "jobs": [
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-A-DEC006",
+        "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "A",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-A-FIXED-BASE-critique-s002",
+      "max_parent_responses": null,
+      "max_seconds": 600,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "3b0c620e576c29096090cf785d15a6c4285c78e46053bb89d3d1f99785c59e3c"
+      },
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/critique.md"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-A-critique-s001",
+      "stage": "critique",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/SEED-DEV-A-FIXED-BASE-critique-s002/prepared-stage.json",
+        "sha256": "8352e962f4857712f658b84a9e67212d55da89bdb32b603774180f1fee947e2f"
+      },
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-A-DEC006",
+        "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "A",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-A-FIXED-BASE-revision-s002",
+      "max_parent_responses": null,
+      "max_seconds": 450,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "3b0c620e576c29096090cf785d15a6c4285c78e46053bb89d3d1f99785c59e3c"
+      },
+      "prerequisite_job_ids": [
+        "SEED-DEV-A-FIXED-BASE-critique-s002"
+      ],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/revision.md",
+        "out/seed/sources.json",
+        "out/seed/witnesses.json",
+        "out/seed/leads.json",
+        "out/seed/dependencies.json"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-A-revision-s001",
+      "stage": "revision",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/SEED-DEV-A-FIXED-BASE-revision-s002/prepared-stage.json",
+        "sha256": "b242aa976a4dfc46ea5e0502a10657d2d29058905e75660efc2e200a5107f0ee"
+      },
+      "status": "AWAITING_ACTUAL_FROZEN_CRITIQUE"
+    },
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-A-DEC006",
+        "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "A",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-A-FIXED-BASE-enrichment-s002",
+      "max_parent_responses": null,
+      "max_seconds": 900,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "3b0c620e576c29096090cf785d15a6c4285c78e46053bb89d3d1f99785c59e3c"
+      },
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/enrichment.md",
+        "out/seed/sources.json",
+        "out/seed/witnesses.json",
+        "out/seed/leads.json",
+        "out/seed/dependencies.json"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-A-enrichment-s001",
+      "stage": "enrichment",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/A/SEED-DEV-A-FIXED-BASE-enrichment-s002/prepared-stage.json",
+        "sha256": "13120f520db85327109169ed7fb3caeaa97df193d80142834b910f9254045bac"
+      },
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-B-DEC006",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "B",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-B-FIXED-BASE-critique-s002",
+      "max_parent_responses": null,
+      "max_seconds": 600,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "b5044420d93c844a0a19311cb0721a4c784824f6fe9a6ae7addd36fb79a005b9"
+      },
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/critique.md"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-B-critique-s001",
+      "stage": "critique",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/B/SEED-DEV-B-FIXED-BASE-critique-s002/prepared-stage.json",
+        "sha256": "944855df929c74694208eb8c21ad1556f68bc98105d31d09ce3805534d35aea8"
+      },
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-B-DEC006",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "B",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-B-FIXED-BASE-revision-s002",
+      "max_parent_responses": null,
+      "max_seconds": 450,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "b5044420d93c844a0a19311cb0721a4c784824f6fe9a6ae7addd36fb79a005b9"
+      },
+      "prerequisite_job_ids": [
+        "SEED-DEV-B-FIXED-BASE-critique-s002"
+      ],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/revision.md",
+        "out/seed/sources.json",
+        "out/seed/witnesses.json",
+        "out/seed/leads.json",
+        "out/seed/dependencies.json"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-B-revision-s001",
+      "stage": "revision",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/B/SEED-DEV-B-FIXED-BASE-revision-s002/prepared-stage.json",
+        "sha256": "08e76363840345423525c5c293a04487e3cccf7c3d363a03ab673607a151934b"
+      },
+      "status": "AWAITING_ACTUAL_FROZEN_CRITIQUE"
+    },
+    {
+      "automatic_expansion": false,
+      "base_manifest": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "seed_id": "BASE-B-DEC006",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "cold_costs": "Charge the existing original base once, retained failed seed costs, and each actual fresh role once; no invented usage or duplicate base charge.",
+      "domain": "B",
+      "execution_enabled": true,
+      "job_id": "SEED-DEV-B-FIXED-BASE-enrichment-s002",
+      "max_parent_responses": null,
+      "max_seconds": 900,
+      "native_goal": true,
+      "new_native_starts": 0,
+      "original_failed_base": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-base-s001/OUTPUT_FREEZE.json",
+        "sha256": "b5044420d93c844a0a19311cb0721a4c784824f6fe9a6ae7addd36fb79a005b9"
+      },
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "requested_effort": "Max",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "required_artifacts": [
+        "out/seed/enrichment.md",
+        "out/seed/sources.json",
+        "out/seed/witnesses.json",
+        "out/seed/leads.json",
+        "out/seed/dependencies.json"
+      ],
+      "schema": "er9.fixed-base-candidate-role-job.v2",
+      "scored_comparison": false,
+      "source_job_lineage": "SEED-DEV-B-enrichment-s001",
+      "stage": "enrichment",
+      "stage_spec_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/continuations/B/SEED-DEV-B-FIXED-BASE-enrichment-s002/prepared-stage.json",
+        "sha256": "f0ee291851117e983bc4ed02425cfaf38fa78ccc31f6c918908d58cc442b5086"
+      },
+      "status": "PREPARED_NOT_ADMITTED"
+    }
+  ],
+  "maximum_occupied_candidate_seconds": 3900,
+  "new_full_discovery_bases": 0,
+  "new_native_starts": 0,
+  "original_attempts_and_costs_preserved": true,
+  "original_failed_status_and_costs_preserved": true,
+  "pair_id": "SEED-DEV-A-RESOURCE-R001",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "required_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "ca950513863a9611ce2adb66902e417ee10b7b07a295e637d48a08255ac845eb"
+  },
+  "resource_version": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/SEED-DEV-A-RESOURCE-R001/RESOURCE_VERSION.json",
+    "sha256": "36ef8e6f265e48b0c131a721c56175c9d0fed1c52afb9c0ff1aae62797b74de2"
+  },
+  "schema": "er9.finite-fixed-base-role-continuations.v2",
+  "source_card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/FIXED_BASE_CONTINUATIONS.json",
+    "sha256": "4ef536f55482f335948b38bfc7b9b2d9de8dead99ff29a1d1dbccd6a554ac46d"
+  },
+  "source_pair_id": "SEED-DEV-A"
+}

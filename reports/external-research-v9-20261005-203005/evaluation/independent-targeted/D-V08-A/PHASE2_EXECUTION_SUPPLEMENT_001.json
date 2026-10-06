@@ -1,0 +1,124 @@
+{
+  "schema": "er9.targeted-late-execution-provenance-supplement.v1",
+  "pair_id": "D-V08-A",
+  "created_utc": "2026-10-06T01:01:54.742212+00:00",
+  "phase": "PHASE2_AFTER_IMMUTABLE_SOURCE_JUDGMENT",
+  "phase1_assessment_sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+  "source_grade_overwritten": false,
+  "source_grade_remains": "INCOMPLETE; partial available output and absent partner/baseline",
+  "actual_receipt_status": "POSITIVELY_SELECTED_AND_VERIFIED",
+  "manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/MANIFEST.json",
+    "sha256": "6cf2fa0750bf87f89ffd4eee5356ebddfef9b42dc5f2379b8b9005fedcda91ec"
+  },
+  "request_policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/request-policy.json",
+    "sha256": "cdebc628bb98c17a1810b2143896eb6d3397771fbc6e16f7019e2bcfaf8e4e2f",
+    "original_request_sha256": "6a95a18bd75a675d3bc578698b8eb6a6f8e98f5cf47667ad88d20c8cb709e827"
+  },
+  "verified_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/code.py",
+      "sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "bytes": 1440,
+      "kind": "candidate_code",
+      "original_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_input",
+      "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stdout.bin",
+      "sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "bytes": 252,
+      "kind": "candidate_stdout",
+      "original_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "candidate_stderr",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/TARGET-D08A-EXECUTION-001/A/exec-ggbhz4r7/execution-facts.json",
+      "sha256": "7eb2666fbc42b785fe015c63d80299e78c34422f2f9dbd6b727d2ad2dcc06e24",
+      "bytes": 1481,
+      "kind": "candidate_execution_receipt",
+      "original_sha256": "1c2c17cd0b16a31b926f9f984e0ed11d8b751bfbabd03ae22540cd400fc175e2"
+    }
+  ],
+  "matches": {
+    "actual_submitted_code_equals_authored_catalog": true,
+    "actual_stdout_equals_authored_catalog": true,
+    "actual_input_json": null,
+    "actual_code_input_stdout_hashes_match_receipt": true
+  },
+  "receipt_facts": {
+    "actor": "candidate",
+    "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+    "bootstrap_started": true,
+    "cleanup_classification": "collected_unit_absent",
+    "cleanup_confirmed": true,
+    "cleanup_state_returncode": 0,
+    "cleanup_stop_returncode": 5,
+    "code_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+    "control_group_absent_after_stop": null,
+    "control_group_populated_after_stop": null,
+    "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "execution_id": "exec-ggbhz4r7",
+    "execution_label": "executed by candidate",
+    "exit_code": 0,
+    "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+    "limits": {
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "network": "new empty namespace",
+      "stream_bytes_each": 32768,
+      "tasks": 16,
+      "wall_seconds": 5
+    },
+    "schema": "er9.execution.result.v1",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 252,
+    "stdout_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+    "stopped_by_adapter": null,
+    "unit_active_state_after_stop": "inactive",
+    "unit_load_state_after_stop": "not-found",
+    "execution_scope": "actual candidate critic_and_final-stage execution; only positively requested execution ID, no inferred fixture suitability"
+  },
+  "policy_facts": {
+    "actor": "candidate",
+    "bootstrap_sha256": "ca44fd1471166504c51c806b53b2c8ccb46b596984d083946eb66c571973240b",
+    "bwrap_binary_sha256": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "code_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+    "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "limits": {
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "network": "new empty namespace",
+      "stream_bytes_each": 32768,
+      "tasks": 16,
+      "wall_seconds": 5
+    },
+    "python_binary_sha256": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "requested_execution_label": "executed by candidate",
+    "schema": "er9.execution.request.v1",
+    "server_sha256": "01ba5ab8ab9d8f1ff495f7a768c211ee1c8dd1cbc2b834868b93785a984c72ef"
+  },
+  "interpretation": "Actual isolated candidate execution confirmed for W4 after Phase1 saved; independently justified arithmetic/limited scope already recorded in source judgment. This confirms provenance of code/stdout only, not application behavior, fixture suitability/preservation, complete delivery, whole-pipeline PASS or winner. Malformed candidate data hash remains a delivery defect; actual full hash supplied by late receipt does not repair candidate output.",
+  "phase1_W4_executed_facet_as_of_save": "UNASSESSED then; missing actual receipt at that save was historical intake fact, preserved",
+  "scope_limits": [
+    "Pure arithmetic only, no file reader/export/reopen/resampler/application test",
+    "No evaluator rerun of candidate code",
+    "Exact request/result actor/hash/resource/network-namespace facts inspected; omitted full private bootstrap command/filesystem mount recipe is not independently reconstructed",
+    "No sealed confirmation brief or candidate retest input opened"
+  ]
+}

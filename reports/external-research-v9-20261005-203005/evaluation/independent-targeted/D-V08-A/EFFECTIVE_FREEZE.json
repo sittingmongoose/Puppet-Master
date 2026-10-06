@@ -1,0 +1,109 @@
+{
+  "schema": "er9.targeted-effective-criteria-freeze.v1",
+  "pair_id": "D-V08-A",
+  "frozen_utc": "2026-10-06T00:44:53.834213+00:00",
+  "reservation_sha256": "2de6b925e5697e540a4fa9b5b5024c90be902cb0cc56cb9eb8b9f53ca303c792",
+  "dispatch_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/dispatch.json",
+  "dispatch_sha256": "e08b7a4c9aa90da5e7dd6017e6a685c099f420ced840d64de901016a0944d132",
+  "neutral_quiescence_proof_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/integrity-proof.json",
+  "neutral_quiescence_proof_sha256": "be0de9734656d79dc10e78a433c67483afc5ad268755fbe8b0c67ee2905308c5",
+  "criteria_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A.json",
+      "sha256": "5efcba23635414a16ecf571e04871753e932585f518697057e7fdb36cb254ba5",
+      "bytes": 6134,
+      "original_frozen_criteria_sha256": "5efcba23635414a16ecf571e04871753e932585f518697057e7fdb36cb254ba5"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-TASK.md",
+      "sha256": "5b0a56e8d17e329763ca22e6eba50a61c579281b5146a895768bfdba1e7ce72f",
+      "bytes": 1366,
+      "original_frozen_criteria_sha256": "5b0a56e8d17e329763ca22e6eba50a61c579281b5146a895768bfdba1e7ce72f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/D-V08-A-coverage.json",
+      "sha256": "54fd36329877fc4c0e4af48edbf220420b0ea9a364f4b59fa2ef5389b4c8a8d8",
+      "bytes": 2169,
+      "original_frozen_criteria_sha256": "54fd36329877fc4c0e4af48edbf220420b0ea9a364f4b59fa2ef5389b4c8a8d8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/development-A-biomedical.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324,
+      "original_frozen_criteria_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "original_frozen_criteria_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "original_frozen_criteria_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/criteria/important-checks-A.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937,
+      "original_frozen_criteria_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+    }
+  ],
+  "artifact_inventory": [
+    {
+      "alias": "A",
+      "relative_path": "critique/review.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/critique/review.md",
+      "sha256": "9e90502a58ee212718d959a8c3a1d3340ad5cf63747f3983806eb8768e4b68e6",
+      "bytes": 8081,
+      "byte_policy": "exact frozen substantive bytes"
+    },
+    {
+      "alias": "A",
+      "relative_path": "final/proposal.md",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/proposal.md",
+      "sha256": "28bfa801e56e559999ef6a35bdf10f5f5f72c2a86ff085ccbcc44dd7f7addbfe",
+      "bytes": 27869,
+      "byte_policy": "exact frozen substantive bytes"
+    },
+    {
+      "alias": "A",
+      "relative_path": "final/sources.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/sources.json",
+      "sha256": "4839a4508ebf3d9657e587b9b9eb2164528e28483cf766ec0af58c7a18f0a1f3",
+      "bytes": 14243,
+      "byte_policy": "exact frozen substantive bytes"
+    },
+    {
+      "alias": "A",
+      "relative_path": "final/witnesses.json",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/TARGET-D08A-2fe92e1627cdaf7c-001/outputs/A/final/witnesses.json",
+      "sha256": "7e4f22a43a01e1bdcebf7a602848bad318642d6a2bfd6e16941221fd8958348d",
+      "bytes": 8045,
+      "byte_policy": "exact frozen substantive bytes"
+    }
+  ],
+  "missing_artifacts": [
+    {
+      "alias": "B",
+      "role": "critic",
+      "artifact": "critic review",
+      "quality": "UNASSESSED"
+    },
+    {
+      "alias": "A",
+      "artifact": "final/leads.json",
+      "presence": "ABSENT"
+    }
+  ],
+  "supplied_input_inventory": [],
+  "fixture_suitability_and_input_preservation": "UNASSESSED: no positively selected supplied seed/input baseline",
+  "matched_comparison_and_full_pipeline": "UNASSESSED: missing control critic/final outputs; no winner",
+  "private_required_outcome": "UNASSESSED: no positively located private map; exact neutral card/coverage/task/brief/checks only",
+  "source_screen_seconds": 1200,
+  "pair_elapsed_seconds": 1800,
+  "reset_allowed": false,
+  "phase2_not_read": true
+}

@@ -1,0 +1,454 @@
+{
+  "reads": [
+    {
+      "kind": "task",
+      "name": "brief",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324,
+      "read": "full",
+      "read_monotonic_ns": 79271705650793
+    },
+    {
+      "kind": "task",
+      "name": "coverage_map",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473,
+      "read": "full",
+      "read_monotonic_ns": 79271705778651
+    },
+    {
+      "kind": "task",
+      "name": "common_criteria",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521,
+      "read": "full",
+      "read_monotonic_ns": 79271705846862
+    },
+    {
+      "kind": "task",
+      "name": "source_access",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751,
+      "read": "full",
+      "read_monotonic_ns": 79271705888724
+    },
+    {
+      "kind": "task",
+      "name": "output_contract",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062,
+      "read": "full",
+      "read_monotonic_ns": 79271705986379
+    },
+    {
+      "kind": "task",
+      "name": "important_checks",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/task/important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937,
+      "read": "full",
+      "read_monotonic_ns": 79271706054832
+    },
+    {
+      "kind": "candidate_output",
+      "name": "designated_final",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "sha256": "893107486033ddcc71ad30fb117d29fda439c28a814d1e937320c148d4023a97",
+      "bytes": 27066,
+      "read": "full",
+      "read_monotonic_ns": 79298619439039
+    },
+    {
+      "kind": "candidate_output",
+      "name": "source_catalog",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/sources.json",
+      "sha256": "c2acba5ddd9c8226450abc4b6277f7c422d0ded2aefea51219de97210d3040aa",
+      "bytes": 13492,
+      "read": "full",
+      "read_monotonic_ns": 79298619737009
+    },
+    {
+      "kind": "candidate_output",
+      "name": "designated_final",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "read": "supplement lines 110-155 after combined output truncation; complete semantic body now",
+      "read_monotonic_ns": 79312324503571
+    },
+    {
+      "kind": "candidate_output",
+      "name": "designated_final",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P3-R002-SINGLE-FINAL-001/outputs/A/final/proposal.md",
+      "read": "supplement lines 86-104 after output truncation",
+      "read_monotonic_ns": 79328628818733
+    },
+    {
+      "kind": "task",
+      "name": "neutral_actual_card_projection",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/task-only/P3-R002-NEUTRAL-001/NEUTRAL_CARD.json",
+      "sha256": "2f8bae5fa13bcb346e859b6ff232abf69919f8fcd4d075731b07306ff44dd562",
+      "bytes": 2316,
+      "read": "full",
+      "read_monotonic_ns": 79487273208637
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S6",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S6.body",
+      "sha256": "23d800f8f4421c35ff8bd159a310011a53a60e409f5ffff422bde9b2708d0ad3",
+      "bytes": 5801,
+      "read_scope": "selected JSON fields title,state,body,created_at,closed_at,merged_at,merge_commit_sha,milestone",
+      "metadata_read": "full",
+      "read_monotonic_ns": 79565526129888
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S7.body",
+      "sha256": "8819f356306877e0db71cf13884a9bee57ae476cbd62ed6a1834cf83912e47df",
+      "bytes": 5042,
+      "read_scope": "full patch",
+      "metadata_read": "full",
+      "read_monotonic_ns": 79565526308452
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S8",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S8.body",
+      "sha256": "d5014177d9db6ff47e5e92855e7d03572a60c6c01eb1efa9ad867cb189978e67",
+      "bytes": 20154,
+      "read_scope": "selected JSON fields title,state,body,created_at,closed_at,merged_at,merge_commit_sha,milestone",
+      "metadata_read": "full",
+      "read_monotonic_ns": 79565526927943
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S3.body",
+      "sha256": "d9d9487238dd361cb3b0e33d3351711e2518289fc8668e2b88022d5e0af4fc0b",
+      "bytes": 34722,
+      "read_scope": "JSON info/version,requires_python,requires_dist; description Requirements through Notes and regional Zarr example",
+      "read_monotonic_ns": 79590097501683
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S4",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S4.body",
+      "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "bytes": 15402,
+      "read_scope": "lines 1-166 and 249-265 slice_from_axis/split_channels/split_rgb",
+      "read_monotonic_ns": 79590097869640
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S5",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S5.body",
+      "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "bytes": 11419,
+      "read_scope": "lines 1-70 test_split_rgb",
+      "read_monotonic_ns": 79590098134801
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S11",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S11.body",
+      "sha256": "b95458e66fbdaee45a26d876e6411735e31f4113753aa4f1d4c6b56bf6604354",
+      "bytes": 31495,
+      "read_scope": "project.requires-python/dependencies/Qt extras/optional-base",
+      "read_monotonic_ns": 79590105591210
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S14",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S14.body",
+      "sha256": "da5d584b4f51765d761bb84309a70697a1f670ce3743081ab7b390c13f1e6d0d",
+      "bytes": 8011,
+      "read_scope": "JSON info/name,version,requires_python,requires_dist",
+      "read_monotonic_ns": 79590105855372
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S4",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S4.body",
+      "sha256": "e378ae48c619ddace100cc9edd33e802146ee6ff10227597663e37c1837d2572",
+      "bytes": 15402,
+      "read_scope": "full split_rgb function AST lines, supplement earlier snippet",
+      "read_monotonic_ns": 79626153116233
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S5",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S5.body",
+      "sha256": "3441d1843c49682f99bdad2cd06499a2784e74feaa803b0bbfeb40ee7bb9ea1e",
+      "bytes": 11419,
+      "read_scope": "full parametrized test_split_rgb lines41-74",
+      "read_monotonic_ns": 79626153483017
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S13",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S13.body",
+      "sha256": "64b439ff488c87d81ca112b73b7123596952ff8a8543e3b02d94ea8db5ed51ee",
+      "bytes": 261500,
+      "read_scope": "schema namespace/version; Pixels and Plane named dimension/calibration/time/stage attributes, documentation/defaults",
+      "read_monotonic_ns": 79626167744071
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S1.body",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "bytes": 163120,
+      "read_scope": "HTML sections2/2.1,3.1,3.3/3.4,3.6/3.7 rendered text",
+      "read_monotonic_ns": 79685048103073
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S2.body",
+      "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "bytes": 48745,
+      "read_scope": "rendered DimensionOrder/TiffData defaults and explicit mapping examples through first8500chars",
+      "read_monotonic_ns": 79685061878707
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S12",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S12.body",
+      "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+      "bytes": 77968,
+      "read_scope": "rendered selected locking/flush/assumptions/failure headings; heuristic extracted sections",
+      "read_monotonic_ns": 79685090739111
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S9",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S9.body",
+      "sha256": "54172f653d6c6fdc7e96cefd7a408d3ec8787354b191c1c4709a1e0c035487e6",
+      "bytes": 8505,
+      "read_scope": "JSON issue title/state/opening timestamp/full body",
+      "read_monotonic_ns": 79700424732962
+    },
+    {
+      "kind": "primary_source",
+      "source_id": "S10",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/bodies/S10.body",
+      "sha256": "a20fb19679dc634101bb2cf91858245c3e5b39fae80aafbec0f13bd55480e67d",
+      "bytes": 14404,
+      "read_scope": "all returned issue comment bodies/timestamps/URLs; no pagination completeness inferred",
+      "read_monotonic_ns": 79700425277644
+    },
+    {
+      "kind": "fresh_primary_source",
+      "name": "tifffile-v2025.5.10",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/tifffile-v2025.5.10.body",
+      "sha256": "bf36b5000c483ad60a0ba13658d1975e4797002244deeb064cac1e71dd3ad162",
+      "bytes": 872866,
+      "read_scope": "AST class/method symbol metadata and lines12056-12105 initially; not full",
+      "read_monotonic_ns": 79735004978049
+    },
+    {
+      "kind": "fresh_primary_source",
+      "name": "tifffile-v2025.5.10",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-ONLY-FRESH-001/tifffile-v2025.5.10.body",
+      "sha256": "bf36b5000c483ad60a0ba13658d1975e4797002244deeb064cac1e71dd3ad162",
+      "bytes": 872866,
+      "read_scope": "full AST TiffFile.aszarr L4539-4588; ZarrTiffStore class docstring/__init__ L12838-12979/_getitem L13379-13434; rest unchecked",
+      "read_monotonic_ns": 79753251110203
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S1",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S1.json",
+      "sha256": "c22d75ee7b81a30ed5138e1f01e3c2a50b9a52cd1b0d12a7efdcc57f6b7f4b17",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792000374128
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S2",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S2.json",
+      "sha256": "13017f1e07759e783cd3a45664e3aac0288327db213044c9006e34a53229b2a5",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792000718523
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S3",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S3.json",
+      "sha256": "4ee411a26d52d888a2e0244d12124b75c531370fea4281f85fd9142883e10290",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792000995257
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S4",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S4.json",
+      "sha256": "ed7b2551bb617839d8d1ca9d6c20c09f46d70c4249fa10b94fdfb5a3f9ed5111",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001197866
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S5",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S5.json",
+      "sha256": "35a78b9e68c92af79d79d187985023456d405899528c35995769ed99c354072b",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001359821
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S6",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S6.json",
+      "sha256": "259a5a63c1bc2c9242d15496b6d6df620b84177ea9a678bc8ea2a16a82617f48",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001486095
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S7",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S7.json",
+      "sha256": "f85f1807ce7645e543c1c9ab80b55cb8eab923ba133a2f5b9017cb4b7ec0d562",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001598316
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S8",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S8.json",
+      "sha256": "9c8dfe0f74ef7aefbc77b10870f164784944209ce8a88ab23ee0e80f32250faf",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001779377
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S9",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S9.json",
+      "sha256": "1b98035219192695f368f51b40b84e1ca9241c22ca2a00cb9320efc0ee4416d7",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792001924919
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S10",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S10.json",
+      "sha256": "5debe58aecd90363a86d95f180583de354be5f0d6299f7ca5945fcc03c2f3458",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792002098733
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S11",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S11.json",
+      "sha256": "bf2990380117a1529ff49e7c798386c99bbd0f9a674582017dd91bf2b231d07f",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792002346585
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S12",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S12.json",
+      "sha256": "67439a1883d8d9ffe3aa5c617b680fd0e8db697c62ea759afdb27e181e1bd84a",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792002757257
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S13",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S13.json",
+      "sha256": "ff06a023401aa22d6705ca889b274cb2adf01ec4c8440b1f04572d5fd6b3ddd3",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792004143329
+    },
+    {
+      "kind": "source_provenance_metadata",
+      "source_id": "S14",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P3-R002-SOURCES-001/metadata/S14.json",
+      "sha256": "0f2faea0df9560ea9b88ab2e45eaae8d1bf6bb52a9d9284b002dd7c0e82bd634",
+      "read": "full for provenance; no runtime",
+      "read_monotonic_ns": 79792004342194
+    },
+    {
+      "kind": "phase2_sidecar",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/P3_R002_SINGLE_FINAL_ALIAS_001.json",
+      "sha256": "d669267dd36883c6601a26aca1a9454b66c093a34bd157348fb06a8cab455b0c",
+      "bytes": 6098,
+      "read": "full",
+      "read_monotonic_ns": 80497011564329
+    },
+    {
+      "kind": "phase2_native_receipt",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+      "sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8",
+      "bytes": 175468,
+      "read_scope": "top-level keys and selected status/identity/Goal/elapsed/usage/metrics/quiescence fields only",
+      "read_monotonic_ns": 80551852640247
+    },
+    {
+      "kind": "phase2_execution_manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/MANIFEST.json",
+      "sha256": "d2c144067f2724fcf81f0d7051a6713585113b21e636f8f4bc7245505821d73d",
+      "bytes": 3481,
+      "read": "full",
+      "read_monotonic_ns": 80612344128237
+    },
+    {
+      "kind": "phase2_actual_execution",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/code.py",
+      "sha256": "eb5bff593d41a6188cabd53495b0a5efc358ba001211c17eb3d2c87b295bb86f",
+      "bytes": 1135,
+      "read": "full",
+      "evidence_kind": "candidate_code",
+      "read_monotonic_ns": 80623948658857
+    },
+    {
+      "kind": "phase2_actual_execution",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/data.json",
+      "sha256": "136859a1275db3bc2a813efb396c690170db35b65f650bb7476ef8bf09af8905",
+      "bytes": 391,
+      "read": "full",
+      "evidence_kind": "candidate_input",
+      "read_monotonic_ns": 80623948865922
+    },
+    {
+      "kind": "phase2_actual_execution",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stdout.bin",
+      "sha256": "b38394ff6d44a957904f46e840d3e27914c057a72ce7410cceb0b2d4cb322327",
+      "bytes": 175,
+      "read": "full",
+      "evidence_kind": "candidate_stdout",
+      "read_monotonic_ns": 80623949045483
+    },
+    {
+      "kind": "phase2_actual_execution",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "read": "full",
+      "evidence_kind": "candidate_stderr",
+      "read_monotonic_ns": 80623949212669
+    },
+    {
+      "kind": "phase2_actual_execution",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/P3-R002-EXECUTION-001/A/exec-81tq4_c4/execution-facts.json",
+      "sha256": "e599deecfdb0aa947b216162d132ffeedff6e45a03f6d23b4ac1002044b70544",
+      "bytes": 1487,
+      "read": "full",
+      "evidence_kind": "candidate_execution_receipt",
+      "read_monotonic_ns": 80623949391229
+    },
+    {
+      "kind": "phase2_runtime_accounting_manifest",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P3-R002-RUNTIME-ACCOUNTING-001/MANIFEST.json",
+      "sha256": "ec5e24ce56e87510c3fea8ed4d736aa005cef0f2a24d7e5c4b518fc118c7695d",
+      "bytes": 36154,
+      "read_scope": "selected direct lifecycle/identity/usage/accountant row and47 inputpin metadata; previous full print truncated",
+      "read_monotonic_ns": 80755297801520
+    }
+  ],
+  "prior_judgments_read": false
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "er9.positive-execution-policy-projection.v1",
+  "execution_id": "exec-ggbhz4r7",
+  "original_request_sha256": "6a95a18bd75a675d3bc578698b8eb6a6f8e98f5cf47667ad88d20c8cb709e827",
+  "actual_request_fields": {
+    "actor": "candidate",
+    "bootstrap_sha256": "ca44fd1471166504c51c806b53b2c8ccb46b596984d083946eb66c571973240b",
+    "bwrap_binary_sha256": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "code_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+    "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "limits": {
+      "cpu_seconds": 3,
+      "memory_bytes": 268435456,
+      "network": "new empty namespace",
+      "stream_bytes_each": 32768,
+      "tasks": 16,
+      "wall_seconds": 5
+    },
+    "python_binary_sha256": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+    "requested_execution_label": "executed by candidate",
+    "schema": "er9.execution.request.v1",
+    "server_sha256": "01ba5ab8ab9d8f1ff495f7a768c211ee1c8dd1cbc2b834868b93785a984c72ef"
+  },
+  "omitted_original_fields": [
+    "command",
+    "deadline_monotonic_ns",
+    "started_utc",
+    "unit"
+  ],
+  "redaction_policy": "retain actualpolicy/actor/hash fields, omitunit/privatecommand/deadline/timingcontext",
+  "owned_scope_supplement_sha256": "c4bf3f4af387f2dd2f75dc092fd49dbc4280a7c03c4cf079c409e2642f4fea26"
+}

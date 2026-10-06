@@ -1,0 +1,6 @@
+source index: [2.0, 3.0]
+NGFF scale then translation => world: [101.0, -1.0]
+source_to_derived => derived index: [2.0, 4.0]
+inverse export mapping => source index: [2.0, 3.0]
+translation then scale differs: True
+frame-aware coordinate round-trip: True

@@ -1,0 +1,34 @@
+{
+  "schema": "er9.luna.service-acceptance-positive-publication-selection.v1",
+  "status": "OWNER_FROZEN",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/service_acceptance_projection.py",
+      "relative_path": "dev/luna-route/service_acceptance_projection.py",
+      "sha256": "6e5c8e6a5c055788ced67fadda72fadfb74c916ba80e424d82daa80327b72a43"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/test_service_acceptance_projection.py",
+      "relative_path": "dev/luna-route/test_service_acceptance_projection.py",
+      "sha256": "133fd116353e83cd47c849894cdb6c0c055f741d0c71daab3990741a1c993bae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "relative_path": "dev/luna-route/SERVICE_ACCEPTANCE_REGRESSION.json",
+      "sha256": "7250c51487b9f7fcc4cb05f67f1957f13e894a8a3d9e38a36a99b6088d77c137"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/SERVICE_ACCEPTANCE_README.md",
+      "relative_path": "dev/luna-route/SERVICE_ACCEPTANCE_README.md",
+      "sha256": "b55922739547a14b9fadd9afdd49181372775bfb1fbec4acaefe5f06291d8810"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/SERVICE_ACCEPTANCE_PIN.json",
+      "relative_path": "dev/luna-route/SERVICE_ACCEPTANCE_PIN.json",
+      "sha256": "7fb461b0a30f89c56bb825a9ab320eab691535f0ef9715341c2e2731beb96049"
+    }
+  ],
+  "excluded": "private/native journal/result inputs, prompts, candidate/evaluator content, auth/provider secrets, unknown error message text and live outputs",
+  "native_goal_starts": 0,
+  "existing_runtime_and_original_flags_preserved": true
+}

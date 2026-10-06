@@ -1,0 +1,29 @@
+{
+  "schema": "er9.pinned-imported-public-source-metadata.v1",
+  "source_id": "S12",
+  "body_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+  "body_bytes": 77968,
+  "actual_admitted_index_record": {
+    "candidate_path": "inputs/source_context/0018.body",
+    "url": "https://www.sqlite.org/atomiccommit.html",
+    "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "version_or_commit": "sha256:5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "actual_admitted_index_sha256": "d897a3b1b2fb569e0370b46144f0f682564444ce5adc4bca086bed795de45f46",
+  "catalog_asserted_capture_identity": {
+    "capture_id": "a2c4db802e824b7cbdea3cabbbdeec6a",
+    "path": "inputs/source_context/0018.body",
+    "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+    "captured_at": "2026-10-05T22:21:12.461917+00:00",
+    "bytes": 77968,
+    "complete": true
+  },
+  "capture_identity_boundary": "original HTTP capture ID/time not independently established by import index; catalog assertion kept distinct",
+  "model_comprehension": "UNKNOWN; imported/fetched bytes do not prove comprehension",
+  "original_current_stage_input_sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+}

@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "D08-role-output-and-method-accounting-010",
-  "publication_snapshot_at": "2026-10-06T00:53:31.248076+00:00",
+  "cohort": "D08-finished-review-and-resource-successors-011",
+  "publication_snapshot_at": "2026-10-06T01:39:36.242983+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -37,7 +37,7 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-008/snapshot.safe.json",
+  "campaign_accounting_snapshot": "accounting/cohort-009/snapshot.safe.json",
   "accounting_snapshot_is_live_or_final": false,
   "independent_I02_research_verdicts": [
     "FAIL_SCREEN",
@@ -63,7 +63,7 @@
   "research_stage_count_scope": "Four original I01/I02 published artifact sets plus one R001 available research set; missing R001 partner is a separate attempted stage. Not full campaign attempts/occupancy.",
   "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
   "I01_scored_stages_observed_in_phase2": 4,
-  "accounting_snapshot_scope": "74deployments/66known candidate Goals/183574628known cache-inclusive tokens +3unknown usage rows at accounting008 capture; not final billing/liveness.",
+  "accounting_snapshot_scope": "74deployments/66known candidate Goals/200379027known tokens+2unknown usage at accounting009 capture; not final billing/liveness.",
   "DEC006_import_scope": {
     "neutral_locators": 622,
     "unique_contents": 405,
@@ -117,7 +117,7 @@
   },
   "archive_tool": "archive/tool-001/README.md",
   "Eval2_clock_companion": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
-  "D08A_role_packet": "Available frozen roles; review STARTED, source quality UNASSESSED, incomplete pair",
+  "D08A_role_packet": "Available A critic_and_final INCOMPLETE/PARTIAL; missing Bcritic UNASSESSED; review FINISHED",
   "method_audit": "Frozen cutoff; prospective repair selections are not repair completion proof",
   "dispatcher_kernel_envelope_admission": "NOT_OBSERVED_IN_THIS_COHORT",
   "initial_slots_terminal_gate": {
@@ -127,5 +127,15 @@
     "remaining_admission_requirements": "Actual safe complete GLM resource profile and real headroom; not quality/all32 approval",
     "source": "restart/cohort010/initial-terminal-gate/current.json",
     "whole_pipeline_credit": false
+  },
+  "D08A_review_seconds": 1163.017374667,
+  "I05_R002_current_packet": "Independently assessed FAIL_SCREEN/PARTIAL; limited blinding; one new isolated execution; no pipeline/winner",
+  "DEC010_policy": "Native endorsed final provenance/nullable identity proof/labeled clock anchors; V06botharms firstrelease excluded",
+  "resource_successors_preparation_native_claim": false,
+  "I05_R002_evaluator_clock": {
+    "review_closed_seconds": 1762.552529925,
+    "finished_notification_seconds": 1850.358101297,
+    "handoff_ceiling_exceeded_seconds": 50.358101297,
+    "new_assessment_after_close": false
   }
 }

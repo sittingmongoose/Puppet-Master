@@ -1,0 +1,92 @@
+{
+  "schema": "er9.positive-anonymous-witness-export.v1",
+  "parent_dispatch_sha256": "e08b7a4c9aa90da5e7dd6017e6a685c099f420ced840d64de901016a0944d132",
+  "executions": 1,
+  "files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-ggbhz4r7",
+      "relative_path": "A/exec-ggbhz4r7/code.py",
+      "sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "original_sha256": "9ce621e66390e07e69e3526296d48efd22987a86ae7b684c34bc5f95f3a54381",
+      "evidence_kind": "candidate_code",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-ggbhz4r7",
+      "relative_path": "A/exec-ggbhz4r7/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "evidence_kind": "candidate_input",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-ggbhz4r7",
+      "relative_path": "A/exec-ggbhz4r7/stdout.bin",
+      "sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "original_sha256": "c088e3072389fe9edc0d2bee053f94961aa65517cbd7afb3da2307000d1ad283",
+      "evidence_kind": "candidate_stdout",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-ggbhz4r7",
+      "relative_path": "A/exec-ggbhz4r7/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "redaction_policy": "exact bytes"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-ggbhz4r7",
+      "relative_path": "A/exec-ggbhz4r7/execution-facts.json",
+      "sha256": "7eb2666fbc42b785fe015c63d80299e78c34422f2f9dbd6b727d2ad2dcc06e24",
+      "original_sha256": "1c2c17cd0b16a31b926f9f984e0ed11d8b751bfbabd03ae22540cd400fc175e2",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positive field projection; omit private paths, unit IDs, timing/economics/history and duplicate stdout/stderr strings; exact separately pinned streams retained",
+      "retained_original_fields": [
+        "actor",
+        "bootstrap_marker_sha256",
+        "bootstrap_started",
+        "cleanup_classification",
+        "cleanup_confirmed",
+        "cleanup_state_returncode",
+        "cleanup_stop_returncode",
+        "code_sha256",
+        "control_group_absent_after_stop",
+        "control_group_populated_after_stop",
+        "data_sha256",
+        "execution_id",
+        "execution_label",
+        "exit_code",
+        "exit_scope",
+        "limits",
+        "schema",
+        "stderr_bytes",
+        "stderr_sha256",
+        "stdout_bytes",
+        "stdout_sha256",
+        "stopped_by_adapter",
+        "unit_active_state_after_stop",
+        "unit_load_state_after_stop"
+      ],
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "stderr",
+        "stdout"
+      ]
+    }
+  ],
+  "candidate_output_freeze_sha256": "2fe92e1627cdaf7c05f2d3bf571ddce0844e3ab4201bfec98769f6c7f21489ad",
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER"
+}

@@ -1,0 +1,34 @@
+{
+  "schema": "er9.safe_authored_publication_selector.v1",
+  "recorded_utc": "2026-10-06T01:26:35.453169+00:00",
+  "selector_sha256": "c2698ae81cf6a262b5e6ad47b622d4c35f75acd40edd08fa09490d893b757494",
+  "selector_encoding": "UTF-8 compact sorted-key JSON array of path+sha256 in listed order, no newline",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.md",
+      "sha256": "f442e3f5749f7be227c0311149ebad16ffe7065c0c418f887f4175680d6cda62"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-evidence.json",
+      "sha256": "355b689022b73ae3426527eb37f5e4c851059435b4fa2148eb582e17dcd39eb3"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    }
+  ],
+  "supersedes_selector_only": "DECISIONS-010-publication-provenance-addendum.json; appends clock convention without rewriting earlier policy/addenda/selectors",
+  "excluded": "No candidate/source/evaluation bodies, sealed brief details or private/vendor/live/raw captures"
+}
