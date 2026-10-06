@@ -1,0 +1,636 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assessment_queue010_observed_utc": {
+      "type": "string"
+    },
+    "assessment_queue010_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "assessment_scope_metadata_only": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "completion_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "dispatch_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "evaluation_id": {
+                "type": "string"
+              },
+              "exact_scope_only_no_automatic_wholepipeline_assessment": {
+                "type": "boolean"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "prepared_utc": {
+                "type": "string"
+              },
+              "reservation_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evaluation_id",
+              "pair_id",
+              "scope",
+              "prepared_utc",
+              "reservation_pin",
+              "dispatch_pin",
+              "completion_pin",
+              "exact_scope_only_no_automatic_wholepipeline_assessment"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "completion_pin": {
+                "type": "null"
+              },
+              "dispatch_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "evaluation_id": {
+                "type": "string"
+              },
+              "exact_scope_only_no_automatic_wholepipeline_assessment": {
+                "type": "boolean"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "prepared_utc": {
+                "type": "string"
+              },
+              "reservation_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evaluation_id",
+              "pair_id",
+              "scope",
+              "prepared_utc",
+              "reservation_pin",
+              "dispatch_pin",
+              "completion_pin",
+              "exact_scope_only_no_automatic_wholepipeline_assessment"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "completion_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "dispatch_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "evaluation_id": {
+                "type": "string"
+              },
+              "exact_scope_only_no_automatic_wholepipeline_assessment": {
+                "type": "boolean"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "prepared_utc": {
+                "type": "string"
+              },
+              "reservation_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evaluation_id",
+              "pair_id",
+              "scope",
+              "prepared_utc",
+              "reservation_pin",
+              "dispatch_pin",
+              "completion_pin",
+              "exact_scope_only_no_automatic_wholepipeline_assessment"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "completion_pin": {
+                "type": "null"
+              },
+              "dispatch_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "observed_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "observed_utc"
+                ],
+                "type": "object"
+              },
+              "evaluation_id": {
+                "type": "string"
+              },
+              "exact_scope_only_no_automatic_wholepipeline_assessment": {
+                "type": "boolean"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "prepared_utc": {
+                "type": "string"
+              },
+              "reservation_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "evaluation_id",
+              "pair_id",
+              "scope",
+              "prepared_utc",
+              "reservation_pin",
+              "dispatch_pin",
+              "completion_pin",
+              "exact_scope_only_no_automatic_wholepipeline_assessment"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "original_logical_target_counts_unchanged": {
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_pairs": {
+          "type": "number"
+        },
+        "fresh_integrated_pairs": {
+          "type": "number"
+        },
+        "locked_confirmation_pairs": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "diagnostic_pairs",
+        "fresh_integrated_pairs",
+        "locked_confirmation_pairs"
+      ],
+      "type": "object"
+    },
+    "queue_updated_units_metadata_only": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "closure_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "unit_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "unit_id",
+              "state",
+              "scope",
+              "closure_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "closure_pin": {
+                "type": "null"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "unit_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "unit_id",
+              "state",
+              "scope",
+              "closure_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "closure_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "unit_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "unit_id",
+              "state",
+              "scope",
+              "closure_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "closure_pin": {
+                "type": "null"
+              },
+              "scope": {
+                "type": "null"
+              },
+              "state": {
+                "type": "string"
+              },
+              "unit_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "unit_id",
+              "state",
+              "scope",
+              "closure_pin"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "closure_pin": {
+                "type": "null"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              },
+              "unit_id": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "unit_id",
+              "state",
+              "scope",
+              "closure_pin"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "rule": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "storage_no_campaign_cutoff": {
+      "type": "boolean"
+    },
+    "storage_no_clock_reset": {
+      "type": "boolean"
+    },
+    "storage_observed_utc": {
+      "type": "string"
+    },
+    "storage_qualification_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "workload004_completed_utc": {
+      "type": "string"
+    },
+    "workload004_neutral_closure_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "workload004_scoreboard_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "workload004_selector_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "workload004_source_window_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "workload004_selector_pin",
+    "workload004_scoreboard_pin",
+    "workload004_neutral_closure_pin",
+    "workload004_completed_utc",
+    "workload004_source_window_utc",
+    "original_logical_target_counts_unchanged",
+    "assessment_queue010_pin",
+    "assessment_queue010_observed_utc",
+    "assessment_scope_metadata_only",
+    "queue_updated_units_metadata_only",
+    "storage_qualification_pin",
+    "storage_observed_utc",
+    "storage_no_clock_reset",
+    "storage_no_campaign_cutoff",
+    "rule"
+  ],
+  "type": "object"
+}

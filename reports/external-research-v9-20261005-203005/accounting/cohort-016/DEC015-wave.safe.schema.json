@@ -1,0 +1,751 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accounting_capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "owner_checkpoint_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_observed_utc": {
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "extra_logical_target_credit": {
+                "type": "boolean"
+              },
+              "freeze_pin_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts_from_exact_accounting_capture": {
+                "type": "number"
+              },
+              "native_goal_status_saved": {
+                "type": "string"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operator_operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "source_uptake_or_cache_benefit": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "pair_id",
+              "source_slot",
+              "arm",
+              "stage",
+              "operator_status",
+              "operator_operational_complete",
+              "native_goal_starts_from_exact_accounting_capture",
+              "native_goal_status_saved",
+              "usage_reference_only",
+              "usage_basis",
+              "native_receipt_pin",
+              "freeze_pin_reference_only",
+              "occupied_seconds_reference_only",
+              "billing_dollars",
+              "extra_logical_target_credit",
+              "source_uptake_or_cache_benefit",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "extra_logical_target_credit": {
+                "type": "boolean"
+              },
+              "freeze_pin_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts_from_exact_accounting_capture": {
+                "type": "number"
+              },
+              "native_goal_status_saved": {
+                "type": "string"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operator_operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "source_uptake_or_cache_benefit": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "pair_id",
+              "source_slot",
+              "arm",
+              "stage",
+              "operator_status",
+              "operator_operational_complete",
+              "native_goal_starts_from_exact_accounting_capture",
+              "native_goal_status_saved",
+              "usage_reference_only",
+              "usage_basis",
+              "native_receipt_pin",
+              "freeze_pin_reference_only",
+              "occupied_seconds_reference_only",
+              "billing_dollars",
+              "extra_logical_target_credit",
+              "source_uptake_or_cache_benefit",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "extra_logical_target_credit": {
+                "type": "boolean"
+              },
+              "freeze_pin_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts_from_exact_accounting_capture": {
+                "type": "number"
+              },
+              "native_goal_status_saved": {
+                "type": "string"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operator_operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "source_uptake_or_cache_benefit": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "pair_id",
+              "source_slot",
+              "arm",
+              "stage",
+              "operator_status",
+              "operator_operational_complete",
+              "native_goal_starts_from_exact_accounting_capture",
+              "native_goal_status_saved",
+              "usage_reference_only",
+              "usage_basis",
+              "native_receipt_pin",
+              "freeze_pin_reference_only",
+              "occupied_seconds_reference_only",
+              "billing_dollars",
+              "extra_logical_target_credit",
+              "source_uptake_or_cache_benefit",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "extra_logical_target_credit": {
+                "type": "boolean"
+              },
+              "freeze_pin_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts_from_exact_accounting_capture": {
+                "type": "number"
+              },
+              "native_goal_status_saved": {
+                "type": "string"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operator_operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "source_uptake_or_cache_benefit": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "pair_id",
+              "source_slot",
+              "arm",
+              "stage",
+              "operator_status",
+              "operator_operational_complete",
+              "native_goal_starts_from_exact_accounting_capture",
+              "native_goal_status_saved",
+              "usage_reference_only",
+              "usage_basis",
+              "native_receipt_pin",
+              "freeze_pin_reference_only",
+              "occupied_seconds_reference_only",
+              "billing_dollars",
+              "extra_logical_target_credit",
+              "source_uptake_or_cache_benefit",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "extra_logical_target_credit": {
+                "type": "boolean"
+              },
+              "freeze_pin_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts_from_exact_accounting_capture": {
+                "type": "number"
+              },
+              "native_goal_status_saved": {
+                "type": "string"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operator_operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "source_uptake_or_cache_benefit": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "pair_id",
+              "source_slot",
+              "arm",
+              "stage",
+              "operator_status",
+              "operator_operational_complete",
+              "native_goal_starts_from_exact_accounting_capture",
+              "native_goal_status_saved",
+              "usage_reference_only",
+              "usage_basis",
+              "native_receipt_pin",
+              "freeze_pin_reference_only",
+              "occupied_seconds_reference_only",
+              "billing_dollars",
+              "extra_logical_target_credit",
+              "source_uptake_or_cache_benefit",
+              "scope"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "rule": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "summary": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_native_attempts": {
+          "type": "number"
+        },
+        "extra_logical_targets": {
+          "type": "number"
+        },
+        "failed_operational_status": {
+          "type": "number"
+        },
+        "known_usage_reference_tokens": {
+          "type": "number"
+        },
+        "operational_complete": {
+          "type": "number"
+        },
+        "usage_unknown_rows": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "actual_native_attempts",
+        "operational_complete",
+        "failed_operational_status",
+        "known_usage_reference_tokens",
+        "usage_unknown_rows",
+        "extra_logical_targets"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_checkpoint_pin",
+    "owner_observed_utc",
+    "accounting_capture_interval_utc",
+    "rows",
+    "summary",
+    "rule"
+  ],
+  "type": "object"
+}

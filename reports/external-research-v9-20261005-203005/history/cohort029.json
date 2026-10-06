@@ -1,0 +1,150 @@
+{
+  "cohort": "failure-inclusive-accounting-029",
+  "snapshot_at": "2026-10-06T07:24:27.605586+00:00",
+  "sources": [
+    {
+      "source": "accounting/cohort-016/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-016/PUBLIC_SELECTION.json",
+      "source_sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140",
+      "public_sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "published": "accounting/cohort-016/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "source_sha256": "9d8080ca8751e432f93ac48806dff8ddf7fc12d2b318e217fef76b8fdfde09f0",
+      "public_sha256": "9d8080ca8751e432f93ac48806dff8ddf7fc12d2b318e217fef76b8fdfde09f0",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "published": "accounting/cohort-016/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "source_sha256": "7efcd9bd55265db608f2849eb2fd4acbed435533ece669a3fc1bb208870b5448",
+      "public_sha256": "7efcd9bd55265db608f2849eb2fd4acbed435533ece669a3fc1bb208870b5448",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/COST_SNAPSHOT.md",
+      "published": "accounting/cohort-016/COST_SNAPSHOT.md",
+      "source_sha256": "71856bb966deeb0eb0e79bfb3f4a937c4e7718ffbbba32f05b04ba1474aa4e3b",
+      "public_sha256": "71856bb966deeb0eb0e79bfb3f4a937c4e7718ffbbba32f05b04ba1474aa4e3b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/DEC015-wave.safe.json",
+      "published": "accounting/cohort-016/DEC015-wave.safe.json",
+      "source_sha256": "98a548569a9f12e5a3395d582fc55cedbac0115e39428945d9ac8c0856dce891",
+      "public_sha256": "98a548569a9f12e5a3395d582fc55cedbac0115e39428945d9ac8c0856dce891",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/DEC015-wave.safe.schema.json",
+      "published": "accounting/cohort-016/DEC015-wave.safe.schema.json",
+      "source_sha256": "482b8fb32e6e0ce5d477d552cc0f84d0478fce08a375797f2e02173ca9b2db85",
+      "public_sha256": "482b8fb32e6e0ce5d477d552cc0f84d0478fce08a375797f2e02173ca9b2db85",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/KEEPER_RECEIPT.json",
+      "published": "accounting/cohort-016/KEEPER_RECEIPT.json",
+      "source_sha256": "8548157a8d32e166cbe814f693730f85c170cfbca5021212528e319c451cb721",
+      "public_sha256": "8548157a8d32e166cbe814f693730f85c170cfbca5021212528e319c451cb721",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/KEEPER_RECEIPT.schema.json",
+      "published": "accounting/cohort-016/KEEPER_RECEIPT.schema.json",
+      "source_sha256": "52dab5a823a272325442ef310724d6faa854d991eb938abc0b86a6dbc81bfa46",
+      "public_sha256": "52dab5a823a272325442ef310724d6faa854d991eb938abc0b86a6dbc81bfa46",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/VERIFICATION.json",
+      "published": "accounting/cohort-016/VERIFICATION.json",
+      "source_sha256": "82d73c9b42d58f2e63efcbacde7b36ef996ec709eabfbd127e33a7b706c43850",
+      "public_sha256": "82d73c9b42d58f2e63efcbacde7b36ef996ec709eabfbd127e33a7b706c43850",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/attempts.safe.json",
+      "published": "accounting/cohort-016/attempts.safe.json",
+      "source_sha256": "620316e67913392bdd8b68e1e560134fa013a338bdf96341012497ec94d531c1",
+      "public_sha256": "620316e67913392bdd8b68e1e560134fa013a338bdf96341012497ec94d531c1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/attempts.safe.schema.json",
+      "published": "accounting/cohort-016/attempts.safe.schema.json",
+      "source_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "public_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/evaluator-clocks.safe.json",
+      "published": "accounting/cohort-016/evaluator-clocks.safe.json",
+      "source_sha256": "e62aa0c2bff21c8dd7f37326dc3f2694ab0bde29bdcf4341fe78aa2aef44d171",
+      "public_sha256": "e62aa0c2bff21c8dd7f37326dc3f2694ab0bde29bdcf4341fe78aa2aef44d171",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/evaluator-clocks.safe.schema.json",
+      "published": "accounting/cohort-016/evaluator-clocks.safe.schema.json",
+      "source_sha256": "86e3e830f2bf5c480b21b25f7d5d0603fb0cacf20bdcf696663c865d3160ce28",
+      "public_sha256": "86e3e830f2bf5c480b21b25f7d5d0603fb0cacf20bdcf696663c865d3160ce28",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/snapshot.safe.json",
+      "published": "accounting/cohort-016/snapshot.safe.json",
+      "source_sha256": "ed4c1aac3651b87b9024cb716484d56a6512f7ba798c247b311e93cebd8c3ccc",
+      "public_sha256": "ed4c1aac3651b87b9024cb716484d56a6512f7ba798c247b311e93cebd8c3ccc",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/snapshot.safe.schema.json",
+      "published": "accounting/cohort-016/snapshot.safe.schema.json",
+      "source_sha256": "6fc0b65510eb5e47962ca5c3c84c6d56a1021fec67b3a9270097ea78a099f00f",
+      "public_sha256": "6fc0b65510eb5e47962ca5c3c84c6d56a1021fec67b3a9270097ea78a099f00f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/storage-coordination.safe.json",
+      "published": "accounting/cohort-016/storage-coordination.safe.json",
+      "source_sha256": "fc03d1709d7075be1c120468b078c0425c7961930d5322a34fdb660774089206",
+      "public_sha256": "fc03d1709d7075be1c120468b078c0425c7961930d5322a34fdb660774089206",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/storage-coordination.safe.schema.json",
+      "published": "accounting/cohort-016/storage-coordination.safe.schema.json",
+      "source_sha256": "17b9d0f129be9b0cf915ad2666a6693017b474ed609828483e04dd26bf6a5988",
+      "public_sha256": "17b9d0f129be9b0cf915ad2666a6693017b474ed609828483e04dd26bf6a5988",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/workload-storage.safe.json",
+      "published": "accounting/cohort-016/workload-storage.safe.json",
+      "source_sha256": "73d0edf09a598d3d9d719cb0897da3932742859ecb292d2bf9fbf406d19def05",
+      "public_sha256": "73d0edf09a598d3d9d719cb0897da3932742859ecb292d2bf9fbf406d19def05",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-016/workload-storage.safe.schema.json",
+      "published": "accounting/cohort-016/workload-storage.safe.schema.json",
+      "source_sha256": "739e32c17668c3c2cb9d76b5e90c51052a6971c1b446e164ef74e6520bffd2b2",
+      "public_sha256": "739e32c17668c3c2cb9d76b5e90c51052a6971c1b446e164ef74e6520bffd2b2",
+      "transform": "byte-identical"
+    }
+  ],
+  "scope": "Accounting016 capture07:18:34.480107\u201335.138389Z distinct from later review closures; prior snapshots immutable",
+  "attempts": 239,
+  "confirmed_goals": 221,
+  "known_provider_tokens_cache_inclusive": 638711141,
+  "unknown_usage_rows": 19,
+  "unknown_start_rows": 0,
+  "billing": "UNKNOWN",
+  "DEC015_terminal_wave": "Five same-Goal warm recoveries already globally charged32439645 known tokens;1operational complete/4operatorfailures/0extra targets; no scientific claim",
+  "operational_pipelines_prior_verified": 6,
+  "operational_matched_pairs_prior_verified": 2,
+  "causal_winner": null
+}

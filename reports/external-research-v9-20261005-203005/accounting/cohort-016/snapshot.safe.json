@@ -1,0 +1,2653 @@
+{
+  "actual_family_totals": {
+    "GLM": {
+      "attempts": 72,
+      "known_tokens": 89762665,
+      "native_goal_starts_known": 72
+    },
+    "Luna": {
+      "attempts": 156,
+      "known_tokens": 549695842,
+      "native_goal_starts_known": 156
+    },
+    "UNKNOWN": {
+      "attempts": 3,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 23,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0
+    }
+  },
+  "as_of_utc": "2026-10-06T07:18:35.457625+00:00",
+  "billing_dollars": "UNKNOWN",
+  "candidate_actual_family_counts": {
+    "GLM": {
+      "attempts": 70,
+      "confirmed_native_starts": 70,
+      "known_tokens": 89705425
+    },
+    "Luna": {
+      "attempts": 151,
+      "confirmed_native_starts": 151,
+      "known_tokens": 549005716
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 18,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    }
+  },
+  "candidate_last_observed_native_goal_status_counts": {
+    "UNKNOWN": 81,
+    "active": 5,
+    "complete": 43,
+    "paused": 110
+  },
+  "capture_interval_utc": {
+    "end": "2026-10-06T07:18:35.138389+00:00",
+    "start": "2026-10-06T07:18:34.480107+00:00"
+  },
+  "capture_stability": [
+    {
+      "captured_sha256": "85830f41eb25023603fb591586a82643c831e1dab5b6274be0d09a95a3c3f7be",
+      "path": "state/jobs.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d41f0fe67ab156abce599733e84c5615e4c3e08c2f2e28ecb08c8b54fb6fe3a2",
+      "path": "state/attempts.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "690924b52f13723039a2ecfc8c4f3896ce3dc574c855109b78a1a35ad5f2ad41",
+      "path": "state/queue_cursor.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6ebfd6c0f21179215d47361658fcaa6401eeb32a737039e0b1317fcbfe1a7b36",
+      "path": "state/supervisor_goal_counters.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "91e13922e233b488d64d0be53ea18fc6cce3b46770f9579fa64960a3bf88166d",
+      "path": "dev/luna-route/diagnosis-short/NATIVE_ERROR_CLASS.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c",
+      "path": "dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a4d4cc02668166da5a58ea684c937e83da7fcd83b285bdc37576ea16881860f1",
+      "path": "ops/dispatcher/runs/I-01-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "57821d4e1dbfe9e99271a9819e7c9b33bf179013a23116b53e65fbd3fec2a030",
+      "path": "ops/dispatcher/runs/I-01-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2ac85128d0d01b6a7081aa944c8fe5b30d511fe7fcc95c167b0b605b18c955e3",
+      "path": "ops/dispatcher/runs/I-01-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "eb49ba0e8393ff6e8d1557038fe24d5c967900936b3cd08cf696d00924e86b53",
+      "path": "ops/dispatcher/runs/I-01-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "71a877cd78da86c8c63eb56faf2f87272288db76a44fb2e21d05f919203136d2",
+      "path": "ops/dispatcher/runs/I-01-control-revision-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7d5eb54b8b3d78eb93f09e82e5a98741bc393689d4c83432a9346b83c3189a7d",
+      "path": "ops/dispatcher/runs/I-01-control-revision-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "eeffaeebf3d0725d20b8fcb902066f5dde0b4faea564b9269df38d27577421e7",
+      "path": "ops/dispatcher/runs/I-01-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4c7109f26c308f114143ce9f2dda572d8194690a6cb65215d00fa5920fff27a6",
+      "path": "ops/dispatcher/runs/I-01-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "be01c7b65f2fed0c9db16e291c971dbd95ed64d8573a8e5532f3868486535614",
+      "path": "ops/dispatcher/runs/I-02-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5caf11dda18e2be56e02893741ab3430843ea005349934cb43d9f436544f3967",
+      "path": "ops/dispatcher/runs/I-02-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9ef7870e0f98db079ad14bfe62351534bb001cdcec963a7abc5caae679031df3",
+      "path": "ops/dispatcher/runs/I-02-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "170615453fbc3a3e0c4a3be507b15c674ce071caa9668b155d9fa4b5a3aaafa5",
+      "path": "ops/dispatcher/runs/I-02-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3b7918e862170e0cf528679bf7d6a6d0055f233ebf48a2e6e377d21a5a8e838f",
+      "path": "ops/dispatcher/runs/I-02-treatment-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "82087b3bf675b3577bc922282b38bc3061047cf509e10539e5b986b78048287d",
+      "path": "ops/dispatcher/runs/I-02-treatment-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d0a02f152ae031b8fe432d38a86a5704b3d6b66498e59080fe05ee1060d92dd7",
+      "path": "ops/dispatcher/runs/I-03-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2b9301f95b961827452bf7b843f328fd694cfab6877cafbb8927f774228ad9b5",
+      "path": "ops/dispatcher/runs/I-03-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3460a004e724e604f8e3157b7ac27cf3ac0bbd5802b355475adda4a0bb40f748",
+      "path": "ops/dispatcher/runs/I-03-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b6005826218c4b8a590165a0583527e4b7a5b7c13465c1e61252e9a713f331fe",
+      "path": "ops/dispatcher/runs/I-03-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6177120829ca07256c60fcf8f250650337b75f95230b96ad26d99ab1858ed580",
+      "path": "ops/dispatcher/runs/I-04-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f538b7cfc42cf0295f183ed847206f96e841cd0f364d99d9b4c7e440e8efdd12",
+      "path": "ops/dispatcher/runs/I-04-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "94b2172548a18009079ceb100c7d8d0307db5cd74ad22c4ed07ab4b30ebfa67b",
+      "path": "ops/dispatcher/runs/I-04-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d4ee529cf6405211b311acff1f997a2addfb49d0c88cf0509f2697ea7df24e0e",
+      "path": "ops/dispatcher/runs/I-04-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657",
+      "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-control-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f20ae3d3091601a86e30cf99cba78cf02f227f5ddf72e8e6d9a538e5a0f53609",
+      "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-treatment-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "93dbb51ddd92202eda6cea0c4f4d077ad9b1b813c2cd1fcf602058085bc9f16b",
+      "path": "ops/dispatcher/runs/D-V14-B-control-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13",
+      "path": "ops/dispatcher/runs/D-V14-B-treatment-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "529dd260b032e4bc5e925bf2ec55dea815bba529458e36d391c8ff4bbfab78ca",
+      "path": "ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "01f55b1420c5208c345ab3698a8e12ee46b12696be55e5c8adbc170602dac474",
+      "path": "ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc",
+      "path": "ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2",
+      "path": "ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b8d62d167f9a525292f78edd9857e60f3ca2f584f773e20f6615f4e444cd2397",
+      "path": "ops/dispatcher/runs/I-05-LUNA-S1-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "53762d097cbf064a1ff00904bf1065c151edc41ef935f3b44f225a3b6cb8a2ef",
+      "path": "ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "21bb445054f1c685763892a24b0f29b34e439921c65dd3e08f7b40bab0e3e7da",
+      "path": "ops/dispatcher/runs/I-05-LUNA-S1-treatment-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8edc22bcca95f30bd2c08919e749711ff65506e6dc1c2bea2b03845219078589",
+      "path": "dev/luna-route/diagnosis-I05/I-05-LUNA-S1-treatment-critique-a001-OWNED_SCOPE_PROOF.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c0d0bf6bcb4ba8bb5ff4fbe63245e91ade731b897b9ef90c3b600feeb0e69278",
+      "path": "ops/dispatcher/runs/I-06-LUNA-S1-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c60f9202874d43af5cb9cbad56b1db51bc7c379159d33889bf4edb1ce4381eac",
+      "path": "ops/dispatcher/runs/I-06-LUNA-S1-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4745e9d06ee7c893ae5ae6fa87a9f1db53e483e0e840019dd335e8c5c96b7661",
+      "path": "ops/dispatcher/runs/I-07-LUNA-S1-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "35dc00749a8666be9b61737e50f89b4a890fd86bbc7c185d8a5a4fed97090c2e",
+      "path": "ops/dispatcher/runs/I-07-LUNA-S1-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d7c06708ed8144c251c2454989fe3e2f9957865a2ec49eb4a385118763c3f337",
+      "path": "ops/dispatcher/runs/I-08-LUNA-S1-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5160efcf4f7603152728ec27bbd815d03c3f20c2dfaad2e0a37d8fc5c577f03d",
+      "path": "ops/dispatcher/runs/I-08-LUNA-S1-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "572114b5548cf94aeb43202e670c7db775152acb8ff9067dbac590982ffadd20",
+      "path": "ops/dispatcher/runs/I-01-R001-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6831e28630b4f28b14f54664454b5465becd59c31195d828f3fc1e749c7555be",
+      "path": "ops/dispatcher/runs/I-01-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b5917c9029be8bc07089b0a6895d191df1910ba7a68db9247b2f880de89255dc",
+      "path": "ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "03ab16f065d9dd5d4e8b1446b6acf07346239ad1b3d3293284aa0cb6d8c7ebd6",
+      "path": "ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e0d29ddf5c891ea1dcb9de32b6f25917fdf95f6da9c77b3adf5cd7c83b5f14ab",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-base-s001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7d0092c676d2855a426b9b30c6abf7d5c590ebadc64ddc382131614984f13b60",
+      "path": "dev/luna-route/diagnosis-I05/SEED-DEV-A-base-s001-OWNED_SCOPE_PROOF.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a7126e95773d1f4224f62486079f3efaa39c79db7b9923917e1c3900eb5e2e7e",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-base-s001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fbd4b2e22ee57cd9c86f3b5c0c3702bb78e4d8965259aef1254559819a56e767",
+      "path": "dev/luna-route/diagnosis-I05/SEED-DEV-B-base-s001-OWNED_SCOPE_PROOF.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad",
+      "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895",
+      "path": "ops/dispatcher/runs/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6bf88c11e74055cb5da6e0d2ae8a46ab832b4851a010c4533cfd2378fff42110",
+      "path": "ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "37c9d1209ce66c07af25dc13b9afdd8f78ee82ae1e857e75422be9fa2ada73dc",
+      "path": "ops/dispatcher/runs/I-09-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8579c591136c26834cb69f2f4cbd7c6cd0a7ef325b9001aa07e23244f77792bf",
+      "path": "ops/dispatcher/runs/I-09-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3678150203795a11e7afb90ed9128871bdf69a038416d7838e9512adf6cd6e6e",
+      "path": "ops/dispatcher/runs/I-09-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e843211320de935da3146cf1af850c683fb2ebe27e59473bd49482b6b8e0de42",
+      "path": "ops/dispatcher/runs/I-09-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4c982f2c77dbf67cf35cf77c7a6bb61a79b4d8da42d483c1c57359fb110694ec",
+      "path": "ops/dispatcher/runs/I-10-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "042bea8bd2fb5b38ed9659708acf8267edfad5e9ddd72fd9d1c0cdf9f778bd1f",
+      "path": "ops/dispatcher/runs/I-10-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "045b689ef52ec3a6946491e4e45d9771af2594943d9831012f6639e334d00283",
+      "path": "ops/dispatcher/runs/I-10-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a6cfa5b4c8391f7e0ed13efdd49a1712a1df887d661f3d4f355ecff4ced1c0f8",
+      "path": "ops/dispatcher/runs/I-10-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "34fac08b0e73bc11dc07680630037f8c7d23e3a936a2b17db8a8b0367ba1808b",
+      "path": "ops/dispatcher/runs/I-11-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9e88ac81df3aeeea22560f9d76c49e9c34c08c5f14a34997142b55089f4f7575",
+      "path": "ops/dispatcher/runs/I-11-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "96aa54fd521c8c57da5642f3a88df8463792528a87f04bc0601288ffda2dd7ba",
+      "path": "ops/dispatcher/runs/I-11-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e6f0f81aae76464e7a0a25a292284a7f9063e9eab763767998ae6532ad858893",
+      "path": "ops/dispatcher/runs/I-11-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f2eb0bc36a17722b74ceda1b5597c1312c068d9c963106699f7fa4a64e1ac4b2",
+      "path": "ops/dispatcher/runs/I-11-control-revision-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e4aa2ff194ce63be465e21c2dd2addc8d65687eb91725fd247eb6c10c73461de",
+      "path": "ops/dispatcher/runs/I-11-control-revision-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c2a9df0844126d6dd488f47c0df453946996eb162a01dcf2daf2ec0036f9890a",
+      "path": "ops/dispatcher/runs/I-11-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b095def7f178566760d10ac319348dc319370857ea0b2b1256fea27f07b8768a",
+      "path": "ops/dispatcher/runs/I-11-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "742f41d6347ace4ed8b4f6c2e93f5b6bbaba2d0a05cd74de4b9162d6493a6b39",
+      "path": "ops/dispatcher/runs/I-12-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "0a62be67b16c01d00529fff6877daf42525faa8a4fb8b66242f2f9754cc34b70",
+      "path": "ops/dispatcher/runs/I-12-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "07e05c6cefecec6dcf9e7b5f0bc91c3c07e6b113ea193792fe9dd6a9cb4f6661",
+      "path": "ops/dispatcher/runs/I-12-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9360755e59d3226404c394b76a4c5ef24c81fbdf019c23bf3c88d035ada34d88",
+      "path": "ops/dispatcher/runs/I-12-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c8334526dfb6add511dba985c4cca54d7804855711cc84d9d76153615741f45c",
+      "path": "ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0",
+      "path": "ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4d6bb319f1e2d06273f969d44d3f57eeba2729406cdf67dce203382e09a111cb",
+      "path": "ops/dispatcher/runs/I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "19db3b0509e9acbd805b46afcecaef7041c9d748cce5eb9474dd212b4d451b4d",
+      "path": "ops/dispatcher/runs/D-V01-A-control-diagnostic-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f1d93be1e7ab1ccad30eb1e23e795c63cb4a5b8e98bd70da30785d8222133ac7",
+      "path": "ops/dispatcher/runs/D-V01-A-control-diagnostic-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8eb3ddd1aafd66ffac4c7403ea616cad3aa5e7c6e25fcbf05a00074af4d11278",
+      "path": "ops/dispatcher/runs/D-V01-A-treatment-diagnostic-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "daec82ffb9f89161ca49be88883ec3508757a00510df788d3dcb1cdcb6833a2f",
+      "path": "ops/dispatcher/runs/D-V01-A-treatment-diagnostic-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f4fcf7fad216e536e498121ae572a58b249bb746f14538f94ad1f3e154e79bad",
+      "path": "ops/dispatcher/runs/D-V08-A-control-critic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c991d7336a6ef3406ac9788ac3254d20e70929fa7ccbbb34e24c490eff3e296a",
+      "path": "ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e2ecf5b815d110df3f485de9866449c5cab6886f8adce81d64c732a0f6131aef",
+      "path": "ops/dispatcher/runs/D-V08-B-control-critic-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1ed97349b26e5263f6ef72cf67d41062f3cc550d073585fac575446639e9166a",
+      "path": "ops/dispatcher/runs/D-V08-B-control-critic-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e69cdcb52a413f106848e2e757252e198b8e8208be5ad9b483092e98c1311a13",
+      "path": "ops/dispatcher/runs/D-V08-B-treatment-critic_and_final-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "97510b10461c4b27f1b6046ea6bd7381caaa03dd3426fae1d0db2a1600d17e50",
+      "path": "ops/dispatcher/runs/D-V08-B-treatment-critic_and_final-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e48a00702dbc3f10e5be255d9ae3529c90327063b801489759f4385774e7014a",
+      "path": "ops/dispatcher/runs/D-V09-A-treatment-implementation_critic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "09a3d353b40aef0353d2e1f95fb2c66ff6eca53371643954a3db427a2df7c18a",
+      "path": "ops/dispatcher/runs/D-V16-A-control-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a3496415df9842049345fc300059a227a141c81ae724bea1547bbeba8448befd",
+      "path": "ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "495fcab36eb0fedb7c46f53c6b35c2745ce5d6cafd0f3f9eacba5c1ecb3804c9",
+      "path": "ops/dispatcher/runs/D-V16-B-control-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6fe863b4d3ab045acc6ec8419c68e6b2abc8ecabc82e144a76dd59ee0c79cfba",
+      "path": "ops/dispatcher/runs/D-V16-B-treatment-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "37031141261fdd4aeeab3d1101da66b03521f4417e0eab4a1547e888860cae9a",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-FIXED-BASE-enrichment-s002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "73a65ea1bba3ca3dd89d847dc67b87daf1b6da4e232e41468f67a4b6ca0760e1",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-FIXED-BASE-enrichment-s002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a2228fa06ba9e31d8c352b5eb73ec1e35a051f306599dcc8e212d709ba32813c",
+      "path": "ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "91757a3ffae1a1d3e29e3febc9db4affe85714791acb88d2c6b191f41ac9e692",
+      "path": "ops/dispatcher/runs/D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f6475ad897ca4bba1d0c2d0290eef59e4612e4face038353e01aad6367e14764",
+      "path": "ops/dispatcher/runs/D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "aa52c7889879caf8098d5876c98aa6d21dbb89cfbcef422930d53df5dda61192",
+      "path": "ops/dispatcher/runs/D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "116f7a4a56c4ef10e8ee3c5e06d98e4b849d74ad2a36e3cf24d3a65c11203d7d",
+      "path": "ops/dispatcher/runs/D-V01-B-control-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c8e6507dcd7229ee7cb094b6601931f64cdfba64845f653c4bd779d7ee39ca60",
+      "path": "ops/dispatcher/runs/D-V01-B-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "bc4e9bdb4b8ad5f6f4ad2b657422be3a7b00f1dd31f8b73e329b167e2173095f",
+      "path": "ops/dispatcher/runs/D-V04-A-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "265825a58ededa4f3b2cafe346fde71abeaebab2ed00678c5f64a2b6640bd64f",
+      "path": "ops/dispatcher/runs/D-V04-A-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "54c873823d04ac16e42f598e6762dab50866cd7ce209228b473f8dc8ce5196f9",
+      "path": "ops/dispatcher/runs/D-V04-B-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8f1564c94276759a3f6cedd0ae2df57d9655678f6cb0708232c7081d7c9aaa73",
+      "path": "ops/dispatcher/runs/D-V04-B-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "19f3ea3c21894c0022c82c676d0fc6d6bee7e8e9877338367cfb046f40740c2d",
+      "path": "ops/dispatcher/runs/D-V09-B-control-whole_critic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d1393a1e4017bf4df94d225d9f838b94447b655d36f00eec3145640425346bc2",
+      "path": "ops/dispatcher/runs/D-V09-B-treatment-source_critic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "ee4d31808d6e7172e8225b5c6d4de6d0eb19b693fde314aa2e2a20cb905cd655",
+      "path": "ops/dispatcher/runs/D-V09-B-treatment-implementation_critic-a001-resource-v13-a002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4dff869e00c0c6e853313462ba2385bfa8921bd2f080ec550b5a47bfb88d0828",
+      "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320",
+      "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "dd01ed62e559c2ac8399e55d896c2f1ee99786dc292f34d4aeca83138350a31e",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c11c7ab765c8f49fa0b985a0377ef3c64a5acd25caa1c2761e5a348fde31d2bb",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8",
+      "path": "ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c01a8c79b11c31aa0b55100d23deab8742dffff5ee90cf090453ce8b58b4c558",
+      "path": "ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "ade4f5f6690e83b0ec6c71799f9217e1ebb79d89bc035526be0c7e3ae95f5cc1",
+      "path": "ops/dispatcher/runs/I-07-FRESH-DELIVERY-R002-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "bcd8a864ad9f59d24fd470881a54f3e8ea027b68220e50f38cf24dc2f9bda588",
+      "path": "ops/dispatcher/runs/I-07-FRESH-DELIVERY-R002-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2cc211c0750fb6fd71e0be94a6d1f92948241dd759cb6f510e7580d677b06790",
+      "path": "ops/dispatcher/runs/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8a8099cfdb1af0d424abaef3e5472c13d68b94d6abcafbaad13b938ef0442dd7",
+      "path": "ops/dispatcher/runs/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "abe56f583bb75dfe76b15d6547edc24df6e43b2758a788fdf36350059fcfa613",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5aa7c01f7ce51c684ebf318c4cf9048235f99ed242147f50bd45d15d1ca1a04c",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7861a3cedd96729c3221814692a5b453fa0cf5a4794a6c90992242e93609fd28",
+      "path": "ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "be0763411a52f14f7a593a651330403ca64f416242d0537ca7a4872ded25eca4",
+      "path": "ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2c8952bb8f2b8f1513683f48e66e52b122a1a7caae27bee2b1f5e59946d63091",
+      "path": "ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "0aab8c1f49cd4b51e7fb7acb7366d96a6a03865f4d4ff71d5f9a1530389aa1cb",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "0b60e1b376ddab00e4593e07a1eb76ab894a46f74a099348d1d186ecefe18c3f",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "67bb0ae52cead5246bcd19cbe78c8a138983e5492606b6a3847889cd3aa7a732",
+      "path": "ops/dispatcher/runs/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "120961e7cf3069afd47b65e4283c62c09f868f17ef699e43835a84541f5d3096",
+      "path": "ops/dispatcher/runs/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "233111cd0d2104bc68c79e9e8e7c55736e46d5a6307bda8a0b2c4a9293df66b8",
+      "path": "ops/dispatcher/runs/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2b45089a63b94c4f4d3b55945eb1a9458b948e45a2fb1195931f49c18b3099fe",
+      "path": "ops/dispatcher/runs/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "96d78db5e144b1019a188a226c177f582ec8b7e1cd3df49b4b59d3c23cc1607d",
+      "path": "ops/dispatcher/runs/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a548dc766f03ad2e3670ac8618c4d5c5f3e3a3e5097b935635521ba066133da9",
+      "path": "ops/dispatcher/runs/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5f00f3dde94c86ccd4defe74d613670a96d90bfcf6b4a9825195f041ae5421d3",
+      "path": "ops/dispatcher/runs/I-12-RESOURCE-R001-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-12-RESOURCE-R001-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "16c7ef496f8d1f25fb8efc8ab59974a2fb026934218fd6a7078d625918eb0abc",
+      "path": "ops/dispatcher/runs/I-12-RESOURCE-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "ops/dispatcher/runs/I-12-RESOURCE-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b1b2e34bd8ec5a95ee059adfda3e573c39b54a032d74fa3121e48aad957105e1",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1c530c9824802f8b5251072e34ffde1d66b09b4fe2bdc3df7027e8338d470b35",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3ca8f9db0381580626a10cf62c802f8d792e166941310d54c862a352df223079",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4d418c98f8d076577f6b50d7c6aaf0bccb7d5f7e0b42ee379c4a3fe34ef54634",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6927b010b6c9fc56abef015fe0a63bdce72372aa44e715773194b5b3d7a374f0",
+      "path": "ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "712e5aacbeb61e83fdd77ba83587d3bc8532c6df50a523a4171baad1bd9de1b1",
+      "path": "ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "72795d7c7053ff781c64e554cb00d540d03bfe9061bec307e4ad625ad64665b0",
+      "path": "ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f81d1827bd1bf8ca02981834a92d1aefb73cbc28401246412f9f37fbb1a8605c",
+      "path": "ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "331879568fbcf7544eba4f0851fa15a5b638bad1f886f062bda951bbd418ca7d",
+      "path": "ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "69bc65779c5d40d1fb7f7adc669b8144aba480d5286b15d79ac9ab179416a3b9",
+      "path": "ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3ea0543bac24372d0c30ff94abb3e8de76da00c94796274a28dcbc1f03615679",
+      "path": "ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9bff60b1159cac4403bb2e223996a4e337969e709e3a60cac6b449b6aee3b7fe",
+      "path": "ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a2ce7bb0765a5098ba6ac2ad9a21ae11af5564a463b7526f55ec7d66e6d7ea74",
+      "path": "ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d623314857c441bea7961c3babf18311577f590fdff334fe087e21d2392eb7b4",
+      "path": "ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6ef23b83b92fa0dcf1c1f1c1aa4ac97358b347208382cdd516b08df9e6b3ce45",
+      "path": "ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fbd549182f6062118a44a932cc99060582a149094f0e777dcc934a3b039de88a",
+      "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "040bd8b9d18525aaa7dbfdcec87a9f602c64945cc5cabf11ce9d1f0092875294",
+      "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "dae9a1f1ea18c2f6c2c65162b3a7d02d468683924aeafbf2cbf582c2bc690921",
+      "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3941db4ab43b4a72e99fd73a4c8ff4b0cb7faf2c55b07087488f7492e4a41fb",
+      "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e040299a976c734f4f7b08486469cb85f68cb9e4bf4fc849eb02c7d01522d89f",
+      "path": "ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "62871575ea9694767ffa883e64eac844c388ca42251b8c01bb7a176f1ad3f1e1",
+      "path": "ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d38f85c5d235338a9c7881e79241b7956fda9aff352132ee8bec4aaaeef47177",
+      "path": "ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9feb573bcd3de526df824ec23d01d662df5e3415fb36ad3e2ccc8375ffbcc240",
+      "path": "ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3ef7b82548a8cfe4bfaf70e42d2f7288650abf5cdb2994259d85b0b7f411a4b7",
+      "path": "ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "83ad40351d8a29bfca601a2cab299ec8749c917cae0342e4e7d9a7f1fc6e72b6",
+      "path": "ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9c883675aab1f20c6f89a7289b2256fae5b5ddad947c312122a282c1416e02f1",
+      "path": "ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "68a2c2f932039b0dadc80d0379b3a1a81bd5e74988ef51622ecc6a42c7f66d5b",
+      "path": "ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3eb45dc9ef76b6ab30ed2e9df94360cdbe114b70ebf9ab6a6d5322a6b2ab4b45",
+      "path": "ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b695e2c2fef67fe7777189fcf831fd27030bdfc91de169c47c5d641b80f1b2d5",
+      "path": "ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7bde50bd3d1c1db25f043d272a2ba5a88eaf394e2ac6df14f34c014cda61ca33",
+      "path": "ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "65c04fec683590e169c1fb99e13fd8befe4c4b101952a9b2498639a08bfd2719",
+      "path": "ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f868e8cb3d2cf133a1800b1c38bff733bef068e9447fc516d62a70c8bb54f0fe",
+      "path": "ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c20cbbf47c48d2a00387fb1569808e00f6df7f21589072c0864dcd8c4eb7a3de",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "237808f234f1b92a0a99d672c619e820e01a9abbcc63ac535bb860986b4506ea",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6d4994e440788131526b0c07b5da6b49b9d5eea8d72c38451865dd7938fb11d8",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fec5af4fae40e0c87f2b8aeb6e4b007880ce38079714988d7a4ce982b891ef90",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "06cfb3c0f5aeb9509ba5d4849866b360880f9b74ecda366fc5dc651de5f56ab2",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1ade2fc555a1455460359205f9778ce026340188973821d643f21debb99bd25d",
+      "path": "ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2cf4d0f53bda52a908f6054a67d9154dc6bcf7cf8ca41762a45a5378a1d7891e",
+      "path": "ops/dispatcher/runs/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136",
+      "path": "ops/dispatcher/runs/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4ff9c569381a0c220de584ea8f39d294cc1d9fcb7e8a9efcd888edbd625b1d03",
+      "path": "ops/dispatcher/runs/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9",
+      "path": "ops/dispatcher/runs/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1f15f88609a10ca750f27a463c880dfbbb46ed5acc451213ee5360627aa02801",
+      "path": "ops/dispatcher/runs/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "04e7e682a05619e686616c1b08691a7439d1b0b1fb87fbb5c946bcd04a1773ce",
+      "path": "ops/dispatcher/runs/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55",
+      "path": "ops/dispatcher/runs/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d",
+      "path": "ops/dispatcher/runs/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "69452f45f312df8ab8cd33f592f775d8c70c8494cd2ce293014efbc0458fd08a",
+      "path": "ops/dispatcher/runs/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b2e5403beafe172ed22706268fab6f3d46df2b83f369000e288cd9dea1893142",
+      "path": "ops/dispatcher/runs/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66",
+      "path": "ops/dispatcher/runs/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db",
+      "path": "ops/dispatcher/runs/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "592fe18d1c7e73f700df43c0bd1a00a1b204de21a6b3c6db7afe57ac6bc1ccec",
+      "path": "ops/dispatcher/runs/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "591875a3a7bc9b4088abe9935e71aeb526320b60fc66d6c45badd6b67e99f2cb",
+      "path": "ops/dispatcher/runs/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "00fc3042b5345e780e341d2b60c3ef77d9561686f4ef02a923a3fd6e2913a42b",
+      "path": "ops/dispatcher/runs/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c58917b9c0ade39039b61c47045c3d9663f892c7e280d06f6df9013f9461f146",
+      "path": "ops/dispatcher/runs/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e5a219cb346a0c1a0e0cbb3d9e354be3f146f3d93756e0113cee22816b56218a",
+      "path": "ops/dispatcher/runs/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "74a0aa3fd540d9f738d9ff3d442d741937984f47fab72a8cc8df4da1784f4ace",
+      "path": "ops/dispatcher/runs/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2a6205d3ed35e9648d4e6adaf4699f1609fc99498e66428d3ecc66a24ed8168b",
+      "path": "ops/dispatcher/runs/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "17b4f762c525945ad9f8de91f263fc050c3041564ca0e56fe213c39bcf9c6ed4",
+      "path": "ops/dispatcher/runs/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9fa2ca4210bbb80e8c69df489a8b371caf64ff2446f837db25d57d36adfd4f5e",
+      "path": "ops/dispatcher/runs/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9dac32ba9b1c70345865e1f6996752d80f69453d980866b5a3221cda08f8f0af",
+      "path": "ops/dispatcher/runs/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "372364b139bfe319d103a51b62891fc96931cec60919e6399a8780fd4450e197",
+      "path": "ops/dispatcher/runs/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "193f8dbebe23ba700fe036581615577ce732d57429276a24d22d3bec46231205",
+      "path": "ops/dispatcher/runs/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "50639ec34b2290141436810962b95708ea17d0334532a57f2dbd02581e5c4d77",
+      "path": "ops/dispatcher/runs/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "cc968cb5cab580c4d8ad761ef10b5ac98791d913cfb4a4c26f23ba3ba15136a3",
+      "path": "ops/dispatcher/runs/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9e441e22ca9b772b4dbda2fd9dc9fd51b49dca9b8a108eb29c2156d3f067c06c",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7f1f5779127d57292be5b0ed357ae1f3fec0cc2f3131970d345426b3ab9f963a",
+      "path": "ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "59a2ba19c4941d7bda4a3230c33dcd53cc384dac2f73fb6bbb74c120ec4ec4ab",
+      "path": "ops/dispatcher/runs/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "58fc9526cfe7be65185d9f8b13242013888d180c5e23a13a6524979bdc721ac1",
+      "path": "ops/dispatcher/runs/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "38f2eb28a45d0b635293e98758e29d5019ee7c3a9f8fb4e58595f0b9938a916d",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "171ce052712f3e042bb150816f651e29d1d13fb634463c259bf4b82c1ffafe56",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "eafa4f99d8c52c5c455cd794bdc3fe3975aa8707373500463b886e373aa7603e",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4e69d80951a9cb3763b45e03308b64fd5969373fca821e4df0459554a064103e",
+      "path": "ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2e872f6e23f93d5e516583471a0422fc0c803bceae9e5d314b2ceea675ec571d",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8a13e3dcbe85c76c785f112cce4be2bb8880c00e6180a5f2ef7d5a0879c10f33",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8eb513fcad7940aefefbd008f4c55fc49bb92a56616f731ec0297d5a970ea522",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e9ad3fd96f7ec626f7b6f248d09498aa1c416519d75b11e6c0ce4fc1941136cb",
+      "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2d139dc0767ad1cd18dddbe6345d5c5d5ddce7772a3490a4493a7e6879222600",
+      "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "da549671832b91a6beabab54eff70c5e2174bcbd87cef267e4066f6c58d36b5f",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5c846e0c832e4b46faceab758dfb8414759a44df42ba9df278126639233f89f4",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a8cb228e18d6609de41d3bdf1598a14ff9c82a02a06db8f829ed09d306ba2706",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "65dba066a747521f9583f11816fcd3119e1fa6f454a003885ec5ace9f7ca27c9",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "dffd0fccd9b4e52f57e21fcc9174e5b7847aa1c89951910c406569636ea08a54",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "33da03e221b5b5cd6cebe9d0a4b3e1255e6f99ff142859d850a5226ce2cca844",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9d880ecfe2ac36f55c14d238f51de1c3eab6dbfca8e681e0fbf9dbda7e2041d7",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c4b6675326bc651696dbcd87b55535d2844e27cbc5edfc2ddcd775254ab35ec5",
+      "path": "ops/dispatcher/runs/I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "66a7cc407859d0fd4f46d9fcc4757884c4411693cf99e20e6f02006e7683f445",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "317cf60cf4515310d177484f515b58fd5fe47cbf3ee024a03e73bc19f09b0871",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b8dad3fd980a38761905e869772279c5ed18a6037d8c26819764c0d8b925e70c",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "0bce5859967405c9aaf07f95753eda204bf2ecc333fb78808171628ca74e006b",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e53f38f4bea22582197d564821df45f4a784ebeb691f8f202612c4560b2cd41b",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4588d7f8a85eb75481d97616c70d6dd19cd55903a545e635d9eff761b17ba34c",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "22a792074938e05f1dc6fff5bb57b20bd3b3be5f971b6f62d5768e6fc23a9dec",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "63e19763c56ee49658aa6d785cb19af42f0a4499424856a29b8bbca6afbca48b",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "356c45c4b868d297efba7d7c7dbcbacda2352f51e2b33d21154b249f18c21a05",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c92fdf34659c109fd2e3da0a5b4aa8413bc3a1fcf3ed017553b2ac41e4a2a44e",
+      "path": "ops/dispatcher/runs/I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fa535b63cf502fc74c85b3f05e0d1f6ad2766603cd5628365d37b83a77e50e06",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9b132d4ce8ee1e5406b4fe605effb548560c8e5f504004b71bde830d9f34c7fe",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "11291bfcb21f48ae58f7364df881525a104a887ba83bcdbdd33881b5a3750d97",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f34257338fe13995c66dfdd5e641b7c0450e63ef160fb1a83b8622c8d2dc3003",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f676cf580260b488da9a955fbb9150b14e6508bcc865952eae86debb12a7d29f",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f5db9859873a5afac1ea6521cb01d006357206f270fb2fadfd8a5187317bb4ea",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6457aa0c3ac9a6f003514d69200a10c5985e5993d6935bdad22819eee36242d7",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "babd08c700b2b89bedb4aacff768ddb122d56bab1f63d9f67a890db3cbc36d5b",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "09d8fc1f917bcbb45668d4113c4d40465656fce924698c350c43b0cf4c866dbb",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1f7b9d650b4a6ecc630cc8523b2cbf6ef75dc1d27e2a205cbeb288ac3c997cca",
+      "path": "ops/dispatcher/runs/I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "564b00c2b91c504227ae9a089149af4d302d4654039c6acdca195104ae3b8848",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "164386c8367ac1a274f86e49517bc44c0b9a5cbedf958ea503f43ef6395e2fb2",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "17c15a8f08be8b8556c49b37cfe9b150af0b154846ac7fc7c0f50e09a8be152a",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f3f3da412678eceff8056e155d48ff254d8afbce4d05ae2d4631353e12390ede",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "aa3e17a882cb491b3247dd9a69b0a7a10a2c7ea35138131967ae4b1390fe8089",
+      "path": "ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6b251a20d67ea77feaedfc21ed774026b6dd673853908177342de7c28ea5fd81",
+      "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b35e3698866da13b7eb385fd37bf09f918e8d2fda9abc539a312663a42969d12",
+      "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fa708d5e748797cbe4f69f0ef9d96c137a973febf11a34c6c9fc2a14d95368b1",
+      "path": "ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f0320828b6e5e069650f03e6d54d87bdabc90414d3a5e48a3ba4c2ca376167e5",
+      "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7f996f85f51b8db2f6c320869eb672c0f9d5da4ac4dc5535c056f30c585977a5",
+      "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e0d01a67d823458e8910aba6ceb2d651598f945be3860f41431afffd201a7eba",
+      "path": "ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "77db3a3c91f0cfa169a4d4f84b5228100347174432b681ac81fd97c34f12fe81",
+      "path": "ops/dispatcher/runs/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f7bc81d4c1c233727166fc81f2f85b3beeda7634c3fb2c359ceb864c93bfbd41",
+      "path": "ops/dispatcher/runs/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d417093e247448dbe38a3113dbd94e9365b595aae228c7551b227bf3cdeb1123",
+      "path": "ops/dispatcher/runs/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "97a5cea3aeb26ec8c08bd1528379e86f0efd9686dcff2c7d74ef42d47a864dd7",
+      "path": "ops/dispatcher/runs/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "982d6436ee3d2b015d77b91c7a875d0895f57ddfdd196a1017b526ecab8c0251",
+      "path": "ops/dispatcher/runs/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6901b8a77f037c51a876e6be804cf96aeff53865f4f7404fc2404b5a60a5d547",
+      "path": "ops/dispatcher/runs/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4439fb11c024d6074b388a690008072b7506ddd705716d81f2c33e69f4f89cae",
+      "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "fd5bd33d43543b3b871c49e25c4c61728b49ee84d1449ca78b0801ab05f27f9e",
+      "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff",
+      "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e",
+      "path": "ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "29b5a83b9896bc42f952e139af8ddd951dbc41c8bd32f0e0ed5828c4a92e8f17",
+      "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9c67c24b082a6eeaee73c40896ce08004822a9e1348dbc84d232e209e27d0638",
+      "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "3608339414f9d93479bfc748283f716f4dc8d217d0f8e76db03fa6006567ab9f",
+      "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "19ba03d8a475e929b02c735e44550bcb3c573775d0aac9be5397dca546ef20fa",
+      "path": "ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "26bed9341d848ea2b1876484431a5372b271f6025c0ef86c7f8b08f31a582978",
+      "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "42ac637d226d87a3f77b9ddd433a18929f881f2745f17bbd6955c11b4b4ff98e",
+      "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d7c0537f66081dacc541f1cedd1d3218b5d8f9d29764296469f2f17b4a80c97b",
+      "path": "ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "0a90774a6b262a2face40bf17d8a24156c8fd012e87fd2a9bbfa62720f97c233",
+      "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "37ac1e326bc91abdfe655916bdc57200ab614443742d0ade13c26353342cd4b5",
+      "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "44c495e6c6c702399633fa20a1944bd46c447a8b8f9f1078126729ebf7152b76",
+      "path": "ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "6c80e91906b0555ec878f9c7f634b1625c096dfc79b4c701983e230a6f74cbc9",
+      "path": "ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8e5282d2811ecb7304e4a505a890142592e8cb4165eea023a06de2237e760197",
+      "path": "ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a54dc3d59667c67526180c9266c47b4075cbdbb54f85aca64fcdc66d88be68c9",
+      "path": "ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "69098c266a3007ec41d401788f2b3e357cc8f441ab69554f4f2b5c4406d5cea0",
+      "path": "ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c981dbb1dc9009b10b17e14f91fcb926f2b1e62db3b6630353d854a6e224cd4f",
+      "path": "ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "838f56ee35c1f77c73064c464c3d9f7aaf6fa4f9caf4ce3d28aa1a331b0f39c4",
+      "path": "ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "74221897ce01fd277af500e9b7c0a1ed69dcee9717cf65625d3322c34b25c469",
+      "path": "ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "064ccba77900e61112d59a12d851144176c6a12748971c910d3219fe0b44ec96",
+      "path": "ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b5f6128012071e4621f6b2f1a444cbf8068df404d6461575ad0b02955960b618",
+      "path": "ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f706f61a4fa9faeaaaf98580d7657c45f675e71c9d6634dfd681da53c02ae5de",
+      "path": "ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "c6f957caaaf32f98ab790e084b25de9b98f8729b75b101e5660b44cb1a2612d4",
+      "path": "ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808",
+      "path": "ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "671ba65ae0b6163e407146963053e4f635b570bab4db3dfe352828590b87b6c5",
+      "path": "ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b702ac2964633db4dac50640876ac05a881716ada3b9e3a4a8238ca158f01e31",
+      "path": "ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "f72d00fb53f8d183da1558100fc48e7f712b81794c1f5e45d3b6f5948338aa2f",
+      "path": "dev/execution/canary-001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "dev/execution/canary-001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b7cbab0a00cca58dc28590a02da33ca6b9d1c5389b788e19135051f7212b0c5f",
+      "path": "dev/execution/canary-001/ACCOUNTING_CORRECTION.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "b33715595ee1e222b8f0a3087b22114fdb81ebd98e90fc64d20d255cc214fe75",
+      "path": "dev/execution/canary-002/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "17b5e08949129495d53a71b168aeda50032ab4ab32fecedb8ce5cb4518d33de7",
+      "path": "dev/execution/canary-002/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "bb1f11839001f23b266ad3e18dce0428b2785e779a4753b585aa43cbbb05f4ae",
+      "path": "dev/execution/probe-001/native/receipt.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "path": "dev/execution/probe-001/native/provider-usage.redacted.jsonl",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5d405e38778e2210102c51118cb369103d5b5299698771098df800b4524f81d8",
+      "path": "dev/luna-route/canary-001/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "8df4b22f8f8f453eef98a96ee6a5cec479625efd997c1f96215d64a1a5b559a8",
+      "path": "dev/luna-route/client-canary-010/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "088f910c1e07db1df9a060e4bf57ab4a0a72d1af828307f30ecfd141a5c6bf9a",
+      "path": "dev/luna-route/client-metadata-009/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "2eddc3510083339d85bbb72e242da3da68ce4cf0fe9e218caef25101827694fd",
+      "path": "dev/luna-route/mcp-lifecycle-006/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "bd9e0f9de899d539eb33d07c97b3a6f87d59e5a8814009b307eb9a0f1f16831c",
+      "path": "dev/luna-route/mcp-lifecycle-007/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "5f7c2f935bb30643a62eb7f8287a0d1c08613245373d6462bf5b6ad684f52443",
+      "path": "dev/luna-route/mcp-metadata-004/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "63138e552e26006a58cdf88ed432c7d02d4cda55cdf83c572d424a46c110bfba",
+      "path": "dev/luna-route/metadata-probe-001/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "7869b31af18eaddc7904df4f64a79067518b1f16567a6f8006b455d21860ed8e",
+      "path": "dev/luna-route/tools-canary-002/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "a9dd9478bafdefaa85b2f42746472fc0a8a3529ef0970e84672b31d6ac544bb5",
+      "path": "dev/luna-route/tools-canary-003/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "89705acfd702d055da18474f998dccada0e2163f1a49e13e773b560499602ccd",
+      "path": "dev/luna-route/tools-canary-005/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "1b5b2b8f2c895e3534706ff9e6a7b0f3466ef7dea89a08d2cc9d26d868a649a4",
+      "path": "dev/luna-route/tools-canary-008/result.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "d9f40e420ba3405a6126513c366a5e90f15680043cf8a8184702c16cdf41bd1e",
+      "path": "dev/muse-route/catalog-probe/RECEIPT.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "4e4c9ac6e1d35f84b15c6f64e7eee8cbe01796325f54271be48bffd1f816c263",
+      "path": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "bfac874eb3f9592edf8542e35684d3464487d00811b5bf27bf1ffa79826b1131",
+      "path": "dev/diagnostic-runner/seed-recovery/BASE_IMPORT_OUTBOX.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16",
+      "path": "dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+      "path": "dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "9f72f9f84211382e84c617a75e82b15d66ee5195bdd6bcfb264f310fd48c2898",
+      "path": "evaluation/independent-targeted/RESERVATION_RECEIPT_001.json",
+      "unchanged_at_capture_end": true
+    },
+    {
+      "captured_sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c",
+      "path": "evaluation/independent-targeted/D-V08-A/STARTED.json",
+      "unchanged_at_capture_end": true
+    }
+  ],
+  "capture_stability_qualifier": "Exact bytes captured once across stated interval; changed-source list records any race, including an empty list when all captured sources were stable at end. No attempt to reconstruct03:26 or assert atomic global cutoff; later source changes do not rewrite this cohort.",
+  "cleanup_rule": "Occupied seconds include setup/cleanup where receipt says so. Cleanup reserve is a bound, not measured cleanup. Parallel occupied seconds must not be called critical-path time.",
+  "counter_rule": "Cache included in input once; reasoning subset of output; provider request sums separate from baseline-filtered native UI counters, native Goal and supervisor cumulative counters. Unobserved/cancelled tails remain UNKNOWN.",
+  "evaluator_extensions_separate": {
+    "assessment_boundary": "No source judgment, assessment, execution grade, or missing execution evidence is changed or inferred by this cost projection.",
+    "clock_rule": "Original starts/deadlines remain unchanged; separate600s extension clocks retain their own starts/deadlines and actual finished elapsed times.",
+    "counter_rule": "Wall clocks are not model/API occupied time, critical path, provider tokens, or billing. Never add this companion to candidate token totals or root cumulative counters.",
+    "overlap_rule": "Screen and report-write times are subsets/intermediate observations of full review; do not add them to full review. D15B original closure log1951.288343771s is a closure-record delay, not original assessment time beyond its immutable1800s deadline.",
+    "pipeline_eval2_separate": {
+      "assessment_boundary": "Native Goal status, router outcome, job failure and independent quality judgment are different facts. This projection does not assess or alter source coverage or quality.",
+      "billing_dollars": "UNKNOWN",
+      "candidate_physical_provider_and_http_attempts": "UNKNOWN",
+      "candidate_reference_only": {
+        "existing_attempt_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+        "existing_goal_id": "01a10e6d-7d6e-7603-9c16-7e60a1a76acd",
+        "freeze_elapsed_seconds": 585.649430624,
+        "job_status": "FAILED",
+        "native_elapsed_seconds": 585.563808303,
+        "native_goal_status": "paused",
+        "native_receipt_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+          "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+        },
+        "new_charge_tokens": 0,
+        "router_terminal_status": "HOLD",
+        "rule": "Reference an existing charged actor/Goal; cached input is included in input and reasoning is a subset of output. Native and freeze elapsed intervals overlap, never add them.",
+        "usage": {
+          "cachedInputTokens": 4887296,
+          "inputTokens": 5203609,
+          "outputTokens": 59681,
+          "reasoningOutputTokens": 31736,
+          "totalTokens": 5263290
+        }
+      },
+      "clock_rule": "Whole review contains phase1, phase2, interphase wait/prep and report-writing. Never add slices to whole again. Wall clocks are not model/API occupied time or critical path.",
+      "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+      "evaluator_observed_effort": "UNKNOWN",
+      "evaluator_observed_model": "UNKNOWN",
+      "evaluator_provider_tokens": "UNKNOWN",
+      "interphase_wait_and_report_prep_seconds": 565.582755949,
+      "no_clock_reset_or_extension": true,
+      "observed_pre_source_seconds_since_reservation": 1548.893206,
+      "phases": {
+        "phase1": {
+          "elapsed_seconds": 457.105438333,
+          "finished_monotonic_ns": 75647855684662,
+          "finished_utc": "2026-10-06T00:07:08.998665Z",
+          "started_monotonic_ns": 75190750246329,
+          "started_utc": "2026-10-05T23:59:31.893206Z"
+        },
+        "phase2": {
+          "elapsed_seconds": 527.175318055,
+          "finished_monotonic_ns": 76740613758666,
+          "finished_utc": "2026-10-06T00:25:21.756714Z",
+          "started_monotonic_ns": 76213438440611,
+          "started_utc": "2026-10-06T00:16:34.581388Z"
+        },
+        "report_write": {
+          "elapsed_seconds": 193.607181404,
+          "finished_monotonic_ns": 76934220940070,
+          "finished_utc": "2026-10-06T00:28:35.363866Z",
+          "started_monotonic_ns": 76740613758666,
+          "started_utc": "2026-10-06T00:25:21.756714Z"
+        }
+      },
+      "pre_source_scope": "Observed reservation/prep/wait only; unobserved dispatch birth UNKNOWN. Separate from post-source review.",
+      "schema": "er9.accounting.eval2-clocks.v1",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-2/review0001/COST_RECEIPT.json",
+        "sha256": "6351a085c8a7cf87fcd1b627ad92f3f7b2e02fdfa1f8768dcb015bb997a35dcd"
+      },
+      "validation_errors": [],
+      "whole_assessment_elapsed_seconds": 1549.863512337,
+      "whole_review_including_report_seconds": 1743.470693741
+    },
+    "pipeline_eval3_final_handoff_separate": {
+      "actual_whole_wall_through_handoff_seconds": 1850.358101297,
+      "billing_and_model_occupied_seconds": "UNKNOWN",
+      "boundary_rule": "Cohort010 Eval3 whole1762.552529925 refers to review artifacts ready, not full notification/handoff. Actual finished handoff1850.358101297 exceeded1800 by50.358101297. Whole contains source/Phase2/waits/report slices; never add them again. No source-grade change or duplicated candidate charge.",
+      "clock_reset_count": 0,
+      "clock_source_pin": {
+        "path": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+        "sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b"
+      },
+      "declared_new_candidate_models_or_Goals": 0,
+      "declared_source_execution_reads_after_review_completed": 0,
+      "evaluation_id": "independent-pipeline-3-review0001",
+      "finished_utc": "2026-10-06T01:38:23.206224+00:00",
+      "handoff_inside_original_whole_ceiling": false,
+      "handoff_overrun_seconds": 50.358101297,
+      "original_whole_allowance_seconds": 1800,
+      "phase2_seconds": 403.956776389,
+      "post_review_handoff_seconds": 87.80557137200003,
+      "review_artifacts_ready_whole_seconds": 1762.552529925,
+      "schema": "er9.accounting.eval3-final-clock.v1",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-3/review0001/FINISHED.json",
+        "sha256": "db81d32d567a86904f8a20106e69fee464e2bbea27dd65dc76b2c62f00482e37"
+      },
+      "source_seconds": 794.3574254
+    },
+    "pipeline_eval3_separate": {
+      "billing_dollars": "UNKNOWN",
+      "evaluator_provider_tokens": "UNKNOWN",
+      "existing_candidate_reference_only": {
+        "Goal_id": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+        "attempt_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "global_charge_added_by_reference": 0,
+        "usage": {
+          "cached_input_included": 1927936,
+          "input": 2066729,
+          "output": 28008,
+          "reasoning_output_subset": 15611,
+          "total": 2094737
+        }
+      },
+      "finished_clocks": {
+        "clock_semantics": "Whole includes source, courier wait, Phase2 and review preparation from first semantic body. Clocks close when completed review artifacts are prepared; publication/archival follow-up is separately reported. No reset.",
+        "effective_phase2_available_s": 574.694386358,
+        "evaluation_id": "independent-pipeline-3-review0001",
+        "phase1_budget_s": 1200,
+        "phase1_elapsed_s": 794.3574254,
+        "phase1_freeze_monotonic_ns": 80066062535740,
+        "phase1_freeze_utc": "2026-10-06T01:20:47.209439+00:00",
+        "phase2_budget_s": 600,
+        "phase2_elapsed_s": 403.956776389,
+        "phase2_freeze_monotonic_ns": 80900967500371,
+        "phase2_freeze_utc": "2026-10-06T01:34:42.111335+00:00",
+        "phase2_start_monotonic_ns": 80497010723982,
+        "phase2_start_utc": "2026-10-06T01:27:58.153735+00:00",
+        "physical_model_telemetry": "UNKNOWN",
+        "post_phase2_review_preparation_seconds": 133.290139894,
+        "reset_count": 0,
+        "review_completed_monotonic_ns": 81034257640265,
+        "review_completed_utc": "2026-10-06T01:36:55.400654+00:00",
+        "source_start_monotonic_ns": 79271705110340,
+        "source_start_utc": "2026-10-06T01:07:32.848121+00:00",
+        "wait_and_delivery_overhead_s": 430.948188242,
+        "whole_budget_s": 1800,
+        "whole_elapsed_s": 1762.552529925
+      },
+      "rule": "Whole includes source/Phase2/waits/review preparation; no slice added again, no model-occupied inference, candidate existing reference adds no charge, no quality or source-feedback projection.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+        "sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b"
+      }
+    },
+    "pipeline_eval4_owner_handoff_separate": {
+      "handoff_utc": "2026-10-06T02:03:20.779935+00:00",
+      "original_whole_deadline_utc": "2026-10-06T02:10:29.989809+00:00",
+      "original_whole_start_utc": "2026-10-06T01:40:29.989809+00:00",
+      "post_review_owner_receipt_handoff_seconds_subset": 225.889306988,
+      "reset": false,
+      "review_report_ready_seconds_subset": 1144.900827376,
+      "scope": "Final enclosing owner-handoff1370.790134364 includes earlier report-ready1144.900827376 plus225.889306988 neutral receipt collection. Overlapping intervals not summed; no source/Phase2 work reopened or candidate charge added.",
+      "source_pin": {
+        "path": "evaluation/independent-pipelines/P4-I08-R002/handoff_receipt.json",
+        "sha256": "ae4a4b28bdd5d844f34e64c538a4bbcced09f28d4c736cb2e7ee6b7591c5cd28"
+      },
+      "whole_to_final_handoff_seconds": 1370.790134364,
+      "within_original_whole_limit": true
+    },
+    "pipeline_eval4_separate": {
+      "assessment_boundary": "Clock and existing-cost metadata only; no source judgments, quality findings, or completion/whole-pipeline credit inferred.",
+      "billing_dollars": "UNKNOWN",
+      "clock_reset": false,
+      "clock_rule": "Whole1144.900827376 contains source511.314386838, Phase2566.439320408 and interphase67.14712013. Never add slices to whole or convert wall limits/durations into provider cost. Original clocks/deadlines unchanged; later owner harvesting separately timed.",
+      "evaluation_id": "P4-I08-R002",
+      "evaluator_physical_provider": "UNKNOWN",
+      "evaluator_provider_tokens": "UNKNOWN",
+      "existing_candidate_reference_only": {
+        "attempt_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+        "global_candidate_charge_added_by_reference": 0,
+        "native_Goal_id": "01a10ead-e433-7300-804f-d984e8a71dca",
+        "native_Goal_status": "paused",
+        "native_receipt_pins": [
+          {
+            "path": "ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+            "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+          }
+        ],
+        "operator_status": "FAILED",
+        "rule": "Existing actual actor/Goal charged once. Cache included in input; reasoning is output subset; notifications do not establish native response count.",
+        "usage": {
+          "cached_input_included": 4911104,
+          "input": 5193444,
+          "output": 58195,
+          "reasoning_output_subset": 27419,
+          "total": 5251639
+        }
+      },
+      "interphase_elapsed_seconds": 67.14712013,
+      "model_occupied_seconds": "UNKNOWN",
+      "original_phase2_allowance_seconds": 600,
+      "original_phase2_deadline_utc": "2026-10-06T02:00:08.451295+00:00",
+      "original_phase2_start_utc": "2026-10-06T01:50:08.451295+00:00",
+      "original_source_allowance_seconds": 1200,
+      "original_source_deadline_utc": "2026-10-06T02:00:29.989809+00:00",
+      "original_source_start_utc": "2026-10-06T01:40:29.989809+00:00",
+      "original_whole_allowance_seconds": 1800,
+      "original_whole_deadline_utc": "2026-10-06T02:10:29.989809+00:00",
+      "phase2_elapsed_seconds": 566.439320408,
+      "phase2_finished_utc": "2026-10-06T01:59:34.890626+00:00",
+      "provider_http_attempts": "UNKNOWN",
+      "requested_evaluator_effort": "xhigh",
+      "requested_evaluator_model": "gpt-6.1-sol",
+      "schema": "er9.accounting.p4-clocks.v1",
+      "source_elapsed_seconds": 511.314386838,
+      "source_finished_utc": "2026-10-06T01:49:01.304173+00:00",
+      "source_pins": [
+        {
+          "path": "evaluation/independent-pipelines/P4-I08-R002/source_start.json",
+          "sha256": "8e2cda6fd42c7b4ab4e8b1a22edcf33b7ddc5a9ff305947fb6df0704b1f4ea3d"
+        },
+        {
+          "path": "evaluation/independent-pipelines/P4-I08-R002/phase1_finish.json",
+          "sha256": "53c5316dc9c0668b15f112423e2f269cc42fdf39e48b7a48a88cad370fdbd5c9"
+        },
+        {
+          "path": "evaluation/independent-pipelines/P4-I08-R002/phase2_start.json",
+          "sha256": "a0f115f78fe6c0c001fcfed33927d667f5bb65c40843d40d7d4d037e409af50a"
+        },
+        {
+          "path": "evaluation/independent-pipelines/P4-I08-R002/phase2_finish.json",
+          "sha256": "7635c98e3f3953b12838a7e658680810adda9ab3a31d956d94a7b8a2bb3922f2"
+        },
+        {
+          "path": "evaluation/independent-pipelines/P4-I08-R002/whole_finish.json",
+          "sha256": "b7aba903ca6c1766e2daf3491cee74266a8bc81b26805c81691fcc44aebc9682"
+        }
+      ],
+      "validation_errors": [],
+      "whole_elapsed_seconds": 1144.900827376,
+      "whole_finished_utc": "2026-10-06T01:59:34.890626+00:00"
+    },
+    "rows": [
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+        "extension_allowance_seconds": 600,
+        "extension_deadline_utc": "2026-10-05T23:03:17.625832Z",
+        "extension_elapsed_seconds": 462.430683741,
+        "extension_finished_utc": "2026-10-05T23:01:00.056572Z",
+        "extension_start_utc": "2026-10-05T22:53:17.625832Z",
+        "full_review_elapsed_seconds": null,
+        "full_review_finished_utc": null,
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": 1769.035593866,
+        "original_closed_utc": "2026-10-05T22:50:40.573654Z",
+        "original_closure_logged_elapsed_seconds": null,
+        "original_deadline_utc": "2026-10-05T22:51:11.537980Z",
+        "original_start_utc": "2026-10-05T22:21:11.537980Z",
+        "report_write_elapsed_seconds_intermediate": null,
+        "requested_effort": null,
+        "requested_model": null,
+        "screen_elapsed_seconds_subset": null,
+        "source_pins": [
+          {
+            "path": "evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+            "sha256": "aed77d4662fcb9cda76db2d55364616eba3a19e91de66c346841ea84599baf43"
+          }
+        ]
+      },
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+        "extension_allowance_seconds": 600,
+        "extension_deadline_utc": "2026-10-05T23:36:36.161363Z",
+        "extension_elapsed_seconds": 323.987746408,
+        "extension_finished_utc": "2026-10-05T23:32:00.149098Z",
+        "extension_start_utc": "2026-10-05T23:26:36.161363Z",
+        "full_review_elapsed_seconds": null,
+        "full_review_finished_utc": null,
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": null,
+        "original_closed_utc": "2026-10-05T23:18:51.841260Z",
+        "original_closure_logged_elapsed_seconds": 1951.288343771,
+        "original_deadline_utc": "2026-10-05T23:16:20.550141Z",
+        "original_start_utc": "2026-10-05T22:46:20.550141Z",
+        "report_write_elapsed_seconds_intermediate": null,
+        "requested_effort": null,
+        "requested_model": null,
+        "screen_elapsed_seconds_subset": null,
+        "source_pins": [
+          {
+            "path": "evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+            "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5"
+          },
+          {
+            "path": "evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+            "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+          }
+        ]
+      },
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-NEXT-003",
+        "extension_allowance_seconds": null,
+        "extension_deadline_utc": null,
+        "extension_elapsed_seconds": null,
+        "extension_finished_utc": null,
+        "extension_start_utc": null,
+        "full_review_elapsed_seconds": 1224.429093,
+        "full_review_finished_utc": "2026-10-05T23:57:36.147813Z",
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": null,
+        "original_closed_utc": null,
+        "original_closure_logged_elapsed_seconds": null,
+        "original_deadline_utc": "2026-10-06T00:07:11.718720Z",
+        "original_start_utc": "2026-10-05T23:37:11.718720Z",
+        "report_write_elapsed_seconds_intermediate": 1094.85785,
+        "requested_effort": "xhigh",
+        "requested_model": "gpt-6.1-sol",
+        "screen_elapsed_seconds_subset": 826.743626,
+        "source_pins": [
+          {
+            "path": "evaluation/dispatch/I01-R001-research-review0001/STARTED.json",
+            "sha256": "79f858cdbae064a7c7f8add53cdbf71860f4cd3457730519779b4a7ee1bc5f3e"
+          },
+          {
+            "path": "evaluation/dispatch/I01-R001-research-review0001/FINISHED.json",
+            "sha256": "588ca68642692bf36544bdd24f6b627b738b1063ff75d43b75ab2b09c109d054"
+          }
+        ]
+      }
+    ],
+    "schema": "er9.accounting.evaluator-clocks.v1",
+    "sum_reported_extension_wall_seconds": 786.418430149,
+    "targeted_D08A_finished_and_cost_references_separate": {
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "clock_rule": "Whole1163.017374667 contains source690.912547327 and Phase2 472.10482734; do not add subsets to whole or treat wall as model inference.",
+      "exposure_rule": "Input hash linkage is dispatch provenance; does not establish actual source-reading uptake or any warm-cache benefit.",
+      "finished_clock": {
+        "budgets": {
+          "reset_allowed": false,
+          "source_screen_seconds": 1200,
+          "whole_seconds": 1800
+        },
+        "clock_source_pins": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+            "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+            "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+          }
+        ],
+        "evaluator_model_inference_cost": "UNKNOWN",
+        "event": "FINISHED",
+        "finished": {
+          "epoch_ns": 1791248656852110179,
+          "monotonic_ns": 79075709111059,
+          "utc": "2026-10-06T01:04:16.852110+00:00"
+        },
+        "observed_budget_compliance": {
+          "source_within1200": true,
+          "whole_within1800": true
+        },
+        "pair_id": "D-V08-A",
+        "phase1_finished": {
+          "epoch_ns": 1791248184747282534,
+          "monotonic_ns": 78603604283719,
+          "utc": "2026-10-06T00:56:24.747283+00:00"
+        },
+        "phase2_elapsed_seconds": 472.10482734,
+        "physical_provider_telemetry": "UNKNOWN",
+        "quality_findings_in_clock_projection": false,
+        "schema": "er9.neutral-evaluator-finished-clock.v1",
+        "source_is_subset_of_whole": true,
+        "source_screen_elapsed_seconds": 690.912547327,
+        "started": {
+          "epoch_ns": 1791247493834732395,
+          "monotonic_ns": 77912691736392,
+          "utc": "2026-10-06T00:44:53.834732+00:00"
+        },
+        "whole_elapsed_seconds": 1163.017374667
+      },
+      "global_token_charge_added_by_reference": 0,
+      "new_inference_from_role_imports": 0,
+      "per_comparison_apportionment": {
+        "arm_reference_share_each_if_equal_apportionment": 1257846.5,
+        "comparison": "D-V08-A",
+        "fraction_each": "1/2",
+        "scope": "Descriptive allocation for the selected two-arm view, not measured per-arm origin inference. No addition to campaign global costs.",
+        "shared_origin_charge_reference_once": 2515693
+      },
+      "selected_actual_goal_ids": [
+        "01a10e7a-82fb-7781-b98b-fd639ff0e2ab",
+        "01a10e7a-894b-7ed3-8987-ea6daff289ae"
+      ],
+      "selected_plus_shared_origin_totals_reference_only": {
+        "cached_input_included": 4187072,
+        "input": 4899786,
+        "output": 85830,
+        "reasoning_output_subset": 21017,
+        "total": 4985616
+      },
+      "selected_two_stage_usage_reference_only": {
+        "cachedInputTokens": 2189568,
+        "inputTokens": 2431533,
+        "outputTokens": 38390,
+        "reasoningOutputTokens": 21017,
+        "totalTokens": 2469923
+      },
+      "shared_origin_attempt_id": "I-01-control-research-a001",
+      "shared_origin_usage_reference_only": {
+        "cached_input_included": 1997504,
+        "input": 2468253,
+        "output": 47440,
+        "reasoning_output_subset": 0,
+        "total": 2515693
+      },
+      "source_pins": [
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/FINISHED.json",
+          "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096"
+        },
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/PHASE2_NATIVE_ECONOMICS_001.json",
+          "sha256": "cffdc26e561a019ee1ec97144c17fa7366ca3aca831a12b5a3d349e4d1180fd2"
+        },
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/PHASE2_LINEAGE_COST_001.json",
+          "sha256": "e36c7cc4d9dca0c11367c64f52a944ef60f4fa1fae360a702dd2637d0507b354"
+        }
+      ],
+      "whole_pipeline_cost": "UNKNOWN"
+    },
+    "targeted_D08A_source_phase_separate": {
+      "neutral_clock": {
+        "authorized_budgets_not_observed_cost": {
+          "pair_elapsed_seconds": 1800,
+          "reset_allowed": false,
+          "source_screen_seconds": 1200
+        },
+        "clock_phase": "source subset; not extra beyond total pair",
+        "model_inference_cost": "UNKNOWN",
+        "pair_id": "D-V08-A",
+        "phase1_finished": {
+          "epoch_ns": 1791248184747282534,
+          "monotonic_ns": 78603604283719,
+          "utc": "2026-10-06T00:56:24.747283+00:00"
+        },
+        "physical_provider_telemetry": "UNKNOWN",
+        "projection_created_utc": "2026-10-06T00:58:15.985995+00:00",
+        "schema": "er9.neutral-evaluator-source-clock.v1",
+        "source_screen_elapsed_seconds": 690.912547327,
+        "source_selectors": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+            "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+            "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+          }
+        ],
+        "started": {
+          "epoch_ns": 1791247493834732395,
+          "monotonic_ns": 77912691736392,
+          "utc": "2026-10-06T00:44:53.834732+00:00"
+        },
+        "whole_FINISHED": null
+      },
+      "rule": "Source-screen wall interval is a subset of unfinished whole pair; not model/API occupied time or provider cost, not extra budget, no source-quality inference.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted/D-V08-A/CLOCK_PHASE1_001.json",
+        "sha256": "65c8be9e5ffc08b90c7a556309018ce034a761250fc334f06414ade6a9cf92ee"
+      }
+    },
+    "validation_errors": []
+  },
+  "goal_status_rule": "Native Goal status comes only from a Goal receipt; router completed/cap/error status remains in its separate field. Earlier cohorts001..003 GLM native_goal_status erroneously carried router status; treat those values as router statuses and Goal status as UNKNOWN. Luna interrupted turn receipts remain interrupted even when a turn/completed notification exists.",
+  "goal_status_time_qualifier": "Saved native receipt enums only at per-row timestamps where exposed; UNKNOWN timestamp if unexposed. Active is not current occupancy; complete is not full-pipeline or quality credit.",
+  "helper_provider_usage": "UNKNOWN",
+  "historical_checkpoint_separate": "2026-10-06T03:26:15.043356Z; 138 positive starts; counts-only prior checkpoint, not this cutoff",
+  "historical_native_proof_companion": {
+    "path": "accounting/cohort-011-native-proof-001/native-proof-companion.safe.json",
+    "sha256": "4e4c9ac6e1d35f84b15c6f64e7eee8cbe01796325f54271be48bffd1f816c263"
+  },
+  "last_captured_root_counter_separate": {
+    "helper_inclusion": "UNKNOWN",
+    "native_updated_at": 1791270861,
+    "observed_utc": "2026-10-06 07:14:52 UTC",
+    "provider_counts_combined": false,
+    "remainingTokens": null,
+    "status": "active",
+    "stop_trigger": false,
+    "timeUsedSeconds": 38511,
+    "tokensUsed": 28422156
+  },
+  "model_provenance": {
+    "candidate_identity_rule": "Observed model receipt only; requested names and label suffixes do not establish actual family.",
+    "configured_accountant": "GPT6.1SolMedium",
+    "physical_provider_telemetry": "UNKNOWN"
+  },
+  "native_start_rule": "Positive activation or exact failure-before-Goal proof establishes a native start count. A false activation flag plus missing Goal submission evidence and empty provider export does not by itself establish zero actual Goal or zero total cost. Operator declarations remain separate; opaque Goal identity and unexposed tails stay UNKNOWN.",
+  "neutral_dec015_wave_pin": {
+    "path": "accounting/cohort-016/DEC015-wave.safe.json",
+    "sha256": "98a548569a9f12e5a3395d582fc55cedbac0115e39428945d9ac8c0856dce891"
+  },
+  "neutral_workload_storage_pin": {
+    "path": "accounting/cohort-016/workload-storage.safe.json",
+    "sha256": "73d0edf09a598d3d9d719cb0897da3932742859ecb292d2bf9fbf406d19def05"
+  },
+  "new_evaluator_clock_companion": {
+    "path": "accounting/cohort-016/evaluator-clocks.safe.json",
+    "sha256": "e62aa0c2bff21c8dd7f37326dc3f2694ab0bde29bdcf4341fe78aa2aef44d171"
+  },
+  "ops_actual_admission_selection": {
+    "path": "ops/dispatcher/publication/ACTUAL_RESOURCE_ADMISSION_002/MANIFEST.json",
+    "sha256": "ebcdea835bb58da8e87b8144b28fab1ec3625f241a94e719a32baa102ef21d0f"
+  },
+  "own_current_clock_rule": "Original source/reviewer/accounting clocks preserved. All previous cumulative clocks/usage are references, no provider/root/helper/UI double sum or campaign limit.",
+  "prior_cohort012_non_atomic_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior_cohort012_selection": {
+    "path": "accounting/cohort-012/PUBLIC_SELECTION.json",
+    "sha256": "5c2dd116ca8d4d38fad5b695d8b47d0fa3bd8499af6290b6edb7c8103590b314"
+  },
+  "prior_cohort013_selection": {
+    "path": "accounting/cohort-013/PUBLIC_SELECTION.json",
+    "sha256": "4d5edbcaabcc7f6750d3fbc3cb21e0a6af83e41f7cd3f09e01954d3af4739130"
+  },
+  "prior_cohort014_selection": {
+    "path": "accounting/cohort-014/PUBLIC_SELECTION.json",
+    "sha256": "c0a7839ffe3fab5db887e30da38b6d75b86557de2833c7dc01ea0857c9151427"
+  },
+  "prior_cohort015_selection": {
+    "path": "accounting/cohort-015/PUBLIC_SELECTION.json",
+    "sha256": "b7ac2042c9383b3655fbaa9480a8e30207656613850d23fabc252c8a5cee0bca"
+  },
+  "quiescence_rule": "Cohorts001..004 quiescent was native-cgroup quiet only. Cohort005+ preserves native, held-group, client-tool and execution-unit flags separately; aggregate is false when any original flag is false, unknown if required flags absent. Supplemented permit-release proof is separate and does not rewrite original failure flags.",
+  "reconciliations": {
+    "I01_full4": {
+      "attempt_ids": [
+        "I-01-control-research-a001",
+        "I-01-control-critique-a001",
+        "I-01-control-revision-a001",
+        "I-01-treatment-research-a001"
+      ],
+      "known_tokens": 7992185
+    },
+    "Luna_D14_first4": {
+      "attempt_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "known_tokens": 19152242
+    }
+  },
+  "role_import_cost_links_reference_only": [
+    {
+      "actual_consumer_exposure": "UNKNOWN_NO_EXECUTED_CONSUMER_RECEIPTS",
+      "candidate_bytes_rewritten": false,
+      "cost_rule": "Reference existing origin costs; do not add these tokens or Goals to global totals.",
+      "known_origin_tokens_reference_only": 2515693,
+      "manifest_pin": {
+        "path": "dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+        "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16"
+      },
+      "new_native_goal_starts": 0,
+      "origin_artifact_pins": [
+        {
+          "bytes": 38465,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/proposal.md",
+          "role": "proposal",
+          "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+        },
+        {
+          "bytes": 19318,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/sources.json",
+          "role": "source_catalog",
+          "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b"
+        },
+        {
+          "bytes": 7434,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/witnesses.json",
+          "role": "witness_catalog",
+          "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a"
+        },
+        {
+          "bytes": 4731,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/leads.json",
+          "role": "lead_inventory",
+          "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751"
+        }
+      ],
+      "origin_attempt_ids": [
+        "I-01-control-research-a001"
+      ],
+      "per_comparison_apportionment": "UNKNOWN_NO_EXECUTED_CONSUMER_REFERENCE_COUNT",
+      "seed_id": "BASE-A-DEC006"
+    },
+    {
+      "actual_consumer_exposure": "UNKNOWN_NO_EXECUTED_CONSUMER_RECEIPTS",
+      "candidate_bytes_rewritten": false,
+      "cost_rule": "Reference existing origin costs; do not add these tokens or Goals to global totals.",
+      "known_origin_tokens_reference_only": 1489767,
+      "manifest_pin": {
+        "path": "dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027"
+      },
+      "new_native_goal_starts": 0,
+      "origin_artifact_pins": [
+        {
+          "bytes": 28811,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/proposal.md",
+          "role": "proposal",
+          "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df"
+        },
+        {
+          "bytes": 15430,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/sources.json",
+          "role": "source_catalog",
+          "sha256": "99e732e12036f339697bc7a4cf59d439ad142413b3d452f2186957005b9caf7a"
+        },
+        {
+          "bytes": 5777,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/witnesses.json",
+          "role": "witness_catalog",
+          "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d"
+        },
+        {
+          "bytes": 5062,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/leads.json",
+          "role": "lead_inventory",
+          "sha256": "193efdef4b6adff977b69af28c090c9d579a6e824c23f1f1a95d306d083a4c5a"
+        }
+      ],
+      "origin_attempt_ids": [
+        "I-02-treatment-research-a001"
+      ],
+      "per_comparison_apportionment": "UNKNOWN_NO_EXECUTED_CONSUMER_REFERENCE_COUNT",
+      "seed_id": "BASE-B-DEC006"
+    }
+  ],
+  "root_counter_timestamp_rule": "Supervisor at fields are source-record timestamps; supplied observation timestamps remain in original records. Counters are cumulative; cache/input/provider/helper inclusion and billing UNKNOWN. Never add root counters to provider or evaluator totals, infer a native budget stop, or interpret an absent/null budget as token cost.",
+  "root_supplied_counter_separate": {
+    "add_to_provider": false,
+    "billing_dollars": "UNKNOWN",
+    "helper_inclusion": "UNKNOWN",
+    "observation_timestamp": "2026-10-06T05:07:54Z",
+    "remaining_tokens": null,
+    "status": "active",
+    "time_used_seconds": 31124,
+    "tokens_used": 22351369,
+    "updated_epoch": 1791263274
+  },
+  "schema": "er9.accounting.snapshot.v1",
+  "seed_apportionment_rule": "Count unique actual actor attempt once in global totals; shared per-comparison allocation must state reference count and fraction, never erase failed originals.",
+  "seed_unique_actor_artifact_cost": {
+    "actual_attempt_ids": [
+      "SEED-DEV-A-base-s001",
+      "SEED-DEV-B-base-s001",
+      "SEED-DEV-A-FIXED-BASE-enrichment-s002",
+      "SEED-DEV-B-FIXED-BASE-enrichment-s002",
+      "SEED-DEV-A-RESOURCE-R001-seed-critique-a001",
+      "SEED-DEV-B-RESOURCE-R001-seed-critique-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-critique-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001",
+      "SEED-DEV-B-DEFERRED-R001-seed-critique-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+      "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000"
+    ],
+    "comparison_apportionment": "NONE_OBSERVED_STARTED_SEED_DEPENDENCY_CONSUMERS; artifact exposure beyond registry dependencies UNKNOWN",
+    "cost_rule": "Global actual actor-attempt cost once; artifact reuse does not create another inference charge. Failed attempts retained.",
+    "known_cold_seed_tokens": 17725511,
+    "known_seed_role_continuation_tokens": 49891058,
+    "observed_started_seed_dependency_consumers": 0,
+    "registered_jobs": 29
+  },
+  "snapshot_consistency": "Each source captured independently; per-source hash pins identify the exact bytes used. Live receipts may advance after capture; this is not an atomic global state freeze.",
+  "sources": [
+    {
+      "path": "state/jobs.json",
+      "sha256": "85830f41eb25023603fb591586a82643c831e1dab5b6274be0d09a95a3c3f7be"
+    },
+    {
+      "path": "state/attempts.jsonl",
+      "sha256": "d41f0fe67ab156abce599733e84c5615e4c3e08c2f2e28ecb08c8b54fb6fe3a2"
+    },
+    {
+      "path": "state/queue_cursor.json",
+      "sha256": "690924b52f13723039a2ecfc8c4f3896ce3dc574c855109b78a1a35ad5f2ad41"
+    },
+    {
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "6ebfd6c0f21179215d47361658fcaa6401eeb32a737039e0b1317fcbfe1a7b36"
+    }
+  ],
+  "storage_coordination_pin": {
+    "path": "accounting/cohort-016/storage-coordination.safe.json",
+    "sha256": "fc03d1709d7075be1c120468b078c0425c7961930d5322a34fdb660774089206"
+  },
+  "supervisor_cumulative_snapshots_separate_never_sum": [
+    {
+      "at": "2026-10-05T21:22:00Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "UNKNOWN",
+      "time_used_seconds": 3177,
+      "tokens_used": 2062875
+    },
+    {
+      "at": "2026-10-05T22:06:02.000Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 5812,
+      "tokens_used": 3177771
+    },
+    {
+      "at": "2026-10-05T22:31:34.519555+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 7323,
+      "tokens_used": 4036585
+    },
+    {
+      "at": "2026-10-05T23:26:23.814654+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 10611,
+      "tokens_used": 5832554
+    },
+    {
+      "at": "2026-10-06T00:02:16.327403+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 12759,
+      "tokens_used": 7606896
+    },
+    {
+      "at": "2026-10-06T00:34:29Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 14718,
+      "tokens_used": 8633062
+    },
+    {
+      "at": "2026-10-06T00:45:27Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 15377,
+      "tokens_used": 9255770
+    },
+    {
+      "at": "2026-10-06T01:27:35Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 17873,
+      "tokens_used": 11098709
+    },
+    {
+      "at": "2026-10-06T01:33:20Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 18250,
+      "tokens_used": 11397746
+    },
+    {
+      "at": "2026-10-06T01:54:14Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 19503,
+      "tokens_used": 12435990
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 21641,
+      "tokens_used": 13517130
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 23342,
+      "tokens_used": 15369811
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 24879,
+      "tokens_used": 16085726
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 27081,
+      "tokens_used": 18611821
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 28544,
+      "tokens_used": 19923288
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 31124,
+      "tokens_used": 22351369
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 32880,
+      "tokens_used": 24091553
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 34874,
+      "tokens_used": 26346986
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 36343,
+      "tokens_used": 27412404
+    },
+    {
+      "at": null,
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 38511,
+      "tokens_used": 28422156
+    }
+  ],
+  "supplemental_counter_source_pins": [
+    {
+      "path": "accounting/cohort-016/root_counter_supplements.input.json",
+      "sha256": "acbed4c55ab65d6070c7e69e6306106135906e67ef685c642abda05d1f328dd3"
+    }
+  ],
+  "targeted_evaluator_reservation_separate": {
+    "pair_seconds_observed": null,
+    "recorded_closed_utc": "2026-10-06T00:12:16.860886+00:00",
+    "rule": "Reservation is not assessment elapsed cost or candidate Goal start; budget limits are not observed cost.",
+    "source_FINISHED": null,
+    "source_STARTED": null,
+    "source_pin": {
+      "path": "evaluation/independent-targeted/RESERVATION_RECEIPT_001.json",
+      "sha256": "9f72f9f84211382e84c617a75e82b15d66ee5195bdd6bcfb264f310fd48c2898"
+    },
+    "source_screen_seconds_observed": null,
+    "status": "NOT_RUN"
+  },
+  "targeted_evaluator_started_receipts_separate": [
+    {
+      "FINISHED_receipt_imported": true,
+      "billing_dollars": "UNKNOWN",
+      "finished_elapsed_seconds": 1163.017374667,
+      "pair_authorized_seconds": 1800.0,
+      "pair_id": "D-V08-A",
+      "provider_usage": "UNKNOWN",
+      "receipt_event": "STARTED",
+      "scope": "STARTED source record; finished counterpart, if imported, is separate evaluator-clock metadata. Budget bounds are not observed cost, and no quality inference follows.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted/D-V08-A/STARTED.json",
+        "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+      },
+      "source_screen_authorized_seconds": 1200.0,
+      "started_utc": "2026-10-06T00:44:53.834732+00:00"
+    }
+  ],
+  "totals": {
+    "candidate_attempt": {
+      "attempts": 239,
+      "known_tokens": 638711141,
+      "native_goal_starts_known": 221,
+      "occupied_seconds_known": 153586.32605369203,
+      "occupied_seconds_unknown_rows": 18,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 19
+    },
+    "route_canary": {
+      "attempts": 2,
+      "known_tokens": 57240,
+      "native_goal_starts_known": 2,
+      "occupied_seconds_known": 83.74218208000093,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    },
+    "route_canary_or_metadata": {
+      "attempts": 11,
+      "known_tokens": 690126,
+      "native_goal_starts_known": 5,
+      "occupied_seconds_known": 473.934378578,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 3,
+      "usage_unknown_rows": 3
+    },
+    "route_probe": {
+      "attempts": 2,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0,
+      "occupied_seconds_known": 8.237438862001,
+      "occupied_seconds_unknown_rows": 1,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    }
+  },
+  "unstarted_resource_blocked_descriptors_separate": [
+    {
+      "counting": "Unstarted resource-blocked descriptor; not an actual candidate attempt, Goal or provider-cost zero. Helper preparation/billing UNKNOWN.",
+      "full_pipeline_credit": false,
+      "job_id": "I-12-control-critique-a001",
+      "new_native_starts": 0,
+      "recorded_utc": "2026-10-06T00:52:16.410317+00:00",
+      "source_capture_sha256": "d41f0fe67ab156abce599733e84c5615e4c3e08c2f2e28ecb08c8b54fb6fe3a2",
+      "source_path": "state/attempts.jsonl"
+    },
+    {
+      "counting": "Unstarted resource-blocked descriptor; not an actual candidate attempt, Goal or provider-cost zero. Helper preparation/billing UNKNOWN.",
+      "full_pipeline_credit": false,
+      "job_id": "I-12-control-revision-a001",
+      "new_native_starts": 0,
+      "recorded_utc": "2026-10-06T00:52:16.414191+00:00",
+      "source_capture_sha256": "d41f0fe67ab156abce599733e84c5615e4c3e08c2f2e28ecb08c8b54fb6fe3a2",
+      "source_path": "state/attempts.jsonl"
+    }
+  ],
+  "validation_errors": [],
+  "wall_critical_path_seconds": "UNKNOWN",
+  "wasted_seconds": "UNKNOWN_FAILURE_IS_NOT_PROOF_ALL_TIME_WASTED"
+}

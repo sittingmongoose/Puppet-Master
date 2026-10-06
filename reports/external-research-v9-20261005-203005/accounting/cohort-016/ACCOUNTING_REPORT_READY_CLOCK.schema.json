@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "authorized_whole_seconds": {
+      "type": "number"
+    },
+    "billing_dollars": {
+      "type": "string"
+    },
+    "clock_reset": {
+      "type": "boolean"
+    },
+    "elapsed_seconds": {
+      "type": "number"
+    },
+    "helper_provider_usage": {
+      "type": "string"
+    },
+    "monotonic_ns": {
+      "type": "number"
+    },
+    "required_notice_handoffs_follow_this_checkpoint": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "start_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "utc": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "start_pin",
+    "utc",
+    "monotonic_ns",
+    "elapsed_seconds",
+    "authorized_whole_seconds",
+    "clock_reset",
+    "required_notice_handoffs_follow_this_checkpoint",
+    "helper_provider_usage",
+    "billing_dollars",
+    "scope"
+  ],
+  "type": "object"
+}

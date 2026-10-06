@@ -1,0 +1,154 @@
+{
+  "assessment_queue010_observed_utc": "2026-10-06T07:16:41.258949+00:00",
+  "assessment_queue010_pin": {
+    "path": "ops/assessment-dispatch-001/QUEUE_SNAPSHOT_010.json",
+    "sha256": "2c443c11fd01d3b4b65f26ba5500255aa8a900002047440b33b806f8d28decef"
+  },
+  "assessment_scope_metadata_only": [
+    {
+      "completion_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804725+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/completion.json",
+        "sha256": "461dce3f5a36a9c66645b6f472059d287b6da1ec62b819b2ef85c11881b5f646"
+      },
+      "dispatch_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804138+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/dispatch.json",
+        "sha256": "a4e0e78ad87f73bd67d266902bcdef6cecb104381b3cd78c6fc13db1fbf80b2a"
+      },
+      "evaluation_id": "independent-pipeline-6",
+      "exact_scope_only_no_automatic_wholepipeline_assessment": true,
+      "pair_id": "I-06-LUNA-CLOCK-FRESH-R001",
+      "prepared_utc": "2026-10-06T05:55:43.948775+00:00",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/reservation.json",
+        "sha256": "7b852e88a1af6d4bfe1e87528d0bb4c0b23694eab2edfa3c6ae4169163f1842a"
+      },
+      "scope": "current_integrated_final_pair_available_actual_designated_final_and_terminal_missing_partner"
+    },
+    {
+      "completion_pin": null,
+      "dispatch_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804338+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/p1_sources/dispatch.json",
+        "sha256": "a5b95a97364f8c49915851adc00006b1d5f8a5b7d2a4025aed2dd491f043932c"
+      },
+      "evaluation_id": "independent-pipeline-7",
+      "exact_scope_only_no_automatic_wholepipeline_assessment": true,
+      "pair_id": "I-07-LUNA-CLOCK-FRESH-R001",
+      "prepared_utc": "2026-10-06T05:55:43.966521+00:00",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/reservation.json",
+        "sha256": "4a351c914c388a6ad3a33036f48dd7e3bfa7e91b7ad037b7bceffd8b43fa2ae7"
+      },
+      "scope": "current_integrated_final_pair_available_actual_designated_final_and_terminal_missing_partner"
+    },
+    {
+      "completion_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804794+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/completion.json",
+        "sha256": "bca3e29bf15afca958a49781e2bc67a04f4bd1283b61cd9e922cd53dbe4ef344"
+      },
+      "dispatch_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804515+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/C03-CURRENT-FINAL-1-001/dispatch.json",
+        "sha256": "295f87f464ad1ad83f71cce694b1d700bbc0d1388702a6dd6d6adc1714c3c517"
+      },
+      "evaluation_id": "independent-confirmation-C03-final-1",
+      "exact_scope_only_no_automatic_wholepipeline_assessment": true,
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "prepared_utc": "2026-10-06T06:24:21.200673+00:00",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/reservation.json",
+        "sha256": "0c228f9294027a25a34e112c96899a0e241d2ba7d1a3378fdb91addc1f335bac"
+      },
+      "scope": "single originalholdout currentdesignatedfinal4, counterpartfinalnotselected/missing scientificqualityUNASSESSED; no pairedwinner or futureDEC014credit"
+    },
+    {
+      "completion_pin": null,
+      "dispatch_pin": {
+        "observed_utc": "2026-10-06T06:59:01.804625+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/inputs/dispatch.json",
+        "sha256": "6a120b77b2d9b105b92a1f0aa3333094615cc9fb4dd66ed88d99284b33566b24"
+      },
+      "evaluation_id": "independent-warm-recovery-1-fresh",
+      "exact_scope_only_no_automatic_wholepipeline_assessment": true,
+      "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "prepared_utc": "2026-10-06T06:55:03.022573+00:00",
+      "reservation_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/reservation.json",
+        "sha256": "3b0ae043927c84721ecba6a3d9c3569d51731b9800fb64127d33179374dbf4ec"
+      },
+      "scope": "single_derivative_WARM_actual_current_canonical_source_outputs_plus_sameGoal_candidate_selfreport_no_new_target_credit"
+    }
+  ],
+  "original_logical_target_counts_unchanged": {
+    "diagnostic_pairs": 32,
+    "fresh_integrated_pairs": 12,
+    "locked_confirmation_pairs": 4
+  },
+  "queue_updated_units_metadata_only": [
+    {
+      "closure_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/completion.json",
+        "sha256": "461dce3f5a36a9c66645b6f472059d287b6da1ec62b819b2ef85c11881b5f646"
+      },
+      "scope": "current paired integrated final",
+      "state": "CLOSED",
+      "unit_id": "I06_CURRENT_PAIRED_FINAL"
+    },
+    {
+      "closure_pin": null,
+      "scope": "current paired integrated final",
+      "state": "REPORT_READY_HANDOFF_CLOSURE_UNKNOWN",
+      "unit_id": "I07_CURRENT_PAIRED_FINAL"
+    },
+    {
+      "closure_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/completion.json",
+        "sha256": "bca3e29bf15afca958a49781e2bc67a04f4bd1283b61cd9e922cd53dbe4ef344"
+      },
+      "scope": "single old1.4 H1 final; actual10/common8/card3",
+      "state": "CLOSED",
+      "unit_id": "C03_ORIGINAL_CURRENT_FINAL"
+    },
+    {
+      "closure_pin": null,
+      "scope": null,
+      "state": "UNSTARTED_CLOSED",
+      "unit_id": "WARM1_ABORTED_EXPOSURE_RESERVATION"
+    },
+    {
+      "closure_pin": null,
+      "scope": "single derivative current canonical4+same-candidate-Goal report; no original grade replacement or extra matched target credit",
+      "state": "PHASE2_KEY_RELEASED",
+      "unit_id": "WARM1_FRESH_CURRENT_OUTPUT"
+    }
+  ],
+  "rule": "Different exact source windows preserved. Scientific grade/report/body fields never accessed or selected. Workload/operational/assessment lifecycle do not establish scientific PASS, wholepair completion, source uptake or warm cache. No original clocks changed; no admission or cleanup performed by accountant.",
+  "schema": "er9.accounting.neutral-workload-storage-metadata.v1",
+  "storage_no_campaign_cutoff": true,
+  "storage_no_clock_reset": true,
+  "storage_observed_utc": "2026-10-06T07:14:52.284125+00:00",
+  "storage_qualification_pin": {
+    "path": "supervision/STORAGE-ENOSPC-001.json",
+    "sha256": "47b0ecb40527034a1ea5baffae81a0d92b56052e70db608ac36c699b2058cbaf"
+  },
+  "workload004_completed_utc": "2026-10-06T06:59:01.885634+00:00",
+  "workload004_neutral_closure_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-004/NEUTRAL_CLOSURE.json",
+    "sha256": "c37c6562cdc270d9aaedb084cfa220d13c3aa1a7388de47fe47b8c2183bdac19"
+  },
+  "workload004_scoreboard_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-004/WORKLOAD_SCOREBOARD.json",
+    "sha256": "6b085dbfb29881bc6597eeb01faaa871fd64d2d70dd18010b557359c45b24e02"
+  },
+  "workload004_selector_pin": {
+    "path": "consolidation/workload-004/PUBLICATION_SELECTOR.json",
+    "sha256": "b0d3a139e4d82370fff1b449c775c4f62516191fbbba6ad2e394a8831d4250ac"
+  },
+  "workload004_source_window_utc": {
+    "end": "2026-10-06T06:59:01.885634+00:00",
+    "start": "2026-10-06T06:59:01.758307+00:00"
+  }
+}

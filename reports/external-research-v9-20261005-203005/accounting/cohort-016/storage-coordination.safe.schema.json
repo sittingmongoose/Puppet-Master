@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accounting_metadata_required": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "accounting_raw_bulk_needed": {
+      "type": "boolean"
+    },
+    "archive_restoration_requested_by_accountant": {
+      "type": "boolean"
+    },
+    "billing_helpers_physical_provider": {
+      "type": "string"
+    },
+    "coordinate_root_ops_notices_sent": {
+      "type": "boolean"
+    },
+    "historical_native_proof_rule": {
+      "type": "string"
+    },
+    "offloaded_bulk_not_read": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "original_clock_reset": {
+      "type": "boolean"
+    },
+    "owner_archive_manifest_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "source_cost_repricing": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_archive_manifest_pin",
+    "accounting_metadata_required",
+    "accounting_raw_bulk_needed",
+    "offloaded_bulk_not_read",
+    "archive_restoration_requested_by_accountant",
+    "historical_native_proof_rule",
+    "source_cost_repricing",
+    "original_clock_reset",
+    "coordinate_root_ops_notices_sent",
+    "billing_helpers_physical_provider",
+    "scope"
+  ],
+  "type": "object"
+}

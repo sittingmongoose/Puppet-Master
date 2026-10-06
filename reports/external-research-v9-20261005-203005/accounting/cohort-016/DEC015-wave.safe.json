@@ -1,0 +1,183 @@
+{
+  "accounting_capture_interval_utc": {
+    "end": "2026-10-06T07:18:35.138389+00:00",
+    "start": "2026-10-06T07:18:34.480107+00:00"
+  },
+  "owner_checkpoint_pin": {
+    "path": "ops/dispatcher/DEC015_ALL_FIVE_TERMINAL_CHECKPOINT_001.json",
+    "sha256": "bbf97c0645de08cb890b260aa5cd092b119672010ff58929f8c1d31afd2a85f6"
+  },
+  "owner_observed_utc": "2026-10-06T06:46:37.367858+00:00",
+  "rows": [
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "extra_logical_target_credit": false,
+      "freeze_pin_reference_only": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "830c2ba7448e10b083f745d9e3e2bec1ea217e737708ef08f1351274c9a288f7"
+      },
+      "job_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "native_goal_starts_from_exact_accounting_capture": 1,
+      "native_goal_status_saved": "paused",
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "f706f61a4fa9faeaaaf98580d7657c45f675e71c9d6634dfd681da53c02ae5de"
+      },
+      "occupied_seconds_reference_only": 1485.788483628,
+      "operator_operational_complete": false,
+      "operator_status": "FAILED",
+      "pair_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "scope": "Exact current derivative actor cost already in global attempt totals, not charged again as imported source or per-comparison evidence.",
+      "source_slot": "I-05",
+      "source_uptake_or_cache_benefit": "UNKNOWN",
+      "stage": "critic_final",
+      "usage_basis": "native_thread_cumulative",
+      "usage_reference_only": {
+        "cached_input_included": 5548544,
+        "input": 5882445,
+        "output": 68295,
+        "reasoning_output_subset": 40526,
+        "total": 5950740
+      }
+    },
+    {
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "extra_logical_target_credit": false,
+      "freeze_pin_reference_only": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "14d4df7abe38e890d6d4c91d94072585b09bb064431bacc6bbe46a9dc639f768"
+      },
+      "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "native_goal_starts_from_exact_accounting_capture": 1,
+      "native_goal_status_saved": "paused",
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "c6f957caaaf32f98ab790e084b25de9b98f8729b75b101e5660b44cb1a2612d4"
+      },
+      "occupied_seconds_reference_only": 1485.606847704,
+      "operator_operational_complete": false,
+      "operator_status": "FAILED",
+      "pair_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001",
+      "scope": "Exact current derivative actor cost already in global attempt totals, not charged again as imported source or per-comparison evidence.",
+      "source_slot": "I-06",
+      "source_uptake_or_cache_benefit": "UNKNOWN",
+      "stage": "critic_final",
+      "usage_basis": "native_thread_cumulative",
+      "usage_reference_only": {
+        "cached_input_included": 5292032,
+        "input": 5668990,
+        "output": 65419,
+        "reasoning_output_subset": 34837,
+        "total": 5734409
+      }
+    },
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "extra_logical_target_credit": false,
+      "freeze_pin_reference_only": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "5dd2fba6dfdc25a345517295b1e06593b7e395328abe8031a689eb4de1518796"
+      },
+      "job_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "native_goal_starts_from_exact_accounting_capture": 1,
+      "native_goal_status_saved": "paused",
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808"
+      },
+      "occupied_seconds_reference_only": 598.760597752,
+      "operator_operational_complete": false,
+      "operator_status": "FAILED",
+      "pair_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "scope": "Exact current derivative actor cost already in global attempt totals, not charged again as imported source or per-comparison evidence.",
+      "source_slot": "I-06",
+      "source_uptake_or_cache_benefit": "UNKNOWN",
+      "stage": "critic_final",
+      "usage_basis": "native_thread_cumulative",
+      "usage_reference_only": {
+        "cached_input_included": 6400512,
+        "input": 6762114,
+        "output": 65707,
+        "reasoning_output_subset": 50924,
+        "total": 6827821
+      }
+    },
+    {
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "extra_logical_target_credit": false,
+      "freeze_pin_reference_only": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "f0c777985c009366327afb2d97280ad71b2eceef4ccd418b1f1c32dcb77ce0b4"
+      },
+      "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "native_goal_starts_from_exact_accounting_capture": 1,
+      "native_goal_status_saved": "paused",
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "671ba65ae0b6163e407146963053e4f635b570bab4db3dfe352828590b87b6c5"
+      },
+      "occupied_seconds_reference_only": 1216.028331371,
+      "operator_operational_complete": false,
+      "operator_status": "FAILED",
+      "pair_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001",
+      "scope": "Exact current derivative actor cost already in global attempt totals, not charged again as imported source or per-comparison evidence.",
+      "source_slot": "I-07",
+      "source_uptake_or_cache_benefit": "UNKNOWN",
+      "stage": "critic_final",
+      "usage_basis": "native_thread_cumulative",
+      "usage_reference_only": {
+        "cached_input_included": 7390208,
+        "input": 7874676,
+        "output": 111363,
+        "reasoning_output_subset": 75382,
+        "total": 7986039
+      }
+    },
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "extra_logical_target_credit": false,
+      "freeze_pin_reference_only": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/OUTPUT_FREEZE.json",
+        "sha256": "d33c145f742c56d37e934386af9f70017bc0eb066e8f7ce3fb6895cc0902ce08"
+      },
+      "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "native_goal_starts_from_exact_accounting_capture": 1,
+      "native_goal_status_saved": "complete",
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "sha256": "b702ac2964633db4dac50640876ac05a881716ada3b9e3a4a8238ca158f01e31"
+      },
+      "occupied_seconds_reference_only": 762.466389032,
+      "operator_operational_complete": true,
+      "operator_status": "COMPLETED",
+      "pair_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "scope": "Exact current derivative actor cost already in global attempt totals, not charged again as imported source or per-comparison evidence.",
+      "source_slot": "I-07",
+      "source_uptake_or_cache_benefit": "UNKNOWN",
+      "stage": "critic_final",
+      "usage_basis": "native_thread_cumulative",
+      "usage_reference_only": {
+        "cached_input_included": 5511424,
+        "input": 5839266,
+        "output": 101370,
+        "reasoning_output_subset": 47912,
+        "total": 5940636
+      }
+    }
+  ],
+  "rule": "Operational status only, no scientific grades or fresh/matched comparison credit. All previous failed/cold/source costs remain global once; this wave is already included, no addition to snapshot totals.",
+  "schema": "er9.accounting.derivative-terminal-wave.v1",
+  "summary": {
+    "actual_native_attempts": 5,
+    "extra_logical_targets": 0,
+    "failed_operational_status": 4,
+    "known_usage_reference_tokens": 32439645,
+    "operational_complete": 1,
+    "usage_unknown_rows": 0
+  }
+}

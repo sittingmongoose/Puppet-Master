@@ -1,0 +1,31 @@
+{
+  "accounting_metadata_required": [
+    "state/jobs.json",
+    "state/attempts.jsonl",
+    "state/queue_cursor.json",
+    "state/supervisor_goal_counters.jsonl",
+    "native/receipt.json",
+    "native/result.json",
+    "native/provider-usage.redacted.jsonl",
+    "native/activation.json",
+    "native/final-session.redacted.json",
+    "selected direct Goal/status/proof and neutral lifecycle/clock metadata"
+  ],
+  "accounting_raw_bulk_needed": false,
+  "archive_restoration_requested_by_accountant": false,
+  "billing_helpers_physical_provider": "UNKNOWN",
+  "coordinate_root_ops_notices_sent": true,
+  "historical_native_proof_rule": "Join immutable preverified bounded proof companion and exact receipt/source hashes; no archived raw protocol/modelIO reopened in this turn. Ops manifest source is pinned; accountant independently verifies metadata manifest hash only, not every archived body/decompression.",
+  "offloaded_bulk_not_read": [
+    "native/protocol.redacted.jsonl",
+    "native/model-io.redacted.jsonl"
+  ],
+  "original_clock_reset": false,
+  "owner_archive_manifest_pin": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0710/terminal-redacted/BATCH-20261006T071708620971Z.json",
+    "sha256": "8f4fce52544d92ec4c4c598885617d51845f530d3fb05e92175396043fb2059e"
+  },
+  "schema": "er9.accounting.retained-metadata-storage-qualification.v1",
+  "scope": "Owned archive preservation coordination only, no source scientific/body evaluation, foreign cleanup or evidence deletion. Exact current cost metadata stayed available. Storage overhead inside own original016 clock.",
+  "source_cost_repricing": false
+}

@@ -1,0 +1,105 @@
+{
+  "attempts_pin": {
+    "path": "accounting/cohort-016/attempts.safe.json",
+    "sha256": "620316e67913392bdd8b68e1e560134fa013a338bdf96341012497ec94d531c1"
+  },
+  "candidate_family_counts": {
+    "GLM": {
+      "attempts": 70,
+      "confirmed_native_starts": 70,
+      "known_tokens": 89705425
+    },
+    "Luna": {
+      "attempts": 151,
+      "confirmed_native_starts": 151,
+      "known_tokens": 549005716
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 18,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    }
+  },
+  "candidate_totals": {
+    "attempts": 239,
+    "known_tokens": 638711141,
+    "native_goal_starts_known": 221,
+    "occupied_seconds_known": 153586.32605369203,
+    "occupied_seconds_unknown_rows": 18,
+    "starts_unknown_rows": 0,
+    "usage_unknown_rows": 19
+  },
+  "capture_interval_utc": {
+    "end": "2026-10-06T07:18:35.138389+00:00",
+    "start": "2026-10-06T07:18:34.480107+00:00"
+  },
+  "current_changed_sources": [],
+  "derivative_wave_pin": {
+    "path": "accounting/cohort-016/DEC015-wave.safe.json",
+    "sha256": "98a548569a9f12e5a3395d582fc55cedbac0115e39428945d9ac8c0856dce891"
+  },
+  "last_captured_root_counter_separate": {
+    "helper_inclusion": "UNKNOWN",
+    "native_updated_at": 1791270861,
+    "observed_utc": "2026-10-06 07:14:52 UTC",
+    "provider_counts_combined": false,
+    "remainingTokens": null,
+    "status": "active",
+    "stop_trigger": false,
+    "timeUsedSeconds": 38511,
+    "tokensUsed": 28422156
+  },
+  "new_actual_attempt_ids": [
+    "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+    "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+    "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+    "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+    "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+    "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+    "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+  ],
+  "prior012_race_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior015_selection_pin": {
+    "path": "accounting/cohort-015/PUBLIC_SELECTION.json",
+    "sha256": "b7ac2042c9383b3655fbaa9480a8e30207656613850d23fabc252c8a5cee0bca"
+  },
+  "reviewer_clocks_pin": {
+    "path": "accounting/cohort-016/evaluator-clocks.safe.json",
+    "sha256": "e62aa0c2bff21c8dd7f37326dc3f2694ab0bde29bdcf4341fe78aa2aef44d171"
+  },
+  "schema": "er9.accounting.restart-receipt.v1",
+  "snapshot_pin": {
+    "path": "accounting/cohort-016/snapshot.safe.json",
+    "sha256": "ed4c1aac3651b87b9024cb716484d56a6512f7ba798c247b311e93cebd8c3ccc"
+  },
+  "storage_coordination_pin": {
+    "path": "accounting/cohort-016/storage-coordination.safe.json",
+    "sha256": "fc03d1709d7075be1c120468b078c0425c7961930d5322a34fdb660774089206"
+  },
+  "unknown_rule": "Physical/billing/helpers/cancelled tails/true critical path/cleanup/actual exposure stay UNKNOWN if unexposed. No logicaltarget credit or campaign stop.",
+  "workload_storage_pin": {
+    "path": "accounting/cohort-016/workload-storage.safe.json",
+    "sha256": "73d0edf09a598d3d9d719cb0897da3932742859ecb292d2bf9fbf406d19def05"
+  }
+}

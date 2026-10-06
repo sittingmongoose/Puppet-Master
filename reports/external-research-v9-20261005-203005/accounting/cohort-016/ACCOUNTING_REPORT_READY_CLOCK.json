@@ -1,0 +1,16 @@
+{
+  "authorized_whole_seconds": 1800,
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "elapsed_seconds": 238.759857198,
+  "helper_provider_usage": "UNKNOWN",
+  "monotonic_ns": 101716420294407,
+  "required_notice_handoffs_follow_this_checkpoint": true,
+  "schema": "er9.accounting.report-ready-clock.v1",
+  "scope": "Own metadata work report-ready checkpoint; not candidate inference/model occupied cost. Final required handoff measurement follows, no sum with source/reviewer clocks.",
+  "start_pin": {
+    "path": "accounting/cohort-016/START.json",
+    "sha256": "1eec5a9fed22a133e516fd2e0d8a653916d7c759fd2998c471c4af6813f6fec4"
+  },
+  "utc": "2026-10-06T07:21:37.563388+00:00"
+}
