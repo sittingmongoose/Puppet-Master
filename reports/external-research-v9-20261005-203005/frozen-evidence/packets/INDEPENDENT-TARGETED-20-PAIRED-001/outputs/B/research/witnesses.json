@@ -1,0 +1,68 @@
+{
+  "inventory_version": "D-V13-B-current/1",
+  "labels": {
+    "executed_by_candidate": "W5 only in this stage; isolated component evidence, not product validation.",
+    "inherited_seed": "W1-W4 are receipts described by the authentic supplied seed inventory, not rerun here. Their exact candidate code/input bodies were not supplied, so they are retained as context and are not used to claim SQL integration.",
+    "proposed_unexecuted": "Validation plans below have no execution receipt."
+  },
+  "executed": [
+    {
+      "id": "W5",
+      "title": "Shared Python/SQL provenance fingerprint and downstream invalidation model",
+      "status": "executed_by_candidate",
+      "execution_id": "exec-7td1_i0q",
+      "completed_utc": "2026-10-06T03:43:11.787163+00:00",
+      "code_sha256": "ae77251fb03dcf5792714d0e7b0b80eb47eb528bb4764087b3edc19b720a8a6a",
+      "data_sha256": "cad8a64ff3d75e81cf4a818735db39e4909910175549a2d21fdd4c17c0d225bf",
+      "code_utf8": "import hashlib\nimport json\n\n\ndef canonical_bytes(value):\n    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\")).encode(\"utf-8\")\n\n\ndef digest_bytes(value):\n    return hashlib.sha256(value).hexdigest()\n\n\ndef digest_obj(value):\n    return digest_bytes(canonical_bytes(value))\n\n\ndef make_key(kind, source_text, inputs, environment):\n    return digest_obj({\n        \"kind\": kind,\n        \"source_sha256\": digest_bytes(source_text.encode(\"utf-8\")),\n        \"input_digests\": inputs,\n        \"environment\": environment,\n    })\n\n\n# Candidate-authored tiny Python transform; only this Python function runs.\nrecords = data[\"records\"]\npython_result = [{\"category\": row.get(\"category\"), \"label\": row.get(\"label\", \"<missing>\")} for row in records]\nexpected_python_result = [\n    {\"category\": \"café\", \"label\": \"alpha\"},\n    {\"category\": None, \"label\": \"<missing>\"},\n]\nassert python_result == expected_python_result\n\npython_source = data[\"python_source\"]\nsql_source = data[\"sql_source\"]\nenvironment = data[\"environment\"]\ndataset_digest = digest_obj(records)\npython_key = make_key(\"python_notebook\", python_source, [dataset_digest], environment)\nintermediate_digest = digest_obj(python_result)\nsql_key = make_key(\"sql_transform\", sql_source, [intermediate_digest], environment)\n\nsql_changed_key = make_key(\"sql_transform\", sql_source + \"\\n-- comment changed\", [intermediate_digest], environment)\nchanged_data_digest = digest_obj(records + [{\"category\": \"β\"}])\nchanged_python_key = make_key(\"python_notebook\", python_source, [changed_data_digest], environment)\nchanged_intermediate_digest = digest_obj(python_result + [{\"category\": \"β\", \"label\": \"<missing>\"}])\nchanged_downstream_sql_key = make_key(\"sql_transform\", sql_source, [changed_intermediate_digest], environment)\nchanged_environment = dict(environment, duckdb_build=\"1.5.x+different-build\")\nenvironment_python_key = make_key(\"python_notebook\", python_source, [dataset_digest], changed_environment)\nenvironment_sql_key = make_key(\"sql_transform\", sql_source, [intermediate_digest], changed_environment)\n\nassert sql_changed_key != sql_key and python_key == make_key(\"python_notebook\", python_source, [dataset_digest], environment)\nassert changed_python_key != python_key and changed_downstream_sql_key != sql_key\nassert environment_python_key != python_key and environment_sql_key != sql_key\nprint(json.dumps({\n    \"check\": \"shared provenance-key and invalidation model\",\n    \"python_result\": python_result,\n    \"python_node_key\": python_key,\n    \"sql_node_key\": sql_key,\n    \"sql_edit_invalidates_sql_node\": sql_changed_key != sql_key,\n    \"dataset_edit_invalidates_python_and_downstream_sql\": changed_python_key != python_key and changed_downstream_sql_key != sql_key,\n    \"engine_environment_edit_invalidates_both\": environment_python_key != python_key and environment_sql_key != sql_key,\n    \"sql_execution\": \"not performed; SQL text only hashed as a first-class node input\"\n}, ensure_ascii=False, sort_keys=True))",
+      "input_json": {
+        "records": [
+          {"category": "café", "label": "alpha"},
+          {"category": null}
+        ],
+        "python_source": "python_result = transform(project.dataset('tiny'))",
+        "sql_source": "SELECT category, COUNT(*) AS n FROM prepared GROUP BY category ORDER BY category NULLS FIRST;",
+        "environment": {
+          "python_lock": "sha256:example-lock",
+          "duckdb_build": "1.5.x+example-build",
+          "threads": 1
+        }
+      },
+      "expected_behavior_justification": "The proposed common provenance key must change when a node's own source, declared parent output/data identity, or relevant environment changes. The tiny Python transform should preserve the explicit null and expected label; SQL source changes should invalidate its node without changing the upstream Python key.",
+      "stdout": "{\"check\": \"shared provenance-key and invalidation model\", \"dataset_edit_invalidates_python_and_downstream_sql\": true, \"engine_environment_edit_invalidates_both\": true, \"python_node_key\": \"15a921f588e59d1e0c70caf6b012af70e080ce6ce0178bccd99fb5ea8b1e4bf8\", \"python_result\": [{\"category\": \"café\", \"label\": \"alpha\"}, {\"category\": null, \"label\": \"<missing>\"}], \"sql_edit_invalidates_sql_node\": true, \"sql_execution\": \"not performed; SQL text only hashed as a first-class node input\", \"sql_node_key\": \"f5557c31f3678e5a4a626252f49fa1e9db750993a748d56206f3f7f547ccdfce\"}\n",
+      "stdout_sha256": "e1514023f12afb83ea3308d0e5e964834ed0ffaf8c7cb135fcb8826c6fa1f35c",
+      "stderr": "",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exit_code": 0,
+      "limits": {
+        "wall_seconds": 5,
+        "cpu_seconds": 3,
+        "memory_bytes": 268435456,
+        "tasks": 16,
+        "network": "new empty namespace",
+        "filesystem": "fresh empty filesystem"
+      },
+      "scope_limits": "Only the fixed candidate-authored Python transform and provenance-key model executed. The python_source and sql_source values were hashed as strings, not executed. No DuckDB engine, SQL parser, notebook runtime, project filesystem, 5 GB input, real sandbox policy, or application behavior was tested. The example environment strings are placeholders, not installed or pinned releases."
+    }
+  ],
+  "inherited_seed_receipts": {
+    "source_file": "inputs/seed/witness_catalog.json",
+    "source_sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+    "not_rerun_current_stage": true,
+    "exact_code_and_input_bodies_supplied": false,
+    "items": [
+      {"id": "W1-rev1", "status": "executed_by_candidate_in_seed", "execution_id": "exec-83jjs6ws", "code_sha256": "c05485aae07c5f60cbd7a3ec02bb845b180f4fe3a0c910ec9ade7d243ac5d54d", "outcome": "fail", "stderr_summary": "TypeError comparing None and int while sorting execution_count", "stdout": "", "exit_code": 1, "scope_limits": "Schema-level synthetic check; no real nbformat library."},
+      {"id": "W1", "status": "executed_by_candidate_in_seed", "execution_id": "exec-6tyxg1kl", "code_sha256": "122fde487b19ae201ebe104742f055783d77a0eb6360c905afc8a5bf141dda64", "outcome": "pass", "stdout_summary": "5 synthetic cells; display and replay order differ; null execution_count cell excluded and flagged unverified", "exit_code": 0, "scope_limits": "Schema-derived rules only; no Jupyter/nbformat library."},
+      {"id": "W2", "status": "executed_by_candidate_in_seed", "execution_id": "exec-eo7n39wa", "code_sha256": "0cdd861a1625b50aaa50bade9a560fef0203c6626c00c390320bc44c673245f1", "outcome": "pass", "stdout_summary": "50,000 synthetic NDJSON lines; 49,997 accepted, 3 rejected; max 512 rows materialized; sample preview; source unchanged", "exit_code": 0, "scope_limits": "In-memory synthetic corpus; not 5 GB; no production engine; app-tracked memory, not OS-measured."},
+      {"id": "W3", "status": "executed_by_candidate_in_seed", "execution_id": "exec-vephzgkd", "code_sha256": "9d1dd4802343a3ccc76600b679d7be8ffe425f51f22754d663fb3f2f4360c5f8", "outcome": "pass", "stdout_summary": "13-event model scenario; error, data-change, and restart invalidation transitions asserted", "exit_code": 0, "scope_limits": "Three-cell model simulation; no real kernel/editor."},
+      {"id": "W4", "status": "executed_by_candidate_in_seed", "execution_id": "exec-0mgh0exa", "code_sha256": "fccc8ce64279b36c2d53c6f9d35cdd6207775440e4af31d91bf09c3497ace2f0", "outcome": "pass", "stdout_summary": "Pure transform twice byte-identical; unseeded RNG differed; illustrative manifest produced", "exit_code": 0, "scope_limits": "Fresh state emulated; no subprocess isolation; sandbox Python 3.14.4; illustrative manifest only."}
+    ]
+  },
+  "proposed_unexecuted": [
+    {"id": "V8", "title": "Real mixed Python/SQL clean replay with DuckDB", "required_evidence": "Candidate application run using one exact locked DuckDB build; SQL node materialized and Python notebook consumes named artifact; complete event and second replay digest."},
+    {"id": "V9", "title": "Mixed-node invalidation/failure/cancel matrix", "required_evidence": "Change Python source, SQL text, input/schema, lock/engine/settings separately; prove exact descendants stale and partial outputs never current."},
+    {"id": "V10", "title": "DuckDB CSV regression release matrix", "required_evidence": "Run tagged/released engine test/reproduction for issue #12596, including serial mode; report tested binary versions and results."},
+    {"id": "V11", "title": "5 GB workstation and portability matrix", "required_evidence": "8-core/16 GB peak RSS, spill disk, latency, cancel/recovery; reopen on second supported OS/architecture and report digest differences."},
+    {"id": "V12", "title": "OS sandbox validation", "required_evidence": "Filesystem/network/resource escape attempts and forced termination against the selected production isolation and supported platforms."}
+  ]
+}

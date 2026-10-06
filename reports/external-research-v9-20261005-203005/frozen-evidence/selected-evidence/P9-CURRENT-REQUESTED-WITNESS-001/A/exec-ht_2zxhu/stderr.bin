@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/runtime/bootstrap.py", line 9, in <module>
+    exec(compile(open('/work/code.py').read(), '/work/code.py', 'exec'), {'__name__':'__main__', 'data':data})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/code.py", line 57, in <module>
+    assert manifest["rows_parsed"] == 4, manifest["rows_parsed"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3

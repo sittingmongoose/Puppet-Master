@@ -1,0 +1,177 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "dispatch_interface_version": "1.2",
+  "evaluation_id": "independent-pipeline-9-research-I02",
+  "scope": "two_terminal_research_stage_outputs",
+  "assessed_stage": "research",
+  "track": "B",
+  "prepared_utc": "2026-10-06T09:14:43.569683Z",
+  "candidate_outputs_frozen_utc": "2026-10-06T05:01:17.792413+00:00",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "result_directory": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+    },
+    "coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/coverage_map.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f"
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    "important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60"
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    "actual_launched_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/task/actual_launched_task.md",
+      "sha256": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+    }
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "artifact_status": "FROZEN_TERMINAL_RESEARCH_STAGE_PARTIAL",
+      "assessed_stage": "research",
+      "designated_final": null,
+      "stage_proposal": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+        "sha256": "042cb9c162fb1843fbb291b71fb67306542cc0a6142a55b29f768de859c76a2c"
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/A/research/sources.json",
+        "sha256": "ded3d180890944f870e2966b5da27611aa2ef04686a5d4ac3519d7217ea2feb2"
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/A/research/witnesses.json",
+        "sha256": "97346a01157190b8fb3177236b824fcb593d658db1750b2188cbca25154b5509"
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/A/research/leads.json",
+        "sha256": "a2e213a69570f8ee21dc6c494a94a807422e962a7c52472cda09cee3fb69c0a3"
+      },
+      "missing_stage_catalogs": [],
+      "additional_anonymous_evidence": [],
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false
+    },
+    {
+      "alias": "B",
+      "artifact_status": "FROZEN_TERMINAL_RESEARCH_STAGE_PARTIAL",
+      "assessed_stage": "research",
+      "designated_final": null,
+      "stage_proposal": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+        "sha256": "2b9cf6a18d08b91b75c0e0510d05b6cb604fffd0fe274bb0fd3a36fbe9861364"
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/B/research/sources.json",
+        "sha256": "a414ab88617a7e43a92678cf2887cafe60bd2212360ad6e104ff9d84758fb1a6"
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/B/research/witnesses.json",
+        "sha256": "065521ecf65bf037e9b0f2a3f01bfd53d3ed052db51850e03c6712e70007b50f"
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P9-I02-CURRENT-RESEARCH-PAIR-001/outputs/B/research/leads.json",
+        "sha256": "3ffc4629baaf4a5d421d74e1e20918f8b9f54c91c4776ef8cae7a02bd063f95e"
+      },
+      "missing_stage_catalogs": [],
+      "additional_anonymous_evidence": [],
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "B-P1",
+      "obligation_ids": [
+        "B08",
+        "B09"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "B-P2",
+      "obligation_ids": [
+        "B02",
+        "B03",
+        "B04",
+        "B10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "B-P3",
+      "obligation_ids": [
+        "B11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "B-P4",
+      "obligation_ids": [
+        "B12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "B-P5",
+      "obligation_ids": [
+        "B01",
+        "B05",
+        "B06",
+        "B07",
+        "B10"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "assessment_plan": {
+    "mode": "matched_current_research_stage_source_screen",
+    "screen_max_seconds": 1200,
+    "history_execution_reserve_seconds": 600,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-06T09:14:43.457198+00:00",
+    "whole_includes_waits_reports_required_handoffs": true,
+    "inclusive_phase2_anchor": "immutable_phase1_freeze",
+    "full_pipeline_quality": "UNASSESSED"
+  },
+  "scope_boundary": "Assess actual source/factual/brief coverage in each frozen research output under the original common criteria. Original final-form obligations remain explicit; final delivery, later repair/preservation and whole pipelines stay UNASSESSED. No designated final substitution, recipe qualification or mechanism effect from unexecuted later stages.",
+  "blinding": {
+    "hidden_fields": [
+      "arm_assignment",
+      "economics",
+      "prior_grades",
+      "later_stage_history",
+      "operational_failure_cause"
+    ],
+    "known_hints_at_dispatch": [
+      "Case/model/role labels in exact launched Task may expose identity; disclosed, no perfect blinding claim. Runtime status/costs/key and old judgments withheld. Current research only; both designated finals null."
+    ],
+    "byte_policy": "Exact substantive stage output bytes; disclose incidental identity hints.",
+    "allocation_record": "coordinator-only sidecar, excluded",
+    "phase2_material_release": "only after immutable stage current-output judgment saved"
+  },
+  "outputs": [
+    "current_output_judgment.json",
+    "report.json",
+    "REVIEW.md"
+  ],
+  "private_expected_truth_policy": "Post-freeze evaluator-only; no candidate inputs or retests from findings."
+}

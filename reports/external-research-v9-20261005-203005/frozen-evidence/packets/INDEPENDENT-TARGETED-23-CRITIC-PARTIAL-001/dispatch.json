@@ -1,0 +1,151 @@
+{
+  "schema": "er9.targeted-available-intermediate-role-source-packet.v1",
+  "evaluation_id": "independent-targeted-23",
+  "pair_id": "D-V09-B",
+  "prepared_utc": "2026-10-06T09:33:25.039204+00:00",
+  "scope": "three_current_critic_roles_actual_required_reports_missing_one_partial_source_index_only",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-targeted-23/reservation.json",
+    "sha256": "daf4aa53f34e86392d71d10b2aa457ed04c091f47ad5bff9a34427939a67b8cc",
+    "bytes": 765
+  },
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/targeted_coverage_map.json",
+      "sha256": "4465a65f1f5068c4fb4c03394b5f523d3a16ee7ebac347c794509ea856a4efa4",
+      "bytes": 2164
+    },
+    "neutral_targeted_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/neutral_targeted_task.md",
+      "sha256": "0be9b61266d0d29e1dd319813e0c9c43fcb8a60c1e4073825eee35b2f82a060f",
+      "bytes": 1366
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    "actual_role_task_R1": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R1.md",
+      "sha256": "2e923403683bab0aaa9c350ad9a9b0c89bb4d7df8fd987aa66fdf7f22dc3404f",
+      "bytes": 12023
+    },
+    "actual_role_task_R2": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R2.md",
+      "sha256": "20767ee2974c996ac50ee38c30af6ba1799ecdcd57409b50b16e8cbe54e916a4",
+      "bytes": 11832
+    },
+    "actual_role_task_R3": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R3.md",
+      "sha256": "c894e5c70b1a8e03324f530718c2713eca4106138126f83b8f401451099aa56f",
+      "bytes": 12045
+    }
+  },
+  "actual_criteria_counts": {
+    "B_brief_obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "targeted_predeclared_checks": [
+    {
+      "id": "D-V09-B-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V09-B-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V09-B-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "anonymous_outputs": [
+    {
+      "alias": "R1",
+      "actual_stage": "implementation_critic",
+      "required_artifacts": [
+        "out/critique/implementation.md"
+      ],
+      "required_role_report_present": false,
+      "designated_final": null,
+      "partial_artifacts": [],
+      "downstream_resolve_final": "UNSTARTED; not promoted; qualityUNASSESSED",
+      "source_quality": "UNASSESSED_PENDING_REVIEW",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "alias": "R2",
+      "actual_stage": "whole_critic",
+      "required_artifacts": [
+        "out/critique/review.md"
+      ],
+      "required_role_report_present": false,
+      "designated_final": null,
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/outputs/R2/critique/source-index-lines.txt",
+          "sha256": "7b9bafad45075f5e4dca6128b59ee4f46e6479344d0d0ccb08559f3334c1ecb8",
+          "bytes": 23508,
+          "kind": "candidate_authored_partial_source_line_map",
+          "scope": "actual source-index lines only, not required critic report or designated final"
+        }
+      ],
+      "downstream_resolve_final": "UNSTARTED; not promoted; qualityUNASSESSED",
+      "source_quality": "UNASSESSED_PENDING_REVIEW",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "alias": "R3",
+      "actual_stage": "source_critic",
+      "required_artifacts": [
+        "out/critique/source.md"
+      ],
+      "required_role_report_present": false,
+      "designated_final": null,
+      "partial_artifacts": [],
+      "downstream_resolve_final": "UNSTARTED; not promoted; qualityUNASSESSED",
+      "source_quality": "UNASSESSED_PENDING_REVIEW",
+      "full_pipeline_quality": "UNASSESSED"
+    }
+  ],
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/integrity-proof.json",
+    "sha256": "172457abbff6a80bd11f6369e7a33855d1f93905ab295f870dbcdceb792703ec",
+    "bytes": 1532
+  },
+  "budget": {
+    "source_seconds": 1200,
+    "whole_seconds": 1800,
+    "inclusive_phase2_seconds": 600,
+    "phase2_anchor": "immutableP1freeze",
+    "whole_includes_all_waits_reports_required_handoffs": true,
+    "reset": false
+  },
+  "blinding": {
+    "known_hints": "Exact originalRoleTask/case labels incidental; no perfectblindnessclaim",
+    "held": "aliases/native/status/model/history/economics/key/oldgrades untilimmutableP1"
+  },
+  "qualification": "Allthree required criticreports ABSENT; one partial sourceindex artifact selected. RolelabelsR1/R2/R3 are anonymous role views, notthree arms; exacttwoarm membership held untilP1freeze. DownstreamfinalGoal0UNSTARTED, final/pipeline/effect/winnerUNASSESSED; no final4rubric imposed on criticroles."
+}

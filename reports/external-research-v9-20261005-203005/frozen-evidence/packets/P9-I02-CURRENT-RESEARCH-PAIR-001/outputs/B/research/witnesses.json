@@ -1,0 +1,82 @@
+{
+  "schema": "witness-inventory.v1",
+  "stage": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001 (research role)",
+  "labeling": "W* = executed by candidate in the experiment's isolated python_execute capability (stdlib-only, tiny synthetic data, no host secrets, no network). P* = proposed/UNEXECUTED. An executed witness demonstrates one candidate-authored mechanism in isolation; it does NOT establish full application behavior, engine behavior, or performance on large data.",
+  "executed_by_candidate": [
+    {
+      "id": "W1",
+      "title": "Output-status reducer: stale-on-upstream-edit, unverified-on-kernel-restart",
+      "execution_id": "exec-_g7q7dd5",
+      "code_sha256": "a07ca3eb677c6bc2db8c150afc1739ae4e7e988d282c71828764faf60c0a948a",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b (empty JSON data param)",
+      "stdout_sha256": "284bc63696b23af49e7d7d63e91e6808d2c83f64210dcdf7c118f9fb67a9d510",
+      "stderr": "empty", "exit_code": 0, "elapsed_seconds": 0.347,
+      "input": "In-memory model: 3 notebook cells with stable ids (c1_load, c2_clean, c3_total), one recorded execution event {kernel_epoch, env_hash, per-cell source hashes (sha256), per-dataset content hash}, then (case 1) the load cell is edited and (case 2) the kernel epoch is bumped with nothing else changed.",
+      "expected": "Case 1: all three outputs stale (edited cell itself plus downstream chain). Case 2: all outputs 'unverified', never 'current'. Precedence: failed > unverified > stale > current.",
+      "observed": "case1 {c1_load: stale, c2_clean: stale, c3_total: stale}; case2 all 'unverified'; assertions passed; exit 0.",
+      "scope_limits": "Reducer logic only, on 3 synthetic cells. No real kernel, no real notebook store, no concurrency. The rule set (epoch/env/data/source comparison, document order as dataflow proxy) is a product choice this witness implements, not an external fact."
+    },
+    {
+      "id": "W2",
+      "title": "Preview-vs-full type inference mismatch (preview is not full-dataset proof)",
+      "execution_id": "exec-55d49v5_ (passing run)",
+      "prior_failed_run": {
+        "execution_id": "exec-uf0p05px",
+        "exit_code": 1,
+        "stderr_sha256": "85f1eef375706f114c1f72178121552dfb1fba04c774206115ff625009ed8ea1",
+        "reason": "Candidate-authored expectation was wrong: asserted int(float('1.5')) == 2 (rounding, as DuckDB's scanner reportedly does per issue #25824) but Python's int() truncates to 1. Corrected expectation to 1 with the truncation documented; substantive invariant (silent rewrite under a preview-derived type) unchanged."
+      },
+      "code_sha256": "a45d552db23f5ca71f57932efc46a47f4af9a6ead2d7e16e4df88eefacedbb0a",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b (empty JSON data param)",
+      "stdout_sha256": "576f2bbae1a4ffa6aa64ed5d8aa70935d41cfb11c31d78814be50298053c087e",
+      "stderr": "empty on passing run", "exit_code": 0, "elapsed_seconds": 0.345,
+      "input": "Synthetic CSV, 104 data rows: 100 rows value '1', then '1.5', '007', '2020-06-15T13:45:59'. Naive per-column type inference over first 10 rows vs full scan; cast of the late value under the preview-derived type.",
+      "expected": "Preview infers INTEGER, full scan infers VARCHAR; casting late value '1.5' under the preview's assumption silently rewrites it (truncation to 1 in this emulation).",
+      "observed": "Exactly as expected; assertions passed; exit 0.",
+      "scope_limits": "Mechanism emulation at toy scale; mirrors the asymmetry documented in duckdb#25824 (S1) but is NOT a DuckDB run and proves nothing about any engine. Real engines differ in cast semantics (DuckDB reportedly rounds; this emulation truncates) — the invariant is 'silently rewritten', not the specific value."
+    },
+    {
+      "id": "W3",
+      "title": "Bounded-chunk streaming scan with reject capture and row identity",
+      "execution_id": "exec-jv0thj3e",
+      "code_sha256": "aecad7a0fe6041e64e6d944cb07ddf5763061ef4f862346736ae12783b3d6c33",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b (empty JSON data param)",
+      "stdout_sha256": "e991c643b7dfdec4ab1765edd3b5a543e84ca0cbda825044d68cd6b46c94fcd6",
+      "stderr": "empty", "exit_code": 0, "elapsed_seconds": 0.566,
+      "input": "Synthetic 5,442,308-byte CSV (120,000 data rows + header) with one malformed record (5 fields at file line 100,001); processed in fixed 65,536-byte chunks.",
+      "expected": "Resident bytes bounded by chunk+carry; exactly 1 reject recorded with its line number and byte offset; clean rows + rejects == 120,000 (nothing silently dropped); streaming sha256 computed.",
+      "observed": "max_bytes_held_at_once 65,579; clean_rows 119,999; malformed_kept_in_rejects 1 at line 100,001 byte_offset 4,516,692; streamed_sha256_prefix 17ae7adb5c116ea0; exit 0.",
+      "scope_limits": "The synthetic bytes were generated in memory (the generator is not a streaming test); 'bounded' refers to the scan loop. The field check is a naive comma count without CSV quoting. Demonstrates the streaming/reject/row-identity contract shape only; does not demonstrate 5 GB throughput or any real reader."
+    }
+  ],
+  "proposed_unexecuted": [
+    {
+      "id": "P1",
+      "title": "5 GB streaming target on the chosen engine",
+      "plan": "On an 8-core/16 GB machine, ingest a generated ~5 GB CSV with DuckDB 1.5.x read_csv at defaults, then with explicit columns schema and sample_size=-1; measure peak RSS (must stay well under 16 GB with memory_limit set), wall time, and row-count/hash agreement with a chunked reference reader. Repeat for one aggregation query and one ORDER BY (global op) with temp_directory on local disk.",
+      "expected": "Bounded/filter/aggregate operations complete without RSS blowup; a full-file ORDER BY either spills or is refused with an explicit bound message.",
+      "status": "UNEXECUTED in this stage: no DuckDB installation or large-data run was possible inside the admitted isolation (no package installation; execution sandbox capped at 256 MB)."
+    },
+    {
+      "id": "P2",
+      "title": "Replay determinism of a pinned environment",
+      "plan": "Two fresh venvs from a hash-pinned requirements set; run the same 6-cell notebook via nbclient (allow_errors=false, timeout set) on byte-identical synthetic inputs; diff saved outputs cell-by-cell; then perturb one dependency version and confirm outputs are flagged unverified by the env-hash rule.",
+      "expected": "Identical outputs under identical pinned env+data; drift detected without execution by env-hash comparison.",
+      "status": "UNEXECUTED (no package installation in the admitted sandbox; nbclient not installable here)."
+    },
+    {
+      "id": "P3",
+      "title": "Sniffer behavior spot-check on DuckDB 1.5.x",
+      "plan": "Reproduce duckdb#25824's minimal CSV (20,479 rows of '1' then '1.5') on installed DuckDB 1.5.x; confirm the silent-rounding behavior and the sample_size=-1 / all_varchar=true recoveries; then run the same file through the wrapper's mandatory explicit-schema path to show the contract prevents it.",
+      "expected": "Defaults show 1.5 read back as 2; explicit schema returns the value unchanged.",
+      "status": "UNEXECUTED; depends on L2 (issue open, upstream behavior may change)."
+    },
+    {
+      "id": "P4",
+      "title": "Crash-recovery of the append-only event journal",
+      "plan": "Kill the writer process mid-append (SIGKILL between write and fsync) at 200 randomized offsets; reopen project; assert the journal is either complete to the last committed event or truncated at a record boundary with a recorded partial-tail marker, and that outputs committed before the crash still resolve.",
+      "expected": "No torn record ever accepted; no committed output lost.",
+      "status": "UNEXECUTED."
+    }
+  ]
+}

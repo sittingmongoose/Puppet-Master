@@ -1,0 +1,186 @@
+{
+  "actual_runtime_tools_resource_pins_required_before_outputs": true,
+  "allocation": {
+    "critical_path_candidate_seconds_per_arm": 2700,
+    "occupied_candidate_seconds_per_arm": 5400,
+    "per_stage_allocations_sum": 2700
+  },
+  "artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "lead_inventory": "out/final/leads.json",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json"
+  },
+  "brief_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2.md",
+  "candidate_family": "GLM",
+  "card_version": "DEC017-final-only-navigation-diagnostic-r001",
+  "case_id": "H2-v1",
+  "clock_behavior_version": "er9.common-original-action-clock-awareness.v1",
+  "common_criteria_path": "common_criteria.json",
+  "common_output_contract": "prompts/output_contract.md",
+  "control_competent_and_contemporaneous": true,
+  "control_stages": [
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1200,
+      "max_parent_responses": 120,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/research.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "stage": "research"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 900,
+      "max_parent_responses": 90,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/critique-common.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/critique/review.md"
+      ],
+      "stage": "critique"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 600,
+      "max_parent_responses": 60,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/revision.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "stage": "revision"
+    }
+  ],
+  "coverage_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2-coverage.json",
+  "critical_source_and_delivery_duties": {
+    "complete_actual_final4_required": true,
+    "independent_implementation_precedents_min": 2,
+    "real_issue_fix_regression_chain_required": true
+  },
+  "declared_runtime_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-02-CONFIRMATION-CLOCK-FRESH-R001/COMMON_RUNTIME_CLOSURE.json",
+    "sha256": "5554e8a9ad570061919c7a812671b03c12d95f0db2e4066bfc388eca07a93446"
+  },
+  "exact_locked_bundle": [
+    "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+    "V10 early coherent release/artifact/API binding",
+    "Candidate-authored discriminating execution where useful with matched tools",
+    "V16 complete decision-focused current proposal and catalogs"
+  ],
+  "execute_all_four_after_early_FAILURE": true,
+  "execution_gate": "All initial I-01..I-12 slots have terminal development outcomes, verified by sole ops; recovery accounting separate",
+  "holdout_code": "H2",
+  "initial_input": "BRIEF_ONLY_CANDIDATE_SOURCE_DISCOVERY",
+  "method_id": "CONFIRM-A",
+  "new_critic_roles": 0,
+  "new_native_role_scope": "Exactly one600 final perarm from own current COMPLETE R+critic, repeated final costs retained",
+  "new_research_roles": 0,
+  "no_feedback_between_confirmation_comparisons": true,
+  "observed_model": null,
+  "pair_id": "C-02-OWN-PRIOR-INDEX-FINAL-R001",
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "quality": "NOT_RUN",
+  "recipe": "A",
+  "release_receipt_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/CONFIRMATION_RELEASE_RECEIPT.json",
+    "sha256": "869061dc8cdcd805c5df145ad60f6d70f182563f5951e26a652d0dd4c103b770"
+  },
+  "requested_effort": "max",
+  "requested_model": "GLM 5.3 Flash",
+  "reservation_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/confirmation/C-02.json",
+    "sha256": "2a0632a909d5a46c0b736f2f032639a5037e30a9fd00dffa3f46169e8e8db772"
+  },
+  "schema": "er9.locked-confirmation-case.v1",
+  "selection_lock_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+    "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "source_access_path": "source_access.json",
+  "source_answers_or_prior_development_in_inputs": false,
+  "source_pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+  "source_slot": "C-02",
+  "status": "NOT_RUN",
+  "track": "C",
+  "treatment_stages": [
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 1200,
+      "max_parent_responses": 120,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/research.md",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-defaults/prompts/V14-protected-discovery.md",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/prompts/V10-release-binding.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "stage": "research"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 900,
+      "max_parent_responses": 90,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/critique-common.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/critique/review.md"
+      ],
+      "stage": "critique"
+    },
+    {
+      "execution_enabled": true,
+      "fresh_same_family": true,
+      "max_native_seconds": 600,
+      "max_parent_responses": 60,
+      "native_goal": true,
+      "prompt_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/revision.md",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/prompts/V16-complete-decision-delivery.md"
+      ],
+      "public_get": true,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "stage": "revision"
+    }
+  ],
+  "whole_case_or_all_diagnostic_PASS_required": false
+}

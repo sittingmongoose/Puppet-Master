@@ -1,0 +1,24 @@
+{
+  "schema": "er9.actual-intermediate-source-integrity.v1",
+  "checks": [
+    {
+      "alias": "A",
+      "freeze_sha256": "19a430d3249181bf9396a0cfb40e67f4cc619c5774042f0bdb546ec8407a48f7",
+      "native_receipt_sha256": "8f1564c94276759a3f6cedd0ae2df57d9655678f6cb0708232c7081d7c9aaa73",
+      "outer_release_sha256": "539f0dc982852f912d281510992528be814dda74e0f288a71e84dda0b2c09721",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    },
+    {
+      "alias": "B",
+      "freeze_sha256": "27d9b66cd445dca123bf940009e2132f135b590f8f5c71d0ca8026fa33799029",
+      "native_receipt_sha256": "54c873823d04ac16e42f598e6762dab50866cd7ce209228b473f8dc8ce5196f9",
+      "outer_release_sha256": "c671e8d466c175c2a1df2774361bac1ac30d2e0d8d1a2f986c35e3324d5b375c",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    }
+  ],
+  "native_goal_status_history_cost": "HELD"
+}

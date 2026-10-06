@@ -1,0 +1,413 @@
+{
+  "schema": "er9.current-research-pair-native-resource-safe-projection.v1",
+  "evaluation_id": "independent-pipeline-9-research-I02",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "arm": "treatment",
+      "assessed_stage": "research",
+      "native_sha256": "dffd0fccd9b4e52f57e21fcc9174e5b7847aa1c89951910c406569636ea08a54",
+      "freeze_sha256": "54aeb438c7d3b225f4f752cc47d3210ff761a0e7c3bec12b3f661496a6db216c",
+      "stage_sha256": "f426f83766bafc4042a99e37dd9671d0822a499ba5a13abb7bed2d44069dd792",
+      "declared_nativeGoal_starts": 1,
+      "goal_activation_direct": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T04:35:23.724193+00:00",
+        "pre_activation_seconds": 8.160892635001801
+      },
+      "native_driver_status_NOT_Goal_status": "completed",
+      "nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "owner_selected_direct_Goal_status_claim": "UNKNOWN_NO_DIRECT_GOAL_STATUS_RECORD_SELECTED",
+      "Goalstatus_claim_basis": "owner-selected positive native-receipt claim kept distinct; exactdirectAPI status record notcopied bysafeprojection, driverenum notsubstituted",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "elapsed_seconds": 815.6850256160105,
+      "start_utc": "2026-10-06T04:35:18.077590+00:00",
+      "ended_utc": "2026-10-06T04:48:51.248337+00:00",
+      "birth_epoch": 1791261315.5633268,
+      "birth_monotonic": 91734.420320301,
+      "deadline_monotonic": 92934.420320301,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "complete_job_memory_max_bytes": 2415919104,
+      "fit": "UNKNOWN",
+      "operational_complete": true,
+      "actual_current_role_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "cleanup": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "remaining_owned_group_members_count": 0,
+      "aggregate_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "283439104",
+        "memory.peak": "834961408",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "resource_profile_sha256": "3e8bd59461419dfb0e1872775ba3f3d3bc440600581313654298ce4fcd7a4477",
+      "resource_profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 91734420320301,
+        "original_total_stop_monotonic_ns": 92934420320301,
+        "allocation_monotonic_ns": 91735776037291,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "outer_release_sha256": "114f94e0ed71c75ce3c25889537429f4c1997641cf8e63f671ea435b521cc7a5",
+      "outer_release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "229888000",
+          "memory.peak": "834961408",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "[not set]",
+          "MemoryMax": "infinity",
+          "MemorySwapMax": "infinity"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 92567474228619
+      },
+      "current_known_counters_and_scope": {
+        "native_usage": {
+          "totalTokens": 381547,
+          "inputTokens": 339907,
+          "outputTokens": 41640,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 14,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 13,
+          "model_request_started": 1
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1211938,
+          "outputTokens": 40226,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1043328,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1252164
+        },
+        "native_responses": 13,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 14,
+          "export_sha256": "33da03e221b5b5cd6cebe9d0a4b3e1255e6f99ff142859d850a5226ce2cca844"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "cache_UI_provider_root_scope": "literal scopes distinct; do not sum/reprice/assume cache inclusion",
+      "source_version": "exactcurrent selectedstage/resource profile, not olderI02lineages",
+      "source_input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "error_class_or_message": "UNKNOWN_NOT_EXPOSED_BY_SAFE_RECEIPT; execution_error router label is separate",
+      "only_actualcurrenttwo_original_roles_selected": true
+    },
+    {
+      "alias": "B",
+      "job_id": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "arm": "control",
+      "assessed_stage": "research",
+      "native_sha256": "da549671832b91a6beabab54eff70c5e2174bcbd87cef267e4066f6c58d36b5f",
+      "freeze_sha256": "cf2769987818533bd318829dc57e0c89c0634728de461d81be586a1682682150",
+      "stage_sha256": "974144f40fdaf6d3e35ab9923d02a49f6f35a22fa38dc027a4072e609b160f80",
+      "declared_nativeGoal_starts": 1,
+      "goal_activation_direct": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T04:44:56.608941+00:00",
+        "pre_activation_seconds": 8.302081472997088
+      },
+      "native_driver_status_NOT_Goal_status": "completed",
+      "nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "owner_selected_direct_Goal_status_claim": "UNKNOWN_NO_DIRECT_GOAL_STATUS_RECORD_SELECTED",
+      "Goalstatus_claim_basis": "owner-selected positive native-receipt claim kept distinct; exactdirectAPI status record notcopied bysafeprojection, driverenum notsubstituted",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "elapsed_seconds": 976.6737408070039,
+      "start_utc": "2026-10-06T04:44:50.334843+00:00",
+      "ended_utc": "2026-10-06T05:01:04.980606+00:00",
+      "birth_epoch": 1791261888.3068798,
+      "birth_monotonic": 92307.163873449,
+      "deadline_monotonic": 93507.163873449,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "complete_job_memory_max_bytes": 2415919104,
+      "fit": "UNKNOWN",
+      "operational_complete": true,
+      "actual_current_role_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "cleanup": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "remaining_owned_group_members_count": 0,
+      "aggregate_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "287682560",
+        "memory.peak": "839155712",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "resource_profile_sha256": "8dd62e776242bf14747ab5b7dfd4d858e27aa2a0069f64abc63df9af978052fb",
+      "resource_profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 92307163873449,
+        "original_total_stop_monotonic_ns": 93507163873449,
+        "allocation_monotonic_ns": 92308082696126,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "outer_release_sha256": "217564753cd9ebd92ebe83867316cf5d89d6807489de1457e26649aa36171dab",
+      "outer_release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "231837696",
+          "memory.peak": "839155712",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "[not set]",
+          "MemoryMax": "infinity",
+          "MemorySwapMax": "infinity"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 93296552917672
+      },
+      "current_known_counters_and_scope": {
+        "native_usage": {
+          "totalTokens": 395935,
+          "inputTokens": 354295,
+          "outputTokens": 41640,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 13,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 13
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1308944,
+          "outputTokens": 39796,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1133120,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1348740
+        },
+        "native_responses": 13,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 13,
+          "export_sha256": "5c846e0c832e4b46faceab758dfb8414759a44df42ba9df278126639233f89f4"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "cache_UI_provider_root_scope": "literal scopes distinct; do not sum/reprice/assume cache inclusion",
+      "source_version": "exactcurrent selectedstage/resource profile, not olderI02lineages",
+      "source_input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "error_class_or_message": "UNKNOWN_NOT_EXPOSED_BY_SAFE_RECEIPT; execution_error router label is separate",
+      "only_actualcurrenttwo_original_roles_selected": true
+    }
+  ],
+  "no_rawmodelIO_Goalobjective_auth_OS_session_privateDB_identifiers": true,
+  "no_source_grade_or_earliest_actual_clock_rewrite": true
+}

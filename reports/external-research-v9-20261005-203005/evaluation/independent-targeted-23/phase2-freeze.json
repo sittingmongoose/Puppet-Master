@@ -1,0 +1,41 @@
+{
+  "eval_id": "independent-targeted-23",
+  "files": [
+    {
+      "bytes": 1814,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase2-input-pin.json",
+      "sha256": "1a538fef2aec8c598c78da5d133faa775bf350f106bb02311259392d3fd6e7e8"
+    },
+    {
+      "bytes": 4478,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase2-metadata-crosscheck.json",
+      "sha256": "8407b1d15699d4e84e650af9c70a8c75679cb985de6764edad9dcd4ca611b8ea"
+    },
+    {
+      "bytes": 13970,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase2-assessment.json",
+      "sha256": "2f98a38cdc0a61cc17ce24e7ff0707c5d61039deb758a4d9009c1464f641c28d"
+    },
+    {
+      "bytes": 7640,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/report.md",
+      "sha256": "48bf8450cb4d032f01c9e458a49c21af0794a043020f79c596e96a80308d146c"
+    }
+  ],
+  "freeze_monotonic_ns": 110384343693327,
+  "freeze_utc": "2026-10-06T09:46:05.486710+00:00",
+  "literal_p2_deadline_monotonic_ns": 110437555331543,
+  "no_clock_reset": true,
+  "original_whole_deadline_monotonic_ns": 111452296516828,
+  "p2_elapsed_inclusive_seconds": 546.788361784,
+  "pair_id": "D-V09-B",
+  "required_handoffs_pending": true,
+  "schema": "er9.independent-evaluator-phase2-freeze.v1",
+  "source_judgment_unchanged": true,
+  "whole_elapsed_inclusive_seconds": 732.047176499,
+  "within_both_deadlines_at_report_freeze": true
+}

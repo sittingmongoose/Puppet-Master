@@ -1,0 +1,260 @@
+{
+  "B_important_check_coverage": [
+    {
+      "id": "B-P1",
+      "reason": "Final-focused check retained as context; not used to demand a final proposal from these critic roles.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B-P2",
+      "reason": "Final-focused check retained as context; not used to demand a final proposal from these critic roles.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B-P3",
+      "reason": "Final-focused check retained as context; not used to demand a final proposal from these critic roles.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B-P4",
+      "reason": "Final-focused check retained as context; not used to demand a final proposal from these critic roles.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B-P5",
+      "reason": "Final-focused check retained as context; not used to demand a final proposal from these critic roles.",
+      "state": "UNASSESSED"
+    }
+  ],
+  "actual_source_inputs": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/SOURCE_ALLOWLIST.json",
+  "assessed_partial": {
+    "bytes": 23508,
+    "capture_status_counts": {
+      "200": 24,
+      "404": 3
+    },
+    "internal_reconstruction_hash_matches": true,
+    "mapped_lines": 329,
+    "one_record": true,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/outputs/R2/critique/source-index-lines.txt",
+    "scope": "source-index metadata only",
+    "sha256": "7b9bafad45075f5e4dca6128b59ee4f46e6479344d0d0ccb08559f3334c1ecb8",
+    "source_records": 27
+  },
+  "autonomous_discovery": "UNASSESSED_NOT_ESTABLISHED_BY_SUPPLIED_INPUTS",
+  "brief_obligation_coverage": [
+    {
+      "id": "B01",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B02",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B03",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B04",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B05",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B06",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B07",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B08",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B09",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B10",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B11",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "B12",
+      "reason": "No required critic report or designated final available; source-index pointers do not establish the obligation.",
+      "state": "UNASSESSED"
+    }
+  ],
+  "candidate_execution": "UNASSESSED_NO_CANDIDATE_WITNESS_RECEIPTS_READ",
+  "common_dimension_coverage": [
+    {
+      "id": "Q1",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q2",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q3",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q4",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q5",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q6",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q7",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "Q8",
+      "reason": "Semantic critic quality unavailable; R2 has limited internally consistent navigational metadata only.",
+      "state": "UNASSESSED"
+    }
+  ],
+  "criteria_counts": {
+    "B_brief_obligations": 12,
+    "B_important_checks": 5,
+    "common_dimensions": 8,
+    "target_scope_checks": 3
+  },
+  "delivery_qualification": "Exact role overrides require the three critic reports; the packet dispatch records each absent. This is incomplete role delivery, not a semantic FAIL inferred from absence. Common designated-final catalogs are not imposed on intermediate critic stages.",
+  "downstream_final": "UNSTARTED_AS_RECORDED_BY_DISPATCH; UNASSESSED",
+  "eval_id": "independent-targeted-23",
+  "evaluator_checks": "Read-only metadata parsing, hash/length/mode checks, and index reconstruction; no candidate code executed and no external pages fetched.",
+  "final_quality": "UNASSESSED",
+  "full_pipeline_quality": "UNASSESSED",
+  "integrity_qualification": "Allowlist bytes, hashes, lengths and 0444 modes independently verified. The pinned integrity-proof JSON records all-five quiet flags and independent owned host/unit/cgroup/PID matching; original native receipts and host records were held and not read by this evaluator.",
+  "matched_causal_inference": "UNASSESSED",
+  "pair_id": "D-V09-B",
+  "phase": "P1_SOURCE_ONLY_PRE_HELD_KEY",
+  "positive_preservation": [
+    "Contiguous line mapping reproduces the claimed index hash with a terminal newline.",
+    "All 27 ordered source entries retain URL, capture hash, capture ID, and returned-content limitation fields.",
+    "Three recorded 404 captures remain visible instead of being silently represented as successful documentation."
+  ],
+  "role_views_not_arms": true,
+  "roles": [
+    {
+      "actual_stage": "implementation_critic",
+      "alias": "R1",
+      "available_partial_artifacts": 0,
+      "delivery": "INCOMPLETE_REQUIRED_REPORT_ABSENT",
+      "required_report": "out/critique/implementation.md",
+      "semantic_quality": "UNASSESSED"
+    },
+    {
+      "actual_stage": "whole_critic",
+      "alias": "R2",
+      "available_partial_artifacts": 1,
+      "delivery": "INCOMPLETE_REQUIRED_REPORT_ABSENT",
+      "partial_metadata_result": "INTERNALLY_CONSISTENT_WITHIN_EXACT_BYTES_ONLY",
+      "required_report": "out/critique/review.md",
+      "semantic_quality": "UNASSESSED"
+    },
+    {
+      "actual_stage": "source_critic",
+      "alias": "R3",
+      "available_partial_artifacts": 0,
+      "delivery": "INCOMPLETE_REQUIRED_REPORT_ABSENT",
+      "required_report": "out/critique/source.md",
+      "semantic_quality": "UNASSESSED"
+    }
+  ],
+  "schema": "er9.independent-targeted-source-role-judgment.v1",
+  "scope": "available_current_critic_partial_plus_missing_critic_roles_no_final",
+  "score_policy": "No weighted, aggregate, invented facet score, or equality inference from shared missing-report delivery labels.",
+  "source_grounded_consequential_defect_qualification": "No substantive interpretation, correction, preservation rationale, behavior claim, or witness claim is available in a required critic report. No independent semantic PASS or FAIL is supported.",
+  "source_grounded_consequential_defects": [],
+  "source_limitations": [
+    "Original proposal and capture bodies are not evaluator-read inputs in this exact packet.",
+    "URLs and content hashes are navigational capture identities, not proof of release applicability, independent useful mechanisms, issue/fix/regression causality, or runtime behavior.",
+    "No candidate witness code/input/expected result/stdout/stderr/exit receipt is present."
+  ],
+  "source_start": {
+    "eval_id": "independent-targeted-23",
+    "p2_budget_seconds": 600,
+    "pair_id": "D-V09-B",
+    "schema": "er9.independent-evaluator-start.v1",
+    "source_budget_seconds": 1200,
+    "source_status": "SOURCE_STARTED",
+    "start_monotonic_ns": 109652296516828,
+    "start_utc": "2026-10-06T09:33:53.439466+00:00",
+    "whole_budget_seconds": 1800
+  },
+  "target_predeclared_check_coverage": [
+    {
+      "id": "D-V09-B-P1",
+      "reason": "No same-claim correction or preservation comparison, downstream final, or matched-budget semantic comparison can be made.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "D-V09-B-P2",
+      "reason": "No same-claim correction or preservation comparison, downstream final, or matched-budget semantic comparison can be made.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "D-V09-B-P3",
+      "reason": "No same-claim correction or preservation comparison, downstream final, or matched-budget semantic comparison can be made.",
+      "state": "UNASSESSED"
+    }
+  ],
+  "target_scope_coverage": [
+    {
+      "id": "D-V09-B-01",
+      "reason": "No role report establishes seam correction/preservation, full source applicability, or a complete task-scoped critic result.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "D-V09-B-02",
+      "reason": "No role report establishes seam correction/preservation, full source applicability, or a complete task-scoped critic result.",
+      "state": "UNASSESSED"
+    },
+    {
+      "id": "D-V09-B-03",
+      "reason": "No role report establishes seam correction/preservation, full source applicability, or a complete task-scoped critic result.",
+      "state": "UNASSESSED"
+    }
+  ],
+  "unavoidable_hints": [
+    "Launcher wording identified control whole-critic partial versus treatment split-critic absence before source START.",
+    "Actual role task prose discloses single whole-critic versus split-critic mechanisms. Exact anonymous-arm mapping remains held. No perfect-blindness claim."
+  ],
+  "underlying_arm_mapping": "HELD",
+  "winner": "UNASSESSED"
+}

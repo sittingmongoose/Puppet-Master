@@ -1,0 +1,24 @@
+{
+  "schema": "er9.actual-intermediate-source-integrity.v1",
+  "checks": [
+    {
+      "alias": "A",
+      "freeze_sha256": "24dfccb032fa3ef92c45b22ff85212b3e1803f79aefe46fc2cd14deb909b2fa0",
+      "native_receipt_sha256": "bc4e9bdb4b8ad5f6f4ad2b657422be3a7b00f1dd31f8b73e329b167e2173095f",
+      "outer_release_sha256": "8ec64430c44efcd2398e5fea4721e2f90865a8d2b99d8289b87e2b4f97daf3b6",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    },
+    {
+      "alias": "B",
+      "freeze_sha256": "31e18ea98a144fa7c8ebada41a4d31a05da3cc7f4b42dbf8c625ed23c0c5980c",
+      "native_receipt_sha256": "265825a58ededa4f3b2cafe346fde71abeaebab2ed00678c5f64a2b6640bd64f",
+      "outer_release_sha256": "faa5b96db0a0b18ca4b0e067f5f7f30d9394c500013aef831c320dd07d9c15b9",
+      "all_exact_owned_scopes_quiet": true,
+      "all5_original_quiet_flags": true,
+      "host_unit_cgroup_pid_pins_independently_matched": true
+    }
+  ],
+  "native_goal_status_history_cost": "HELD"
+}

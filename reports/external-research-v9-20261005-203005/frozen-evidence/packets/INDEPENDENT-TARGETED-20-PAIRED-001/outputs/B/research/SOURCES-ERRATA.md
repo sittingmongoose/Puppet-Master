@@ -1,0 +1,3 @@
+# Research source catalog erratum
+
+`out/research/sources.json` was written once and the bounded writer rejects overwrites. In its S4 `capture_id` array, the second value `b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012` is the captured body SHA-256, not the capture ID. The correct capture ID from `inputs/source_context/index.json` for `inputs/source_context/0002.body` is `3c886bfc0a934957877cd6f0993a3908`. The captured digest and path in that entry are correct. The standalone final `sources.json` supplied in the adoption bundle uses the corrected capture ID.

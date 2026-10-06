@@ -1,0 +1,2621 @@
+{
+  "schema": "er9.finite-logical-assessment-coverage-metadata.v1",
+  "observed_utc": "2026-10-06T09:23:52.210050+00:00",
+  "accepted_dated_runtime_inventory_pin": {
+    "path": "LAB_ROOT/consolidation/workload-005/WORKLOAD_SCOREBOARD.json",
+    "sha256": "4a221612c13858b2cc508dec9507f1d6b10bcdd442ec132fc7f16fb979640462",
+    "bytes": 1765259
+  },
+  "logical_counts": {
+    "targeted": 32,
+    "fresh_integrated": 12,
+    "confirmation": 4
+  },
+  "slots": [
+    {
+      "logical_slot": "D-V01-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V01-A-control-diagnostic-a001",
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V01-A-control-diagnostic-a001",
+            "D-V01-A-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V01-A-control-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V01-A-treatment-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V01-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-7",
+          "matched_current_job_ids": [
+            "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+            "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-7/CLOSURE.json",
+              "sha256": "fd519383d78e62eb8afcd780520846779f5eda1a483b89ecea1d12a34a2f96e7",
+              "bytes": 3962
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V01-B-treatment-diagnostic-a001-resource-v13-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V02-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        },
+        {
+          "evaluation_id": "independent-targeted-8",
+          "matched_current_job_ids": [
+            "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V02-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-9",
+          "matched_current_job_ids": [
+            "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V03-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-10",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V03-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-13",
+          "matched_current_job_ids": [
+            "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V04-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+        "D-V04-A-treatment-compare_final-a001",
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-21",
+          "matched_current_job_ids": [
+            "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+            "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-treatment-compare_final-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+          "stage": "proposal_first_record",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-A-control-compare_final-a001",
+          "stage": "compare_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-A-treatment-source_first_record-a001-resource-v13-a002",
+          "stage": "source_first_record",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-A-treatment-compare_final-a001",
+          "stage": "compare_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V04-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+          "stage": "proposal_first_record",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-B-control-compare_final-a001",
+          "stage": "compare_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-B-treatment-source_first_record-a001-resource-v13-a002",
+          "stage": "source_first_record",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V04-B-treatment-compare_final-a001",
+          "stage": "compare_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V05-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+          "stage": "final_author",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+          "stage": "flash_check",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002",
+          "stage": "resolve_final",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V05-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+          "stage": "final_author",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+          "stage": "flash_check",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002",
+          "stage": "resolve_final",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V06-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V06-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V07-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-11",
+          "matched_current_job_ids": [
+            "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-11/completion.json",
+              "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+              "bytes": 1851
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V07-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-12",
+          "matched_current_job_ids": [
+            "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-12/closure.json",
+              "sha256": "04da9a267e2c394a1ebf0e8f21aeaf683ea4caf5f356807e57ccc87cf2f1c1ef",
+              "bytes": 1833
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V08-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V08-A-control-critic-a001",
+        "D-V08-A-control-final_author-a001",
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-D-V08-A",
+          "matched_current_job_ids": [
+            "D-V08-A-control-critic-a001",
+            "D-V08-A-treatment-critic_and_final-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted/D-V08-A/FINISHED.json",
+              "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096",
+              "bytes": 1574
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "D-V08-A-control-final_author-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V08-A-control-critic-a001",
+          "stage": "critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V08-A-control-final_author-a001",
+          "stage": "final_author",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V08-A-treatment-critic_and_final-a001",
+          "stage": "critic_and_final",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V08-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001",
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V08-B-treatment-critic_and_final-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V08-B-control-critic-a001",
+          "stage": "critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V08-B-control-final_author-a001",
+          "stage": "final_author",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V08-B-treatment-critic_and_final-a001",
+          "stage": "critic_and_final",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V09-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-control-resolve_final-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-control-resolve_final-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V09-A-control-resolve_final-a001",
+          "stage": "resolve_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "stage": "whole_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-A-treatment-implementation_critic-a001",
+          "stage": "implementation_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-A-treatment-resolve_final-a001",
+          "stage": "resolve_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+          "stage": "source_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V09-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+          "stage": "whole_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-B-control-resolve_final-a001",
+          "stage": "resolve_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-B-treatment-source_critic-a001-resource-v13-a002",
+          "stage": "source_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+          "stage": "implementation_critic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V09-B-treatment-resolve_final-a001",
+          "stage": "resolve_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V10-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-14",
+          "matched_current_job_ids": [
+            "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-14/neutral-closure.json",
+              "sha256": "4e483cfd52bd8802cff6697244f180f853d99cb2bdfe1f925c7b49a38276118b",
+              "bytes": 4264
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V10-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-15",
+          "matched_current_job_ids": [
+            "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V11-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        },
+        {
+          "evaluation_id": "independent-targeted-16",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-16/completion.json",
+              "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18",
+              "bytes": 1898
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V11-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-17",
+          "matched_current_job_ids": [
+            "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-17/closure.json",
+              "sha256": "7745eb8d75234ab1e4ab4fff2f0f4c9f515a60d1d735e48a1aa2a0bccac6bd39",
+              "bytes": 1549
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V12-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-18",
+          "matched_current_job_ids": [
+            "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-18/closure.json",
+              "sha256": "a2685571a3d68a37c39d2b630c6c9c64038ddc4470409245ba505a32e730da20",
+              "bytes": 4270
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V12-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-19",
+          "matched_current_job_ids": [
+            "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-19/closure.json",
+              "sha256": "5b0b9938cd85e34a174c3e665a8d6700a657fadc78860121b2c8728f3bef535b",
+              "bytes": 2156
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V13-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V13-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-20",
+          "matched_current_job_ids": [
+            "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+            "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-20/CLOSURE.json",
+              "sha256": "a419b6374e5d0155ede2dbc7e1552e9ab9f643dc9fa66d6aa95c2d3945c4d7ba",
+              "bytes": 2037
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V14-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V14-A-LUNA-R1-control-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V14-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V14-B-control-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V14-B-treatment-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V15-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V15-A-control-diagnostic-a002",
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V15-A-control-diagnostic-a002",
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V15-A-control-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V15-A-treatment-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V15-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V15-B-control-diagnostic-a002",
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "D-V15-B-control-diagnostic-a002",
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V15-B-control-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V15-B-treatment-diagnostic-a002",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V16-A",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V16-A-control-diagnostic-a001",
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-5",
+          "matched_current_job_ids": [
+            "D-V16-A-control-diagnostic-a001",
+            "D-V16-A-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-targeted-5/closure.json",
+              "sha256": "5fbbcac5cb0a8d9b55160fb2adec97e8a899e6b8ed84a732a9df189364d4dbfb",
+              "bytes": 2046
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V16-A-control-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V16-A-treatment-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "D-V16-B",
+      "track": "A",
+      "accepted_current_job_ids": [
+        "D-V16-B-control-diagnostic-a001",
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V16-B-control-diagnostic-a001",
+            "D-V16-B-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "D-V16-B-control-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "D-V16-B-treatment-diagnostic-a001",
+          "stage": "diagnostic",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-01",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-8-research-I01",
+          "matched_current_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-pipeline-8-research-I01/CLOSURE.json",
+              "sha256": "a02af77976e304784b8b0a7d2b2f92790e1a907e42177e73ffbe36fec9ceeabb",
+              "bytes": 4135
+            },
+            {
+              "path": "LAB_ROOT/evaluation/independent-pipeline-8-research-I01/FINAL_HANDOFF_RECEIPT.json",
+              "sha256": "ee1962ff8825fc393bf20c15a122fde9c0510b376949efedb1494a7d81a2b384",
+              "bytes": 625
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-01-FRESH-DELIVERY-R001-treatment-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-02",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-9-research-I02",
+          "matched_current_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-03",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-10-research-I03",
+          "matched_current_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+          "stage": "flash_check",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+          "stage": "final_resolution",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-04",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+          "stage": "flash_check",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+          "stage": "final_resolution",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-05",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-5",
+          "matched_current_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-06",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-6",
+          "matched_current_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "LAB_ROOT/evaluation/independent-pipeline-6/completion.json",
+              "sha256": "461dce3f5a36a9c66645b6f472059d287b6da1ec62b819b2ef85c11881b5f646",
+              "bytes": 2120
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-07",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-7",
+          "matched_current_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "stage": "critic_final",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-08",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "stage": "critic_final",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-09",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-10",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-11",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "I-12",
+      "track": "B",
+      "accepted_current_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "stage": "research",
+          "native_goal_starts": 0,
+          "operational_status": "SEALED_READY",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "C-01",
+      "track": "C",
+      "accepted_current_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "C-02",
+      "track": "C",
+      "accepted_current_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "C-03",
+      "track": "C",
+      "accepted_current_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 1,
+          "operational_status": "COMPLETED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "stage": "critic_final",
+          "native_goal_starts": 0,
+          "operational_status": "BLOCKED_PREDECESSOR_FAILED",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    },
+    {
+      "logical_slot": "C-04",
+      "track": "C",
+      "accepted_current_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "actual_scope_review_matches": [],
+      "unmatched_current_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "captured_stage_metadata": [
+        {
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "RUNNING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+          "stage": "critique",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+          "stage": "revision",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+          "stage": "research",
+          "native_goal_starts": 1,
+          "operational_status": "RUNNING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        },
+        {
+          "job_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+          "stage": "critic_final",
+          "native_goal_starts": 0,
+          "operational_status": "WAITING_RUNTIME_BINDING",
+          "scope": "runtime_metadata_not_scientific_grade"
+        }
+      ],
+      "scientific_grade": "HELD_OR_UNASSESSED"
+    }
+  ],
+  "dated_workload_not_refreshed": true,
+  "no_coverage_inferred_from_reviewer_ordinal_or_file_presence": true,
+  "unmatched_means": "Needs current role/scope/blocked/empty requirement adjudication, not candidate qualityFAIL or neverexecuted",
+  "native_key_contents_science_report_bodies_in_output": "EXCLUDED",
+  "no_quality_or_new_target_credit": true
+}

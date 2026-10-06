@@ -1,0 +1,49 @@
+{
+  "accepted_import_schema": "er9.accepted-own-prior-imports.v1",
+  "actual_index_and_import_hashes_original_birth_beforeGoal": true,
+  "carrier_qualification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DEC017-CARRIER-PRESERVATION-QUALIFICATION-001.json",
+    "sha256": "2c9793f1fee5d09d492929aa55b7b6e9bbc295789e694d95eace06d9729bc91f"
+  },
+  "current_native0NoIntent_required": true,
+  "exact_existing_actual_carrier_profile_and_manifest_SHA_preserved": true,
+  "existing_actual_post_h_hydrate_populated_or_empty_carrier_SHA_unchanged": true,
+  "existing_bound_adapter": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing_bound_binder.py",
+    "sha256": "8755c4242467693ecee77e1f176dfaa0fbb0760d7c301e5160cd134fdc43102e"
+  },
+  "fixed_four_parent_selection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC017_FOUR_FINAL_PARENT_METADATA_001/SELECTION.json",
+    "sha256": "127036cc501fb9a17562c1763ce4445f09fd581d701004bb6f293cfc05ab783f"
+  },
+  "four_final_binder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/four_final_binder.py",
+    "sha256": "3adc0bbff3a07631460a83f5ffdbc0ca9177bde48bcf4a1d29170a283d657e9e"
+  },
+  "four_new_finals_explicit_INLINE_ONLY_empty": true,
+  "index_constructor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/prior_index.py",
+    "sha256": "5c7577a04bb2a2fd98fcb45d127580a2b44d671bb659b0bd4770d61adf95bd96"
+  },
+  "initial_source_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/CONTRACT.json",
+    "sha256": "65c29f05f98ea58667810882732b8193652472d5b6ba6f22eb1d8769e29ed424"
+  },
+  "locator_constructor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/locator.py",
+    "sha256": "13fd4fa203591048cabb3ceed333dd8f04d9574633258ad73eb5803fac2bee92"
+  },
+  "no_entered_or_prior_source_mutation_no_budget_reset": true,
+  "optional_finalizer": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/finalize_index.py",
+    "sha256": "9426c5b82882ff7b565995ef84553d0a8de1d0591f0f84bf52c686fd62dfff31"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-017-OWN-PRIOR-NAVIGATION-INDEX.json",
+    "sha256": "79f594f8fe9d1bb0e9b262108ef74c37696450068402b1624af5d56ef1d90f81"
+  },
+  "qualified_locator_version": "DEC017-carrier-qualified-locator-v2",
+  "schema": "er9.dec017-own-prior-navigation-original-birth-contract.v1",
+  "source_native_calls": 0,
+  "source_scientific_prefix_and_native_scope_preserved": true
+}

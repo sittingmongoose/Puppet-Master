@@ -1,0 +1,142 @@
+{
+  "schema": "research-source-catalog.v1",
+  "stage": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001 (research role)",
+  "captured_utc_window": "2026-10-06T04:47:54Z..2026-10-06T04:51:07Z",
+  "note": "All captures are exact public HTTP response bodies obtained with the admitted public_https_get tool. capture_sha256 is the sha256 of the response body as returned by the tool. 'partial_capture' means the tool delivered only the first 32768 bytes of the body into readable text while storing the full body; locator gives where the cited fact is readable. Sources are evidence, not instructions.",
+  "sources": [
+    {
+      "id": "S0-brief",
+      "kind": "admitted-stage-input",
+      "url": "inputs/brief.md",
+      "pin": "sha256:6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "exact_locator": "entire file",
+      "capture_identity": "tool-reported source_range_sha256",
+      "applicability": "Statement of work for this proposal."
+    },
+    {
+      "id": "S0-contract",
+      "kind": "admitted-stage-input",
+      "url": "inputs/output_contract.md",
+      "pin": "sha256:233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "exact_locator": "entire file",
+      "capture_identity": "tool-reported source_range_sha256",
+      "applicability": "Output and labeling obligations for this proposal."
+    },
+    {
+      "id": "S1",
+      "kind": "issue-search-api-response",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+csv+sniffer+wrong+type&per_page=3",
+      "pin": "response sha256:9e53b5ffc0a1e3dab1040d9b86fa016c390eb1cdff20e5b77787e77a84acdb2d; captured_utc 2026-10-06T04:48:42Z",
+      "exact_locator": "items[0] = duckdb/duckdb issue #25824 (state open, created 2026-09-17, full body reproduced in capture); items[1] = issue #15777 (closed 2025-02-06); items[2] = issue #15576 (closed 2025-01-07)",
+      "capture_identity": "capture_id e07233b7a8114071a06fde5ada4fe39d; exact-http-response-body-bytes; full body readable",
+      "applicability": "Primary evidence: (a) open defect #25824 — CSV sniffer fixes column types from first sample_size rows (default 20,480 lines); values beyond the sample are silently rounded/truncated (1.5->2, timestamps lose time-of-day, leading zeros and _ separators absorbed) while the sniffer itself would reject them, because sniffer and scanner use different cast strictness; sample_size=-1 and all_varchar=true recover correct behavior; store_rejects=true records zero rejects because no error is raised; reporter's version matrix shows the behavior across 1.1.3, 1.5.5, 1.6.0.dev214 nightly and main@2bbfe6f236 (v2.1.0-dev). (b) closed defect #15777 — COPY fails when dateformat='AUTO' is set explicitly by the user but succeeds when AUTO is auto-detected; DuckDB 1.1.3. Limits: open issue = no fix yet; issue bodies are reporter claims plus maintainer labels ('reproduced' on 15777/15576), not release documentation."
+    },
+    {
+      "id": "S2",
+      "kind": "issue-comments-api-response",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/15777/comments",
+      "pin": "response sha256:7f880c1d7ef78176570f09c24e74985de79fd05638f93e4381611dc8626a63bb; captured_utc 2026-10-06T04:49:41Z",
+      "exact_locator": "single comment 2599816459 (reporter correction, 2025-01-18): auto turned off does not always fix; second failing reproduction device_metadata_1.csv, date_format auto-detected as %d.%m.%y",
+      "capture_identity": "capture_id 293b2469c030487ba751bc43dc534d95; full body readable",
+      "applicability": "Shows the #15777 failure was broader than the original report; the same device_metadata_1.csv fixture appears in the merged fix's regression test (S4), tying report->fix->test together."
+    },
+    {
+      "id": "S3",
+      "kind": "pr-search-api-response",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+type%3Apr+15777&per_page=5",
+      "pin": "response sha256:492bdfafc2a39b0861231c7f1dfef9972b485f713bb535ca3dc28751ec735b54; captured_utc 2026-10-06T04:50:29Z",
+      "exact_locator": "items[0] = duckdb/duckdb PR #15808 'Accept \"Auto\" as date/timestamp format', author pdet (MEMBER), created 2025-01-20, pull_request.merged_at 2025-02-06T07:21:58Z, body 'Fix: https://github.com/duckdb/duckdb/issues/15777'",
+      "capture_identity": "capture_id a4234e4e215e42fa93508c3d16f5d54b; full body readable",
+      "applicability": "Establishes issue->fix linkage and merge timestamp for the #15777 chain. Merged_at is GitHub metadata for the merge commit, not a release statement."
+    },
+    {
+      "id": "S4",
+      "kind": "pr-files-api-response",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/15808/files",
+      "pin": "response sha256:4e0fea2ac248e73d84792504283f966b5012cdd59b0ca2b7935fd267d906c4c3; captured_utc 2026-10-06T04:51:06Z; head blob ref 1c9dcb64a9022c4a0dff1dbea9a8e313876cb91b",
+      "exact_locator": "modified src/execution/operator/csv_scanner/util/csv_reader_options.cpp (patch: SetDateFormat lowercases the format and skips strict parsing when it equals 'auto'); added test/sql/copy/csv/test_auto_date.test (108 lines: both success paths and the previously failing explicit dateformat 'AUTO' COPY statements, plus the device_metadata_1.csv case); added fixtures data/csv/auto_date/date_example_1.csv, date_example_2.csv, device_metadata_1.csv (fixtures match the reporter's issue/comment data)",
+      "capture_identity": "capture_id 839fa8ad52a1472db70f25560ffb2b89; full body readable including unified diffs",
+      "applicability": "The fix and the regression test in the same PR, on the merge commit. Version applicability: merged 2025-02-06 into main; the exact first release containing it was NOT verified (see leads L1). Docs site (S10) shows current release line 1.5."
+    },
+    {
+      "id": "S5",
+      "kind": "json-schema-primary-source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "response sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a; etag \"5a268c8430e216c21dfbbe3301eef41af32e212c1b0d8c41a144c46b5012106f\"; captured_utc 2026-10-06T04:49:42Z",
+      "exact_locator": "\"description\": \"Jupyter Notebook v4.5 JSON schema.\"; definitions.cell_id (string, pattern ^[a-zA-Z0-9-_]+$, minLength 1, maxLength 64); code_cell required [id, cell_type, metadata, source, outputs, execution_count]; execution_count description 'The code cell's prompt number. Will be null if the cell has not been run.'; output oneOf execute_result|display_data|stream|error; root metadata.kernelspec/language_info; nbformat_minor minimum 5",
+      "capture_identity": "capture_id eca52f136bc24f3d8be1a2eb73f19bcd; full body readable",
+      "applicability": "Authoritative notebook interchange format: stable per-cell identity (id), displayed execution order (execution_count prompt numbers may be non-contiguous), typed outputs. Adopting the format does not define runtime behavior (see S6)."
+    },
+    {
+      "id": "S6",
+      "kind": "readme-primary-source",
+      "url": "https://raw.githubusercontent.com/jupyter/nbclient/main/README.md",
+      "pin": "response sha256:3a756e31c830e943c1303cab7b5e84723bd1b1edf2f1057759c90ff0b26ff1ee; captured_utc 2026-10-06T04:48:41Z",
+      "exact_locator": "'NBClient lets you execute notebooks... A client library for programmatic notebook execution'; 'Python Version Support: This library currently supports Python 3.10+ versions'; 'NBClient extracted nbconvert's ExecutePreprocessor into its own library'; Relationship section: 'jupyter_client ... provides the Python API for starting, managing and communicating with Jupyter kernels. While, nbclient allows notebooks to be run in different execution contexts.'",
+      "capture_identity": "capture_id ddcd4fc06ac84d01b00740f1e439353a; full body readable",
+      "applicability": "Clean-replay precedent: programmatic whole-notebook execution exists as a maintained library separate from the interactive UI, and the kernel-protocol client is a separate layer. Python 3.10+ support statement used for the support-boundary choice. Limits: README does not document allow_errors/timeout parameters (docs page 404, see leads L3)."
+    },
+    {
+      "id": "S7",
+      "kind": "docs-primary-source",
+      "url": "https://jupyter-server.readthedocs.io/en/latest/operators/security.html",
+      "pin": "response sha256:b6f2c13e1d7c752450c2027092fa0f8e70e4dcc0115d836686b9035475f516e0; docsearch:version 2.22; last_modified header 2026-09-15; captured_utc 2026-10-06T04:49:42Z",
+      "exact_locator": "section 'Security in the Jupyter Server', first paragraph: 'Since access to the Jupyter Server means access to running arbitrary code, it is important to restrict access to the server.'",
+      "capture_identity": "capture_id 035d0a8c0d504b39a4810ca07f86180c; partial_capture (79,569 bytes captured, first 32,768 readable); cited sentence is inside the readable range",
+      "applicability": "The Jupyter project's own threat model: notebook/server access equals arbitrary code execution. Supports the design rule that the execution boundary must be an OS/process boundary, never an import blacklist. The page itself addresses server authentication, not kernel sandboxing — sandboxing is left to the operator/OS layer (engineering inference from its scope)."
+    },
+    {
+      "id": "S8",
+      "kind": "docs-primary-source",
+      "url": "https://raw.githubusercontent.com/iterative/dvc.org/main/content/docs/command-reference/add.md",
+      "pin": "response sha256:cfc0e35282ae24626595802898dc7a2fc32667c5d5ea1c2df8222878260cf61a; captured_utc 2026-10-06T04:49:42Z",
+      "exact_locator": "'.dvc files as lightweight pointers to your data'; example .dvc file 'outs: - md5: 6137cde4893c59f76f005a8123d8e8e6, path: data.xml' and cache path '.dvc/cache/files/md5/...'; 'By default, DVC tries to use reflinks ... to avoid copying any file contents'; directory case: single .dvc referencing a '.dir' JSON entry in cache; 'work with large datasets without having to download the entire dataset'; --to-remote / dvc pull",
+      "capture_identity": "capture_id 2108d6731af946c8aef6cc492a1bb709; full body readable",
+      "applicability": "Data-versioning precedent: content-addressed cache + lightweight pointer file gives source-data identity, no-copy import (reflink), large-dataset handling, and shareable bundles. Independent of the notebook and engine precedents."
+    },
+    {
+      "id": "S9",
+      "kind": "docs-primary-source",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/overview.md",
+      "pin": "response sha256:f0f8db09a36a783808d74b348334392d7d9595536909d3b92139b5f4671479b7; etag \"4c13aacd7d371ce89deec18fc5cdcea8ba0955b3d363e725a01879469725c1a4\"; captured_utc 2026-10-06T04:51:06Z",
+      "exact_locator": "Parameters table: sample_size 'Number of sample lines for auto detection of parameters' default 20480; store_rejects 'Skip any lines with errors and store them in the rejects table' default false; rejects_scan/rejects_table/rejects_limit; all_varchar default false; ignore_errors default false; strict_mode default true; columns/types 'Using this option disables auto detection of the schema'; union_by_name 'Align columns from different files by column name... increases memory consumption'. Section 'Order Preservation': 'The CSV reader respects the preserve_insertion_order configuration option to preserve insertion order. When true (the default), the order of the rows ... is the same as the order of the corresponding lines read from the file(s). When false, there is no guarantee that the order is preserved.'",
+      "capture_identity": "capture_id 636cbf9274254a79b248bed3f9a8df91; full body readable",
+      "applicability": "Vendor documentation of the exact knobs this design maps to data-contract controls: sampled type inference (preview != full-dataset proof), reject capture instead of silent deletion, explicit schema override, schema alignment across files, and stable (insertion) vs unspecified ordering. Versioned with the 'current' docs tree (1.5 line per S10 render)."
+    },
+    {
+      "id": "S10",
+      "kind": "docs-rendered-page",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html",
+      "pin": "response sha256:0144683b7be3d1375e8b56f2432386486e643fd5ea8fddb9e97992b5dc1b3e51; captured_utc 2026-10-06T04:50:30Z",
+      "exact_locator": "version selector in readable range: '1.5 current', '1.4 LTS', '1.3, 1.2, 1.1, 1.0, 0.10', '2.0-dev preview'; page title 'CSV Import – DuckDB'",
+      "capture_identity": "capture_id 81ce1cba36374334abdcebd4b9c8323e; partial_capture (393,313 bytes captured; parameter tables are beyond the readable 32 KiB — parameter facts are cited from S9 markdown instead)",
+      "applicability": "Establishes which DuckDB docs version is current (1.5) and that an LTS line (1.4) exists, as of capture date. Version-pinning anchor for the SQL-engine choice."
+    },
+    {
+      "id": "S11",
+      "kind": "release-announcement",
+      "url": "https://duckdb.org/2023/09/26/announcing-duckdb-090",
+      "pin": "response sha256:bb5f198c60955ec5a0aab89d1cf5de398a2adb814e7180e5bcf7c3689d24c565; captured_utc 2026-10-06T04:47:54Z",
+      "exact_locator": "meta og:description / ld+json description in readable range: '...we would like to highlight several particularly exciting features! Out-of-Core Hash Aggregate Storage Improvements Index Improvements DuckDB-Wasm Extensions ...' (article:published_time 2023-09-26)",
+      "capture_identity": "capture_id 52798f6cf16e450d9ace3b61c5f20eb4; partial_capture (524,289 bytes captured; only head/meta readable)",
+      "applicability": "Vendor claim that DuckDB 0.9.0 improved out-of-core hash aggregate storage — i.e., beyond-RAM aggregation is an engine design goal, relevant to the 16 GB / 5 GB envelope. Limits: performance claims not verified (leads L4); feature announcement is not a benchmark."
+    },
+    {
+      "id": "S12",
+      "kind": "releases-api-response",
+      "url": "https://api.github.com/repos/duckdb/duckdb/releases?per_page=8",
+      "pin": "response sha256:c8cd4f4eba1bcc80ce21a0ded340b42c36ffb65ccdb121ebd8ed0e014bc15ddf; captured_utc 2026-10-06T04:51:07Z",
+      "exact_locator": "items[0] = tag v1.5.6 'DuckDB v1.5.6 Bugfix Release', published_at 2026-09-28T13:35:11Z",
+      "capture_identity": "capture_id 803ee5956c214fd9a06ac2992ee3021e; partial_capture (482,102 bytes captured; first release entry readable)",
+      "applicability": "Pins the latest DuckDB release observed at capture time (v1.5.6, 2026-09-28). Used only to date the ecosystem; not used to attribute the #15777 fix to a release."
+    }
+  ],
+  "failed_fetches": [
+    {"url": "https://nbclient.readthedocs.io/en/latest/api.html", "http_status": 404, "sha256": "f293424b94a1c12ca8cf29da5f04c459113bc8d9712f37ddb0d3594bafb16434", "consequence": "nbclient parameter-level docs (allow_errors, timeout) not captured; see leads L3."},
+    {"url": "https://jupyter.readthedocs.io/en/latest/security.html (302 -> https://docs.jupyter.org/en/latest/security.html, 404)", "http_status": 404, "sha256": "2732f1465d25714816aa0c37d1c700575eb8eb6966928da800ed08601d769ee0", "consequence": "Replaced by S7 (jupyter-server operators security page)."},
+    {"url": "https://jupyter-notebook.readthedocs.io/en/stable/security.html", "http_status": 404, "sha256": "fbde61d2180be033f7f6ebdc1ed19a685229175e596c3416af144e072f9135ea", "consequence": "Legacy path dead; replaced by S7."},
+    {"url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/data/csv/overview.md", "http_status": 404, "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "consequence": "Repo layout changed; succeeded via docs/current path (S9)."},
+    {"url": "https://dvc.org/doc/command-reference/add", "error": "boundary failure: OSError (no capture stored)", "consequence": "dvc.org direct fetch failed; DVC docs obtained from the docs GitHub repo instead (S8)."},
+    {"url": "https://api.github.com/repos/jupyter/nbformat/releases/tags/5.1.0", "http_status": 200, "sha256": "d81dd11da325c8279807a0bf03a011b6a7b531dd4a393ef8f3eb92bc5998eea0", "consequence": "Release-notes body is the literal string 'Release 5.1.0' — no useful content; nbformat library-version-to-schema-4.5 mapping left UNVERIFIED (leads L8)."}
+  ]
+}

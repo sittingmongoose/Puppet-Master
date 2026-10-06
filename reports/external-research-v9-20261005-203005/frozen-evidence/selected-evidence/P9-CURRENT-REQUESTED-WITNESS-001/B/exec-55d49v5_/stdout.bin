@@ -1,0 +1,6 @@
+inferred from 10-row preview : INTEGER
+inferred from full scan      : VARCHAR
+late value in file           : 1.5
+read back under preview type : 1  (silent rewrite of 1.5)
+W2 PASS: a bounded preview supports a type claim the full dataset refutes; casting under the preview's assumption silently rewrote 1.5 -> 1 (truncating cast; DuckDB's scanner rounds, see issue #25824 -- the invariant is 'silently rewritten', not the specific value)
+SCOPE: mechanism emulation only; mirrors DuckDB issue #25824's sniffer/scanner asymmetry at toy scale, not a DuckDB result

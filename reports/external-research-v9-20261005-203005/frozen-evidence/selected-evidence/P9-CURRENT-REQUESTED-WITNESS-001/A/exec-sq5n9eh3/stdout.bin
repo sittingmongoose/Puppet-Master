@@ -1,0 +1,20 @@
+{
+ "preview_claim": {
+  "n_seen": 500,
+  "min": 0,
+  "has_negative": false
+ },
+ "full_scan_fact": {
+  "n_seen": 10000,
+  "min": -1,
+  "has_negative": true
+ },
+ "preview_supports_full_claim": false,
+ "deterministic_replay_identical": true,
+ "sorted_first3": [
+  -1,
+  0,
+  0
+ ]
+}
+W3 OK: preview (first 500 rows) says 'no negative values'; full scan refutes it — a bounded preview must never be surfaced as proof of a full-dataset property; deterministic recomputation is byte-identical

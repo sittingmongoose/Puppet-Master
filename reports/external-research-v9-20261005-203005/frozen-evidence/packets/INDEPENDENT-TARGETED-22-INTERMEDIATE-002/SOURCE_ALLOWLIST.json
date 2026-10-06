@@ -1,0 +1,71 @@
+{
+  "schema": "er9.phase1-source-only-allowlist.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/dispatch.json",
+      "sha256": "9fe3d5c91799b9855b6a3ae9ad69c7d34cd787c8f17962e242493d30c53c0910",
+      "bytes": 6762
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/integrity-proof.json",
+      "sha256": "ab82436ee023d83b9d64ecf6b9b6deeb9160b75b4687965595371f7fd53ba2df",
+      "bytes": 1061
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/outputs/B/evidence/python_versions.line_map",
+      "sha256": "13e01e30b5f019a267e9e0e5516ce2624b8cf4438444a06c62feccdc497b7084",
+      "bytes": 223019
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/actual_role_task_A.md",
+      "sha256": "0b9912f345016cf441e488e6feb96b49411f2260bf52d4f598f643b6e8bb1da2",
+      "bytes": 12087
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/actual_role_task_B.md",
+      "sha256": "db1c9373c3139c1a99568126a9acdbb6a43985a59f4dda4e259b2b5315f55c63",
+      "bytes": 11889
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/neutral_targeted_task.md",
+      "sha256": "b7253308990753b4cd57e427d96bddb5d63e836ab11bc875540e9617ab820a51",
+      "bytes": 1412
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/targeted_coverage_map.json",
+      "sha256": "ef0aa9a0da42d75056ebc7279750a4b0273670efb4426a0c8697040cd9ed0a3d",
+      "bytes": 2213
+    }
+  ],
+  "dispatch_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/dispatch.json",
+    "sha256": "9fe3d5c91799b9855b6a3ae9ad69c7d34cd787c8f17962e242493d30c53c0910",
+    "bytes": 6762
+  },
+  "held_private_key": true
+}

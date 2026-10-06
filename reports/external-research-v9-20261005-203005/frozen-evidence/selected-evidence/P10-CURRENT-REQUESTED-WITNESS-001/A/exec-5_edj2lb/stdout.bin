@@ -1,0 +1,7 @@
+p=(0.0, 0.0)       elementwise=(10.0, 20.0)             matrix3(T@S)=(10.0, 20.0)
+p=(100.0, 200.0)   elementwise=(60.0, 70.0)             matrix3(T@S)=(60.0, 70.0)
+p=(31.4, -17.3)    elementwise=(25.7, 15.675)           matrix3(T@S)=(25.7, 15.675)
+p=(-5.0, 40.0)     elementwise=(7.5, 30.0)              matrix3(T@S)=(7.5, 30.0)
+world = data*scale + translate equals homogeneous T@S applied to data: True
+max |diff| if translation were applied before scaling: 15.0 world units
+reflect scale=-1: position 40 -> -40 (flip kept); size signed=-10 (invalid); size |s|=10 (valid)

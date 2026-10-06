@@ -1,0 +1,3 @@
+{"bytes_total": 5442308, "chunk_bytes": 65536, "max_bytes_held_at_once": 65579, "clean_rows": 119999, "malformed_kept_in_rejects": 1, "reject_records": [{"line": 100001, "byte_offset": 4516692, "bytes": 46, "reason": "expected 4 fields"}], "streamed_sha256_prefix": "17ae7adb5c116ea0"}
+W3 PASS: bounded-chunk streaming kept <=64KiB+carry resident; the malformed record was recorded with its line number and byte offset, never silently deleted
+SCOPE: data generated in memory (synthetic); 'bounded' applies to per-chunk processing, not to this generator; naive field split does not implement CSV quoting

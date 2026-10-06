@@ -1,0 +1,495 @@
+{
+  "artifact_status": {
+    "A": "FROZEN_TERMINAL_RESEARCH_STAGE_PARTIAL",
+    "B": "FROZEN_TERMINAL_RESEARCH_STAGE_PARTIAL"
+  },
+  "assessed_stage": "research",
+  "blinding_limit": "Exact Task bodies and stage labels may expose incidental identity hints; no perfect blinding claim. Arm assignment, economics, execution history, old judgments and held key not inspected before freeze.",
+  "common_dimensions": {
+    "Q1": "PARTIAL: useful coverage across all twelve obligations; contract/support issues remain.",
+    "Q2": "PARTIAL: selected consequential facts checked against primary code/docs; recorded defects, remaining claims not exhaustively qualified.",
+    "Q3": "PARTIAL: coherent choices preserved; unsupported component/resource transfers remain.",
+    "Q4": "PARTIAL: useful independently selected discoveries, real source chains and alternatives preserved; limits are recorded.",
+    "Q5": "PARTIAL: witness claims remain execution-UNASSESSED until P2; honest proposed validation preserved.",
+    "Q6": "UNASSESSED: later semantic preservation, critique/repair and final integration were not provided.",
+    "Q7": "PARTIAL: substantial honest limits preserved; missing critical resource boundaries remain.",
+    "Q8": "PARTIAL: exact current research file hashes and inventory verified; execution receipts deferred, designated final absent."
+  },
+  "comparative_claim": "Two FAIL_SCREEN labels do not mean equal quality. No winner, mechanism effect, recipe qualification or full-pipeline result is inferred.",
+  "criteria_counts": {
+    "brief_A": 12,
+    "common": 8,
+    "important": 5,
+    "targeted": "N/A"
+  },
+  "defects": [
+    {
+      "aliases": [
+        "A"
+      ],
+      "current_claim": {
+        "lines": [
+          84,
+          118
+        ],
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+        "summary": "C1 is thin adapters over tifffile and includes PNG in v1."
+      },
+      "defect_id": "I03-A-D01",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "interpretation": "The reader accepts TIFF byte-order signatures and rejects an ordinary PNG signature. README PNG support refers to TIFF segment compression codecs, not a standalone PNG reader.",
+          "local_pin": {
+            "bytes": 988932,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/public_sources/tifffile_code.body",
+            "sha256": "a58e2d16ceefce0455e780fdc7955e15d76030ff66f68f7a68a4a0108d0c77f8"
+          },
+          "locator": "TiffFile.__init__, lines 4581-4588; __version__ line 832 is 2026.9.20",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py"
+        }
+      ],
+      "obligation_ids": [
+        "A01",
+        "A10"
+      ],
+      "plan_consequence": "The declared PNG import path needs a separate PNG reader or a narrowed support boundary; the chosen adapter is not supported by the cited component.",
+      "scope_limit": "Static code-path interpretation; no candidate retest, image generation, installation, or future application failure is claimed.",
+      "severity": "MAJOR",
+      "title": "Standalone PNG import assigned to a TIFF reader"
+    },
+    {
+      "aliases": [
+        "A",
+        "B"
+      ],
+      "current_claim": {
+        "locators": {
+          "A": "sections 5, 7, 8; lines 84-85,118,126",
+          "B": "sections 3 F1, 6, 10, 13, 14; lines 34,88,167,191,199"
+        },
+        "paths": [
+          "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+          "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md"
+        ],
+        "summary": "Broad TIFF/OME-TIFF support is combined with viewport-only tile reads and a byte-capped cache as the bounded-access mechanism."
+      },
+      "defect_id": "I03-AB-D02",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "interpretation": "A stripped TIFF chunk spans rowsperstrip by imagewidth, not a chosen 1024-square viewport tile.",
+          "local_pin": {
+            "bytes": 988932,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/public_sources/tifffile_code.body",
+            "sha256": "a58e2d16ceefce0455e780fdc7955e15d76030ff66f68f7a68a4a0108d0c77f8"
+          },
+          "locator": "TiffPage.chunks, lines 8250-8263",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/tifffile.py"
+        },
+        {
+          "interpretation": "Default store chunks use source tiles/strips. The source chunk is decoded before its resulting bytes are returned.",
+          "local_pin": {
+            "bytes": 91288,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/public_sources/zarrtiffstore_code.body",
+            "sha256": "adfed9be489acd318f354cfc98e05386fb6e3971905b60f5eeeca41143f41ed6"
+          },
+          "locator": "ZarrTiffStore chunkmode documentation around 533-536; chunk grid around 780; decode return around 1216-1230",
+          "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/tifffile/zarr.py"
+        }
+      ],
+      "obligation_ids": [
+        "A04",
+        "A10"
+      ],
+      "plan_consequence": "An admitted 60000 by 25000 uint16 image in one compressed strip has a 3,000,000,000-byte decoded chunk. A 1 GiB/1.5 GB retained-cache cap alone cannot turn this into bounded viewport decode. Admission must check decoded segment/chunk size and concurrency, or provide a separately justified bounded conversion/read path. Neither proposal states that boundary.",
+      "scope_limit": "This is a structural critical dependency, not a measured performance failure. Both correctly label the real 3 GB benchmark UNEXECUTED; B explicitly names a per-tile-RSS assumption. Those qualifications are preserved, but the implementation path remains unsupported for the declared boundary.",
+      "severity": "MAJOR",
+      "title": "Cache budget does not bound a source strip/chunk decode"
+    },
+    {
+      "aliases": [
+        "B"
+      ],
+      "current_claim": {
+        "lines": [
+          52,
+          57,
+          65,
+          157,
+          191
+        ],
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+        "summary": "The source slice-snapshot mechanism and cap of 100 are called memory-bounded and the test is said to assert a memory cap; slice snapshots, stroke grouping, dimension resets and the cap are adopted."
+      },
+      "defect_id": "I03-B-D03",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "interpretation": "The patch copies the entire displayed slice into deques and caps number of entries. The regression test checks entry-count/undo availability, with a 50 by 50 uint8 image; it does not establish a byte or workstation-memory bound.",
+          "local_pin": {
+            "bytes": 11354,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/public_sources/B_patch533.body",
+            "sha256": "f25e5a78db5c8c1117fcd59fb7369b5708295f72e7e8b0f62932527de15e32a4"
+          },
+          "locator": "napari/layers/labels/labels.py: _save_history/_trim_history; napari/tests/test_advanced.py: test_labels_undo_redo",
+          "url": "https://api.github.com/repos/napari/napari/pulls/533/files?per_page=100"
+        }
+      ],
+      "obligation_ids": [
+        "A04",
+        "A08",
+        "A10"
+      ],
+      "plan_consequence": "A single 60000 by 25000 uint8 mask snapshot is 1.5 GB; 100 such snapshots are 150 GB. A slice is the full image for a 2D acquisition. A byte budget, bounded deltas, disk-backed policy or explicit mask-size admission is needed before using this source lesson as a 16 GB resource solution.",
+      "scope_limit": "The future implementation might choose disk-backed history or deltas, but this is not specified. No actual application OOM is inferred; the defect is the source-scope overstatement and unsupported transfer.",
+      "severity": "MAJOR",
+      "title": "Snapshot history count cap is described as a memory bound"
+    },
+    {
+      "aliases": [
+        "B"
+      ],
+      "current_claim": {
+        "lines": [
+          125,
+          137,
+          144
+        ],
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+        "summary": "The example uses scope_kind=slice_t_only and null Z/C fields, while the enum allows only slice, volume, acquisition and whole-extent semantics are defined by omission."
+      },
+      "defect_id": "I03-B-D04",
+      "dimension_ids": [
+        "Q1",
+        "Q3"
+      ],
+      "evidence": [
+        {
+          "input_pin": {
+            "bytes": 33054,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+            "sha256": "b4e495f638ffb27b20b5e0c2197398689d6380e0f94bb6081b37d5890f1cd510"
+          },
+          "kind": "direct internal contract comparison",
+          "locator": "section 8 example versus immediately following enum/scope rules"
+        }
+      ],
+      "obligation_ids": [
+        "A02"
+      ],
+      "plan_consequence": "The example cannot be validated or reopened under the written enum, and null-versus-absent scope handling is not defined. A concrete uniform scope grammar is needed for reliable annotation/export attachment.",
+      "scope_limit": "Static document inconsistency; no executed parser failure is claimed.",
+      "severity": "MEDIUM",
+      "title": "Annotation scope example conflicts with its own declared contract"
+    },
+    {
+      "aliases": [
+        "B"
+      ],
+      "current_claim": {
+        "lines": [
+          128,
+          142,
+          182
+        ],
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+        "summary": "OME-ROI XML is said to map one-to-one onto a record model that includes volume masks, chunked storage and a 3 by 3 physical orientation mapping."
+      },
+      "defect_id": "I03-B-D05",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "interpretation": "OME shapes are 2D; Mask uses an upper-left position and BinData, Shape Transform has six values, and 3D ROI is a Union of per-plane shapes.",
+          "local_pin": {
+            "bytes": 12027,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/public_sources/ome_roi.body",
+            "sha256": "be941d083f99a3fa7d2fa4336fc2fdc37de6f7763ac0c21dec91bff8dc142e59"
+          },
+          "locator": "Shape types; Geometry Adjustment; Mask implementation; 3D ROI",
+          "url": "https://ome-model.readthedocs.io/en/stable/developers/roi.html"
+        }
+      ],
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A09"
+      ],
+      "plan_consequence": "The useful opportunity is preserved, but volumetric masks need per-plane decomposition and storage conversion, and a six-value in-plane transform is not a general 3D direction matrix. Interoperability needs a supported mapping profile and loss/unsupported-case statement.",
+      "scope_limit": "Optional adoption remains optional. The source supports a useful OME-ROI opportunity; this finding rejects only the blanket one-to-one/immediate interoperability claim.",
+      "severity": "MEDIUM",
+      "title": "OME-ROI export described as one-to-one without dimensional/storage limits"
+    }
+  ],
+  "designated_final": {
+    "A": null,
+    "B": null
+  },
+  "eval_id": "independent-pipeline-10-research-I03",
+  "immutable_freeze_anchor": "phase1_freeze.json",
+  "important_checks": {
+    "A": [
+      {
+        "assessment": "Verified independently useful primary precedents and the stated commit-level issue/feature-fix/test chain; preserve the narrower chain scope and, for B, D03.",
+        "check_id": "A-P1",
+        "coverage": "COMPLETE"
+      },
+      {
+        "assessment": "Critical chosen-path/source-contract defects recorded. No full correctness qualification.",
+        "check_id": "A-P2",
+        "coverage": "PARTIAL"
+      },
+      {
+        "assessment": "Catalog assertions and scope labels read; actual code/input/results unavailable in the source-only packet. Reserved for post-freeze exact receipt checks.",
+        "check_id": "A-P3",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "assessment": "Both designated finals are null. Current standalone research content was read; final repair/preservation and subsequent stages are not assessed.",
+        "check_id": "A-P4",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "assessment": "Useful minimum workflow, portability, recovery, usability, opportunities and alternatives are present; resource/support dependencies prevent complete source qualification.",
+        "check_id": "A-P5",
+        "coverage": "PARTIAL"
+      }
+    ],
+    "B": [
+      {
+        "assessment": "Verified independently useful primary precedents and the stated commit-level issue/feature-fix/test chain; preserve the narrower chain scope and, for B, D03.",
+        "check_id": "A-P1",
+        "coverage": "PARTIAL"
+      },
+      {
+        "assessment": "Critical chosen-path/source-contract defects recorded. No full correctness qualification.",
+        "check_id": "A-P2",
+        "coverage": "PARTIAL"
+      },
+      {
+        "assessment": "Catalog assertions and scope labels read; actual code/input/results unavailable in the source-only packet. Reserved for post-freeze exact receipt checks.",
+        "check_id": "A-P3",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "assessment": "Both designated finals are null. Current standalone research content was read; final repair/preservation and subsequent stages are not assessed.",
+        "check_id": "A-P4",
+        "coverage": "UNASSESSED"
+      },
+      {
+        "assessment": "Useful minimum workflow, portability, recovery, usability, opportunities and alternatives are present; resource/support dependencies prevent complete source qualification.",
+        "check_id": "A-P5",
+        "coverage": "PARTIAL"
+      }
+    ]
+  },
+  "obligation_coverage": {
+    "A": [
+      {
+        "basis": "Complete written workflow; PNG reader mismatch D01 affects the chosen support boundary.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A01"
+      },
+      {
+        "basis": "Axis order, signed scale, units and attachment scopes are stated. Orientation matrices are explicitly retained but not applied in v1; physical export gating and center/corner convention remain unresolved.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A02"
+      },
+      {
+        "basis": "Display state and sample/resampling operations are separated as product choices; export receipts state source identity and space. Runtime behavior is not claimed verified.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A03"
+      },
+      {
+        "basis": "Responsive tile/cache/progress/cancel design and honest benchmark limits are present; decoded-source-chunk boundary D02 is missing.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A04"
+      },
+      {
+        "basis": "Identity, relocation, collected versus reference bundles and save/recovery options are covered; NAS/rename and crash tests are explicitly unresolved.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A05"
+      },
+      {
+        "basis": "Styles, command undo/redo, keyboard controls, legible status and original/derived distinction are covered as choices.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A06"
+      },
+      {
+        "basis": "Independent napari transform/interaction and QuPath project/export mechanisms are source-backed and tied to plan consequences.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A07"
+      },
+      {
+        "basis": "Issue 9338, PR 9339 merge, fix patch and two regression tests are directly confirmed. Commit scope and unverified first-shipping release are qualified.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A08"
+      },
+      {
+        "basis": "NGFF opportunity and QuPath/napari alternatives remain accessible and optional; NGFF clause verification is honestly pending.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A09"
+      },
+      {
+        "basis": "Architecture is coherent but has unsupported PNG and source-decode dependencies D01/D02.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A10"
+      },
+      {
+        "basis": "Proposed checks are discriminating and labeled UNEXECUTED. Actual executed code/input/receipts are held until P2 and remain UNASSESSED in P1.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A11"
+      },
+      {
+        "basis": "Standalone research proposal and catalogs/lead preservation are present. Designated final, repair/preservation across later stages and full pipeline remain UNASSESSED.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A12"
+      }
+    ],
+    "B": [
+      {
+        "basis": "The complete minimum workflow and support/failure plan are in the current research proposal; no final substitution is made.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A01"
+      },
+      {
+        "basis": "Axis/calibration/orientation and scope design is substantive; internal scope grammar D04 and export dimensional limits D05 remain consequential.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A02"
+      },
+      {
+        "basis": "Display versus samples/resampling and receipts are clearly separated; blanket OME-ROI mapping D05 exceeds supported dimensional scope.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A03"
+      },
+      {
+        "basis": "Tile-cache/cancel/progress design and proposed 3 GB benchmark are honest; decoded-chunk bound D02 and snapshot byte bound D03 are unresolved.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A04"
+      },
+      {
+        "basis": "Identity, relocation, portable/reference bundles, temp-replace/journal/backup recovery options are covered; shared-storage crash durability remains unexecuted, despite an overstrong never-lose-manifest sentence.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A05"
+      },
+      {
+        "basis": "Named styles, undo/redo and keyboard/accessibility/error affordances are explicit.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A06"
+      },
+      {
+        "basis": "Independent tifffile bytes/axes mechanism and napari viewer/undo mechanism are verified and applicable; their independence does not rely on the inaccurate different-languages phrase.",
+        "coverage": "COMPLETE",
+        "obligation_id": "A07"
+      },
+      {
+        "basis": "PR 533 problem statement, merged feature fix and test are confirmed at commit level. It is a missing-undo feature chain, not demonstrated evidence for arbitrary mutation/volume recovery, and its memory-cap interpretation is wrong (D03).",
+        "coverage": "PARTIAL",
+        "obligation_id": "A08"
+      },
+      {
+        "basis": "OME-ROI is useful and alternatives remain accessible/optional, but one-to-one mapping overstatement D05 needs qualification.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A09"
+      },
+      {
+        "basis": "The component architecture is useful; source-chunk and snapshot resource transfers D02/D03 are unsupported critical dependencies.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A10"
+      },
+      {
+        "basis": "Proposed checks are relevant and UNEXECUTED; actual W1/W2 code/input/receipts are held until P2 and remain UNASSESSED in P1.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A11"
+      },
+      {
+        "basis": "Standalone research proposal/catalogs/leads are present. Designated final, later repair/preservation and full pipeline remain UNASSESSED.",
+        "coverage": "PARTIAL",
+        "obligation_id": "A12"
+      }
+    ]
+  },
+  "observed_physical_model": "UNKNOWN",
+  "outcomes": {
+    "A": {
+      "current_research_source_screen": "FAIL_SCREEN",
+      "full_case_PASS_eligible": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "independent_coverage": "PARTIAL",
+      "whole_case": "UNASSESSED"
+    },
+    "B": {
+      "current_research_source_screen": "FAIL_SCREEN",
+      "full_case_PASS_eligible": false,
+      "full_pipeline_quality": "UNASSESSED",
+      "independent_coverage": "PARTIAL",
+      "whole_case": "UNASSESSED"
+    }
+  },
+  "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+  "phase": "P1_SOURCE_ONLY",
+  "prohibited_actions_taken": [],
+  "remaining_unassessed": [
+    "Exact executed witness code/input/stdout/stderr/exit and execution history until P2.",
+    "All later stages, designated final delivery and full pipeline.",
+    "Real 3 GB resource/latency/cancel behavior, cross-machine reopen and NAS/power-loss durability.",
+    "Every noncritical external claim was not exhaustively audited after a decisive matched source screen."
+  ],
+  "requested_evaluator": {
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "schema": "er9.independent-current-output-judgment.v1",
+  "source_screen_elapsed_seconds": 595.454685633,
+  "source_screen_saved_utc": "2026-10-06T09:29:11.808625+00:00",
+  "source_start": {
+    "all_waits_reports_handoffs_included": true,
+    "eval_id": "independent-pipeline-10-research-I03",
+    "p2_required_budget_seconds": 600,
+    "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+    "schema": "er9.independent-evaluator-clock.v1",
+    "source_allowlist_expected_sha256": "1bbc983d2026be1be00d7185e9a49394dca570b28abb79f6e7cdfd80f97ae454",
+    "source_allowlist_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P10-I03-CURRENT-RESEARCH-PAIR-001/SOURCE_ALLOWLIST.json",
+    "source_budget_seconds": 1200,
+    "source_deadline_monotonic_ns": 109975210928428,
+    "source_start_monotonic_ns": 108775210928428,
+    "source_start_utc": "2026-10-06T09:19:16.353940+00:00",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 110575210928428
+  },
+  "supported_findings_to_preserve": {
+    "A": [
+      "Negative-scale point/handle failure and abs-size/picking fix with two upstream regression tests.",
+      "QuPath JSON entry/project identity, relocation limitations and explicit pixel-unit/top-left-origin export convention.",
+      "Display state separate from samples; provenance/relocation/bundle trade-off, recovery options and full-workflow plan.",
+      "NGFF and first-shipping-release uncertainty, failed transform attempts and component/full-app scope labels."
+    ],
+    "B": [
+      "tifffile explicit support/metadata limitations and OME-XML mapping location.",
+      "OME extra-dimension/Modulo ambiguity and mandatory user interpretation plan.",
+      "OME shape scope omission semantics, with export dimensional/storage limits.",
+      "Napari PR 533 stroke grouping, entry-count cap, dimension reset and regression test, plus unmerged PR 3155 mutation-path lesson.",
+      "Float64 persistence motivation, component-scope save check labels and unexecuted real-environment validation."
+    ]
+  },
+  "track": "A"
+}

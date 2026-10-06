@@ -1,0 +1,50 @@
+{
+  "schema": "leads-catalog.v1",
+  "stage": "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001 (research role)",
+  "unresolved_critical_dependencies": [
+    {
+      "id": "L1",
+      "topic": "First DuckDB release containing the #15777 fix (PR #15808)",
+      "state": "PR merged 2025-02-06T07:21:58Z into main (S3/S4). The DuckDB releases API page captured only lists v1.5.6 (2026-09-28) in its readable range; the release that first shipped the fix was not established. v1.2.0 was released around 2025-02-05 per general ecosystem knowledge, but that mapping is UNVERIFIED here and must not be cited from this catalog.",
+      "bounded_alternative": "Treat the fix as present in 'current' (1.5 line per S10) and absent in 1.1.3 (reporter's version in S1 items[1]); verify exact boundary later via git tag containment (git tag --contains 1c9dcb64) before making any version support promise."
+    },
+    {
+      "id": "L2",
+      "topic": "duckdb#25824 is OPEN: silent value mutation past the sniffer sample",
+      "state": "Open as of capture (created 2026-09-17; updated 2026-09-24). No fix, no milestone in the captured JSON. If the workspace relied on sniffer-inferred schemas, this defect would silently corrupt large files; the design therefore forbids silently-trusted inferred schemas for contract-relevant reads.",
+      "bounded_alternative": "Product rule: preview/schema panels may use the sniffer; any replay-relevant read must carry an explicit columns/types contract or sample_size=-1 confirmation, and contract imports record which path was used."
+    },
+    {
+      "id": "L3",
+      "topic": "nbclient parameter-level behavior (allow_errors, per-cell timeout, error-on-timeout semantics) not captured",
+      "state": "README (S6) establishes role and Python support; the API reference page 404'd. Exact parameter names/defaults are UNVERIFIED by capture.",
+      "bounded_alternative": "If nbclient is adopted for clean replay, verify parameters against the installed version's own docs/tests before relying on stop-on-first-error semantics; otherwise implement replay on jupyter_client directly (S6 confirms layer separation)."
+    },
+    {
+      "id": "L4",
+      "topic": "Beyond-RAM performance on the 16 GB / 5 GB envelope",
+      "state": "Only a 0.9.0 feature announcement (S11, out-of-core hash aggregate storage) supports the claim that aggregation spills; no benchmark was run and no current-release memory_limit/temp_directory semantics were captured. The 5 GB streaming target remains a target, not a result.",
+      "bounded_alternative": "P1 witness; if spill behavior disappoints, the bounded alternative is chunked pandas/pyarrow processing for filter/project/aggregate ops with explicit refusal for global ops, keeping DuckDB only for SQL convenience on smaller data."
+    },
+    {
+      "id": "L5",
+      "topic": "store_rejects precise semantics (page not captured)",
+      "state": "Parameter table captured (S9: 'Skip any lines with errors and store them in the rejects table', rejects_scan/rejects_table/rejects_limit); the dedicated 'Reading Faulty CSV Files' page was not fetched. Interaction with store_rejects and schema mismatch failures, and rejects-table lifetime (temporary), are UNVERIFIED in detail.",
+      "bounded_alternative": "Regardless of engine behavior, the workspace writes its own rejects ledger (line number, byte offset, reason, ref version) at import time (shape demonstrated by W3), so no data is ever silently dropped even if engine rejects are limited."
+    },
+    {
+      "id": "L8",
+      "topic": "nbformat library version <-> v4.5 schema mapping",
+      "state": "Schema JSON (S5) self-describes as 'Jupyter Notebook v4.5 JSON schema' with nbformat_minor >= 5, but the nbformat 5.1.0 release API body contained no notes; the library release that made cell ids mandatory is UNVERIFIED by capture.",
+      "bounded_alternative": "Pin by schema (nbformat_minor >= 5 with cell id) rather than by library version, and validate on read."
+    }
+  ],
+  "optional_opportunities": [
+    {"id": "O1", "topic": "SQL convenience path over the embedded engine", "note": "Expose DuckDB SQL against registered data refs as an optional transform cell type; record query text + engine version + ref versions as an execution event, so SQL results enter the same provenance graph instead of a separate tool. Rejected-as-requirement: full multi-language kernel support."},
+    {"id": "O2", "topic": "Portable bundle export", "note": "zip of project record + content-addressed data cache entries (DVC-style .dir manifests, S8) gives a single-file share; ordinary folders remain the primary exchange (brief requirement)."},
+    {"id": "O3", "topic": "Arrow/ADBC interchange for results", "note": "Large cell results as Arrow/Parquet pointers instead of inline mime bundles; noted, not investigated this stage."},
+    {"id": "O4", "topic": "Content-defined chunking for faster re-hashing of large CSVs", "note": "Full-file sha256 of a 5 GB file costs seconds-to-minutes; head+tail+sparse-window approximate identity is the default, with exact hashing as an explicit background op. Alternative mechanism, UNVERIFIED here."},
+    {"id": "O5", "topic": "Real-time collaboration / hosted service / scheduler", "note": "Explicitly out of scope per brief; the append-only event log is shaped so a future sync layer could replay it, but nothing in the minimum workflow depends on it."}
+  ],
+  "source_eligibility_note": "All evidence above is independently chosen public documentation/issues/API responses captured this stage. No campaign, evaluator, or other-arm material was used, and no capture contained any; nothing needed to be excluded under the eligibility rule."
+}

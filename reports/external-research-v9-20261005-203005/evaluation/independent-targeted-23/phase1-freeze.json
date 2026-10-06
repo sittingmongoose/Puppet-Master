@@ -1,0 +1,54 @@
+{
+  "budget_reset": false,
+  "eval_id": "independent-targeted-23",
+  "freeze_monotonic_ns": 109837555331543,
+  "freeze_utc": "2026-10-06T09:36:58.698297+00:00",
+  "frozen_files": [
+    {
+      "bytes": 765,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/reservation.json",
+      "sha256": "daf4aa53f34e86392d71d10b2aa457ed04c091f47ad5bff9a34427939a67b8cc"
+    },
+    {
+      "bytes": 339,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/start.json",
+      "sha256": "a5f6599dca59cf2cc9ebbfd3eb06cf4c49a01bd2d9bc4a01640920761419680d"
+    },
+    {
+      "bytes": 1793,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/partial-internal-check.json",
+      "sha256": "5b855a60f838e576be11d9c5ca9de0cf4766766c3875e87e3fe3b2c523e2dee3"
+    },
+    {
+      "bytes": 5105,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase1-input-pin.json",
+      "sha256": "e699b2d13d3206bf9b12f4733f8c9ee4467894e345ebd1a5b31919a0066232d8"
+    },
+    {
+      "bytes": 11208,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase1-judgment.json",
+      "sha256": "dd2e5538cf734d0c924c0019ff1c7b9e9197f72021b154b65d8f7096553b7d7b"
+    },
+    {
+      "bytes": 5011,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase1-report.md",
+      "sha256": "ce829419aa2f59e86b8b90723713a6da395dc00b2ec94f0db13e428ac32f4aea"
+    }
+  ],
+  "held_key_not_read": true,
+  "p2_deadline_monotonic_ns": 110437555331543,
+  "p2_inclusive_budget_seconds": 600,
+  "pair_id": "D-V09-B",
+  "phase1_immutable": true,
+  "schema": "er9.independent-evaluator-phase1-freeze.v1",
+  "source_elapsed_seconds": 185.258814715,
+  "source_started_monotonic_ns": 109652296516828,
+  "whole_budget_seconds": 1800,
+  "whole_deadline_monotonic_ns": 111452296516828
+}

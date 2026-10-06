@@ -1,0 +1,1 @@
+{"environment":{"duckdb_build":"1.5.x+example-build","python_lock":"sha256:example-lock","threads":1},"python_source":"python_result = transform(project.dataset('tiny'))","records":[{"category":"café","label":"alpha"},{"category":null}],"sql_source":"SELECT category, COUNT(*) AS n FROM prepared GROUP BY category ORDER BY category NULLS FIRST;"}

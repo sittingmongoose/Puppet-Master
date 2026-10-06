@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/runtime/bootstrap.py", line 9, in <module>
+    exec(compile(open('/work/code.py').read(), '/work/code.py', 'exec'), {'__name__':'__main__', 'data':data})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/code.py", line 22, in <module>
+    mat = hom(M, p)
+  File "/work/code.py", line 5, in hom
+    x, y, w = M[0][0]*p[0]+M[0][1]*p[1]+M[0][2], M[1][0]*p[0]+M[1][1]*p[1]+M[1][2], M[2][0]*p[0]+M[2][1]*p[1]+M[2][2]
+                                                                                    ~^^^
+IndexError: list index out of range

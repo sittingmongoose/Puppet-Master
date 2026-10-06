@@ -1,0 +1,4 @@
+inferred from 10-row preview : INTEGER
+inferred from full scan      : VARCHAR
+late value in file           : 1.5
+read back under preview type : 1  (silent rewrite of 1.5)

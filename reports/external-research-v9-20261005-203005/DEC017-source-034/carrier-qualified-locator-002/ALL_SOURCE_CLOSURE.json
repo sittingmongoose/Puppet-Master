@@ -1,0 +1,44 @@
+{
+  "all_four_new_final_source_choices_before_ANY_one_Goal": true,
+  "current_parent_blocked_rows_not_admitted": true,
+  "exact_existing_descriptor_count": 19,
+  "existing_pair_descendant_closures": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/existing/I-09-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "f6c3db287c4999b46b7511abd150e1fe31aa5f3415b6276c8847bd444d58c266"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/existing/I-10-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "251397be1ed7a40b5acdd7dba11b20fe7f2645e6878c71f5305fa250ab83f744"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/existing/I-11-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "a91aaa0e501f064ff21f97ca1ca4fc84586037ed76ca9915b84360d2b95effd0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/existing/I-12-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "b8cf49a04f468d115470cc6b56f446d79da472c26229e8c4bc9381bcafa43d86"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/existing/C-04-CONFIRMATION-CLOCK-FRESH-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "b3f016e8b8f24421e4e4c7e352c13b8a5c50179563670be629af0b2b3bce661c"
+    }
+  ],
+  "new_four_final_registrations": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-01-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+      "sha256": "365941fd3fb36f7d5f7d4cf76d917ade0af10faffe88e09baed12debc73a1d2b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-02-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+      "sha256": "68b22b52782116848a6d0336a629b512069737c71cd1358f6004c79f05d01337"
+    }
+  ],
+  "new_native_role_count": 4,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-017-OWN-PRIOR-NAVIGATION-INDEX.json",
+    "sha256": "79f594f8fe9d1bb0e9b262108ef74c37696450068402b1624af5d56ef1d90f81"
+  },
+  "schema": "er9.dec017-all-navigation-source-closure.v1",
+  "source_native_calls": 0
+}

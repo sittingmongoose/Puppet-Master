@@ -1,0 +1,524 @@
+{
+  "assessed_stage": "research",
+  "blinding": {
+    "excluded_before_freeze": [
+      "coordinator identity key",
+      "economics",
+      "prior grades",
+      "later-stage history",
+      "old I04 reports",
+      "sibling summaries"
+    ],
+    "formal_assignment": "UNKNOWN_UNTIL_P2",
+    "incidental_hints": [
+      "A catalog stage strings visibly include treatment and the exact current role/case label.",
+      "Exact launched Tasks disclose unequal original candidate stage allocations."
+    ],
+    "perfect_blinding_claim": false
+  },
+  "criteria_dimensions": {
+    "Q1": "PARTIAL",
+    "Q2": "PARTIAL",
+    "Q3": "PARTIAL",
+    "Q4": "PARTIAL",
+    "Q5": "PARTIAL",
+    "Q6": "PARTIAL",
+    "Q7": "PARTIAL",
+    "Q8": "PARTIAL"
+  },
+  "criteria_limits": {
+    "Q4": "Core useful precedents and real issue chains established; optional breadth is not a score.",
+    "Q6": "No later correction/preservation evidence in P1; UNASSESSED for cross-stage effects.",
+    "Q8": "Research artifacts source-pinned; designated-final reproducibility UNASSESSED and economics separated."
+  },
+  "designated_final": {
+    "A": null,
+    "B": null
+  },
+  "evaluation_id": "independent-pipeline-11-research-I04",
+  "evaluator": {
+    "declared_model": "gpt-6.1-sol",
+    "declared_reasoning_effort": "xhigh",
+    "fork_turns": "none",
+    "physical_identity": "UNKNOWN"
+  },
+  "findings": [
+    {
+      "alias": "A",
+      "claim_locator": "proposal section 5, schema assumptions",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q5"
+      ],
+      "evidence": [
+        {
+          "locator": "section 5: count(*) / all_varchar=false and sample_size=-1",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+          "sha256": "5bd0d88021a45b8b89e8d9113b67297048fb992b70544c2cc2a131a2a24ab157"
+        },
+        {
+          "id": "duckdb_faulty_csv",
+          "locator": "projection-pushdown example and sample_size type-detection explanation",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/duckdb_faulty_csv.body",
+          "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+          "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md"
+        },
+        {
+          "id": "duckdb_csv_file_scanner_v155",
+          "locator": "CSVFileScan::InitializeFileNamesTypes, lines 103-119: empty required-column set reads first column as VARCHAR",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/duckdb_csv_file_scanner_v155.body",
+          "sha256": "98352c412f73c4af7b625177d04a168120c80effe0740f76fa38a64620673d86",
+          "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.5/src/execution/operator/csv_scanner/table_function/csv_file_scanner.cpp"
+        },
+        {
+          "id": "duckdb_csv_string_scanner_v155",
+          "locator": "unprojected-column skip and cast loop, lines 256-262 and 1081 onward",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/duckdb_csv_string_scanner_v155.body",
+          "sha256": "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18",
+          "url": "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.5/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp"
+        }
+      ],
+      "finding": "The proposed count(*) scan with all_varchar=false does not force conversion of every declared CSV column. It can count a file without validating errors in unprojected columns, defeating the promised assumed-to-verified promotion gate. sample_size=-1 is type detection, not validation against a separately declared schema.",
+      "id": "P11R-A-01",
+      "kind": "incorrect_validation_mechanism",
+      "obligation_ids": [
+        "B02"
+      ],
+      "preserve": "The discovery that projection pushdown hides cast errors is correct and useful; strict ingestion, explicit schemas, and quarantine remain useful choices.",
+      "reasoning": "Static source interpretation; no evaluator execution or retest. count(*) references no declared value columns. DuckDB v1.5.5 source explicitly selects a first-column VARCHAR placeholder when file columns are irrelevant, and skips other projected-out values. The data-integrity gate must consume all declared typed values, not merely count rows.",
+      "severity": "HIGH"
+    },
+    {
+      "alias": "A",
+      "claim_locator": "proposal sections 12 and 5/10, EC-W2b",
+      "dimension_ids": [
+        "Q5"
+      ],
+      "evidence": [
+        {
+          "locator": "section 12: stable vs deterministic ordering differ",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+          "sha256": "5bd0d88021a45b8b89e8d9113b67297048fb992b70544c2cc2a131a2a24ab157"
+        },
+        {
+          "locator": "EC-W2b expected_and_observed note",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/A/research/witnesses.json",
+          "sha256": "5f63e83ec21841948d1d105a98bfa551a8a5df4dae7a7bd5cd730ebb0ddb0f7c"
+        },
+        {
+          "locator": "W2b final sorting/assertion block",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P11-CURRENT-REQUESTED-WITNESS-001/A/exec-q8c_9jfp/code.py",
+          "sha256": "a8dbc6ba722e8baf80c8d34122eaee1541daa1b67c918ad046db88be5c43b80e"
+        },
+        {
+          "locator": "W2b order output",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P11-CURRENT-REQUESTED-WITNESS-001/A/exec-q8c_9jfp/stdout.bin",
+          "sha256": "0144fe597902fa81e82bed09b9b808b1b7d1c45297c003ac6506263f5992d1a6"
+        }
+      ],
+      "finding": "The proposal says stable and deterministic duplicate-key ordering differ in the executed check. Both recorded orders are [1,0,2], and the code asserts that same order for both. The catalog admits coincidence; this witness does not discriminate the claimed difference.",
+      "id": "P11R-A-02",
+      "kind": "witness_claim_exceeds_discrimination",
+      "obligation_ids": [
+        "B11"
+      ],
+      "preserve": "The run really executed and sorting uses an explicit tie-break key. The catalog limitation is honest. Source-data staleness and restart demotion assertions are supported by the same executed code.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "A",
+      "claim_locator": "proposal section 2.1; sources S1",
+      "dimension_ids": [
+        "Q2"
+      ],
+      "evidence": [
+        {
+          "locator": "section 2.1",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+          "sha256": "5bd0d88021a45b8b89e8d9113b67297048fb992b70544c2cc2a131a2a24ab157"
+        },
+        {
+          "id": "nbformat_schema",
+          "locator": "root properties.metadata: additionalProperties true; orig_nbformat/title/authors also listed",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/nbformat_schema.body",
+          "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+          "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json"
+        }
+      ],
+      "finding": "The notebook metadata is described as containing only kernelspec/language_info and almost no provenance. The pinned schema also has other standard metadata properties and allows additionalProperties. It does not standardize a reproducibility ledger, but it does permit custom provenance metadata; the source cannot justify a categorical metadata limitation.",
+      "id": "P11R-A-03",
+      "kind": "source_interpretation_overstatement",
+      "obligation_ids": [
+        "B03",
+        "B05"
+      ],
+      "preserve": "A standard ipynb alone does not establish replay provenance. Choosing an external run ledger remains defensible.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "A",
+      "claim_locator": "proposal section 8",
+      "dimension_ids": [
+        "Q1",
+        "Q3",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "locator": "section 8 filesystem boundary versus usability default; section 14 degraded mode",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/A/research/proposal.md",
+          "sha256": "5bd0d88021a45b8b89e8d9113b67297048fb992b70544c2cc2a131a2a24ab157"
+        }
+      ],
+      "finding": "The chosen filesystem boundary first limits reads to project/interpreter prefixes, then says the default records reads anywhere rather than blocking them. The proposal does not reconcile those permissions or specify a complete OS-level read audit mechanism for arbitrary native notebook code. This leaves a consequential security/provenance dependency, although degraded-mode risk and stronger isolation are disclosed.",
+      "id": "P11R-A-04",
+      "kind": "incoherent_execution_permission_boundary",
+      "obligation_ids": [
+        "B07"
+      ],
+      "preserve": "OS-level process/network/resource confinement and rejection of import blacklists are useful. Isolation is unbuilt and should remain proposed.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "B",
+      "claim_locator": "proposal section 0 and chosen data plane",
+      "dimension_ids": [
+        "Q2",
+        "Q3",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "locator": "section 0 PyArrow dataset for CSV/NDJSON/Parquet; section 6 chosen scan layer",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+          "sha256": "3325cad6094946e82102f34e6e1d77198cdb39261abe36deb89f9317a2926708"
+        },
+        {
+          "id": "arrow_dataset",
+          "locator": "supported formats near beginning and Reading different file formats; exact SHA equals candidate S6",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/arrow_dataset.body",
+          "sha256": "02e45ee05b5f1d0feafa96031002304fe555505b9afdbb1efb32a02d6fa031f2",
+          "url": "https://raw.githubusercontent.com/apache/arrow/main/docs/source/python/dataset.rst"
+        }
+      ],
+      "finding": "The chosen PyArrow dataset scan layer is claimed to handle CSV/NDJSON/Parquet. The exact candidate-cited dataset documentation supports Parquet, Feather/Arrow IPC, CSV and ORC; NDJSON is not a Dataset file format. No separate JSON reader/adapter or unsupported-NDJSON boundary is specified. A required input path is therefore asserted without an implementation mechanism.",
+      "id": "P11R-B-01",
+      "kind": "unsupported_component_format_claim",
+      "obligation_ids": [
+        "B01",
+        "B02",
+        "B06",
+        "B10"
+      ],
+      "preserve": "Arrow Dataset batch scanning is a useful independent precedent for its supported formats. A separate Arrow JSON streaming adapter or bounded DuckDB JSON path could be investigated, but none is credited as implemented research here.",
+      "severity": "HIGH"
+    },
+    {
+      "alias": "B",
+      "claim_locator": "proposal sections 4,6,10; witnesses W3",
+      "dimension_ids": [
+        "Q5"
+      ],
+      "evidence": [
+        {
+          "locator": "W3 streaming/bounded path claims",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+          "sha256": "3325cad6094946e82102f34e6e1d77198cdb39261abe36deb89f9317a2926708"
+        },
+        {
+          "locator": "W3 bounded loop expected behavior",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/witnesses.json",
+          "sha256": "5c7e960619a6bc0d4124376b9287a011c7a42df44f6e8b9ea6fe08ad753d026c"
+        },
+        {
+          "locator": "src_hash_before/after fh.read(); vals_full append",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P11-CURRENT-REQUESTED-WITNESS-001/B/exec-3dtvtehh/code.py",
+          "sha256": "e4c90aa135f21a18ea4ff425c87e1f473ce9e1bb6d900e99d60695e8960e3098"
+        },
+        {
+          "locator": "reported chunk line maximum and mean",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P11-CURRENT-REQUESTED-WITNESS-001/B/exec-3dtvtehh/stdout.bin",
+          "sha256": "28e4abe3d1788e77749527266beccf671ac6080e984725172e76d232c357567f"
+        }
+      ],
+      "finding": "W3 is advertised as a bounded streaming ingestion pattern, but its code hashes the complete file with fh.read() twice and accumulates all accepted numeric values in vals_full. Reading input in chunks does not bound total memory. The 417-lines-per-chunk result does not measure the growing accumulator or whole-file reads.",
+      "id": "P11R-B-02",
+      "kind": "witness_not_memory_bounded",
+      "obligation_ids": [
+        "B06",
+        "B11"
+      ],
+      "preserve": "Receipt proves the tiny synthetic check executed with exit 0. Its mass balance, one reject line, unchanged source hash, and preview/full mean counterexample are supported. Candidate honestly disclaims 5 GB performance and actual PyArrow/DuckDB execution; those remain UNEXECUTED.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "B",
+      "claim_locator": "proposal sections 4 and 6",
+      "dimension_ids": [
+        "Q1",
+        "Q3"
+      ],
+      "evidence": [
+        {
+          "locator": "sections 4 and 6",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+          "sha256": "3325cad6094946e82102f34e6e1d77198cdb39261abe36deb89f9317a2926708"
+        },
+        {
+          "locator": "timestamp and label fields generated as strings; no timestamp conversion or null contract exercised",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/P11-CURRENT-REQUESTED-WITNESS-001/B/exec-3dtvtehh/code.py",
+          "sha256": "e4c90aa135f21a18ea4ff425c87e1f473ce9e1bb6d900e99d60695e8960e3098"
+        }
+      ],
+      "finding": "The chosen data contract does not define missing versus null values, Unicode/encoding behavior, timestamp formats/timezones or conversion semantics for these types. W3 containing Unicode labels and timestamp strings does not settle their product contract. No concrete caching/key/invalidation policy is supplied beyond output status invalidation.",
+      "id": "P11R-B-03",
+      "kind": "required_contract_gaps",
+      "obligation_ids": [
+        "B02",
+        "B06"
+      ],
+      "preserve": "Explicit expected types, string-first heterogeneous columns, reject ledger, order non-guarantees and schema fingerprints are useful partial coverage.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "B",
+      "claim_locator": "proposal section 4 identity / invalidation",
+      "dimension_ids": [
+        "Q3",
+        "Q7"
+      ],
+      "evidence": [
+        {
+          "locator": "section 4 rechecked cheaply size+mtime, full hash on demand; section 5 dataset-content invalidation",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/proposal.md",
+          "sha256": "3325cad6094946e82102f34e6e1d77198cdb39261abe36deb89f9317a2926708"
+        }
+      ],
+      "finding": "Dataset content identity is hashed at import but rechecked cheaply by size+mtime, with a full hash only on demand. A same-size content replacement with preserved mtime can evade that freshness check. The proposal does not explain when automatic stale/current computation forces content verification, despite promising dataset-content invalidation.",
+      "id": "P11R-B-04",
+      "kind": "data_identity_refresh_gap",
+      "obligation_ids": [
+        "B04",
+        "B05"
+      ],
+      "preserve": "Content-hash identity itself and a manifest hash list are sound design ingredients; freshness must remain unverified when content has not been revalidated.",
+      "reasoning": "An engineering counterexample to the declared contract; no executable test was run. Size and mtime do not uniquely determine content.",
+      "severity": "MEDIUM"
+    },
+    {
+      "alias": "B",
+      "claim_locator": "proposal section 2; sources S4",
+      "dimension_ids": [
+        "Q2"
+      ],
+      "evidence": [
+        {
+          "locator": "S4 establishes one minute before close",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P11-I04-CURRENT-RESEARCH-PAIR-001/outputs/B/research/sources.json",
+          "sha256": "97c565cceb7203569cbd13eef1030445724833d10b5c8023ccea788c62e2b96d"
+        },
+        {
+          "id": "nbclient_88_timeline",
+          "locator": "cross-referenced PR merged_at and closed-event created_at",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/primary_sources/nbclient_88_timeline.body",
+          "sha256": "ae47b874d891bf08dc9e08cdbce1c949b00c92a7bd05f72d9bc30fe0f368e1a5",
+          "url": "https://api.github.com/repos/jupyter/nbclient/issues/88/timeline?per_page=30"
+        }
+      ],
+      "finding": "The issue closure is called one minute after PR merge; exact recorded timestamps are 22:01:24Z and 22:01:25Z, one second apart. This does not break the real issue/fix/test linkage.",
+      "id": "P11R-B-05",
+      "kind": "timestamp_transcription",
+      "obligation_ids": [
+        "B09"
+      ],
+      "preserve": "The kernel-death diagnosis, liveness polling mechanism and Autokill regression test are supported.",
+      "severity": "LOW"
+    }
+  ],
+  "full_case_PASS_eligible": false,
+  "full_pipeline_quality": {
+    "A": "UNASSESSED",
+    "B": "UNASSESSED"
+  },
+  "matched_important_checks": {
+    "B-P1": {
+      "A": "COMPLETE",
+      "B": "COMPLETE",
+      "reason": "Research-stage two independent useful precedents and real source/fix/test chains established; released/current scope stays bounded."
+    },
+    "B-P2": {
+      "A": "FAIL_SCREEN",
+      "B": "FAIL_SCREEN",
+      "reason": "A full-column verification method contradicted by primary docs/implementation; B selected NDJSON dataset mechanism contradicted by exact cited documentation. Other required contract gaps recorded."
+    },
+    "B-P3": {
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "reason": "Actual successful executions supported, but A ordering witness non-discriminating and B claimed bounded ingestion pattern retains whole-file/all-value memory. Proposed validations stay unexecuted."
+    },
+    "B-P4": {
+      "A": "UNASSESSED",
+      "B": "UNASSESSED",
+      "reason": "Both designated finals null. Cross-stage error correction and semantic preservation are outside research-only evidence."
+    },
+    "B-P5": {
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "reason": "Substantial minimum workflow, portability/recovery/resource/usability/opportunity content preserved; A boundary conflict and B data/cache gaps prevent complete source qualification."
+    }
+  },
+  "obligation_coverage": {
+    "A": [
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B01",
+        "reason": "Research minimum workflow and Python/optional SQL support are explicitly mapped; shipped behavior unassessed."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B02",
+        "reason": "Detailed type/null/Unicode/timestamp/order/quarantine policy, but invalid full-column verification mechanism (A-01)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B03",
+        "reason": "Four-way distinction and replay limits covered; metadata overstatement (A-03) and runtime guarantees remain proposed."
+      },
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B04",
+        "reason": "Explicit code/data/env/restart/interrupt status choices; tiny source/restart witness supports its stated transition subset."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B05",
+        "reason": "Registry, environment binding, run/output joins and bundle manifest covered; pylock installer support correctly unresolved; source metadata overstatement remains."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B06",
+        "reason": "Streaming target, bounds, cache keys, locking and journal recovery covered; engine performance and recovery unexecuted; ordering witness mismatch (A-02)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B07",
+        "reason": "Clear OS isolation ingredients and UX views, but conflicting read permissions/audit dependency (A-04); accessibility details thin."
+      },
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B08",
+        "reason": "Independent nbformat/DVC/DuckDB mechanisms with source pins; primary captured bytes independently matched for core mechanisms."
+      },
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B09",
+        "reason": "DuckDB #10769 -> #10777 code/test -> v0.10.1 release-notes inclusion; current recurrence correctly qualified as unresolved."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B10",
+        "reason": "Coherent composition, alternatives/opportunities and critical dependency table present; incorrect validation dependency unresolved."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B11",
+        "reason": "Successful execution support inspected; valid tiny checks preserved; W2b does not discriminate claimed order difference. No full engine/runtime/5GB credit."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B12",
+        "reason": "Standalone research proposal and catalogs exist; supplemental actual citation alias map resolves S7-S10 pointers. Final delivery/correction/preservation remain UNASSESSED."
+      }
+    ],
+    "B": [
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B01",
+        "reason": "Minimum workflow and bounded Python/SQL support mapped, but asserted NDJSON path lacks selected component support (B-01)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B02",
+        "reason": "Schema/type/order/reject policy partial; NDJSON mechanism and required null/Unicode/timestamp details absent (B-01/B-03)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B03",
+        "reason": "Four-way separation, local replay and bounded guarantee stated; execution_count alone is not full history, but event log is proposed as provenance spine."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B04",
+        "reason": "Status transitions tested as candidate logic; content change detection has size/mtime gap (B-04)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B05",
+        "reason": "Portable folder, environment fingerprint, event/output joins and manifest present; freshness verification gap (B-04)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B06",
+        "reason": "Arrow batch scan precedent, bounds, locking and save recovery proposed; cache design missing and W3 unbounded in total memory (B-02/B-03)."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B07",
+        "reason": "Filesystem allowlist/default-deny network/resource boundary and provenance/status UX covered as unbuilt choice; confinement/a11y unassessed beyond prose."
+      },
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B08",
+        "reason": "Independent nbformat/nbclient, Arrow Dataset and DuckDB mechanisms; Arrow/schema/diff bytes matched and live issue limits independently checked."
+      },
+      {
+        "coverage": "COMPLETE",
+        "obligation_id": "B09",
+        "reason": "nbclient #88 timeline -> merged #90 liveness diff + Autokill/test; first release explicitly unresolved. Evaluator additionally checked tagged v0.10.4 liveness source, preserving bounded choice."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B10",
+        "reason": "Dual data plane, useful hooks opportunity and DuckDB-only alternative present; NDJSON path and identity/caching dependencies remain."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B11",
+        "reason": "All three successful witness code/input/stdout/exit projections inspected. W1/W2 and W3 small-data results real; W3 total memory is not bounded. No full engine/runtime/5GB credit."
+      },
+      {
+        "coverage": "PARTIAL",
+        "obligation_id": "B12",
+        "reason": "Standalone research proposal/catalogs present with source limits and leads. Later correction/preservation and final delivery UNASSESSED."
+      }
+    ]
+  },
+  "outcome_meaning": "Both current research stages contain distinct consequential defects. This is not a pipeline outcome, arm winner or equal-quality conclusion.",
+  "outcomes": {
+    "A": "FAIL_SCREEN",
+    "B": "FAIL_SCREEN"
+  },
+  "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+  "phase": "P1_SOURCE_ONLY",
+  "prepared_utc": "2026-10-06T09:45:36.357281+00:00",
+  "schema": "er9.current-output-judgment.v1",
+  "source_clock_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/source_clock.json",
+    "sha256": "bffc87d60c8021c67bb875e9f136f4411bbeb9f3741617f8e61f7db53a1cea3a"
+  },
+  "source_scope": "Exact current two frozen research proposals/catalogs plus exact requested same-stage citation/witness source projections and independently retrieved public primary sources.",
+  "unassessed": [
+    "All later stages and final delivery",
+    "Cross-stage correction/preservation and mechanism effects",
+    "Full 5 GB performance, actual Arrow/DuckDB runtime ingestion validation, cross-machine replay, crash recovery and sandbox product implementation",
+    "Remaining consequential claims beyond inspected source paths; no whole-case PASS"
+  ],
+  "witness_policy": {
+    "candidate_execution_receipts_confirmed": true,
+    "evaluator_execution_or_retest": false,
+    "failed_attempt_claims": "Catalog descriptions acknowledged; their exact failed code/results not independently verified in P1.",
+    "semantics_assessed_statically": true,
+    "synthetic_scope": "Tiny component logic only; no shipped product, full runtime, 5 GB performance, or sandbox-product certification."
+  }
+}

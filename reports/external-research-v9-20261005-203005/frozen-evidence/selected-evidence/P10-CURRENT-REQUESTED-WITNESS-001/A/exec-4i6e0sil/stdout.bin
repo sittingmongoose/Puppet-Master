@@ -1,0 +1,7 @@
+p=(0.0, 0.0)       elementwise=(10.0, 20.0)             matrix(T*S)=(0.0, 0.0)
+p=(100.0, 200.0)   elementwise=(60.0, 70.0)             matrix(T*S)=(50.0, 50.0)
+p=(31.4, -17.3)    elementwise=(25.7, 15.675)           matrix(T*S)=(15.7, -4.325)
+p=(-5.0, 40.0)     elementwise=(7.5, 30.0)              matrix(T*S)=(-2.5, 10.0)
+convention world = data*scale + translate matches matrix T*S: False
+max |diff| if implementation scaled after translating: 15.0 world units
+reflect scale=-1: position 40 -> -40 (flip kept), size signed=-10 (invalid), size |s|=10 (valid)

@@ -1,0 +1,59 @@
+{
+  "acquisition_metadata_http_status_counts": {
+    "200": 18,
+    "None": 9
+  },
+  "acquisition_metadata_incomplete_count": 0,
+  "acquisition_metadata_truncated_count": 0,
+  "body_bytes": 2845438,
+  "body_count": 81,
+  "cohorts": [
+    {
+      "authority_selector_sha256": "e447c984b0fbddebb178e475b27fa6e086048877240ef7474147a68dd8089f34",
+      "body_count": 13,
+      "files_count": 26,
+      "selected_bytes": 1082001,
+      "selection": "P8-I01-FRESH-REQUESTED-SOURCE-WITNESS-001"
+    },
+    {
+      "authority_selector_sha256": "4c56a4ea75aabf297bcd3e65ed9a983f8febbd5504d91f0f2e693510084b5aa8",
+      "body_count": 1,
+      "files_count": 2,
+      "selected_bytes": 5501,
+      "selection": "P8-I01-FRESH-REQUESTED-S5B-001"
+    },
+    {
+      "authority_selector_sha256": "9b8b7dc626509695d39c629900df1d8e1d7ffbb226a3f01d4090c9c1596fb763",
+      "body_count": 13,
+      "files_count": 26,
+      "selected_bytes": 233049,
+      "selection": "TD20-REQUESTED-SOURCE-W5-001"
+    },
+    {
+      "authority_selector_sha256": "e0d40f4259ebd632b796028b27b2e63de58a793d4d013b1b2e792e10605a735e",
+      "body_count": 54,
+      "files_count": 56,
+      "selected_bytes": 1576898,
+      "selection": "TD17-REQUESTED-ADMITTED-SEED-SOURCE-001"
+    }
+  ],
+  "coverage": "PARTIAL_EXACT_P8_TD20_TD17_PUBLIC_SOURCE_SUBSETS_NOT_QUEUE_RECONCILED",
+  "excluded_candidate_execution_count": 20,
+  "excluded_seedbaseline_count": 8,
+  "files_count": 110,
+  "independent_archive_reread": "ALL110_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/d61f92847808416a55359e26c944346bc57e09f16bc86aa7da71e5db60c7364b/MANIFEST.json",
+  "manifest_sha256": "b16abd1f287dce23da08c4f9873a44da807be40887a1afa2f29436a3319f74cf",
+  "metadata_count": 27,
+  "metadata_index_bytes": 52011,
+  "overlap_policy": "selected lineages retained; sameSHA and previous cohort overlap not new unique evidence",
+  "prior_archives": "UNCHANGED",
+  "public_index_count": 2,
+  "raw_repository_policy": "bodies/index/metadata/rawlocators NASonly; compactmanifestpin maypublish",
+  "restart": "Exactallowlistpublicsubsets complete; further evidence separatepositivepins; wholequeue reconciliation pending",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 2897449,
+  "selection_sha256": "d61f92847808416a55359e26c944346bc57e09f16bc86aa7da71e5db60c7364b",
+  "source_quality": "UNKNOWN_NO_SEMANTIC_ASSESSMENT",
+  "status_scope": "27acquisitionmetadata only; TD17indexes not interpreted"
+}

@@ -1,0 +1,203 @@
+{
+  "additional_scientific_finding": {
+    "alias": "A",
+    "consequence": "The arithmetic and recorded trace sensitivity are useful. Pyramids/prefetch may be sensible product choices, but their necessity/effect is not demonstrated by this witness. Keep them as choices or proposed comparisons.",
+    "current_claim": "Proposal summary and section 8 infer that pyramids plus prefetch are required from W2 hit rates described as pan/zoom or zoomy.",
+    "defect_id": "I03-A-D06",
+    "dimension_ids": [
+      "Q3",
+      "Q5"
+    ],
+    "evidence": {
+      "code_pin": {
+        "bytes": 1407,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase2_witness_inputs/A/exec-dp5d1p91/code.py",
+        "sha256": "5b7067f5cddabf63157b32fec0e74f510c9821c73bbccdbe282a05ead42e2014"
+      },
+      "locator": "run: key=(cx,cy), fixed gx/gy; no zoom level, viewport footprint, prefetch, pyramid or latency comparison exists.",
+      "stdout_pin": {
+        "bytes": 348,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase2_witness_inputs/A/exec-dp5d1p91/stdout.bin",
+        "sha256": "782ba9e3422a9f4b7d3c1d9d07dc63cf571608a05111219eebaf0b7788118f7c"
+      }
+    },
+    "obligation_ids": [
+      "A04",
+      "A10",
+      "A11"
+    ],
+    "scope": "The candidate already labels this simulation informative and not a performance proof; those valid limits remain credited.",
+    "severity": "MEDIUM",
+    "title": "Single-level random-walk cache trace does not establish zoom behavior or necessity of prefetch/pyramids"
+  },
+  "assessed_stage": "research",
+  "binding_after_freeze": {
+    "alias_map": {
+      "A": "treatment",
+      "B": "control"
+    },
+    "equal_original_time_bound": false,
+    "interpretation": "Same actual brief/obligations, but original stage clock allocations differ. No controlled mechanism effect, recipe qualification, ranking or winner is inferred.",
+    "source_hashes_match_exact_current_research_inventory": true,
+    "time_bound_seconds": {
+      "A": 1050,
+      "B": 1200
+    }
+  },
+  "candidate_retests": 0,
+  "created_monotonic_ns": 109811255895322,
+  "created_utc": "2026-10-06T09:36:32.398906+00:00",
+  "economics": "Separate neutral_accounting_initial.json and neutral_accounting_final.json. Literal counters are not aggregated or repriced and do not determine scientific judgment.",
+  "eval_id": "independent-pipeline-10-research-I03",
+  "evaluator_nativeGoal_starts": 0,
+  "evaluator_new_candidate_executions": 0,
+  "exact_selected_execution_records": 5,
+  "exact_selected_files_verified": 25,
+  "inclusive_clock": {
+    "no_reset": true,
+    "p2_budget_seconds": 600,
+    "p2_deadline_monotonic_ns": 110005728743288,
+    "p2_includes_key_wait_checks_reports_handoffs": true,
+    "phase2_elapsed_at_report_seconds": 405.527152034,
+    "source_inclusive_seconds": 630.51781486,
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 110575210928428,
+    "whole_elapsed_at_report_seconds": 1036.044966894
+  },
+  "input_pins_pin": {
+    "bytes": 16458,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase2_witness_input_pins.json",
+    "sha256": "1c8b8715b30e0f2c6c2ce19e87765b94fce6c16ac106f42678c477d63e8112f5"
+  },
+  "matched_A_P3_update": {
+    "A": {
+      "execution_provenance": "COMPLETE for all four catalogued attempts",
+      "semantic_assessment": "PARTIAL: successful affine formula check is supported; W2 scoped simulation is real but necessity/zoom inference exceeds its code."
+    },
+    "B": {
+      "execution_provenance": "COMPLETE for two witnesses sharing one execution",
+      "semantic_assessment": "COMPLETE within the declared narrow numeric and user-space simulation scope; all proposed full-environment checks remain UNEXECUTED."
+    }
+  },
+  "new_model_runs": 0,
+  "no_old_lineage_or_prior_judgment_access": true,
+  "operational_scope": {
+    "direct_Goal_status": {
+      "A": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "B": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED"
+    },
+    "driver_status": {
+      "A": "completed",
+      "B": "completed"
+    },
+    "opaque_Goal_ID": {
+      "A": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "B": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION"
+    },
+    "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+    "quiet_evidence": "Selected safe projection records owned native/components/group quiet and outer release; does not establish direct Goal completion or semantic success.",
+    "resource_fit": "UNKNOWN"
+  },
+  "pair_id": "I-03-FRESH-DELIVERY-R001-CLOCK-R001",
+  "phase": "P2_POST_IMMUTABLE_SOURCE_JUDGMENT",
+  "phase1_all_pins_unchanged_readonly": true,
+  "phase1_freeze_pin": {
+    "bytes": 12235,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase1_freeze.json",
+    "sha256": "e4cad4e467d13f5be7dc6aacfa8e42edbab84758143c35e88c1a42d767093894"
+  },
+  "phase1_judgment_pin": {
+    "bytes": 24460,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/current_output_judgment.json",
+    "sha256": "fd05dfc41827cb3cf719a3d77467f2faf05de7c2eb1b3da2d813bfd77b68a31e"
+  },
+  "phase2_exposure_pin": {
+    "bytes": 961,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase2_exposure_receipt.json",
+    "sha256": "e0228b93be90434f71faa7658952bccc2e498af1656c9f622196d570846b914f"
+  },
+  "remaining_unassessed": [
+    "Both designated finals null; later pipeline delivery/integration/repair and whole-case PASS.",
+    "Real files/application large-data, latency/cancel, orientation/export interoperability, NAS/shared-storage durability.",
+    "Direct native Goal completion/ID and physical provider payload not exported by safe projection.",
+    "Noncritical source claims outside the decisive matched screen."
+  ],
+  "schema": "er9.independent-phase2-execution-assessment.v1",
+  "scientific_outcomes_after_phase2": {
+    "A": "Current RESEARCH source FAIL_SCREEN/PARTIAL preserved; full final and pipeline UNASSESSED.",
+    "B": "Current RESEARCH source FAIL_SCREEN/PARTIAL preserved; full final and pipeline UNASSESSED."
+  },
+  "unavailable": [],
+  "witness_assessments": [
+    {
+      "alias": "A",
+      "assessment": "ERRORED_AND_HONESTLY_DISCLOSED",
+      "execution_id": "exec-h6i5pzpn",
+      "execution_verified": true,
+      "independent_expectation": "hom requires M[2], but mul returns two rows; IndexError before stdout is consistent with exact code.",
+      "receipt_exit_code": 1,
+      "scope": "No scientific result is credited from this failed attempt.",
+      "witness_id": "W1a"
+    },
+    {
+      "alias": "A",
+      "assessment": "FALSE_HEADLINE_AND_HONESTLY_DISCLOSED_SUPERSEDED",
+      "execution_id": "exec-4i6e0sil",
+      "execution_verified": true,
+      "independent_expectation": "The inner k range omits the homogeneous translation contribution, so M is scale-only and equality must be False. The separately computed wrong-convention difference is max((1-0.5)*10,(1-0.25)*20)=15; reflected position=-40 and magnitude size=10.",
+      "receipt_exit_code": 0,
+      "scope": "The current catalog explicitly rejects the headline equality and retains individually valid scalar results.",
+      "witness_id": "W1b"
+    },
+    {
+      "alias": "A",
+      "assessment": "SUPPORTED_WITHIN_PURE_AFFINE_ARITHMETIC_SCOPE",
+      "execution_id": "exec-5_edj2lb",
+      "execution_verified": true,
+      "independent_expectation": "T times S is [[0.5,0,10],[0,0.25,20],[0,0,1]]. Expected outputs are (10,20),(60,70),(25.7,15.675),(7.5,30); both paths agree. Translation-before-scale offset is (5,15), and reflected position=-40 while size magnitude=10.",
+      "receipt_exit_code": 0,
+      "scope": "Not an execution of napari, a project writer/exporter, picking behavior, general orientation, or a future application.",
+      "witness_id": "W1c"
+    },
+    {
+      "alias": "A",
+      "assessment": "RECORDED_SIMULATION_RESULTS_SUPPORTED_WITH_INTERPRETATION_LIMIT",
+      "execution_id": "exec-dp5d1p91",
+      "execution_verified": true,
+      "independent_expectation": "60000*25000*2 is 3e9 bytes; ceiling tile counts are 59*25=1475; a 1024-square uint16 tile is 2 MiB. OrderedDict simulates an entry-count LRU on a seeded 2D random walk and spatial jumps.",
+      "observed_rates_percent": [
+        14.6,
+        19.8,
+        43.0
+      ],
+      "receipt_exit_code": 0,
+      "scope": "No image bytes, real reader, decoder, allocated tile payloads, latency, viewport at different zoom levels, pyramid level, prefetch algorithm, or comparison is tested. Rates are recorded exact stdout, not independently recomputed; candidate retests were prohibited.",
+      "witness_id": "W2"
+    },
+    {
+      "alias": "B",
+      "assessment": "SUPPORTED_WITHIN_STDLIB_NUMERIC_SCOPE",
+      "execution_id": "exec-0dds09qa",
+      "execution_verified": true,
+      "independent_expectation": "Binary32 spacing is two at 2^24, so 2^24+0.25 rounds to 2^24. The recorded 0.0645 float32 value has the stated relative error. Binary64 packing round-trips an already-binary64 Python input.",
+      "receipt_exit_code": 0,
+      "scope": "Does not prove exact real-number representation of every decimal, JSON persistence, reader calibration accuracy, or full application behavior.",
+      "witness_id": "W1"
+    },
+    {
+      "alias": "B",
+      "assessment": "SUPPORTED_WITHIN_SINGLE_PROCESS_USER_SPACE_SIMULATION",
+      "execution_id": "exec-0dds09qa",
+      "execution_verified": true,
+      "independent_expectation": "The truncated temp and original are different paths. Old target remains v1; truncated JSON raises JSONDecodeError; fully written+fsynced temp followed by os.replace gives v2 and removes temp.",
+      "receipt_exit_code": 0,
+      "scope": "No process is killed. No concurrent reader, power-loss, directory fsync, journal recovery, network filesystem or actual application is exercised. The proposal explicitly reserves OS-level SIGKILL/durability as UNEXECUTED W6; that qualification is preserved.",
+      "witness_id": "W2"
+    }
+  ],
+  "witness_manifest_pin": {
+    "bytes": 11780,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/witness_receipt_manifest.json",
+    "sha256": "720eb40985e24fbe9733ff59bec8da38bac7cc28733649c97b383f5eaf97bc0c"
+  }
+}

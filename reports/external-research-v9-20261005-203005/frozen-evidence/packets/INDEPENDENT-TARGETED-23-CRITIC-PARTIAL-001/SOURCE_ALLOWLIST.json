@@ -1,0 +1,76 @@
+{
+  "schema": "er9.phase1-source-only-allowlist.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/dispatch.json",
+      "sha256": "1f53eb534265aea385aa32407152e6780f7f00358d6ad04d12d33bcef242567c",
+      "bytes": 7627
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/integrity-proof.json",
+      "sha256": "172457abbff6a80bd11f6369e7a33855d1f93905ab295f870dbcdceb792703ec",
+      "bytes": 1532
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/outputs/R2/critique/source-index-lines.txt",
+      "sha256": "7b9bafad45075f5e4dca6128b59ee4f46e6479344d0d0ccb08559f3334c1ecb8",
+      "bytes": 23508
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R1.md",
+      "sha256": "2e923403683bab0aaa9c350ad9a9b0c89bb4d7df8fd987aa66fdf7f22dc3404f",
+      "bytes": 12023
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R2.md",
+      "sha256": "20767ee2974c996ac50ee38c30af6ba1799ecdcd57409b50b16e8cbe54e916a4",
+      "bytes": 11832
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/actual_role_task_R3.md",
+      "sha256": "c894e5c70b1a8e03324f530718c2713eca4106138126f83b8f401451099aa56f",
+      "bytes": 12045
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/neutral_targeted_task.md",
+      "sha256": "0be9b61266d0d29e1dd319813e0c9c43fcb8a60c1e4073825eee35b2f82a060f",
+      "bytes": 1366
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/task/targeted_coverage_map.json",
+      "sha256": "4465a65f1f5068c4fb4c03394b5f523d3a16ee7ebac347c794509ea856a4efa4",
+      "bytes": 2164
+    }
+  ],
+  "dispatch_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-23-CRITIC-PARTIAL-001/dispatch.json",
+    "sha256": "1f53eb534265aea385aa32407152e6780f7f00358d6ad04d12d33bcef242567c",
+    "bytes": 7627
+  },
+  "held_private_key": true
+}

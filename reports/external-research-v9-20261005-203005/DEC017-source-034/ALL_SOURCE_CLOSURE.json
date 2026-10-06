@@ -1,0 +1,44 @@
+{
+  "all_four_new_final_source_choices_before_ANY_one_Goal": true,
+  "current_parent_blocked_rows_not_admitted": true,
+  "exact_existing_descriptor_count": 19,
+  "existing_pair_descendant_closures": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing/I-09-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "c935c8e3661957e710ed268a4d6397a705fdb0f02589e8a5b05675ca307acb8b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing/I-10-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "276bbedd5ad675d45cfcd028b88b9ab8fbd4f0a2cf5fc69917c45165315ef564"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing/I-11-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "4270c94705932cb50adb38080d01236c79cbe0fa2e5d3475508ed4220e63fe8f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing/I-12-FRESH-DELIVERY-R001-CLOCK-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "d85d66b3e5b731fef16478c596b687c7e5d51283ba86c19a5f288da214d114ac"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/existing/C-04-CONFIRMATION-CLOCK-FRESH-R001/DESCENDANT_CLOSURE.json",
+      "sha256": "dd000913f9b0dc0922c21f4155663f24f93c793bd88f2cef4d02fb0dcdc8c11c"
+    }
+  ],
+  "new_four_final_registrations": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/four-finals/C-01-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+      "sha256": "d571120d1bf63b54b58e20ebfb7a7825150bf62284516ed2a2bbd2bd63d9f96d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/four-finals/C-02-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+      "sha256": "190eb6685aba990167e834b9eee71ccaff9797941ab3292e58c7a3302b375875"
+    }
+  ],
+  "new_native_role_count": 4,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-017-OWN-PRIOR-NAVIGATION-INDEX.json",
+    "sha256": "79f594f8fe9d1bb0e9b262108ef74c37696450068402b1624af5d56ef1d90f81"
+  },
+  "schema": "er9.dec017-all-navigation-source-closure.v1",
+  "source_native_calls": 0
+}

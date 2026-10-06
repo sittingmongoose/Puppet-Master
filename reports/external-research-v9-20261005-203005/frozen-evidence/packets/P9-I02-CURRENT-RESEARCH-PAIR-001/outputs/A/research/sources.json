@@ -1,0 +1,194 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "captured_utc_base": "2026-10-06T04:36:28Z..04:42:16Z",
+  "note": "capture identity = sha256 of exact HTTP response body as delivered by the admitted public_https_get tool. Pins are tag/branch/commit as returned by the source at capture time.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "branch main @ commit 4346f97c9d435f41ddfe76d28758b23796fdcf5a (head at capture, see S2)",
+      "locator": "whole file; key locators: description 'Jupyter Notebook v4.5 JSON schema'; definitions.code_cell required [id, cell_type, metadata, source, outputs, execution_count]; cell_id pattern '^[a-zA-Z0-9-_]+$' maxLength 64; execution_count description 'The code cell's prompt number. Will be null if the cell has not been run.'; metadata.kernelspec",
+      "capture_id": "d3f46948af564aa2b3c464a8e5c7c19b",
+      "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "captured_utc": "2026-10-06T04:37:01Z",
+      "applicability": "document-format precedent P1: stable cell ids, per-cell execution_count, outputs mimebundle, kernelspec metadata; no data/env/freshness fields",
+      "limits": "fetched from main branch (tagged-release path 5.10.4 returned 404, see S15); schema describes format, not runtime behavior"
+    },
+    {
+      "id": "S2",
+      "url": "https://api.github.com/repos/jupyter/nbformat/commits/main",
+      "pin": "API response for ref main at capture",
+      "locator": "sha=4346f97c9d435f41ddfe76d28758b23796fdcf5a; committer date 2026-08-24T10:53:05Z; package.json version 5.11.1 (in commit patch)",
+      "capture_id": "4c2089a61b2340518edf10a5f068b7f4",
+      "capture_sha256": "41c7970857ee939eff3f85362bd56f9a7681ef6f24b152a57f3e2dbf3ef2fd5d",
+      "captured_utc": "2026-10-06T04:37:44Z",
+      "applicability": "pins S1 to a commit; shows nbformat JS schema package at 5.11.1",
+      "limits": "head moves; pin is point-in-time"
+    },
+    {
+      "id": "S3",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+csv+sniffer+in%3Atitle+type%3Aissue&sort=reactions&order=desc&per_page=10",
+      "pin": "API search result at capture (total_count 12)",
+      "locator": "items: issue #17599 'CSV sniffer defaults to no quote' (closed 2025-05-26, label reproduced, full body with read_csv error dump incl. sample_size=20480); issue #25824 'CSV reader silently rounds/truncates values past the sniffer's sample_size...' (open, updated 2026-09-24, full body with strictness asymmetry analysis type_detection.cpp:182 vs string_value_scanner.cpp:335 and version matrix 1.1.3/1.5.5/1.6.0.dev/main@2bbfe6f236); issue #16476 '...escape-by-doubling...' (closed 2025-03-12, body with error dump escape='\\' Auto-Detected); issue #15882 (extra header confuses sniffer)",
+      "capture_id": "9b635a9d3c104ea0b39e6c5f87af34f3",
+      "capture_sha256": "230dc00d1f6106bed618832c0f5e2a627bf87ccfba72a569ddf51f285b8f7bf8",
+      "captured_utc": "2026-10-06T04:36:30Z",
+      "applicability": "engine precedent P2 evidence: sampling defaults, option surface, silent-corruption defect class (preview/sample asymmetry), regression reports",
+      "limits": "search page truncated at 32768 bytes delivered (#15882 body partial); issue bodies are reporter statements; #25824 is OPEN and unfixed at capture"
+    },
+    {
+      "id": "S4",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+csv+sniffer+in%3Atitle+type%3Aissue&sort=reactions&order=desc&per_page=10 (same capture as S3)",
+      "pin": "same bytes as S3",
+      "locator": "issue #17599 item: body reproducer foo.csv with first quoted field at row 24128; error dump 'quote = (empty) (Auto-Detected)'; workaround sample_size=-1 returns 24128",
+      "capture_id": "9b635a9d3c104ea0b39e6c5f87af34f3",
+      "capture_sha256": "230dc00d1f6106bed618832c0f5e2a627bf87ccfba72a569ddf51f285b8f7bf8",
+      "captured_utc": "2026-10-06T04:36:30Z",
+      "applicability": "sampling-defaults defect class; closed WITHOUT fix (see S6)",
+      "limits": "same as S3"
+    },
+    {
+      "id": "S5",
+      "url": "https://api.github.com/search/issues?q=repo%3Aduckdb%2Fduckdb+csv+sniffer+in%3Atitle+type%3Aissue&sort=reactions&order=desc&per_page=10 (same capture as S3)",
+      "pin": "same bytes as S3",
+      "locator": "issue #25824 item: tables of silent conversions (1.5 -> 2, 007 -> 7, timestamp -> DATE) gated exactly on default 20480-row sample; boundary table 20477/20478/20479/20480; 'store_rejects=true records zero rejects'",
+      "capture_id": "9b635a9d3c104ea0b39e6c5f87af34f3",
+      "capture_sha256": "230dc00d1f6106bed618832c0f5e2a627bf87ccfba72a569ddf51f285b8f7bf8",
+      "captured_utc": "2026-10-06T04:36:30Z",
+      "applicability": "core evidence that sample-based inference must never be treated as full-dataset truth; motivates W3 and the pin-the-contract rule",
+      "limits": "open issue; reporter's source-line citations not independently verified by candidate"
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/17599/timeline",
+      "pin": "API timeline at capture",
+      "locator": "comment by pdet (MEMBER) 2025-05-26T08:53:04Z: \"that's by design, if the sniffer does not encounter any quotes then it decides there are no quotes. You can use the sample_size option...\"; closed event same timestamp",
+      "capture_id": "8bb7123d3c58462485bbfa2a304cae74",
+      "capture_sha256": "f5665083f9f35505793fc5a439aca9e19c25436ee6761c7f31e64d670e694971",
+      "captured_utc": "2026-10-06T04:37:00Z",
+      "applicability": "shows a sampling hazard can be upstream 'by design' -> product must pin, not hope for fixes",
+      "limits": "single-maintainer statement of intent; not documentation"
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/16476/timeline",
+      "pin": "API timeline at capture",
+      "locator": "issue body (in first item context): error dump escape='\\' Auto-Detected, quote='\"', sample_size=20480, DuckDB 1.2 / V1.3.0-dev926; comment dimkr 2025-03-03: \"1.1.3 imports the same CSV file successfully\"; label 'reproduced' by szarnyasg 2025-03-05; comment simonmhawkins 2025-03-10 reproduced on v1.2.0 5f5512b827; cross-reference to PR #16584 with full PR JSON (title 'Give preference to quote=escape if we can't do better', author pdet MEMBER, closed_at 2025-03-12T08:47:05Z)",
+      "capture_id": "8c7c8b4d748b477d8fa280ba58f51f03",
+      "capture_sha256": "49a560517b6ff13f3ac0a6cef99635b5b044f351688356b1dff50a438e95a81f",
+      "captured_utc": "2026-10-06T04:37:44Z",
+      "applicability": "defect definition + affected-version statements (1.1.3 ok; 1.2.x broken) + link to fix PR",
+      "limits": "timeline truncated at 32768/58943 bytes (PR JSON tail cut, but merged_at visible in S9); 1.1.3-vs-1.2.0 claim is commenter-reported, not candidate-executed"
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/16584/files",
+      "pin": "PR head sha ea9836f6c058530cf7217a0b94b9027a42b2b0ae",
+      "locator": "file 1: src/execution/operator/csv_scanner/sniffer/dialect_detection.cpp (+9, hunk '@@ -519,6 +519,15 @@ void CSVSniffer::RefineCandidates()' preferring candidate where escape == quote); file 2 (added): test/sql/copy/csv/test_quoted_later_escaped.test (+35): builds 100000-row and 5000-row files with quoted/escaped field beyond the sample, asserts sniff_csv quote='\"' escape='\"' (doubling) and escape='\\' (backslash file)",
+      "capture_id": "9ea2a7e509164c8180e0e4fadd82f9dd",
+      "capture_sha256": "221674a14edcd19d40dc468d131308bcd811858c4b4aa942fb92cafc1bfe0ee5",
+      "captured_utc": "2026-10-06T04:38:11Z",
+      "applicability": "exact fix mechanism + the regression test with its file path",
+      "limits": "patch text only; test not executed by candidate"
+    },
+    {
+      "id": "S9",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/16584",
+      "pin": "PR #16584 at capture",
+      "locator": "merged true; merged_at 2025-03-12T08:47:04Z; merge_commit_sha 7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37; base ref 'v1.2-histrionicus'; merged_by Mytherin; changed_files 2, additions 44; body 'Fix: https://github.com/duckdb/duckdb/issues/16476'",
+      "capture_id": "c73e5c6d1c494e7aba8e9a7c898f8fd5",
+      "capture_sha256": "b52753c28f61eff2761e6fca528891679cb5a13c5d2c16fa502caec7034a8be1",
+      "captured_utc": "2026-10-06T04:38:12Z",
+      "applicability": "fix merge event + merge commit pin",
+      "limits": "PR metadata does not by itself establish which release contains the fix (S10/S11 do)"
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/repos/duckdb/duckdb/compare/7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37...v1.2.1",
+      "pin": "compare merge-commit 7d9d4fc6... tag v1.2.1",
+      "locator": "status \"behind\", ahead_by 0, behind_by 23; base_commit = merge commit (message 'Give preference to quote=escape if we can't do better (#16584)', GPG verified)",
+      "capture_id": "7c211d1488884f1e8eccac7632e729d2",
+      "capture_sha256": "fbc63579e3df05db1f0ea1027f095f683e5252de22b98f6b30b3a3dc1240f0ab",
+      "captured_utc": "2026-10-06T04:38:38Z",
+      "applicability": "proves fix NOT contained in tag v1.2.1",
+      "limits": "ancestry fact for v1.2.1 only; other 1.2.x tags unchecked"
+    },
+    {
+      "id": "S11",
+      "url": "https://api.github.com/repos/duckdb/duckdb/compare/7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37...v1.3.0",
+      "pin": "compare merge-commit 7d9d4fc6... tag v1.3.0",
+      "locator": "merge_base_commit.sha == 7d9d4fc60d1b51e1f18763f4f8f4e3c91112bb37; status \"ahead\", ahead_by 3390, behind_by 0; permalink to 71c5c07 (v1.3.0)",
+      "capture_id": "49cc0856e1ed445cb4ddb9020cf805c9",
+      "capture_sha256": "e7a2c7975dc6bf83654090a58a37df50cfa968d78878bbe05298bbd0e1bb40b1",
+      "captured_utc": "2026-10-06T04:38:40Z",
+      "applicability": "proves fix commit is ancestor of tag v1.3.0 (shipped in 1.3.0)",
+      "limits": "response truncated at 524288 bytes (commit list only; the status/merge_base fields needed are in the delivered prefix)"
+    },
+    {
+      "id": "S12",
+      "url": "https://duckdb.org/docs/current/data/csv/overview.html (fetched via https://duckdb.org/docs/stable/data/csv/overview redirect)",
+      "pin": "docs 'current' = version 1.5 (sidebar shows 2.0-dev preview, 1.5 current, 1.4 LTS, 1.3, 1.2, 1.1, 1.0, 0.10)",
+      "locator": "head/meta description: read_csv examples with auto-infer and explicit options \"read_csv('flights.csv', delim = '|', header = true, columns = { 'FlightDate': 'DATE', ... })\"; nav confirms sibling pages 'Auto Detection', 'Reading Faulty CSV Files'",
+      "capture_id": "2dc1cd7ae4684f6eb50c466f444243b5",
+      "capture_sha256": "543adfc649f0ef3d4ab6a6407022f9972cc1a54609b09240f9c8553152a1963e",
+      "captured_utc": "2026-10-06T04:37:01Z",
+      "applicability": "documents explicit-columns read path used by the data contract; establishes current/LTS version lines",
+      "limits": "393173-byte HTML page; only first 32768 bytes delivered/read (mostly chrome); parameter-reference sections not read — sample_size default etc. are cited from S3-S7 error dumps instead"
+    },
+    {
+      "id": "S13",
+      "url": "https://api.github.com/repos/iterative/dvc/tags?per_page=3",
+      "pin": "API response; repo redirects to treeverse/dvc (node ids prefix MDM6UmVmODM4NzgyNjk = repo 83878269)",
+      "locator": "tags 3.67.1 (commit 356dfa03...), 3.67.0 (e40e378f...), 3.66.1 (ff8752c3...), all under api.github.com/repos/treeverse/dvc",
+      "capture_id": "9b260d686bec4a6f8b35624ba459258f",
+      "capture_sha256": "e435740bbb9f93d557c084d4fe7323b036c649fa040fe7c1602fe73a011e3f5f",
+      "captured_utc": "2026-10-06T04:40:11Z",
+      "applicability": "establishes DVC repo location/transfer and latest release tags at capture (alternative-precedent context only)",
+      "limits": "no DVC mechanism (deps/outs/status) verified from source this run"
+    },
+    {
+      "id": "S14",
+      "url": "https://api.github.com/repos/treeverse/dvc/contents/?ref=3.59.0",
+      "pin": "tag 3.59.0 tree root listing",
+      "locator": "top-level entries include dvc/ (package), tests/, pyproject.toml; no top-level schema dir",
+      "capture_id": "40277fa3a72247feb4edb055c554137f",
+      "capture_sha256": "46091f7dabf192d3a6ac1dbc6c0fbbecc8d65899c37ffa535b2fed343196b3ba",
+      "captured_utc": "2026-10-06T04:40:59Z",
+      "applicability": "confirms repo layout at 3.59.0; supports that schema would live under dvc/ package (path unresolved, see L1)",
+      "limits": "listing only; no mechanism content"
+    },
+    {
+      "id": "S15",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/5.10.4/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "tag-path attempt 5.10.4",
+      "locator": "response body '404: Not Found'",
+      "capture_id": "52d2c733e2ba4160be652ef9ea4c6e7e",
+      "capture_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "captured_utc": "2026-10-06T04:36:28Z",
+      "applicability": "records failed pin attempt honestly; tag name/path assumption wrong",
+      "limits": "no schema content obtained for tag 5.10.4"
+    },
+    {
+      "id": "S16",
+      "url": "https://raw.githubusercontent.com/iterative/dvc/main/dvc/schema/dvc-schema.json and https://raw.githubusercontent.com/iterative/dvc/3.59.0/dvc/schema/dvc-schema.json and https://raw.githubusercontent.com/treeverse/dvc/3.59.0/dvc/schema/dvc.schema.json and https://raw.githubusercontent.com/treeverse/dvc/3.59.0/dvc/schema/dvc-schema.json",
+      "pin": "four path attempts (main, tag 3.59.0, two filenames)",
+      "locator": "each returned '404: Not Found' (identical 14-byte body, capture_sha256 d5558cd4... as S15)",
+      "capture_id": "13d208c8878a4425a17f0a2360341ea8 / 0622fc8966ec4e1ebb0a7c4bbd2fcbf2 / 9a2d567059154dd491cf1a7786bc51a0 / 76c8d49d281040dd919f5bfe25403b13",
+      "capture_sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed (all four)",
+      "captured_utc": "2026-10-06T04:37:01Z..04:42:16Z",
+      "applicability": "documents that DVC's dvc.yaml schema was not captured; DVC claims in proposal are labeled INFER/lead",
+      "limits": "correct path not found within stage budget"
+    },
+    {
+      "id": "S17",
+      "url": "https://dvc.org/doc/user-guide/project-structure/pipelines-files (attempted 3x)",
+      "pin": "none",
+      "locator": "tool error: 'boundary failure: OSError' on each attempt (no HTTP response captured)",
+      "capture_id": "none (tool-level failure)",
+      "capture_sha256": "n/a",
+      "captured_utc": "2026-10-06T04:36:29Z, 04:38:11Z",
+      "applicability": "dvc.org unreachable from this environment; documented as evidence limit, not as a source",
+      "limits": "no bytes captured"
+    }
+  ]
+}

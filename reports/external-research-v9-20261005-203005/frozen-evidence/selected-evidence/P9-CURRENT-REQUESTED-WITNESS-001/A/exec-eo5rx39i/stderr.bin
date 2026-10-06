@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/runtime/bootstrap.py", line 9, in <module>
+    exec(compile(open('/work/code.py').read(), '/work/code.py', 'exec'), {'__name__':'__main__', 'data':data})
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/work/code.py", line 62, in <module>
+    assert [r["line"] for r in rows] == [2, 3, 5, 8]  # original line numbers preserved in row identity
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

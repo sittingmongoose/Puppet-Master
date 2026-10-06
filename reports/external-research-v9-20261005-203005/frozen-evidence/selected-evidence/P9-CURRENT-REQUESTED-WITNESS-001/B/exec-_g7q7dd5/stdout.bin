@@ -1,0 +1,3 @@
+case1 edited-upstream-cell: {"c1_load": "stale", "c2_clean": "stale", "c3_total": "stale"}
+case2 kernel-restart:       {"c1_load": "unverified", "c2_clean": "unverified", "c3_total": "unverified"}
+W1 PASS: edited upstream cell marks the whole downstream chain stale; a kernel restart downgrades outputs to 'unverified', never silently 'current'

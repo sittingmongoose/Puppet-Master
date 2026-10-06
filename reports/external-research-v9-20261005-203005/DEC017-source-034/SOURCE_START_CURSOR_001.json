@@ -1,0 +1,28 @@
+{
+  "actual_task_START_basis": "UNKNOWN: forwarded assignment/source turn does not expose an exact timestamp; do not relabel policy creation or first clock observation as actual START",
+  "actual_task_START_utc": null,
+  "captured_utc": "2026-10-06T09:13:05.416439+00:00",
+  "conservative_cutoff_basis": "source policy creation +3000, deliberately earlier proxy; not asserted original deadline",
+  "conservative_work_cutoff_utc": "2026-10-06T09:44:57.494840+00:00",
+  "current_owned_code_pins": {
+    "finalize_index.py": "9426c5b82882ff7b565995ef84553d0a8de1d0591f0f84bf52c686fd62dfff31",
+    "locator.py": "30c598eac1cd28cef3df5fe16bc77b8caa138946f3603f55513bbbcdd5468ea4",
+    "prior_index.py": "5c7577a04bb2a2fd98fcb45d127580a2b44d671bb659b0bd4770d61adf95bd96",
+    "source_builder.py": "1d7b1e9dc17e6577fab712fa511aafc09a4a2fe01ccf8975b324b082b481e069"
+  },
+  "cursor": "ACTIVE_SOURCE_PREPARATION: deterministic index/neutral locator/finalizer/23 descriptor source builder implemented; fixed-four-parent binder/tests/materialization/source sealing next",
+  "entered_or_prior_source_mutations": 0,
+  "first_exposed_clock_basis": "actual date -u output in this source task; later than task start, not deadline origin",
+  "first_exposed_clock_observation_utc": "2026-10-06T08:57:59+00:00",
+  "original_deadline_basis": "UNKNOWN until exact original START is supplied; no clock reset",
+  "original_engineering_budget_seconds": 3000,
+  "original_task_deadline_utc": null,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-017-OWN-PRIOR-NAVIGATION-INDEX.json",
+    "sha256": "79f594f8fe9d1bb0e9b262108ef74c37696450068402b1624af5d56ef1d90f81"
+  },
+  "ready_or_admission_claim": false,
+  "schema": "er9.dec017-source-engineering-start-cursor.v1",
+  "source_native_model_Goal_calls": 0,
+  "source_task_clock_reset": false
+}

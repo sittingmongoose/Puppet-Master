@@ -1,0 +1,78 @@
+{
+  "schema": "er9.witness-inventory.v1",
+  "actor": "candidate (admitted isolated execution capability: python_execute, stdlib-only, fresh empty filesystem, no network, cgroup limits per receipt)",
+  "scope_statement": "All witnesses are isolated component checks of candidate-authored logic on tiny synthetic data. A passing result demonstrates the candidate-authored mechanism only; it does not establish DuckDB, ipykernel, or any full-application behavior, nor properties of large real datasets.",
+  "witnesses": [
+    {
+      "id": "W1",
+      "title": "Data-contract import: strict types, quarantine not deletion, stable row identity, source not mutated",
+      "status": "executed_by_candidate_PASS",
+      "final_receipt": {
+        "execution_id": "exec-yzc08y40",
+        "exit_code": 0,
+        "code_sha256": "0ccdb0d9fcc3810dd67c05920a47a0f8807fc66f4885c3d3faad3ee43c8bbd3f",
+        "completed_utc": "2026-10-06T04:42:14Z",
+        "stdout_summary": "manifest: rows_parsed=4, rows_quarantined=2 with line+reason (line 4 \"val='notanumber': invalid literal for int()\", line 6 \"column count 1 != 3\"); source_sha256 constant before/after; row identity = original line number + content hash; contract distinguishes required id/ts (empty -> error) from nullable val (empty -> null)",
+        "stderr": "empty",
+        "limits": "wall 5s cpu 3s mem 256MiB; no network"
+      },
+      "expected_behavior_justification": "A contract-driven parser must (a) reject typed values failing conversion with a retained raw line and reason, (b) keep ordinal line identity so downstream joins/diffs are stable, (c) never write to the source, (d) honor declared nullability instead of guessing. Each is asserted.",
+      "prior_failed_attempts": [
+        {
+          "execution_id": "exec-ht_2zxhu",
+          "exit_code": 1,
+          "code_sha256": "fd202640383365ef775f2a3a0e5581ec1231f10fd63c41e066278d09d2956428",
+          "failure": "AssertionError: rows_parsed==3 vs expected 4 — candidate test-data bug: row 2 had empty 'ts' while the contract declared ts required; witness data contradicted its own contract.",
+          "disposition": "test data fixed (empty moved to nullable column val); code logic unchanged"
+        },
+        {
+          "execution_id": "exec-eo5rx39i",
+          "exit_code": 1,
+          "code_sha256": "cc801c8193fc02e0157dc5245b71c6db0d669eb214290b02c215ba2fffb08c7c",
+          "failure": "AssertionError on expected line numbers [2,3,5,8] vs actual [2,3,5,7] — candidate arithmetic error counting fixture lines.",
+          "disposition": "assertion corrected to [2,3,5,7]"
+        }
+      ]
+    },
+    {
+      "id": "W2",
+      "title": "Provenance/status engine: code+dep+data+env hashes -> current/stale; transitive staleness; restart -> unverified; execution order distinct from display order",
+      "status": "executed_by_candidate_PASS",
+      "final_receipt": {
+        "execution_id": "exec-uhzn0n65",
+        "exit_code": 0,
+        "code_sha256": "900cd96b0eb7e7a1f5db8af891fdc22430fd7a1eb19d733016957af48937fe90",
+        "completed_utc": "2026-10-06T04:40:59Z",
+        "stdout_summary": "baseline [current,current]; edit upstream cell -> [stale,stale]; restore -> [current,current]; source dataset change -> [stale,stale] (transitive through A); env change -> [stale,stale]; kernel restart -> [unverified,unverified]; exec_seq (A,B) = (1,2) in clean run vs (2,1) in messy run under identical display order",
+        "stderr": "empty",
+        "limits": "same sandbox profile"
+      },
+      "expected_behavior_justification": "Status must be a pure function of recorded hashes vs current hashes; staleness must propagate along dependency edges (a downstream cell can look hash-identical yet depend on stale upstream); kernel restart must downgrade to unverified rather than silently labeling old outputs current; execution order must be recorded independently of the cells array order.",
+      "prior_failed_attempts": [
+        {
+          "execution_id": "exec-2m38k2cp",
+          "exit_code": 1,
+          "code_sha256": "0cb792df4db461dbb175b705cadccb00d13a46b45b3be1e59fcadae3093dd2d7",
+          "failure": "AssertionError: r4 == ['stale','current'] — source-dataset change marked only the reading cell stale; downstream cell stayed 'current' because only its own hashes were checked.",
+          "disposition": "revealed a real modeling gap: rule corrected to transitive propagation via dependency edges (status(dep) must be current). This failed receipt is retained as evidence the rule was derived, not assumed."
+        }
+      ]
+    },
+    {
+      "id": "W3",
+      "title": "Bounded preview cannot prove a full-dataset property; deterministic recomputation is byte-identical",
+      "status": "executed_by_candidate_PASS",
+      "final_receipt": {
+        "execution_id": "exec-sq5n9eh3",
+        "exit_code": 0,
+        "code_sha256": "a58db5bbd330983d0f7fb2577257092abbd56892849da3a040728d1c43272248",
+        "completed_utc": "2026-10-06T04:42:16Z",
+        "stdout_summary": "preview (first 500 of 10,000 deterministic rows): {min:0, has_negative:false}; full scan: {min:-1, has_negative:true}; preview_supports_full_claim=false; deterministic replay identical=true",
+        "stderr": "empty",
+        "limits": "same sandbox profile; tiny synthetic data (LCG-seeded), mirrors at miniature scale the DuckDB sample_size asymmetry documented in S4/S5"
+      },
+      "expected_behavior_justification": "Any product surface that shows a sampled preview must not present it as evidence about unsampled rows; the check demonstrates a concrete property (presence of negative values) that the sample gets wrong. Determinism assertion validates the stable-recomputation premise used by output comparison."
+    }
+  ],
+  "not_executed": "No DuckDB, ipykernel, nbclient, DVC, or any packaged runtime was executed; no large dataset was processed; no sandbox-escape tests were run. All such validation is PROPOSED/UNEXECUTED (proposal.md §14)."
+}

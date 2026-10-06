@@ -1,0 +1,236 @@
+{
+  "schema": "er9.current-exact-requested-witness-source-receipts.v1",
+  "evaluation_id": "independent-pipeline-10-research-I03",
+  "selection": "ONLY exactexecutionIDs mechanically present currentsamealias frozenwitness catalogs; all listed failure/success attempts retained",
+  "files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-h6i5pzpn/code.py",
+      "sha256": "8a810d0a76490c5c07de58edd970d8c4b842e2312d028a45b7cd6efa471c3e95",
+      "bytes": 1906,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-h6i5pzpn/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-h6i5pzpn/stdout.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-h6i5pzpn/stderr.bin",
+      "sha256": "9328904f51fbc91849d4455acb59e2c322ed55f509d26d67ad23375c587ab267",
+      "bytes": 656,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-h6i5pzpn/result.source-proof.json",
+      "sha256": "8ac048c5ec80f75f1abb0fb620ac8a26b280de2ef4e73409d5d8cef6a858c057",
+      "bytes": 2378,
+      "kind": "candidate_execution_receipt_projection"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-4i6e0sil/code.py",
+      "sha256": "95f416b5d59196c15af3ee9a1cb9e33841ee8f4b864d1177a246ba77c026df06",
+      "bytes": 1893,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-4i6e0sil/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-4i6e0sil/stdout.bin",
+      "sha256": "3be29c41cd533d44968c4fcf290778509d97d2dafd8bf2d744a1d418464d0f57",
+      "bytes": 561,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-4i6e0sil/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-4i6e0sil/result.source-proof.json",
+      "sha256": "90e236906f26dc910260521198d883e45567495570f0b37059e78559b3acff69",
+      "bytes": 2378,
+      "kind": "candidate_execution_receipt_projection"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-5_edj2lb/code.py",
+      "sha256": "b3dd987d7dc512b82a519e10770cbc311a160915b9151427b7feb191e1fe938b",
+      "bytes": 1425,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-5_edj2lb/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-5_edj2lb/stdout.bin",
+      "sha256": "64f7e124cb9f0804f1047fee26f7bb9e23b25bf8094e190f6860d16b387a87a9",
+      "bytes": 574,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-5_edj2lb/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-5_edj2lb/result.source-proof.json",
+      "sha256": "5388acd1517f595c2927a94d43ae420ce5b54995e22a62250c01cece21deb7b7",
+      "bytes": 2378,
+      "kind": "candidate_execution_receipt_projection"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-dp5d1p91/code.py",
+      "sha256": "5b7067f5cddabf63157b32fec0e74f510c9821c73bbccdbe282a05ead42e2014",
+      "bytes": 1407,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-dp5d1p91/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-dp5d1p91/stdout.bin",
+      "sha256": "782ba9e3422a9f4b7d3c1d9d07dc63cf571608a05111219eebaf0b7788118f7c",
+      "bytes": 348,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-dp5d1p91/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/A/exec-dp5d1p91/result.source-proof.json",
+      "sha256": "783b3e23ef86c344393322d099a4a1a29c604155caae4fa76ef2b1c0f35a37b3",
+      "bytes": 2378,
+      "kind": "candidate_execution_receipt_projection"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/B/exec-0dds09qa/code.py",
+      "sha256": "b415cb6070d2ce75af33bdc8f59a208855138239f7990aedf45af3719f40432f",
+      "bytes": 1714,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/B/exec-0dds09qa/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/B/exec-0dds09qa/stdout.bin",
+      "sha256": "fa8d0b4ebabafa4aaca92f74ca8e2369cc714335a68ddd3e42b444c7ff5e16f4",
+      "bytes": 970,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/B/exec-0dds09qa/stderr.bin",
+      "sha256": "6f790686e57ff81988727aafc862e5dae5176e7750d3c227a28e038e1e1a6180",
+      "bytes": 24,
+      "kind": "candidate_execution_exact_source_file"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/P10-CURRENT-REQUESTED-WITNESS-001/B/exec-0dds09qa/result.source-proof.json",
+      "sha256": "538506daff6f8ec620dae37a19cb661c51f1a12cf5c6d109242e460c24c6904f",
+      "bytes": 2379,
+      "kind": "candidate_execution_receipt_projection"
+    }
+  ],
+  "original_result_pins": [
+    {
+      "alias": "A",
+      "execution_id": "exec-h6i5pzpn",
+      "original_result_sha256": "bf1f096b8a71b08152dc693d32e4a4b2434bab009f59f475630cfcffd96f4ca0"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-4i6e0sil",
+      "original_result_sha256": "3336cb14e21096bba58601506e6f49cae0270b1a2026564b99509914235e1f78"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-5_edj2lb",
+      "original_result_sha256": "e4d5fa6f33bbd54b031dfb30c245a033d04d64f9b8628f030edad962bbe6818d"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-dp5d1p91",
+      "original_result_sha256": "d76d03ccd34225e90960e13e387263488887b91389a51ccfcb0fa9b5fef043ca"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-0dds09qa",
+      "original_result_sha256": "80d6d2360202958ddf1b996e838b02db1d46e773f5f9946c9335f81078745db4"
+    }
+  ],
+  "unavailable": [],
+  "native_modelIO_identity_history_cost": "EXCLUDED"
+}

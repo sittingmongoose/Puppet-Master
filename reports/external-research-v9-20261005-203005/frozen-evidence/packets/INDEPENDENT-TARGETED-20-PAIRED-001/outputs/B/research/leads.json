@@ -1,0 +1,76 @@
+{
+  "leads_version": "D-V13-B-current/1",
+  "scope_note": "Unresolved implementation dependencies and optional directions after making SQL a required clean-replay participant. Statuses are current to this stage; proposed checks are not executed.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "First DuckDB v1.0.x point release containing the #12596 fix",
+      "status": "unresolved",
+      "detail": "Exact source at v1.0.0 lacks the guard; exact source at v1.1.0 has the guard and regression-test file [S24-S26]. v1.0.1/1.0.2 or other point tags were not checked. The tagged test was not executed.",
+      "next_step": "Inspect the relevant v1.0.x release tags/source and run test_12596.test against supported release binaries; state source and binary conclusions separately."
+    },
+    {
+      "id": "L2",
+      "title": "Exact supported DuckDB package/build and Python matrix",
+      "status": "critical_unverified",
+      "detail": "The selected design requires Python and SQL nodes to load the same pinned DuckDB Python package/build, but the current docs capture is moving and no exact production wheel/version was selected or run. The example build strings in W5 are placeholders.",
+      "next_step": "Choose one exact DuckDB patch per supported platform, lock wheel hashes/extensions/config, test Python 3.11-3.13 compatibility, and run the mixed-node replay validation V8."
+    },
+    {
+      "id": "L3",
+      "title": "Actual mixed Python notebook and SQL node replay",
+      "status": "critical_unverified",
+      "detail": "W5 checks only a candidate-authored fingerprint/invalidation model; it hashes SQL source but does not execute SQL or DuckDB. The graph scheduler, named artifact hand-off, result materialization, progress/cancel, and shared event format are design choices without an implementation check.",
+      "next_step": "Implement a tiny actual DuckDB SQL node and fresh Python notebook replay consuming its Parquet output; compare two complete event/output manifests and SQL-only invalidation."
+    },
+    {
+      "id": "L4",
+      "title": "5 GB operation envelope and spill behavior",
+      "status": "unverified",
+      "detail": "Buffer-pool eviction and file readers are source evidence, not measured performance. Sort, distinct, join, aggregate spill limits and disk use are unknown for 8 cores/16 GB.",
+      "next_step": "Run proposed validation V11 on generated CSV, NDJSON, and Parquet inputs; record peak RSS, temp disk, latency, and cancellation behavior by operation class."
+    },
+    {
+      "id": "L5",
+      "title": "Production OS execution isolation and platform coverage",
+      "status": "critical_unverified",
+      "detail": "The proposal needs process isolation, filesystem/network restrictions, and resource limits. No production OS primitive, Windows/macOS behavior, or escape test is established by the candidate check.",
+      "next_step": "Select a supported OS boundary, run filesystem/network/resource escape and kill tests, and define the unsupported-platform fallback before shipping."
+    },
+    {
+      "id": "L6",
+      "title": "Portable artifact serialization and deterministic row identity",
+      "status": "unverified",
+      "detail": "Parquet bytes, schema metadata, floating-point representation, format-aware logical record ordinals, and hash stability across platform/build are not proven. An unordered SQL result has no implied stable order.",
+      "next_step": "Specify typed canonical hashing and stable row-ID rules; test duplicate rows, null/missing distinctions, sort ties, schema evolution, and cross-platform output comparison."
+    },
+    {
+      "id": "L7",
+      "title": "Format-specific schema and missing/null contract",
+      "status": "unverified",
+      "detail": "The current proposal requires presence information where absent JSON fields must differ from explicit null, but no real DuckDB conversion path was run for heterogeneous NDJSON, timestamps, or evolving schemas.",
+      "next_step": "Use tiny CSV/NDJSON/Parquet fixtures to pin import/conversion rules and verify reject-ledger behavior across projection and schema changes."
+    },
+    {
+      "id": "L8",
+      "title": "marimo issue and runtime status if reconsidering its runtime",
+      "status": "optional_recheck",
+      "detail": "Supplied search capture reports #9881 and #10602 open and #10915 unmerged as of 2026-10-05, while #10912 is merged [S21]. The design does not adopt marimo runtime, and current states/fixes were not refreshed.",
+      "next_step": "Recheck exact issue/PR bodies and released behavior only if marimo becomes a selected component."
+    },
+    {
+      "id": "L9",
+      "title": "Project locking on shared/network storage and multiple local processes",
+      "status": "bounded_choice_unverified",
+      "detail": "DuckDB docs caution about multi-process/write and shared/network paths [S3]. A single-writer project lock and local-filesystem-first scope are proposed, but stale lock recovery and crash races are not implemented.",
+      "next_step": "Fault-inject lock acquisition, owner death, interrupted journal append, temp output rename, and simultaneous read-only opens on each supported local filesystem."
+    },
+    {
+      "id": "L10",
+      "title": "Optional opportunity: shared multi-writer catalog",
+      "status": "deferred_optional",
+      "detail": "Real-time collaboration and hosted catalog are outside the brief minimum; the supplied DuckDB concurrency documentation distinguishes current embedded behavior from newer multi-writer options [S3].",
+      "next_step": "Revisit only if multiple concurrent writers become a user requirement; evaluate the engine/catalog release and operational dependencies at that time."
+    }
+  ]
+}

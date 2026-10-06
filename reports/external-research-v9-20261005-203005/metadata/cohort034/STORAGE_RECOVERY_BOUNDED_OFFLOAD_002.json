@@ -1,0 +1,132 @@
+{
+  "schema": "er9.bounded-storage-recovery-observation.v2",
+  "observed_utc": "2026-10-06T09:15:44.435137+00:00",
+  "manifest_ref": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/BATCH-20261006T091526997633Z.json",
+    "sha256": "15e97a48af229f3876f2023f5d2c8cd63d8d341c31981cab60ffa43ba4aff713"
+  },
+  "released_allocated_bytes": 1377071104,
+  "local_available_bytes": 6328815616,
+  "NFS_available_bytes": 4623171584,
+  "locators": [
+    {
+      "job_id": "D-V08-B-treatment-critic_and_final-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/D-V08-B-treatment-critic_and_final-a001/native/protocol.redacted.jsonl",
+      "raw_sha256": "e3cbb0796e4362fac6db499f674b21073113d6d2251d31cfe4c1c2f64728d233",
+      "raw_bytes": 112869646,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/D-V08-B-treatment-critic_and_final-a001--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "cf82c1426f6b8c7e4be4f5d8945fe195728b03a71608926a503752a19e6431bd",
+      "compressed_bytes": 29570452,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "D-V08-B-treatment-critic_and_final-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/D-V08-B-treatment-critic_and_final-a001/native/model-io.redacted.jsonl",
+      "raw_sha256": "6d097e49697a28c2a085b6424f5fd0b7f363f6d1e26dc4f7615daf81506fbf04",
+      "raw_bytes": 13573301,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/D-V08-B-treatment-critic_and_final-a001--model-io.redacted.jsonl.gz",
+      "compressed_sha256": "9b3439329c0fe7501ca548e77804d6c0f83d7b67a96f004012126a572738db76",
+      "compressed_bytes": 4015210,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001/native/protocol.redacted.jsonl",
+      "raw_sha256": "d711c292ca905e19ab3f6f6b1a83599dfba5d36f6e45295d13083f68b6a8bd3a",
+      "raw_bytes": 205534337,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "49072a0ffa0a67df069ba477cd2643615bc23b2f93916627c8248dd9dc6a67ef",
+      "compressed_bytes": 59737103,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001/native/model-io.redacted.jsonl",
+      "raw_sha256": "80c913c9ed20c217b04251aac8ab696bf3b60304a15cf8bfe683525e3b66c42d",
+      "raw_bytes": 27718341,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001--model-io.redacted.jsonl.gz",
+      "compressed_sha256": "7c56d41835a033a957b018b0ef30684b50f7f7dc0f0c5e98e6ebdedef6f4146b",
+      "compressed_bytes": 8595391,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/protocol.redacted.jsonl",
+      "raw_sha256": "f423a1793d9d3216ad616a7a99b0e5909b3bbf83dd4b969dd0fe8a007c0e3997",
+      "raw_bytes": 125026454,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "0043e54a60d0c4dcc2d6e16ac1d9927d85784974deb08f8b17fcfe5d367ca3a0",
+      "compressed_bytes": 37793141,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002/native/model-io.redacted.jsonl",
+      "raw_sha256": "7ae7de3bf962869885485e713072e871d06ffd4cd955aae451275425441840e5",
+      "raw_bytes": 20161682,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002--model-io.redacted.jsonl.gz",
+      "compressed_sha256": "740a51e384803361b04945375da849a411c88518e0e8db24c016055836445983",
+      "compressed_bytes": 6725737,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/protocol.redacted.jsonl",
+      "raw_sha256": "98194916db062deae8db4663057effb07a1472facbf38f2a2b5118052dfaa5bd",
+      "raw_bytes": 184547153,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "e86ab0737c84ddb3cceed6a350712118fb9e80527d5b2158834790b892354751",
+      "compressed_bytes": 50391670,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002/native/model-io.redacted.jsonl",
+      "raw_sha256": "fa4b3fcd2d33410c9c8bc083682a0b3c0bafa1c7bd36ab48dd0cd3c1f04a056d",
+      "raw_bytes": 21646204,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002--model-io.redacted.jsonl.gz",
+      "compressed_sha256": "9a4ad43e3295d806c5236fdc6f650ac6019a4cdcf903706fa06e696d2eff7894",
+      "compressed_bytes": 6510502,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-01-FRESH-DELIVERY-R001-control-research-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-control-research-a001/native/protocol.redacted.jsonl",
+      "raw_sha256": "e3a74afa7130ce35be21e3c07d43221f838a145d4703a51ddb4aee333f11744c",
+      "raw_bytes": 318111886,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-01-FRESH-DELIVERY-R001-control-research-a001--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "f68436c324790b6965abd3be25540ac3c779e4c3a319541950f05dfb19154036",
+      "compressed_bytes": 85492565,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-01-FRESH-DELIVERY-R001-control-research-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-control-research-a001/native/model-io.redacted.jsonl",
+      "raw_sha256": "f6ede0da0fac2a37052c1caeae98660b1efeb8e70513bd76c9947aa7dc68669a",
+      "raw_bytes": 27718347,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-01-FRESH-DELIVERY-R001-control-research-a001--model-io.redacted.jsonl.gz",
+      "compressed_sha256": "9410ad2f48a742b4266af24e43de7d68a1fbf70b432e8d23fb532b4dbf463255",
+      "compressed_bytes": 7804996,
+      "verified_decompressed_raw_SHA_and_length": true
+    },
+    {
+      "job_id": "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+      "source_path": "LAB_ROOT/ops/dispatcher/runs/I-01-FRESH-DELIVERY-R001-treatment-research-a001/native/protocol.redacted.jsonl",
+      "raw_sha256": "5fff72dae7f5ce1c486e1d7c1d54390c7caeb37c0dd7f19821a3667ad1ed20a1",
+      "raw_bytes": 320104491,
+      "compressed_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0915/terminal-redacted/I-01-FRESH-DELIVERY-R001-treatment-research-a001--protocol.redacted.jsonl.gz",
+      "compressed_sha256": "ffebe55dd40b5b1fbb362b82a3f68d6da78042e3c954c65e9c0f7593999813f2",
+      "compressed_bytes": 89888659,
+      "verified_decompressed_raw_SHA_and_length": true
+    }
+  ],
+  "old_archive_and_canonical_restore_API_preserved": true,
+  "live_or_dependency_files_touched": false,
+  "live_job_original_clocks_unchanged": true,
+  "current_cursor_observed_utc": "2026-10-06T09:15:36.676506+00:00",
+  "running_job_ids": [
+    "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+    "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+  ],
+  "publication_rule": "Safe exact locator/raw+compressedSHA/length metadata only; NEVER compressed/raw protocol/modelIO payloads"
+}

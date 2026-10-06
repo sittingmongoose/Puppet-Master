@@ -1,0 +1,35 @@
+{
+ "baseline": [
+  "current",
+  "current"
+ ],
+ "after_edit_upstream": [
+  "stale",
+  "stale"
+ ],
+ "after_restore": [
+  "current",
+  "current"
+ ],
+ "after_source_dataset_change": [
+  "stale",
+  "stale"
+ ],
+ "after_env_change": [
+  "stale",
+  "stale"
+ ],
+ "after_kernel_restart": [
+  "unverified",
+  "unverified"
+ ],
+ "exec_seq_run1_displayAB": [
+  1,
+  2
+ ],
+ "exec_seq_run2_displayAB": [
+  2,
+  1
+ ]
+}
+W2 OK: current/stale/unverified derived from recorded code+dep+data+env hashes; dataset change propagates transitively; restart -> unverified (never silently current); execution order kept separately from display order

@@ -1,0 +1,34 @@
+{
+  "schema": "er9.source-packet-positive-quiescence-proof.v1",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/reservation.json",
+    "sha256": "8aba157f23f7ba8c319f5ba26d7cde6add06762cc2a67dd245583a04a23c0f6b",
+    "bytes": 607
+  },
+  "source_selector_sha256": "b0ae4b6948ad2c83f1659dc4559911500901599ab767a986a240981df3e331c9",
+  "checks": [
+    {
+      "freeze_sha256": "cf2769987818533bd318829dc57e0c89c0634728de461d81be586a1682682150",
+      "native_receipt_sha256": "da549671832b91a6beabab54eff70c5e2174bcbd87cef267e4066f6c58d36b5f",
+      "outer_release_sha256": "217564753cd9ebd92ebe83867316cf5d89d6807489de1457e26649aa36171dab",
+      "owned_native_tool_components_quiet": true,
+      "owned_native_group_empty": true,
+      "owned_outer_slice_quiet_released": true
+    },
+    {
+      "freeze_sha256": "54aeb438c7d3b225f4f752cc47d3210ff761a0e7c3bec12b3f661496a6db216c",
+      "native_receipt_sha256": "dffd0fccd9b4e52f57e21fcc9174e5b7847aa1c89951910c406569636ea08a54",
+      "outer_release_sha256": "114f94e0ed71c75ce3c25889537429f4c1997641cf8e63f671ea435b521cc7a5",
+      "owned_native_tool_components_quiet": true,
+      "owned_native_group_empty": true,
+      "owned_outer_slice_quiet_released": true
+    }
+  ],
+  "scope": "owned exact quiet evidence verified; no native Goal/completion/quality inference",
+  "actual_criteria_counts": {
+    "B_brief_obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5,
+    "targeted_scope": "N/A integrated research"
+  }
+}

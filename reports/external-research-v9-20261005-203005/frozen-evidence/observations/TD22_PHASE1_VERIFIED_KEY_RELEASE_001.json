@@ -1,0 +1,132 @@
+{
+  "schema": "er9.independently-verified-P1-key-release.v1",
+  "evaluation_id": "independent-targeted-22",
+  "observed_utc": "2026-10-06T09:34:06.560522+00:00",
+  "phase1_freeze_sha256": "aaed34f99a12dace5072ec329913d1f05c4b22abdb9f9dedc7bf995801a3a5f1",
+  "verified_files": [
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/reservation.json",
+      "sha256": "eda7289b3b3e3a65b4072ca2992ff9d13dc030aa3abfda96a1137829f87e3deb",
+      "bytes": 758
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/source_start.json",
+      "sha256": "e440ce2e15ad49044f0c9522278ace89b11e30455ebe7464a08597b043a1e305",
+      "bytes": 594
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/public_python_versions.html",
+      "sha256": "4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c",
+      "bytes": 125357
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/public_python_versions.capture.json",
+      "sha256": "2058376df7e02058eb5a8ce91f13b8ea758b8db715a86590a1b8945ea268cb59",
+      "bytes": 2609
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/source_map_verify.py",
+      "sha256": "6a18912cdd41946394f73c76eabb160ab39e6915150c057427c7589cb7d961b8",
+      "bytes": 2542
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/source_map_verify.stdout.json",
+      "sha256": "5246f74faa8c7314ea174ed2ef96ed172c20e9adbc93e98bac9c0216decb5103",
+      "bytes": 5277
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/source_map_verify.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/source_map_verify.receipt.json",
+      "sha256": "dbd99d1fa03882a7a3c0724d095a0407630685c0e8a60f2b4773e387c7cc9d5b",
+      "bytes": 911
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p1_input_pins.json",
+      "sha256": "64df8b059d74f662ff3637e5b95504d30010f9de3b39326ac35b68ee6ebf831b",
+      "bytes": 7640
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p1_judgment.json",
+      "sha256": "ad8b40a51eb7cdcb635fb70cf46940d208dbcd3711af99b6933b726d79074667",
+      "bytes": 13862
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p1_report.md",
+      "sha256": "1a9c76038f5b9c868eb13936df45765e2ecf7c504ca6a87ea8323fad5a60091a",
+      "bytes": 5013
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/dispatch.json",
+      "sha256": "9fe3d5c91799b9855b6a3ae9ad69c7d34cd787c8f17962e242493d30c53c0910",
+      "bytes": 6762
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/integrity-proof.json",
+      "sha256": "ab82436ee023d83b9d64ecf6b9b6deeb9160b75b4687965595371f7fd53ba2df",
+      "bytes": 1061
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/outputs/B/evidence/python_versions.line_map",
+      "sha256": "13e01e30b5f019a267e9e0e5516ce2624b8cf4438444a06c62feccdc497b7084",
+      "bytes": 223019
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/actual_role_task_A.md",
+      "sha256": "0b9912f345016cf441e488e6feb96b49411f2260bf52d4f598f643b6e8bb1da2",
+      "bytes": 12087
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/actual_role_task_B.md",
+      "sha256": "db1c9373c3139c1a99568126a9acdbb6a43985a59f4dda4e259b2b5315f55c63",
+      "bytes": 11889
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/neutral_targeted_task.md",
+      "sha256": "b7253308990753b4cd57e427d96bddb5d63e836ab11bc875540e9617ab820a51",
+      "bytes": 1412
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-22-INTERMEDIATE-002/task/targeted_coverage_map.json",
+      "sha256": "ef0aa9a0da42d75056ebc7279750a4b0273670efb4426a0c8697040cd9ed0a3d",
+      "bytes": 2213
+    }
+  ],
+  "key_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/private/INDEPENDENT-TARGETED-22_PHASE2_KEY_001.json",
+    "sha256": "fc21205635ee1f5eb15ee6a900e855b1991677f421f2d57db10b0dbb62106bf0"
+  },
+  "literal_phase2_deadline_utc": "2026-10-06T09:43:17.694596Z",
+  "original_whole_deadline_utc": "2026-10-06T09:55:05.053428Z",
+  "prepacket_wait_seconds": 238.831562,
+  "scientific_content_read": "NONE hashonly",
+  "reset": false
+}

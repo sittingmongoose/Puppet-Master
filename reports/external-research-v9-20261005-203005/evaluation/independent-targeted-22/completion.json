@@ -1,0 +1,51 @@
+{
+  "ack_waits": 0,
+  "all_prepacket_and_key_waits_report_writes_and_required_handoffs_charged": true,
+  "clock_resets": 0,
+  "completion_sample_monotonic_seconds": 109961.220259105,
+  "completion_sample_utc": "2026-10-06T09:39:02.363277+00:00",
+  "eval_id": "independent-targeted-22",
+  "final_receipt_transfers_scope": "This end sample follows all substantive required handoffs. Receipt transfer and final harness return occur within the remaining charged budget; exact harness-return time is UNKNOWN.",
+  "immutable_p1_freeze_monotonic_seconds": 109616.551584701,
+  "immutable_p1_freeze_utc": "2026-10-06T09:33:17.694596+00:00",
+  "inclusive_p2_budget_seconds": 600,
+  "inclusive_p2_elapsed_seconds": 344.6686744040053,
+  "inclusive_p2_remaining_seconds": 255.3313255959947,
+  "p1_manifest_sha256": "aaed34f99a12dace5072ec329913d1f05c4b22abdb9f9dedc7bf995801a3a5f1",
+  "p2_manifest_sha256": "363b289e33548c0768b48483dedd73db8b76edd54e09b851a0c2957ef5e26f3c",
+  "pair_id": "D-V04-B",
+  "physical_reviewer_runtime": "UNKNOWN",
+  "requested_reviewer_runtime": {
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "required_handoffs_sent_before_completion_sample": [
+    {
+      "scope": "scientific final",
+      "target": "/root"
+    },
+    {
+      "scope": "scientific final",
+      "target": "/root/publisher"
+    },
+    {
+      "scope": "neutral accounting",
+      "target": "/root/cost_accounting"
+    },
+    {
+      "scope": "neutral FINAL paths/hashes/clocks",
+      "target": "/root/frozen_exports"
+    }
+  ],
+  "reviewer_usage_billing": "UNKNOWN",
+  "schema": "er9.independent-evaluation-post-handoff-completion.v1",
+  "source_budget_seconds": 1200,
+  "source_elapsed_at_p1_freeze_seconds": 253.8095380559971,
+  "source_quality_rewrite": false,
+  "source_start_utc": "2026-10-06T09:29:03.885074+00:00",
+  "whole_budget_seconds": 1800,
+  "whole_elapsed_seconds": 837.309774016001,
+  "whole_start_monotonic_seconds": 109123.910485089,
+  "whole_start_utc": "2026-10-06T09:25:05.053428+00:00"
+}

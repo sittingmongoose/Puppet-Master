@@ -1,0 +1,7 @@
+# Prospective source separation for fresh ER9 roles
+
+Campaign, evaluator and other-arm material is ineligible as research evidence regardless of URL or storage location. Do not retrieve, inspect, search for or use this experiment's current or prior-cohort candidate outputs, source catalogs, evaluator reports, answer fixtures or prompt recipes, including public research-branch publications, caches, mirrors or snippets of those materials. Public availability does not make them eligible.
+
+Use the current host-admitted task and role inputs. Authorized current same-arm role imports and explicitly frozen shared seeds remain permitted only where the source card permits them. The fixed12 first research role starts from its admitted brief/access contract alone, with no old candidate output, seed or evaluator answer. Independently chosen third-party primary documentation, repositories, issues, fixes, tests, standards and relevant research papers remain available; mechanical capture reuse of the same independently requested public bytes remains permitted.
+
+If a public response unexpectedly contains ineligible campaign/evaluator material, stop reading or extracting that material and do not use its answers. Record the URL, capture identity and limitation without quoting the excluded content, then continue the assigned research using eligible sources. This is a source-eligibility rule, not a new network restriction or instruction to suspend the role.

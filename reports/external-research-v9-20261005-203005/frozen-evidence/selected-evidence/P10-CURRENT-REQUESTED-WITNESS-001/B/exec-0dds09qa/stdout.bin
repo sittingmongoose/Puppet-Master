@@ -1,0 +1,43 @@
+{
+ "float32_cases": [
+  {
+   "value": 0.0645,
+   "as_float32": 0.06449999660253525,
+   "exactly_equal": false,
+   "abs_error": 3.3974647539736225e-09,
+   "rel_error": 5.2673872154629806e-08
+  },
+  {
+   "value": 0.1,
+   "as_float32": 0.10000000149011612,
+   "exactly_equal": false,
+   "abs_error": 1.4901161138336505e-09,
+   "rel_error": 1.4901161138336505e-08
+  },
+  {
+   "value": 16777216.25,
+   "as_float32": 16777216.0,
+   "exactly_equal": false,
+   "abs_error": 0.25,
+   "rel_error": 1.4901160971803055e-08
+  },
+  {
+   "value": 1e-07,
+   "as_float32": 1.0000000116860974e-07,
+   "exactly_equal": false,
+   "abs_error": 1.1686097468332243e-15,
+   "rel_error": 1.1686097468332243e-08
+  }
+ ],
+ "float64_roundtrip_0.0645_exact": true,
+ "interrupted_save_original_intact": {
+  "version": 1,
+  "annotations": 7
+ },
+ "interrupted_save_tmp_rejected": "JSONDecodeError",
+ "atomic_save_result": {
+  "version": 2,
+  "annotations": 9
+ },
+ "temp_file_removed_by_replace": true
+}

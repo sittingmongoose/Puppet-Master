@@ -1,0 +1,295 @@
+{
+  "accountant_qualification": "Two neutral requests and a deadline notice sent; no source findings disclosed. Cost/accounting evidence is the pinned current runtime/resource projections only; no inferred prices or efficiencies.",
+  "accountant_response": "NO_EXACT_NEUTRAL_REPLY_RECEIVED_BEFORE_FINAL_REPORT_FREEZE",
+  "allocated_budget_observation": "Control original total400s versus treatment original total200s per role, sum400s; per-role wall caps observed. This is nominal allocated resource matching only, not successful matched-budget output evidence.",
+  "clock_reset": false,
+  "common_admitted_input_pin_count": 35,
+  "current_start_denominator": {
+    "control_critic": 1,
+    "imported_baseline_starts_recounted": false,
+    "resolve_final_control": 0,
+    "resolve_final_treatment": 0,
+    "treatment_critics": 2
+  },
+  "economics_qualification": "Keep native cumulative notification input/cache/output/reasoning/total per role. Cached input is included in input; reasoning output is included in output. Direct Goal counters are distinct. Parent/UI/provider/cache billing and cancelled-unexposed tail not added. Dollar cost, unique HTTP attempts and enforced response count UNKNOWN. No cost per corrected defect, accepted claim or completed report calculated.",
+  "eval_id": "independent-targeted-23",
+  "execution_qualification": "R2 has one actual candidate isolated execution metadata receipt with exit0, candidate code/data/stdout/stderr hashes and cleanup classification. The code/input/output bodies and independently justified expected behavior were not read in this source-index-only review; this does not reopen P1 or establish a consequential witness PASS. R1/R3 inventories are empty.",
+  "final_quality": "UNASSESSED",
+  "full_pipeline_quality": "UNASSESSED",
+  "hash_chain_qualification": "Current resource metadata identifies embedded native receipt hash as the then-saved pre-enrichment result; final enriched result hash is distinct. Separately saved pre-embedding bytes UNKNOWN; no reconstructed proof.",
+  "mapping": [
+    {
+      "alias": "R1",
+      "arm": "treatment",
+      "stage": "implementation_critic"
+    },
+    {
+      "alias": "R2",
+      "arm": "control",
+      "stage": "whole_critic"
+    },
+    {
+      "alias": "R3",
+      "arm": "treatment",
+      "stage": "source_critic"
+    }
+  ],
+  "matched_causal_inference": "UNASSESSED",
+  "mechanism_observation": "One control whole critic and two treatment complementary critics actually started as fresh native roles. Both treatments carry overlapping full proposal/brief responsibilities. No required critic reports or downstream resolution exist, so completed semantic mechanism uptake and correction effect are UNASSESSED.",
+  "no_candidate_feedback_or_retest": true,
+  "non_mechanism_inputs_exact_hashes_match_across_all_three": true,
+  "pair_id": "D-V09-B",
+  "phase1_unchanged": true,
+  "phase2_anchor_monotonic_ns": 109837555331543,
+  "phase2_deadline_monotonic_ns": 110437555331543,
+  "phase2_report_written_monotonic_ns": 110384342209034,
+  "phase2_report_written_utc": "2026-10-06T09:46:05.485135+00:00",
+  "resource_qualification": "2,415,919,104-byte aggregate owned-job memory cap and swap0 recorded for each role; no observed OOM; per-role quiet/release metadata corroborated. Complete aggregate CPU/tasks/scratch caps and fit UNKNOWN. No inference that resource bounds establish semantic correctness or representative large-dataset performance.",
+  "rows": [
+    {
+      "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "actual_current_execution_receipts": [],
+      "actual_inference_tool_payload_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "aggregate_memory_max_bytes": 2415919104,
+      "alias": "R1",
+      "all5_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "closed_before_original_total_stop": true,
+      "current_runtime_elapsed_seconds": 185.598465435,
+      "direct_Goal_final_fields": {
+        "createdAt": 1791249654,
+        "status": "paused",
+        "timeUsedSeconds": 180,
+        "tokenBudget": null,
+        "tokensUsed": 69959,
+        "updatedAt": 1791249834
+      },
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "fit": "UNKNOWN",
+      "fresh_session_observed": true,
+      "host_and_tool_boundary_metadata_counts": {
+        "pm_boundary.read_file": 14
+      },
+      "job_id": "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+      "memory_peak_bytes": 363995136,
+      "native_activation_observed": true,
+      "native_goal_starts": 1,
+      "native_http_attempts": "UNKNOWN",
+      "native_observed_cumulative_notification_usage": {
+        "cachedInputTokens": 349440,
+        "inputTokens": 416989,
+        "outputTokens": 2410,
+        "reasoningOutputTokens": 1812,
+        "totalTokens": 419399
+      },
+      "native_outcome": "HOLD",
+      "native_response_count_cap_enforced": false,
+      "native_responses": "UNKNOWN",
+      "native_usage_notification_count": 16,
+      "observed_configuration_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "oom_observed": false,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "original_total_allocated_seconds": 200.0,
+      "output_freeze_elapsed_seconds": 185.655039848,
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "stage": "implementation_critic",
+      "tool_inventory_admission": "Client dynamicToolSpec/native MCP catalog observations; full inference request payload UNKNOWN",
+      "turn_terminal_status": "interrupted"
+    },
+    {
+      "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "actual_current_execution_receipts": [
+        {
+          "execution_id": "exec-bapfrt3w",
+          "original_result_sha256": "b3d7c07da41fec79a0c692bde9c78df16b5e5ac1a820154efc8872f29897d630",
+          "positive_fields": {
+            "actor": "candidate",
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "ac8c7a9056b69f8de4b975f861ced0f587b72e21725f9046ab3879069fdb8b3c",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "execution_id": "exec-bapfrt3w",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "schema": "er9.execution.result.v1",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_bytes": 202,
+            "stdout_sha256": "8662ab7fcc32478f63d17a120613e420e6457e906f4743c6d8125a7faed0fdc0",
+            "stopped_by_adapter": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          }
+        }
+      ],
+      "actual_inference_tool_payload_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "aggregate_memory_max_bytes": 2415919104,
+      "alias": "R2",
+      "all5_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "closed_before_original_total_stop": true,
+      "current_runtime_elapsed_seconds": 385.619208138,
+      "direct_Goal_final_fields": {
+        "createdAt": 1791250574,
+        "status": "paused",
+        "timeUsedSeconds": 380,
+        "tokenBudget": null,
+        "tokensUsed": 227518,
+        "updatedAt": 1791250954
+      },
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "fit": "UNKNOWN",
+      "fresh_session_observed": true,
+      "host_and_tool_boundary_metadata_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.public_https_get": 2,
+        "pm_boundary.read_file": 39,
+        "pm_execution.python_execute": 1
+      },
+      "job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+      "memory_peak_bytes": 449814528,
+      "native_activation_observed": true,
+      "native_goal_starts": 1,
+      "native_http_attempts": "UNKNOWN",
+      "native_observed_cumulative_notification_usage": {
+        "cachedInputTokens": 3683328,
+        "inputTokens": 3894497,
+        "outputTokens": 16349,
+        "reasoningOutputTokens": 14014,
+        "totalTokens": 3910846
+      },
+      "native_outcome": "HOLD",
+      "native_response_count_cap_enforced": false,
+      "native_responses": "UNKNOWN",
+      "native_usage_notification_count": 45,
+      "observed_configuration_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "oom_observed": false,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "original_total_allocated_seconds": 400.0,
+      "output_freeze_elapsed_seconds": 385.662146017,
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "stage": "whole_critic",
+      "tool_inventory_admission": "Client dynamicToolSpec/native MCP catalog observations; full inference request payload UNKNOWN",
+      "turn_terminal_status": "interrupted"
+    },
+    {
+      "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "actual_current_execution_receipts": [],
+      "actual_inference_tool_payload_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "aggregate_memory_max_bytes": 2415919104,
+      "alias": "R3",
+      "all5_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "closed_before_original_total_stop": true,
+      "current_runtime_elapsed_seconds": 185.552652705,
+      "direct_Goal_final_fields": {
+        "createdAt": 1791250746,
+        "status": "paused",
+        "timeUsedSeconds": 179,
+        "tokenBudget": null,
+        "tokensUsed": 143004,
+        "updatedAt": 1791250926
+      },
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "fit": "UNKNOWN",
+      "fresh_session_observed": true,
+      "host_and_tool_boundary_metadata_counts": {
+        "pm_boundary.read_file": 24
+      },
+      "job_id": "D-V09-B-treatment-source_critic-a001-resource-v13-a002",
+      "memory_peak_bytes": 363937792,
+      "native_activation_observed": true,
+      "native_goal_starts": 1,
+      "native_http_attempts": "UNKNOWN",
+      "native_observed_cumulative_notification_usage": {
+        "cachedInputTokens": 1075200,
+        "inputTokens": 1210970,
+        "outputTokens": 7234,
+        "reasoningOutputTokens": 6224,
+        "totalTokens": 1218204
+      },
+      "native_outcome": "HOLD",
+      "native_response_count_cap_enforced": false,
+      "native_responses": "UNKNOWN",
+      "native_usage_notification_count": 27,
+      "observed_configuration_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "oom_observed": false,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "original_total_allocated_seconds": 200.0,
+      "output_freeze_elapsed_seconds": 185.653474411,
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "stage": "source_critic",
+      "tool_inventory_admission": "Client dynamicToolSpec/native MCP catalog observations; full inference request payload UNKNOWN",
+      "turn_terminal_status": "interrupted"
+    }
+  ],
+  "schema": "er9.independent-targeted-phase2-execution-economics.v1",
+  "whole_deadline_monotonic_ns": 111452296516828,
+  "winner": "UNASSESSED"
+}

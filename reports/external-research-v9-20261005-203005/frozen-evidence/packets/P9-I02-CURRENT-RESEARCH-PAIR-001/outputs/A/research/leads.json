@@ -1,0 +1,61 @@
+{
+  "schema": "er9.leads.v1",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "DVC pipeline schema/docs not captured (alternative precedent unverified)",
+      "detail": "The deps/outs/md5 stage-staleness mechanism attributed to DVC is engineering inference from prior product knowledge. Attempts: dvc.org docs page (3x OSError, S17); dvc-schema.json at 4 path/tag combinations (all 404, S16); repo confirmed at treeverse/dvc with tags 3.67.1 etc. (S13, S14).",
+      "next_step": "List dvc/ package contents at a pinned tag via the git trees API and locate the schema or stage/dag modules; or capture docs from a mirror of the dvc.org site.",
+      "affects": "proposal.md §3 P3, §11 alternative; if DVC mechanism differs, only the alternative's framing changes (core design is grounded in P1/P2 and W2)"
+    },
+    {
+      "id": "L2",
+      "title": "DuckDB streaming/out-of-core behavior not fully documented in captured bytes",
+      "detail": "The 5 GB streaming target rests on DuckDB's in-process columnar design (INFER). The CSV overview page (S12) was captured but only its first 32 KB read (nav-heavy HTML); memory_limit/out-of-core docs pages not captured.",
+      "next_step": "Capture duckdb.org docs pages: memory limits, out-of-core/operator behavior, and read_csv parameter reference; then run the PROPOSED 5 GB benchmark on the envelope machine.",
+      "affects": "proposal.md §3 P2, §13 large-data behavior; fallback if disproven: explicit spill-to-disk bound or bounded external sort with declared disk budget"
+    },
+    {
+      "id": "L3",
+      "title": "nbclient / clean-execution precedent not directly captured",
+      "detail": "Clean replay is modeled on nbclient-style fresh-kernel execution, asserted via the nbformat execution_count semantics (S1) rather than nbclient's own docs/code.",
+      "next_step": "Capture nbclient README/docs at a pinned tag and its roadmap/papermill relationship; verify clean-run guarantees (fresh namespace, allow_errors flags, kernel restart between runs).",
+      "affects": "proposal.md §2, §6, §7 (mechanism description, not correctness claims)"
+    },
+    {
+      "id": "L4",
+      "title": "nbformat 4.5 cell-id requirement: version applicability of the 'id' field",
+      "detail": "Captured schema (main @ 4346f97c) requires code cells to have 'id' (S1). Which nbformat package version began requiring/emitting ids on write (believed 5.1.0 era, nbformat_minor 4.5) was not verified from release notes; tagged schema path 5.10.4 404'd (S15).",
+      "next_step": "Fetch nbformat CHANGELOG at a valid tag; verify when ids became required and how readers handle missing ids (downgrade behavior).",
+      "affects": "proposal.md §3 P1, §13 critical dependency (ecosystem tools dropping ids would break provenance keys)"
+    },
+    {
+      "id": "L5",
+      "title": "Recovery/locking mechanics are design proposals",
+      "detail": "Atomic save via temp+rename+fsync, journal reconciliation on open, single-writer lockfile: described in proposal §9 but no crash-injection test was executed.",
+      "next_step": "PROPOSED witness: kill a writer mid-save, reopen, assert outputs are 'unverified' and notebook file parses; test stale-lock clearing UX.",
+      "affects": "proposal.md §9 (label there is [CHOICE/PROPOSED/UNEXEC])"
+    },
+    {
+      "id": "L6",
+      "title": "Open upstream defects to track (no Bench-side fix possible)",
+      "detail": "DuckDB #25824 (silent rounding past sample_size; open at capture 2026-09-24, longstanding across 1.1.3..main per reporter matrix, S5) and the by-design #17599 sampling behavior (S6) remain live hazards even with engine pinning: a pinned engine with a known sampling defect stays defective.",
+      "next_step": "Track #25824 for a fix release; in Bench, default imports to explicit contracts (never pure auto-detect) and expose store_rejects-style reject counts in import reports.",
+      "affects": "proposal.md §4, §5, §13"
+    },
+    {
+      "id": "L7",
+      "title": "Optional interchange investigation: Arrow IPC / Parquet as canonical derived format",
+      "detail": "Brief invites investigating a standard interchange format beyond the notebook document. Arrow IPC/Parquet for outputs/cache was considered but not researched this run.",
+      "next_step": "Evaluate Parquet for content-addressed output artifacts (schema embedding, stable ordering guarantees) vs raw-JSON outputs.",
+      "affects": "proposal.md §11 opportunities; non-blocking"
+    },
+    {
+      "id": "L8",
+      "title": "Sandbox primitive selection per platform",
+      "detail": "Proposal specifies OS-level confinement (namespace/bubblewrap/container-class) with a declared-access degraded mode; no specific technology was benchmarked or verified this run (the experiment harness's own systemd/bwrap isolation appears in execution receipts but is not evidence about product behavior).",
+      "next_step": "PROPOSED: sandbox escape test suite (network bind, out-of-root file read, cgroup limit breach) per candidate primitive on Linux first.",
+      "affects": "proposal.md §8, §14"
+    }
+  ]
+}
