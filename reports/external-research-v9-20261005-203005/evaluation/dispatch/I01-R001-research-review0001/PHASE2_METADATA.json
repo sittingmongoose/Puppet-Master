@@ -1,0 +1,247 @@
+{
+  "schema": "er9.courier-phase2-accounting-subset.v1",
+  "prepared_utc": "2026-10-05T23:52:08.018632+00:00",
+  "phase1_judgment_sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+  "parent_dispatch_sha256": "a3a9c7357ea7d87bca633557e323c323541f128186631e80f644d97c840ea0b5",
+  "source_accounting_selection_sha256": "67f134bbdfef316045be16de06fbaf8e31cf7a083854b1fa122b7f41d713821b",
+  "source_accounting_sha256": "13be21a7411c683d9e856762eead939739821044976afba2d69e432a9b826509",
+  "selection_rule": "exact two I01-R001 current research typed rows; native receipts match exact stagefreeze; no earlier I01 semantic history",
+  "aliases": {
+    "A": "I-01-R001-control-research-a001",
+    "B": "I-01-R001-treatment-research-a001"
+  },
+  "freeze_binding": [
+    {
+      "attempt_id": "I-01-R001-control-research-a001",
+      "alias": "A",
+      "output_freeze_sha256": "50d47bc4e18ab470ee8a03291f4fccb54ff7b112c0e21782b92087087aecccd0",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-control-research-a001/native/receipt.json",
+        "sha256": "572114b5548cf94aeb43202e670c7db775152acb8ff9067dbac590982ffadd20"
+      },
+      "actual_saved_native_structural_fields": {
+        "schema": "er9.native-stage.v1",
+        "status": "execution_error",
+        "goal_activated": true,
+        "goal_submitted": true,
+        "native_responses": 10,
+        "start_utc": "2026-10-05T22:46:20.992110+00:00",
+        "ended_utc": "2026-10-05T23:06:03.496593+00:00",
+        "max_seconds": 1200,
+        "max_responses": 120,
+        "elapsed_seconds": 1182.5559812430001,
+        "caps_include_setup_and_cleanup": true,
+        "request_status_counts": {
+          "model_request_completed": 10
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+        "actual_terminal_native_goal_status": "UNKNOWN_NOT_SAVED_IN_THIS_RECEIPT",
+        "cleanup": {
+          "process_exited": true,
+          "exit_code": 0,
+          "remaining_group_members": [],
+          "native_quiescent": true
+        }
+      },
+      "native_receipt_projection_policy": "only lifecycle/counters/definitions; no native ModelIO/auth/privatecandidatehistory"
+    },
+    {
+      "attempt_id": "I-01-R001-treatment-research-a001",
+      "alias": "B",
+      "output_freeze_sha256": "ce6b8e6aa3c3e92bc7fd4874634b1cd1bc419c6439451378ba7f5444ceb38c83",
+      "native_receipt": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/receipt.json",
+        "sha256": "b5917c9029be8bc07089b0a6895d191df1910ba7a68db9247b2f880de89255dc"
+      },
+      "actual_saved_native_structural_fields": {
+        "schema": "er9.native-stage.v1",
+        "status": "cap_seconds",
+        "goal_activated": true,
+        "goal_submitted": true,
+        "native_responses": 11,
+        "start_utc": "2026-10-05T22:42:16.721527+00:00",
+        "ended_utc": "2026-10-05T23:01:51.691752+00:00",
+        "max_seconds": 1200,
+        "max_responses": 120,
+        "elapsed_seconds": 1175.0188386310037,
+        "caps_include_setup_and_cleanup": true,
+        "request_status_counts": {
+          "model_request_started": 1,
+          "model_request_completed": 11
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+        "actual_terminal_native_goal_status": "UNKNOWN_NOT_SAVED_IN_THIS_RECEIPT",
+        "cleanup": {
+          "process_exited": true,
+          "exit_code": 0,
+          "remaining_group_members": [],
+          "native_quiescent": true
+        }
+      },
+      "native_receipt_projection_policy": "only lifecycle/counters/definitions; no native ModelIO/auth/privatecandidatehistory"
+    }
+  ],
+  "attempts": [
+    {
+      "actual_family": "GLM",
+      "arm": "control",
+      "attempt_id": "I-01-R001-control-research-a001",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNEXPOSED_CHILD_USAGE_UNKNOWN",
+      "category": "candidate_attempt",
+      "cleanup_reserve_seconds": null,
+      "cleanup_seconds": "UNKNOWN",
+      "client_tool_cgroups_quiet": null,
+      "client_tool_process_groups_absent": null,
+      "end_utc": "2026-10-05T23:06:03.496593+00:00",
+      "execution_units_quiet": null,
+      "goal_identity": "target_muvu9yrl_5fdc757f-0081-48b3-a249-12301eacce41",
+      "held_process_groups_absent": null,
+      "http_attempts": "UNKNOWN",
+      "inference_model_provenance": "NATIVE_PROVIDER_REQUEST_EXPORT",
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 1177792,
+        "input": 1452819,
+        "output": 54473,
+        "reasoning_output_subset": 0,
+        "total": 1507292
+      },
+      "native_cgroup_quiet": null,
+      "native_execution_seconds": null,
+      "native_goal_starts": 1,
+      "native_goal_status": "active",
+      "native_goal_status_before_cleanup": null,
+      "native_goal_status_observation_time": "2026-10-05T23:05:34.880000+00:00",
+      "native_goal_status_selector": "/projection/target/status",
+      "native_goal_status_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-control-research-a001/native/final-session.redacted.json",
+      "native_goal_status_source_sha256": "f273ce0a7680b82920497ccd473b6eaaf6c5eddbc4284d5e7c8aea3ce0245767",
+      "observed_effort": "max",
+      "observed_model": "GLM-5.3-Flash",
+      "occupied_seconds": 1182.5559812430001,
+      "owned_scope_observation_epoch": null,
+      "owned_scope_supplement_quiet": null,
+      "pair_id": "I-01-R001",
+      "provider_request_count": 10,
+      "provider_status_counts": {
+        "completed": 10
+      },
+      "quiescent": true,
+      "quota_exhaustion": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "router_terminal_status": "execution_error",
+      "source_pins": [
+        {
+          "path": "ops/dispatcher/runs/I-01-R001-control-research-a001/native/receipt.json",
+          "sha256": "572114b5548cf94aeb43202e670c7db775152acb8ff9067dbac590982ffadd20"
+        },
+        {
+          "path": "ops/dispatcher/runs/I-01-R001-control-research-a001/native/provider-usage.redacted.jsonl",
+          "sha256": "6831e28630b4f28b14f54664454b5465becd59c31195d828f3fc1e749c7555be"
+        },
+        {
+          "path": "dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+          "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c"
+        }
+      ],
+      "stage": "research",
+      "start_utc": "2026-10-05T22:46:20.992110+00:00",
+      "supplemental_permit_release_confirmed": null,
+      "terminal_error_class": "ProtocolError",
+      "turn_completion_notifications": null,
+      "turn_status_counts": {},
+      "ui_usage_separate": {
+        "cached_input_included": 0,
+        "input": 274728,
+        "output": 54473,
+        "reasoning_output_subset": 0,
+        "total": 329201
+      },
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_notifications": null
+    },
+    {
+      "actual_family": "GLM",
+      "arm": "treatment",
+      "attempt_id": "I-01-R001-treatment-research-a001",
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "category": "candidate_attempt",
+      "cleanup_reserve_seconds": null,
+      "cleanup_seconds": "UNKNOWN",
+      "client_tool_cgroups_quiet": null,
+      "client_tool_process_groups_absent": null,
+      "end_utc": "2026-10-05T23:01:51.691752+00:00",
+      "execution_units_quiet": null,
+      "goal_identity": "target_muvu4qqp_8d8f54aa-1144-4cb8-a560-5f20fe6a4d45",
+      "held_process_groups_absent": null,
+      "http_attempts": "UNKNOWN",
+      "inference_model_provenance": "NATIVE_PROVIDER_REQUEST_EXPORT",
+      "job_status": "FAILED",
+      "known_usage": {
+        "cached_input_included": 1324224,
+        "input": 1589081,
+        "output": 43743,
+        "reasoning_output_subset": 0,
+        "total": 1632824
+      },
+      "native_cgroup_quiet": null,
+      "native_execution_seconds": null,
+      "native_goal_starts": 1,
+      "native_goal_status": "paused",
+      "native_goal_status_before_cleanup": null,
+      "native_goal_status_observation_time": "2026-10-05T23:01:47.208000+00:00",
+      "native_goal_status_selector": "/projection/target/status",
+      "native_goal_status_source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/final-session.redacted.json",
+      "native_goal_status_source_sha256": "4fa9e012660724f2a6121474f95193dc8dacb4dbc1c4e87a45228713717a3a54",
+      "observed_effort": "max",
+      "observed_model": "GLM-5.3-Flash",
+      "occupied_seconds": 1175.0188386310037,
+      "owned_scope_observation_epoch": null,
+      "owned_scope_supplement_quiet": null,
+      "pair_id": "I-01-R001",
+      "provider_request_count": 12,
+      "provider_status_counts": {
+        "cancelled": 1,
+        "completed": 11
+      },
+      "quiescent": true,
+      "quota_exhaustion": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "router_terminal_status": "cap_seconds",
+      "source_pins": [
+        {
+          "path": "ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/receipt.json",
+          "sha256": "b5917c9029be8bc07089b0a6895d191df1910ba7a68db9247b2f880de89255dc"
+        },
+        {
+          "path": "ops/dispatcher/runs/I-01-R001-treatment-research-a001/native/provider-usage.redacted.jsonl",
+          "sha256": "03ab16f065d9dd5d4e8b1446b6acf07346239ad1b3d3293284aa0cb6d8c7ebd6"
+        },
+        {
+          "path": "dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+          "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c"
+        }
+      ],
+      "stage": "research",
+      "start_utc": "2026-10-05T22:42:16.721527+00:00",
+      "supplemental_permit_release_confirmed": null,
+      "terminal_error_class": null,
+      "turn_completion_notifications": null,
+      "turn_status_counts": {},
+      "ui_usage_separate": {
+        "cached_input_included": 0,
+        "input": 264574,
+        "output": 43743,
+        "reasoning_output_subset": 0,
+        "total": 308317
+      },
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_notifications": null
+    }
+  ],
+  "semantic_interpretation": "none; native job cap/errors/Goal status/quality distinct; UNKNOWN remains UNKNOWN",
+  "budget": "original overall00:07:11.718720Z; no renewed clock/no new grade"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "er9.luna.native-error-projection-regression.v1",
+  "status": "PASS",
+  "actual_native_goals": 0,
+  "inference_started": false,
+  "candidate_source_context_used": false,
+  "checks": {
+    "exact_service_capacity_code": true,
+    "quota_auth_permission_codes": true,
+    "unknown_message_code_context_hashed_only": true,
+    "exact_session_identity_candidate_bodies_omitted": true,
+    "event_timestamp_and_receipt_hash": true,
+    "foreign_expected_identity_rejected": true
+  }
+}

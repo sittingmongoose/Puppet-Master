@@ -1,0 +1,27 @@
+{
+  "evaluation_id": "ER9-EVAL-NEXT-003",
+  "status": "STARTED",
+  "assessed_stage": "research",
+  "scope": "one_terminal_research_partial_with_terminal_missing_stage_partner",
+  "started_utc": "2026-10-05T23:37:11.718720Z",
+  "first_body_read_immediately_after_receipt": true,
+  "screen_deadline_utc": "2026-10-05T23:57:11.718720Z",
+  "hard_deadline_utc": "2026-10-06T00:07:11.718720Z",
+  "screen_max_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "dispatch": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/dispatch.json",
+    "sha256": "a3a9c7357ea7d87bca633557e323c323541f128186631e80f644d97c840ea0b5"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "prior_context_and_coordination_hints": [
+    "The evaluator has already evaluated original I01 and I02 and knows their findings. This is an independent assessment of new frozen R001 research bytes; old findings are not supplied to candidates or assumed to recur.",
+    "Coordination disclosed the available research output as control, both research stages as terminal failures and partner as proposal-absent before this packet. Candidate family and V01 method context were known from prior campaign assignment. Economics/detailed later history remain hidden until immutable judgment."
+  ],
+  "designated_final_present": false,
+  "full_pipeline_quality": "UNASSESSED"
+}

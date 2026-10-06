@@ -1,0 +1,329 @@
+{
+  "schema": "er9.additive-receipt-assessment.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+  "pair_id": "D-V15-B",
+  "saved_utc": "2026-10-05T23:32:00.149098Z",
+  "assessment_status": "COMPLETE_OF_DELIVERED_OPERATIONAL_SUBSET; program-witness and semantic uptake gaps remain unassessed",
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RESERVATION.json",
+    "sha256": "196c67e7b8222b758d282d16057034b0b3ed9f8fe5fa6e0dd4cb96319ad8ddef"
+  },
+  "started": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/STARTED.json",
+    "sha256": "1edfcdf86ce3dc4d307a23f1aab3cd338b86b0e41800555382c0f011a8c85177"
+  },
+  "received_packets": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/MANIFEST.json",
+      "sha256": "a0cccfb4b0a52ec170984c3a360c967f047e2a61afc8fe7e158ec18ec5b91410"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/PUBLIC_SELECTION_005.json",
+      "sha256": "efe522e4d6ab6ac3629c1538bb5f5f6489f053c028ad54d24d2c0c29190c047e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/METHOD_CARD.json",
+      "sha256": "c4323900b08934991074a00cb0c87ffd7d2e95358c1c42e615e83b821a84510e"
+    }
+  ],
+  "original_snapshots": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/partial_source_judgment.json",
+      "sha256": "964afda2bac53991deed012343017a0edc8240d4b29712d88291b27fa39b7520"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/review0001/current_output_judgment.json",
+      "sha256": "cf71e581176be116cfd913f708eaf083ecbc5ad7d261bf9388f44788e8301080"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/SOURCE_SCOPE_CLARIFICATION.json",
+      "sha256": "7bc487920139adf880d81873a3ae3df7be4299503c8a34582954d3dee28a0558"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+      "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+    }
+  ],
+  "original_snapshots_unchanged": true,
+  "original_closed_deadline_utc": "2026-10-05T23:16:20.550141Z",
+  "original_closed_clock_not_reset": true,
+  "within_original_clock_Phase2_credit": false,
+  "packet_original_delivery_class": "AFTER_ORIGINAL_DEADLINE; publication-lineage only, no within-budget evaluator assessment credit",
+  "configured_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "basis": "Actual spawn controls confirmed by root"
+  },
+  "observed_physical_evaluator_identity": "UNKNOWN",
+  "phase2_allocation": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "platform_reported_candidate_identity": {
+        "family": "Luna",
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "source_receipt_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+          "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+        }
+      },
+      "native_goal_starts": 1,
+      "native_quiescent_reported": true,
+      "operational_complete": false,
+      "max_native_seconds": 900,
+      "max_responses": null,
+      "actual_input_pin_checks": [
+        {
+          "name": "diagnostic_task.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/diagnostic_task.md",
+          "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+          "exact_pin_match": true
+        },
+        {
+          "name": "brief.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "exact_pin_match": true
+        },
+        {
+          "name": "arm_instruction.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/arm_instruction.md",
+          "sha256": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+          "exact_pin_match": true
+        },
+        {
+          "name": "output_contract.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "exact_pin_match": true
+        }
+      ],
+      "actual_prompt_sha256": "2d6099ed4208a1a51e4cc6fe8b1fbd840933016441d5698d4081a2d83807902f",
+      "typed_accounting_row": {
+        "actual_family": "Luna",
+        "arm": "control",
+        "attempt_id": "D-V15-B-control-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e1c-46b0-76b0-b2d0-1e5900f9179a",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 6061568,
+          "input": 6715373,
+          "output": 33480,
+          "reasoning_output_subset": 23922,
+          "total": 6748853
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.426781046,
+        "pair_id": "D-V15-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+            "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 66
+      },
+      "actual_program_witnesses": "UNASSESSED; code/input/stdout/stderr/exit execution receipts not in selected005 packet"
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "platform_reported_candidate_identity": {
+        "family": "Luna",
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "basis": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "source_receipt_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+          "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+        }
+      },
+      "native_goal_starts": 1,
+      "native_quiescent_reported": true,
+      "operational_complete": false,
+      "max_native_seconds": 900,
+      "max_responses": null,
+      "actual_input_pin_checks": [
+        {
+          "name": "diagnostic_task.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/diagnostic_task.md",
+          "sha256": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+          "exact_pin_match": true
+        },
+        {
+          "name": "brief.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "exact_pin_match": true
+        },
+        {
+          "name": "arm_instruction.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/arm_instruction.md",
+          "sha256": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+          "exact_pin_match": true
+        },
+        {
+          "name": "output_contract.md",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "exact_pin_match": true
+        }
+      ],
+      "actual_prompt_sha256": "ccca613d0f007664c013d15b173cb3590a607900106adb00cd4b1cf23e362ec8",
+      "typed_accounting_row": {
+        "actual_family": "Luna",
+        "arm": "treatment",
+        "attempt_id": "D-V15-B-treatment-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e1c-4bf8-71c0-b43a-dfa859c42d91",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 4413184,
+          "input": 4696805,
+          "output": 29252,
+          "reasoning_output_subset": 21800,
+          "total": 4726057
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.53239356,
+        "pair_id": "D-V15-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+            "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 46
+      },
+      "actual_program_witnesses": "UNASSESSED; code/input/stdout/stderr/exit execution receipts not in selected005 packet"
+    }
+  ],
+  "method_uptake": {
+    "instruction_delivery": "VERIFIED input pins; A=control,B=treatment; actual same brief/task/output contract, distinct arm-instruction hashes, same900s wall allocation",
+    "declared_method": "V15 brief-only live discovery/implementation+issue/test applicability",
+    "substantive_uptake_or_effect": "UNASSESSED in this receipt-only extension; existing partial source judgments and narrower facet limits preserved",
+    "program_execution_claims": "UNASSESSED; no positively selected executed-witness bodies or IDs to assess",
+    "runtime_response_cap": "max_responses:null; do not assert the prospective100-response cap was enforced"
+  },
+  "economics": {
+    "candidate_native_starts_sum": 2,
+    "candidate_occupied_seconds_sum": 1770.959174606,
+    "largest_arm_occupied_seconds": 885.53239356,
+    "pair_wall_or_critical_path": "UNKNOWN; start/end UTC missing; overlapping occupied durations not added as wall",
+    "native_cumulative_usage_per_arm": [
+      {
+        "alias": "A",
+        "arm": "control",
+        "known_usage": {
+          "cached_input_included": 6061568,
+          "input": 6715373,
+          "output": 33480,
+          "reasoning_output_subset": 23922,
+          "total": 6748853
+        },
+        "basis": "native_thread_cumulative"
+      },
+      {
+        "alias": "B",
+        "arm": "treatment",
+        "known_usage": {
+          "cached_input_included": 4413184,
+          "input": 4696805,
+          "output": 29252,
+          "reasoning_output_subset": 21800,
+          "total": 4726057
+        },
+        "basis": "native_thread_cumulative"
+      }
+    ],
+    "usage_definition": "total=input+output; cached_input_included is subset of input; reasoning_output_subset is subset of output. Metered total is not generated output or billed dollars.",
+    "billing_dollars": "UNKNOWN",
+    "service_http_retries_waits_child_cancelled_tail": "UNKNOWN",
+    "evaluator_extra_elapsed_seconds": 323.987746408,
+    "evaluator_extra_usage_and_billing": "UNKNOWN",
+    "evaluator_cost_separate": true
+  },
+  "decision_boundary": {
+    "source_grade_rewritten": false,
+    "source_searches": false,
+    "candidate_work": false,
+    "original_partial_HOLD_preserved": true,
+    "narrow_misleading_or_version_mismatched_apparent_chain_facet": "UNASSESSED",
+    "final_quality": "UNASSESSED",
+    "whole_case_PASS": false,
+    "complete_pair_or_pipeline_credit": false
+  },
+  "budget": {
+    "separate_max_seconds": 600,
+    "start_utc": "2026-10-05T23:26:36.161363Z",
+    "deadline_utc": "2026-10-05T23:36:36.161363Z",
+    "elapsed_seconds": 323.987746408,
+    "finished_utc": "2026-10-05T23:32:00.149098Z",
+    "within_separate_extension": true
+  },
+  "limitations": [
+    "Late operational facts now checked in a separately authorized receipt-only extension; no retroactive originalbudget credit.",
+    "Underlying raw native result bodies/prompt bodies/private modelIO were not opened; only positive typed projections and exact allowed input pins assessed.",
+    "No code/input/stdout/stderr/exit program-witness records in selected005; actual synthetic checks remain unassessed.",
+    "Frozen source semantics/partial judgments/finalquality/actual misapplied-chain facet remain unchanged."
+  ]
+}

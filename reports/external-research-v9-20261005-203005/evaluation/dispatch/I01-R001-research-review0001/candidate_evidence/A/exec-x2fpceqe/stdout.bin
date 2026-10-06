@@ -1,0 +1,16 @@
+{
+ "stored_sequence": [
+  0,
+  1,
+  10,
+  11
+ ],
+ "query": {
+  "c": 1,
+  "z": 0
+ },
+ "value_if_axes_CZ": 10,
+ "value_if_axes_ZC": 1,
+ "readings_disagree": true,
+ "note": "same bytes, same index query, different sample; only explicit axes metadata disambiguates"
+}

@@ -1,0 +1,11 @@
+# D-V15-B — separately authorized late receipt assessment
+
+The original deadline was2026-10-05T23:16:20.550141Z. Its closure and all source/current-output judgments remain byte-identical. This separate600s assessment started at2026-10-05T23:26:36.161363Z and finished at2026-10-05T23:32:00.149098Z after323.988s. It gives no within-original-clock Phase2 credit, final-quality PASS or pipeline credit.
+
+Positive late operational metadata releases A=control,B=treatment. Both platform-reported candidate identities are gpt-6-luna/max, each one native Goal, quiescent and operationally incomplete. Exact task/brief/arm-instruction/output-contract pins match. Same900s allocation applied; `max_responses` is null, so no enforced100-response cap is claimed. Instruction delivery is verified; full semantic method uptake/effect is not newly assessed.
+
+The selected005 packet contains operational metadata and its exact method card. It excludes executed-witness bodies. No synthetic-check executionID/code/input/stdout/exit correspondence can be established here; those claims remain UNASSESSED. No source search, new candidate work or original-grade rewrite occurred. The narrower genuinely misleading/version-mismatched apparent-chain facet remains UNASSESSED under the existing source clarification.
+
+Failure-inclusive occupied candidate time is1770.959s across two attempts. Control native cumulative input/output is6,715,373/33,480; treatment4,696,805/29,252. Cached input is already included in input and reasoning already included in output. These are metered counters, not generated-output totals or billed dollars. Pair wall/critical path, billing, service retry/wait and unexposed child/cancelled usage are UNKNOWN. Additional evaluator time/cost is recorded separately, with evaluator tokens/billing UNKNOWN.
+
+Assessment `/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RECEIPT_ASSESSMENT.json` SHA-256 `c86fe8a18c1dd286d423e8317000d636c3bc5f259fe8580cea807cc3772f21d5`. Received positive selection005 SHA-256 `efe522e4d6ab6ac3629c1538bb5f5f6489f053c028ad54d24d2c0c29190c047e` and operational packet SHA-256 `a0cccfb4b0a52ec170984c3a360c967f047e2a61afc8fe7e158ec18ec5b91410`. Original source findings stay partialHOLD and final quality UNASSESSED.

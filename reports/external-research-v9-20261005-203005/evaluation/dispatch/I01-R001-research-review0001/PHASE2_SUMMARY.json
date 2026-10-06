@@ -1,0 +1,81 @@
+{
+  "phase1_judgment_sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+  "phase2_read_utc": "2026-10-05T23:53:43.771069Z",
+  "scope": "exact two current R001 research attempts, not earlier I01 or later pipelines",
+  "allocation": {
+    "A": "I-01-R001-control-research-a001",
+    "B": "I-01-R001-treatment-research-a001"
+  },
+  "candidate_model_configuration": {
+    "requested_model": [
+      "builtin:zai-coding-plan/GLM-5.3-Flash"
+    ],
+    "observed_model": [
+      "GLM-5.3-Flash"
+    ],
+    "requested_effort": [
+      "max"
+    ],
+    "observed_effort": [
+      "max"
+    ],
+    "observation_basis": [
+      "NATIVE_PROVIDER_REQUEST_EXPORT"
+    ]
+  },
+  "candidate_native_goal_starts": 2,
+  "provider_request_count": 22,
+  "known_provider_usage": {
+    "input": 3041900,
+    "output": 98216,
+    "total": 3140116,
+    "cached_input_included": 2502016
+  },
+  "usage_definition": "Known native provider-request sums. Cache is a subset of input/total, never added. UI usage is a separate counter/baseline and never added. Unknown cancelled/child/unexposed tails and dollars remain unknown.",
+  "occupied_seconds_sum": 2357.574819874004,
+  "occupied_definition": "Sum of each native receipt-accounted occupied_seconds, includes native setup/cleanup; not cohort elapsed wall or all pipeline effort. Dispatcher/end-to-end timings can use a different scope.",
+  "last_saved_goal_observations": [
+    {
+      "alias": "control",
+      "status": "active",
+      "observed_utc": "2026-10-05T23:05:34.880000+00:00",
+      "source_sha256": "f273ce0a7680b82920497ccd473b6eaaf6c5eddbc4284d5e7c8aea3ce0245767",
+      "selector": "/projection/target/status"
+    },
+    {
+      "alias": "treatment",
+      "status": "paused",
+      "observed_utc": "2026-10-05T23:01:47.208000+00:00",
+      "source_sha256": "4fa9e012660724f2a6121474f95193dc8dacb4dbc1c4e87a45228713717a3a54",
+      "selector": "/projection/target/status"
+    }
+  ],
+  "terminal_goal_status_in_native_receipts": "UNKNOWN_NOT_SAVED_IN_THIS_RECEIPT for both; job FAILED/cap/error and cleanup exit0 do not imply Goal COMPLETE/FAILED",
+  "job_states": [
+    {
+      "attempt_id": "I-01-R001-control-research-a001",
+      "job_status": "FAILED",
+      "router_terminal_status": "execution_error",
+      "quiescent": true
+    },
+    {
+      "attempt_id": "I-01-R001-treatment-research-a001",
+      "job_status": "FAILED",
+      "router_terminal_status": "cap_seconds",
+      "quiescent": true
+    }
+  ],
+  "pipeline_credit": "NONE_QUALIFIED; no later final and stage jobs failed. Full pipeline source quality UNASSESSED.",
+  "preservation_rate": "UNASSESSED",
+  "mechanism_effect": "UNASSESSED_LATER_CRITIC_FINAL_ROLES_NOT_EXECUTED",
+  "full_pair_efficiency": "NOT_QUALIFIED_INCOMPLETE_STAGE_PAIR",
+  "unknown_facets": [
+    "billing dollars",
+    "cancelled/unexposed child usage",
+    "HTTP attempts",
+    "quota exhaustion",
+    "complete Goal terminal state",
+    "later stages/final cost and full pipeline quality",
+    "independent evaluator model/effort receipt and evaluator token usage"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "schema": "er9.owner-positive-publication-selection.v1",
+  "owner": "diagnostic_eval",
+  "created_utc": "2026-10-05T23:32:00.149098Z",
+  "selection_id": "D15B_RECEIPT_ONLY_EXTENSION_001",
+  "rows": [
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RESERVATION.json",
+      "relative_path": "D-V15-B/extensions/RECEIPT-001/RESERVATION.json",
+      "sha256": "196c67e7b8222b758d282d16057034b0b3ed9f8fe5fa6e0dd4cb96319ad8ddef",
+      "kind": "separately_authorized_D15B_receipt_only_extension"
+    },
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/STARTED.json",
+      "relative_path": "D-V15-B/extensions/RECEIPT-001/STARTED.json",
+      "sha256": "1edfcdf86ce3dc4d307a23f1aab3cd338b86b0e41800555382c0f011a8c85177",
+      "kind": "separately_authorized_D15B_receipt_only_extension"
+    },
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RECEIPT_ASSESSMENT.json",
+      "relative_path": "D-V15-B/extensions/RECEIPT-001/RECEIPT_ASSESSMENT.json",
+      "sha256": "c86fe8a18c1dd286d423e8317000d636c3bc5f259fe8580cea807cc3772f21d5",
+      "kind": "separately_authorized_D15B_receipt_only_extension"
+    },
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/REVIEW.md",
+      "relative_path": "D-V15-B/extensions/RECEIPT-001/REVIEW.md",
+      "sha256": "f7024f5e8eccc0b3d753a64d98c1133a7f9d0030635bb5e36b207fdff128237e",
+      "kind": "separately_authorized_D15B_receipt_only_extension"
+    },
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+      "relative_path": "D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+      "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5",
+      "kind": "separately_authorized_D15B_receipt_only_extension"
+    }
+  ],
+  "original_judgments_unchanged": true,
+  "late_original_packet_separate_extension_credit_only": true,
+  "excluded": [
+    "Raw native/private modelIO/prompt/auth/source bodies",
+    "Candidate execution bodies not in selected005",
+    "Source-grade rewrite/within-original-clock credit"
+  ],
+  "git_actions_by_owner": false
+}

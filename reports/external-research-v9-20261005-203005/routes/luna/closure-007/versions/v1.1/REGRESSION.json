@@ -1,0 +1,21 @@
+{
+  "schema": "er9.luna.complete-tail-regression.v1",
+  "inference_started": false,
+  "actual_native_goals": 0,
+  "status": "PASS",
+  "checks": {
+    "pre_stop_complete_with_exact_tail_interrupt": true,
+    "interrupted_is_terminal_not_successful_completion": true,
+    "initial_clock_at_stop_rejected": true,
+    "receipt_exactly_at_stop_rejected": true,
+    "receipt_after_stop_rejected_even_old_backend_timestamp": true,
+    "nonterminal_recheck_not_accepted": true,
+    "native_goal_identity_replacement_rejected": true,
+    "adverse_event_during_confirmation_rejected": true,
+    "activation_required": true,
+    "unregistered_interrupt_remains_failure": true,
+    "failed_tail_not_excused": true,
+    "native_service_error_still_failure": true
+  },
+  "native_transport_guardian_and_artifact_worker_unchanged": true
+}

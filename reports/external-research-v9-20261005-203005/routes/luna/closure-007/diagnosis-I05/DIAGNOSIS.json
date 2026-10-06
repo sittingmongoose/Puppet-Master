@@ -1,0 +1,26 @@
+{
+  "schema": "er9.luna.I05-completion-tail-diagnosis.v1",
+  "control_native_goal_complete_epoch_interval": [
+    1791239616,
+    1791239617
+  ],
+  "control_native_stop_epoch": 1791239627.977159,
+  "native_complete_at_least_seconds_before_stop": 10.977159023284912,
+  "native_complete_receipt_count": 12,
+  "required_artifacts_flushed_before_complete": true,
+  "last_required_write_utc": "2026-10-05T22:32:36.067790+00:00",
+  "later_source_tool_flushes": 0,
+  "control_turn_terminal_status": "interrupted",
+  "control_turn_interrupt_seconds_after_stop": 0.060239136,
+  "old_predicate": "native Goal COMPLETE and no active turns before stop",
+  "old_outcome_preserved": "HOLD original native stop reached; original costs unchanged",
+  "treatment_turn_completed_seconds_before_stop": 5.785332239,
+  "prospective_fix": "strict pre-stop native COMPLETE RPC confirmation then tagged exact tail close; artifact/freeze/quiet proof independent; source quality pending independent evaluation",
+  "semantic_verification_finished": "UNKNOWN; terminal declaration and artifact bytes do not prove source correctness",
+  "evidence_pins": {
+    "STRUCTURAL_TIMING.json": "6c9e34438ae93b4507fcb4970dbf6d0859b7b5f615be0feaa5fd139af57f84c8",
+    "COMPLETE_PREDICATE_TIMING.json": "bc5282eb32405fe8b3288becd6d509bee0d19ade374cdf3abac2f9137b908077"
+  },
+  "prospective_version_pin_sha256": "534d060f449517b835b6806cab58f2a15c7df48f328c826e0bb9c32ce4cfe108",
+  "all_original_runtime_bytes_unchanged": true
+}

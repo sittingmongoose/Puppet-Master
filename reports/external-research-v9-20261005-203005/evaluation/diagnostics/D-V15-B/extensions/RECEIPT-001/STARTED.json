@@ -1,0 +1,18 @@
+{
+  "schema": "er9.additive-receipt-assessment-start.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+  "start_utc": "2026-10-05T23:26:36.161363Z",
+  "started_monotonic_ns": 73215018384483,
+  "deadline_utc": "2026-10-05T23:36:36.161363Z",
+  "hard_max_seconds": 600,
+  "reservation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RESERVATION.json",
+    "sha256": "196c67e7b8222b758d282d16057034b0b3ed9f8fe5fa6e0dd4cb96319ad8ddef"
+  },
+  "packet": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/MANIFEST.json",
+    "sha256": "a0cccfb4b0a52ec170984c3a360c967f047e2a61afc8fe7e158ec18ec5b91410"
+  },
+  "packet_bodies_read_before_start": false,
+  "original_judgments_unchanged": true
+}

@@ -1,0 +1,45 @@
+{
+  "schema": "er9.luna.exact-owned-scope-supplement-selection.v1",
+  "scope": "resources/ownership only; no candidate outputs/grade reclassification",
+  "rows": [
+    {
+      "job_id": "I-05-LUNA-S1-treatment-critique-a001",
+      "original_outcome": "native_goal_complete",
+      "original_goal_status": "complete",
+      "original_elapsed_seconds": 695.467447834,
+      "original_held_process_groups_absent": false,
+      "all_owned_scopes_quiet_now": true,
+      "supplement_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/I-05-LUNA-S1-treatment-critique-a001-OWNED_SCOPE_PROOF.json",
+      "supplement_file_sha256": "8edc22bcca95f30bd2c08919e749711ff65506e6dc1c2bea2b03845219078589",
+      "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "original_failed_result_preserved": true,
+      "operational_quality_grade_not_changed": true
+    },
+    {
+      "job_id": "SEED-DEV-A-base-s001",
+      "original_outcome": "HOLD",
+      "original_goal_status": "active",
+      "original_elapsed_seconds": 1185.593149942,
+      "original_held_process_groups_absent": false,
+      "all_owned_scopes_quiet_now": true,
+      "supplement_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/SEED-DEV-A-base-s001-OWNED_SCOPE_PROOF.json",
+      "supplement_file_sha256": "7d0092c676d2855a426b9b30c6abf7d5c590ebadc64ddc382131614984f13b60",
+      "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "original_failed_result_preserved": true,
+      "operational_quality_grade_not_changed": true
+    },
+    {
+      "job_id": "SEED-DEV-B-base-s001",
+      "original_outcome": "HOLD",
+      "original_goal_status": "active",
+      "original_elapsed_seconds": 1185.568283487,
+      "original_held_process_groups_absent": true,
+      "all_owned_scopes_quiet_now": true,
+      "supplement_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/diagnosis-I05/SEED-DEV-B-base-s001-OWNED_SCOPE_PROOF.json",
+      "supplement_file_sha256": "fbd4b2e22ee57cd9c86f3b5c0c3702bb78e4d8965259aef1254559819a56e767",
+      "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "original_failed_result_preserved": true,
+      "operational_quality_grade_not_changed": true
+    }
+  ]
+}

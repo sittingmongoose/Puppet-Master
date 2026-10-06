@@ -1,0 +1,26 @@
+{
+  "schema": "er9.neutral-evaluator-clock-cost-receipt.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+  "pair_id": "D-V15-B",
+  "original_first_actual_read_utc": "2026-10-05T22:46:20.550141Z",
+  "original_hard_deadline_utc": "2026-10-05T23:16:20.550141Z",
+  "original_allowance_seconds": 1800,
+  "original_closure_record": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+    "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+  },
+  "separate_extension_start_utc": "2026-10-05T23:26:36.161363Z",
+  "separate_extension_deadline_utc": "2026-10-05T23:36:36.161363Z",
+  "separate_extension_allowance_seconds": 600,
+  "extension_finished_utc": "2026-10-05T23:32:00.149098Z",
+  "extension_elapsed_seconds": 323.987746408,
+  "extension_assessment_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/RECEIPT_ASSESSMENT.json",
+    "sha256": "c86fe8a18c1dd286d423e8317000d636c3bc5f259fe8580cea807cc3772f21d5"
+  },
+  "known_evaluator_usage": null,
+  "evaluator_provider_model_billing": "UNKNOWN",
+  "clock_reset": false,
+  "wall_vs_occupied": "Elapsed wall clock; occupied model/API time is not exposed",
+  "hidden_answers_or_source_bodies_in_receipt": false
+}

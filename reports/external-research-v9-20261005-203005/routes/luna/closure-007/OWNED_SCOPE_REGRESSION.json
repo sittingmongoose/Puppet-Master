@@ -1,0 +1,17 @@
+{
+  "schema": "er9.luna.owned-scope-regression.v1",
+  "status": "PASS",
+  "actual_native_goals": 0,
+  "inference_started": false,
+  "signals_or_service_starts": 0,
+  "checks": {
+    "shared_manager_pgid_is_never_ownership_requirement": true,
+    "live_or_reused_exact_pid_blocks_proof": true,
+    "active_main_pid_blocks_proof": true,
+    "query_failure_is_not_quiet": true,
+    "populated_original_or_current_cgroup_blocks_proof": true,
+    "same_clock_deadline_not_extended": true,
+    "execution_enabled_requires_workspace_evidence": true,
+    "nonowned_manager_unit_rejected": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-006-evaluator-clocks-001/evaluator-clocks.safe.json",
+      "sha256": "d14493c4b9a80ff452e751c9df44e6e94b218c9ff0124e17b4dabeb2899f0c66"
+    },
+    {
+      "path": "accounting/cohort-006-evaluator-clocks-001/evaluator-clocks.safe.schema.json",
+      "sha256": "472b317a8d21b78246df4e9aa5bd256e6c9f5c06f668bc4f6940f4539504864d"
+    },
+    {
+      "path": "accounting/cohort-006-evaluator-clocks-001/EVALUATOR_CLOCKS.md",
+      "sha256": "b97bdb05ceb69232ab07d425f9b5b40aa6657f53fba927f32f2b9304746ff481"
+    }
+  ],
+  "cohort": "006-evaluator-clocks-001",
+  "exclusion": "Clock metadata only; no assessments, hidden answers, candidate/source bodies, raw machine state or unlisted files.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

@@ -1,0 +1,99 @@
+{
+  "schema": "er9.supervision.evidence.v1",
+  "recorded_utc": "2026-10-05T23:25:44.716254+00:00",
+  "scope": "neutral seed contracts and prospective decision freeze; no candidate/source bodies or private evaluator facts",
+  "earlier_decision_evidence_unchanged": true,
+  "mechanical_origin_eligibility": "root/case owner structural confirmation; exact origin pins belong in lossless import envelopes",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/input/ER9/ER9_EXECUTE_HANDOFF.md",
+      "sha256": "46529ea93a95d92196f947daf3da54ac60768408aed9f5eaaa8d64c4167d210a",
+      "bytes": 58697,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/SEED_PROTOCOL.md",
+      "sha256": "1303735aad31e75a8def72f4cd6895d473287b1b78379593da76843494a9e953",
+      "bytes": 1960,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/SEED_MANIFEST_CONTRACT.md",
+      "sha256": "b60c1d31a0b6ad57672d33ea00af4eb3cd5087f3fabdf3325cf6efc43672ef4a",
+      "bytes": 3050,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/plan_seeded.py",
+      "sha256": "ec57249658f67d59bce2338c775280485e315c71ce8d508a7ca7c31896e54b50",
+      "bytes": 15139,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/bind_seeded.py",
+      "sha256": "3d320a18db3ad01338c069e25dc4bb059be35255d8ba6be702be59c00f4a2c36",
+      "bytes": 15116,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V01-A-TASK.md",
+      "sha256": "04bdef46591c1c78b30a913b67fcf3faaf0e97bc8d7f78b30075b767281c2121",
+      "bytes": 1625,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V05-A-TASK.md",
+      "sha256": "5ab74ba902944c6b77915da958c5864f8a4b10117e80bba3d5e51e107672bfcd",
+      "bytes": 1487,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V13-A-TASK.md",
+      "sha256": "f2422e3f7f080b3b5f25aba521e9c18f2cd7269babbeffefad316dc943aa8956",
+      "bytes": 1555,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V16-A-TASK.md",
+      "sha256": "7559cfeb08ac24d7d651c38ec0b48e8461b359952e53d1115d9d9952a98a3919",
+      "bytes": 1469,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/job.json",
+      "sha256": "43e553a348e7d5eee83ca0ffc220899ae6f579c8bcd1ab19fa82990077f79d91",
+      "bytes": 1969,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-A-base-s001/workspace/TASK.md",
+      "sha256": "0381fd64998e819b79553c19d761347076b60902108739eb07ededbc4b8bea01",
+      "bytes": 7607,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/job.json",
+      "sha256": "e7cc2c587fad4c8b344861ad2f2fef2179d461925892d202dcc9be14e4edefc8",
+      "bytes": 1969,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seeded/seed-jobs/SEED-DEV-B-base-s001/workspace/TASK.md",
+      "sha256": "d3069da43d077f845b3a0299322c567df3b1a74ceb186ace7a19ce537352a8f7",
+      "bytes": 8113,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-006.md",
+      "sha256": "5b0ef03275ddb1c7dc4f4edbff832659a1a7da229c025beb67b6e4cec9114365",
+      "bytes": 9811,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-006.json",
+      "sha256": "5d17a50b3ceb20928a0ae141d90325088152c7be66ace3d09adc7fc32ce6fd60",
+      "bytes": 3318,
+      "scope": "neutral contract/input/provenance implementation, not candidate output"
+    }
+  ]
+}

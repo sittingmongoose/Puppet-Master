@@ -1,0 +1,68 @@
+{
+  "witness_schema": "research-stage witness inventory v1",
+  "labeling": "executed_by_candidate = run in this stage's isolated python_execute sandbox with receipts; UNEXECUTED = proposed only, designed but never run.",
+  "scope_warning": "All executed items are isolated component checks on synthetic data. They do not establish behavior of any complete application, nor of third-party tools (napari/QuPath/tifffile/OpenSlide).",
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Stored-coordinate precision and transform composition order",
+      "label": "executed by candidate",
+      "execution_id": "exec-tria9pbb",
+      "code_sha256": "ca792ad5b29f1a6ca41981738f0743607b36135488898ed0c8f4e985684a0e47",
+      "input": "synthetic coordinate values; stage origin 100000.0 um, pixel size 0.101 um, index 1234; S=(2,2), T=(10,0), p=(2,3)",
+      "justified_expected": "Python float (IEEE-754 double) round-trips exactly through JSON (shortest-repr guarantee); routing the same computation through float32 loses precision proportional to the large origin; scale-then-translate differs from translate-then-scale, so composition order is information that must be recorded.",
+      "stdout_summary": {"json_float64_roundtrip_exact": "true for all 5 values (repr keys incl. 123456.7890123456, 2.9033, 0.30000000000000004, 1e-07, 12345678901234.566)", "world_f64_um": 100124.634, "world_via_f32_um": 100124.6328125, "f32_drift_um": 0.0011875000054715201, "scale_then_translate": [14.0, 6.0], "translate_then_scale": [24.0, 6.0], "orders_differ": true},
+      "stderr": "", "exit_code": 0,
+      "stdout_sha256": "ad5adb1a67c998ade7f081d7be7adcce82bb0db4723398400a7c9cc95e757680",
+      "scope_limits": "pure-Python arithmetic on synthetic values; no real image/JSON project files; supports the storage decision (float64 + JSON shortest-repr + recorded order), does not measure any product."
+    },
+    {
+      "id": "W2",
+      "title": "Axis-order ambiguity discrimination",
+      "label": "executed by candidate",
+      "execution_id": "exec-x2fpceqe",
+      "code_sha256": "07a49dd2f7fc14c3ad59cc70ade4b23cafe7446722bcb963066ea2de8aca2217",
+      "input": "synthetic 16-sample acquisition, C-major 'CZ' writer layout (C=2, Z=2, Y=1, X=1, value=10*c+z); two reader interpretations CZ vs ZC; query (c=1, z=0)",
+      "justified_expected": "Both readings are internally consistent with the same stored sequence, so the query returns different samples (10 vs 1): axis order cannot be inferred from bytes; it must be explicit metadata (the failure class NGFF axes metadata and the tifffile #334 metadata-type regression speak to).",
+      "stdout_summary": {"stored_sequence": [0, 1, 10, 11], "value_if_axes_CZ": 10, "value_if_axes_ZC": 1, "readings_disagree": true},
+      "stderr": "", "exit_code": 0,
+      "stdout_sha256": "a4b7350ffdbdb5ec1fea2161b94d9e5b2bcf1c1654c544019f30a6727f84fb51",
+      "scope_limits": "synthetic layout; demonstrates the ambiguity class only, not any specific vendor file."
+    },
+    {
+      "id": "W3",
+      "title": "Atomic save via temp + os.replace; interrupted-save recovery",
+      "label": "executed by candidate",
+      "execution_id": "exec-_fe0rayi",
+      "code_sha256": "cd6a712f21209816f8b3f9ee019e74bb0251c171d854005814c17a9ea347be8a",
+      "input": "sandbox tempdir; project.json rev1; simulated crash mid-write of temp file (partial JSON, no rename); then clean rewrite of temp + os.replace",
+      "justified_expected": "After an interrupted save the previous complete state remains readable; the stale partial temp file is detectable; a completed save atomically replaces the old file and removes the temp name (POSIX rename semantics).",
+      "stdout_summary": {"state_after_interrupted_save": {"rev": 1, "annotations": ["a1"]}, "stale_temp_detected": true, "stale_temp_was_partial_json": true, "state_after_clean_save": {"rev": 2, "annotations": ["a1", "a2"]}, "temp_gone_after_replace": true},
+      "stderr": "", "exit_code": 0,
+      "stdout_sha256": "470ed82f801e35e32e8af64b6bb12893d2dfb761ad5667a40891830ade983b02",
+      "scope_limits": "Linux sandbox filesystem only; no concurrent readers, no fsync/power-loss simulation, no Windows rename semantics; validates the mechanism, not the application."
+    },
+    {
+      "id": "W4",
+      "title": "Source identity by sha256+size; relocation and relink",
+      "label": "executed by candidate",
+      "execution_id": "exec-y9ke719k",
+      "code_sha256": "b5581b0075e3a5d5fcf1cd90268505337b0d55156c329cc12caed21a7a5132b4",
+      "input": "sandbox tempdir; 73,728-byte synthetic source; copy to renamed path with forced older mtime; original removed; whole-tree relink search by size+sha256",
+      "justified_expected": "Content hash+size survive rename, relocation and mtime change; path is a hint and mtime is not identity; relink-by-content finds the moved file after the original path disappears.",
+      "stdout_summary": {"record_sha256_prefix": "3a690dc90a3ac02a", "record_size": 73728, "relocated_copy_mtime_differs": true, "relocated_copy_sha_matches": true, "original_path_missing_after_removal": true, "relink_candidates_found": ["relocated/acq001_camA_renamed_copy.ome.tif"]},
+      "stderr": "", "exit_code": 0,
+      "stdout_sha256": "f71a62e99145250cb0e830e34f917ce1d6e6c8b5327524eafd5257a993331a76",
+      "superseded": "exec-8zodkcc4 (first run) checked original-missing before the removal and reported false; retained here for transparency, superseded by this corrected run.",
+      "scope_limits": "synthetic small file; hashing full contents at import is the proposed production behavior but its cost on multi-GB files is unmeasured (see P1)."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "P1", "title": "3 GB bounded-access benchmark", "design": "On the 8-core/16 GB envelope, open a >=3 GB tiled OME-TIFF through the planned tile source; measure peak RSS (<~6 GB target), time-to-first-plane (<2 s warm), pan/zoom jitter (<100 ms warm), cancel latency (<250 ms) during bulk prefetch.", "status": "UNEXECUTED - no real large file was available to this stage; the brief's 3 GB envelope remains an engineering target."},
+    {"id": "P2", "title": "Crash-recovery suite", "design": "kill -9 during manifest save, import hashing, and export; relaunch must yield last complete manifest + journal replay per proposal 5.5; includes P2c: verify os.replace-over-existing semantics on Windows before shipping.", "status": "UNEXECUTED - W3 covers only the clean POSIX mechanism."},
+    {"id": "P3", "title": "Second-machine reopen", "design": "Copy project directory + relocate sources on a second machine; app must relink by sha256+size or enter explicit quarantine; annotations and view state must round-trip byte-identically in the index frame.", "status": "UNEXECUTED - W4 demonstrates only the identity/relink primitive."},
+    {"id": "P4", "title": "NGFF export round-trip", "design": "Export an image + label store as OME-NGFF 0.4 and read it back with an independent reader (e.g. ome-zarr-py); axes order, per-level scale, translation, and window metadata must match the manifest within double precision.", "status": "UNEXECUTED"},
+    {"id": "P5", "title": "Export coordinate spot-check", "design": "Compare this tool's annotation-table export coordinates against a QuPath GeoJSON export of the same ROI on the same image; both claim full-resolution pixel units with top-left origin (QuPath docs S10); disagreement diagnoses an origin/units bug.", "status": "UNEXECUTED"},
+    {"id": "P6", "title": "Plane-scoped operation property test", "design": "Property test: any geometric op (split/subtract/clip) applied to annotations with mixed (z,t) anchors must not alter annotations on other planes (the QuPath #1729 failure class).", "status": "UNEXECUTED"}
+  ]
+}

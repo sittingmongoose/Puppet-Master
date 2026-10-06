@@ -1,0 +1,23 @@
+{
+  "schema": "er9.additive-receipt-assessment-reservation.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+  "pair_id": "D-V15-B",
+  "authorized_by": "Root explicit new task: separately bounded600s receipt-only extension",
+  "reserved_utc": "2026-10-05T23:26:36.161363Z",
+  "hard_max_seconds": 600,
+  "scope": [
+    "Exact existing execution/provenance/method/cost evidence in late frozen operational packet and courierpositive selection005",
+    "Actual execution ID/code-input-stdout/exit hashes only where positively exposed",
+    "Method input lineage and observed candidate cost/provenance"
+  ],
+  "excluded": [
+    "New source search",
+    "New candidate work",
+    "Source-grade rewrite",
+    "Originalclockreset or within-originalclockPhase2 credit"
+  ],
+  "original_deadline_utc": "2026-10-05T23:16:20.550141Z",
+  "original_closed_allowance_preserved": true,
+  "original_final_quality": "UNASSESSED",
+  "additional_evaluator_cost_separate": true
+}

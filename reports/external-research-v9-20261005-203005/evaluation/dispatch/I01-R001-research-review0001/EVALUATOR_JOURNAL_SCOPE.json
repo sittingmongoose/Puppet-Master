@@ -1,0 +1,9 @@
+{
+  "execution_label": "evaluator_executed",
+  "basis": "Own pure memory simulation of the POSIX-permitted short regular-file write; does not run candidate code, fill disk, or prove a built product fails",
+  "record_requested_bytes": 49,
+  "short_write_bytes": 20,
+  "persisted_prefix_valid": true,
+  "trailing_record_parse_error": "JSONDecodeError",
+  "scope": "Shows why append positioning/per-file rename cannot by themselves establish whole-record journal or multi-file crash consistency. Explicit prefix recovery/commit ordering not in current proposal; mature implementation may add it."
+}

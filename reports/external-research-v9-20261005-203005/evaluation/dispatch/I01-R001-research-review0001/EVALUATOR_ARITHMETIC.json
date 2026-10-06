@@ -1,0 +1,21 @@
+{
+  "execution_label": "evaluator_executed",
+  "code_basis": "Evaluator-authored Python stdlib arithmetic, not candidate/upstream code execution",
+  "source_basis": "Candidate synthetic values and operation order; compare actual candidate code when delivered",
+  "json_roundtrip": true,
+  "world_f64_um": 100124.634,
+  "fully_rounded_f32_um": 100124.6328125,
+  "absolute_drift_um": 0.0011875000054715201,
+  "compose_scale_then_translate": [
+    14,
+    6
+  ],
+  "compose_translate_then_scale": [
+    24,
+    6
+  ],
+  "scope": "Matches actual candidate W1 expression for these values; fully-rounded arithmetic variant has the same result here. No universal per-operation drift or viewer behavior established.",
+  "candidate_actual_order_f32_um": 100124.6328125,
+  "candidate_actual_order_drift_um": 0.0011875000054715201,
+  "actual_candidate_code_inspected": true
+}

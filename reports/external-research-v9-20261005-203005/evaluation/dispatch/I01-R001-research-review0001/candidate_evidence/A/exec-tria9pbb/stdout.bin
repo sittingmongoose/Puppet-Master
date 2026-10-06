@@ -1,0 +1,21 @@
+{
+ "json_float64_roundtrip_exact": {
+  "123456.7890123456": true,
+  "2.9033": true,
+  "0.30000000000000004": true,
+  "1e-07": true,
+  "12345678901234.566": true
+ },
+ "world_f64_um": 100124.634,
+ "world_via_f32_um": 100124.6328125,
+ "f32_drift_um": 0.0011875000054715201,
+ "scale_then_translate": [
+  14.0,
+  6.0
+ ],
+ "translate_then_scale": [
+  24.0,
+  6.0
+ ],
+ "orders_differ": true
+}

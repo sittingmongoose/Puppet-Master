@@ -1,0 +1,29 @@
+{
+  "schema": "er9.neutral-evaluator-clock-cost-receipt.v1",
+  "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+  "pair_id": "D-V15-A",
+  "original_first_actual_read_utc": "2026-10-05T22:21:11.537980Z",
+  "original_hard_deadline_utc": "2026-10-05T22:51:11.537980Z",
+  "original_allowance_seconds": 1800,
+  "original_closed_utc": "2026-10-05T22:50:40.573654Z",
+  "original_closed_elapsed_seconds": 1769.035593866,
+  "original_closure_record": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/BUDGET_CLOSURE.json",
+    "sha256": "67d233bd9d54a01f04a3eb9f805b70c05af444e077d0f7110851c690c0f42600"
+  },
+  "separate_extension_start_utc": "2026-10-05T22:53:17.625832Z",
+  "separate_extension_deadline_utc": "2026-10-05T23:03:17.625832Z",
+  "separate_extension_allowance_seconds": 600,
+  "extension_finished_utc": "2026-10-05T23:01:00.056572Z",
+  "extension_elapsed_seconds": 462.430683741,
+  "extension_assessment_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/RECEIPT_ASSESSMENT.json",
+    "sha256": "7ac201849c960ec2a85cbf0dcca9041536597581be2ce8f49af75c7419cfe9e4"
+  },
+  "known_evaluator_usage": null,
+  "evaluator_provider_model_billing": "UNKNOWN",
+  "clock_reset": false,
+  "wall_vs_occupied": "Elapsed wall clocks; occupied model/API time not exposed. Original and separate extension preserved rather than reset.",
+  "hidden_answers_or_source_bodies_in_receipt": false,
+  "prepared_as": "Mechanical neutral clock extraction from already-frozen assessments, not extra semantic/source evaluation"
+}

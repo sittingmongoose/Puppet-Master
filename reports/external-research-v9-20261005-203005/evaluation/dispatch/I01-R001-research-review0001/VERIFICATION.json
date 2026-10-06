@@ -1,0 +1,28 @@
+{
+  "status": "PASS_REPORT_INTEGRITY_ONLY",
+  "scope": "Current R001 review, not full-case PASS",
+  "checks": [
+    "all frozen received task/artifact pins match",
+    "12 actual obligations /8 common dimensions /5 original important questions",
+    "21 current claim groups with partial/unassessed remainder",
+    "2 decisive current-source defects, separate leads delivery omission",
+    "5 actual candidate witnesses/25 positive files hashes consistent",
+    "20 source acquisition metadata; 1 unresolved and truncated response retained",
+    "Phase1 remains byte-identical, economics only after Phase1",
+    "No designated finals promoted; missing partner UNASSESSED; fullpipeline UNASSESSED"
+  ],
+  "phase1_sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+  "report_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/report.json",
+    "sha256": "7a207ef904346c2c5b9cb4665fb99099475da59bef56399e573113f3bf05bd83"
+  },
+  "review_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/REVIEW.md",
+    "sha256": "ad7ce747049bd40789a84877fd2271f6d35c3c20ee92cf1e984f95facbfb3c4c"
+  },
+  "source_index_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/SOURCE_INDEX.json",
+    "sha256": "834f8511b3aa85d66a04d6193c32710b35f04038ba1b8bc3521d2a14bc3dcfdf"
+  },
+  "verified_utc": "2026-10-05T23:57:36.147559Z"
+}

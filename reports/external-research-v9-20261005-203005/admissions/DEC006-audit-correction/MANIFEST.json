@@ -1,0 +1,27 @@
+{
+  "schema": "er9.public-positive-selection.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/dispatcher/DEC006_IMPORT_BINDING_AUDIT_001.json",
+      "sha256": "1f754ea2f77d20c050f1574c85a0b56ee7059e83d79f43782aef68af63edf357",
+      "kind": "historical_false_audit"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/DEC006_IMPORT_BINDING_AUDIT_002.json",
+      "sha256": "e319182514bf2174c73afbc63b67bbdaa94b54adfc2a0dcf9f439012544e7ebc",
+      "kind": "corrected_current_audit"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/DEC006_AUDIT_CORRECTION_V1/ERRATUM.json",
+      "sha256": "d5f898cdb0027357367c4fd610a160f44c2e8c2af6c0c864e774c9e85bb78add",
+      "kind": "current_correction"
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/publication/DEC006_AUDIT_CORRECTION_V1/FALSE_HOLD_HISTORY.json",
+      "sha256": "e26b1105b1ad449b617ca3e956f30f6fc7dec19fae9224eb14de9940961a5567",
+      "kind": "historical_setup_hold_metadata"
+    }
+  ],
+  "historical_false_findings_not_current_truth": true,
+  "host_path_projection_required": true
+}

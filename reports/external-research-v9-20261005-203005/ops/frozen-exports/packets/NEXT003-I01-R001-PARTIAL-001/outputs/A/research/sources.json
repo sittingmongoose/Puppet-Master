@@ -1,0 +1,203 @@
+{
+  "catalog_schema": "research-stage source catalog v1",
+  "captured_utc_note": "All captures made 2026-10-05T22:48Z-22:58Z via the admitted public_https_get tool; capture identity = tool-reported capture_id/sha256 of exact HTTP response body bytes. byte_range = bytes actually read/quoted for claims (captures may contain more bytes than read).",
+  "method_notes": [
+    "GitHub REST core API rate-limited (60/60 used) at capture time; search API (10-request budget, 6 used) plus raw.githubusercontent.com, patch-diff.githubusercontent.com .diff/.patch endpoints, github.com .atom feeds, and server-rendered HTML pages were used instead.",
+    " napari.org/stable/guides/transforms.html and qupath project_details.html 404'd (docs restructured); current equivalents were located and captured instead (S21, S9).",
+    "zarr v2 spec moved from zarr.readthedocs.io/en/stable/spec/v2.html (404) to zarr-specs.readthedocs.io; captured at the new location (S19)."
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "napari issue #6631 - Transform mode problem when zoomed in on multiscale layer with scale= set",
+      "url": "https://github.com/napari/napari/issues/6631",
+      "pin": "napari/napari issue 6631; created 2024-01-31T10:08:59Z; closed 2024-02-01T07:25:31Z; label bug; reporter m-albert; environment napari 0.4.19rc8",
+      "locator": "Search-API JSON: items[0].title/body/state/closed_at; body contains 'This issue is very similar to #6382, which has been fixed by #6390' and repro script with scale=[10,10]",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+in%3Atitle+scale+transform+linked%3Apr+type%3Aissue&per_page=30", "capture_id": "8ce6662574234aae9a6dc34253760215", "capture_path": "public_captures/829204b874d691de9e82527d706f825dae2a10482b8a0413806d6df97a1d3580.body", "sha256": "829204b874d691de9e82527d706f825dae2a10482b8a0413806d6df97a1d3580", "bytes": 6176, "byte_range": "0-6176 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:49:58Z"},
+      "applicability": "Issue leg of napari chain; explicit reference to #6382 and fix PR #6390; demonstrates scale+multiscale overlay failure class."
+    },
+    {
+      "id": "S2",
+      "title": "napari issue #6382 - Transform mode problem when zoomed out on multiscale layer",
+      "url": "https://github.com/napari/napari/issues/6382",
+      "pin": "napari/napari issue 6382; datePublished 2023-10-25T12:26:54Z (embedded ld+json); author m-albert; environment napari 0.5.0a2.dev413",
+      "locator": "HTML <title> tag and embedded ld+json articleBody: 'The transform box adopts a wrong shape when zooming out on a multiscale layer' + repro script",
+      "capture": {"tool": "public_https_get", "capture_id": "54aad79079fc4c52a5208dfd7eb3bf10", "capture_path": "public_captures/1d104e9e0703f2d33f8fcee1420de8edfddc947e119f4f3e929e7b824f6a0a1c.body", "sha256": "1d104e9e0703f2d33f8fcee1420de8edfddc947e119f4f3e929e7b824f6a0a1c", "bytes": 289455, "byte_range": "32768-81920 read (title + ld+json located in this range)", "http_status": 200, "captured_utc": "2026-10-05T22:50:44Z"},
+      "applicability": "Earlier issue in napari chain; establishes recurrence narrative."
+    },
+    {
+      "id": "S3",
+      "title": "napari PR #6390 diff (fix for #6382: level-aware bounding box)",
+      "url": "https://github.com/napari/napari/pull/6390",
+      "pin": "PR 6390 diff, complete 5614 bytes; references issue #6382 fix (per S1)",
+      "locator": "diff hunks: napari/layers/image/image.py adds _extent_level_data/_extent_level_data_augmented/_display_bounding_box_augmented_data_level; overlays/interaction_box.py + bounding_box.py rerouted; NO test file in diff",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6390.diff", "capture_id": "299dd0b61406455ea7920a773356734f", "capture_path": "public_captures/ad37185fe00c316e1932d768b4aef8266220abd28ff034684e790590b38219f1.body", "sha256": "ad37185fe00c316e1932d768b4aef8266220abd28ff034684e790590b38219f1", "bytes": 5614, "byte_range": "0-5614 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:50:45Z"},
+      "applicability": "Fix leg of first napari chain; evidence that fix had no accompanying test."
+    },
+    {
+      "id": "S4",
+      "title": "napari PR #6633 record - Respect scale when render bounding box around multiscale level",
+      "url": "https://github.com/napari/napari/pull/6633",
+      "pin": "PR 6633; body 'closes #6631'; label bugfix; created 2024-01-31T14:03:23Z; merged 2024-02-01T07:25:30Z; milestone 0.4.19; author Czaki (COLLABORATOR)",
+      "locator": "Search-API JSON items[0]: title, pull_request.merged_at, milestone.title '0.4.19', body 'When calculating translate of bounding box for multiscale images, respect the layers scale'",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+type%3Apr+6631&per_page=10", "capture_id": "68b9f7603a5c40d19aaf4f4ec53df12a", "capture_path": "public_captures/55030dd93733cc8a95ec7e1ee17d067c41a952d440dfb99e1dba8ca5447ac037.body", "sha256": "55030dd93733cc8a95ec7e1ee17d067c41a952d440dfb99e1dba8ca5447ac037", "bytes": 14364, "byte_range": "0-14364 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:51:42Z"},
+      "applicability": "Issue->PR linkage and merge/milestone applicability for napari chain."
+    },
+    {
+      "id": "S5",
+      "title": "napari PR #6633 diff (child-layer transform composition fix)",
+      "url": "https://github.com/napari/napari/pull/6633",
+      "pin": "PR 6633 diff, complete 2191 bytes; merged 2024-02-01 (per S4)",
+      "locator": "diff hunk napari/_vispy/layers/base.py::_on_matrix_change: new_translate = np.dot(trans_rotate, (translate_child - translate)) / trans_scale; NO test file in diff",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://patch-diff.githubusercontent.com/raw/napari/napari/pull/6633.diff", "capture_id": "f976a4f84e0c4906806d11c110a42d09", "capture_path": "public_captures/0cc64609e0f7cf537b4dcac8d6fea6dfd97a8480b3d9bd40b91d01caca634e9a.body", "sha256": "0cc64609e0f7cf537b4dcac8d6fea6dfd97a8480b3d9bd40b91d01caca634e9a", "bytes": 2191, "byte_range": "0-2191 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:52:17Z"},
+      "applicability": "Fix content for #6631; confirms absence of regression test in the fix."
+    },
+    {
+      "id": "S6",
+      "title": "napari tag v0.4.19 - napari/_vispy/layers/base.py (raw file at release tag)",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.4.19/napari/_vispy/layers/base.py",
+      "pin": "git tag v0.4.19; file 10618 bytes; etag c8ded2374c452f33d05b2bf9a0d2aa2555e21d660e78aa8936526e9988c1fe0c",
+      "locator": "_on_matrix_change contains the #6633 fix verbatim (trans_rotate/trans_scale/new_translate block and 'for child in self.node.children' update)",
+      "capture": {"tool": "public_https_get", "capture_id": "c246aa2f3f2949daa98eb3faa0d0b257", "capture_path": "public_captures/b52355b8125d346d4fafa483ba6c4dfd5bff533838f1e476f41d20e6be69add7.body", "sha256": "b52355b8125d346d4fafa483ba6c4dfd5bff533838f1e476f41d20e6be69add7", "bytes": 10618, "byte_range": "0-10618 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:53:29Z"},
+      "applicability": "Release applicability of napari chain: fix shipped in v0.4.19."
+    },
+    {
+      "id": "S7",
+      "title": "QuPath issue #1729 - 'Split annotations by lines' does not work for z-stacks or time-series if line thickness > 0",
+      "url": "https://github.com/qupath/qupath/issues/1729",
+      "pin": "qupath/qupath issue 1729; label bug; state closed; reporter Pascal-bucketbreaker (creation 2025-08-21T17:09:08Z per search metadata; see L2 timestamp caveat)",
+      "locator": "Search-API JSON (qupath annotation search, items[5]): title + repro beginning 'In v0.6, when using Objects > Annotations > Split annotations by lines...'",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://api.github.com/search/issues?q=repo%3Aqupath%2Fqupath+in%3Atitle+annotation+linked%3Apr+type%3Aissue&per_page=30", "capture_id": "9e3ecbc2f47643e8b56843d92dd5cd2b", "capture_path": "public_captures/dd513c51bd4430678c93820d358ca7b1a5175f2fd36eccea6a1a4e9e2e74ecc2.body", "sha256": "dd513c51bd4430678c93820d358ca7b1a5175f2fd36eccea6a1a4e9e2e74ecc2", "bytes": 60370, "byte_range": "0-32768 read (item for #1729 begins near end of range; title captured, body partially)", "http_status": 200, "captured_utc": "2026-10-05T22:49:59Z"},
+      "applicability": "Issue leg of QuPath plane-scoping lesson; z-stack/time-series annotation failure."
+    },
+    {
+      "id": "S8",
+      "title": "QuPath PR #1730 record + diff - Fix 'Split annotations by lines' bug",
+      "url": "https://github.com/qupath/qupath/pull/1730",
+      "pin": "PR 1730; body 'Fixes https://github.com/qupath/qupath/issues/1729'; author petebankhead (MEMBER); created 2024-12-13T06:38:57Z; merged 2024-12-13T06:44:39Z; milestone v0.6.0; diff complete 1948 bytes",
+      "locator": "diff: CHANGELOG.md adds #1729 line; qupath-core/src/main/java/qupath/lib/objects/PathObjectTools.java splitAreasByBufferedLines now filters linesOnSamePlane by roi.getZ()==line.getZ() && roi.getT()==line.getT(); NO test file in diff",
+      "capture": {"tool": "public_https_get", "captures": [
+        {"what": "PR record", "url_fetched": "https://api.github.com/search/issues?q=repo%3Aqupath%2Fqupath+type%3Apr+1729&per_page=10", "capture_id": "524eec7c598b49c789178a4fc6d6f762", "capture_path": "public_captures/f3374e47e76f1a0d771204c0da909ef25b73c2a5c3cc9f93bea0baa7f97af6b7.body", "sha256": "f3374e47e76f1a0d771204c0da909ef25b73c2a5c3cc9f93bea0baa7f97af6b7", "bytes": 4054, "http_status": 200, "captured_utc": "2026-10-05T22:54:13Z"},
+        {"what": "PR diff", "url_fetched": "https://patch-diff.githubusercontent.com/raw/qupath/qupath/pull/1730.diff", "capture_id": "d54b50d695ff4f9da7db1106a48a5637", "capture_path": "public_captures/742a8dd5587143b2c46d54a6ab41a3abd368e55ecf7b5fc9bf2f3f05eb5f9a90.body", "sha256": "742a8dd5587143b2c46d54a6ab41a3abd368e55ecf7b5fc9bf2f3f05eb5f9a90", "bytes": 1948, "byte_range": "0-1948 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:56:45Z"}
+      ]},
+      "applicability": "Fix leg of QuPath chain; explicit plane-membership filtering; no regression test in diff."
+    },
+    {
+      "id": "S9",
+      "title": "QuPath documentation - Project structure (0.7.x)",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/reference/projects_structure.html",
+      "pin": "QuPath 0.7.0 docs (stable), page last-modified Mon, 02 Mar 2026 13:04:29 GMT",
+      "locator": "Sections: 'The project.qpproj file' (JSON representation; serverBuilder names reading library e.g. OpenSlide/Bio-Formats + URI; unique entryID; duplicate .qpproj for per-computer paths with warning), 'The data directory' (data.qpdata; summary.json 'should be written at the same time as data.qpdata'), 'The scripts directory', 'The classifiers directory'",
+      "capture": {"tool": "public_https_get", "capture_id": "32307d722e574cd38924405e07da963a", "capture_path": "public_captures/d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f.body", "sha256": "d43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f", "bytes": 12770, "byte_range": "0-12770 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:52:18Z"},
+      "applicability": "Project-format precedent: manifest + per-entry data + summary sidecar; machine-specific path relocation pattern."
+    },
+    {
+      "id": "S10",
+      "title": "QuPath documentation - Exporting annotations (0.7.x)",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/advanced/exporting_annotations.html",
+      "pin": "QuPath 0.7.0 docs (stable), page last-modified Tue, 18 Aug 2026 15:22:41 GMT",
+      "locator": "Admonition 'Units and origin': 'All of the shape export methods below define coordinates in pixel units, taking the origin (0, 0) as the top left corner of the full-resolution image'; GeoJSON preferred export, 'ellipses become polygons'; 'A note on XML' (prefers well-defined open formats); LabeledImageServer builder; draw-order/overlap semantics",
+      "capture": {"tool": "public_https_get", "capture_id": "d26884647b5f40b2989071f577cc6e62", "capture_path": "public_captures/df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420.body", "sha256": "df12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420", "bytes": 40941, "byte_range": "0-32768 read (units-and-origin + GeoJSON + WKT + ImageJ ROI + labeled-image sections within range)", "http_status": 200, "captured_utc": "2026-10-05T22:52:18Z"},
+      "applicability": "Export-honesty contract; stated units/origin; shapes-vs-rasters export taxonomy."
+    },
+    {
+      "id": "S11",
+      "title": "QuPath documentation - Concepts: Images (0.7.x)",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/concepts/images.html",
+      "pin": "QuPath 0.7.0 docs (stable), page last-modified Fri, 21 Aug 2026 19:51:57 GMT",
+      "locator": "'Choosing colors' (LUT separates display from values; 'the pixel values are the raw data in scientific imaging. These need to be preserved unchanged'; photo-editing warning); 'Where do pixel sizes come from?' ('not guaranteed to be a) present, or b) correct'; jpeg/png lack it; TIFF DPI caveat); 'How big is a pixel?' (61 um ruler example); 'z-stacks & time series' ('Objects (e.g. annotations, cells) also should remember which plane they belong to')",
+      "capture": {"tool": "public_https_get", "capture_id": "4602d1ba788646bfa23a6f8b41556a71", "capture_path": "public_captures/b12696d6e75b574af39fd888aee2693637d48ed912d85b3819ae7449580dc2d8.body", "sha256": "b12696d6e75b574af39fd888aee2693637d48ed912d85b3819ae7449580dc2d8", "bytes": 32118, "byte_range": "0-32118 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:54:12Z"},
+      "applicability": "Display/data separation mandate; calibration trust model; annotation plane anchoring."
+    },
+    {
+      "id": "S12",
+      "title": "QuPath documentation index (0.7.x)",
+      "url": "https://qupath.readthedocs.io/en/stable/index.html",
+      "pin": "QuPath 0.7.0 docs; 'The latest release is QuPath 0.7.0'; page last-modified Mon, 02 Mar 2026",
+      "locator": "Navigation: Reference > Shortcuts (keyboard shortcuts reference exists), Advanced > Exporting images/annotations, Deep learning (StarDist/InstanSeg pages listed)",
+      "capture": {"tool": "public_https_get", "capture_id": "6a56285a720c4c3d8fec93564007007a", "capture_path": "public_captures/e601f7806fa349448a0c972db25e5801657fe611651ab7b61c43c168729622d5.body", "sha256": "e601f7806fa349448a0c972db25e5801657fe611651ab7b61c43c168729622d5", "bytes": 14865, "byte_range": "0-14865 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:51:43Z"},
+      "applicability": "Version pin for all QuPath doc captures; existence of shortcuts/deep-learning doc areas (used as pattern pointers only)."
+    },
+    {
+      "id": "S13",
+      "title": "OME-NGFF 0.4 specification - Next-generation file formats (NGFF)",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "pin": "Final Community Group Report, updated 1 October 2026; spec revision table: 0.4.0 (2022-02-08) 'multiscales: add axes type, units and coordinateTransformations'; canonical https://ngff.openmicroscopy.org/0.4/; revision meta a4c68004fdb8a8d822367205dc12f9574a32ddf8",
+      "locator": "2.1 Images (zarr hierarchy; 'axis of type time before type channel, before spatial axes'); 3.3 coordinateTransformations ('applied sequentially and in order'; translation/scale vectors, 'path' variant); 3.4 multiscales ('axes' MUST 2-5 matching dims, ordered time,channel,space, zyx SHOULD; each dataset MUST have exactly one scale; translation MAY, MUST follow scale; group-level applied after per-level); 3.5 omero (channels with color/window min-max-start-end); 3.7 image-label (label-value, rgba, properties); 7 Version History",
+      "capture": {"tool": "public_https_get", "capture_id": "02a10a8eec6841449f13b046fbd056f2", "capture_path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body", "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269", "bytes": 163120, "byte_range": "0-32768 and 98304-163120 read (sections 1-2.2 and 3.3-7 fully within read ranges; part of 3.1/3.2 in unread middle range 32768-98304 - axes requirements re-quoted via 3.4 text which restates them)", "http_status": 200, "captured_utc": "2026-10-05T22:49:59Z"},
+      "applicability": "Primary standard for axes/calibration/display-window/labels data contract."
+    },
+    {
+      "id": "S14",
+      "title": "tifffile PyPI metadata (README + changelog), version 2026.9.20",
+      "url": "https://pypi.org/pypi/tifffile/json",
+      "pin": "tifffile 2026.9.20; author Christoph Gohlke; BSD-3-Clause; DOI 10.5281/zenodo.6795860",
+      "locator": "info.description: OME-TIFF paragraph ('UTF-8 encoded OME-XML metadata found in the ImageDescription tag of the first IFD defines the position of TIFF IFDs in the high-dimensional image data'); 'read as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher-order series, and pyramidal levels'; series.axes examples ('ZYX','QYX'); return_as='zarr' tile-slice example; page.decode tile loop; non-goals sentence; Notes on NDPI ('may contain wrong values') and MMStack ('often corrupted or wrong'); Revisions: '2026.9.15 - Fix MMStack series when numeric Summary metadata values are strings (#334)'; breaking-change entries 2026.5.2",
+      "capture": {"tool": "public_https_get", "capture_id": "2ca73571a3fb49bebd62e421f4ab6d91", "capture_path": "public_captures/775c238a4576ce121f541539e68d3882591e9fa5aae0dda7028f219a3e85fdaf.body", "sha256": "775c238a4576ce121f541539e68d3882591e9fa5aae0dda7028f219a3e85fdaf", "bytes": 313690, "byte_range": "0-32768 read (includes full quickstart, requirements, revisions 2026.9.20 back to 2026.4.11, Notes, Examples through zarr access examples)", "http_status": 200, "captured_utc": "2026-10-05T22:52:18Z"},
+      "applicability": "Reader-mechanism precedent; changelog fix leg of #334 chain; support-boundary and format-caveat facts."
+    },
+    {
+      "id": "S15",
+      "title": "tifffile issue #334 - Regression in 2026.5.2: reading MMStack fails with TypeError when z-step_um is a string",
+      "url": "https://github.com/cgohlke/tifffile/issues/334",
+      "pin": "cgohlke/tifffile issue 334; label bug; created 2026-09-15T13:51:46Z; closed 2026-09-15T14:41:07Z; state_reason completed; reporter miloo42",
+      "locator": "Search-API JSON items[0].body: affected versions (2026.5.2, 2026.5.15, 2026.6.1, 2026.7.14, 2026.9.9 fail; 2026.4.11 fine); repro; traceback 'line 20460, in series_mmstack: coords[\"Z\"] = (0.0, sizez * abs(zstep))'; cause analysis ('zstep != 0 is true for any non-empty string'); Micro-Manager 1.4 setAcquisitionProperty string explanation with plugin line; suggested isinstance fix referencing series_scanimage pattern; sample file attached",
+      "capture": {"tool": "public_https_get", "url_fetched": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+in%3Atitle+MMStack+type%3Aissue&per_page=10", "capture_id": "90ae60a312ca4e26a5cabdefe5c61e9b", "capture_path": "public_captures/06bb56c68c6ac32f52b7538a5d035003d1ddae0478d3c468e53baacdb04563be.body", "sha256": "06bb56c68c6ac32f52b7538a5d035003d1ddae0478d3c468e53baacdb04563be", "bytes": 14002, "byte_range": "0-14002 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:53:27Z"},
+      "applicability": "Primary issue leg of the required issue->fix->regression-test chain; instrument-metadata type unreliability evidence."
+    },
+    {
+      "id": "S16",
+      "title": "tifffile ATOM feed - commits touching tests/test_tifffile.py",
+      "url": "https://github.com/cgohlke/tifffile/commits/master/tests/test_tifffile.py.atom",
+      "pin": "feed updated 2026-09-21T03:37:20Z; entries are maintainer (cgohlke) commits",
+      "locator": "entry: commit ed361c575930474938b5552c6745fbf2fa513cee, 'Update tests/test_tifffile.py', updated 2026-09-15T15:00:19Z (19 minutes after issue #334 closed)",
+      "capture": {"tool": "public_https_get", "capture_id": "6252b458a5ce4ea3ba64d07e1fb80b0d", "capture_path": "public_captures/bc8dda78e04e20b13c2d1f574226ea61818e4cb635f85af7445b19efaff58327.body", "sha256": "bc8dda78e04e20b13c2d1f574226ea61818e4cb635f85af7445b19efaff58327", "bytes": 14770, "byte_range": "0-14770 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:53:28Z"},
+      "applicability": "Locates the regression-test commit for the #334 chain without the rate-limited core API."
+    },
+    {
+      "id": "S17",
+      "title": "tifffile commit ed361c5 patch - adds regression test test_read_mmstack_zstep_str",
+      "url": "https://github.com/cgohlke/tifffile/commit/ed361c575930474938b5552c6745fbf2fa513cee.patch",
+      "pin": "commit ed361c575930474938b5552c6745fbf2fa513cee; author Christoph Gohlke; Date: Tue, 15 Sep 2026 08:00:19 -0700; tests/test_tifffile.py +41 -1; test-file version header bumped 2026.9.9 -> 2026.9.15",
+      "locator": "patch body: def test_read_mmstack_zstep_str(): 'Test read MM v1.4 MMStack where z-step_um is JSON string.' # https://github.com/cgohlke/tifffile/issues/334 ; asserts isinstance(summ['z-step_um'], str); series.shape == (3, 2048, 2048); series.axes == 'ZYX'; series.coords['Z'] == pytest.approx([0.0, 2.9033, 5.8066]) ('Z coordinates must be resolved from the string value 2.9033'); equality with is_mmstack=False read",
+      "capture": {"tool": "public_https_get", "capture_id": "ab53c1388a5f426dad0f57f73d1fcc84", "capture_path": "public_captures/25383061b06390bc4aafefb88a55820bc5a4ab3da1cb77dea731ef902f1b35ea.body", "sha256": "25383061b06390bc4aafefb88a55820bc5a4ab3da1cb77dea731ef902f1b35ea", "bytes": 2421, "byte_range": "0-2421 (complete)", "http_status": 200, "captured_utc": "2026-10-05T22:54:11Z"},
+      "applicability": "Regression-test leg of the #334 chain: test asserts parsed physical coordinates, not merely absence of crash."
+    },
+    {
+      "id": "S18",
+      "title": "OpenSlide Python API documentation (1.4.6)",
+      "url": "https://openslide.org/api/python/",
+      "pin": "OpenSlide Python 1.4.6 documentation; page last-modified Thu, 01 Oct 2026 19:01:08 GMT",
+      "locator": "Intro ('tens of gigabytes when uncompressed... allows reading a small amount of image data at the resolution closest to a desired zoom level'); read_region(location '(x, y) tuple giving the top left pixel in the level 0 reference frame', level, size); level_dimensions; level_downsamples; get_best_level_for_downsample; set_cache ('store recently decoded slide tiles'); OpenSlideError latching semantics; OpenSlideUnsupportedFormatError; detect_format returns None if unrecognized; supported format list",
+      "capture": {"tool": "public_https_get", "capture_id": "c2cbb57547c74908963b16061334eac0", "capture_path": "public_captures/80256aecac97e75f72996e2a9c7e42ab1f6dcce5409311dad77810a3e40e2c67.body", "sha256": "80256aecac97e75f72996e2a9c7e42ab1f6dcce5409311dad77810a3e40e2c67", "bytes": 90711, "byte_range": "0-32768 read (intro, format list, OpenSlide class, detect_format, level_count/dimensions/downsamples, properties, associated_images, read_region, get_best_level_for_downsample, get_thumbnail, set_cache within range)", "http_status": 200, "captured_utc": "2026-10-05T22:54:12Z"},
+      "applicability": "Bounded-access mechanism: level-0 reference frame, per-level downsamples, tile cache, fail-loud error taxonomy."
+    },
+    {
+      "id": "S19",
+      "title": "Zarr Storage Specification Version 2",
+      "url": "https://zarr-specs.readthedocs.io/en/latest/v2/v2.0.html",
+      "pin": "Zarr specs docs, 'latest'; page last-modified Mon, 21 Sep 2026 11:05:05 GMT; Status section: 'This specification has been superseded. See v3 for the latest version.'",
+      "locator": "Storage (key/value interface; filesystem and S3 examples); Arrays > Metadata (.zarray MUST keys: zarr_format, shape, chunks, dtype, compressor, fill_value, order, filters; MAY dimension_separator '.' default or '/'; 'all chunks... have the same shape'); example .zarray JSON",
+      "capture": {"tool": "public_https_get", "capture_id": "0bef0fed2311412481c267d245d1668d", "capture_path": "public_captures/8b4b5f24291fb890c264d97f9aa42b0c9751ccd95bae4764765cda3546c747d2.body", "sha256": "8b4b5f24291fb890c264d97f9aa42b0c9751ccd95bae4764765cda3546c747d2", "bytes": 70727, "byte_range": "0-32768 read (status, storage, metadata, dtype encoding within range)", "http_status": 200, "captured_utc": "2026-10-05T22:56:48Z"},
+      "applicability": "Chunked-storage contract for masks/caches; supersession-by-v3 dependency risk."
+    },
+    {
+      "id": "S20",
+      "title": "nibabel documentation - Coordinate systems and affines",
+      "url": "https://nipy.org/nibabel/coordinate_systems.html",
+      "pin": "NiBabel dev docs (0.1.0.dev1+gabe5e8e0c); page last-modified Wed, 08 Apr 2026 15:49:17 GMT",
+      "locator": "'A nibabel (and nipy) image is the association of three things' (data array, affine array, header); 'Voxel coordinates are coordinates in the image data array'; 'Voxel coordinates and points in space' ('the voxel coordinate tells us almost nothing about where the data came from... the affine array tells you the position of the image array data in a reference space')",
+      "capture": {"tool": "public_https_get", "capture_id": "c6659a83006b4c1c8674d47eb28c406c", "capture_path": "public_captures/b54ac6b3b5d4acabb9cb9be4b9d1c527ec545109c6bd22e07fb2fac361196f6d.body", "sha256": "b54ac6b3b5d4acabb9cb9be4b9d1c527ec545109c6bd22e07fb2fac361196f6d", "bytes": 84712, "byte_range": "0-32768 read (all quoted sections within range)", "http_status": 200, "captured_utc": "2026-10-05T22:48:59Z"},
+      "applicability": "Conceptual anchor for voxel(index) vs world(physical) frames and why the relationship must be explicit."
+    },
+    {
+      "id": "S21",
+      "title": "napari documentation - Image layer how-to (stable)",
+      "url": "https://napari.org/stable/howtos/layers/image.html",
+      "pin": "napari stable docs (docsearch:version 0.9.2); page last-modified Mon, 05 Oct 2026 10:30:49 GMT; response 1,701,221 bytes (capture truncated at 524,288 by tool)",
+      "locator": "og:description/meta description: '...how to set properties like contrast limits, opacity, colormaps, blending and interpolation'; navigation tree confirms dedicated guides: 'Axis names in napari', 'Scale and unit-aware rendering', 'handedness', 'napari performance', Labels layer page",
+      "capture": {"tool": "public_https_get", "capture_id": "17bfc978a08c405486abec2e292678a6", "capture_path": "public_captures/49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f.body", "sha256": "49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f", "bytes": 524288, "byte_range": "0-32768 read; body_complete=false (truncated capture of a larger page) - only the property-list claim and docs-structure are cited", "http_status": 200, "captured_utc": "2026-10-05T22:53:29Z"},
+      "applicability": "Confirms display-property vocabulary (contrast limits/blending/interpolation) and existence of axis-name/unit guides; cited narrowly due to truncated capture."
+    }
+  ]
+}

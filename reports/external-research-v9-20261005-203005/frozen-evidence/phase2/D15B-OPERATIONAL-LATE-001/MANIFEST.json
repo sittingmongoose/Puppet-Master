@@ -1,0 +1,193 @@
+{
+  "schema": "er9.positive-diagnostic-phase2-operational.v1",
+  "pair_id": "D-V15-B",
+  "prepared_utc": "2026-10-05T23:18:51.386545+00:00",
+  "original_assessment_deadline_utc": "2026-10-05T23:16:20.550141Z",
+  "delivery_class": "AFTER_ORIGINAL_DEADLINE; publication-lineage only, no within-budget evaluator assessment credit",
+  "saved_phase1_judgment_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/partial_source_judgment.json",
+    "sha256": "964afda2bac53991deed012343017a0edc8240d4b29712d88291b27fa39b7520"
+  },
+  "method_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/METHOD_CARD.json",
+    "sha256": "c4323900b08934991074a00cb0c87ffd7d2e95358c1c42e615e83b821a84510e"
+  },
+  "source_accounting_sha256": "2af4b3df6d76447c30117e4a4b6e05428fded0996287da12c25875525bd978cb",
+  "arms": [
+    {
+      "alias": "A",
+      "arm_phase2": "control",
+      "stage_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/stage.json",
+        "sha256": "167ae9a86a9a772df1e8a4be50b51da6e250bbaf9e7c158358dc756ded792ee7"
+      },
+      "output_freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/OUTPUT_FREEZE.json",
+        "sha256": "ed43fc2e5c83ab936a3d634ee7f9ed7c3313f8ec9db9b686c5d3df7f9257d545"
+      },
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+        "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+      },
+      "actual_stage_input_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/diagnostic_task.md": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/brief.md": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/arm_instruction.md": "c679bd6ba40025982ec325e99be60e7e192007e066873f61cad2a4b27eceb0d4",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      },
+      "actual_prompt_sha256": "2d6099ed4208a1a51e4cc6fe8b1fbd840933016441d5698d4081a2d83807902f",
+      "max_seconds": 900,
+      "max_responses": null,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_status": "HOLD",
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "control",
+        "attempt_id": "D-V15-B-control-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e1c-46b0-76b0-b2d0-1e5900f9179a",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 6061568,
+          "input": 6715373,
+          "output": 33480,
+          "reasoning_output_subset": 23922,
+          "total": 6748853
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.426781046,
+        "pair_id": "D-V15-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+            "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 66
+      }
+    },
+    {
+      "alias": "B",
+      "arm_phase2": "treatment",
+      "stage_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/stage.json",
+        "sha256": "d480142ff0b07844e6bb5de5fe0e1d99141a4b84eacb9478af40c60dc9184d05"
+      },
+      "output_freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/OUTPUT_FREEZE.json",
+        "sha256": "c290752836af8f0e32225efc96cd065466a979d7e326d652faa534a259a25e8a"
+      },
+      "native_receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+        "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+      },
+      "actual_stage_input_pins": {
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/diagnostic_task.md": "51ce8a6df781f7094ac70bcd42cf96ad036dc3c3d790dfd8e6ada8f4f3378e03",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/brief.md": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/arm_instruction.md": "054f9494e9c099e0cc48099439849003ceb2a11216658d831020b343e8e1d167",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+      },
+      "actual_prompt_sha256": "ccca613d0f007664c013d15b173cb3590a607900106adb00cd4b1cf23e362ec8",
+      "max_seconds": 900,
+      "max_responses": null,
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_quiescent": true,
+      "operational_complete": false,
+      "native_status": "HOLD",
+      "accounting_typed_row": {
+        "actual_family": "Luna",
+        "arm": "treatment",
+        "attempt_id": "D-V15-B-treatment-diagnostic-a002",
+        "billing_dollars": "UNKNOWN",
+        "cancelled_or_unexposed_tail": "UNKNOWN",
+        "category": "candidate_attempt",
+        "cleanup_reserve_seconds": 15.0,
+        "cleanup_seconds": "UNKNOWN",
+        "end_utc": null,
+        "goal_identity": "01a10e1c-4bf8-71c0-b43a-dfa859c42d91",
+        "http_attempts": "UNKNOWN",
+        "inference_model_provenance": "NATIVE_THREAD_IDENTITY_AND_USAGE_RECEIPT",
+        "job_status": "FAILED",
+        "known_usage": {
+          "cached_input_included": 4413184,
+          "input": 4696805,
+          "output": 29252,
+          "reasoning_output_subset": 21800,
+          "total": 4726057
+        },
+        "native_execution_seconds": null,
+        "native_goal_starts": 1,
+        "native_goal_status": "paused",
+        "native_goal_status_before_cleanup": "active",
+        "observed_effort": "max",
+        "observed_model": "gpt-6-luna",
+        "occupied_seconds": 885.53239356,
+        "pair_id": "D-V15-B",
+        "provider_request_count": null,
+        "provider_status_counts": {},
+        "quiescent": true,
+        "quota_exhaustion": "UNKNOWN",
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "router_terminal_status": "HOLD",
+        "source_pins": [
+          {
+            "path": "ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+            "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+          }
+        ],
+        "stage": "diagnostic",
+        "start_utc": null,
+        "terminal_error_class": "TimeoutError",
+        "turn_completion_notifications": 1,
+        "turn_status_counts": {
+          "interrupted": 1
+        },
+        "ui_usage_separate": null,
+        "usage_basis": "native_thread_cumulative",
+        "usage_notifications": 46
+      }
+    }
+  ],
+  "semantic_interpretation": "none; no candidate prompt body/raw native IO/source answers; final quality remains UNASSESSED"
+}

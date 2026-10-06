@@ -1,0 +1,30 @@
+{
+  "schema": "er9.native-goal-status-public-selection.v2",
+  "frozen_owner": "codex-er9-execution",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/export.py",
+      "sha256": "921ef67204e4d4116b7e63a9c755fd20599379e819bdda1d659f6d67fbee5e82"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/README.md",
+      "sha256": "d238ba15c2b0f866de6eae6c5d79123000cb62783d56947be6992e8254e4c6b9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+      "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-002/MANIFEST.json",
+      "sha256": "f27541382daeb59dd39daaea98c9e134c55b1f3f5367b7daad003ba83e910d01"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-002/ADDITIVE_DELTA.json",
+      "sha256": "c4b269487a72fd45c783fff6bb604d43c9375825bd78aa87368de8791bf46299"
+    }
+  ],
+  "scope": "Receipt-only additive refresh, no candidate bodies or source evaluation",
+  "old_cohort_preserved": true,
+  "new_model_or_canary_runs": 0,
+  "metadata_only": true
+}

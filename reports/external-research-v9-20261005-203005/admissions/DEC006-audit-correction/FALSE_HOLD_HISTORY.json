@@ -1,0 +1,31 @@
+{
+  "schema": "er9.false-hold-history.v1",
+  "historical_claims_superseded": true,
+  "events": [
+    {
+      "utc": "2026-10-05T23:47:08.534403+00:00",
+      "kind": "OWNER_PACKET_FAMILY_MISMATCH_HELD_BEFORE_INFERENCE",
+      "pair_id": "D-V01-B",
+      "card_requested_family": "Luna",
+      "registration_declared_family": "Z",
+      "actual_native_starts": 0
+    },
+    {
+      "utc": "2026-10-05T23:50:53.475139+00:00",
+      "kind": "DEC006_OWNER_REQUEST_MODEL_FAMILY_PINS_AUDITED",
+      "path": "LAB_ROOT/ops/dispatcher/DEC006_IMPORT_BINDING_AUDIT_001.json",
+      "sha256": "1f754ea2f77d20c050f1574c85a0b56ee7059e83d79f43782aef68af63edf357",
+      "owners_correct": true,
+      "mismatch_count": 4
+    },
+    {
+      "utc": "2026-10-05T23:52:58.220886+00:00",
+      "kind": "COORDINATOR_FALSE_FAMILY_HOLD_CORRECTED",
+      "audit_path": "LAB_ROOT/ops/dispatcher/DEC006_IMPORT_BINDING_AUDIT_002.json",
+      "audit_sha256": "e319182514bf2174c73afbc63b67bbdaa94b54adfc2a0dcf9f439012544e7ebc",
+      "actual_mismatches": 0,
+      "wrong_family_native_starts": 0
+    }
+  ],
+  "no_candidate_launch_from_these_holds": true
+}

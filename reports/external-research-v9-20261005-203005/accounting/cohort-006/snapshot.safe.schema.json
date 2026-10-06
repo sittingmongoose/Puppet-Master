@@ -1,0 +1,896 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual_family_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "GLM": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN_PRE_NATIVE": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "GLM",
+        "Luna",
+        "UNKNOWN",
+        "UNKNOWN_PRE_NATIVE"
+      ],
+      "type": "object"
+    },
+    "as_of_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "billing_dollars": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cleanup_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "counter_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evaluator_extensions_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "rows": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "evaluator": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_limit_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "finished_elapsed_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_provider_tokens": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_clock_receipt": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "evaluator",
+              "extension_limit_seconds",
+              "finished_elapsed_seconds",
+              "original_clock_receipt",
+              "native_provider_tokens"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "schema",
+        "rows",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "goal_status_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "helper_provider_usage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_identity_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "configured_accountant": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "physical_provider_telemetry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "configured_accountant",
+        "physical_provider_telemetry",
+        "candidate_identity_rule"
+      ],
+      "type": "object"
+    },
+    "quiescence_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reconciliations": {
+      "additionalProperties": false,
+      "properties": {
+        "I01_full4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna_D14_first4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "I01_full4",
+        "Luna_D14_first4"
+      ],
+      "type": "object"
+    },
+    "role_import_cost_links_reference_only": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_consumer_exposure": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "candidate_bytes_rewritten": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "cost_rule": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "known_origin_tokens_reference_only": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "manifest_pin": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "new_native_goal_starts": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "origin_artifact_pins": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "origin_job_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "role": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "role",
+                "origin_job_id",
+                "sha256",
+                "bytes",
+                "path"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin_attempt_ids": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": "array"
+          },
+          "per_comparison_apportionment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seed_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "seed_id",
+          "manifest_pin",
+          "origin_attempt_ids",
+          "known_origin_tokens_reference_only",
+          "new_native_goal_starts",
+          "candidate_bytes_rewritten",
+          "origin_artifact_pins",
+          "cost_rule",
+          "actual_consumer_exposure",
+          "per_comparison_apportionment"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_apportionment_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_unique_actor_artifact_cost": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_attempt_ids": {
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "comparison_apportionment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cost_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_cold_seed_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "observed_started_seed_dependency_consumers": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "registered_jobs": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "registered_jobs",
+        "actual_attempt_ids",
+        "cost_rule",
+        "known_cold_seed_tokens",
+        "observed_started_seed_dependency_consumers",
+        "comparison_apportionment"
+      ],
+      "type": "object"
+    },
+    "snapshot_consistency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "supervisor_cumulative_snapshots_separate_never_sum": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "time_used_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "tokens_used": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "at",
+          "tokens_used",
+          "time_used_seconds",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "totals": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_attempt": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary_or_metadata": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_probe": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "candidate_attempt",
+        "route_canary",
+        "route_canary_or_metadata",
+        "route_probe"
+      ],
+      "type": "object"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "wall_critical_path_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "wasted_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "as_of_utc",
+    "sources",
+    "totals",
+    "actual_family_totals",
+    "reconciliations",
+    "supervisor_cumulative_snapshots_separate_never_sum",
+    "role_import_cost_links_reference_only",
+    "evaluator_extensions_separate",
+    "helper_provider_usage",
+    "billing_dollars",
+    "wall_critical_path_seconds",
+    "wasted_seconds",
+    "seed_unique_actor_artifact_cost",
+    "seed_apportionment_rule",
+    "cleanup_rule",
+    "quiescence_rule",
+    "goal_status_rule",
+    "counter_rule",
+    "snapshot_consistency",
+    "model_provenance",
+    "validation_errors"
+  ],
+  "title": "ER9 exact safe snapshot schema",
+  "type": "object"
+}

@@ -1,0 +1,701 @@
+{
+  "schema": "er9.owner-import-binding-audit.v2",
+  "rows": [
+    {
+      "job_id": "D-V01-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "GLM",
+      "registered_family": "Z",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "Z",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V01-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "GLM",
+      "registered_family": "Z",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "Z",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V01-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "6c25b77f16714ab89b4b524fddd9ab844d03bc2d3855502bd6481de107eb56dd",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V01-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "98db53d888114c3105272c08ca553c7bb29a072f1e7dee6092892fd7aff597d3",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V02-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V02-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "adb5e130bb3fc5fda988d811d860368e13c99131dd87cc7c4e027a170b44141d",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V02-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V02-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "7bcab0cb632f0490652c1beb02d002141e6ef9562a2bad845a1e86a9c70e6b3d",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V02-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V02-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "94ec729f83687d1cafffae079dea83c62fd4f4285793f25cee80a5120daa1fd2",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V02-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V02-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "6cac0cd19a9e5ef8efb8f90a40f279a2adfac5a079e02a20f8f753877f3ef799",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V03-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V03-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "e3f701e2eaf67ecde4c7e17076af1e05933d277337f06766da24249c4bd012ab",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V03-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V03-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "9168314dbf713a6da8af014c6f53afa97250c168ba03a0ec6a2d7f66d04e6a56",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V03-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V03-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "8d698c7486bb2a4dec8deb56f2e5ba307a29145f16350988e69618603cf734b4",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V03-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V03-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "579fb643ee4a1f21e7c58aff88390fa466af5224c3604a7a0592bf512f10f795",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V04-A-control-proposal_first_record-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V04-A-diagnostic-preparation-control-proposal_first_record-dec006-r002.json",
+        "sha256": "e9d660895e698bba3675c738781102850d965e1a686e2cd5c906c2972a52fe88",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V04-A-treatment-source_first_record-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V04-A-diagnostic-preparation-treatment-source_first_record-dec006-r002.json",
+        "sha256": "7dcba8a6ea98b9c2af984f3f51bccd0ed23c55cb7ac3dd590393d5b51e9a6af0",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V04-B-control-proposal_first_record-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V04-B-diagnostic-preparation-control-proposal_first_record-dec006-r002.json",
+        "sha256": "1a7c19fb8a361d2193feaf45f245f5acadfd8ad857337e3ee237bf9953f3cf1c",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V04-B-treatment-source_first_record-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V04-B-diagnostic-preparation-treatment-source_first_record-dec006-r002.json",
+        "sha256": "7b52dad2d169a18e793e7178cfd97b0bd47fcfdb3fa4f6f7bbf8c3597f149499",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V07-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V07-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "40143f13aee35f96ac0b9abb26c2ae7de248b4eb8a3b9910692896d3fc4da8a7",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V07-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V07-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "ca8bb3eaf7ea4e371c0daac0fe7da2fe7bd9bcd524da0d010cb8f25d5b977b20",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V07-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V07-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "cfaa28c977714f4dcb7c5694f30af7f80719f3918fcdce2247b19abda2d96a34",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V07-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V07-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "7c1d3d5f5acbd15f4294252457aad9dfc326da4d20438081e73791c01754fe35",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V08-A-control-critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V08-A-diagnostic-preparation-control-critic-dec006-r002.json",
+        "sha256": "86d6d16326721197064aa1b84319b3ba0a0607b15218502b93314351d488ad27",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V08-A-treatment-critic_and_final-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V08-A-diagnostic-preparation-treatment-critic_and_final-dec006-r002.json",
+        "sha256": "3c58277b50e2fe706419b67c7e135680dc2f4cf7685d2cc653c9813eaa0d7fcd",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V08-B-control-critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V08-B-diagnostic-preparation-control-critic-dec006-r002.json",
+        "sha256": "5d887ef546f06675adf3c208bba5116167f71ef44203ca087713038f98fc9416",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "GLM",
+      "registered_family": "Z",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "Z",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V08-B-treatment-critic_and_final-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V08-B-diagnostic-preparation-treatment-critic_and_final-dec006-r002.json",
+        "sha256": "5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "GLM",
+      "registered_family": "Z",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "Z",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-A-control-whole_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-A-diagnostic-preparation-control-whole_critic-dec006-r002.json",
+        "sha256": "4a8c0130dce97991b844402b42f8060bb1f7767e35c8c86f61883cdbee888b87",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-A-treatment-source_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-A-diagnostic-preparation-treatment-source_critic-dec006-r002.json",
+        "sha256": "63794a3eb6919e2f9b250d891650570f087c4fd82c632326d870b363b3e8497f",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-A-treatment-implementation_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-A-diagnostic-preparation-treatment-implementation_critic-dec006-r002.json",
+        "sha256": "a498fa65b7c46aab263bc0f36ef8054c4cb02e79430680a3f0eb55b6001b942e",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-B-control-whole_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-B-diagnostic-preparation-control-whole_critic-dec006-r002.json",
+        "sha256": "1ca85f1439aacbdac2f5af51d6614499b01a5edae58e4275b2e30004657f7e14",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-B-treatment-source_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-B-diagnostic-preparation-treatment-source_critic-dec006-r002.json",
+        "sha256": "21ce83acdcadd4e141722cf2453da3f913dbe6aed1addbbd0f7de80c95a38302",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V09-B-treatment-implementation_critic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V09-B-diagnostic-preparation-treatment-implementation_critic-dec006-r002.json",
+        "sha256": "4f6c274bfa5d07833e9a6ad3d0c3b234a39ea1f61a6814abb6caa7d308cdbec2",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V10-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V10-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "b13b3146cb5019ee9bcab3171ea532406dbd74ee0730423dc3e4a172698e0505",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V10-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V10-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "af4b80f1e254b98d4eb4cf7868085150019dc15f5b75218a4c557ff821c861ec",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V10-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V10-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "cc8760eb9e5fc6ea88fa67a1320643853b51f03e3f3d8be2b4334f85b42b57f6",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V10-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V10-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "7e095d6e6778f032fa5eb1c4a8fdf522b0eabebc9ade6c38dcb985a4a6c1db26",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V11-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V11-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "5bbdb289192405f34168da9127c2790fbe47a80b7b50daaa5188e9adb38e161c",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V11-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V11-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "8043fa3e47ef31236f77b75cab6b245a59bf63fc507657010c74efbe3c673817",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V11-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V11-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "1a628082f26295d24b4ffa4c74f5ccce154e7e039748acb33833cd4f383d9251",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V11-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V11-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "1371298beb3cfc0703357f3e9e95bb47b8d67da6b8f6610d3217323d8fc85c57",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V12-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V12-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "0102b322b8da826f0b1384f63ca98a4a024bdb22ead97b6e3adce012b86adf98",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V12-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V12-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "02c0eadb527d6eb4fcf44296a4efc0dac512b541368623b580d10fbe524772ac",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V12-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V12-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "a25ab21911a9215894f067b7f771940cfc01520842555477da00dd2275be86fd",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V12-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V12-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "23ab1aa5e5ad00d4255604986cc8d1564080a88d3fe2ae5eed0eea9595879cc6",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": true,
+      "bound_runtime_family": "L",
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V16-A-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "91a4819458c7c407ee5eaf913a6f82f27267b42bfca87f6fb98fad1c3497eb43",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": false,
+      "bound_runtime_family": null,
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V16-A-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "af1a285ae7e099cde38d6d08d6cb85f76c97e4d1240b153f1e163e4395d41d82",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": false,
+      "bound_runtime_family": null,
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V16-B-control-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": false,
+      "bound_runtime_family": null,
+      "source_family_matches": true
+    },
+    {
+      "job_id": "D-V16-B-treatment-diagnostic-a001",
+      "owner_registration": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "card_requested_family": "Luna",
+      "registered_family": "L",
+      "runtime_binding_completed": false,
+      "bound_runtime_family": null,
+      "source_family_matches": true
+    }
+  ],
+  "mismatches": 0,
+  "owner_families": {
+    "Z": 4,
+    "L": 42
+  },
+  "correction": "Coordinator incorrectly assumed D01B GLM and classified unbound templates as actual GLM runtime. All owner requests correct; no wrong-family native launch. Historical false holds/audit retained."
+}

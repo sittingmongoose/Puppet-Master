@@ -1,0 +1,27 @@
+{
+  "schema": "er9.accounting.positive-selection.v1",
+  "cohort": "005",
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-005/attempts.safe.json",
+      "sha256": "5691cb4cb79bb59c6571a6691dda8528f77c6528a179fb36ca22406f59b91908"
+    },
+    {
+      "path": "accounting/cohort-005/snapshot.safe.json",
+      "sha256": "028d1123f12357b50ac30ca6fcae840ba4189ad8ac37683705686e8fdd6c7853"
+    },
+    {
+      "path": "accounting/cohort-005/attempts.safe.schema.json",
+      "sha256": "33afb44649dddccb89f077e064e712e3bb17eb7c8e1d87603d4e6f8bf296f1b9"
+    },
+    {
+      "path": "accounting/cohort-005/snapshot.safe.schema.json",
+      "sha256": "f93cf2696f7f01fceb7ec0de344a25d251812a3c10acbed3480f13ce422e891d"
+    },
+    {
+      "path": "accounting/cohort-005/COST_SNAPSHOT.md",
+      "sha256": "48d142995513f9d1202e5a4c8b51ea3ccb0646167c8bec60674d09b596ad31a6"
+    }
+  ],
+  "exclusion": "Only these projected artifacts; no raw source receipts/private runtime/semantic bodies/hidden answers."
+}

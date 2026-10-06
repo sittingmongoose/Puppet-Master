@@ -1,0 +1,25 @@
+{
+  "schema": "er9.owner-positive-publication-selection.v1",
+  "owner": "diagnostic_eval",
+  "created_utc": "2026-10-05T23:18:51.846808Z",
+  "additive_to": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/PUBLICATION_SELECTION_v1.json",
+    "sha256": "2306eb508e3af0b40c6a5b4e654b736b66e6021edf4a764118f8465530ee8cc0"
+  },
+  "rows": [
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/SOURCE_SCOPE_CLARIFICATION.json",
+      "relative_path": "D-V15-B/partial-review0001/SOURCE_SCOPE_CLARIFICATION.json",
+      "sha256": "7bc487920139adf880d81873a3ae3df7be4299503c8a34582954d3dee28a0558",
+      "kind": "owner-authored scope/budget closure; no candidate/source body"
+    },
+    {
+      "source_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+      "relative_path": "D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+      "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74",
+      "kind": "owner-authored scope/budget closure; no candidate/source body"
+    }
+  ],
+  "original_judgments_unchanged": true,
+  "scope": "D15Bsourcefacetclarification and originalbudgetclosure only; no originalgradeupdate or extraevaluation"
+}

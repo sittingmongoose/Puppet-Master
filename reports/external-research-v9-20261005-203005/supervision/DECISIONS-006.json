@@ -1,0 +1,61 @@
+{
+  "schema": "er9.authentic_seed_reuse_recovery.v1",
+  "policy_version": "DECISIONS-006",
+  "scope": "neutral contract and finite queue recovery only",
+  "reuse_first": {
+    "authorized": true,
+    "selection_rule": "first mechanically eligible completed research per domain by original native birth/admission timestamp, job-id tie-break",
+    "reported_origins": {"A": "original I-01 control research", "B": "original I-02 treatment research"},
+    "actual_origin_family_model_effort": "GLM Flash/max; exact native identity pinned in wrapper",
+    "select_on_quality_or_known_errors": false,
+    "source_grade_PASS_required": false,
+    "roles_directly_importable": ["proposal", "source_catalog", "witness_catalog", "lead_inventory"],
+    "mechanical_wrapping_only": true,
+    "original_receipts_or_failed_statuses_rewritten": false,
+    "new_candidate_starts_for_import": 0,
+    "missing_roles_aliased_or_inferred": false
+  },
+  "prospective_role_policy_correction": {
+    "new_pinned_versions_required_before_output": true,
+    "base_only_methods_if_fixture_suitable": ["V01", "V02", "V03", "V04", "V07", "V08", "V09", "V10", "V11", "V12", "V16"],
+    "base_only_preparable_pairs_maximum": 22,
+    "automatic_semantic_suitability_from_files": false,
+    "required_extra_roles": {"V05": ["critique", "revision"], "V06": ["critique"], "V13": ["dependencies"]},
+    "extra_role_pairs": 6,
+    "V04_source_first_proposal_prose_withholding_preserved": true,
+    "full_required_meaning_criteria_and_matched_budgets_preserved": true,
+    "missing_facet_outcome": "UNASSESSED or reasoned candidate-authored successor; never fabricated or silently tested"
+  },
+  "missing_role_continuations": {
+    "fixed_base_and_legitimate_raw_source_context": true,
+    "native_candidate_authorship_required": true,
+    "existing_stage_seconds": {"critique": 600, "revision": 450, "enrichment_including_dependencies": 900},
+    "new_full_discovery_or_increased_bounds": false,
+    "actual_model_substitution": false,
+    "private_evaluator_answers_or_Sol_semantics_supplied": false,
+    "all_seed_jobs_must_finish_before_any_comparison": false,
+    "automatic_identical_bestof_retries": false,
+    "new_prerequisite_DAG_instead_of_relabeling_failed_base": true
+  },
+  "native_assignment_completion": {
+    "objective": "complete current honest assigned stage delivery with all required meaning and exact artifacts",
+    "independent_product_PASS_or_perfection_required": false,
+    "unresolved_or_unexecuted_material_honestly_labeled": true,
+    "blank_outputs_or_omitted_requirements_accepted": false,
+    "native_status_artifact_validation_quietness_and_source_quality_separate": true,
+    "original_deadlines_unchanged": true
+  },
+  "accounting": {
+    "all_failed_original_costs_preserved": true,
+    "reused_native_origin_start_charged_once_in_campaign_totals": true,
+    "cold_shared_warm_full_workflow_costs_distinguished": true,
+    "import_is_scored_comparison_or_fresh_discovery": false,
+    "cancelled_tail_and_unknown_counters_preserved": true
+  },
+  "observer_quiescence_repair_is_separate": true,
+  "new_global_cutoff_or_qualification_barrier": false,
+  "new_Max_or_user_Go_required": false,
+  "candidate_bodies_source_answers_or_holdouts_read": false,
+  "native_Goals_launched": 0,
+  "prior_decisions_unchanged": true
+}

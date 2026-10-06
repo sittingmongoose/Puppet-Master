@@ -1,0 +1,402 @@
+{
+  "schema": "er9.positive-anonymous-source-capture-export.v1",
+  "parent_dispatch_sha256": "a3a9c7357ea7d87bca633557e323c323541f128186631e80f644d97c840ea0b5",
+  "candidate_output_freeze_sha256": "50d47bc4e18ab470ee8a03291f4fccb54ff7b112c0e21782b92087087aecccd0",
+  "source_catalog_sha256": "79ba20e801f1b2478b8965c404a369ebcdf925c7f00056dc9e52c3b46de54cdd",
+  "files": [
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/02a10a8eec6841449f13b046fbd056f2.json",
+      "sha256": "adb0c4df5930fbc4eb07e93671269239ccd7836e5c01fedfd04debad3a8d0d95",
+      "original_sha256": "a04277521eed2312d3fff098c6bac39d4091fca434b6bb4d0b14be0e70e4177b",
+      "capture_id": "02a10a8eec6841449f13b046fbd056f2",
+      "source_ids": [
+        "S13"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/selected-public-bodies/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "original_sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "size_bytes": 163120,
+      "capture_id": "02a10a8eec6841449f13b046fbd056f2",
+      "source_ids": [
+        "S13"
+      ],
+      "evidence_kind": "public_source_capture",
+      "byte_policy": "exact requested public response bytes; original SHA+captured_bytes verified; retain failed/truncated/non200 evidence",
+      "publication_rule": "raw body LAB/Evidence only; not positive public repo selection"
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/0bef0fed2311412481c267d245d1668d.json",
+      "sha256": "f183736b8566c66bdab266597993d48bf3a44300d874ac8c1983186a2b43d439",
+      "original_sha256": "dcfcfa62efc45348f819505a8e9f56a94cd1b37a62bf6d35f69425d4ccdadd65",
+      "capture_id": "0bef0fed2311412481c267d245d1668d",
+      "source_ids": [
+        "S19"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/17bfc978a08c405486abec2e292678a6.json",
+      "sha256": "071b44252592b21dd44ee8756aa0dc0da2f59937eae7195824863f5a0d889c69",
+      "original_sha256": "3982bd3aeb6940b534b7bcbcfe6feb958e94f26fb10fb6fb8e5d2387b7f54406",
+      "capture_id": "17bfc978a08c405486abec2e292678a6",
+      "source_ids": [
+        "S21"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/299dd0b61406455ea7920a773356734f.json",
+      "sha256": "8e511892d193691c05c41a539838c6c29b75650d1c21d7ca06fc9c48c0b0befa",
+      "original_sha256": "10149a40146ae0b4eada23fe3661bba1dbb22afd7a461442939b2adf7cf5f91c",
+      "capture_id": "299dd0b61406455ea7920a773356734f",
+      "source_ids": [
+        "S3"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/2ca73571a3fb49bebd62e421f4ab6d91.json",
+      "sha256": "d461a85c906838c9e76ebe799ab7857df6becb500e91ad1da9eed20a088ceb2b",
+      "original_sha256": "426e67d100f96e7493938c046a95a376cf8bdb2031637eae9a700a0b1227cc6c",
+      "capture_id": "2ca73571a3fb49bebd62e421f4ab6d91",
+      "source_ids": [
+        "S14"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/32307d722e574cd38924405e07da963a.json",
+      "sha256": "36515270e208296ba744acdfae9b841571d808701742675e77f3051eb2087044",
+      "original_sha256": "552dfcaef32159d4a2d476dc2cf9c5a752e9c4a73fdd167105310007506cf102",
+      "capture_id": "32307d722e574cd38924405e07da963a",
+      "source_ids": [
+        "S9"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/4602d1ba788646bfa23a6f8b41556a71.json",
+      "sha256": "4b3e6f834b5caeb808f6f732d4acd042be3d482eeefbf2a8fb57cf1f9e271753",
+      "original_sha256": "e841d43be3164d53ef18a62b17733116366346323f7600c6b16e402488cff8da",
+      "capture_id": "4602d1ba788646bfa23a6f8b41556a71",
+      "source_ids": [
+        "S11"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/54aad79079fc4c52a5208dfd7eb3bf10.json",
+      "sha256": "5c6cf7ce815832be63a49cb5d80744004f3aa146b561be8021cce4bf8b60492d",
+      "original_sha256": "a7418f7f0b5373cf8eac719a97009f1f242d9ff760262be0f35fdd4f529477e1",
+      "capture_id": "54aad79079fc4c52a5208dfd7eb3bf10",
+      "source_ids": [
+        "S2"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/6252b458a5ce4ea3ba64d07e1fb80b0d.json",
+      "sha256": "71da456b2d50f02eaf4713ca66bc9d45b1954bb0aaf0ed3e6a95753e6316649c",
+      "original_sha256": "01b098625a2eeb713037d51241f3176b6365b0e257a7bc0eafee9ea64bdf762b",
+      "capture_id": "6252b458a5ce4ea3ba64d07e1fb80b0d",
+      "source_ids": [
+        "S16"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/68b9f7603a5c40d19aaf4f4ec53df12a.json",
+      "sha256": "55037fde9ed93fab664b10ff9f8d07c6a7837f8fd331261ec5cdd32554b12e5e",
+      "original_sha256": "fb786d601b5a5a44d878be76884ffa5ad92238ee260d4934959b20bff34b7911",
+      "capture_id": "68b9f7603a5c40d19aaf4f4ec53df12a",
+      "source_ids": [
+        "S4"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/6a56285a720c4c3d8fec93564007007a.json",
+      "sha256": "ed034a01e2c7cb6ebd4633432c56f01a55d06c6700effef4203c0a9d0e4b67e4",
+      "original_sha256": "58aa00b6fec77b49cb68af0602cfa322facfe2e20663f814affe636e9e6f8bc7",
+      "capture_id": "6a56285a720c4c3d8fec93564007007a",
+      "source_ids": [
+        "S12"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/8ce6662574234aae9a6dc34253760215.json",
+      "sha256": "2a2163cb69a7b38c421a0f6fb0ff91b8f77b59c8bed043f37629b540f9695104",
+      "original_sha256": "046bf4bfbfe13840ba3c7ff571bb9e833ace7b933ecd4532f6c9d616e0915912",
+      "capture_id": "8ce6662574234aae9a6dc34253760215",
+      "source_ids": [
+        "S1"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/90ae60a312ca4e26a5cabdefe5c61e9b.json",
+      "sha256": "5c9ce2fa920a4fde711ec079a7789a01b9ef10440b8c32fd4d448acc9c2cdcc1",
+      "original_sha256": "5b579ecbfaf0781236652e1ba4d11a5498d9bf8010d0b86e70e51439795e77af",
+      "capture_id": "90ae60a312ca4e26a5cabdefe5c61e9b",
+      "source_ids": [
+        "S15"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/selected-public-bodies/06bb56c68c6ac32f52b7538a5d035003d1ddae0478d3c468e53baacdb04563be.body",
+      "sha256": "06bb56c68c6ac32f52b7538a5d035003d1ddae0478d3c468e53baacdb04563be",
+      "original_sha256": "06bb56c68c6ac32f52b7538a5d035003d1ddae0478d3c468e53baacdb04563be",
+      "size_bytes": 14002,
+      "capture_id": "90ae60a312ca4e26a5cabdefe5c61e9b",
+      "source_ids": [
+        "S15"
+      ],
+      "evidence_kind": "public_source_capture",
+      "byte_policy": "exact requested public response bytes; original SHA+captured_bytes verified; retain failed/truncated/non200 evidence",
+      "publication_rule": "raw body LAB/Evidence only; not positive public repo selection"
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/9e3ecbc2f47643e8b56843d92dd5cd2b.json",
+      "sha256": "f82a6d242e0a2fab86c5ac9b4f62c7bc497848fd1298eca587b3645e020d16fc",
+      "original_sha256": "540ab94c60478fd13dc853049c27f1e67f714cea1e85b40d84b06c5ec2e2dfac",
+      "capture_id": "9e3ecbc2f47643e8b56843d92dd5cd2b",
+      "source_ids": [
+        "S7"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/ab53c1388a5f426dad0f57f73d1fcc84.json",
+      "sha256": "b74d72c77c5a5581cea723b826469d9db16def1306b3ad927d995852d9922c17",
+      "original_sha256": "0ca507639d714f3f1f758a74da9abfddcaeaadbdca663c9ec86159ad8e33da40",
+      "capture_id": "ab53c1388a5f426dad0f57f73d1fcc84",
+      "source_ids": [
+        "S17"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/selected-public-bodies/25383061b06390bc4aafefb88a55820bc5a4ab3da1cb77dea731ef902f1b35ea.body",
+      "sha256": "25383061b06390bc4aafefb88a55820bc5a4ab3da1cb77dea731ef902f1b35ea",
+      "original_sha256": "25383061b06390bc4aafefb88a55820bc5a4ab3da1cb77dea731ef902f1b35ea",
+      "size_bytes": 2421,
+      "capture_id": "ab53c1388a5f426dad0f57f73d1fcc84",
+      "source_ids": [
+        "S17"
+      ],
+      "evidence_kind": "public_source_capture",
+      "byte_policy": "exact requested public response bytes; original SHA+captured_bytes verified; retain failed/truncated/non200 evidence",
+      "publication_rule": "raw body LAB/Evidence only; not positive public repo selection"
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c246aa2f3f2949daa98eb3faa0d0b257.json",
+      "sha256": "14d1df56d50b1c7e7ee42630ed2c74b7e9c019a0f228c3a5b5a0e1123e520f0b",
+      "original_sha256": "f3552e6fbb017ff2a34dc17caf2f09855adf343257464e769ea3c1fa4a1a328b",
+      "capture_id": "c246aa2f3f2949daa98eb3faa0d0b257",
+      "source_ids": [
+        "S6"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c2cbb57547c74908963b16061334eac0.json",
+      "sha256": "7d2b713672f18ef352b4edea019c192d184f7fc90443541a87d0014766f16391",
+      "original_sha256": "beb22fb1b74ad2c13f21848a96c3e513731e0acde499547d4a432259f877a93e",
+      "capture_id": "c2cbb57547c74908963b16061334eac0",
+      "source_ids": [
+        "S18"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/c6659a83006b4c1c8674d47eb28c406c.json",
+      "sha256": "4d2e8d04525f194de75e8dc2c6a10e714fe02f8f4e720898715e7dbb5fd5bea9",
+      "original_sha256": "4dcb2f58b0ef1fbfa5025f24bbc434bb08d58b72d156161ef4c1b27f641ad59c",
+      "capture_id": "c6659a83006b4c1c8674d47eb28c406c",
+      "source_ids": [
+        "S20"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/d26884647b5f40b2989071f577cc6e62.json",
+      "sha256": "158456390cd3777a6d9252f099aff9618dc2389581a9a7c4f1ebb86a46e9a79f",
+      "original_sha256": "ad4499fef6bbf300f95516d502a7c199bb7b54ce015b1f16370dbbab228f48ad",
+      "capture_id": "d26884647b5f40b2989071f577cc6e62",
+      "source_ids": [
+        "S10"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    },
+    {
+      "alias": "A",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/evidence/NEXT003-CAPTURES-001/A/metadata/f976a4f84e0c4906806d11c110a42d09.json",
+      "sha256": "b4db9b029971a79fccf8a954ce754c56ffe19e8241bed457ea63b1ba99235ac5",
+      "original_sha256": "d4df554356faf9aff5da8493253e8dd54f1063d391f738951afd355eff054747",
+      "capture_id": "f976a4f84e0c4906806d11c110a42d09",
+      "source_ids": [
+        "S5"
+      ],
+      "evidence_kind": "public_source_capture_metadata",
+      "redaction_policy": "positive metadata projection; omit privatecapturepath/publicIP/llm_read; preserve all actual response status/limits/time/hash",
+      "omitted_original_fields": [
+        "capture_path",
+        "llm_read",
+        "public_pinned_ip"
+      ]
+    }
+  ],
+  "unresolved_references": [
+    {
+      "source_id": "S8",
+      "disposition": "no exact positive capture ID; not guessed"
+    }
+  ],
+  "raw_body_selection": [
+    "S13",
+    "S15",
+    "S17"
+  ],
+  "semantic_assessment": "NOT_PERFORMED_BY_COURIER"
+}

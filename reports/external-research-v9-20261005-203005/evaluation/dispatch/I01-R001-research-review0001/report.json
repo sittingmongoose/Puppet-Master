@@ -1,0 +1,1106 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "ER9-EVAL-NEXT-003",
+  "status": "ASSESSED_FAILED_SCREEN_FOR_AVAILABLE_PARTIAL_RESEARCH",
+  "scope": "source_screen_of_one_terminal_research_partial",
+  "started_utc": "2026-10-05T23:37:11.718720Z",
+  "report_written_utc": "2026-10-05T23:55:26.576570Z",
+  "report_write_wall_seconds": 1094.85785,
+  "authoritative_review_finish_clock": "FINISHED.json written after validation; not report-write time",
+  "current_output_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/current_output_judgment.json",
+    "sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+    "saved_utc": "2026-10-05T23:50:58.462346Z"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "observed_model_effort_basis": "No direct evaluator identity/effort receipt supplied; requested configuration is not asserted observed.",
+  "received_inputs": {
+    "dispatch": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/dispatch.json",
+      "sha256": "a3a9c7357ea7d87bca633557e323c323541f128186631e80f644d97c840ea0b5"
+    },
+    "received_inputs": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/brief.md",
+        "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+        "kind": "task",
+        "name": "brief"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/coverage_map.json",
+        "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+        "kind": "task",
+        "name": "coverage_map"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/common_criteria.json",
+        "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+        "kind": "task",
+        "name": "common_criteria"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/source_access.json",
+        "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+        "kind": "task",
+        "name": "source_access"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/important_checks.json",
+        "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+        "kind": "task",
+        "name": "important_checks"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/output_contract.md",
+        "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+        "kind": "task",
+        "name": "output_contract"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/research_task.md",
+        "sha256": "dac9562abb37847b3cacc9a8101fb7d708c1ced3887f97126a86033fb7ecabdd",
+        "kind": "task",
+        "name": "research_task"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/actual_launched_research_task.md",
+        "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f",
+        "kind": "task",
+        "name": "actual_launched_research_task"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/proposal.md",
+        "sha256": "98b2aaab833d2a43aa0648ecc8449e77d954ce55ba831c7a9237d70105f80c6a",
+        "kind": "candidate",
+        "alias": "A",
+        "name": "stage_proposal"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/sources.json",
+        "sha256": "79ba20e801f1b2478b8965c404a369ebcdf925c7f00056dc9e52c3b46de54cdd",
+        "kind": "candidate",
+        "alias": "A",
+        "name": "source_catalog"
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/witnesses.json",
+        "sha256": "c55cfb1935f537b301b2bde3b470551077bfcbfa4316c7e3fe0df66dce026dac",
+        "kind": "candidate",
+        "alias": "A",
+        "name": "witness_catalog"
+      }
+    ],
+    "checked_utc": "2026-10-05T23:37:11.720392Z"
+  },
+  "blinding": {
+    "hidden_fields": [
+      "arm_assignment",
+      "failure_cause",
+      "economics",
+      "prior_grades",
+      "method_history"
+    ],
+    "known_hints_at_dispatch": [
+      "The evaluator has already evaluated original I01 and I02 and knows their findings. This is an independent assessment of new frozen R001 research bytes; old findings are not supplied to candidates or assumed to recur.",
+      "Coordination disclosed the available research output as control, both research stages as terminal failures and partner as proposal-absent before this packet. Candidate family and V01 method context were known from prior campaign assignment. Economics/detailed later history remain hidden until immutable judgment."
+    ],
+    "byte_policy": "Exact frozen substantive bytes retained; disclose incidental identity hints.",
+    "allocation_record": "coordinator-only, excluded",
+    "phase2_material_release": "only after immutable current-output judgment saved"
+  },
+  "phase1": {
+    "protocol_version": "ER9-independent-output-v1",
+    "evaluation_id": "ER9-EVAL-NEXT-003",
+    "phase": "PHASE1_IMMUTABLE_CURRENT_OUTPUT",
+    "saved_utc": "2026-10-05T23:50:58.462346Z",
+    "started_utc": "2026-10-05T23:37:11.718720Z",
+    "screen_elapsed_seconds": 826.743626,
+    "assessment_mode": "source_screen_of_one_terminal_research_partial",
+    "dispatch_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/dispatch.json",
+      "sha256": "a3a9c7357ea7d87bca633557e323c323541f128186631e80f644d97c840ea0b5"
+    },
+    "requested_evaluator": {
+      "model": "gpt-6.1-sol",
+      "reasoning_effort": "xhigh"
+    },
+    "observed_evaluator": null,
+    "observed_identity_basis": "No direct evaluator identity/effort receipt supplied; requested configuration is not asserted observed.",
+    "blinding": {
+      "hidden_fields": [
+        "arm_assignment",
+        "failure_cause",
+        "economics",
+        "prior_grades",
+        "method_history"
+      ],
+      "known_hints_at_dispatch": [
+        "The evaluator has already evaluated original I01 and I02 and knows their findings. This is an independent assessment of new frozen R001 research bytes; old findings are not supplied to candidates or assumed to recur.",
+        "Coordination disclosed the available research output as control, both research stages as terminal failures and partner as proposal-absent before this packet. Candidate family and V01 method context were known from prior campaign assignment. Economics/detailed later history remain hidden until immutable judgment."
+      ],
+      "byte_policy": "Exact frozen substantive bytes retained; disclose incidental identity hints.",
+      "allocation_record": "coordinator-only, excluded",
+      "phase2_material_release": "only after immutable current-output judgment saved"
+    },
+    "prior_case_knowledge_limit": "Original I01/I02 facts known to evaluator; new current claims checked against their own primary evidence, no original-quality comparison or candidate feedback.",
+    "anonymous_output_results": [
+      {
+        "alias": "A",
+        "decision": "FAIL_SCREEN",
+        "assessment_state": "partial",
+        "full_pass_eligible": false,
+        "current_stage_artifact_contract": "INCOMPLETE_REQUIRED_LEADS_ABSENT",
+        "designated_final": null,
+        "full_pipeline_quality": "UNASSESSED",
+        "obligations": [
+          {
+            "obligation_id": "A01",
+            "text": "Minimum import/inspect/navigation/annotation/save/reopen/export workflow, with preservation of originals and bounded support scope",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "claim_ids": [
+              "C14"
+            ],
+            "reason": "Minimum planned workflow present; integrated reliability depends on unresolved storage/resource conditions.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A02",
+            "text": "Explicit axis, coordinate, orientation, physical calibration and annotation scope contract; transformations and units qualified",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "claim_ids": [
+              "C04",
+              "C08",
+              "C16"
+            ],
+            "reason": "NGFF axes/order and numeric/anchor choices supported; complete orientation/transformed export scope unverified.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A03",
+            "text": "Distinguish intensity display from sample mutation and recorded resampling; exported annotation/derived-image meaning",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "claim_ids": [
+              "C03",
+              "C09",
+              "C19"
+            ],
+            "reason": "Display/data separation and provenance plan present; actual derived/export behavior unexecuted.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A04",
+            "text": "Large-data access/cache responsiveness, progress/cancel and investigated resource target without unsupported performance promises",
+            "assessment_state": "partial",
+            "finding": "contradicted",
+            "claim_ids": [
+              "C12",
+              "C19"
+            ],
+            "reason": "Reader chunk-bound condition missing; real resource and cancellation targets remain unexecuted.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A05",
+            "text": "Project identity, portability/external-path relocation, metadata provenance and save/recovery behavior",
+            "assessment_state": "partial",
+            "finding": "contradicted",
+            "claim_ids": [
+              "C10",
+              "C11",
+              "C17",
+              "C18"
+            ],
+            "reason": "Identity/relink primitive supported; journal/multi-file recovery guarantee unsupported.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A06",
+            "text": "Usable annotation styles, undo/redo, keyboard/accessibility and legible status/unsupported-input feedback",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "claim_ids": [
+              "C14"
+            ],
+            "reason": "Plan-level styles, inverse-op undo, keyboard focus, screen-reader/legible feedback and status are explicit; no built UI credit.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A07",
+            "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "claim_ids": [
+              "C01",
+              "C02",
+              "C05",
+              "C06"
+            ],
+            "reason": "At least two independent useful precedents and concrete mechanisms verified; no link-count substitute.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A08",
+            "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "claim_ids": [
+              "C05"
+            ],
+            "reason": "Real issue/release-fix/regression-test chain and causal limits verified without running upstream test.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A09",
+            "text": "At least one useful opportunity and one plausible alternative; optional adoption distinguished from requirements",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "claim_ids": [
+              "C15"
+            ],
+            "reason": "Useful interoperability opportunity and viewer/storage alternatives, with optional adoption, are stated.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A10",
+            "text": "Coherent component/architecture choice or bounded alternatives with critical dependencies and support/validation limits",
+            "assessment_state": "partial",
+            "finding": "unresolved",
+            "claim_ids": [
+              "C11",
+              "C12",
+              "C13"
+            ],
+            "reason": "Coherent service sketch exists; two central behavior dependencies lack necessary conditions.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A11",
+            "text": "Consequential numerical/coordinate/storage/export checks discriminate claimed behavior; executed/proposed labels and component/full-app scope are honest",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "claim_ids": [
+              "C16",
+              "C17",
+              "C18",
+              "C19"
+            ],
+            "reason": "All five actual witness receipts, code/streams and expectations checked; proposed checks remain unexecuted.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          },
+          {
+            "obligation_id": "A12",
+            "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and keeps unresolved leads separately accessible",
+            "assessment_state": "partial",
+            "finding": "contradicted",
+            "claim_ids": [
+              "C20",
+              "C21"
+            ],
+            "reason": "Current research references/inline leads useful; one required catalog absent, later final/preservation duties unassessed.",
+            "stage_scope": "current research only; final-form duties are not waived"
+          }
+        ],
+        "consequential_claims": [
+          {
+            "claim_id": "C01",
+            "claim": "napari multiscale/scale overlay issue history informs the transform core",
+            "output_locator": "proposal.md:42-51,95,236",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "source_ids": [
+              "napari_issue6631",
+              "napari_issue6382",
+              "napari_6390_diff",
+              "napari_6633_diff",
+              "napari_v0419_base"
+            ],
+            "reason": "Reported repros and complete fix diffs support the narrow lesson; v0.4.19 contains the fix. No test file in either diff. Broad affected ranges and exhaustive lineage/neighboring behavior are unassessed."
+          },
+          {
+            "claim_id": "C02",
+            "claim": "QuPath project entries, per-entry data/summary and per-machine path variants",
+            "output_locator": "proposal.md:55,61,110-123,169,181",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "qupath_projects"
+            ],
+            "reason": "Primary 0.7.0 docs support layout and relocation patterns. They do not establish a multi-file transaction; that inference is assessed separately in C11."
+          },
+          {
+            "claim_id": "C03",
+            "claim": "QuPath LUT preserves samples, calibration may be absent/wrong, export uses stated full-resolution frame",
+            "output_locator": "proposal.md:56-59,97,99,174,186-188",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "qupath_export",
+              "qupath_images",
+              "qupath_1730_diff",
+              "qupath_issue1729"
+            ],
+            "reason": "The documented data/display and export contracts and same-plane fix are real. The primary issue page dates creation to 2024-12-12, resolving the candidate-noted metadata inconsistency. QuPath release-tag applicability remains unverified."
+          },
+          {
+            "claim_id": "C04",
+            "claim": "NGFF 0.4 ordered axes, per-level scale and translation, display and label metadata",
+            "output_locator": "proposal.md:63-71,132-150",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "ngff_v04"
+            ],
+            "reason": "Exact captured specification matches the source catalog. Multiscales permits only scale/translation; scale is required and translation follows it. This proposal states those restrictions correctly."
+          },
+          {
+            "claim_id": "C05",
+            "claim": "tifffile #334 has an issue, release fix and linked coordinate/data regression test",
+            "output_locator": "proposal.md:28,75-77,228-234",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "tiff_issue334",
+              "tiff_readme_pinned",
+              "tiff_test_patch",
+              "tiff_core_v0915",
+              "tiff_core_pinned"
+            ],
+            "reason": "The reported string-metadata regression, 2026.9.15 fix entry and ed361c5 regression test are real. The test asserts recovered Z coordinates and pixel equality. Independent tagged-source inspection confirms numeric coercion. Neither evaluator nor candidate ran this upstream regression test."
+          },
+          {
+            "claim_id": "C06",
+            "claim": "OpenSlide API supplies a level-0 region frame, cache and latching error model",
+            "output_locator": "proposal.md:80-83,176,196",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "openslide_python"
+            ],
+            "reason": "Narrow API facts are documented for Python 1.4.6. They are an architectural precedent, not proof every planned TIFF adapter inherits its bounds."
+          },
+          {
+            "claim_id": "C07",
+            "claim": "Zarr v2 has a key/value chunk layout and is superseded by v3",
+            "output_locator": "proposal.md:85-88,123,174,273",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "zarr_v2"
+            ],
+            "reason": "Storage-format facts are supported. Runtime adapter compatibility and exact dependency pins are separate unresolved implementation facets."
+          },
+          {
+            "claim_id": "C08",
+            "claim": "Three frames, explicit plane/volume anchors and double-precision stored coordinates",
+            "output_locator": "proposal.md:128-170,213",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "source_ids": [
+              "ngff_v04",
+              "nibabel_coords",
+              "candidate_W1",
+              "candidate_W2"
+            ],
+            "reason": "Axis/anchor choices and numerical rationale are coherent. General orientation/affine support is explicitly deferred; complete transformed annotation/export behavior and scope sufficiency are not verified."
+          },
+          {
+            "claim_id": "C09",
+            "claim": "Display changes preserve originals; data operations and derived exports record provenance",
+            "output_locator": "proposal.md:24,148,170,184-188,200-202",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "qupath_images",
+              "qupath_export"
+            ],
+            "reason": "Source/data separation is correctly interpreted and chosen as a product contract. This is a plan-level decision, not an executed application/export guarantee."
+          },
+          {
+            "claim_id": "C10",
+            "claim": "Content hash plus size supports path relocation and linked/bundled trade-offs",
+            "output_locator": "proposal.md:164-170,257",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "candidate_W4",
+              "qupath_projects"
+            ],
+            "reason": "The final W4 run preserves content identity after rename, mtime change and original removal and finds the relocated file. Real multi-machine project reopening is proposed only; hash cost on large files is unmeasured."
+          },
+          {
+            "claim_id": "C11",
+            "claim": "Regular-file journal append is atomic for practical record sizes and ensures project recovery",
+            "output_locator": "proposal.md:20,98,117-120,163,178-182,212",
+            "assessment_state": "complete",
+            "finding": "contradicted",
+            "source_ids": [
+              "posix_write",
+              "python_os",
+              "rename_man",
+              "qupath_projects",
+              "candidate_W3",
+              "evaluator_journal_scope"
+            ],
+            "reason": "See R001-D01. Per-path replacement and the valid W3 illustration do not establish whole-record journal or multi-file crash consistency."
+          },
+          {
+            "claim_id": "C12",
+            "claim": "The selected TIFF chunk service supplies small bounded reads for its admitted TIFF scope",
+            "output_locator": "proposal.md:23,174-176,196,219,276",
+            "assessment_state": "complete",
+            "finding": "contradicted",
+            "source_ids": [
+              "tiff_core_pinned",
+              "tiff_zarr_pinned",
+              "evaluator_strip_scope"
+            ],
+            "reason": "See R001-D02. A request tile/cache budget does not bound the upstream decoded strip. The explicitly unsubstantiated benchmark target is preserved as UNEXECUTED, not marked empirically failed."
+          },
+          {
+            "claim_id": "C13",
+            "claim": "Selected Python/Qt/service architecture and pinned dependencies are implementable",
+            "output_locator": "proposal.md:107-125,192-213,270-278",
+            "assessment_state": "partial",
+            "finding": "unresolved",
+            "source_ids": [
+              "tiff_readme_pinned",
+              "zarr_v2",
+              "ngff_v04"
+            ],
+            "reason": "Components and alternatives are stated. Exact runtime version matrix, cache/admission policy and recoverable commit protocol are not established. No new library incompatibility is alleged."
+          },
+          {
+            "claim_id": "C14",
+            "claim": "Minimum workflow, styles, keyboard/feedback/undo and incremental implementation scope",
+            "output_locator": "proposal.md:32-36,152-176,184-203,243-247",
+            "assessment_state": "partial",
+            "finding": "supported",
+            "source_ids": [],
+            "reason": "The plan covers the named workflow and usable UI choices. Recovery/resource errors affect its reliability claims; complete orientation/export/reopen behavior and application acceptance remain unverified."
+          },
+          {
+            "claim_id": "C15",
+            "claim": "Useful NGFF interoperability opportunity, assistance boundary and plausible alternatives",
+            "output_locator": "proposal.md:209-213,263-268",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "ngff_v04",
+              "zarr_v2"
+            ],
+            "reason": "Optional NGFF image/label exchange and viewer/storage alternatives have concrete mechanisms and deferred-adoption boundaries. No optional adoption is treated as a requirement. A separate required leads file is absent."
+          },
+          {
+            "claim_id": "C16",
+            "claim": "W1 arithmetic and W2 axis ambiguity were actually executed with the reported results",
+            "output_locator": "proposal.md:149,254-255; witnesses.json W1-W2",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "candidate_W1",
+              "candidate_W2",
+              "evaluator_arithmetic"
+            ],
+            "reason": "Exact candidate code and actual receipt streams match the reported results. W1 drift is 0.0011875000054715201 micrometers for its expression; ordering gives (14,6) versus (24,6). W2 uses four samples; its sixteen-sample comment is a minor description typo, not a consequential result error."
+          },
+          {
+            "claim_id": "C17",
+            "claim": "W3 preserves the old file before replace and observes successful clean replacement",
+            "output_locator": "proposal.md:180,256; witnesses.json W3",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "candidate_W3",
+              "python_os"
+            ],
+            "reason": "Actual code/streams support the simulated interrupted-temp and clean-replace observations. It did not kill a process, test concurrent readers, append a journal, fsync, power-loss, multi-file commit or Windows."
+          },
+          {
+            "claim_id": "C18",
+            "claim": "W4 rerun corrects an ordering flaw and transparently preserves the earlier run",
+            "output_locator": "proposal.md:257; witnesses.json W4",
+            "assessment_state": "complete",
+            "finding": "supported",
+            "source_ids": [
+              "candidate_W4",
+              "candidate_W4_initial"
+            ],
+            "reason": "Both executions exit 0. The earlier missing-path check occurs before removal and reports false; the final run moves it after removal and reports true. This is a logical flaw plus honest repair within research, not an infrastructure failure."
+          },
+          {
+            "claim_id": "C19",
+            "claim": "Real large-data/cancel/crash/reopen/export/platform acceptance results",
+            "output_locator": "proposal.md:217-222,259,275-278; witnesses.json P1-P6",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "source_ids": [],
+            "reason": "These checks are explicitly proposed/UNEXECUTED. No real image, 3 GB benchmark, application, third-party execution or full recovery validation was demonstrated."
+          },
+          {
+            "claim_id": "C20",
+            "claim": "Later critic/final repair and full-pipeline semantic preservation",
+            "output_locator": "original final-form obligations A12 and all packet designated_final fields",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "source_ids": [],
+            "reason": "No designated final exists for either partner. Original obligations remain in force; later-stage/final delivery and full-pipeline source quality are not assessed by this research view."
+          },
+          {
+            "claim_id": "C21",
+            "claim": "All required current research artifacts were delivered",
+            "output_locator": "actual_launched_research_task.md current role; dispatch anonymous A missing_stage_catalogs",
+            "assessment_state": "complete",
+            "finding": "contradicted",
+            "source_ids": [],
+            "reason": "Research proposal/source/witness files are present, but required research/leads.json is absent. Useful inline leads remain preserved. Artifact incompleteness is distinct from operational Goal status and source grade."
+          }
+        ],
+        "dimensions": [
+          {
+            "id": "Q1",
+            "assessment_state": "partial",
+            "finding": "All 12 actual obligations inventoried; incomplete current stage and no final scope."
+          },
+          {
+            "id": "Q2",
+            "assessment_state": "partial",
+            "finding": "Primary standard/chain facts supported; D01/D02 identify consequential unsupported conditions; other source facets unassessed."
+          },
+          {
+            "id": "Q3",
+            "assessment_state": "partial",
+            "finding": "Useful component choices preserved; persistence/resource guarantees exceed their evidence."
+          },
+          {
+            "id": "Q4",
+            "assessment_state": "partial",
+            "finding": "Independent precedents, real failure chain and useful opportunities verified; exhaustive search/lineage not established."
+          },
+          {
+            "id": "Q5",
+            "assessment_state": "complete",
+            "finding": "All declared current executed witnesses independently interpreted against actual facts; future checks labeled unexecuted."
+          },
+          {
+            "id": "Q6",
+            "assessment_state": "partial",
+            "finding": "Current consequential errors identified; prior-to-final preservation and later repairs unassessed."
+          },
+          {
+            "id": "Q7",
+            "assessment_state": "partial",
+            "finding": "Most explicit execution/performance/version limits honest; critical journal/chunk conditions omitted."
+          },
+          {
+            "id": "Q8",
+            "assessment_state": "partial",
+            "finding": "Exact current artifacts/evidence reproducible, one required catalog missing; final delivery/cost/completion separate."
+          }
+        ],
+        "defects": [
+          {
+            "defect_id": "R001-D01",
+            "severity": "major",
+            "kind": "error_and_unsupported_dependency",
+            "obligation_ids": [
+              "A05",
+              "A10",
+              "A12"
+            ],
+            "claim_ids": [
+              "C11"
+            ],
+            "output_locators": [
+              "proposal.md:178-182",
+              "proposal.md:20,98,163,212"
+            ],
+            "source_ids": [
+              "posix_write",
+              "python_os",
+              "rename_man",
+              "qupath_projects",
+              "candidate_W3",
+              "evaluator_journal_scope"
+            ],
+            "reason": "POSIX permits short regular-file writes, even for small records; O_APPEND protects append positioning rather than whole-record durability. The proposal supplies no valid-prefix recovery/commit protocol for its journals or related files, yet infers project recovery from per-file replace. W3 correctly tests one file and does not close this gap. A central interrupted-save guarantee is unsupported.",
+            "screen_decisive": true,
+            "boundary": "No built application was crashed and no inevitable loss of an entire project is claimed. The source assertion and its design inference are the defect."
+          },
+          {
+            "defect_id": "R001-D02",
+            "severity": "major",
+            "kind": "unsupported_dependency",
+            "obligation_ids": [
+              "A04",
+              "A10"
+            ],
+            "claim_ids": [
+              "C12"
+            ],
+            "output_locators": [
+              "proposal.md:23",
+              "proposal.md:174-176,196,219,276"
+            ],
+            "source_ids": [
+              "tiff_core_pinned",
+              "tiff_zarr_pinned",
+              "evaluator_strip_scope"
+            ],
+            "reason": "The chosen tifffile path decodes storage chunks. A strip can span full image height/width, and the Zarr view keeps that chunk geometry. A 40,000 by 25,000 RGB-byte single strip requires a 3,000,000,000-byte decoded chunk, exceeding the proposed 2 GiB cache. Admission has no chunk-size restriction/conversion/refusal, so small application tiles cannot establish the stated bound.",
+            "screen_decisive": true,
+            "boundary": "The candidate correctly calls real performance unsubstantiated. This is a missing critical reader/input-layout condition, not an empirical RAM/cancel benchmark failure or a demand for a full application build."
+          },
+          {
+            "defect_id": "R001-D03",
+            "severity": "minor",
+            "kind": "delivery_omission",
+            "obligation_ids": [
+              "A12"
+            ],
+            "claim_ids": [
+              "C21"
+            ],
+            "output_locators": [
+              "actual_launched_research_task.md final current-role paragraph",
+              "dispatch.json anonymous A missing_stage_catalogs"
+            ],
+            "source_ids": [],
+            "reason": "Required research/leads.json is absent from the exact quiescent export. Inline opportunities/leads remain useful and accessible; this omission does not imply absent execution or erase supported research.",
+            "screen_decisive": false,
+            "boundary": "Separate artifact contract failure, not a false claim that a final stage should have run within this research Goal."
+          }
+        ],
+        "witnesses": [
+          {
+            "witness_id": "W1",
+            "execution_label": "candidate_executed",
+            "execution_id": "exec-tria9pbb",
+            "receipt_refs": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/A/exec-tria9pbb/execution-facts.json",
+                "sha256": "ba31ad4e1add48c9360d92b7fcf28a7e7d2cbfa34f3c48fac797164d68f618c2"
+              }
+            ],
+            "expected_value_basis": "Own stdlib arithmetic matches exact candidate expression and JSON results.",
+            "scope": "Five finite synthetic values and one affine-order example; no universal per-operation drift guarantee.",
+            "finding": "SUPPORTED_WITH_STATED_LIMITS",
+            "exit_code": 0
+          },
+          {
+            "witness_id": "W2",
+            "execution_label": "candidate_executed",
+            "execution_id": "exec-x2fpceqe",
+            "receipt_refs": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/A/exec-x2fpceqe/execution-facts.json",
+                "sha256": "ded7bc9aac38af867e0feb55adb18cc68417577fcb3298232e2435dbc6d178d6"
+              }
+            ],
+            "expected_value_basis": "C-major sequence [0,1,10,11]; query c1/z0 yields indices 2 and 1.",
+            "scope": "Four synthetic values, not a vendor file.",
+            "finding": "SUPPORTED_WITH_STATED_LIMITS",
+            "exit_code": 0
+          },
+          {
+            "witness_id": "W3",
+            "execution_label": "candidate_executed",
+            "execution_id": "exec-_fe0rayi",
+            "receipt_refs": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/A/exec-_fe0rayi/execution-facts.json",
+                "sha256": "7aa53f6d3b6b7223c46920134b9e67eefe6ad8567e97352b9fd9923f0c93ed23"
+              }
+            ],
+            "expected_value_basis": "Old target remains unchanged until actual os.replace; final target is rev2.",
+            "scope": "Simulated partial temporary write and normal replacement only; no journal/multi-file/power-loss test.",
+            "finding": "SUPPORTED_WITH_STATED_LIMITS",
+            "exit_code": 0
+          },
+          {
+            "witness_id": "W4",
+            "execution_label": "candidate_executed",
+            "execution_id": "exec-y9ke719k",
+            "receipt_refs": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/A/exec-y9ke719k/execution-facts.json",
+                "sha256": "d2ed19f75d6c36275f2dab33e7cd27bcab8bd51b7b955f13eaaa3f7d13f2a404"
+              }
+            ],
+            "expected_value_basis": "Content bytes/size unchanged while path/mtime change; removal precedes missing-path check.",
+            "scope": "Small synthetic file/relink; no second machine, large-file timing or full project reopen.",
+            "finding": "SUPPORTED_WITH_STATED_LIMITS",
+            "exit_code": 0
+          },
+          {
+            "witness_id": "W4-initial",
+            "execution_label": "candidate_executed",
+            "execution_id": "exec-8zodkcc4",
+            "receipt_refs": [
+              {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/A/exec-8zodkcc4/execution-facts.json",
+                "sha256": "b37522b1a83db1bbbeabc7a3044f888173229751fb93903bf8c41e937dbc4a91"
+              }
+            ],
+            "expected_value_basis": "Static ordering explains false missing-path result before removal, corrected later.",
+            "scope": "Logical flaw retained, exit0; not counted as a correct missing-path observation.",
+            "finding": "SUPPORTED_WITH_STATED_LIMITS",
+            "exit_code": 0
+          }
+        ],
+        "proposed_unexecuted": [
+          "P1 3GB benchmark",
+          "P2 crash suite and Windows",
+          "P3 second-machine reopen",
+          "P4 NGFF independent-reader export",
+          "P5 QuPath coordinate spot-check",
+          "P6 plane-scoped property test"
+        ],
+        "remaining_unassessed": [
+          "C19 real resource/recovery/reopen/export/platform acceptance",
+          "C20 later critic/final/preservation and both full pipelines",
+          "Exhaustive affected ranges, cross-component lineage, runtime version matrix and general orientation/export completeness"
+        ],
+        "supported_findings_delivered": [
+          "Real tifffile issue/fix/regression-test lesson",
+          "Correct NGFF multiscales rules",
+          "Independent napari/QuPath/reader precedents",
+          "Correct display/sample and export frame distinctions",
+          "Honest isolated W1-W4 execution/superseded W4",
+          "Explicit optional alternatives and proposed tests"
+        ]
+      },
+      {
+        "alias": "B",
+        "decision": "UNASSESSED",
+        "assessment_state": "unassessed",
+        "artifact_status": "TERMINAL_MISSING_RESEARCH_STAGE_PROPOSAL",
+        "designated_final": null,
+        "full_pipeline_quality": "UNASSESSED",
+        "quality_basis": "No authored research proposal. Temporary source material is not promoted. No semantic FAIL or equality inferred from operational status.",
+        "obligations": [
+          {
+            "obligation_id": "A01",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A02",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A03",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A04",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A05",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A06",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A07",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A08",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A09",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A10",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A11",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          },
+          {
+            "obligation_id": "A12",
+            "assessment_state": "unassessed",
+            "finding": "unresolved",
+            "reason": "Missing current stage proposal"
+          }
+        ]
+      }
+    ],
+    "shared_check_comparison": [
+      {
+        "check_id": "A-P1",
+        "obligation_ids": [
+          "A07",
+          "A08"
+        ],
+        "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+        "results": [
+          {
+            "alias": "A",
+            "assessment": "COMPLETE_SUPPORTED"
+          },
+          {
+            "alias": "B",
+            "assessment": "UNASSESSED_NO_STAGE_PROPOSAL"
+          }
+        ],
+        "boundary": "Original same check retained. Apply available facets to actual research; missing/final/preservation facets unassessed. No complete matched pair comparison."
+      },
+      {
+        "check_id": "A-P2",
+        "obligation_ids": [
+          "A02",
+          "A03",
+          "A10"
+        ],
+        "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+        "results": [
+          {
+            "alias": "A",
+            "assessment": "PARTIAL_FAILED_DEPENDENCY_SCREEN"
+          },
+          {
+            "alias": "B",
+            "assessment": "UNASSESSED_NO_STAGE_PROPOSAL"
+          }
+        ],
+        "boundary": "Original same check retained. Apply available facets to actual research; missing/final/preservation facets unassessed. No complete matched pair comparison."
+      },
+      {
+        "check_id": "A-P3",
+        "obligation_ids": [
+          "A11"
+        ],
+        "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+        "results": [
+          {
+            "alias": "A",
+            "assessment": "COMPLETE_SUPPORTED_NARROW_WITNESSES"
+          },
+          {
+            "alias": "B",
+            "assessment": "UNASSESSED_NO_STAGE_PROPOSAL"
+          }
+        ],
+        "boundary": "Original same check retained. Apply available facets to actual research; missing/final/preservation facets unassessed. No complete matched pair comparison."
+      },
+      {
+        "check_id": "A-P4",
+        "obligation_ids": [
+          "A12"
+        ],
+        "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+        "results": [
+          {
+            "alias": "A",
+            "assessment": "PARTIAL_CURRENT_ARTIFACT_FAILURE_FINAL_UNASSESSED"
+          },
+          {
+            "alias": "B",
+            "assessment": "UNASSESSED_NO_STAGE_PROPOSAL"
+          }
+        ],
+        "boundary": "Original same check retained. Apply available facets to actual research; missing/final/preservation facets unassessed. No complete matched pair comparison."
+      },
+      {
+        "check_id": "A-P5",
+        "obligation_ids": [
+          "A01",
+          "A04",
+          "A05",
+          "A06",
+          "A09"
+        ],
+        "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+        "results": [
+          {
+            "alias": "A",
+            "assessment": "PARTIAL_FAILED_STORAGE_RESOURCE_SCREEN"
+          },
+          {
+            "alias": "B",
+            "assessment": "UNASSESSED_NO_STAGE_PROPOSAL"
+          }
+        ],
+        "boundary": "Original same check retained. Apply available facets to actual research; missing/final/preservation facets unassessed. No complete matched pair comparison."
+      }
+    ],
+    "pair_boundary": "INCOMPLETE_STAGE_PAIR; no semantic equivalence/winner/recipe qualification/mechanism effect.",
+    "sources_index_draft_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/SOURCE_INDEX_DRAFT.json",
+      "sha256": "03e18def769893193c41da239af23d7cbd88131b822fb955236a0e66ad825e87"
+    },
+    "candidate_execution_evidence_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/candidate_evidence/MANIFEST.json",
+      "sha256": "e64e910ea631a06e86d932865f3e491998d9617e83e4e1666eefe8f09743db89"
+    },
+    "receipt_limits": "Exact five actual witness bodies checked. Original execution limitations field omitted in courier projection; retained resource caps/actor/bootstrap/cleanup/scope are not a guarantee about all original fields. Source retrieval receipts do not prove model comprehension.",
+    "phase2_material_read_before_save": false,
+    "candidate_feedback_policy": "Evaluator-only facts/expected truths; no candidate prompts/imports/retests from findings."
+  },
+  "phase2": {
+    "phase1_judgment_sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+    "phase2_read_utc": "2026-10-05T23:53:43.771069Z",
+    "scope": "exact two current R001 research attempts, not earlier I01 or later pipelines",
+    "allocation": {
+      "A": "I-01-R001-control-research-a001",
+      "B": "I-01-R001-treatment-research-a001"
+    },
+    "candidate_model_configuration": {
+      "requested_model": [
+        "builtin:zai-coding-plan/GLM-5.3-Flash"
+      ],
+      "observed_model": [
+        "GLM-5.3-Flash"
+      ],
+      "requested_effort": [
+        "max"
+      ],
+      "observed_effort": [
+        "max"
+      ],
+      "observation_basis": [
+        "NATIVE_PROVIDER_REQUEST_EXPORT"
+      ]
+    },
+    "candidate_native_goal_starts": 2,
+    "provider_request_count": 22,
+    "known_provider_usage": {
+      "input": 3041900,
+      "output": 98216,
+      "total": 3140116,
+      "cached_input_included": 2502016
+    },
+    "usage_definition": "Known native provider-request sums. Cache is a subset of input/total, never added. UI usage is a separate counter/baseline and never added. Unknown cancelled/child/unexposed tails and dollars remain unknown.",
+    "occupied_seconds_sum": 2357.574819874004,
+    "occupied_definition": "Sum of each native receipt-accounted occupied_seconds, includes native setup/cleanup; not cohort elapsed wall or all pipeline effort. Dispatcher/end-to-end timings can use a different scope.",
+    "last_saved_goal_observations": [
+      {
+        "alias": "control",
+        "status": "active",
+        "observed_utc": "2026-10-05T23:05:34.880000+00:00",
+        "source_sha256": "f273ce0a7680b82920497ccd473b6eaaf6c5eddbc4284d5e7c8aea3ce0245767",
+        "selector": "/projection/target/status"
+      },
+      {
+        "alias": "treatment",
+        "status": "paused",
+        "observed_utc": "2026-10-05T23:01:47.208000+00:00",
+        "source_sha256": "4fa9e012660724f2a6121474f95193dc8dacb4dbc1c4e87a45228713717a3a54",
+        "selector": "/projection/target/status"
+      }
+    ],
+    "terminal_goal_status_in_native_receipts": "UNKNOWN_NOT_SAVED_IN_THIS_RECEIPT for both; job FAILED/cap/error and cleanup exit0 do not imply Goal COMPLETE/FAILED",
+    "job_states": [
+      {
+        "attempt_id": "I-01-R001-control-research-a001",
+        "job_status": "FAILED",
+        "router_terminal_status": "execution_error",
+        "quiescent": true
+      },
+      {
+        "attempt_id": "I-01-R001-treatment-research-a001",
+        "job_status": "FAILED",
+        "router_terminal_status": "cap_seconds",
+        "quiescent": true
+      }
+    ],
+    "pipeline_credit": "NONE_QUALIFIED; no later final and stage jobs failed. Full pipeline source quality UNASSESSED.",
+    "preservation_rate": "UNASSESSED",
+    "mechanism_effect": "UNASSESSED_LATER_CRITIC_FINAL_ROLES_NOT_EXECUTED",
+    "full_pair_efficiency": "NOT_QUALIFIED_INCOMPLETE_STAGE_PAIR",
+    "unknown_facets": [
+      "billing dollars",
+      "cancelled/unexposed child usage",
+      "HTTP attempts",
+      "quota exhaustion",
+      "complete Goal terminal state",
+      "later stages/final cost and full pipeline quality",
+      "independent evaluator model/effort receipt and evaluator token usage"
+    ]
+  },
+  "candidate_output_statuses": {
+    "A": {
+      "job_id": "I-01-R001-control-research-a001",
+      "research_quality": "FAIL_SCREEN",
+      "required_artifact_contract": "INCOMPLETE",
+      "operational_job_status": "FAILED",
+      "last_saved_goal_status": "active",
+      "terminal_goal_status_in_native_receipt": "UNKNOWN",
+      "final_artifact": null,
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    "B": {
+      "job_id": "I-01-R001-treatment-research-a001",
+      "research_quality": "UNASSESSED_NO_PROPOSAL",
+      "operational_job_status": "FAILED",
+      "last_saved_goal_status": "paused",
+      "terminal_goal_status_in_native_receipt": "UNKNOWN",
+      "final_artifact": null,
+      "full_pipeline_quality": "UNASSESSED"
+    }
+  },
+  "economics": {
+    "reported_separately_after_current_judgment": true,
+    "candidate_known_counters": {
+      "input": 3041900,
+      "output": 98216,
+      "total": 3140116,
+      "cached_input_included": 2502016
+    },
+    "native_goal_starts": 2,
+    "occupied_seconds_sum": 2357.574819874004,
+    "full_pair_efficiency": "NOT_QUALIFIED",
+    "evaluator_token_usage": "UNKNOWN",
+    "evaluator_cost_dollars": "UNKNOWN",
+    "candidate_billing_dollars": "UNKNOWN"
+  },
+  "sources": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/SOURCE_INDEX.json",
+    "sha256": "834f8511b3aa85d66a04d6193c32710b35f04038ba1b8bc3521d2a14bc3dcfdf"
+  },
+  "scope_and_limits": [
+    "All actual12 obligations/common8/five important questions inventoried; 15 claim groups complete,4partial,2unassessed. Complete assessment may be contradicted; it is not PASS.",
+    "One terminal research view and a truly missing partner; no complete final/pipeline comparison, equality/winner or recipe/mechanism qualification.",
+    "No full app or upstream library/regression tests executed. Real performance/crash/multi-machine/export checks remain unexecuted.",
+    "Capture receipts support acquisition facts only. Model comprehension unknown; one courier capture linkage unresolved, one truncated response retained.",
+    "Original I01/I02 knowledge and available-arm identity known before judgment; detailed economics/history were not read until frozen Phase1.",
+    "Actual candidate execution limitations field omitted from courier projection; retained scope/resource facts are bounded evidence.",
+    "Findings and evaluator-created expected truths stay outside candidate inputs/imports/retests; original I01/I02 frozen outputs untouched."
+  ],
+  "errata": []
+}

@@ -1,0 +1,79 @@
+{
+  "actual_executions": [
+    {
+      "execution_id": "exec-8zodkcc4",
+      "exit_code": 0,
+      "hashes_match": true,
+      "cleanup_confirmed": true,
+      "stdout_fields": [
+        "record",
+        "relocated_copy_mtime_differs",
+        "relocated_copy_sha_matches",
+        "original_path_missing",
+        "relink_candidates_found",
+        "note"
+      ]
+    },
+    {
+      "execution_id": "exec-_fe0rayi",
+      "exit_code": 0,
+      "hashes_match": true,
+      "cleanup_confirmed": true,
+      "stdout_fields": [
+        "dir",
+        "state_after_interrupted_save",
+        "stale_temp_detected",
+        "stale_temp_was_partial_json",
+        "state_after_clean_save",
+        "temp_gone_after_replace"
+      ]
+    },
+    {
+      "execution_id": "exec-tria9pbb",
+      "exit_code": 0,
+      "hashes_match": true,
+      "cleanup_confirmed": true,
+      "stdout_fields": [
+        "json_float64_roundtrip_exact",
+        "world_f64_um",
+        "world_via_f32_um",
+        "f32_drift_um",
+        "scale_then_translate",
+        "translate_then_scale",
+        "orders_differ"
+      ]
+    },
+    {
+      "execution_id": "exec-x2fpceqe",
+      "exit_code": 0,
+      "hashes_match": true,
+      "cleanup_confirmed": true,
+      "stdout_fields": [
+        "stored_sequence",
+        "query",
+        "value_if_axes_CZ",
+        "value_if_axes_ZC",
+        "readings_disagree",
+        "note"
+      ]
+    },
+    {
+      "execution_id": "exec-y9ke719k",
+      "exit_code": 0,
+      "hashes_match": true,
+      "cleanup_confirmed": true,
+      "stdout_fields": [
+        "record_sha256_prefix",
+        "record_size",
+        "relocated_copy_mtime_differs",
+        "relocated_copy_sha_matches",
+        "original_path_missing_after_removal",
+        "relink_candidates_found",
+        "note"
+      ]
+    }
+  ],
+  "executed_by_evaluator": false,
+  "verification_method": "Hash verification plus static code/result interpretation, not rerun of candidate code",
+  "scope": "All five exit 0; first W4 logical ordering flaw retained transparently. No real image, large resource, kill/crash, app or third-party behavior was executed. Manifest omission of original limitations field disclosed; positive resource caps and actual scope retained."
+}

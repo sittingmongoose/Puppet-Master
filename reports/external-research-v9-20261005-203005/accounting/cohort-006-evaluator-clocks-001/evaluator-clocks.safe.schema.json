@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assessment_boundary": {
+      "type": "string"
+    },
+    "clock_rule": {
+      "type": "string"
+    },
+    "counter_rule": {
+      "type": "string"
+    },
+    "overlap_rule": {
+      "type": "string"
+    },
+    "rows": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "billing_dollars": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "clock_reset": {
+            "type": "boolean"
+          },
+          "evaluation_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "extension_allowance_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "extension_deadline_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "extension_elapsed_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "extension_finished_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "extension_start_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "full_review_elapsed_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "full_review_finished_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "model_occupied_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "native_provider_tokens": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "observed_effort": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "observed_model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "original_allowance_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "original_closed_elapsed_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "original_closed_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "original_closure_logged_elapsed_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "original_deadline_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "original_start_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "report_write_elapsed_seconds_intermediate": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "requested_effort": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "requested_model": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "screen_elapsed_seconds_subset": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "source_pins": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "pattern": "^[0-9a-f]{64}$",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "evaluation_id",
+          "original_start_utc",
+          "original_deadline_utc",
+          "original_allowance_seconds",
+          "original_closed_utc",
+          "original_closed_elapsed_seconds",
+          "original_closure_logged_elapsed_seconds",
+          "extension_start_utc",
+          "extension_deadline_utc",
+          "extension_allowance_seconds",
+          "extension_finished_utc",
+          "extension_elapsed_seconds",
+          "full_review_finished_utc",
+          "full_review_elapsed_seconds",
+          "screen_elapsed_seconds_subset",
+          "report_write_elapsed_seconds_intermediate",
+          "requested_model",
+          "requested_effort",
+          "observed_model",
+          "observed_effort",
+          "native_provider_tokens",
+          "billing_dollars",
+          "model_occupied_seconds",
+          "clock_reset",
+          "source_pins"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "schema": {
+      "const": "er9.accounting.evaluator-clocks.v1"
+    },
+    "sum_reported_extension_wall_seconds": {
+      "type": "number"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "rows",
+    "sum_reported_extension_wall_seconds",
+    "counter_rule",
+    "overlap_rule",
+    "clock_rule",
+    "assessment_boundary",
+    "validation_errors"
+  ],
+  "type": "object"
+}

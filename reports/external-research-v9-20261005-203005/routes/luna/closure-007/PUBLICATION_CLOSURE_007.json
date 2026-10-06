@@ -1,0 +1,189 @@
+{
+  "schema": "er9.luna.publication-code-closure.v1",
+  "cohort": "007",
+  "owner_frozen": true,
+  "status": "READY_FOR_PUBLICATION",
+  "selected_files": [
+    {
+      "source": "dev/luna-route/NATIVE_ERROR_PROJECTION_REGRESSION.json",
+      "sha256": "cc7b0ce1917c1f30d2d2bd8b356f2afeea991d5e1943cb01445c551aa22a3ed9",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/NATIVE_ERROR_PROJECTION_REGRESSION.json"
+    },
+    {
+      "source": "dev/luna-route/NATIVE_ERROR_READER_PIN.json",
+      "sha256": "768b077c2d1f60c43c046a667a31bab594328bcf61196c14b905f6f5f4560b4c",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/NATIVE_ERROR_READER_PIN.json"
+    },
+    {
+      "source": "dev/luna-route/OWNED_SCOPE_REGRESSION.json",
+      "sha256": "71800c0f9985f12753488565bb31426e5601e5f5c67cc28ef3c631487c2f884a",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/OWNED_SCOPE_REGRESSION.json"
+    },
+    {
+      "source": "dev/luna-route/REPRODUCE_V1_2.md",
+      "sha256": "a05f49b2ecde3b1081d897b9bba13de0e0ed09af7f8a7f86a0694c22002baa4c",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/REPRODUCE_V1_2.md"
+    },
+    {
+      "source": "dev/luna-route/diagnosis-I05/DIAGNOSIS.json",
+      "sha256": "2f3cdfc5c0d68634952eecb5ef560979a1210b0c3034d581f7a98735aafea653",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/diagnosis-I05/DIAGNOSIS.json"
+    },
+    {
+      "source": "dev/luna-route/diagnosis-I05/OWNED_SCOPE_SUPPLEMENT_SELECTION.json",
+      "sha256": "9c78911e7be513b11c667c45c462c93b880912d492ded8e69b76af0315e2f6c6",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/diagnosis-I05/OWNED_SCOPE_SUPPLEMENT_SELECTION.json"
+    },
+    {
+      "source": "dev/luna-route/native_error_projection.py",
+      "sha256": "8e8994c72f78ede01d791e3c8414d38a9360f8891331bdbff4661e2e81a70d04",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/native_error_projection.py"
+    },
+    {
+      "source": "dev/luna-route/owned_scope_proof.py",
+      "sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/owned_scope_proof.py"
+    },
+    {
+      "source": "dev/luna-route/test_native_error_projection.py",
+      "sha256": "66e437929af0f24deedd4bde56c528ad1bd02cc7794ab09da1278e70b63cbc3c",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/test_native_error_projection.py"
+    },
+    {
+      "source": "dev/luna-route/test_owned_scope_proof.py",
+      "sha256": "eef1e4851ab7a367d5307508502b794c6683c018d970ad25842bd7a67c93729a",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/test_owned_scope_proof.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/PIN.json",
+      "sha256": "534d060f449517b835b6806cab58f2a15c7df48f328c826e0bb9c32ce4cfe108",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/versions/v1.1/PIN.json"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/REGRESSION.json",
+      "sha256": "c3cb67e6cc7fc389a85ebc016aeae2a12c7aecc8794077f3536287b565f8eafd",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/versions/v1.1/REGRESSION.json"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/completion_driver.py",
+      "sha256": "3b294e703ca8e6d2a2ed6b92a4df9663173c376e77c1b21e5762c3fcdbbb098f",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.1/completion_driver.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/completion_policy.py",
+      "sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.1/completion_policy.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/dynamic_stage_runner.py",
+      "sha256": "da11caa58d4e28621c57f2fab55985ff8cb67d3e934961d9895988c0e8fd754d",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.1/dynamic_stage_runner.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/projection.py",
+      "sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.1/projection.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.1/test_completion_policy.py",
+      "sha256": "d60170b6b6a43759b14f5af2660d0e15fd212b95d5a3be6bc5f0cd824782022b",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.1/test_completion_policy.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.2/PIN.json",
+      "sha256": "958820ea74f56c2cab0faf57ef2eeda39925e7bc2e8b29ad4643dda988ec5b6b",
+      "kind": "owned PIN/document/positive repair metadata",
+      "publication_path": "luna-route/versions/v1.2/PIN.json"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.2/completion_driver.py",
+      "sha256": "3b294e703ca8e6d2a2ed6b92a4df9663173c376e77c1b21e5762c3fcdbbb098f",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.2/completion_driver.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.2/completion_policy.py",
+      "sha256": "7222abf50cec47416455b9178a5f4e5dec115c0b94f16f1b8ec90057b19030bc",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.2/completion_policy.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.2/dynamic_stage_runner.py",
+      "sha256": "8b1c5f057cf7fa0892c684f5ff3de8cfc98152dfef3fda102dc3743da9d11ece",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.2/dynamic_stage_runner.py"
+    },
+    {
+      "source": "dev/luna-route/versions/v1.2/projection.py",
+      "sha256": "1ea8c8c7de7010eb1a183172e2731ea36f97f5fc9235f4437ea4ea20432b81c5",
+      "kind": "owned Python code",
+      "publication_path": "luna-route/versions/v1.2/projection.py"
+    }
+  ],
+  "selection_policy": "copy only enumerated owned files; never walk sibling directories",
+  "runtime_versions": {
+    "v1.1": {
+      "pin_sha256": "534d060f449517b835b6806cab58f2a15c7df48f328c826e0bb9c32ce4cfe108",
+      "change": "strict pre-stop COMPLETE receipt plus exact tagged tail closure"
+    },
+    "v1.2": {
+      "pin_sha256": "958820ea74f56c2cab0faf57ef2eeda39925e7bc2e8b29ad4643dda988ec5b6b",
+      "change": "v1.1 plus read-only exact PID/cgroup ownership proof; manager PGID never required absent"
+    }
+  },
+  "old_source001_and_runtime_preserved": true,
+  "original_runtime_pin_sha256": "91b8c0246b724d48ee0b4e8c483c9f0c3fd5879b640b3b8ffaf51b4d93155b69",
+  "old_false_flags_and_HOLD_results_preserved": true,
+  "admissions_and_live_jobs_changed": false,
+  "native_Goals_started_for_repairs": 0,
+  "tests": {
+    "completion_race_deadline_identity_and_tail": 12,
+    "ownership_query_pid_cgroup_and_deadline": 8,
+    "error_class_privacy_identity_and_hash": 6,
+    "all_zero_inference": true
+  },
+  "replay_boundary": {
+    "self_contained_runtime_bundle": false,
+    "required_external_trusted_inputs": [
+      "inherited exact owned route sources referenced by original PIN",
+      "installed trusted native Codex0.160.0 with requested gpt-6-luna/max binding",
+      "local schema-derived item allowlist and restricted model catalogue (hash references only; contents excluded)",
+      "separately owned confined generic tools release dev/tools/versions/v1.2",
+      "operator-owned current artifact-freeze worker applying v1.2 quiet fields and original required-artifact/clock checks"
+    ],
+    "exact_configuration": "new runner CLI unchanged; same original birth/native_stop/total_stop, model/max/fallbackfalse, five exact configured tools (four when executiondisabled), guard/resources/auth isolation unchanged",
+    "no_account_or_platform_restriction_bypass": true,
+    "source_quality": "independently assessed; no repair witness is a research quality grade"
+  },
+  "excluded": [
+    "schema/**",
+    "source/vendor/**",
+    "official or restricted model catalogue contents",
+    "item-contract.json contents",
+    "selected-sources.json contents",
+    "proprietary app-server/standalone bundles",
+    "auth and private HOME contents",
+    "raw native IO or journals",
+    "live native result files",
+    "candidate output bodies",
+    "evaluator findings",
+    "ops/admission files"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "evaluation_id": "ER9-EVAL-NEXT-003",
+  "assessment_complete": true,
+  "evaluation_status": "ASSESSED_FAILED_SCREEN_FOR_AVAILABLE_PARTIAL_RESEARCH",
+  "finished_utc": "2026-10-05T23:57:36.147813Z",
+  "started_utc": "2026-10-05T23:37:11.718720Z",
+  "screen_judgment_elapsed_seconds": 826.743626,
+  "wall_seconds_through_review_verification": 1224.429093,
+  "screen_max_seconds": 1200,
+  "hard_max_seconds": 1800,
+  "budget_overrun": false,
+  "report_write_wall_seconds": 1094.85785,
+  "clock_boundary": "Finished after actual semantic/Phase2/report integrity verification; prospective reservation and downstream mechanical publication are separate.",
+  "current_output_judgment": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/current_output_judgment.json",
+    "sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa"
+  },
+  "report": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/report.json",
+    "sha256": "7a207ef904346c2c5b9cb4665fb99099475da59bef56399e573113f3bf05bd83"
+  },
+  "review": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/REVIEW.md",
+    "sha256": "ad7ce747049bd40789a84877fd2271f6d35c3c20ee92cf1e984f95facbfb3c4c"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/VERIFICATION.json",
+    "sha256": "8b5567455b7af864c3519bfe1a1511fe0fb181aa3a88de05f3ac4df6fc3b09d0"
+  },
+  "missing_partner_quality": "UNASSESSED",
+  "full_pipeline_quality": "UNASSESSED",
+  "complete_pair_comparison": false
+}

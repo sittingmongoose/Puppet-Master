@@ -1,0 +1,21 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_005_D15B_LATE_LINEAGE",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/MANIFEST.json",
+      "sha256": "a0cccfb4b0a52ec170984c3a360c967f047e2a61afc8fe7e158ec18ec5b91410",
+      "relative_path": "phase2/D15B-OPERATIONAL-LATE-001/MANIFEST.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/D15B-OPERATIONAL-LATE-001/METHOD_CARD.json",
+      "sha256": "c4323900b08934991074a00cb0c87ffd7d2e95358c1c42e615e83b821a84510e",
+      "relative_path": "phase2/D15B-OPERATIONAL-LATE-001/METHOD_CARD.json"
+    }
+  ],
+  "delivery_class": "AFTER original23:16:20.550141Z deadline; publication operational lineage only, no within-budget evaluator credit",
+  "semantic_assessment": "none; sourcejudgment remains frozen/finalUNASSESSED",
+  "excluded": [
+    "private/auth/rawnative/rawsourcebodies/candidateprompts/executionbodies"
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "assessment_boundary": "No source judgment, assessment, execution grade, or missing execution evidence is changed or inferred by this cost projection.",
+  "clock_rule": "Original starts/deadlines remain unchanged; separate600s extension clocks retain their own starts/deadlines and actual finished elapsed times.",
+  "counter_rule": "Wall clocks are not model/API occupied time, critical path, provider tokens, or billing. Never add this companion to candidate token totals or root cumulative counters.",
+  "overlap_rule": "Screen and report-write times are subsets/intermediate observations of full review; do not add them to full review. D15B original closure log1951.288343771s is a closure-record delay, not original assessment time beyond its immutable1800s deadline.",
+  "rows": [
+    {
+      "billing_dollars": "UNKNOWN",
+      "clock_reset": false,
+      "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+      "extension_allowance_seconds": 600,
+      "extension_deadline_utc": "2026-10-05T23:03:17.625832Z",
+      "extension_elapsed_seconds": 462.430683741,
+      "extension_finished_utc": "2026-10-05T23:01:00.056572Z",
+      "extension_start_utc": "2026-10-05T22:53:17.625832Z",
+      "full_review_elapsed_seconds": null,
+      "full_review_finished_utc": null,
+      "model_occupied_seconds": null,
+      "native_provider_tokens": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "observed_model": "UNKNOWN",
+      "original_allowance_seconds": 1800,
+      "original_closed_elapsed_seconds": 1769.035593866,
+      "original_closed_utc": "2026-10-05T22:50:40.573654Z",
+      "original_closure_logged_elapsed_seconds": null,
+      "original_deadline_utc": "2026-10-05T22:51:11.537980Z",
+      "original_start_utc": "2026-10-05T22:21:11.537980Z",
+      "report_write_elapsed_seconds_intermediate": null,
+      "requested_effort": null,
+      "requested_model": null,
+      "screen_elapsed_seconds_subset": null,
+      "source_pins": [
+        {
+          "path": "evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+          "sha256": "aed77d4662fcb9cda76db2d55364616eba3a19e91de66c346841ea84599baf43"
+        }
+      ]
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clock_reset": false,
+      "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+      "extension_allowance_seconds": 600,
+      "extension_deadline_utc": "2026-10-05T23:36:36.161363Z",
+      "extension_elapsed_seconds": 323.987746408,
+      "extension_finished_utc": "2026-10-05T23:32:00.149098Z",
+      "extension_start_utc": "2026-10-05T23:26:36.161363Z",
+      "full_review_elapsed_seconds": null,
+      "full_review_finished_utc": null,
+      "model_occupied_seconds": null,
+      "native_provider_tokens": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "observed_model": "UNKNOWN",
+      "original_allowance_seconds": 1800,
+      "original_closed_elapsed_seconds": null,
+      "original_closed_utc": "2026-10-05T23:18:51.841260Z",
+      "original_closure_logged_elapsed_seconds": 1951.288343771,
+      "original_deadline_utc": "2026-10-05T23:16:20.550141Z",
+      "original_start_utc": "2026-10-05T22:46:20.550141Z",
+      "report_write_elapsed_seconds_intermediate": null,
+      "requested_effort": null,
+      "requested_model": null,
+      "screen_elapsed_seconds_subset": null,
+      "source_pins": [
+        {
+          "path": "evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+          "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5"
+        },
+        {
+          "path": "evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+          "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+        }
+      ]
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clock_reset": false,
+      "evaluation_id": "ER9-EVAL-NEXT-003",
+      "extension_allowance_seconds": null,
+      "extension_deadline_utc": null,
+      "extension_elapsed_seconds": null,
+      "extension_finished_utc": null,
+      "extension_start_utc": null,
+      "full_review_elapsed_seconds": 1224.429093,
+      "full_review_finished_utc": "2026-10-05T23:57:36.147813Z",
+      "model_occupied_seconds": null,
+      "native_provider_tokens": "UNKNOWN",
+      "observed_effort": "UNKNOWN",
+      "observed_model": "UNKNOWN",
+      "original_allowance_seconds": 1800,
+      "original_closed_elapsed_seconds": null,
+      "original_closed_utc": null,
+      "original_closure_logged_elapsed_seconds": null,
+      "original_deadline_utc": "2026-10-06T00:07:11.718720Z",
+      "original_start_utc": "2026-10-05T23:37:11.718720Z",
+      "report_write_elapsed_seconds_intermediate": 1094.85785,
+      "requested_effort": "xhigh",
+      "requested_model": "gpt-6.1-sol",
+      "screen_elapsed_seconds_subset": 826.743626,
+      "source_pins": [
+        {
+          "path": "evaluation/dispatch/I01-R001-research-review0001/STARTED.json",
+          "sha256": "79f858cdbae064a7c7f8add53cdbf71860f4cd3457730519779b4a7ee1bc5f3e"
+        },
+        {
+          "path": "evaluation/dispatch/I01-R001-research-review0001/FINISHED.json",
+          "sha256": "588ca68642692bf36544bdd24f6b627b738b1063ff75d43b75ab2b09c109d054"
+        }
+      ]
+    }
+  ],
+  "schema": "er9.accounting.evaluator-clocks.v1",
+  "sum_reported_extension_wall_seconds": 786.418430149,
+  "validation_errors": []
+}

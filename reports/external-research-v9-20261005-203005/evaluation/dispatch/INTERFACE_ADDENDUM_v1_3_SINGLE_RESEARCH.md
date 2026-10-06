@@ -1,0 +1,11 @@
+# Additive single research partial dispatch v1.3
+
+Coordinator-only builder: `build_single_stage_packet_v1_3.py --coordinator-binding FILLED.json --output NEW_PACKET --private-sidecar PRIVATE_OUTSIDE_PACKET.json`.
+
+Binding `I01_R001_RESEARCH_TASK_BINDING_v1_3.json` has the original A brief, 12 obligations, common eight dimensions and five important checks; no invented rubric. Fill `candidate_outputs_frozen_utc`, exactly one `stage_freezes` pinned `er9.stage-output-freeze.v1` research receipt, and one `terminal_missing_stage_outputs:[{terminal_record:{path,sha256}}]`. Each positive artifact is hashed and copied exactly, not selected semantically. Source/witness evidence uses the unchanged same-freeze positive evidence contract.
+
+Missing-stage record schema `er9.terminal-missing-stage-proposal.v1` must bind `pair_id`, `assessed_stage:research`, `stage_terminal:true`, `stage_proposal_present:false`, `native_quiescent:true`, and positive `terminal_evidence_refs` path/SHA pins. Original failure/arm/history stays coordinator-only. Temporary source lines cannot substitute for an authored proposal. Both packet entries have `designated_final:null`; missing partner source quality is UNASSESSED. One actual proposal may be screened under all unchanged applicable requirements; whole pipelines, final delivery and later repair remain UNASSESSED. No complete pair comparison or quality equivalence from operational FAILs.
+
+Clock starts after exact packet receipt and STARTED receipt, immediately before first candidate-body read. Screen 1200 seconds / whole review 1800 seconds. Budget is one scoped review, not renewed for metadata delivery. Save immutable Phase1 current-output judgment before economics/history/private allocation. Disclose coordination hints and prior evaluator case knowledge. No findings/expected truths enter candidate prompts/imports/retests. Existing I01/I02 packets and judgments stay immutable.
+
+Courier owns filled coordinator binding/terminal record/exports; evaluator owns this interface and results. Add launched neutral task/footer pins if they differ from the common research task, preserving substantive task instructions without revealing private treatment/history.

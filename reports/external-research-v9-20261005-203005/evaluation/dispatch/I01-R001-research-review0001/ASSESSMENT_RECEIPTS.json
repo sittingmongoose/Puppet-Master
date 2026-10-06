@@ -1,0 +1,28 @@
+{
+  "schema": "er9.stage-assessment-consumption.v1",
+  "evaluation_id": "ER9-EVAL-NEXT-003",
+  "assessment_complete": true,
+  "finished": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/FINISHED.json",
+    "sha256": "588ca68642692bf36544bdd24f6b627b738b1063ff75d43b75ab2b09c109d054"
+  },
+  "assignments": [
+    {
+      "job_id": "I-01-R001-control-research-a001",
+      "assessment_complete": true,
+      "evaluation_status": "ASSESSED_PARTIAL_RESEARCH_STAGE_FAILED_SCREEN",
+      "quality": "FAIL_SCREEN",
+      "full_pipeline_quality": "UNASSESSED",
+      "pipeline_credit": false
+    },
+    {
+      "job_id": "I-01-R001-treatment-research-a001",
+      "assessment_complete": true,
+      "evaluation_status": "TERMINAL_MISSING_STAGE_PROPOSAL_QUALITY_UNASSESSED",
+      "quality": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "pipeline_credit": false
+    }
+  ],
+  "source_answers_disposition": "No report findings enter candidate prompts/imports/retests or prospective scheduler task content; receipt is status only."
+}

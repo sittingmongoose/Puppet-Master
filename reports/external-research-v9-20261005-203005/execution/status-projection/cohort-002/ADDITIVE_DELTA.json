@@ -1,0 +1,25 @@
+{
+  "schema": "er9.native-goal-status-additive-delta.v1",
+  "previous_projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-001/NATIVE_GOAL_STATUS.json",
+    "sha256": "b290343719c1e0feea8a54d9627dd8c34175e2db8d0d0426efbffea484dc1f7d"
+  },
+  "current_projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
+    "sha256": "a5a2f24c30ffe17ebb499587d7203ce9e34065b8e66544973e2afb80feb7130c"
+  },
+  "new_job_ids": [
+    "I-01-R001-control-research-a001",
+    "I-01-R001-treatment-research-a001",
+    "I-09-control-research-a001",
+    "I-09-treatment-research-a001",
+    "I-11-treatment-research-a001"
+  ],
+  "new_direct_status_counts": {
+    "active": 4,
+    "paused": 1
+  },
+  "existing_direct_status_rows_changed": [],
+  "old_cohort_preserved": true,
+  "interpretation": "Full current export repeats covered IDs for a coherent snapshot; join by job_id and do not double-count across cohorts. active is the last saved native Goal record, not current live process occupancy or native completion."
+}

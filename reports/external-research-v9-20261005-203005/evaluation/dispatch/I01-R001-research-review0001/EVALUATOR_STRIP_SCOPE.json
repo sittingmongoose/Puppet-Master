@@ -1,0 +1,19 @@
+{
+  "execution_label": "evaluator_executed",
+  "basis": "Evaluator arithmetic from pinned tifffile TiffPage.chunks and Zarr decode path; no TIFF generated or decoded",
+  "hypothetical_supported_input": {
+    "format": "losslessly compressed stripped TIFF",
+    "imagewidth": 40000,
+    "imagelength": 25000,
+    "rowsperstrip": 25000,
+    "samplesperpixel": 3,
+    "bytes_per_sample": 1
+  },
+  "decoded_single_strip_bytes": 3000000000,
+  "declared_cache_budget_bytes": 2147483648,
+  "nominal_application_tile_bound_mib": [
+    1,
+    4
+  ],
+  "observation": "Reader storage chunk can be whole plane; application request tile and cache budget do not bound upstream chunk decoding. A preflight layout bound or conversion/refusal is not specified. Performance remains UNEXECUTED, not failed benchmark."
+}

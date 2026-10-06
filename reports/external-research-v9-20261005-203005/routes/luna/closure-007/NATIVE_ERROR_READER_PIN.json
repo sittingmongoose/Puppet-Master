@@ -1,0 +1,23 @@
+{
+  "schema": "er9.luna.additive-native-error-reader-pin.v1",
+  "status": "READY",
+  "files": {
+    "native_error_projection.py": "8e8994c72f78ede01d791e3c8414d38a9360f8891331bdbff4661e2e81a70d04",
+    "test_native_error_projection.py": "66e437929af0f24deedd4bde56c528ad1bd02cc7794ab09da1278e70b63cbc3c",
+    "NATIVE_ERROR_PROJECTION_REGRESSION.json": "cc7b0ce1917c1f30d2d2bd8b356f2afeea991d5e1943cb01445c551aa22a3ed9"
+  },
+  "interface": "python3 native_error_projection.py --native-out ABS_NATIVE_OUT --out FRESH_EXPORT [--expected-thread-id EXACT_OWNED_THREAD_ID]",
+  "classes": [
+    "service_capacity",
+    "account_quota",
+    "rate_limit",
+    "authentication",
+    "permission",
+    "UNKNOWN"
+  ],
+  "native_schema_source": "trusted session_meta matching result.thread_id; only event_msg/task_complete.error",
+  "privacy": "unknown messages/codes/context hashed; only exact known canonical capacity message exported; no candidate bodies/auth/account credits/raw journal",
+  "policy": "sole ops owns backoff/admission; no model substitution, real restriction bypass or billing-zero claim",
+  "runtime_source_changes": false,
+  "native_model_starts_for_tests": 0
+}

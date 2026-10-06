@@ -1,0 +1,28 @@
+{
+  "status": "PASS_MECHANICAL_ONLY",
+  "checks": [
+    "synthetic one exact research output + terminal missing stage",
+    "missing catalogs explicit; both designated finals null",
+    "existing destination refused",
+    "authored partner incorrectly called missing refused"
+  ],
+  "candidate_outputs_read": false,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/build_single_stage_packet_v1_3.py",
+      "sha256": "30b3393ac5db2571c198527759fd4ab4798903129bc0236bc5a295a6e688e5b0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01_R001_RESEARCH_TASK_BINDING_v1_3.json",
+      "sha256": "1e7ff70ef174b4115dd41bf2f0dcadf44ae1ed191618b0ed15610d90793634a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/RESERVATION_NEXT_003_BOUND_v1_3.json",
+      "sha256": "e10fc5f2718f4cacee67a37d48501b0e146f30e8bc668fea06d6bdf462628a2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/INTERFACE_ADDENDUM_v1_3_SINGLE_RESEARCH.md",
+      "sha256": "b2b697d06a14529e3eea47e969517382ebc05b91c8e47b2e414329fd90f52aa8"
+    }
+  ]
+}

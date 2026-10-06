@@ -1,0 +1,164 @@
+{
+  "protocol_version": "ER9-independent-output-v1",
+  "dispatch_interface_version": "1.3",
+  "evaluation_id": "ER9-EVAL-NEXT-003",
+  "scope": "one_terminal_research_partial_with_terminal_missing_stage_partner",
+  "assessed_stage": "research",
+  "track": "B",
+  "prepared_utc": "2026-10-05T23:36:24.278277Z",
+  "candidate_outputs_frozen_utc": "2026-10-05T23:06:03.496593+00:00",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "observed_evaluator": null,
+  "result_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001",
+  "task": {
+    "brief": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628"
+    },
+    "coverage_map": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92"
+    },
+    "common_criteria": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+    },
+    "source_access": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+    },
+    "important_checks": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75"
+    },
+    "output_contract": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+    },
+    "research_task": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/research_task.md",
+      "sha256": "dac9562abb37847b3cacc9a8101fb7d708c1ced3887f97126a86033fb7ecabdd"
+    },
+    "actual_launched_research_task": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/task/actual_launched_research_task.md",
+      "sha256": "957038feb2d36cfd304e9465ca5419f376ee9c01ca0d921031295a24075ae64f"
+    }
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "artifact_status": "FROZEN_TERMINAL_RESEARCH_STAGE_PARTIAL",
+      "assessed_stage": "research",
+      "designated_final": null,
+      "stage_proposal": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/proposal.md",
+        "sha256": "98b2aaab833d2a43aa0648ecc8449e77d954ce55ba831c7a9237d70105f80c6a"
+      },
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false,
+      "source_catalog": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/sources.json",
+        "sha256": "79ba20e801f1b2478b8965c404a369ebcdf925c7f00056dc9e52c3b46de54cdd"
+      },
+      "witness_catalog": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/NEXT003-I01-R001-PARTIAL-001/outputs/A/research/witnesses.json",
+        "sha256": "c55cfb1935f537b301b2bde3b470551077bfcbfa4316c7e3fe0df66dce026dac"
+      },
+      "leads": null,
+      "additional_anonymous_evidence": [],
+      "missing_stage_catalogs": [
+        "research/leads.json"
+      ]
+    },
+    {
+      "alias": "B",
+      "artifact_status": "TERMINAL_MISSING_RESEARCH_STAGE_PROPOSAL",
+      "assessed_stage": "research",
+      "stage_proposal": null,
+      "designated_final": null,
+      "full_pipeline_quality": "UNASSESSED",
+      "full_case_PASS_eligible": false,
+      "operational_status": "FAIL",
+      "quality_status": "UNASSESSED",
+      "phase1_notice": "Research proposal artifact missing after terminal research stage. Temporary source material cannot substitute. No current-output semantic assessment is possible for this partner."
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "assessment_plan": {
+    "mode": "current_partial_stage_source_screen",
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "budget_frozen_utc": "2026-10-05T23:34:27.283504Z",
+    "limits_note": "One coherent pair; full-case PASS only after all obligations/current consequential claims assessed. This is evaluator time, not candidate budget.",
+    "full_pipeline_quality": "UNASSESSED"
+  },
+  "comparison_boundary": "INCOMPLETE_STAGE_PAIR. Assess actual research proposal under original brief/common criteria/important checks. Final delivery, later repair and full pipelines remain UNASSESSED. Missing partner quality UNASSESSED; no quality equivalence, winner, recipe qualification or mechanism effect.",
+  "blinding": {
+    "hidden_fields": [
+      "arm_assignment",
+      "failure_cause",
+      "economics",
+      "prior_grades",
+      "method_history"
+    ],
+    "known_hints_at_dispatch": [
+      "The evaluator has already evaluated original I01 and I02 and knows their findings. This is an independent assessment of new frozen R001 research bytes; old findings are not supplied to candidates or assumed to recur.",
+      "Coordination disclosed the available research output as control, both research stages as terminal failures and partner as proposal-absent before this packet. Candidate family and V01 method context were known from prior campaign assignment. Economics/detailed later history remain hidden until immutable judgment."
+    ],
+    "byte_policy": "Exact frozen substantive bytes retained; disclose incidental identity hints.",
+    "allocation_record": "coordinator-only, excluded",
+    "phase2_material_release": "only after immutable current-output judgment saved"
+  },
+  "outputs": [
+    "current_output_judgment.json",
+    "report.json",
+    "REVIEW.md"
+  ],
+  "private_expected_truth_policy": "post-freeze evaluator-only; no candidate access"
+}

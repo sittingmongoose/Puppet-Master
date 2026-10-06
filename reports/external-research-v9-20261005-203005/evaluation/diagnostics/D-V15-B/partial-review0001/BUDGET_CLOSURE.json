@@ -1,0 +1,27 @@
+{
+  "schema": "er9.evaluation-budget-closure.v1",
+  "pair_id": "D-V15-B",
+  "closed_utc": "2026-10-05T23:18:51.841260Z",
+  "first_actual_output_read_utc": "2026-10-05T22:46:20.550141Z",
+  "hard_max_seconds": 1800,
+  "deadline_utc": "2026-10-05T23:16:20.550141Z",
+  "clock_reset": false,
+  "closure_logged_elapsed_seconds": 1951.288343771,
+  "closure_reason": "Original per-pair allowance ended before positive Phase2 metadata delivery. Source judgment was already frozen at556s. Courier resumed23:16:33 afterdeadline with no packet/body read; leave execution/method/cost remainder unassessed.",
+  "source_decision": "Both partialHOLD; finalqualityUNASSESSED",
+  "original_judgments_unchanged": true,
+  "source_scope_clarification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/SOURCE_SCOPE_CLARIFICATION.json",
+    "sha256": "7bc487920139adf880d81873a3ae3df7be4299503c8a34582954d3dee28a0558"
+  },
+  "phase2_completed": false,
+  "unassessed": [
+    "Actual candidate witness execution/failed attempts",
+    "Actual discovery/method uptake history/capture lineage",
+    "Observed actual family/effort and cost/provenance positive metadata",
+    "Final/source/witness/lead catalog completion",
+    "Narrow actual misleading/version-mismatched apparent-chain facet; hypothetical older-version comparisons alone do not establish it"
+  ],
+  "candidate_failure_inferred_from_evaluator_expiry": false,
+  "later_mechanical_publication_lineage": "May be exported separately as operational/accounting facts, no hidden semantic reassessment, grade rewrite or clockreset."
+}
