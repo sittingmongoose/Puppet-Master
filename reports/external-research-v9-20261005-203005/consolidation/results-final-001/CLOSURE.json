@@ -1,0 +1,34 @@
+{
+  "schema": "er9.final.consolidation-actual-closure-tail.v1",
+  "state": "CLOSED_REPORT_SYNTHESIS_COMPLETE",
+  "start_utc": "2026-10-06T13:23:44.799081+00:00",
+  "start_monotonic_ns": 123443656145394,
+  "actual_closure_sample_utc": "2026-10-06T13:50:04.238822+00:00",
+  "actual_closure_sample_monotonic_ns": 125023095809073,
+  "actual_elapsed_seconds_through_required_handoffs_and_last_output_checks": 1579.439663679,
+  "report_ready_elapsed_seconds_nested": 1495.345843331,
+  "handoff_and_check_tail_after_report_ready_seconds": 84.09382034800001,
+  "original_inclusive_bound_seconds": 1800,
+  "remaining_seconds_at_sample": 220.56033632100002,
+  "within_original_bound_at_actual_closure_sample": true,
+  "required_handoffs_tool_accepted_before_sample": {
+    "root_scientific": true,
+    "publisher_safe_scientific_selector": true,
+    "courier_neutral_selector_clocks_only": true
+  },
+  "required_acknowledgment_waited": false,
+  "clock_reset": false,
+  "actual_final_token_return_exact_utc": "UNKNOWN_NOT_OBSERVED_AT_SAMPLE; receipt writing and final metadata return remain charged to the original deadline, no recursive stopwatch",
+  "scientific_findings_or_candidate_bodies_in_this_receipt": "NONE",
+  "scientific_scoped_work_closed_at_guard": true,
+  "foreign_files_Git_canon_or_operational_state_modified": false,
+  "final_output_hash_length_readonly_checks_passed": true,
+  "selected_output_files": 20,
+  "actual_input_pin_count": 222,
+  "new_scientific_grades_Goals_jobs_retests_sourcebody_audits": 0,
+  "public_scientific_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/PUBLICATION_SELECTOR.json",
+    "sha256": "815d79fc1067415ba29fd28a1fe1f19413fd932f52cdae971b9f4f197abaad1d"
+  },
+  "followup": "Publish exact already-frozen safe selections and this additive neutral closure only; no automatic repeated work or new target."
+}

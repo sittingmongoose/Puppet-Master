@@ -1,0 +1,17 @@
+{
+  "schema": "er9.neutral-root-final-synthesis-acceptance-receipt.v1",
+  "observed_utc": "2026-10-06T13:54:19.023784+00:00",
+  "basis": "Received /root coordinator message: root read actual frozen FINAL_RESULTS.md and accepts final synthesis fidelity; no report revision requested. This is coordinator acceptance for final publication, not a new scientific grade or native status.",
+  "report_pin": {
+    "path": "LAB_ROOT/consolidation/results-final-001/FINAL_RESULTS.md",
+    "sha256": "a0b8073ae47d7f5b70138dc34903c317a8536cf9532703421fec2f0d7924da3b",
+    "bytes": 13470
+  },
+  "report_body_interpreted_by_courier": false,
+  "scientific_findings_in_receipt": false,
+  "finite_native_reviews_owned_cleanup_publication_resolution": "ACTUAL_CLOSED per selected proof pins",
+  "final_publication": "040 ACTUAL_GITHUB_VERIFICATION_PENDING",
+  "root_goal_state": "ACTIVE until final publication and required closure; root32 datedcounter not newcurrentquery",
+  "new_research_grading_candidate_work": false,
+  "canonical_or_goal_state_mutated": false
+}

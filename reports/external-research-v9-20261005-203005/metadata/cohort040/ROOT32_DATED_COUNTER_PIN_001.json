@@ -1,0 +1,14 @@
+{
+  "schema": "er9.root32-dated-native-counter-hash-reference.v1",
+  "observed_utc": "2026-10-06T13:24:34.622920+00:00",
+  "journal_path": "LAB_ROOT/state/supervisor_goal_counters.jsonl",
+  "dated_first32_prefix_sha256": "b56d36155066afbdecb75fd0967d6b3f4f82659cf12ddfc49aa21de4776a80bd",
+  "row32_with_newline_sha256": "6ca0408bafc8be236560ce0438448747ce446fee849b2f9e72de252027de7df7",
+  "immutable_first31_prefix_sha256": "8c1b7d70b4d92f40134d2bd338f8650147e267f7c6913bccfff2a711664bec08",
+  "source_fields": "Parent-authorized dated32 observation13:19:26 ACTIVE45020326tokens60416nativeSeconds; helper inclusion/physicalbillingUNKNOWN/providercombinefalse. Courier onlyhashverified bytes, no liveGoalquery or countervalue recapture.",
+  "reported_observation_utc": "2026-10-06T13:19:26+00:00",
+  "reported_native_tokens": 45020326,
+  "reported_native_time_used_seconds": 60416,
+  "counter_not_sum_with_provider_helpers": true,
+  "not_whole_current_journal_claim": true
+}

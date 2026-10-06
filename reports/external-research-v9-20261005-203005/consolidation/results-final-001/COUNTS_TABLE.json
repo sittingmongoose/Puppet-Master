@@ -1,0 +1,204 @@
+{
+  "schema": "er9.final.distinct-denominators.v1",
+  "logical_strata": [
+    {
+      "track": "A",
+      "logical_slots": 32,
+      "logical_arms": 64,
+      "native_entered_arms": 64,
+      "registered_role_descriptors": 78,
+      "positive_native_entered_roles": 68,
+      "router_completed_roles": 4,
+      "router_failed_roles": 64,
+      "blocked_predecessor_roles": 10,
+      "operational_complete_arms_or_pipelines": 2,
+      "both_arm_operational_pairs": 0,
+      "source_complete_positive_arms": 1,
+      "partial_screened_or_UNASSESSED_without_complete_positive_source_qualification": 63,
+      "clean_scientifically_complete_matched_comparisons": 0
+    },
+    {
+      "track": "B",
+      "logical_slots": 12,
+      "logical_arms": 24,
+      "native_entered_arms": 24,
+      "registered_role_descriptors": 74,
+      "positive_native_entered_roles": 66,
+      "router_completed_roles": 47,
+      "router_failed_roles": 19,
+      "blocked_predecessor_roles": 8,
+      "operational_complete_arms_or_pipelines": 5,
+      "both_arm_operational_pairs": 2,
+      "source_complete_positive_arms": 1,
+      "partial_screened_or_UNASSESSED_without_complete_positive_source_qualification": 23,
+      "clean_scientifically_complete_matched_comparisons": 0
+    },
+    {
+      "track": "C",
+      "logical_slots": 4,
+      "logical_arms": 8,
+      "native_entered_arms": 8,
+      "registered_role_descriptors": 22,
+      "positive_native_entered_roles": 20,
+      "router_completed_roles": 12,
+      "router_failed_roles": 8,
+      "blocked_predecessor_roles": 2,
+      "operational_complete_arms_or_pipelines": 0,
+      "both_arm_operational_pairs": 0,
+      "source_complete_positive_arms": 0,
+      "partial_screened_or_UNASSESSED_without_complete_positive_source_qualification": 8,
+      "clean_scientifically_complete_matched_comparisons": 0
+    }
+  ],
+  "both_arm_operational_pairs": [
+    {
+      "slot_id": "I-06",
+      "track": "B",
+      "arms": [
+        {
+          "slot_id": "I-06",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-06",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ]
+    },
+    {
+      "slot_id": "I-07",
+      "track": "B",
+      "arms": [
+        {
+          "slot_id": "I-07",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-07",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [
+            {
+              "slot": "I-07",
+              "version": "P7 current source final",
+              "arm": "treatment",
+              "reported_qualification": "PASS_FULL_RESEARCH_PROPOSAL; HOLD_FULL_PROVENANCE_QUALIFICATION",
+              "current_selected_credit": true,
+              "source": {
+                "path": "evaluation/independent-pipeline-7/FINAL.json",
+                "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+                "bytes": 2522,
+                "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+              }
+            }
+          ],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ]
+    }
+  ],
+  "current_router_stage_status_counts": {
+    "FAILED": 91,
+    "BLOCKED_PREDECESSOR_FAILED": 20,
+    "COMPLETED": 63
+  },
+  "current_roles": 174,
+  "current_positive_native_entered_roles": 154,
+  "current_all_router_terminal_or_dependency_blocked": true,
+  "current_direct_native_Goal_status_metadata_UNKNOWN_roles": 174,
+  "whole_pipeline_OP_strata": {
+    "current_fresh": 5,
+    "current_confirmation": 0,
+    "historical_C03_treatment": 1,
+    "broader_dated_whole_pipeline_OP_observation": 6,
+    "warm_derivatives_original_pipeline_credit": 0
+  },
+  "all_actor_cost_capture": {
+    "candidate_attempts": 287,
+    "positive_native_starts": 268,
+    "proved_pre_native_zeros": 18,
+    "unknown_native_start_rows": 1,
+    "router_job_status_counts": {
+      "COMPLETED": 94,
+      "FAILED": 183,
+      "FAILED_PRELAUNCH_CONFIRMED_ZERO_NATIVE": 8,
+      "UNCERTAIN_TERMINAL_NO_FREEZE": 2
+    },
+    "known_terminal_router_rows": 285,
+    "uncertain_terminal_no_freeze_rows": 2,
+    "native_Goal_status_counts_dated": {
+      "UNKNOWN": 116,
+      "active": 5,
+      "complete": 49,
+      "paused": 117
+    }
+  },
+  "closed_current_executable_roles_after_guard": 0,
+  "active_owned_candidates_after_guard": 0,
+  "historical_unentered_descriptors_separate": 36,
+  "DEC018_conditional_blocked_roles_separate": 3,
+  "donor_registered_roles_separate": 25,
+  "role_import_new_native_starts": 0,
+  "guard_scope": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINAL_CONSOLIDATION_ACTUAL_ADMISSION_GATE_001.json",
+    "sha256": "6a4420a1642ec9e6385eae327bdc9a52866a49cece11067d13a2397ddddee0d8",
+    "bytes": 3966,
+    "kind": "closed report or neutral positive metadata"
+  },
+  "definitions": "Attempts/role descriptors/native starts/logical arms/operational pipelines/scientific source scopes/clean comparisons are distinct. Router COMPLETED does not prove native Goal complete. Dated active/paused/UNKNOWN native counters are not current occupancy."
+}

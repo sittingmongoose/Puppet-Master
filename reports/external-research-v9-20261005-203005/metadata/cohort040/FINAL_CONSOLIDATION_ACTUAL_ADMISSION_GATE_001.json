@@ -1,0 +1,68 @@
+{
+  "schema": "er9.final-closed-report-consolidation-admission-gate.v1",
+  "observed_utc": "2026-10-06T13:22:03.089556+00:00",
+  "ready": true,
+  "pins": [
+    {
+      "path": "LAB_ROOT/ops/publication/cohort039-verification.json",
+      "sha256": "b1a8faad0a319415d7a1fb511bf106f6cbad657a676628dd050f93ecfab3b0e7",
+      "bytes": 5381
+    },
+    {
+      "path": "LAB_ROOT/ops/publication/commit039-authenticated-assets-and-aliases.json",
+      "sha256": "92974a2f1730f727bc8b367ba2d2ec31688c45d9b503ba6b82ba264a9571ef91",
+      "bytes": 2746738
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/FINAL_OWNED_CONTROLPLANE_CLEANUP_AND_RESTART_001.json",
+      "sha256": "8d6f4a0788b88dae93f68486d63458adf06e008dc2d08a8912fd42a60bee53a3",
+      "bytes": 2419
+    },
+    {
+      "path": "LAB_ROOT/ops/dispatcher/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+      "sha256": "863f18d2188496986d721bc900900f69573e0465cd17bfad08da202583f09a7d",
+      "bytes": 59812
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-DEC019-warm-1/publication/FINAL_CLOCK_TAIL.json",
+      "sha256": "2799b0a1d6795c593ea1cf412ab5cfb77957b4b5eeca788b2b87363781f9cdd9",
+      "bytes": 1111
+    },
+    {
+      "path": "LAB_ROOT/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_005.json",
+      "sha256": "19b759814c5a9d93a2783e9c65c825beaac7a37f934eab6e274bd36e30db1e60",
+      "bytes": 137119
+    },
+    {
+      "path": "LAB_ROOT/supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json",
+      "sha256": "93944ce797291566b7a86e5d74f623aabe1a4ee2bd4a09ff151ae7ec724dc385",
+      "bytes": 1972
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/publication128-009/4236bf807e999e962a3e18e6d53af3b20587c263127ebdf8fe394162ff9ad5ae/MANIFEST.json",
+      "sha256": "0beac5c957457f01b7a2e94be411e26e49978800626432a81467040fc110c885",
+      "bytes": 20274,
+      "type": "ARCHIVER_INDEPENDENT_BODY_REREAD_PROOF_MANIFEST; courier reverified manifest only"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/curation16-010/78c7decc61129f4618be2f224dcf211ea6b091fceb290ed26137cdba95a2796b/MANIFEST.json",
+      "sha256": "36de696d685df8447540ab969c6d2179bfd39e555a063de4bf4290041901dadf",
+      "bytes": 14284,
+      "type": "ARCHIVER_INDEPENDENT_BODY_REREAD_PROOF_MANIFEST; courier reverified manifest only"
+    },
+    {
+      "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/newpublic15-011/6437457abc881854f817c5994860bbab1943522b8f983b45e3320fc5e832a189/MANIFEST.json",
+      "sha256": "5a24825f1f7bab9858f84131a7bd0575ecdc9ab2156f9f709be75b1020ec4e53",
+      "bytes": 13318,
+      "type": "ARCHIVER_INDEPENDENT_BODY_REREAD_PROOF_MANIFEST; courier reverified manifest only"
+    }
+  ],
+  "publisher_commit": "4ac5d0c67bb0d096b55671b9df94c9f1a8efb136",
+  "eligible_content_assets": 937,
+  "eligible_alias_pins": 1130,
+  "public_raw_lineages_NAS": 53,
+  "raw_lineages_not_unique_sources": true,
+  "quarantined_producer_boundary_unknown": 8,
+  "native_scoped_reviews_owned_cleanup": "ACTUAL_CLOSED",
+  "scope": "Final closed-report synthesis ONLY; no fresh scientific grading/candidate body audit/Goals/canon. Existing grades/versions immutable; science onlyroot/publisher. Actual synthesis START required before first scientific closed-report read,1800 inclusive allhandoffs/closure; source prep notSTART."
+}

@@ -1,0 +1,3395 @@
+{
+  "schema": "er9.final.48-logical-slot-report-version-map.v1",
+  "rows": [
+    {
+      "slot_id": "D-V01-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V01-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V01-A-control-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V01-A-control-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V01-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V01-A-treatment-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V01-A-treatment-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V01-A-control-diagnostic-a001",
+            "D-V01-A-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V01-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V01-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V01-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-7",
+          "matched_current_job_ids": [
+            "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+            "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/CLOSURE.json",
+              "sha256": "fd519383d78e62eb8afcd780520846779f5eda1a483b89ecea1d12a34a2f96e7",
+              "bytes": 3962
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD7"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V02-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V02-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V02-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        },
+        {
+          "evaluation_id": "independent-targeted-8",
+          "matched_current_job_ids": [
+            "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD8"
+      ],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V02-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V02-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V02-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-9",
+          "matched_current_job_ids": [
+            "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD9"
+      ],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V03-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V03-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V03-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-10",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD10",
+        "TD10-closure"
+      ],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V03-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V03-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V03-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-13",
+          "matched_current_job_ids": [
+            "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD13"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V04-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V04-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V04-A-control-compare_final-a001",
+            "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V04-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V04-A-treatment-compare_final-a001",
+            "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-21",
+          "matched_current_job_ids": [
+            "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+            "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-21_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "338170a39221fbb7f4d154087ecad40783c38293725d271e3142170807d74c55",
+          "matched_current_job_ids": [
+            "D-V04-A-control-compare_final-a001",
+            "D-V04-A-treatment-compare_final-a001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD21"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V04-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V04-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V04-B-control-compare_final-a001",
+            "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V04-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V04-B-treatment-compare_final-a001",
+            "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "TD22_CURRENT_ROLE_KEY_ADAPTER_001.json",
+          "coordinator_key_sha256": "034249654dded21303c9b6d93f48594b080d28b3c519f06294eda72414aad90d",
+          "matched_current_job_ids": [
+            "D-V04-B-control-compare_final-a001",
+            "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+            "D-V04-B-treatment-compare_final-a001",
+            "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD22"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V05-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "arms": [
+        {
+          "slot_id": "D-V05-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V05-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "independent-targeted-28_PHASE2_KEY.json",
+          "matched_current_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "649f2df56fb76a7e5815d05b0ef9fde2760c49bdf52c64eedb5a60eede63c049",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD28"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V05-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "arms": [
+        {
+          "slot_id": "D-V05-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V05-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "independent-targeted-27_PHASE2_KEY.json",
+          "matched_current_job_ids": [
+            "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "ad7cb4dcf277b5b838e19112e2bd41f7c0989969feb08a938804e333dc36ff2e",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD27"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V06-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "arms": [
+        {
+          "slot_id": "D-V06-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [
+            {
+              "slot": "D-V06-A",
+              "version": "TD25 current CLOCK-R002 targeted repair",
+              "arm": "control",
+              "reported_qualification": "COMPLETE_NO_DETECTED_CONSEQUENTIAL_ERROR",
+              "current_selected_credit": true,
+              "source": {
+                "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase1.judgment.json",
+                "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+                "bytes": 21473,
+                "kind": "exact CLOSED report; 100-file positive report locator selector"
+              }
+            }
+          ],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V06-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-25_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "889237558d6da9a732b486fae0d1923b715d76376980d57242f778b7a063850d",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD25"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V06-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "arms": [
+        {
+          "slot_id": "D-V06-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V06-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-26_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "7c2e973ebb6f5149c0dbf8a23b17ca2afe84aa21c0cc8d56b1eabf7f4a7d89ed",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD26"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V07-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V07-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V07-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-11",
+          "matched_current_job_ids": [
+            "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/completion.json",
+              "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+              "bytes": 1851
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD11"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V07-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V07-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V07-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-12",
+          "matched_current_job_ids": [
+            "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/closure.json",
+              "sha256": "04da9a267e2c394a1ebf0e8f21aeaf683ea4caf5f356807e57ccc87cf2f1c1ef",
+              "bytes": 1833
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD12"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V08-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V08-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V08-A-control-critic-a001",
+            "D-V08-A-control-final_author-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V08-A-control-critic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V08-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V08-A-treatment-critic_and_final-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V08-A-treatment-critic_and_final-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-D-V08-A",
+          "matched_current_job_ids": [
+            "D-V08-A-control-critic-a001",
+            "D-V08-A-treatment-critic_and_final-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/FINISHED.json",
+              "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096",
+              "bytes": 1574
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "D-V08-A-control-final_author-a001"
+      ],
+      "earlier_report_versions": [
+        "D08-old"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V08-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V08-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V08-B-control-critic-a001",
+            "D-V08-B-control-final_author-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V08-B-control-critic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V08-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V08-B-treatment-critic_and_final-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V08-B-treatment-critic_and_final-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V08-B-treatment-critic_and_final-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V09-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V09-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+            "D-V09-A-control-resolve_final-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V09-A-RESOURCE-R001-control-whole_critic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V09-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+            "D-V09-A-treatment-implementation_critic-a001",
+            "D-V09-A-treatment-resolve_final-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+            "D-V09-A-treatment-implementation_critic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-24_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+            "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+            "D-V09-A-control-resolve_final-a001",
+            "D-V09-A-treatment-implementation_critic-a001",
+            "D-V09-A-treatment-resolve_final-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "cce7bc5b32bb3c93667228d7142906f53741c0c0f980156f07c4f6bced8575b5",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD24"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V09-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V09-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V09-B-control-resolve_final-a001",
+            "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V09-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-resolve_final-a001",
+            "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "TD23_CURRENT_ROLE_KEY_ADAPTER_001.json",
+          "coordinator_key_sha256": "cacfa8f81c105b804ecd69779d17640d92b4f55e331a1492e4b1425bb559b824",
+          "matched_current_job_ids": [
+            "D-V09-B-control-resolve_final-a001",
+            "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-resolve_final-a001",
+            "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD23"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V10-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V10-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V10-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-14",
+          "matched_current_job_ids": [
+            "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/neutral-closure.json",
+              "sha256": "4e483cfd52bd8802cff6697244f180f853d99cb2bdfe1f925c7b49a38276118b",
+              "bytes": 4264
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD14"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V10-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V10-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V10-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-15",
+          "matched_current_job_ids": [
+            "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD15"
+      ],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V11-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V11-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V11-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        },
+        {
+          "evaluation_id": "independent-targeted-16",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-16/completion.json",
+              "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18",
+              "bytes": 1898
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD16"
+      ],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V11-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V11-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V11-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-17",
+          "matched_current_job_ids": [
+            "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/closure.json",
+              "sha256": "7745eb8d75234ab1e4ab4fff2f0f4c9f515a60d1d735e48a1aa2a0bccac6bd39",
+              "bytes": 1549
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD17"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V12-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V12-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V12-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-18",
+          "matched_current_job_ids": [
+            "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-18/closure.json",
+              "sha256": "a2685571a3d68a37c39d2b630c6c9c64038ddc4470409245ba505a32e730da20",
+              "bytes": 4270
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD18"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V12-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V12-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V12-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-19",
+          "matched_current_job_ids": [
+            "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-19/closure.json",
+              "sha256": "5b0b9938cd85e34a174c3e665a8d6700a657fadc78860121b2c8728f3bef535b",
+              "bytes": 2156
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD19"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V13-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "arms": [
+        {
+          "slot_id": "D-V13-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V13-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "INDEPENDENT-EMPTY-DELIVERY-CURRENT-2_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "e4d34c6f456c9707c043d1efb975a9c253400b16f9fc3d60cbbcb7caa0f30a94",
+          "matched_current_job_ids": [
+            "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "CLOSED_ACTUAL_FINAL_CURRENT_SOURCE_SCOPE",
+          "actual_scope": "I08currentRonlyfinalnull orD13Aemptydeliverycontract; nofullpipeline/sourcecomplete inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "Empty-current2"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V13-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V13-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V13-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-20",
+          "matched_current_job_ids": [
+            "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+            "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/CLOSURE.json",
+              "sha256": "a419b6374e5d0155ede2dbc7e1552e9ab9f643dc9fa66d6aa95c2d3945c4d7ba",
+              "bytes": 2037
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "TD20"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V14-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V14-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V14-A-LUNA-R1-control-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V14-A-LUNA-R1-control-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V14-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V14-A-LUNA-R1-control-diagnostic-a002",
+            "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+          ],
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "neutral_closure_metadata": {
+            "dedicated_neutral_FINISHED_or_closure_receipt": "UNKNOWN_NOT_EXPOSED_IN_KNOWN_SELECTION",
+            "not_inferred_from_report_presence": true,
+            "frozen_addendum_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/PHASE2_ADDENDUM.json",
+              "sha256": "32c33eef9678f0005a361a1a689525ecd2be6bfd3305e326ea7caac1251c5f47",
+              "bytes": 17136
+            },
+            "saved_utc": "2026-10-05T23:01:00.026441Z",
+            "budget_metadata_only": {
+              "hard_max_seconds": 1800,
+              "original_clock_reset": false,
+              "elapsed_seconds": 1490.801607373,
+              "within_original_bound": true
+            },
+            "assessment_complete_from_this_metadata": "UNKNOWN"
+          },
+          "scientific_grade": "HELD_NOT_READ",
+          "no_later_scoped_successor_substitution": true
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "D14A-original",
+        "TD2"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V14-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V14-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V14-B-control-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V14-B-control-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V14-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V14-B-treatment-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V14-B-treatment-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V14-B-control-diagnostic-a002",
+            "D-V14-B-treatment-diagnostic-a002"
+          ],
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "neutral_closure_metadata": {
+            "dedicated_neutral_FINISHED_or_closure_receipt": "UNKNOWN_NOT_EXPOSED_IN_KNOWN_SELECTION",
+            "not_inferred_from_report_presence": true,
+            "frozen_addendum_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/PHASE2_ADDENDUM.json",
+              "sha256": "af371e9d193a9c33215f453576081efabff9183237b14202688fd846bfcccd44",
+              "bytes": 16201
+            },
+            "saved_utc": "2026-10-05T23:01:00.049460Z",
+            "budget_metadata_only": {
+              "hard_max_seconds": 1800,
+              "original_clock_reset": false,
+              "elapsed_seconds": 1119.839054457,
+              "within_original_bound": true
+            },
+            "assessment_complete_from_this_metadata": "UNKNOWN"
+          },
+          "scientific_grade": "HELD_NOT_READ",
+          "no_later_scoped_successor_substitution": true
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "D14B-original",
+        "TD4"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V15-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V15-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V15-A-control-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V15-A-control-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V15-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V15-A-treatment-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V15-A-treatment-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V15-A-control-diagnostic-a002",
+            "D-V15-A-treatment-diagnostic-a002"
+          ],
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "neutral_closure_metadata": {
+            "explicit_original_budget_closure_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/BUDGET_CLOSURE.json",
+              "sha256": "67d233bd9d54a01f04a3eb9f805b70c05af444e077d0f7110851c690c0f42600",
+              "bytes": 1279
+            },
+            "closed_utc": "2026-10-05T22:50:40.573654Z",
+            "hard_max_seconds": 1800,
+            "clock_reset": false,
+            "original_clock_fields": {
+              "elapsed_original_clock_seconds": 1769.035593866
+            },
+            "parent_boundary_separate_dedicated_FINISHED": "UNKNOWN_NOT_EXPOSED",
+            "separate_extension_neutral_clock_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+              "sha256": "aed77d4662fcb9cda76db2d55364616eba3a19e91de66c346841ea84599baf43",
+              "bytes": 1691
+            }
+          },
+          "scientific_grade": "HELD_NOT_READ",
+          "no_later_scoped_successor_substitution": true
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "D15A-original",
+        "TD3"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V15-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V15-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V15-B-control-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V15-B-control-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V15-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V15-B-treatment-diagnostic-a002"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V15-B-treatment-diagnostic-a002"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V15-B-control-diagnostic-a002",
+            "D-V15-B-treatment-diagnostic-a002"
+          ],
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "neutral_closure_metadata": {
+            "explicit_original_budget_closure_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+              "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74",
+              "bytes": 1656
+            },
+            "closed_utc": "2026-10-05T23:18:51.841260Z",
+            "hard_max_seconds": 1800,
+            "clock_reset": false,
+            "original_clock_fields": {
+              "closure_logged_elapsed_seconds": 1951.288343771,
+              "deadline_utc": "2026-10-05T23:16:20.550141Z"
+            },
+            "parent_boundary_separate_dedicated_FINISHED": "UNKNOWN_NOT_EXPOSED",
+            "separate_extension_neutral_clock_pin": {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+              "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5",
+              "bytes": 1396
+            }
+          },
+          "scientific_grade": "HELD_NOT_READ",
+          "no_later_scoped_successor_substitution": true
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "D15B-original",
+        "TD6"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V16-A",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V16-A",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V16-A-control-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V16-A-control-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V16-A",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V16-A-treatment-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V16-A-treatment-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-targeted-5",
+          "matched_current_job_ids": [
+            "D-V16-A-control-diagnostic-a001",
+            "D-V16-A-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/closure.json",
+              "sha256": "5fbbcac5cb0a8d9b55160fb2adec97e8a899e6b8ed84a732a9df189364d4dbfb",
+              "bytes": 2046
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [
+        "TD5"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "D-V16-B",
+      "track": "A",
+      "method_id": null,
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "D-V16-B",
+          "track": "A",
+          "arm": "control",
+          "selected_job_ids": [
+            "D-V16-B-control-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V16-B-control-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "D-V16-B",
+          "track": "A",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "D-V16-B-treatment-diagnostic-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "D-V16-B-treatment-diagnostic-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V16-B-control-diagnostic-a001",
+            "D-V16-B-treatment-diagnostic-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+              "bytes": 1334
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "Empty1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-01",
+      "track": "B",
+      "method_id": "V01",
+      "locked_recipe": null,
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "arms": [
+        {
+          "slot_id": "I-01",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+            "I-01-FRESH-DELIVERY-R001-control-research-a001",
+            "I-01-FRESH-DELIVERY-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-control-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-01",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+            "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+            "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-8-research-I01",
+          "matched_current_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/CLOSURE.json",
+              "sha256": "a02af77976e304784b8b0a7d2b2f92790e1a907e42177e73ffbe36fec9ceeabb",
+              "bytes": 4135
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/FINAL_HANDOFF_RECEIPT.json",
+              "sha256": "ee1962ff8825fc393bf20c15a122fde9c0510b376949efedb1494a7d81a2b384",
+              "bytes": 625
+            }
+          ]
+        },
+        {
+          "coordinator_key_filename": "P8_I01_FRESH_RESEARCH_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "f29d87bcd23d38f8ba03e6315edff30f41bda6e10704b8bc88f0750f8723fff2",
+          "matched_current_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-control-research-a001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "earlier_report_versions": [
+        "I01-old-final",
+        "I01-R-research"
+      ],
+      "additive_report_versions": [
+        "P8-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-02",
+      "track": "B",
+      "method_id": "V01",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-02",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-02",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-9-research-I02",
+          "matched_current_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [
+        "I02-R-research"
+      ],
+      "additive_report_versions": [
+        "P9-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-03",
+      "track": "B",
+      "method_id": "V05",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-03",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-03",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-10-research-I03",
+          "matched_current_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P10-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-04",
+      "track": "B",
+      "method_id": "V05",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-04",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-04",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "P11_CURRENT_I04_RESEARCH_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "35d9beb34b4e29706324cb9dff1298c6c62fcda90161c4da296c58abbf1632bc",
+          "matched_current_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P11-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-05",
+      "track": "B",
+      "method_id": "V14",
+      "locked_recipe": null,
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "arms": [
+        {
+          "slot_id": "I-05",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-05",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-5",
+          "matched_current_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "earlier_report_versions": [
+        "P2",
+        "P3",
+        "P5-current",
+        "Warm4"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-06",
+      "track": "B",
+      "method_id": "V14",
+      "locked_recipe": null,
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "arms": [
+        {
+          "slot_id": "I-06",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-06",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-6",
+          "matched_current_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/completion.json",
+              "sha256": "461dce3f5a36a9c66645b6f472059d287b6da1ec62b819b2ef85c11881b5f646",
+              "bytes": 2120
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "earlier_report_versions": [
+        "P6-current",
+        "Warm1-fresh",
+        "Warm5"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-07",
+      "track": "B",
+      "method_id": "V08",
+      "locked_recipe": null,
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "arms": [
+        {
+          "slot_id": "I-07",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-07",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": true,
+          "source_complete_positive_contexts": [
+            {
+              "slot": "I-07",
+              "version": "P7 current source final",
+              "arm": "treatment",
+              "reported_qualification": "PASS_FULL_RESEARCH_PROPOSAL; HOLD_FULL_PROVENANCE_QUALIFICATION",
+              "current_selected_credit": true,
+              "source": {
+                "path": "evaluation/independent-pipeline-7/FINAL.json",
+                "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+                "bytes": 2522,
+                "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+              }
+            }
+          ],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-7",
+          "matched_current_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+          ],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN",
+          "neutral_closure_pins": []
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "earlier_report_versions": [
+        "P7-current",
+        "Warm2",
+        "Warm3"
+      ],
+      "additive_report_versions": [],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-08",
+      "track": "B",
+      "method_id": "V08",
+      "locked_recipe": null,
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "arms": [
+        {
+          "slot_id": "I-08",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-08",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-30_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "d0b573e063cabc3b57fbcb7a71446155114ab44914b96e073c5d0674bf42ccee",
+          "matched_current_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "CLOSED_ACTUAL_FINAL_CURRENT_SOURCE_SCOPE",
+          "actual_scope": "I08currentRonlyfinalnull orD13Aemptydeliverycontract; nofullpipeline/sourcecomplete inference",
+          "scientific_grade": "HELD_NOT_READ"
+        },
+        {
+          "evaluation_id": "independent-pipeline-16-I08-current-roles",
+          "matched_current_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+          ],
+          "review_state": "CLOSED_NEUTRAL_RECEIPT_PRESENT_SCOPED_ONLY",
+          "scope_qualification": "ROLE_CORRECTION_PRESERVATION_PARTIAL_DELIVERY; governing research context not a new research quality assessment; finalNULL; actual required-handoff tail UNKNOWN unless independently exposed",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-16-I08-current-roles/completion-receipt.json",
+              "sha256": "60ef0da4be0785763e3118d69d2223162d09aefd31559b73ea55922eb887af5a",
+              "bytes": 9244
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "earlier_report_versions": [
+        "P4"
+      ],
+      "additive_report_versions": [
+        "P15-current-R",
+        "P16-current-roles"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-09",
+      "track": "B",
+      "method_id": "V10",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-09",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-09",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "I09-CURRENT-RESEARCH-P12_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "c6b21c4bec03e283c6149b7852ecde9d8468a069503431f99cfcfb772a35820e",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P12-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-10",
+      "track": "B",
+      "method_id": "V10",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-10",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-10",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "I10-CURRENT-RESEARCH-P13_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "ade8dc4a30f2422bdd10f3bbbe2345b8df71e4022bae77013cb99e7db344875a",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P13-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-11",
+      "track": "B",
+      "method_id": "V16",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-11",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-11",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "I11-CURRENT-RESEARCH-P14_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "ffa233a2d75b037bc067cd06c6fd2000bfcad0e679fdf003363777fbf71cdbf7",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P14-current-R",
+        "DEC019-warm1"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "I-12",
+      "track": "B",
+      "method_id": "V16",
+      "locked_recipe": null,
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "arms": [
+        {
+          "slot_id": "I-12",
+          "track": "B",
+          "arm": "control",
+          "selected_job_ids": [
+            "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "I-12",
+          "track": "B",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "positive_native_entry_job_ids": [
+            "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "evaluation_id": "independent-pipeline-17-research-I12",
+          "matched_current_job_ids": [
+            "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "CLOSED_NEUTRAL_RECEIPT_PRESENT_SCOPED_ONLY",
+          "scope_qualification": "RESEARCH_ONLY_FINAL_NULL; original START and inclusive phase2/whole closure verified",
+          "neutral_closure_pins": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-17-research-I12/completion_clock_receipt.json",
+              "sha256": "d8389c462b676bbe74a380390ba5aac1c011ea067ed95c1dd180ae6c8de914b9",
+              "bytes": 3183
+            }
+          ]
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "P17-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "C-01",
+      "track": "C",
+      "method_id": null,
+      "locked_recipe": "A",
+      "selection_stratum": "DEC014_four_confirmation",
+      "arms": [
+        {
+          "slot_id": "C-01",
+          "track": "C",
+          "arm": "control",
+          "selected_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "C-01",
+          "track": "C",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "C01-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "4af94f4f0f71792ea92c89880129abc06b268535964e5e4a74f8877a497b38bf",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "C01-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "C-02",
+      "track": "C",
+      "method_id": null,
+      "locked_recipe": "A",
+      "selection_stratum": "DEC014_four_confirmation",
+      "arms": [
+        {
+          "slot_id": "C-02",
+          "track": "C",
+          "arm": "control",
+          "selected_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "C-02",
+          "track": "C",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "C02-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "6730f535ad552c4e73e5b531bb8c5bb19fc276bf2447078ab7e39b79170ba9b9",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "C02-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "C-03",
+      "track": "C",
+      "method_id": null,
+      "locked_recipe": "B",
+      "selection_stratum": "DEC014_four_confirmation",
+      "arms": [
+        {
+          "slot_id": "C-03",
+          "track": "C",
+          "arm": "control",
+          "selected_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "C-03",
+          "track": "C",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "C03-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "73568ee79db39fa3363ec5c9d6acebaa3939392607bf8fda1ef6b974cc094b7a",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+      ],
+      "earlier_report_versions": [
+        "C03-original-final"
+      ],
+      "additive_report_versions": [
+        "C03-current-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    },
+    {
+      "slot_id": "C-04",
+      "track": "C",
+      "method_id": null,
+      "locked_recipe": "B",
+      "selection_stratum": "DEC014_four_confirmation",
+      "arms": [
+        {
+          "slot_id": "C-04",
+          "track": "C",
+          "arm": "control",
+          "selected_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        },
+        {
+          "slot_id": "C-04",
+          "track": "C",
+          "arm": "treatment",
+          "selected_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "positive_native_entry_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "native_entered": true,
+          "operational_complete": false,
+          "source_complete_positive_contexts": [],
+          "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+        }
+      ],
+      "exact_current_scope_matches": [
+        {
+          "coordinator_key_filename": "C04-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "matched_current_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_sha256": "02078ce7862d7c967e49a9d4d8e7e2ec4c0fd3502ca0e0c3343e216f4e3740c7",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "unmatched_current_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+      ],
+      "earlier_report_versions": [],
+      "additive_report_versions": [
+        "C04-current-R",
+        "C04-history-R"
+      ],
+      "native_or_scope_match_is_scientific_comparison": false,
+      "unassessed_roles_or_history": "Root-adjudicated unassessed upstream/old R/C not audited or promoted."
+    }
+  ],
+  "logical_slots": 48,
+  "logical_arms": 96,
+  "source_runtime_capture": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-008/WORKLOAD_SCOREBOARD.json",
+    "sha256": "805d474b4faf50d80492b7aadd91a6159209009e382bf6ed51dab058d0b093c4",
+    "bytes": 2024878,
+    "kind": "closed report or neutral positive metadata"
+  },
+  "coverage005": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_005.json",
+    "sha256": "19b759814c5a9d93a2783e9c65c825beaac7a37f934eab6e274bd36e30db1e60",
+    "bytes": 137119,
+    "kind": "closed report or neutral positive metadata"
+  },
+  "any_scoped_review_matches": 48,
+  "slots_with_unmatched_dated_role_contexts": 18,
+  "unmatched_dated_role_contexts": 65,
+  "prior004_counts_unchanged": {
+    "scoped_matches": 47,
+    "slots_with_unmatched": 18,
+    "unmatched_dated_role_contexts": 69
+  },
+  "no_scope_match_to_completed_comparison_promotion": true
+}

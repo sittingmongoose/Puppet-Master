@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "owner-resolved-assets-and-terminal-accounting-039",
-  "publication_snapshot_at": "2026-10-06T13:13:22.618406+00:00",
+  "cohort": "accepted-final-synthesis-and-publication-resolution-040",
+  "publication_snapshot_at": "2026-10-06T13:57:00.851703+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -190,7 +190,7 @@
   "clock_config_selection_adoption": "Atomic sevenpair/46role versionselectionDONE afterbotharmGoal0/noIntent; I01C04wholeold; newclocknativeGoalUNOBSERVED",
   "Luna_clock_source": "26ownedfiles/zeroGoal tests; exposuredisclosed; actualdeploymentnotprovedby sourceclosure",
   "workload_latest_metadata": "consolidation/workload-002/WORKLOAD_SCOREBOARD.json",
-  "restart_snapshot": "restart/cohort039/PUBLIC_SELECTION.json",
+  "restart_snapshot": "restart/cohort040/PUBLIC_SELECTION.json",
   "five_pair_deferred_clock_source": "137positive neutral locators/17roles/12targets+5authenticunscoredprerequisite designs; D13B oldbothenteredfailedexcluded; deploymentunobservedinsourceselection",
   "DEC012_finite_Luna_retest_policy": "AllfourI05-I08/fullfresh/commonclock, no qualitysubset/all12automaticrepeat/newhypothesis/targetinflation; wholeclosures beforefirstR; no newGoal proof in policy",
   "TD9_review": "Finished partial: bothfinal4absent/INCOMPLETE/remainderUNASSESSED/narrowBcontrollocatorpreservation only",
@@ -231,7 +231,7 @@
   "warm2_source_scope": "Exact current derivative single-output packet; scientific outcome not selected here",
   "latest_partial_archive": "archive/cohort034/P8_TD20_TD17_ARCHIVE_SUMMARY_001.json",
   "latest_results_draft": "consolidation/results-draft-002/DRAFT_RESULTS.md",
-  "campaign_status": "CANDIDATE_TAIL_TERMINAL_OWNED_QUIET_PUBLICATION_RECONCILIATION_AND_SCIENTIFIC_SYNTHESIS_PENDING",
+  "campaign_status": "EXECUTION_AND_ACCEPTED_SCIENTIFIC_WORK_CLOSED_FINAL_GITHUB_VERIFICATION_PENDING",
   "DEC016_actual_activation": "Both critics actual native Flash/max Goals/original900clock/no newlogicalcredit",
   "DEC017_scope": "Prospective own-prior navigation index/four conditional finalonlycontinuations; no sourceconstruction/admission claim yet",
   "DEC017_source_ready": "DEC017-source-034/PUBLICATION_SELECTOR.json sourceonly480/native0/admissionunclaimed",
@@ -243,7 +243,12 @@
     "current_confirmation_pipelines": 0,
     "current_confirmation_arms_target": 8,
     "historical_old_C03_treatment_pipeline": 1,
-    "total": 6
+    "total_operational": 6,
+    "both_arm_operational_pairs": [
+      "I06",
+      "I07"
+    ],
+    "clean_scientific_matched_comparisons": 0
   },
   "actual_input_output_matrix": "consolidation/publication-inventory-001/ARM_INVENTORY.json",
   "accounting019_later_terminal_resolution": {
@@ -263,5 +268,11 @@
     "external_raw": 37,
     "unknown": 8
   },
-  "curation_whole_handoff_clock_qualification": "supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json"
+  "curation_whole_handoff_clock_qualification": "supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json",
+  "final_scientific_results": "consolidation/results-final-001/FINAL_RESULTS.md",
+  "final_publication_resolution": "consolidation/publication-resolution-001/PUBLICATION_RESOLUTION.json",
+  "final_manifest": "FINAL_MANIFEST.json",
+  "qualified_recipe": null,
+  "affordability_conclusion": "UNASSESSED; billing/physical/helper limitations preserved",
+  "snapshot_scope": "Exact pre-final-publication freeze; actual final GitHub verification receipt and post-success custody are external to avoid self-reference."
 }

@@ -1,0 +1,36 @@
+{
+  "actual_start_utc": "2026-10-06T13:25:44+00:00",
+  "after_all_required_resolution_handoffs_utc": "2026-10-06T13:34:17.872431+00:00",
+  "all_required_resolution_handoffs_returned_before_capture": true,
+  "body_exposure_limits": "Priorinventory broadLunaresultparse151reconstructed/86current, originalperfilehistoricalreadset/exposureUNKNOWN/lostoverwrittendrafts preserved; no perfectfirewall/all-versionretention claim. Resolution parsed metadata only; no sourcebody/secret/native/controller/scientific audit.",
+  "campaign_finished": false,
+  "checks_pass": true,
+  "classified_pin_rows": 2882,
+  "clock_reset": false,
+  "finite_seconds": 600,
+  "inclusive_deadline_utc": "2026-10-06T13:35:44+00:00",
+  "inclusive_seconds_through_required_resolution_handoffs": 513.872431,
+  "mixed_original_safeprojection_only": 910,
+  "no_generic_pending_known_eligible": true,
+  "old_cur001_actual_clock": {
+    "overrun_seconds": 19,
+    "qualification_sha256": "93944ce797291566b7a86e5d74f623aabe1a4ee2bd4a09ff151ae7ec724dc385",
+    "whole_seconds": 1819
+  },
+  "original_arm_rows": 96,
+  "private_exclusions": 279,
+  "producer_source_boundary_unknown": 8,
+  "required_handoff_recipients": [
+    "/root",
+    "/root/publisher",
+    "/root/frozen_exports",
+    "/root/projection_keeper",
+    "/root/frozen_exports/final_closed_report_consolidation"
+  ],
+  "schema": "er9.publication-resolution-required-handoff-clock.v1",
+  "scientific_findings": "NONE",
+  "separate_from_old_cur001_clock": true,
+  "terminal_clock_metadata_and_response_deliveries_follow_sample_within_original_bound": true,
+  "verified_Git_pin_rows": 1632,
+  "verified_NAS_raw_lineages": 53
+}

@@ -1,0 +1,1351 @@
+{
+  "schema": "er9.final.actual-input-pins.v1",
+  "first_scientific_read_start": {
+    "start_utc": "2026-10-06T13:23:44.799081+00:00",
+    "start_monotonic_ns": 123443656145394,
+    "ceiling_seconds": 1800,
+    "deadline_monotonic_ns": 125243656146401,
+    "definition": "immediately before first semantic closed science report/DRAFT read; inclusive through required handoffs and closure"
+  },
+  "inputs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/CLOSURE.json",
+      "sha256": "d158f0025ab14c5c75a4a60a1bd7622bf4b69f07efd5e82de50a49a7f2482d33",
+      "bytes": 1953,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "e289d2bec2de0b5f6aa173c48232040707ca8a0705937be5d01c74c63a37bbe5",
+      "bytes": 870,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/CURATION-late-clock.safe.json",
+      "sha256": "08a50594630ec09c15da118a9aa171ca47fad40cc643e92d38e5ac75eda60db1",
+      "bytes": 1503,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/DEC019-direct-goal.safe.json",
+      "sha256": "6a5d94e4ae69ebbf7a47ca51d171017c0f053daae440bb7ca776cb987ee8430c",
+      "bytes": 2956,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/PUBLIC_SELECTION.json",
+      "sha256": "74115189ead00369ba9a28b8ddb4f121355c35a511a170dec63f3581f0f82a15",
+      "bytes": 4856,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/VERIFICATION.json",
+      "sha256": "5d7e6aa9879fca1fe3570aa3900802bd1eaca9692fb63f1d3ead703c7f659b7d",
+      "bytes": 967,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/accounting-method-qualification.safe.json",
+      "sha256": "ad413f5df960197832d5c114f5d366c517fd74827dc113146e1abf030e792eeb",
+      "bytes": 1515,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/attempts.safe.json",
+      "sha256": "2558c54407df7438a637de78476010eda55f4a883c1706d68d8029f69c3fe2d9",
+      "bytes": 963590,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/dated96-matrix.safe.json",
+      "sha256": "3b0bcc2c569ff875c028b531cadcd42f3a086b58ce7852e7fd0461773ee74f7c",
+      "bytes": 145076,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/evaluator-clocks.safe.json",
+      "sha256": "26c034ad129dd6fd2cb076c40529b0b089eb897d6b011669a7f517bff5c83f6e",
+      "bytes": 37825,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/finite-scope.safe.json",
+      "sha256": "3ac46d918b930c7dbb2880cfc751954367fd4199f6538c41b0079abc93026380",
+      "bytes": 75557,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/inventory-incident.safe.json",
+      "sha256": "b700d957ea1571462faf7bab145cbfece793bbc917e03ed3ff0102ea831ae3e7",
+      "bytes": 2354,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/model-counter-provenance.safe.json",
+      "sha256": "483adad3bc58bcdc17d9ca58060a77988ee56459be1e026788f0eb5110ebecf0",
+      "bytes": 510974,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/snapshot.safe.json",
+      "sha256": "be3ccd58d7e5e4d2ed4896a812bea8f6d6d156851a1374bc7098346390f3848c",
+      "bytes": 164925,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/terminal-cleanup.safe.json",
+      "sha256": "154b1bbd582104f7d4bca60606e588400adb0e4c058f2c90273570f0475b12b5",
+      "bytes": 28235,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/workload008.safe.json",
+      "sha256": "7ab6aaa2dabc2e2650d46dcad01d124764258076df66ea7dff3d73a2440f0e5f",
+      "bytes": 1823,
+      "kind": "accounting020 positively selected safe scalar projection"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-resolution-001/FINAL.json",
+      "sha256": "eebd4b5a60ed461ebc39080e364db01fa92b29afc3be15bd5e19d457ade9bf44",
+      "bytes": 1653,
+      "kind": "neutral publication-resolution actual closure; separate original600 clock"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-resolution-001/PUBLICATION_RESOLUTION.json",
+      "sha256": "257d7f5366b187e9a3ae19b2f6f299529dcac5c1faf897a9262da5ffb9499285",
+      "bytes": 6561957,
+      "kind": "neutral 96-arm/2882-pin resolution; no source bodies"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-resolution-001/PUBLICATION_SELECTOR.json",
+      "sha256": "97da7fd8051e5004c6eccec1413d48ac56d0c1a680e66a4326595290913f1dd6",
+      "bytes": 2508,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+      "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c",
+      "bytes": 20430,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/HYPOTHESES_TABLE.json",
+      "sha256": "52823bdc94be6d1c223336cf83ba553815abbbafb09ebc176ab5a9600ae33505",
+      "bytes": 16381,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/INPUT_PINS.json",
+      "sha256": "b861e9ebc7da964f21c7b4b0541e1212c7b2a6f2d880230045b203bdb390d256",
+      "bytes": 45345,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/QUALIFIERS_TABLE.json",
+      "sha256": "7e30379b9d4082d97596ca1028c8beda9e60d909629c342180960f7f648df6d8",
+      "bytes": 6720,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/RESULTS_TABLE.json",
+      "sha256": "f179777f6313b2187868f52984818f5a84df808f4867a189e51ed95076e5f3a8",
+      "bytes": 78981,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/SLOT_COVERAGE_TABLE.json",
+      "sha256": "5c9addb5293c7073c29e19a7c69b2cb98e308e95588803a5f5f1f6a18d4dc2d3",
+      "bytes": 73466,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/RESERVATION.json",
+      "sha256": "1c2c74cbaf2a2b7f42fd2723641c4896e61e6d3b6d9072d2736708f0cd0d4fb8",
+      "bytes": 488,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/START.json",
+      "sha256": "6afcefe14a65183ccefa4ae27454cb872d58f21a4cd01049852ebaf940530fd2",
+      "bytes": 301,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-008/PUBLICATION_SELECTOR.json",
+      "sha256": "420954d0dcacd4820629417a74fb117f5884644262a74aa56917b6f2c3b04b7d",
+      "bytes": 926,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-008/WORKLOAD_SCOREBOARD.json",
+      "sha256": "805d474b4faf50d80492b7aadd91a6159209009e382bf6ed51dab058d0b093c4",
+      "bytes": 2024878,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/REVIEW.md",
+      "sha256": "a4c75422d81987955de7bb211f677c3fc5d2107e260be7e1060a6f3394917be1",
+      "bytes": 4246,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/partial_source_judgment.json",
+      "sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d",
+      "bytes": 38577,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/REVIEW.md",
+      "sha256": "e2184672b54b26ec5fd883253713e097b4d08ebb68a1c0a6d96b58b086a8a708",
+      "bytes": 3359,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/partial_source_judgment.json",
+      "sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d",
+      "bytes": 25834,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/REVIEW.md",
+      "sha256": "ef7f6645293f549c47d41f814913aec3894ed22f30440cdd9ffdbc48c43b71bd",
+      "bytes": 2307,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/partial_source_judgment.json",
+      "sha256": "cf16ad3ee5631685d5b443c342a933ed7ef04026f547262f94c09cd359cf69d7",
+      "bytes": 37356,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/REVIEW.md",
+      "sha256": "beed6df0e38629c5f7118b1034678a7cac0d9ceb0c57c6e23c61937d748399af",
+      "bytes": 3798,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/partial_source_judgment.json",
+      "sha256": "964afda2bac53991deed012343017a0edc8240d4b29712d88291b27fa39b7520",
+      "bytes": 37473,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/REVIEW.md",
+      "sha256": "ad7ce747049bd40789a84877fd2271f6d35c3c20ee92cf1e984f95facbfb3c4c",
+      "bytes": 7877,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/current_output_judgment.json",
+      "sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa",
+      "bytes": 40128,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/REVIEW.md",
+      "sha256": "4f0c9c4cf58f0544a63c302facc89283618f5ad7c99509c81f7a31e5fe850d35",
+      "bytes": 8675,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/current_output_judgment.json",
+      "sha256": "9a3d2bcbabfca57057131b83a8545e06d933202f79fc950e2e1575881f5c3ff9",
+      "bytes": 26934,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-review0001/REVIEW.md",
+      "sha256": "348e8467413dd2babc3237cf2394d01a011a2fcfdbf67c1f56c2a6868766948f",
+      "bytes": 7595,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-review0001/current_output_judgment.json",
+      "sha256": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54",
+      "bytes": 35063,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P1-source-judgment.json",
+      "sha256": "c44304f22cd3d4ffb563b29802266a5251048c59dd64b67d0c1c378295c56751",
+      "bytes": 26202,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P1-source-judgment.md",
+      "sha256": "87890d98afe12435915aabe536533a10e6736defc86ae0a99c21fc024d6d6095",
+      "bytes": 6661,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/P2-provenance-runtime-report.json",
+      "sha256": "96b6ef8a6202a0c6a890eb4e5d4efad61d6758dcfb945fb4f31e688c729a8651",
+      "bytes": 20346,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-DEC019-warm-1/PUBLICATION_SELECTOR_FINAL.json",
+      "sha256": "d91d1e4b9ff69d50ba5a130c7d00e06a39253529e052a531399ee258741adc2c",
+      "bytes": 2578,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_judgment.json",
+      "sha256": "e34abd423fcfb4ecf56ccbe7a18ea4adfa591be6fe8104ba4c7f800749072ce3",
+      "bytes": 4655,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c",
+      "bytes": 20358,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase2_report.md",
+      "sha256": "0165856e7d88689132339a20bd165815f0ecd12f6d2e43d0ce39ceb607d6fd75",
+      "bytes": 3927,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_judgment.json",
+      "sha256": "c47fbca74adb0275db7485c03d6856607039032cb35d8fada06cb4fb3e54f874",
+      "bytes": 24899,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_report.md",
+      "sha256": "5a620bd9ad86d61ffb2053e085d6f4e52246e3bb416caea52627d0a1e993441b",
+      "bytes": 9642,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase2_report.md",
+      "sha256": "0109b445d1030c0a2071b2eba14341efe73b47972545bc32777614222ab3edbe",
+      "bytes": 3789,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-current-research-1/phase1/source-review.json",
+      "sha256": "644739d430d082d0cd7a8478ffa877e2a8f661a9e3beca9132f21171bca6fbea",
+      "bytes": 21325,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-current-research-1/phase1/source-review.md",
+      "sha256": "0eda5ad0b24367009dd40d1a36da8ace4f833a9cd51f196aeff5bd7077bd1d51",
+      "bytes": 12486,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-current-research-1/phase2/operational-economics.json",
+      "sha256": "36fa92bc4d3077a1ac0e63432cb6a8aa1717fd5cdf0f67a8ec3299d4a6fac20c",
+      "bytes": 15434,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-current-research-1/phase2/operational-economics.md",
+      "sha256": "1cab5dc1f9d1eeeb81d1b53688779136820e59f3fad321463bbe39121cf47685",
+      "bytes": 3424,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/completion.json",
+      "sha256": "bca3e29bf15afca958a49781e2bc67a04f4bd1283b61cd9e922cd53dbe4ef344",
+      "bytes": 649,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/final.json",
+      "sha256": "e61d6b8e67d85347c27da060cf0528b27dd6d4e30ee854c9a88ca431e25cf0ac",
+      "bytes": 3674,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C03-final-1/phase1.json",
+      "sha256": "a5da069e9b2592a82199eabe959e7525d1170a3901b821e6f57cebc38586d28a",
+      "bytes": 77618,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-current-research-1/phase1_source_assessment.json",
+      "sha256": "bca55f9774d049af3a3cf8d7a2fe5a198960e2c7a87815c1ec9f4b70d706cd17",
+      "bytes": 33045,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-current-research-1/phase1_source_assessment.md",
+      "sha256": "1cad78c078c593b7dd32e18f91d668d6dc6676153e1523134069d535d648b421",
+      "bytes": 3787,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-current-research-1/phase2_operational_assessment.json",
+      "sha256": "902e4fdce2f5e4620994063cee637f298d3cb47a534c1b94561bfa961e5ed8c0",
+      "bytes": 23765,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-research-1/P1.judgment.json",
+      "sha256": "18ec8ecb3f68590d973b98973e8499655c230e084ac16b7717cf14bf9485e43f",
+      "bytes": 13996,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-research-1/P2.assessment.json",
+      "sha256": "83536163bb6630d77a6e11a40bbbf2894b3f94f20a3c28949de3a0747aa9547e",
+      "bytes": 16893,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-research-1/P2.pin-lock.json",
+      "sha256": "705521e82047370a6064d56d9b434083b4575f6155e96c850a2846aa54fe2863",
+      "bytes": 32814,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-research-1/closure.json",
+      "sha256": "4d713924bb7934615d30a7d585539dc2008a0f180c36f1ee75e45ff82cf877b5",
+      "bytes": 940,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C04-research-1/report_selector.json",
+      "sha256": "10175ce0969f0ddb12aa645d0807bfdbac78f693b461aaf12e21777a61785c00",
+      "bytes": 1070,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+      "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723",
+      "bytes": 1334,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/final_report.json",
+      "sha256": "fb5a19b8fac2d943ded7a7c3c0ed6effe384d2d4ec0247868b93dfdec644380a",
+      "bytes": 92150,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-current-2/final_report.json",
+      "sha256": "90a5cb5a01cd26b607a209625ced1a7b0bce94320752d9594f22f70445e8bbd3",
+      "bytes": 3709,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-current-2/p1_report.json",
+      "sha256": "de844a877035ccad2df5f76bf4e03b1026668675fb1ee78f0a18ce67c1cd3000",
+      "bytes": 9548,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-current-2/p1_report.md",
+      "sha256": "06bd8fb98f8250ef4c7b028d827effc95760bfc914922a32f96fede4c543a166",
+      "bytes": 3403,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-current-2/p2_report.json",
+      "sha256": "8194de09b4b71c8ba4ef42379a418059a41bc02daab64ae4ec04ec84a4049bb2",
+      "bytes": 14302,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/current_output_judgment.json",
+      "sha256": "fd05dfc41827cb3cf719a3d77467f2faf05de7c2eb1b3da2d813bfd77b68a31e",
+      "bytes": 24460,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/phase2_report.json",
+      "sha256": "66d3314c3fb04c4391e7b44f0a7577585a0ecff82ee8c925dff60fa12c490c20",
+      "bytes": 10748,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-10-research-I03/report.json",
+      "sha256": "53993d36d2e213bc177ab159c167b08a90376b2e725f66491f5ffb70d1a51fe2",
+      "bytes": 10763,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/current_output_judgment.json",
+      "sha256": "fba3b846b8bbdb67d9230f119b1f8bf64638fdf2124e501349ec13e87173a309",
+      "bytes": 27978,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/phase2_report.json",
+      "sha256": "0c835d4b86801d278470848965c06c184bf0e522a1b421839cba01448617af2f",
+      "bytes": 10377,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-11-research-I04/report.json",
+      "sha256": "8e36f63446f7b1529e9330ba708daa2cb53894ddce17f7fcd36380391cd87b3b",
+      "bytes": 40842,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-12-research-I09/assessment.json",
+      "sha256": "5057003e06896f9ce658528315b61b71987fe3cb9f3522872043b59d28cad157",
+      "bytes": 2258,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-12-research-I09/phase1/source_assessment.json",
+      "sha256": "87a266fe21fc6e6a440f624c8d8eb90f4952d941739a6a80c1e62d8bb909ecca",
+      "bytes": 47332,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-12-research-I09/phase2/accounting_assessment.json",
+      "sha256": "44b508850e13bd6a5a50092d3185bc7befff9ea56df518935a18ec903e32d5fc",
+      "bytes": 16042,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-12-research-I09/report.md",
+      "sha256": "eee5e5219696dd2dc415d86d0d060f594f4b6cf23c9572f2ab2a350f451da4e2",
+      "bytes": 1506,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase1/report.json",
+      "sha256": "dd8e2f542d04be28a3190484e231517ad13ded108550c31f7cbc23c7d2178912",
+      "bytes": 43501,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase1/report.md",
+      "sha256": "d48049acbeb6b9e8b1391160175ad13c6f4d24a3b9b20bedba17e248b47673d1",
+      "bytes": 18437,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase2/final_report.json",
+      "sha256": "873a517de68c0904c563674a4391b37cf2e15f555b894d9d834ff053f34b8a92",
+      "bytes": 11813,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase2/final_report.md",
+      "sha256": "e3e134d64be98018a842b254573e6e597b15a6353109358a8d40af539b66c00c",
+      "bytes": 2556,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-14-research-I11/phase1-report.json",
+      "sha256": "c7329885129eb0ea01bb1ab89dc31ebabdc8e192ac7293ac0c154f4f22864bb3",
+      "bytes": 27491,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-14-research-I11/phase1-report.md",
+      "sha256": "17a6a8fe31ac9a4cc65e90bfbc7454098f1fa84d499c492c503ed7e92f346303",
+      "bytes": 21026,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-14-research-I11/phase2-report.json",
+      "sha256": "6f128b5b7796b097abd84c26d31efa3df94dd430a3b19cfd531069d2b61b72d9",
+      "bytes": 18197,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-15-research-I08/phase1.json",
+      "sha256": "e49de257cbe5e550ddcf97150af48bc1ddaa7b4fcb4fbb0ea51905bca5500233",
+      "bytes": 14273,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-15-research-I08/phase1.md",
+      "sha256": "cbb131956165445fbd8fdae43247341034228e68388a9358692d87e70cdca4da",
+      "bytes": 4324,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-15-research-I08/phase2.json",
+      "sha256": "f6ea2c27b044a983de4cd216d29e9509dbfec1f81e6805fbb15174fa2757cb35",
+      "bytes": 36751,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-15-research-I08/phase2.md",
+      "sha256": "70e80b852ab27ccf3020b43a4ba2a35983fce28c881c9bd1348cc8e10d5e0261",
+      "bytes": 3822,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-16-I08-current-roles/phase1-report.json",
+      "sha256": "72ac664214b617f1d50c38ccef3d7ba80aae1bbbec601692eeff57e27ef4e2a4",
+      "bytes": 18175,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-16-I08-current-roles/phase1-report.md",
+      "sha256": "8f4adefff93deb9f63689b81a3af81a7deaf00e3656ec92dc6cac564aa989e58",
+      "bytes": 8093,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-16-I08-current-roles/phase2-report.json",
+      "sha256": "1f25dde57ab8be33c72b8b04145e0356e813a31df585ca555663dc96591bcf11",
+      "bytes": 29592,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-16-I08-current-roles/phase2-report.md",
+      "sha256": "d35d276c03805a829101f73fe53ab12b4951a504998b49e633998740948d403f",
+      "bytes": 3761,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-17-research-I12/phase1_report.json",
+      "sha256": "295a1b8b143b5dbb42d0a8d09963e082310796acdd78e12cc3b9e6f708a3b104",
+      "bytes": 33157,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-17-research-I12/phase1_report.md",
+      "sha256": "f68d9e155e1849f3ea1d8826d0386a3b5997cc7c341114e4f9ddbbbcd905e8ec",
+      "bytes": 19459,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-17-research-I12/phase2_appendix.json",
+      "sha256": "449e2e5c9e5be74d70903c604d8b5bbccbdf5b5b7163212ca2019ed975245c61",
+      "bytes": 21760,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/REVIEW.md",
+      "sha256": "43ab1b81598952ed68d6b61dbf83bebd4b0b1ab22c20e701075a8a2192e94f69",
+      "bytes": 5953,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/current_output_judgment.json",
+      "sha256": "1c58b51987bcadeee4bbfb7358cb074bd668c941d80648fd5dd5f1fe1cff1a07",
+      "bytes": 49687,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-3/review0001/REVIEW.md",
+      "sha256": "2e58a8237ad59314fc46f915ff07d1893fd5ffe16c336184ff130c32008d6c7b",
+      "bytes": 9736,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/final-report.json",
+      "sha256": "74df43964b4c894827596621703e7096364fe727d6ced6bb037c5743d3e7f6bb",
+      "bytes": 67251,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/handoff-closure.json",
+      "sha256": "7d29cb6b1004d1dccc8510534661e102565cfae989c7acf8c37dd8c40908b1c3",
+      "bytes": 1197,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-judgment.json",
+      "sha256": "e65af2d48a18b8c861c055f95427f0e0bd7f12e6e406770c5d0de127662fde8e",
+      "bytes": 35458,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/final-assessment.json",
+      "sha256": "1a3d8b120df25921a384887ddac4dc8f1b89f9a2d9eacf74bab7fd1052567898",
+      "bytes": 22293,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/phase1-judgment.json",
+      "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd",
+      "bytes": 30351,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/FINAL.json",
+      "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+      "bytes": 2522,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-7/phase1/assessment.json",
+      "sha256": "7aa606aa66c740d86844acc92078343fbb0a3406613bfc5d85f26c367a07560e",
+      "bytes": 27631,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/PHASE2_OPERATIONAL_REPORT.json",
+      "sha256": "f605569c84795bb2866a5b7a858c204da4f2c4ff7901293fa87fc755d0ce257d",
+      "bytes": 20934,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/current_output_judgment.json",
+      "sha256": "ccf57af334c9a9fea6e021ee269ee49559700701290c79485f0931688f44d050",
+      "bytes": 20636,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/report.json",
+      "sha256": "2e3cdf38892bfe5a8d5b34f97196039e0ba0536e7d2c68657b1297471477b3d1",
+      "bytes": 31140,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-9-research-I02/current_output_judgment.json",
+      "sha256": "00e3b20faf0e7302040d32143abf761ce1b7399fbd1176c6bcc0d7c978cf5d8b",
+      "bytes": 23995,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-9-research-I02/phase2_report.json",
+      "sha256": "53238ae8bc5866fe2d2d0a9bf704a215c118e50bf595f3c8e9bbe653c9819461",
+      "bytes": 41211,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-9-research-I02/report.json",
+      "sha256": "addb0240dab63037695e36589b44f4bf8398bbbee6bd3b7dcf8d46a27d8b4b48",
+      "bytes": 16578,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase1_judgment.json",
+      "sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8",
+      "bytes": 20125,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/report.md",
+      "sha256": "3cee77174f8affd8ebca491008f718396288ce6841791ea40a85059b8ecf94c7",
+      "bytes": 4558,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/REPORT.md",
+      "sha256": "e22652e5193ef115827aafdcb476d7b106528861525fe24564cdfbf9b4b1c4ce",
+      "bytes": 6679,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/assessment.json",
+      "sha256": "eb43ec34d0ec102c9e4deacb38d6478855feaaa71de39ca54dd251e1acfc64c5",
+      "bytes": 2263,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/closure-lock.json",
+      "sha256": "ce56b11bcd0c3d82a1d6a87121eda850a3b01031581a623c0c12995b8d034f5e",
+      "bytes": 10894,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/completion.json",
+      "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+      "bytes": 1851,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/phase1-judgment.json",
+      "sha256": "04f448158240f33311d46bd862d2f99c02a5ddce582ee23198c30486c719a94e",
+      "bytes": 21100,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/report.json",
+      "sha256": "d645a8c76d367028d88b8a32b9f23731fd38ac811e56186647156824e545eb34",
+      "bytes": 47088,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-judgment.json",
+      "sha256": "b0fcf5bafda4e602ae738432ce9f270ddda2f0b8d0eb0ee2d266c677758a89ae",
+      "bytes": 22306,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/report.json",
+      "sha256": "2e189d47a006c798a9486dcf5d17cc02375556fd2cd4ffa57a440ab3b40999dd",
+      "bytes": 38702,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/terminal-closure.json",
+      "sha256": "60c5a7d1bb05fa8f2327c0ec2a580e80adb10b7b2afa1eb60ed24bab147d2aa3",
+      "bytes": 3123,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/assessment.json",
+      "sha256": "496c1452b8ac9ba7e3c8ff11ebe2095b08c88834bdb91669daf516d7faa089e3",
+      "bytes": 3142,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/handoff-receipt.json",
+      "sha256": "822c1f6048d9dc6758a7beb4f8a7779da15294ef74fdb0cdf1b2ec7f0853d7f0",
+      "bytes": 1427,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1.json",
+      "sha256": "817bf1264b43e1494e16e0204147380ec0ccfea111b6a2a73c571aaa9b859d6f",
+      "bytes": 35776,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/final-report.json",
+      "sha256": "e180d406e4a7e9ee8e418cd00956dbd046dda7fe63b14392b6e40341c4758fd5",
+      "bytes": 4201,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/handoff-complete.json",
+      "sha256": "96337bb4d1ef5865d6b9084ba98c4c5cd4e3d85afadc0f039e8ec966f0055e2a",
+      "bytes": 1601,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/phase1-judgment.json",
+      "sha256": "b12178e5dd5054dc66bce457b5cd7da66b55772e0a87006088e7d2d0af1a358a",
+      "bytes": 29439,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-15/final_report.json",
+      "sha256": "7a7813c927d6fa98736269a1dedb0cde3ee5fcb6e3558734dd3ea1bb55cbb8f3",
+      "bytes": 50507,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-15/neutral_closure.json",
+      "sha256": "1a4a2f53185d48c7d77ac10335fe82dacb66a299f2662aa427f6467627771b44",
+      "bytes": 1677,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-15/phase1.json",
+      "sha256": "af9d6cd9056d2ab9b60c7d95e10188e8190d87b05a690dc3d9375442af5cf822",
+      "bytes": 32629,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-16/completion.json",
+      "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18",
+      "bytes": 1898,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-16/final-report.json",
+      "sha256": "a22cb6bc427c0e069bb3154a4610af4f4148a87af55f205325ffd77dbba7d567",
+      "bytes": 2714,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-16/phase1-judgment.json",
+      "sha256": "0c3446e5ae92dbaf6d17a37b396c0ed0d12fccd95e03bf3f560965a9d36856da",
+      "bytes": 41227,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/phase1_judgment.json",
+      "sha256": "801e82a4cb0ed70bec40f9d2f708146ba7a6308da7e121c2419f577d8fc2edba",
+      "bytes": 14188,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/phase1_report.md",
+      "sha256": "5860bfe3716d026d8a1a6d366908b76bad63a0c06b213a62ac2636f4ec90e9f6",
+      "bytes": 9497,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/phase2_addendum.json",
+      "sha256": "547316899198e980c067f0326c97e5e4e8b9e7f55df0a54595b068e083fb6ff1",
+      "bytes": 21053,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/phase2_report.md",
+      "sha256": "11be585307de74848a276ca6b0aa0ea2160941c1d68ff1dbbfff8b0b227ee6ff",
+      "bytes": 6254,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-18/phase1_judgment.json",
+      "sha256": "c6fbb0c79ebbfb2765679f63c11b94952b082cd3a1b231d694f3a3b97ec23378",
+      "bytes": 37122,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-18/phase1_report.md",
+      "sha256": "d7a5b37298ad6501b8f50450d3d46b911c3eb2aa1f4241f5cf06377388d2d2fe",
+      "bytes": 5137,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-18/phase2_report.json",
+      "sha256": "69d42f00341374f3d8789d2376900b9b8b95dbd045dbd0c805d59f457eb344b0",
+      "bytes": 37598,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-19/phase1_judgment.json",
+      "sha256": "22fe011c5cd13282f8287681ae1faaea764c6377aef0a248b97969748c04ac3b",
+      "bytes": 23695,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-19/phase1_report.md",
+      "sha256": "995602948753e728831d362bc152ec4876f304ae160d9bbe03d5e44f8ca7dea8",
+      "bytes": 7393,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-19/phase2_judgment.json",
+      "sha256": "3cb2389e712dacf2b662f1502fa1e7e7502e09935a26a8d438896b08d299de34",
+      "bytes": 16309,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/final-review.md",
+      "sha256": "aca403650458e1e10052c3b978080afa6ca9ac631470c3bc68c6ee1a151dde0a",
+      "bytes": 3217,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/source-judgment.json",
+      "sha256": "740a883f06299f41a88eabac2b0d316c45dda26e059051534562f52fbc2c7d43",
+      "bytes": 21014,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/phase1.json",
+      "sha256": "fa30eef6b0836bd12aaded274502b2a51dbda6de772cd5e8a9d339a979540285",
+      "bytes": 40376,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/phase1.md",
+      "sha256": "4ecb8bf0af1091ed32540297966ff122aeec2dd06c9319cb29456f9235e96da8",
+      "bytes": 4183,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/phase2.json",
+      "sha256": "a7120cbc341ad7c630e739f1d27bd06aeb9ac4a4ffd2f9adc71b35c6ea8041a7",
+      "bytes": 32730,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/report.json",
+      "sha256": "98f43dcf93e80c9d6c4df52b639e31f098d0eeb7dbfbf5e6f2112c5475c438a3",
+      "bytes": 2111,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-21/phase1_judgment.json",
+      "sha256": "df73c67a4f16d1a96e040cc9ba1fe3a3617ff3dc37ec7dd6f25145ac222e2050",
+      "bytes": 21204,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-21/phase1_report.md",
+      "sha256": "873389ae7d31ab8a10f9fab11e738ea19d649de1bff1b972dcb227153d12c00f",
+      "bytes": 3204,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-21/phase2_qualification.json",
+      "sha256": "742eb556bbe5b0278953c3517497383d6999d3c99f250077f40b7e0b00fecbd1",
+      "bytes": 5014,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-21/publication_report.md",
+      "sha256": "c1ba22fe6f28bbaa131ffc310d12c3a3126e2442c9acff09c6b04862fa53f8d9",
+      "bytes": 2556,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-22/p1_judgment.json",
+      "sha256": "ad8b40a51eb7cdcb635fb70cf46940d208dbcd3711af99b6933b726d79074667",
+      "bytes": 13862,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-22/p1_report.md",
+      "sha256": "1a9c76038f5b9c868eb13936df45765e2ecf7c504ca6a87ea8323fad5a60091a",
+      "bytes": 5013,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-22/p2_judgment.json",
+      "sha256": "d9986f8a2db9a0205809acd601d4e4a1a6fada0bd62e060629c3df091913e5f2",
+      "bytes": 2540,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-22/p2_report.md",
+      "sha256": "abafc21ddcc04364e20cb4e33432707f7f90178ee0f79794a01d9f6cb74c0ac9",
+      "bytes": 5833,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase1-judgment.json",
+      "sha256": "dd2e5538cf734d0c924c0019ff1c7b9e9197f72021b154b65d8f7096553b7d7b",
+      "bytes": 11208,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase1-report.md",
+      "sha256": "ce829419aa2f59e86b8b90723713a6da395dc00b2ec94f0db13e428ac32f4aea",
+      "bytes": 5011,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/phase2-assessment.json",
+      "sha256": "2f98a38cdc0a61cc17ce24e7ff0707c5d61039deb758a4d9009c1464f641c28d",
+      "bytes": 13970,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-23/report.md",
+      "sha256": "48bf8450cb4d032f01c9e458a49c21af0794a043020f79c596e96a80308d146c",
+      "bytes": 7640,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase1_judgement.json",
+      "sha256": "570b0d2f0996f1ce4ef133a32286aa61147532409f2ad2acff42323004de0e06",
+      "bytes": 24495,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase1_report.md",
+      "sha256": "9f6aed1b34f0330be1bb8d3a18b2dcdf64a2a35fe2ad9679a81320cc3f8c8a98",
+      "bytes": 5843,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase2_judgement.json",
+      "sha256": "96f146982b8af37d72f02b4549c72d90192fd43ae6ee4381a9177097c8151cfb",
+      "bytes": 15806,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase2_report.md",
+      "sha256": "ab8deaaf2413b1ef335c873781f0c091c5268c83cd6e3088d50f50e202f6c80c",
+      "bytes": 4006,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase1.judgment.json",
+      "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+      "bytes": 21473,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase1.report.md",
+      "sha256": "fb0ba67c35e0fcdbcec801f0919b11d443c03f29afdc1998630cb427bf70a7bc",
+      "bytes": 16445,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase2.context.json",
+      "sha256": "38401ccc4f3928c3ac389bc9281b05ad1eae65b89e053d6b1894b902ce9b3562",
+      "bytes": 8825,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase2.report.md",
+      "sha256": "88dbf68d627f6bf1e3f11d45e017079cab5a28f5e06fa5b4b61b30f109e323ff",
+      "bytes": 4853,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-judgement.json",
+      "sha256": "a0c901bbb645eed7a38a8e6770e52279d278fb15ef14bf110f85992551515806",
+      "bytes": 13969,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-report.md",
+      "sha256": "aa786b1637b549a5dfd05a8b0a96d908ab1bb6c25f2403054b1deebaa8be0384",
+      "bytes": 9634,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase2-report.md",
+      "sha256": "b61d3153b52f4ebe416aa9a68de5751f42464546e8bafe724cfce50d3f5a585b",
+      "bytes": 4044,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/final-safe-summary.json",
+      "sha256": "fe15179295ed5fdb14910132fb1345f036958f2b9b70cfbfb4488e9d844a61fc",
+      "bytes": 8638,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.json",
+      "sha256": "6cf83fd9268b4ac0ff88fbcb5b20cf16bd383f31e320b1233b95ae68ef3f4242",
+      "bytes": 111636,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.md",
+      "sha256": "6ec6b44be20888c744b2261e3ae80ce538b59493a8c5ba1e6d5073fe4a0edf98",
+      "bytes": 24701,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase1-assessment.json",
+      "sha256": "dc456a0eaf2c7794c5ebafc16332f22549726f76abc9c96bf6f5245edbd64add",
+      "bytes": 43858,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase1-assessment.md",
+      "sha256": "8585c554e1b64777821f0d63058c6779e4a0392ee7aeb3f31997be2b077c54bb",
+      "bytes": 18009,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase2-assessment.json",
+      "sha256": "20e808ad0c6d475f11bb0563b16198f26336b94540be7c567ca28835ff9641fe",
+      "bytes": 8528,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase2-assessment.md",
+      "sha256": "9fde5b813d5985ddc7f22449a6981e8dfc824e2993f00bec129df4aed62c426c",
+      "bytes": 2752,
+      "kind": "exact CLOSED report; 100-file positive report locator selector"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+      "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998",
+      "bytes": 25593,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/review.md",
+      "sha256": "358bc72a2e6ff94343334ac9413fbb4490cdef5647e58804fe69484fe3353633",
+      "bytes": 4818,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/phase1-source-judgment.json",
+      "sha256": "beb249873d4386c42ad05ad2933c406326ee52706f36215d45eaa9dd4a3025f7",
+      "bytes": 12810,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/phase1-source-report.md",
+      "sha256": "3f0a8379bd49dda70a13db6a1e44e2fbe53a39bae4ef2a14a106c963c8aa4e06",
+      "bytes": 5814,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/final-report-002.md",
+      "sha256": "8087a72bf687307805e7060840f886dac6b62e5f310082c234cc6575d7afcf50",
+      "bytes": 4396,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase1-judgment.json",
+      "sha256": "332c1ae52f06a472acc533260d0d42aefad3636650c655f42c0d3faccf16b489",
+      "bytes": 16578,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/final-report.md",
+      "sha256": "e3dc42ce84621860cdd8eb0fd444036f667476bcc9a6a9fe0ee2743d5b459578",
+      "bytes": 3240,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-judgment.json",
+      "sha256": "31c238783469bc12acea861ac3331d486af3843c7d5719bceb19430d6abf78aa",
+      "bytes": 30772,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/REPORT.md",
+      "sha256": "0d12902f245f9a8d7f0cde17e1a65086001abae951c5ad01e0d1e9e8df846886",
+      "bytes": 4981,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/phase1/judgment.json",
+      "sha256": "432adf352516691aabb9793d6580355685690ffca34dd1c46a0c19eb100b2465",
+      "bytes": 29354,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/final_report.md",
+      "sha256": "d477604285e9d1f2dd29bda5c0ec6a9cd17f7bc01b86380ff9bdda75468a699b",
+      "bytes": 4007,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+      "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7",
+      "bytes": 11658,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-judgment.json",
+      "sha256": "f263952416846370821e787efcc2073b8d84d12847cbdfca766e423b18d62a9b",
+      "bytes": 23773,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/report.md",
+      "sha256": "062291b201778757654cbe78c7c9916e44ce460b1b339052fc75d79220f9a0f4",
+      "bytes": 4231,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/ASSESSMENT_001.md",
+      "sha256": "496f44f596d63d48ec389c3f0bb6f87d85f03ce970e3d3263de49b20553052e3",
+      "bytes": 3138,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+      "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e",
+      "bytes": 9328,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/closure_receipt.json",
+      "sha256": "aefbdd11398b20e9cb9c7b33533c79277342d829dc59a413dc5ed626e21f910c",
+      "bytes": 5600,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/judgment.json",
+      "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+      "bytes": 14281,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-2/assessment_final.json",
+      "sha256": "225b99cf6f8ab9fb534aa552f46e346de6f8da7a8fac44107473831c18c853c0",
+      "bytes": 2142,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-2/handoff_closure.json",
+      "sha256": "b44f0b73adb72495e5b394a2adfd56691e0f8c8525398b443eb86cfc32369c1d",
+      "bytes": 3389,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-2/phase1_assessment.json",
+      "sha256": "9a16266cad6af394dbdb4c393a19145ab11542398681343cfc397fb96b9917a4",
+      "bytes": 12540,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-3/closure.json",
+      "sha256": "46c1d385eef67f010266687045b792fac2eb4207b7a2b05f5677176857a9572a",
+      "bytes": 4061,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-3/phase1-judgment.json",
+      "sha256": "1350ae02f94ca7116c5dca61d3b932224a8c5502454ed7f2a423c69e00b4e4a4",
+      "bytes": 10842,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/closure.json",
+      "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+      "bytes": 3780,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-4/phase1-judgment.json",
+      "sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+      "bytes": 10165,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/closure.json",
+      "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+      "bytes": 829,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-warm-recovery-5/phase1/judgment.json",
+      "sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+      "bytes": 16463,
+      "kind": "historical exact report/closure pinned by DRAFT002"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINAL_CONSOLIDATION_ACTUAL_ADMISSION_GATE_001.json",
+      "sha256": "6a4420a1642ec9e6385eae327bdc9a52866a49cece11067d13a2397ddddee0d8",
+      "bytes": 3966,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_005.json",
+      "sha256": "19b759814c5a9d93a2783e9c65c825beaac7a37f934eab6e274bd36e30db1e60",
+      "bytes": 137119,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_OWNED_CONTROLPLANE_CLEANUP_AND_RESTART_001.json",
+      "sha256": "8d6f4a0788b88dae93f68486d63458adf06e008dc2d08a8912fd42a60bee53a3",
+      "bytes": 2419,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/FINAL_CLOSED_SCIENTIFIC_REPORT_PINSET_001.json",
+      "sha256": "1cecb6ffdbd4f097cff84868c260b4117a4d305ea1f10fbd31b477de423b6c34",
+      "bytes": 47454,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/ROOT32_DATED_COUNTER_PIN_001.json",
+      "sha256": "d90c3dee1b04ebbdb6fa5b9a951806ae1019490bc22c8fe6a43aea115a7cb245",
+      "bytes": 1040,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/publication/cohort039-verification.json",
+      "sha256": "b1a8faad0a319415d7a1fb511bf106f6cbad657a676628dd050f93ecfab3b0e7",
+      "bytes": 5381,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/publication/commit039-authenticated-assets-and-aliases.json",
+      "sha256": "92974a2f1730f727bc8b367ba2d2ec31688c45d9b503ba6b82ba264a9571ef91",
+      "bytes": 2746738,
+      "kind": "closed report or neutral positive metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json",
+      "sha256": "93944ce797291566b7a86e5d74f623aabe1a4ee2bd4a09ff151ae7ec724dc385",
+      "bytes": 1972,
+      "kind": "closed report or neutral positive metadata"
+    }
+  ],
+  "all_actual_read_bytes_SHA256_verified": true,
+  "nested_reference_grant": false,
+  "source_bodies_candidate_outputs_keys_native_IO_execution_code_auth_read": false,
+  "private_TD27_context_skipped_safe_summary_used": true,
+  "exact_late_positive_pinset_count": 100,
+  "late_pinset_actual_read_count": 99,
+  "new_grades_or_retests": 0
+}

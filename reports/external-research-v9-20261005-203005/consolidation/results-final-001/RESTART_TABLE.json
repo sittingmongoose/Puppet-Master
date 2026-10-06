@@ -1,0 +1,429 @@
+{
+  "schema": "er9.final.owned-cleanup-restart-guard.v1",
+  "cleanup": {
+    "observed_utc": "2026-10-06T12:49:31.919056+00:00",
+    "controlplane_units": [
+      {
+        "Id": "er9-203005-dispatcher.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "MainPID": "0",
+        "ControlGroup": ""
+      },
+      {
+        "Id": "er9-203005-metadata-monitor.service",
+        "LoadState": "not-found",
+        "ActiveState": "inactive",
+        "SubState": "dead",
+        "MainPID": "0",
+        "ControlGroup": ""
+      }
+    ],
+    "own_dispatcher_and_monitor_stopped_after_terminal_native_tail": true,
+    "candidate_worker_quiet_ref": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_EXACT_OWNED_CANDIDATE_UNIT_CGROUP_QUIET_OBSERVATION_001.json",
+      "sha256": "d99810ef002bae7a8ebcabb48a7a06163200f254f0037af8282c467dba594a0d"
+    },
+    "historical36_blocker_ref": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+      "sha256": "863f18d2188496986d721bc900900f69573e0465cd17bfad08da202583f09a7d"
+    },
+    "DEC019_terminal_ref": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC019_ALL_TERMINAL_001/CHECKPOINT.json",
+      "sha256": "0267f5fb3f54965848597de66190f08679383db773430dcd44b1cf737a5e99bc"
+    },
+    "actual_active_candidates": 0,
+    "retained_candidate_resources": 0,
+    "current_executable_finite_roles": 0,
+    "historical_descriptor_statuses_unchanged": true,
+    "failed_unit_records_and_native_receipts_not_reset": true,
+    "sibling_or_root_services_changed": false,
+    "restart_command": [
+      "systemd-run",
+      "--user",
+      "--unit",
+      "er9-203005-dispatcher",
+      "--property=Restart=on-failure",
+      "--property=RestartSec=5",
+      "--property=MemoryMax=128M",
+      "--property=CPUQuota=25%",
+      "--working-directory=/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005",
+      "/usr/bin/python3",
+      "-I",
+      "-B",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+      "--lab",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005"
+    ],
+    "restart_scope": "Only new positively source-closed authorized work or explicit operational recovery; no automated reopening historical aliases or quality-driven repetition"
+  },
+  "worker_proof_summary": {
+    "observed_utc": "2026-10-06T12:38:40.915354+00:00",
+    "owned_worker_units_checked": 287,
+    "private_slices_checked": 213,
+    "all_owned_worker_MainPID0_and_no_active_unit": true,
+    "all_saved_private_slice_populated0_or_absent": true
+  },
+  "historical_unentered_descriptor_count": 36,
+  "historical_unentered_descriptors": [
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ]
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ]
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ]
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ]
+    }
+  ],
+  "DEC018_conditional_blocked": [
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    }
+  ],
+  "DEC018_preservation": "UNASSESSED_GATE_SHORTCIRCUITED_AFTER_BOTH_NATIVE_REPAIR_FAIL",
+  "DEC019_no_extra_original_pipeline_or_fresh_target_credit": true,
+  "automatic_repetition_or_new_targets": false,
+  "restart_rule": "Only new positively source-closed explicitly authorized work or explicit operational recovery. Preserve old versions, failures, original clocks, missing outputs and locks. Do not auto reopen historical descriptors/aliases, rerun because of grades, or stop unrelated/root/historical Goals."
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "er9.final.neutral-closure-positive-selector.v1",
+  "permission": "Exact neutral closure/ready/publication-selector metadata only. No report findings interpretation for courier. Scientific publication permission remains ONLY the prior explicit positive selector.",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/CLOSURE.json",
+      "relative_path": "CLOSURE.json",
+      "sha256": "3a3cf36a44d299a5adb82ee5097209802804b0e5efea7b3e1f7f3071b7ccf788",
+      "bytes": 1926,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/REPORT_READY_CLOCK.json",
+      "relative_path": "REPORT_READY_CLOCK.json",
+      "sha256": "fd3422e8b93892ab51b88cb81768c4ab179d38d3139ac7dbd6aec19233aa0829",
+      "bytes": 583,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-final-001/PUBLICATION_SELECTOR.json",
+      "relative_path": "PUBLICATION_SELECTOR.json",
+      "sha256": "815d79fc1067415ba29fd28a1fe1f19413fd932f52cdae971b9f4f197abaad1d",
+      "bytes": 7308,
+      "mode": "0444"
+    }
+  ],
+  "allow_recursive_copy": false,
+  "scope": "One actual closure/tail sample after required three handoffs, no ACK wait/reset/recursive stopwatch."
+}

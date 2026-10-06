@@ -1,0 +1,15 @@
+# ER9 restart state
+
+Recorded 2026-10-06T13:56:15.898894+00:00; edition60. Campaign work **CLOSED** by root acceptance; final GitHub040 publication **PENDING ACTUAL VERIFICATION**. Root native Goal remains **dated ACTIVE**, observed 2026-10-06T13:19:26Z; no Goal completion receipt has been supplied.
+
+Finite native execution, scoped reviews, owned controlplane cleanup, eligible-asset publication resolution, and scientific consolidation are closed. Consolidation final selector `consolidation/results-final-001/PUBLICATION_SELECTOR.json` SHA `815d79fc1067415ba29fd28a1fe1f19413fd932f52cdae971b9f4f197abaad1d`; actual closure selector SHA `833716a12e9dc7e06b0b666c515916d9f91955f5599b38d0d7664d7fb5b33643`. Root acceptance metadata SHA `44a0e7a7df20f2a04e1e073f4219ab1e33dbdc8af785b8e61a7614800bb2a6ad`. Keeper read metadata and hashes only; scientific findings remain with root and publisher.
+
+Consolidation original clock: START13:23:44.799081Z; required handoffs closed13:50:04.238822Z; whole1579.439663679s under1800, report-ready1495.345843331s plus84.093820348s tail. Historical review overruns and UNKNOWN scopes remain in JSON and exact backups. Curation required handoffs1819s exceeded1800 by19s; sealed1783.323618s is a subset; finer actual whole precision UNKNOWN.
+
+Latest verified GitHub039: `4ac5d0c67bb0d096b55671b9df94c9f1a8efb136`,5861positive files/17raw checks, receipt SHA `b1a8faad0a319415d7a1fb511bf106f6cbad657a676628dd050f93ecfab3b0e7`; exact verification UTC UNKNOWN. Resolution final7 selector SHA `97da7fd8051e5004c6eccec1413d48ac56d0c1a680e66a4326595290913f1dd6`:1632verified commit pin rows (1130asset aliases/937unique039assets plus502old036aliases),53raw NAS lineages verified,279private/native excluded,910mixed safe projections only,8true producer UNKNOWN. These classifications grant no new native or scientific credit.
+
+Accounting020 capture12:47:38.214839–12:47:40.065050Z:287attempts/268positive native starts/18proofzeros/1UNKNOWNstart/708688504known tokens/4usageUNKNOWN. Positive selector SHA `74115189ead00369ba9a28b8ddb4f121355c35a511a170dec63f3581f0f82a15`. Native/provider/root/helper/billing meters remain separate. Root32dated45,020,326tokens/60,416native seconds/nullremaining/helperUNKNOWN; authorizedjournalprefix32 SHA `b56d36155066afbdecb75fd0967d6b3f4f82659cf12ddfc49aa21de4776a80bd`, row32 SHA `6ca0408bafc8be236560ce0438448747ce446fee849b2f9e72de252027de7df7`, hash-only verified.
+
+Owned controlplane cleanup receipt SHA `8d6f4a0788b88dae93f68486d63458adf06e008dc2d08a8912fd42a60bee53a3` observed12:49:31.919056Z applies to this campaign controller/monitor and owned candidate slices, not siblings or all historical Goals. Earlier cutoffs including edition59 UNKNOWN helper cleanup remain immutable.
+
+Remaining action: publisher verify040; keeper save final CLOSED projection from that actual receipt; root completes its own Goal afterward. No new candidates/research or extra publication solely to publish this receipt. Exact previous three files backed in `state/history/projection-20261006T135615.898894Z/BACKUP_RECEIPT.json`.

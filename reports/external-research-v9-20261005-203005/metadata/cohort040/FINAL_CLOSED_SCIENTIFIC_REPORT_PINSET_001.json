@@ -1,0 +1,809 @@
+{
+  "schema": "er9.closed-scientific-report-synthesis-positive-pinset.v1",
+  "observed_utc": "2026-10-06T13:28:23.695208+00:00",
+  "files": [
+    {
+      "evaluation_id": "independent-pipeline-8-research-I01",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-8-research-I01/current_output_judgment.json",
+      "sha256": "ccf57af334c9a9fea6e021ee269ee49559700701290c79485f0931688f44d050",
+      "bytes": 20636,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-8-research-I01",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-8-research-I01/report.json",
+      "sha256": "2e3cdf38892bfe5a8d5b34f97196039e0ba0536e7d2c68657b1297471477b3d1",
+      "bytes": 31140,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-8-research-I01",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-8-research-I01/PHASE2_OPERATIONAL_REPORT.json",
+      "sha256": "f605569c84795bb2866a5b7a858c204da4f2c4ff7901293fa87fc755d0ce257d",
+      "bytes": 20934,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-9-research-I02",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/current_output_judgment.json",
+      "sha256": "00e3b20faf0e7302040d32143abf761ce1b7399fbd1176c6bcc0d7c978cf5d8b",
+      "bytes": 23995,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-9-research-I02",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/report.json",
+      "sha256": "addb0240dab63037695e36589b44f4bf8398bbbee6bd3b7dcf8d46a27d8b4b48",
+      "bytes": 16578,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-9-research-I02",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-9-research-I02/phase2_report.json",
+      "sha256": "53238ae8bc5866fe2d2d0a9bf704a215c118e50bf595f3c8e9bbe653c9819461",
+      "bytes": 41211,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-10-research-I03",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-10-research-I03/current_output_judgment.json",
+      "sha256": "fd05dfc41827cb3cf719a3d77467f2faf05de7c2eb1b3da2d813bfd77b68a31e",
+      "bytes": 24460,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-10-research-I03",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-10-research-I03/report.json",
+      "sha256": "53993d36d2e213bc177ab159c167b08a90376b2e725f66491f5ffb70d1a51fe2",
+      "bytes": 10763,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-10-research-I03",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-10-research-I03/phase2_report.json",
+      "sha256": "66d3314c3fb04c4391e7b44f0a7577585a0ecff82ee8c925dff60fa12c490c20",
+      "bytes": 10748,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-11-research-I04",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-11-research-I04/current_output_judgment.json",
+      "sha256": "fba3b846b8bbdb67d9230f119b1f8bf64638fdf2124e501349ec13e87173a309",
+      "bytes": 27978,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-11-research-I04",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-11-research-I04/report.json",
+      "sha256": "8e36f63446f7b1529e9330ba708daa2cb53894ddce17f7fcd36380391cd87b3b",
+      "bytes": 40842,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-11-research-I04",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-11-research-I04/phase2_report.json",
+      "sha256": "0c835d4b86801d278470848965c06c184bf0e522a1b421839cba01448617af2f",
+      "bytes": 10377,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-12-research-I09",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/assessment.json",
+      "sha256": "5057003e06896f9ce658528315b61b71987fe3cb9f3522872043b59d28cad157",
+      "bytes": 2258,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-12-research-I09",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/report.md",
+      "sha256": "eee5e5219696dd2dc415d86d0d060f594f4b6cf23c9572f2ab2a350f451da4e2",
+      "bytes": 1506,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-12-research-I09",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/phase1/source_assessment.json",
+      "sha256": "87a266fe21fc6e6a440f624c8d8eb90f4952d941739a6a80c1e62d8bb909ecca",
+      "bytes": 47332,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-12-research-I09",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/phase2/accounting_assessment.json",
+      "sha256": "44b508850e13bd6a5a50092d3185bc7befff9ea56df518935a18ec903e32d5fc",
+      "bytes": 16042,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-13-research-I10",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-13-research-I10/phase1/report.json",
+      "sha256": "dd8e2f542d04be28a3190484e231517ad13ded108550c31f7cbc23c7d2178912",
+      "bytes": 43501,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-13-research-I10",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-13-research-I10/phase1/report.md",
+      "sha256": "d48049acbeb6b9e8b1391160175ad13c6f4d24a3b9b20bedba17e248b47673d1",
+      "bytes": 18437,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-13-research-I10",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-13-research-I10/phase2/final_report.json",
+      "sha256": "873a517de68c0904c563674a4391b37cf2e15f555b894d9d834ff053f34b8a92",
+      "bytes": 11813,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-13-research-I10",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-13-research-I10/phase2/final_report.md",
+      "sha256": "e3e134d64be98018a842b254573e6e597b15a6353109358a8d40af539b66c00c",
+      "bytes": 2556,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-14-research-I11",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-14-research-I11/phase1-report.json",
+      "sha256": "c7329885129eb0ea01bb1ab89dc31ebabdc8e192ac7293ac0c154f4f22864bb3",
+      "bytes": 27491,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-14-research-I11",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-14-research-I11/phase1-report.md",
+      "sha256": "17a6a8fe31ac9a4cc65e90bfbc7454098f1fa84d499c492c503ed7e92f346303",
+      "bytes": 21026,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-14-research-I11",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-14-research-I11/phase2-report.json",
+      "sha256": "6f128b5b7796b097abd84c26d31efa3df94dd430a3b19cfd531069d2b61b72d9",
+      "bytes": 18197,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-15-research-I08",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-15-research-I08/phase1.json",
+      "sha256": "e49de257cbe5e550ddcf97150af48bc1ddaa7b4fcb4fbb0ea51905bca5500233",
+      "bytes": 14273,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-15-research-I08",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-15-research-I08/phase1.md",
+      "sha256": "cbb131956165445fbd8fdae43247341034228e68388a9358692d87e70cdca4da",
+      "bytes": 4324,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-15-research-I08",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-15-research-I08/phase2.json",
+      "sha256": "f6ea2c27b044a983de4cd216d29e9509dbfec1f81e6805fbb15174fa2757cb35",
+      "bytes": 36751,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-15-research-I08",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-15-research-I08/phase2.md",
+      "sha256": "70e80b852ab27ccf3020b43a4ba2a35983fce28c881c9bd1348cc8e10d5e0261",
+      "bytes": 3822,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-16-I08-current-roles",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-16-I08-current-roles/phase1-report.json",
+      "sha256": "72ac664214b617f1d50c38ccef3d7ba80aae1bbbec601692eeff57e27ef4e2a4",
+      "bytes": 18175,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-16-I08-current-roles",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-16-I08-current-roles/phase1-report.md",
+      "sha256": "8f4adefff93deb9f63689b81a3af81a7deaf00e3656ec92dc6cac564aa989e58",
+      "bytes": 8093,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-16-I08-current-roles",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-16-I08-current-roles/phase2-report.json",
+      "sha256": "1f25dde57ab8be33c72b8b04145e0356e813a31df585ca555663dc96591bcf11",
+      "bytes": 29592,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-16-I08-current-roles",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-16-I08-current-roles/phase2-report.md",
+      "sha256": "d35d276c03805a829101f73fe53ab12b4951a504998b49e633998740948d403f",
+      "bytes": 3761,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-17-research-I12",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-17-research-I12/phase1_report.json",
+      "sha256": "295a1b8b143b5dbb42d0a8d09963e082310796acdd78e12cc3b9e6f708a3b104",
+      "bytes": 33157,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-17-research-I12",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-17-research-I12/phase1_report.md",
+      "sha256": "f68d9e155e1849f3ea1d8826d0386a3b5997cc7c341114e4f9ddbbbcd905e8ec",
+      "bytes": 19459,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-17-research-I12",
+      "path": "LAB_ROOT/evaluation/independent-pipeline-17-research-I12/phase2_appendix.json",
+      "sha256": "449e2e5c9e5be74d70903c604d8b5bbccbdf5b5b7163212ca2019ed975245c61",
+      "bytes": 21760,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C01-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase1_judgment.json",
+      "sha256": "e34abd423fcfb4ecf56ccbe7a18ea4adfa591be6fe8104ba4c7f800749072ce3",
+      "bytes": 4655,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C01-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c",
+      "bytes": 20358,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C01-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C01-current-research-1/phase2_report.md",
+      "sha256": "0165856e7d88689132339a20bd165815f0ecd12f6d2e43d0ce39ceb607d6fd75",
+      "bytes": 3927,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C02-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C02-current-research-1/phase1_judgment.json",
+      "sha256": "c47fbca74adb0275db7485c03d6856607039032cb35d8fada06cb4fb3e54f874",
+      "bytes": 24899,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C02-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C02-current-research-1/phase1_report.md",
+      "sha256": "5a620bd9ad86d61ffb2053e085d6f4e52246e3bb416caea52627d0a1e993441b",
+      "bytes": 9642,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C02-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C02-current-research-1/phase2_report.md",
+      "sha256": "0109b445d1030c0a2071b2eba14341efe73b47972545bc32777614222ab3edbe",
+      "bytes": 3789,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/phase1/source-review.json",
+      "sha256": "644739d430d082d0cd7a8478ffa877e2a8f661a9e3beca9132f21171bca6fbea",
+      "bytes": 21325,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/phase1/source-review.md",
+      "sha256": "0eda5ad0b24367009dd40d1a36da8ace4f833a9cd51f196aeff5bd7077bd1d51",
+      "bytes": 12486,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/phase2/operational-economics.json",
+      "sha256": "36fa92bc4d3077a1ac0e63432cb6a8aa1717fd5cdf0f67a8ec3299d4a6fac20c",
+      "bytes": 15434,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/phase2/operational-economics.md",
+      "sha256": "1cab5dc1f9d1eeeb81d1b53688779136820e59f3fad321463bbe39121cf47685",
+      "bytes": 3424,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C04-current-research-1/phase1_source_assessment.json",
+      "sha256": "bca55f9774d049af3a3cf8d7a2fe5a198960e2c7a87815c1ec9f4b70d706cd17",
+      "bytes": 33045,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C04-current-research-1/phase1_source_assessment.md",
+      "sha256": "1cad78c078c593b7dd32e18f91d668d6dc6676153e1523134069d535d648b421",
+      "bytes": 3787,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C04-current-research-1/phase2_operational_assessment.json",
+      "sha256": "902e4fdce2f5e4620994063cee637f298d3cb47a534c1b94561bfa961e5ed8c0",
+      "bytes": 23765,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-empty-delivery-current-2",
+      "path": "LAB_ROOT/evaluation/independent-empty-delivery-current-2/p1_report.json",
+      "sha256": "de844a877035ccad2df5f76bf4e03b1026668675fb1ee78f0a18ce67c1cd3000",
+      "bytes": 9548,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-empty-delivery-current-2",
+      "path": "LAB_ROOT/evaluation/independent-empty-delivery-current-2/p1_report.md",
+      "sha256": "06bd8fb98f8250ef4c7b028d827effc95760bfc914922a32f96fede4c543a166",
+      "bytes": 3403,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-empty-delivery-current-2",
+      "path": "LAB_ROOT/evaluation/independent-empty-delivery-current-2/p2_report.json",
+      "sha256": "8194de09b4b71c8ba4ef42379a418059a41bc02daab64ae4ec04ec84a4049bb2",
+      "bytes": 14302,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-empty-delivery-current-2",
+      "path": "LAB_ROOT/evaluation/independent-empty-delivery-current-2/final_report.json",
+      "sha256": "90a5cb5a01cd26b607a209625ced1a7b0bce94320752d9594f22f70445e8bbd3",
+      "bytes": 3709,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-DEC019-warm-1",
+      "path": "LAB_ROOT/evaluation/independent-DEC019-warm-1/P1-source-judgment.json",
+      "sha256": "c44304f22cd3d4ffb563b29802266a5251048c59dd64b67d0c1c378295c56751",
+      "bytes": 26202,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-DEC019-warm-1",
+      "path": "LAB_ROOT/evaluation/independent-DEC019-warm-1/P1-source-judgment.md",
+      "sha256": "87890d98afe12435915aabe536533a10e6736defc86ae0a99c21fc024d6d6095",
+      "bytes": 6661,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-DEC019-warm-1",
+      "path": "LAB_ROOT/evaluation/independent-DEC019-warm-1/P2-provenance-runtime-report.json",
+      "sha256": "96b6ef8a6202a0c6a890eb4e5d4efad61d6758dcfb945fb4f31e688c729a8651",
+      "bytes": 20346,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-DEC019-warm-1",
+      "path": "LAB_ROOT/evaluation/independent-DEC019-warm-1/PUBLICATION_SELECTOR_FINAL.json",
+      "sha256": "d91d1e4b9ff69d50ba5a130c7d00e06a39253529e052a531399ee258741adc2c",
+      "bytes": 2578,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-17",
+      "path": "LAB_ROOT/evaluation/independent-targeted-17/phase1_judgment.json",
+      "sha256": "801e82a4cb0ed70bec40f9d2f708146ba7a6308da7e121c2419f577d8fc2edba",
+      "bytes": 14188,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-17",
+      "path": "LAB_ROOT/evaluation/independent-targeted-17/phase1_report.md",
+      "sha256": "5860bfe3716d026d8a1a6d366908b76bad63a0c06b213a62ac2636f4ec90e9f6",
+      "bytes": 9497,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-17",
+      "path": "LAB_ROOT/evaluation/independent-targeted-17/phase2_addendum.json",
+      "sha256": "547316899198e980c067f0326c97e5e4e8b9e7f55df0a54595b068e083fb6ff1",
+      "bytes": 21053,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-17",
+      "path": "LAB_ROOT/evaluation/independent-targeted-17/phase2_report.md",
+      "sha256": "11be585307de74848a276ca6b0aa0ea2160941c1d68ff1dbbfff8b0b227ee6ff",
+      "bytes": 6254,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-18",
+      "path": "LAB_ROOT/evaluation/independent-targeted-18/phase1_judgment.json",
+      "sha256": "c6fbb0c79ebbfb2765679f63c11b94952b082cd3a1b231d694f3a3b97ec23378",
+      "bytes": 37122,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-18",
+      "path": "LAB_ROOT/evaluation/independent-targeted-18/phase1_report.md",
+      "sha256": "d7a5b37298ad6501b8f50450d3d46b911c3eb2aa1f4241f5cf06377388d2d2fe",
+      "bytes": 5137,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-18",
+      "path": "LAB_ROOT/evaluation/independent-targeted-18/phase2_report.json",
+      "sha256": "69d42f00341374f3d8789d2376900b9b8b95dbd045dbd0c805d59f457eb344b0",
+      "bytes": 37598,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-19",
+      "path": "LAB_ROOT/evaluation/independent-targeted-19/phase1_judgment.json",
+      "sha256": "22fe011c5cd13282f8287681ae1faaea764c6377aef0a248b97969748c04ac3b",
+      "bytes": 23695,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-19",
+      "path": "LAB_ROOT/evaluation/independent-targeted-19/phase1_report.md",
+      "sha256": "995602948753e728831d362bc152ec4876f304ae160d9bbe03d5e44f8ca7dea8",
+      "bytes": 7393,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-19",
+      "path": "LAB_ROOT/evaluation/independent-targeted-19/phase2_judgment.json",
+      "sha256": "3cb2389e712dacf2b662f1502fa1e7e7502e09935a26a8d438896b08d299de34",
+      "bytes": 16309,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-20",
+      "path": "LAB_ROOT/evaluation/independent-targeted-20/phase1.json",
+      "sha256": "fa30eef6b0836bd12aaded274502b2a51dbda6de772cd5e8a9d339a979540285",
+      "bytes": 40376,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-20",
+      "path": "LAB_ROOT/evaluation/independent-targeted-20/phase1.md",
+      "sha256": "4ecb8bf0af1091ed32540297966ff122aeec2dd06c9319cb29456f9235e96da8",
+      "bytes": 4183,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-20",
+      "path": "LAB_ROOT/evaluation/independent-targeted-20/phase2.json",
+      "sha256": "a7120cbc341ad7c630e739f1d27bd06aeb9ac4a4ffd2f9adc71b35c6ea8041a7",
+      "bytes": 32730,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-20",
+      "path": "LAB_ROOT/evaluation/independent-targeted-20/report.json",
+      "sha256": "98f43dcf93e80c9d6c4df52b639e31f098d0eeb7dbfbf5e6f2112c5475c438a3",
+      "bytes": 2111,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-21",
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/phase1_judgment.json",
+      "sha256": "df73c67a4f16d1a96e040cc9ba1fe3a3617ff3dc37ec7dd6f25145ac222e2050",
+      "bytes": 21204,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-21",
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/phase1_report.md",
+      "sha256": "873389ae7d31ab8a10f9fab11e738ea19d649de1bff1b972dcb227153d12c00f",
+      "bytes": 3204,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-21",
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/publication_report.md",
+      "sha256": "c1ba22fe6f28bbaa131ffc310d12c3a3126e2442c9acff09c6b04862fa53f8d9",
+      "bytes": 2556,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-21",
+      "path": "LAB_ROOT/evaluation/independent-targeted-21/phase2_qualification.json",
+      "sha256": "742eb556bbe5b0278953c3517497383d6999d3c99f250077f40b7e0b00fecbd1",
+      "bytes": 5014,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-22",
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p1_judgment.json",
+      "sha256": "ad8b40a51eb7cdcb635fb70cf46940d208dbcd3711af99b6933b726d79074667",
+      "bytes": 13862,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-22",
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p1_report.md",
+      "sha256": "1a9c76038f5b9c868eb13936df45765e2ecf7c504ca6a87ea8323fad5a60091a",
+      "bytes": 5013,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-22",
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p2_judgment.json",
+      "sha256": "d9986f8a2db9a0205809acd601d4e4a1a6fada0bd62e060629c3df091913e5f2",
+      "bytes": 2540,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-22",
+      "path": "LAB_ROOT/evaluation/independent-targeted-22/p2_report.md",
+      "sha256": "abafc21ddcc04364e20cb4e33432707f7f90178ee0f79794a01d9f6cb74c0ac9",
+      "bytes": 5833,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-23",
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/phase1-judgment.json",
+      "sha256": "dd2e5538cf734d0c924c0019ff1c7b9e9197f72021b154b65d8f7096553b7d7b",
+      "bytes": 11208,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-23",
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/phase1-report.md",
+      "sha256": "ce829419aa2f59e86b8b90723713a6da395dc00b2ec94f0db13e428ac32f4aea",
+      "bytes": 5011,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-23",
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/phase2-assessment.json",
+      "sha256": "2f98a38cdc0a61cc17ce24e7ff0707c5d61039deb758a4d9009c1464f641c28d",
+      "bytes": 13970,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-23",
+      "path": "LAB_ROOT/evaluation/independent-targeted-23/report.md",
+      "sha256": "48bf8450cb4d032f01c9e458a49c21af0794a043020f79c596e96a80308d146c",
+      "bytes": 7640,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-24",
+      "path": "LAB_ROOT/evaluation/independent-targeted-24/phase1_judgement.json",
+      "sha256": "570b0d2f0996f1ce4ef133a32286aa61147532409f2ad2acff42323004de0e06",
+      "bytes": 24495,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-24",
+      "path": "LAB_ROOT/evaluation/independent-targeted-24/phase1_report.md",
+      "sha256": "9f6aed1b34f0330be1bb8d3a18b2dcdf64a2a35fe2ad9679a81320cc3f8c8a98",
+      "bytes": 5843,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-24",
+      "path": "LAB_ROOT/evaluation/independent-targeted-24/phase2_judgement.json",
+      "sha256": "96f146982b8af37d72f02b4549c72d90192fd43ae6ee4381a9177097c8151cfb",
+      "bytes": 15806,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-24",
+      "path": "LAB_ROOT/evaluation/independent-targeted-24/phase2_report.md",
+      "sha256": "ab8deaaf2413b1ef335c873781f0c091c5268c83cd6e3088d50f50e202f6c80c",
+      "bytes": 4006,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-25",
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase1.judgment.json",
+      "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+      "bytes": 21473,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-25",
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase1.report.md",
+      "sha256": "fb0ba67c35e0fcdbcec801f0919b11d443c03f29afdc1998630cb427bf70a7bc",
+      "bytes": 16445,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-25",
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase2.context.json",
+      "sha256": "38401ccc4f3928c3ac389bc9281b05ad1eae65b89e053d6b1894b902ce9b3562",
+      "bytes": 8825,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-25",
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/phase2.report.md",
+      "sha256": "88dbf68d627f6bf1e3f11d45e017079cab5a28f5e06fa5b4b61b30f109e323ff",
+      "bytes": 4853,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-26",
+      "path": "LAB_ROOT/evaluation/independent-targeted-26/phase1-judgement.json",
+      "sha256": "a0c901bbb645eed7a38a8e6770e52279d278fb15ef14bf110f85992551515806",
+      "bytes": 13969,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-26",
+      "path": "LAB_ROOT/evaluation/independent-targeted-26/phase1-report.md",
+      "sha256": "aa786b1637b549a5dfd05a8b0a96d908ab1bb6c25f2403054b1deebaa8be0384",
+      "bytes": 9634,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-26",
+      "path": "LAB_ROOT/evaluation/independent-targeted-26/phase2-report.md",
+      "sha256": "b61d3153b52f4ebe416aa9a68de5751f42464546e8bafe724cfce50d3f5a585b",
+      "bytes": 4044,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-27",
+      "path": "LAB_ROOT/evaluation/independent-targeted-27/phase1-source-review.json",
+      "sha256": "6cf83fd9268b4ac0ff88fbcb5b20cf16bd383f31e320b1233b95ae68ef3f4242",
+      "bytes": 111636,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-27",
+      "path": "LAB_ROOT/evaluation/independent-targeted-27/phase1-source-review.md",
+      "sha256": "6ec6b44be20888c744b2261e3ae80ce538b59493a8c5ba1e6d5073fe4a0edf98",
+      "bytes": 24701,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-27",
+      "path": "LAB_ROOT/evaluation/independent-targeted-27/phase2-context-review.json",
+      "sha256": "352be9acb32ec2036cea2519db4b4e9d2b9a2d49cb8bfb47e847a318e1d8f178",
+      "bytes": 32424,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-27",
+      "path": "LAB_ROOT/evaluation/independent-targeted-27/final-safe-summary.json",
+      "sha256": "fe15179295ed5fdb14910132fb1345f036958f2b9b70cfbfb4488e9d844a61fc",
+      "bytes": 8638,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-28",
+      "path": "LAB_ROOT/evaluation/independent-targeted-28/phase1-assessment.json",
+      "sha256": "dc456a0eaf2c7794c5ebafc16332f22549726f76abc9c96bf6f5245edbd64add",
+      "bytes": 43858,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-28",
+      "path": "LAB_ROOT/evaluation/independent-targeted-28/phase1-assessment.md",
+      "sha256": "8585c554e1b64777821f0d63058c6779e4a0392ee7aeb3f31997be2b077c54bb",
+      "bytes": 18009,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-28",
+      "path": "LAB_ROOT/evaluation/independent-targeted-28/phase2-assessment.json",
+      "sha256": "20e808ad0c6d475f11bb0563b16198f26336b94540be7c567ca28835ff9641fe",
+      "bytes": 8528,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    },
+    {
+      "evaluation_id": "independent-targeted-28",
+      "path": "LAB_ROOT/evaluation/independent-targeted-28/phase2-assessment.md",
+      "sha256": "9fde5b813d5985ddc7f22449a6981e8dfc824e2993f00bec129df4aed62c426c",
+      "bytes": 2752,
+      "permission": "CLOSED_SCIENTIFIC_REPORT_SYNTHESIS_ROOT_PUBLISHER_ONLY; no candidatefeedback or newgrading",
+      "readonly": true
+    }
+  ],
+  "coordinator_keys_raw_source_candidate_body_or_native_IO_included": false,
+  "scientific_report_contents_interpreted_by_courier": false,
+  "scope": "Exact alreadyclosedP8-P17/currentC01-C04/TD17-TD28/empty2/DEC019reportlocators only; historicaloriginala002 andolderclosedreports viaDRAFT002 INPUT_PINS, no laterjudge substitution. TD30 adapter is P15 not a newscientificreview. P16actualhandofftailUNKNOWN qualification preserved despite reportreadonly. Grades/scopes/versions immutable."
+}

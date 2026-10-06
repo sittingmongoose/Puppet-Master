@@ -1,0 +1,48 @@
+{
+  "schema": "er9.final.explicit-scoped-source-qualification.v1",
+  "rows": [
+    {
+      "slot": "D-V15-A",
+      "version": "TD3 resource successor (separate from original a002 selected history)",
+      "arm": "treatment",
+      "reported_qualification": "PASS_TARGETED_CURRENT_SOURCE_CONTENT",
+      "current_selected_credit": false,
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+        "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998"
+      }
+    },
+    {
+      "slot": "D-V06-A",
+      "version": "TD25 current CLOCK-R002 targeted repair",
+      "arm": "control",
+      "reported_qualification": "COMPLETE_NO_DETECTED_CONSEQUENTIAL_ERROR",
+      "current_selected_credit": true,
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase1.judgment.json",
+        "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+        "bytes": 21473,
+        "kind": "exact CLOSED report; 100-file positive report locator selector"
+      }
+    },
+    {
+      "slot": "I-07",
+      "version": "P7 current source final",
+      "arm": "treatment",
+      "reported_qualification": "PASS_FULL_RESEARCH_PROPOSAL; HOLD_FULL_PROVENANCE_QUALIFICATION",
+      "current_selected_credit": true,
+      "source": {
+        "path": "evaluation/independent-pipeline-7/FINAL.json",
+        "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+        "bytes": 2522,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      }
+    }
+  ],
+  "qualified_source_context_count": 3,
+  "current_selected_qualified_source_arm_count": 2,
+  "remaining_current_selected_arms_without_complete_positive_source_qualification": 94,
+  "clean_full_pipeline_scientific_qualifications": 0,
+  "clean_matched_scientifically_complete_comparisons": 0,
+  "meaning": "Counts only exact positive complete source-scope labels in this readset. Screened defects, partial, locator-only and UNASSESSED remain separate in RESULTS_TABLE.94 is their union, not94 failures, empty outputs, or unperformed executions."
+}

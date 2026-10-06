@@ -1,0 +1,1615 @@
+{
+  "schema": "er9.final.96-current-arm-metadata.v1",
+  "rows": [
+    {
+      "slot_id": "D-V01-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V01-A-control-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V01-A-control-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V01-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V01-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V01-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V02-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V02-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V02-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V02-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V03-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V03-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V03-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V03-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V04-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V04-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V04-A-treatment-compare_final-a001",
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V04-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V04-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V05-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V05-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V05-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V05-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V06-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [
+        {
+          "slot": "D-V06-A",
+          "version": "TD25 current CLOCK-R002 targeted repair",
+          "arm": "control",
+          "reported_qualification": "COMPLETE_NO_DETECTED_CONSEQUENTIAL_ERROR",
+          "current_selected_credit": true,
+          "source": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase1.judgment.json",
+            "sha256": "604206db6f594258f3a2174773dcb48edcc8902a1f97d77bdc0b941f91cb20b3",
+            "bytes": 21473,
+            "kind": "exact CLOSED report; 100-file positive report locator selector"
+          }
+        }
+      ],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V06-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V06-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V06-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V07-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V07-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V07-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V07-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V08-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V08-A-control-critic-a001",
+        "D-V08-A-control-final_author-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V08-A-control-critic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V08-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V08-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V08-B-control-critic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V08-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V09-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-control-resolve_final-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V09-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-treatment-implementation_critic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V09-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V09-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V10-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V10-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V10-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V10-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V11-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V11-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V11-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V11-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V12-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V12-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V12-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V12-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V13-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V13-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V13-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V13-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V14-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V14-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V14-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V14-B-control-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V14-B-control-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V14-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V15-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V15-A-control-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V15-A-control-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V15-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V15-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V15-B-control-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V15-B-control-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V15-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V16-A",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V16-A-control-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V16-A-control-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V16-A",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V16-B",
+      "track": "A",
+      "arm": "control",
+      "selected_job_ids": [
+        "D-V16-B-control-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V16-B-control-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "D-V16-B",
+      "track": "A",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-01",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-01",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-02",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-02",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-03",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-03",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-04",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-04",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-05",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-05",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-06",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-06",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-07",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-07",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": true,
+      "source_complete_positive_contexts": [
+        {
+          "slot": "I-07",
+          "version": "P7 current source final",
+          "arm": "treatment",
+          "reported_qualification": "PASS_FULL_RESEARCH_PROPOSAL; HOLD_FULL_PROVENANCE_QUALIFICATION",
+          "current_selected_credit": true,
+          "source": {
+            "path": "evaluation/independent-pipeline-7/FINAL.json",
+            "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+            "bytes": 2522,
+            "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+          }
+        }
+      ],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-08",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-08",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-09",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-09",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-10",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-10",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-11",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-11",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-12",
+      "track": "B",
+      "arm": "control",
+      "selected_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "I-12",
+      "track": "B",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "positive_native_entry_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-01",
+      "track": "C",
+      "arm": "control",
+      "selected_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-01",
+      "track": "C",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-02",
+      "track": "C",
+      "arm": "control",
+      "selected_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-02",
+      "track": "C",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-03",
+      "track": "C",
+      "arm": "control",
+      "selected_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-03",
+      "track": "C",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-04",
+      "track": "C",
+      "arm": "control",
+      "selected_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    },
+    {
+      "slot_id": "C-04",
+      "track": "C",
+      "arm": "treatment",
+      "selected_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "positive_native_entry_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "native_entered": true,
+      "operational_complete": false,
+      "source_complete_positive_contexts": [],
+      "final_scientific_quality": "Use exact versioned scientist reports; operator status supplies no grade."
+    }
+  ],
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-008/WORKLOAD_SCOREBOARD.json",
+    "sha256": "805d474b4faf50d80492b7aadd91a6159209009e382bf6ed51dab058d0b093c4",
+    "bytes": 2024878,
+    "kind": "closed report or neutral positive metadata"
+  }
+}

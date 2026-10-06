@@ -1,0 +1,27 @@
+{
+  "schema": "er9.final.actual-rubric-scope.v1",
+  "development": {
+    "briefs": [
+      "A",
+      "B"
+    ],
+    "required_obligations_each": 12,
+    "common_dimensions": 8,
+    "important_checks": 5,
+    "target_checks": 3,
+    "target_checks_integrated": "NOT_APPLICABLE"
+  },
+  "holdout": {
+    "briefs": [
+      "H1",
+      "H2"
+    ],
+    "required_obligations_each": 10,
+    "common_dimensions": 8,
+    "card_specific_duties": 3,
+    "development12_or_important5_invented": false
+  },
+  "intermediate_roles": "Exact launched role overrides control required delivery; do not impose canonical final artifacts on a pure record/critic/amendment role. A later required final stays separate.",
+  "no_weighted_or_phantom18_score": true,
+  "binding": "Actual criterion counts and coverage dispositions in pinned source reports; no brief/source/candidate bodies reopened."
+}

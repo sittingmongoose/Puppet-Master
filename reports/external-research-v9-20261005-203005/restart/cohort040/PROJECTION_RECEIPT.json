@@ -1,0 +1,107 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T135615.898894Z/BACKUP_RECEIPT.json",
+    "sha256": "cc6aa232bbb9021c1035a7a5d306f0f667a717bbfa4f4f552c2c51bf430f52d1"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 60,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T13:56:15.898894+00:00",
+  "scope": "Rootacceptedclosedcampaignexecution-review-cleanup-resolution-consolidation vs pending040verifiedpublication; root32datedACTIVE/noGoalcompletion/scientificbody or circularpublication.",
+  "source_observed_utc": "2026-10-06T13:50:04.238822+00:00",
+  "sources": [
+    {
+      "bytes": 5202,
+      "path": "ops/publication/cohort038-verification.json",
+      "sha256": "fec210c40b3608bad71ab421d94267072c4f059fd9ddeece66de3be207aa397e"
+    },
+    {
+      "bytes": 5381,
+      "path": "ops/publication/cohort039-verification.json",
+      "sha256": "b1a8faad0a319415d7a1fb511bf106f6cbad657a676628dd050f93ecfab3b0e7"
+    },
+    {
+      "bytes": 2746738,
+      "path": "ops/publication/commit039-authenticated-assets-and-aliases.json",
+      "sha256": "92974a2f1730f727bc8b367ba2d2ec31688c45d9b503ba6b82ba264a9571ef91"
+    },
+    {
+      "bytes": 4427,
+      "path": "accounting/cohort-020/KEEPER_RECEIPT.json",
+      "sha256": "424eba2db0b3f967d87c4a181fe14304bfd985f34a2beda724a4d7d7b21f44f6"
+    },
+    {
+      "bytes": 4856,
+      "path": "accounting/cohort-020/PUBLIC_SELECTION.json",
+      "sha256": "74115189ead00369ba9a28b8ddb4f121355c35a511a170dec63f3581f0f82a15"
+    },
+    {
+      "bytes": 870,
+      "path": "accounting/cohort-020/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "e289d2bec2de0b5f6aa173c48232040707ca8a0705937be5d01c74c63a37bbe5"
+    },
+    {
+      "bytes": 1953,
+      "path": "accounting/cohort-020/CLOSURE.json",
+      "sha256": "d158f0025ab14c5c75a4a60a1bd7622bf4b69f07efd5e82de50a49a7f2482d33"
+    },
+    {
+      "bytes": 1503,
+      "path": "accounting/cohort-020/CURATION-late-clock.safe.json",
+      "sha256": "08a50594630ec09c15da118a9aa171ca47fad40cc643e92d38e5ac75eda60db1"
+    },
+    {
+      "bytes": 2508,
+      "path": "consolidation/publication-resolution-001/PUBLICATION_SELECTOR.json",
+      "sha256": "97da7fd8051e5004c6eccec1413d48ac56d0c1a680e66a4326595290913f1dd6"
+    },
+    {
+      "bytes": 1653,
+      "path": "consolidation/publication-resolution-001/FINAL.json",
+      "sha256": "eebd4b5a60ed461ebc39080e364db01fa92b29afc3be15bd5e19d457ade9bf44"
+    },
+    {
+      "bytes": 2419,
+      "path": "ops/dispatcher/FINAL_OWNED_CONTROLPLANE_CLEANUP_AND_RESTART_001.json",
+      "sha256": "8d6f4a0788b88dae93f68486d63458adf06e008dc2d08a8912fd42a60bee53a3"
+    },
+    {
+      "bytes": 1111,
+      "path": "evaluation/independent-DEC019-warm-1/publication/FINAL_CLOCK_TAIL.json",
+      "sha256": "2799b0a1d6795c593ea1cf412ab5cfb77957b4b5eeca788b2b87363781f9cdd9"
+    },
+    {
+      "bytes": 7308,
+      "path": "consolidation/results-final-001/PUBLICATION_SELECTOR.json",
+      "sha256": "815d79fc1067415ba29fd28a1fe1f19413fd932f52cdae971b9f4f197abaad1d"
+    },
+    {
+      "bytes": 1434,
+      "path": "consolidation/results-final-001/FINAL_CLOSURE_SELECTOR.json",
+      "sha256": "833716a12e9dc7e06b0b666c515916d9f91955f5599b38d0d7664d7fb5b33643"
+    },
+    {
+      "bytes": 1116,
+      "path": "ops/frozen-exports/observations/FINAL_SYNTHESIS_ROOT_ACCEPTANCE_RECEIPT_001.json",
+      "sha256": "44a0e7a7df20f2a04e1e073f4219ab1e33dbdc8af785b8e61a7614800bb2a6ad"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 259239,
+      "path": "state/current.json",
+      "sha256": "caa61318c659d9cc33715fedff4d7938898786191a4f4654f2a2df404bd6e769"
+    },
+    {
+      "bytes": 259239,
+      "path": "state/campaign.json",
+      "sha256": "caa61318c659d9cc33715fedff4d7938898786191a4f4654f2a2df404bd6e769"
+    },
+    {
+      "bytes": 3086,
+      "path": "CURRENT.md",
+      "sha256": "9d1001bec816f254cd5755e973de44aa4f41ba0e670abee062ed0f5491072e3e"
+    }
+  ]
+}

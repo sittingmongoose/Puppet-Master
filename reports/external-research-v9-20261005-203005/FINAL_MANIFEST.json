@@ -1,0 +1,63 @@
+{
+  "schema": "er9.final-compact-entrypoints.v1",
+  "cohort": "accepted-final-synthesis-and-publication-resolution-040",
+  "scientific_results": {
+    "path": "consolidation/results-final-001/FINAL_RESULTS.md",
+    "sha256": "a0b8073ae47d7f5b70138dc34903c317a8536cf9532703421fec2f0d7924da3b",
+    "exact_scientific_selection": "consolidation/results-final-001/PUBLICATION_SELECTOR.json",
+    "closure": "consolidation/results-final-001/CLOSURE.json",
+    "source_consistency": "consolidation/results-final-001/CHECKS.json",
+    "method_count": 16,
+    "logical_slot_count": 48,
+    "current_arm_count": 96,
+    "clean_scientific_matched_comparisons": 0,
+    "qualified_full_recipe_or_adoption": false,
+    "causal_or_affordability_winner": null
+  },
+  "operational_scope": {
+    "current_fresh_pipelines": 5,
+    "current_fresh_arms_target": 24,
+    "current_confirmation_pipelines": 0,
+    "current_confirmation_arms_target": 8,
+    "historical_old_C03_treatment_pipeline": 1,
+    "total_operational": 6,
+    "both_arm_operational_pairs": [
+      "I06",
+      "I07"
+    ],
+    "clean_scientific_matched_comparisons": 0
+  },
+  "actual_inputs_tools_outputs": {
+    "matrix": "consolidation/publication-inventory-001/ARM_INVENTORY.json",
+    "final_resolution": "consolidation/publication-resolution-001/PUBLICATION_RESOLUTION.json",
+    "verified_asset_map": "publication/verified-039-assets-and-aliases.json",
+    "asset_commit": "4ac5d0c67bb0d096b55671b9df94c9f1a8efb136",
+    "unique_authenticated_assets": 937,
+    "asset_bytes": 12828741,
+    "eligible_pin_aliases": 1130,
+    "prior_verified_aliases": 502,
+    "external_raw_lineages": 53,
+    "private_native_excluded": 279,
+    "mixed_projection_only": 910,
+    "producer_boundary_UNKNOWN": 8,
+    "native_vendor_runtime_portability": "Incomplete by design; private/proprietary runtime inputs and raw evidence excluded"
+  },
+  "cost_snapshot": {
+    "path": "accounting/cohort-020/COST_SNAPSHOT.md",
+    "attempts": 287,
+    "confirmed_native_starts": 268,
+    "proved_zero_starts": 18,
+    "UNKNOWN_starts": 1,
+    "known_cache_inclusive_candidate_tokens": 708688504,
+    "UNKNOWN_usage_rows": 4,
+    "physical_provider_billing_helpers": "UNKNOWN; root/provider/UI/Goal meters not summed"
+  },
+  "restart_and_cleanup": {
+    "owned_cleanup": "terminal-owned-039/FINAL_OWNED_CONTROLPLANE_CLEANUP_AND_RESTART_001.json",
+    "historical_unentered_blockers": "terminal-owned-038/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+    "final_restart_table": "consolidation/results-final-001/RESTART_TABLE.json"
+  },
+  "qualification_tables": "consolidation/results-final-001/QUALIFIERS_TABLE.json",
+  "prior_commit_history_preserved": true,
+  "scope": "Research branch publication only; no main/PR/product canon changes"
+}

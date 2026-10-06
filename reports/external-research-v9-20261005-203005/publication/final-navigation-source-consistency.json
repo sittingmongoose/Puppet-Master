@@ -1,0 +1,198 @@
+{
+  "schema": "er9.publisher.final-navigation-source-consistency.v1",
+  "link_checks": [
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/FINAL_RESULTS.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "metadata/cohort040/FINAL_SYNTHESIS_ROOT_ACCEPTANCE_RECEIPT_001.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "FINAL_MANIFEST.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "PUBLICATION.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/publication-inventory-001/ARM_INVENTORY.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/publication-resolution-001/PUBLICATION_RESOLUTION.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "publication/verified-039-assets-and-aliases.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/RESULTS_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/HYPOTHESES_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/SLOT_COVERAGE_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/CURRENT_ARM_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/SOURCE_COMPLETENESS_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/CHECKS.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/INPUT_PINS.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/CLOSURE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/publication-resolution-001/FINAL.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "accounting/cohort-020/COST_SNAPSHOT.md",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/COST_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/MODEL_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/QUALIFIERS_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/publication-curation-001/editions/003-final-boundary-clock/EXTERNAL_REPRODUCTION_BOUNDARY.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/publication-curation-001/editions/004-final-producer-correction/QUARANTINE_AND_EXTERNAL_REFS.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "archive/cohort039/summary009/PUBLIC_ARCHIVE_SUMMARY_SELECTION_009.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "archive/cohort039/summary010/PUBLIC_FINAL_SELECTION_010.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "archive/cohort039/summary011/PUBLIC_FINAL_SELECTION_011.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "terminal-owned-039/FINAL_OWNED_CONTROLPLANE_CLEANUP_AND_RESTART_001.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "terminal-owned-038/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "consolidation/results-final-001/RESTART_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "restart/cohort040/PUBLIC_SELECTION.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "history/cohort040.json",
+      "exists": true
+    },
+    {
+      "document": "README.md",
+      "target": "supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "consolidation/results-final-001/FINAL_RESULTS.md",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "consolidation/results-final-001/RESULTS_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "consolidation/results-final-001/HYPOTHESES_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "consolidation/results-final-001/QUALIFIERS_TABLE.json",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "FINAL_MANIFEST.json",
+      "exists": true
+    },
+    {
+      "document": "RESULTS.md",
+      "target": "README.md",
+      "exists": true
+    }
+  ],
+  "scientific_source_selector": "consolidation/results-final-001/PUBLICATION_SELECTOR.json",
+  "scientific_source_sha256": "815d79fc1067415ba29fd28a1fe1f19413fd932f52cdae971b9f4f197abaad1d",
+  "source_selected_files": 20,
+  "closure_source_selector_sha256": "833716a12e9dc7e06b0b666c515916d9f91955f5599b38d0d7664d7fb5b33643",
+  "scientific_input_checks": "222 exact final-owner input rereads/output consistency; publisher does no regrading",
+  "publication_resolution_source_sha256": "97da7fd8051e5004c6eccec1413d48ac56d0c1a680e66a4326595290913f1dd6",
+  "verified_assets_map_sha256": "92974a2f1730f727bc8b367ba2d2ec31688c45d9b503ba6b82ba264a9571ef91",
+  "scope": "Exact frozen source copies and local final navigation; remote head/tree/raw-byte checks occur after commit and are separately recorded"
+}

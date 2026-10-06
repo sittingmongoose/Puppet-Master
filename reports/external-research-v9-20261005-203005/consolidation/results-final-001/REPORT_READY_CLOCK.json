@@ -1,0 +1,14 @@
+{
+  "schema": "er9.final.consolidation-report-ready-clock.v1",
+  "report_ready_utc": "2026-10-06T13:48:40.145001+00:00",
+  "report_ready_monotonic_ns": 124939001988725,
+  "start_utc": "2026-10-06T13:23:44.799081+00:00",
+  "start_monotonic_ns": 123443656145394,
+  "elapsed_seconds": 1495.345843331,
+  "original_inclusive_bound_seconds": 1800,
+  "ready_is_nested_not_whole_closure": true,
+  "required_outgoing_handoffs_and_actual_closure_follow_inside_original_clock": true,
+  "clock_reset": false,
+  "ACK_wait_required": false,
+  "scientific_findings": "OMITTED_FROM_NEUTRAL_CLOCK"
+}

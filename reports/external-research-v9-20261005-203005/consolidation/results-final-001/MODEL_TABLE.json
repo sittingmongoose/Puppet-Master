@@ -1,0 +1,77 @@
+{
+  "schema": "er9.final.model-observer-scope.v1",
+  "candidate_actor_rows": [
+    {
+      "actual_family": "GLM",
+      "observed_model": "GLM-5.3-Flash",
+      "observed_effort": "max",
+      "actor_attempts": 117,
+      "positive_native_starts": 117,
+      "known_tokens": 123197837
+    },
+    {
+      "actual_family": "Luna",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "actor_attempts": 151,
+      "positive_native_starts": 151,
+      "known_tokens": 585490667
+    },
+    {
+      "actual_family": "UNKNOWN",
+      "observed_model": "GLM-5.3-Flash",
+      "observed_effort": "max",
+      "actor_attempts": 1,
+      "positive_native_starts": 0,
+      "known_tokens": 0
+    },
+    {
+      "actual_family": "UNKNOWN_PRE_NATIVE",
+      "observed_model": "GLM-5.3-Flash",
+      "observed_effort": "max",
+      "actor_attempts": 10,
+      "positive_native_starts": 0,
+      "known_tokens": 0
+    },
+    {
+      "actual_family": "UNKNOWN_PRE_NATIVE",
+      "observed_model": "None",
+      "observed_effort": "None",
+      "actor_attempts": 8,
+      "positive_native_starts": 0,
+      "known_tokens": 0
+    }
+  ],
+  "requested_review_identity": "gpt-6.1-sol/xhigh per authorization; physical provider telemetry UNKNOWN",
+  "requested_name_or_filename_is_actual_model_proof": false,
+  "family_start_totals": {
+    "GLM": {
+      "attempts": 117,
+      "confirmed_native_starts": 117,
+      "known_tokens": 123197837
+    },
+    "Luna": {
+      "attempts": 151,
+      "confirmed_native_starts": 151,
+      "known_tokens": 585490667
+    },
+    "UNKNOWN": {
+      "attempts": 1,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 18,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    }
+  },
+  "root32_helpers_physical_provider_billing": "UNKNOWN; no provider combination",
+  "model_winner_or_model_versus_recipe_causal_effect": "NOT_ESTABLISHED",
+  "source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/accounting/cohort-020/attempts.safe.json",
+    "sha256": "2558c54407df7438a637de78476010eda55f4a883c1706d68d8029f69c3fe2d9",
+    "bytes": 963590,
+    "kind": "accounting020 positively selected safe scalar projection"
+  }
+}

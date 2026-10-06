@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "1130_eligible_pins_verified039": true,
+    "502_existing_aliases_verified036": true,
+    "64_24_8_tracks_preserved": true,
+    "all2882_original_pins_accounted": true,
+    "all53_raw_NAS_lineages_resolved": true,
+    "all96_current_arm_rows_preserved": true,
+    "exact8_unknown_producer_rows": true,
+    "no_generic_pending_for_known_eligible": true,
+    "no_science_or_native_credit": true,
+    "oldcuration_overrun_not_hidden": true
+  },
+  "pass": true,
+  "resolution_sha256": "257d7f5366b187e9a3ae19b2f6f299529dcac5c1faf897a9262da5ffb9499285",
+  "schema": "er9.publication-resolution-checks.v1",
+  "scope": "Metadata/provenance/count/publisherobject/NASmanifest joins only, no science or bodyvalidation"
+}

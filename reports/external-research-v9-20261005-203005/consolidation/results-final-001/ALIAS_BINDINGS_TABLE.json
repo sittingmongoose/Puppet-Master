@@ -1,0 +1,58 @@
+{
+  "schema": "er9.final.closed-report-explicit-alias-bindings.v1",
+  "rows": [
+    {
+      "evaluation_id": "independent-pipeline-8-research-I01",
+      "alias": "B",
+      "arm": "treatment",
+      "job_id": "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+      "source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/PHASE2_OPERATIONAL_REPORT.json",
+        "sha256": "f605569c84795bb2866a5b7a858c204da4f2c4ff7901293fa87fc755d0ce257d",
+        "bytes": 20934,
+        "kind": "exact CLOSED report; 100-file positive report locator selector"
+      },
+      "json_pointer": "/actual_native_and_operational_outcomes"
+    },
+    {
+      "evaluation_id": "independent-pipeline-8-research-I01",
+      "alias": "A",
+      "arm": "control",
+      "job_id": "I-01-FRESH-DELIVERY-R001-control-research-a001",
+      "source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/PHASE2_OPERATIONAL_REPORT.json",
+        "sha256": "f605569c84795bb2866a5b7a858c204da4f2c4ff7901293fa87fc755d0ce257d",
+        "bytes": 20934,
+        "kind": "exact CLOSED report; 100-file positive report locator selector"
+      },
+      "json_pointer": "/actual_native_and_operational_outcomes"
+    },
+    {
+      "evaluation_id": "independent-pipeline-9-research-I02",
+      "alias": "A",
+      "arm": "treatment",
+      "job_id": null,
+      "source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-9-research-I02/phase2_report.json",
+        "sha256": "53238ae8bc5866fe2d2d0a9bf704a215c118e50bf595f3c8e9bbe653c9819461",
+        "bytes": 41211,
+        "kind": "exact CLOSED report; 100-file positive report locator selector"
+      },
+      "json_pointer": "/phase2_checks/rows"
+    },
+    {
+      "evaluation_id": "independent-pipeline-9-research-I02",
+      "alias": "B",
+      "arm": "control",
+      "job_id": null,
+      "source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-9-research-I02/phase2_report.json",
+        "sha256": "53238ae8bc5866fe2d2d0a9bf704a215c118e50bf595f3c8e9bbe653c9819461",
+        "bytes": 41211,
+        "kind": "exact CLOSED report; 100-file positive report locator selector"
+      },
+      "json_pointer": "/phase2_checks/rows"
+    }
+  ],
+  "scope": "P8/P9 exact scientist-context mappings; remaining exact anonymous labels/whole-case scopes preserved as reported, no global A=control assumption."
+}
