@@ -1,0 +1,22 @@
+{
+  "schema": "er9.report-consolidation-draft-scope.v1",
+  "owner": "diagnostic_eval_existing_report_consolidation",
+  "created_utc": "2026-10-06T04:39:14.560057Z",
+  "draft_deadline_utc": "2026-10-06T05:09:14.560057Z",
+  "started_monotonic_ns": 91973417116993,
+  "max_wall_seconds": 1800,
+  "status": "DRAFT_INCOMPLETE_CAMPAIGN",
+  "scope": "Finished judgment/report/lock synthesis across all16hypotheses,32original diagnostic contrasts,12fresh integrated slots,4locked confirmation slots. No new candidate or source checking.",
+  "owned_directory": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001",
+  "permitted_writes": "This directory only; exact safe positive publication selector to root/publisher",
+  "prohibited": [
+    "Grade or regrade",
+    "Candidate body/raw modelIO/auth/state/Git/canonical edits",
+    "Broad v8 review or inventories",
+    "Native Goal/model calls, spawning, queue interruptions/polling",
+    "Scientific content to ops/engine/foreman/candidates"
+  ],
+  "authority": "Root new task on2026-10-06; report consolidation, not fresh independent grading",
+  "currentness_rule": "Dated snapshots and current-work assertions attributed to exact finished artifacts/root assignment; no snapshot is an up-to-date liveness claim",
+  "gaps_rule": "UNASSESSED/evidence gap where no exact finished report binding is available"
+}

@@ -1,0 +1,21 @@
+{
+  "billing_dollars": "UNKNOWN",
+  "campaign_complete": false,
+  "clock_reset": false,
+  "closed_monotonic_ns": 93956419612557,
+  "closed_utc": "2026-10-06T05:12:17.562702+00:00",
+  "later_closure_pointer_notices_and_final_assistant_delivery": "UNKNOWN_OUTSIDE_THIS_RECEIPT_MEASUREMENT",
+  "native_or_candidate_model_calls_created": false,
+  "owner_acknowledgments": "UNKNOWN_NOT_WAITED_FOR",
+  "primary_required_notice_tool_returns_observed": true,
+  "provider_usage": "UNKNOWN",
+  "report_ready_elapsed_seconds_subset": 142.140717663,
+  "schema": "er9.accounting.required-notice-closure.v1",
+  "scope": "Bounded own accounting work, includes primary required notices; report-ready checkpoint inside this enclosing clock, never added. Not model occupied time or candidate inference charge.",
+  "start_pin": {
+    "path": "accounting/cohort-014/START.json",
+    "sha256": "11af307f3cbd735b4e8828785f616d33db1459ef1c5d59497c9c0c4a77eee773"
+  },
+  "whole_limit_seconds": 1800,
+  "whole_through_primary_root_publisher_keeper_ops_notices_seconds": 208.852618729
+}

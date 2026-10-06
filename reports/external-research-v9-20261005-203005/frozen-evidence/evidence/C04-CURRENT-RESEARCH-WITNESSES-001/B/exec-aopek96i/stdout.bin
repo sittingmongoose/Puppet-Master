@@ -1,0 +1,27 @@
+LWW result: {"R1": {"live": true, "ts": 7, "val": 20}, "R2": {"live": false, "ts": 6}, "R3": {"live": true, "src": "X1", "ts": 4, "val": 3}, "R4": {"live": true, "src": "X1", "ts": 8, "val": 4}}
+LWW silent losses: A's edit of R1 (val=10) overwritten by B's val=20 ; R2 deleted with no record of A-side expectation; A's insert R3 and B's insert R4 share src=X1 unflagged
+explicit three-way conflict set: [
+ {
+  "record": "R1",
+  "class": "both-edited-since-common-ancestor",
+  "base": 1,
+  "A": 10,
+  "B": 20,
+  "resolution": "user field-level choice"
+ },
+ {
+  "record": "R2",
+  "class": "edit-vs-delete",
+  "A": "kept",
+  "B": "deleted",
+  "resolution": "user picks keep or delete"
+ },
+ {
+  "record": "src=X1",
+  "class": "duplicate-source-id",
+  "A": "R3",
+  "B": "R4",
+  "resolution": "link / keep both / remap"
+ }
+]
+scope: toy in-memory dict semantics; illustrates classes, not the real merge engine

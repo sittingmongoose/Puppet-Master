@@ -1,0 +1,1201 @@
+{
+  "schema": "er9.empty-required-delivery-current-native-safe-projection.v1",
+  "evaluation_id": "independent-empty-delivery-1",
+  "rows": [
+    {
+      "alias": "E01",
+      "job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V03-A-BUNDLE-R001",
+      "arm": "control",
+      "native_sha256": "1f15f88609a10ca750f27a463c880dfbbb46ed5acc451213ee5360627aa02801",
+      "freeze_sha256": "cb61e1d473f285ad9ee3e42feb3ad9b86b97d5b4faeafc3e43e8f43c21fcb421",
+      "stage_sha256": "89ddcbaecfdd124f72da02dd1fadc4f135216b9ea59e3fb453362267e9844946",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791254914,
+        "updatedAt": 1791254914
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 223251,
+        "timeUsedSeconds": 880,
+        "tokenBudget": null,
+        "createdAt": 1791254914,
+        "updatedAt": 1791255794
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "45283d390e25ad318a856fdfcf2a38c00fb734b287eeb2fea7d5afaf2ec88094",
+        "receipt_sha256": "2e0ec768ad178a162a50f8d5dbb1a793ee30df974457bbbc791475940ed60a66",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 885.695340251,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 37,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 3135019,
+          "cachedInputTokens": 2932992,
+          "outputTokens": 21224,
+          "reasoningOutputTokens": 16645,
+          "totalTokens": 3156243
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 18,
+          "pm_boundary.public_https_get": 12,
+          "pm_execution.python_execute": 5
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 18,
+          "pm_boundary.public_https_get": 12,
+          "pm_execution.python_execute": 5
+        },
+        "tool_failed_counts": {},
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E02",
+      "job_id": "D-V16-B-control-diagnostic-a001",
+      "pair_id": "D-V16-B",
+      "arm": "control",
+      "native_sha256": "495fcab36eb0fedb7c46f53c6b35c2745ce5d6cafd0f3f9eacba5c1ecb3804c9",
+      "freeze_sha256": "0d2fd9dbeab99a9ab3b686236963eb4f398f68e3b2ce1d79b9dba303ea29c0ee",
+      "stage_sha256": "4fe014588fddf5cbb5b11421b8a8b57499cafe1c8c6cfbc729a8f327a426ec4f",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791246500,
+        "updatedAt": 1791246500
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 180869,
+        "timeUsedSeconds": 581,
+        "tokenBudget": null,
+        "createdAt": 1791246500,
+        "updatedAt": 1791247081
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.owned-scope-proof.v1",
+        "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+        "native_receipt_sha256": "c4ff0b997eeb320685e4f8bea68c9a8103941ee2af683840869de8f8a4410314",
+        "receipt_sha256": "03870f65b2b3da619cd8aa8a9c5b5f9ebcde809ab2181ed7e59cb56f6d850880",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 585.663178605,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 37,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 2337940,
+          "cachedInputTokens": 2181120,
+          "outputTokens": 24049,
+          "reasoningOutputTokens": 20601,
+          "totalTokens": 2361989
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 24,
+          "pm_boundary.public_https_get": 6,
+          "pm_execution.python_execute": 3
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 26,
+          "pm_boundary.public_https_get": 6,
+          "pm_execution.python_execute": 3
+        },
+        "tool_failed_counts": {
+          "pm_boundary.read_file": 2
+        },
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E03",
+      "job_id": "D-V01-A-treatment-diagnostic-a001",
+      "pair_id": "D-V01-A",
+      "arm": "treatment",
+      "native_sha256": "8eb3ddd1aafd66ffac4c7403ea616cad3aa5e7c6e25fcbf05a00074af4d11278",
+      "freeze_sha256": "bfc74e4f34de1acfd9e970718d3ef5d4f5be0811a2db70b272eb79cb5069a004",
+      "stage_sha256": "8d9096f72a97778e957c2ab87d137cc72fed5bc136ab2cecdf37cdb0993050e7",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {
+        "goal_activated": true,
+        "goal_submitted": true
+      },
+      "first_direct_goal": null,
+      "last_direct_goal": null,
+      "nativeGoal_status_before_cleanup_direct": null,
+      "nativeGoal_status_final_direct_or_UNKNOWN": "UNKNOWN_NO_DIRECT_GOAL_RECORD",
+      "native_router_status_not_Goal_status": "cap_seconds",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": "UNKNOWN_NOT_EXPOSED",
+        "held_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_cgroups_quiet": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "execution_units_quiet": "UNKNOWN_NOT_EXPOSED",
+        "all_owned_scopes_quiet": "UNKNOWN_NOT_EXPOSED"
+      },
+      "legacy_cleanup_projection": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "legacy_remaining_group_members_count": 0,
+      "owned_proof_positive_fields": {},
+      "elapsed_seconds": 574.395978813991,
+      "start_utc_if_saved": "2026-10-06T00:03:20.867270+00:00",
+      "end_utc_if_saved": "2026-10-06T00:12:55.207688+00:00",
+      "error_class": null,
+      "metrics_positive": {},
+      "known_usage_and_definitions": {
+        "native_usage": {
+          "totalTokens": 223649,
+          "inputTokens": 199258,
+          "outputTokens": 24391,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 14,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_started": 1,
+          "model_request_completed": 13
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1609646,
+          "outputTokens": 24391,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1410048,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1634037
+        },
+        "native_responses": 13,
+        "provider_usage_metadata": {
+          "available": true,
+          "row_count": 14,
+          "export_sha256": "daec82ffb9f89161ca49be88883ec3508757a00510df788d3dcb1cdcb6833a2f"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+        "provider_semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E04",
+      "job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V10-B-BUNDLE-R001",
+      "arm": "treatment",
+      "native_sha256": "c58917b9c0ade39039b61c47045c3d9663f892c7e280d06f6df9013f9461f146",
+      "freeze_sha256": "b6460da6c28f14f4b796e12b3c8f46c88b93e8fdf11f55ac474ec1b6742c7666",
+      "stage_sha256": "4ae525db4b254c8a8e0a87db4cf197fdf54f35c8bed7f26682678c6be40b521f",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791256301,
+        "updatedAt": 1791256301
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 276246,
+        "timeUsedSeconds": 879,
+        "tokenBudget": null,
+        "createdAt": 1791256301,
+        "updatedAt": 1791257181
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "14141ca98b536d0c6243fa0fc236a6c55d787b8ff8c049ad430897836a868a78",
+        "receipt_sha256": "15594357c37277d184873de8c6feb397608386f28ecf9dcdaa6ad35c8f6cd802",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 885.704128419,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 48,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 4862765,
+          "cachedInputTokens": 4624128,
+          "outputTokens": 37609,
+          "reasoningOutputTokens": 35636,
+          "totalTokens": 4900374
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 17,
+          "pm_boundary.public_https_get": 28
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 17,
+          "pm_boundary.public_https_get": 28
+        },
+        "tool_failed_counts": {},
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E05",
+      "job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V11-A-BUNDLE-R001",
+      "arm": "control",
+      "native_sha256": "e5a219cb346a0c1a0e0cbb3d9e354be3f146f3d93756e0113cee22816b56218a",
+      "freeze_sha256": "d7e09ee17131b07dba15740cfd67396c13f78befa2dfe011cb0c161bd19ffc3f",
+      "stage_sha256": "8789da25807ed066527c80bae944694464090791ed16351e520094309f0b6767",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791256412,
+        "updatedAt": 1791256412
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 181944,
+        "timeUsedSeconds": 579,
+        "tokenBudget": null,
+        "createdAt": 1791256412,
+        "updatedAt": 1791256992
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "7ee3ddc0003c0cac59995e6ccfecfba3d77ac1ed44e5011a9474c36df053ae76",
+        "receipt_sha256": "68291f3d652b523cafb21951aa87d009bdaa6ffed2c7dfb71c888d4750c09100",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 585.623876827,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 39,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 2848993,
+          "cachedInputTokens": 2684416,
+          "outputTokens": 17367,
+          "reasoningOutputTokens": 15098,
+          "totalTokens": 2866360
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 34,
+          "pm_boundary.public_https_get": 1,
+          "pm_execution.python_execute": 2
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 34,
+          "pm_boundary.public_https_get": 1,
+          "pm_execution.python_execute": 2
+        },
+        "tool_failed_counts": {},
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E06",
+      "job_id": "D-V16-B-treatment-diagnostic-a001",
+      "pair_id": "D-V16-B",
+      "arm": "treatment",
+      "native_sha256": "6fe863b4d3ab045acc6ec8419c68e6b2abc8ecabc82e144a76dd59ee0c79cfba",
+      "freeze_sha256": "e8c2d056efe881696e2d1fe38510abd1b49c0efd8437f19f19f22c47ad303a2e",
+      "stage_sha256": "51d5717428ef890c44e9d41993448bec17905d288fea38af485833b7ccb901f5",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791246512,
+        "updatedAt": 1791246512
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 222711,
+        "timeUsedSeconds": 581,
+        "tokenBudget": null,
+        "createdAt": 1791246512,
+        "updatedAt": 1791247094
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.owned-scope-proof.v1",
+        "reader_sha256": "921ea5e33d51a8da351f738510fccae42ad3e2246715741390c960b01d4766ed",
+        "native_receipt_sha256": "783ccda8ab1138afd6f50205fee1dddcd94932400322528bd60d39c8de822c75",
+        "receipt_sha256": "67a9635fc91821f99ffad6f233ffe9eb6674a38290127c4d65d7641b72deb06f",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 585.623833419,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 36,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 3000704,
+          "cachedInputTokens": 2797312,
+          "outputTokens": 19319,
+          "reasoningOutputTokens": 16056,
+          "totalTokens": 3020023
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 25,
+          "pm_boundary.public_https_get": 5,
+          "pm_execution.python_execute": 3
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 25,
+          "pm_boundary.public_https_get": 5,
+          "pm_boundary.mechanical": 1,
+          "pm_execution.python_execute": 3
+        },
+        "tool_failed_counts": {
+          "pm_boundary.mechanical": 1
+        },
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E07",
+      "job_id": "D-V08-B-treatment-critic_and_final-a001",
+      "pair_id": "D-V08-B",
+      "arm": "treatment",
+      "native_sha256": "e69cdcb52a413f106848e2e757252e198b8e8208be5ad9b483092e98c1311a13",
+      "freeze_sha256": "8f05fd02e4bb8da9ef744a623a7ff267ceeb78c2222c6f073365d912aaea0e4d",
+      "stage_sha256": "d9e475346f63d3097a004853e28d1328da898f85c2b7b0bf23e6f8407a0721e8",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {
+        "goal_activated": true,
+        "goal_submitted": true
+      },
+      "first_direct_goal": null,
+      "last_direct_goal": null,
+      "nativeGoal_status_before_cleanup_direct": null,
+      "nativeGoal_status_final_direct_or_UNKNOWN": "UNKNOWN_NO_DIRECT_GOAL_RECORD",
+      "native_router_status_not_Goal_status": "cap_seconds",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": "UNKNOWN_NOT_EXPOSED",
+        "held_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_cgroups_quiet": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "execution_units_quiet": "UNKNOWN_NOT_EXPOSED",
+        "all_owned_scopes_quiet": "UNKNOWN_NOT_EXPOSED"
+      },
+      "legacy_cleanup_projection": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "legacy_remaining_group_members_count": 0,
+      "owned_proof_positive_fields": {},
+      "elapsed_seconds": 574.0228769020032,
+      "start_utc_if_saved": "2026-10-05T23:47:43.815886+00:00",
+      "end_utc_if_saved": "2026-10-05T23:57:17.785043+00:00",
+      "error_class": null,
+      "metrics_positive": {},
+      "known_usage_and_definitions": {
+        "native_usage": {
+          "totalTokens": 133430,
+          "inputTokens": 120457,
+          "outputTokens": 12973,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 16,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_started": 1,
+          "model_request_completed": 15
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1041838,
+          "outputTokens": 12973,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 921024,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1054811
+        },
+        "native_responses": 15,
+        "provider_usage_metadata": {
+          "available": true,
+          "row_count": 16,
+          "export_sha256": "97510b10461c4b27f1b6046ea6bd7381caaa03dd3426fae1d0db2a1600d17e50"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+        "provider_semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E08",
+      "job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V02-B-BUNDLE-R001",
+      "arm": "treatment",
+      "native_sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9",
+      "freeze_sha256": "12a781d2e0530f295b572092960e2c5bfc554ea0734bb457477dd27765559703",
+      "stage_sha256": "44ddcbcc491485686b0a096943ea02434deadfb5af74b4a27ff48276d44e1031",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791254900,
+        "updatedAt": 1791254900
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 166411,
+        "timeUsedSeconds": 579,
+        "tokenBudget": null,
+        "createdAt": 1791254900,
+        "updatedAt": 1791255480
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "68ddba6f803579d210fd56f1d30a1a652aa5b526c35ef7a8f8ecaf1e3f22284a",
+        "receipt_sha256": "0f541ff492ce8bbb0ed5dc14b29b612bf73528fa1f9909c4e4994adb3973c9db",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 585.674449809,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 31,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 1790297,
+          "cachedInputTokens": 1650176,
+          "outputTokens": 26290,
+          "reasoningOutputTokens": 23873,
+          "totalTokens": 1816587
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 26,
+          "pm_execution.python_execute": 1,
+          "pm_boundary.public_https_get": 2
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 26,
+          "pm_execution.python_execute": 1,
+          "pm_boundary.public_https_get": 2
+        },
+        "tool_failed_counts": {},
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E09",
+      "job_id": "D-V01-A-control-diagnostic-a001",
+      "pair_id": "D-V01-A",
+      "arm": "control",
+      "native_sha256": "19db3b0509e9acbd805b46afcecaef7041c9d748cce5eb9474dd212b4d451b4d",
+      "freeze_sha256": "8444b14ec57e2c9d825af2e18d48030e38bd46ece6dc02d90faa558e223ad633",
+      "stage_sha256": "06b9fbd7d9a2e493a3bf33fdccda5539079c3235860e4379d554ce4fd7979c67",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {
+        "goal_activated": true,
+        "goal_submitted": true
+      },
+      "first_direct_goal": null,
+      "last_direct_goal": null,
+      "nativeGoal_status_before_cleanup_direct": null,
+      "nativeGoal_status_final_direct_or_UNKNOWN": "UNKNOWN_NO_DIRECT_GOAL_RECORD",
+      "native_router_status_not_Goal_status": "cap_seconds",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": "UNKNOWN_NOT_EXPOSED",
+        "held_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_cgroups_quiet": "UNKNOWN_NOT_EXPOSED",
+        "client_tool_process_groups_absent": "UNKNOWN_NOT_EXPOSED",
+        "execution_units_quiet": "UNKNOWN_NOT_EXPOSED",
+        "all_owned_scopes_quiet": "UNKNOWN_NOT_EXPOSED"
+      },
+      "legacy_cleanup_projection": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "legacy_remaining_group_members_count": 0,
+      "owned_proof_positive_fields": {},
+      "elapsed_seconds": 575.0126589459978,
+      "start_utc_if_saved": "2026-10-06T00:08:43.730550+00:00",
+      "end_utc_if_saved": "2026-10-06T00:18:18.644993+00:00",
+      "error_class": null,
+      "metrics_positive": {},
+      "known_usage_and_definitions": {
+        "native_usage": {
+          "totalTokens": 215766,
+          "inputTokens": 191076,
+          "outputTokens": 24690,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 15,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_started": 1,
+          "model_request_completed": 14
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1294670,
+          "outputTokens": 24690,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1103104,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1319360
+        },
+        "native_responses": 14,
+        "provider_usage_metadata": {
+          "available": true,
+          "row_count": 15,
+          "export_sha256": "f1d93be1e7ab1ccad30eb1e23e795c63cb4a5b8e98bd70da30785d8222133ac7"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+        "provider_semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    },
+    {
+      "alias": "E10",
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "pair_id": "D-V02-A-BUNDLE-R001",
+      "arm": "treatment",
+      "native_sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136",
+      "freeze_sha256": "0f7298bd6c96d9f7a2b2eb3a9d504de5258388d133e49ad9132ca25b35a05e3b",
+      "stage_sha256": "ecc364d60e72fb093398934b75c04d69b5ef2d9dbba2aa2dde91b0bc0b426662",
+      "positive_nativeGoal_starts": 1,
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_model": "gpt-6-luna",
+      "observed_effort": "max",
+      "physical_provider_payload": "UNKNOWN_UNLESS_EXPOSED; labels not attestation",
+      "opaque_GoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_SESSION_THREAD",
+      "goal_activation_direct_fields": {},
+      "first_direct_goal": {
+        "status": "active",
+        "tokensUsed": 0,
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "createdAt": 1791254885,
+        "updatedAt": 1791254885
+      },
+      "last_direct_goal": {
+        "status": "paused",
+        "tokensUsed": 116392,
+        "timeUsedSeconds": 579,
+        "tokenBudget": null,
+        "createdAt": 1791254885,
+        "updatedAt": 1791255464
+      },
+      "nativeGoal_status_before_cleanup_direct": "active",
+      "nativeGoal_status_final_direct_or_UNKNOWN": "paused",
+      "native_router_status_not_Goal_status": "HOLD",
+      "operational_complete": false,
+      "artifact_count": 0,
+      "stage_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "original_quiet_fields": {
+        "native_cgroup_quiet": true,
+        "held_process_groups_absent": true,
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "all_owned_scopes_quiet": true
+      },
+      "legacy_cleanup_projection": {},
+      "legacy_remaining_group_members_count": "UNKNOWN",
+      "owned_proof_positive_fields": {
+        "schema": "er9.luna.private-slice-owned-scope-proof.v1.3",
+        "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "native_receipt_sha256": "2c10021740ad8aa0e7e0239c8b2f46ed68d75754dfcecd370c3ca2f941322560",
+        "receipt_sha256": "40bdb960f70f7d6957ea0e154a0cc02d233695989f05534a0bf62bbce01aa9b2",
+        "all_owned_scopes_quiet": true,
+        "native_owned_processes_quiet": true,
+        "client_tool_owned_processes_quiet": true,
+        "execution_units_quiet": true,
+        "mutations_performed": false
+      },
+      "elapsed_seconds": 585.584226405,
+      "start_utc_if_saved": null,
+      "end_utc_if_saved": null,
+      "error_class": "TimeoutError",
+      "metrics_positive": {
+        "schema": "er9.luna.public-metrics.v1.1",
+        "fresh_session": true,
+        "requested_model": "gpt-6-luna",
+        "requested_effort": "max",
+        "goal_started_turn": true,
+        "goal_status_final": "paused",
+        "native_responses": "UNKNOWN",
+        "usage_notification_count": 16,
+        "native_response_policy": "wall-goal-token-observation-v1",
+        "native_model_response_cap_enforced": false,
+        "candidate_goals_set_by_host": 1,
+        "goal_replacements_observed": 0,
+        "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1,
+        "tail_interruptions_observed": [],
+        "adverse_failure_observed": true,
+        "native_owned_continuation_observed": false,
+        "host_initial_turns_started": 1,
+        "host_followup_turns_started": 0,
+        "usage_totals": {
+          "inputTokens": 471722,
+          "cachedInputTokens": 386304,
+          "outputTokens": 30974,
+          "reasoningOutputTokens": 19110,
+          "totalTokens": 502696
+        },
+        "tool_completed_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_execution.python_execute": 1
+        },
+        "goal_tool_completed_counts": {},
+        "tool_attempt_counts": {
+          "pm_boundary.read_file": 12,
+          "pm_execution.python_execute": 1,
+          "pm_boundary.write_file": 1
+        },
+        "tool_failed_counts": {
+          "pm_boundary.write_file": 1
+        },
+        "goal_tool_call_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls",
+        "inventory_check": {
+          "verified": false,
+          "native_mcp_catalog_verified": true,
+          "actual_inference_tool_payload_observed": false,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN"
+        },
+        "native_http_attempts": "UNKNOWN",
+        "cost": "UNKNOWN",
+        "component_outcome": "HOLD"
+      },
+      "known_usage_and_definitions": {
+        "provider_usage_metadata": {},
+        "usage_counter_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION",
+        "provider_semantics": "UNKNOWN_OR_UNEXPOSED_SAFE_DEFINITION"
+      },
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "scope_qualification": "absent legacy percomponent quiet/resource fields UNKNOWN, do not manufacture all5/aggregate resource profile; router status notGoal; genuinepositiveGoal emptydelivery distinct noGoalblocked"
+    }
+  ],
+  "native_retry_starts_not_logical_target_credit": true,
+  "counter_policy": "literal SDK/native/provider scopes distinct; do not sum/reprice or assume cache inclusion across sources; reasoning/input/cache semantics only as exposed",
+  "no_scientific_grade_or_clock_rewrite": true,
+  "redactions": [
+    "rawmodelIO/Goalobjective",
+    "private database/auth/session/OS/path identifiers",
+    "unselected histories"
+  ]
+}

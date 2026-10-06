@@ -1,0 +1,41 @@
+{
+  "schema": "er9.additive-mechanical-draft-correction.positive-selector.v1",
+  "owner": "/root/diagnostic_eval",
+  "status": "DRAFT_CORRECTION_NOT_NEW_GRADE",
+  "original_positive_selector_sha256": "09ad22df5e2e513ea4e3a57c5be2fd9fa20f150a69f97a938a5ce470a267a2ff",
+  "original10files_unchanged": true,
+  "publish_alongside_frozen_original": true,
+  "corrected_view_requires_this_addendum": true,
+  "follow_nested_references": false,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/ADDENDUM_001_SCOPE.json",
+      "sha256": "7cc66fbf7869ad698c01d5f12e635d584c91cc5bc20ce22dbffae3c97214c2f9",
+      "bytes": 671
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/ADDENDUM_001.md",
+      "sha256": "03d164626f5566a250c4faaa3e8622e1093e2d385542f850fcfae90c4396e777",
+      "bytes": 2831
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/ADDENDUM_001.json",
+      "sha256": "cf1887bdb446f3195a5a9846d9f1c09fe39e481ac80ecc9a72136df1ce3f815a",
+      "bytes": 1365
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/ADDENDUM_001_RECEIPT.json",
+      "sha256": "1bb22145034626c60bc9f48e2c2ce61aa6aa71892705efb9face17f049552246",
+      "bytes": 591
+    }
+  ],
+  "scientific_distribution": [
+    "/root",
+    "/root/publisher"
+  ],
+  "excluded": [
+    "raw source/candidate/native/private bodies",
+    "all unlisted files"
+  ],
+  "new_grades_or_Goals": 0
+}

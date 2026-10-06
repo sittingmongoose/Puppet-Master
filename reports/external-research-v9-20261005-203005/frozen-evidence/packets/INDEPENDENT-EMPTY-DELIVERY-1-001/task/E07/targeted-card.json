@@ -1,0 +1,71 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "e6b8c10efd463dc5a3aa9b55f904595a4866b36f709f3ae6d0e4ea132a1d40b3",
+  "retained_exact_fields": {
+    "schema": "er9.diagnostic_method_card.v1",
+    "pair_id": "D-V08-B",
+    "case_id": "D-V08-B-v1",
+    "domain": "B",
+    "task_name": "Replay-state correction propagated through stale-output UI",
+    "task": "Use a notebook proposal needing an execution/provenance correction that affects output status and project exchange. Treatment critic is responsible for complete delivery, not just review notes.",
+    "question": "Use cases requiring actual correction, including one in which correcting a claim can affect another section. This is not a formatting-only exercise.",
+    "source_scope": "Full actual candidate draft/sources/witness proposals and governing version context; no Sol completion.",
+    "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+    "discovery_conclusion_allowed": false,
+    "integration_limit": "This tests a simpler production topology, not permission for Sol to finish the research. Do not require three Goals merely to call a two-stage pipeline integrated.",
+    "brief_path": "briefs/development-B-notebook.md",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "neutral_task_prompt_path": "diagnostics/D-V08-B-TASK.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json",
+      "lead_inventory": "out/final/leads.json"
+    },
+    "important_checks": [
+      {
+        "id": "D-V08-B-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V08-B-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V08-B-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "no_truth_key_in_candidate": true,
+    "coverage_path": "diagnostics/D-V08-B-coverage.json"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "candidate_authorship",
+    "card_version",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "observed_effort",
+    "observed_model",
+    "outcome",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "stages",
+    "status",
+    "track",
+    "treatment"
+  ]
+}

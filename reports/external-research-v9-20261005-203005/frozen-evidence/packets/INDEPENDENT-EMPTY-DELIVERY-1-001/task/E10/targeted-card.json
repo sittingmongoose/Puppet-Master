@@ -1,0 +1,77 @@
+{
+  "schema": "er9.exact-targeted-card-source-projection.v1",
+  "original_card_sha256": "21efe6309dd123591da4596dea97d3c4a632087942e24c64d79a60a99415804c",
+  "retained_exact_fields": {
+    "brief_path": "briefs/development-A-biomedical.md",
+    "candidate_artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "lead_inventory": "out/final/leads.json",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json"
+    },
+    "case_id": "D-V02-A-v2-neutral-r1",
+    "common_criteria_path": "common_criteria.json",
+    "coverage_path": "diagnostics/D-V02-A-coverage.json",
+    "discovery_conclusion_allowed": false,
+    "domain": "A",
+    "important_checks": [
+      {
+        "id": "D-V02-A-P1",
+        "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+      },
+      {
+        "id": "D-V02-A-P2",
+        "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+      },
+      {
+        "id": "D-V02-A-P3",
+        "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+      }
+    ],
+    "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+    "integration_limit": "Compare to V01, not to a tool-denied control, so this tests interpretation discipline separately from tool availability.",
+    "neutral_task_prompt_path": "LAB_ROOT/dev/diagnostic-runner/contrast-repairs-001/versions/neutral-r1/D-V02-A/NEUTRAL_TASK.md",
+    "no_truth_key_in_candidate": true,
+    "pair_id": "D-V02-A-BUNDLE-R001",
+    "question": "Use unlike coordinate conventions and a non-geometric analogue such as byte/character offsets, index/count distinctions, or major/minor version predicates. The critic derives its own examples.",
+    "schema": "er9.diagnostic_method_card.v1",
+    "source_access_path": "source_access.json",
+    "source_scope": "Exact candidate-selected pinned coordinate/axis APIs and governing metadata documentation, full surrounding conditions and candidate draft; no evaluator formula.",
+    "task": "Check the frozen candidate draft\u2019s relation between stored array axes, displayed coordinates and physical calibration, including a boundary or inverse operation actually supported by selected sources.",
+    "task_name": "Physical units, axis conventions and valid transform domain"
+  },
+  "omitted_fields": [
+    "allocation",
+    "arm_modifier_paths",
+    "candidate_authorship",
+    "candidate_family",
+    "card_version",
+    "control",
+    "economics_fields",
+    "evaluate_before_history",
+    "execution_policy",
+    "family_binding_rule",
+    "fixture_prerequisites",
+    "freeze_state",
+    "frozen_seed_manifest_path",
+    "measure",
+    "method_id",
+    "method_name",
+    "observed_effort",
+    "observed_model",
+    "outcome",
+    "prospective_setup_lineage",
+    "requested_effort",
+    "requested_family",
+    "requested_model",
+    "requested_route",
+    "required_resource_binding",
+    "resource_version",
+    "setup_version",
+    "source_pair_id",
+    "stages",
+    "status",
+    "track",
+    "treatment"
+  ]
+}

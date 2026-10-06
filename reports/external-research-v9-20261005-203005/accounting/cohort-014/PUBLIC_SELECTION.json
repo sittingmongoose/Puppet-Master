@@ -1,0 +1,54 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-014/attempts.safe.json",
+      "sha256": "be41b382007743353ffcdfc5afb5f358c811ad37528c205553116351aac77be3"
+    },
+    {
+      "path": "accounting/cohort-014/snapshot.safe.json",
+      "sha256": "414ef94aa5b512d56de2f51380a2024186b1e102c6f1cbad7b609b140b406711"
+    },
+    {
+      "path": "accounting/cohort-014/attempts.safe.schema.json",
+      "sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c"
+    },
+    {
+      "path": "accounting/cohort-014/snapshot.safe.schema.json",
+      "sha256": "3f9e54863976a150b9be30937a23ab65de921be432d94b295dd62ca80ce77b4e"
+    },
+    {
+      "path": "accounting/cohort-014/COST_SNAPSHOT.md",
+      "sha256": "dcefb4bbaa9a1088f46e5efc1d2a0af2b2bca288a9718ccb4dd62be0b845028f"
+    },
+    {
+      "path": "accounting/cohort-014/evaluator-clocks.safe.json",
+      "sha256": "52d2ff0ff90304e2834f58ef2a4d8c9b12a21afc8a3afef3b1c54a3a9a76e8aa"
+    },
+    {
+      "path": "accounting/cohort-014/evaluator-clocks.safe.schema.json",
+      "sha256": "de594f02e3b2c5e2d831048dd426f4f2e894067b802e08bbfb28a7c3534e2925"
+    },
+    {
+      "path": "accounting/cohort-014/VERIFICATION.json",
+      "sha256": "54b41994e8763ab23ef28b05c233780dcd90ba35e305b5eda7f90408bcd8c952"
+    },
+    {
+      "path": "accounting/cohort-014/KEEPER_RECEIPT.json",
+      "sha256": "a695f7cde73a606ed00b67d748c79b6dd21ca65a2ae7737ce2e43c9c151a0b11"
+    },
+    {
+      "path": "accounting/cohort-014/KEEPER_RECEIPT.schema.json",
+      "sha256": "1caa343610e0c6caac4e56549290d3908c243b04c7261f07d24af4ac9ee61216"
+    },
+    {
+      "path": "accounting/cohort-014/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "sha256": "0e070b29b36ce9f8a4cdcb7176f83066a5f6faa75e12404dd48a834df6db07e8"
+    },
+    {
+      "path": "accounting/cohort-014/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "sha256": "1b512ddb71445d4d0945d434c041cd45f131f5857267be40c108e5e88e554cd2"
+    }
+  ],
+  "exclusion": "Only positively selected safe projections; no capture bytes, scripts, unlisted receipts, semantic bodies, evaluator judgments or private state.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

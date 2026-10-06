@@ -1,0 +1,23 @@
+{
+  "schema": "er9.report-consolidation.neutral-handoff-close.v1",
+  "status": "BOUNDED_DRAFT_WORK_CLOSED_CAMPAIGN_REMAINS_INCOMPLETE",
+  "closed_utc": "2026-10-06T05:03:20.798569+00:00",
+  "closed_monotonic_ns": 93419655590082,
+  "original_started_utc": "2026-10-06T04:39:14.560057Z",
+  "original_deadline_utc": "2026-10-06T05:09:14.560057Z",
+  "whole_through_handoffs_seconds": 1446.238473089,
+  "whole_ceiling_seconds": 1800,
+  "clock_reset": false,
+  "main_positive_selector_sha256": "09ad22df5e2e513ea4e3a57c5be2fd9fa20f150a69f97a938a5ce470a267a2ff",
+  "main_all10_pins_unchanged": true,
+  "scientific_handoffs": {
+    "root": "SEND_MESSAGE_ACCEPTED",
+    "publisher": "SEND_MESSAGE_ACCEPTED"
+  },
+  "neutral_accountant_handoff": "REJECTED_ACTUAL_AGENT_THREAD_LIMIT_REACHED; root informed; no retry/override",
+  "receipt_sha256": "b8324ecef3e1d5b5c575cb1bb00584ee25a5d58433f955366955025239c53793",
+  "provider_tokens_or_billing": "UNKNOWN",
+  "new_native_Goals_or_model_calls": 0,
+  "new_source_grades_or_source_checks": 0,
+  "work_remaining": "Eventual final campaign queueaudit/root recommendation outside this bounded draft; on call without polling"
+}

@@ -1,0 +1,844 @@
+{
+  "schema": "er9.empty-required-delivery-source-packet.v1",
+  "evaluation_id": "independent-empty-delivery-1",
+  "scope": "10 exactCURRENT nativepositive terminalquiet artifact-empty final-required roles; not intermediates/V06/noGoal/blocked",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-empty-delivery-1/reservation.json",
+    "sha256": "3bddedc3709e880b7d7aeb88ef43f5bec602677d26c1b0769a6f55235bde3453"
+  },
+  "anonymous_roles": [
+    {
+      "alias": "E01",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "bytes": 5324
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/full_brief_obligations.json",
+          "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+          "bytes": 4473
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_important_checks.json",
+          "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+          "bytes": 1937
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted_coverage_map.json",
+          "sha256": "1e91aafe13771cd7b5ceb2b9f584c3bfbbeb52c7f8ea3d961f4b92e9077c54f0",
+          "bytes": 2241
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/neutral_targeted_task.md",
+          "sha256": "b8f87005491a674d8d78136849fe5457f90e1a22d3c2216d6f83e6c31104e92c",
+          "bytes": 1437
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/actual_launched_TASK.md",
+          "sha256": "4b041f8dcf4343ea430c455f40980faba6a589733128613b408ac5509d4c3e33",
+          "bytes": 14886
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted-card.json",
+          "sha256": "81fd28ca4ac2c13b33640abf6382e9cb8ca5e6e4b045fe0a615422d59ddb8d4a"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "cb61e1d473f285ad9ee3e42feb3ad9b86b97d5b4faeafc3e43e8f43c21fcb421",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "45feb32171e2146e1607dadbd8c7ad7f9997e90138cd3d5debc971b0a515660d",
+          "owner_registration_sha256": "304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade",
+          "resource_outbox_sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E02",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "bytes": 5830
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/full_brief_obligations.json",
+          "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+          "bytes": 4577
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_important_checks.json",
+          "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+          "bytes": 1952
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted_coverage_map.json",
+          "sha256": "5d9211d40118bbf04e9e441e9a8d0525522cb28d729b739f7f6729427a59145d",
+          "bytes": 2187
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/neutral_targeted_task.md",
+          "sha256": "6ace23689e5940e407b97f605e2f735f28f4270a0febe1266753ae34b7a9bbda",
+          "bytes": 1410
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/actual_launched_TASK.md",
+          "sha256": "08e1327f6c50b97f397a5228ed52f50427569ef38edfdaacb6f39f06bf32ef5f",
+          "bytes": 11957
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted-card.json",
+          "sha256": "e7c2eafaaed31c289745a55036f9e3066b9801151698206d1b5cd83fa1f44392"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "0d2fd9dbeab99a9ab3b686236963eb4f398f68e3b2ce1d79b9dba303ea29c0ee",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "886c8a82c273753a6ee88ef282564bbd1cc4ab5f825a747f62fe6f4db5003c46",
+          "owner_registration_sha256": "136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7",
+          "resource_outbox_sha256": null
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E03",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "bytes": 5324
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/full_brief_obligations.json",
+          "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+          "bytes": 4473
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_important_checks.json",
+          "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+          "bytes": 1937
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted_coverage_map.json",
+          "sha256": "66b7526479ae625d8f21657fe9d88620748f3f4b35b30fbd11f4da4daf6f3570",
+          "bytes": 2367
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/neutral_targeted_task.md",
+          "sha256": "04bdef46591c1c78b30a913b67fcf3faaf0e97bc8d7f78b30075b767281c2121",
+          "bytes": 1625
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/actual_launched_TASK.md",
+          "sha256": "ef1c587c0f26739b9b5938c044e26aa936d8e9556ea370cf8ed97f651fe138c1",
+          "bytes": 11957
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted-card.json",
+          "sha256": "5caf7c854bc43ddf802c6aa056d56747772e050b4524d3a2fad38798f5bcfd33"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "bfc74e4f34de1acfd9e970718d3ef5d4f5be0811a2db70b272eb79cb5069a004",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "6b16d8655d5f1bceaaddb5364d5d6ebafd702c12b64bf608190e06330f45a935",
+          "owner_registration_sha256": "4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f",
+          "resource_outbox_sha256": null
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E04",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "bytes": 5830
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/full_brief_obligations.json",
+          "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+          "bytes": 4577
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_important_checks.json",
+          "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+          "bytes": 1952
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted_coverage_map.json",
+          "sha256": "4962b8939642e6091b145052465e95317510e5dafc939a9fd15907033b518c85",
+          "bytes": 2158
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/neutral_targeted_task.md",
+          "sha256": "5274b7e4d4e16300ea29e7d05168281428e84189233fbb2a64c87ca84ec7cb53",
+          "bytes": 1370
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/actual_launched_TASK.md",
+          "sha256": "c7d45dbbd5d024911a6c874a3b21b79b058b844e3b5e4601044a38aabf553c4e",
+          "bytes": 15156
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted-card.json",
+          "sha256": "1224a22a0b613d06480b9eb24b5a920053f6c909d92145a2a5df9ad772bc1321"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "b6460da6c28f14f4b796e12b3c8f46c88b93e8fdf11f55ac474ec1b6742c7666",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "c66b09fe88934d00f719343db1a7c258c4b442db290a4738f937cd38da9359bb",
+          "owner_registration_sha256": "2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a",
+          "resource_outbox_sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E05",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "bytes": 5324
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/full_brief_obligations.json",
+          "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+          "bytes": 4473
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_important_checks.json",
+          "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+          "bytes": 1937
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted_coverage_map.json",
+          "sha256": "7efef027941405fbfa4f36c8611100bf83e09ec2a1344c40cc946e7e24d8a73a",
+          "bytes": 2255
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/neutral_targeted_task.md",
+          "sha256": "739fbc8adfc6953c1ea3fe85d94e73d5b50300d92e3cf10d57ae940a22942f73",
+          "bytes": 1456
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/actual_launched_TASK.md",
+          "sha256": "85eb4f0ebbb4fa80ab7302c5325b2be2f84446101dcaeef39f8f0e69e0955e79",
+          "bytes": 14848
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted-card.json",
+          "sha256": "2af702a6580ce63a592fc5c9d6012f4e7897941ffc443fa93d656546913a6663"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "d7e09ee17131b07dba15740cfd67396c13f78befa2dfe011cb0c161bd19ffc3f",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "89c2f88df7e42eddb7110642cee85eb3bc494b33c146be1f4744687dcf6ce832",
+          "owner_registration_sha256": "b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740",
+          "resource_outbox_sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E06",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "bytes": 5830
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/full_brief_obligations.json",
+          "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+          "bytes": 4577
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_important_checks.json",
+          "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+          "bytes": 1952
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted_coverage_map.json",
+          "sha256": "5d9211d40118bbf04e9e441e9a8d0525522cb28d729b739f7f6729427a59145d",
+          "bytes": 2187
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/neutral_targeted_task.md",
+          "sha256": "6ace23689e5940e407b97f605e2f735f28f4270a0febe1266753ae34b7a9bbda",
+          "bytes": 1410
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/actual_launched_TASK.md",
+          "sha256": "faedf6f0844b8262a0eeb7bd6208da944dd7a094f1645c4981cc3bd9e7d975a2",
+          "bytes": 12031
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted-card.json",
+          "sha256": "e7c2eafaaed31c289745a55036f9e3066b9801151698206d1b5cd83fa1f44392"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "e8c2d056efe881696e2d1fe38510abd1b49c0efd8437f19f19f22c47ad303a2e",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "886c8a82c273753a6ee88ef282564bbd1cc4ab5f825a747f62fe6f4db5003c46",
+          "owner_registration_sha256": "436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f",
+          "resource_outbox_sha256": null
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E07",
+      "actual_role": "critic_and_final",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "bytes": 5830
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/full_brief_obligations.json",
+          "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+          "bytes": 4577
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_important_checks.json",
+          "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+          "bytes": 1952
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted_coverage_map.json",
+          "sha256": "126ece141331ba4e819d0ecf844c0f4100c5929a5eaa8fd42016c8954d805f68",
+          "bytes": 2167
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/neutral_targeted_task.md",
+          "sha256": "32062fe8ea995ad4eb4950069b982783d93bfdf953e95acfe3ac6c44c297f5e4",
+          "bytes": 1353
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/actual_launched_TASK.md",
+          "sha256": "5ea363d6f245e77a8f97ddd40e5a96b6bac392365d402a1bf639d43629a9a3b3",
+          "bytes": 12030
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted-card.json",
+          "sha256": "30e84a4a64f0467c47e2402332ed943ab9f0663aef27a5a8288a53c023009b0c"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "8f05fd02e4bb8da9ef744a623a7ff267ceeb78c2222c6f073365d912aaea0e4d",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "e6b8c10efd463dc5a3aa9b55f904595a4866b36f709f3ae6d0e4ea132a1d40b3",
+          "owner_registration_sha256": "5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3",
+          "resource_outbox_sha256": null
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E08",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+          "bytes": 5830
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/full_brief_obligations.json",
+          "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+          "bytes": 4577
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_important_checks.json",
+          "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+          "bytes": 1952
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted_coverage_map.json",
+          "sha256": "002009ea99f5c3be815500a9b9704ca32b3b43c4efce12881e50be9c4673ccb5",
+          "bytes": 2212
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/neutral_targeted_task.md",
+          "sha256": "22765077e8b5628bcffd3c78ad1d51c9f7254e1580fc35b55077c0570a1c4697",
+          "bytes": 1417
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/actual_launched_TASK.md",
+          "sha256": "71e33c7153bb08aeeb89986f29f553c1af4c9e6fb8d4256dd118015b05cde522",
+          "bytes": 15253
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted-card.json",
+          "sha256": "5ba8472a61369d6cba81109f1f4fbc1e5c974409b204120980d4af0ced77e2db"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "12a781d2e0530f295b572092960e2c5bfc554ea0734bb457477dd27765559703",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "9fafad7c74a99f7d866da30d9c5f50989d81fd8c8301acf47e593142b8c2f5ab",
+          "owner_registration_sha256": "4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed",
+          "resource_outbox_sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E09",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "bytes": 5324
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/full_brief_obligations.json",
+          "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+          "bytes": 4473
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_important_checks.json",
+          "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+          "bytes": 1937
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted_coverage_map.json",
+          "sha256": "66b7526479ae625d8f21657fe9d88620748f3f4b35b30fbd11f4da4daf6f3570",
+          "bytes": 2367
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/neutral_targeted_task.md",
+          "sha256": "04bdef46591c1c78b30a913b67fcf3faaf0e97bc8d7f78b30075b767281c2121",
+          "bytes": 1625
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/actual_launched_TASK.md",
+          "sha256": "ca1203f8e25455e6c3f9b6d10f7b77d5152cf72667e88fa1c486e205f4d12491",
+          "bytes": 11992
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted-card.json",
+          "sha256": "5caf7c854bc43ddf802c6aa056d56747772e050b4524d3a2fad38798f5bcfd33"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "8444b14ec57e2c9d825af2e18d48030e38bd46ece6dc02d90faa558e223ad633",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "6b16d8655d5f1bceaaddb5364d5d6ebafd702c12b64bf608190e06330f45a935",
+          "owner_registration_sha256": "072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e",
+          "resource_outbox_sha256": null
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    },
+    {
+      "alias": "E10",
+      "actual_role": "diagnostic",
+      "task": {
+        "brief": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/brief.md",
+          "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+          "bytes": 5324
+        },
+        "full_brief_obligations": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/full_brief_obligations.json",
+          "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+          "bytes": 4473
+        },
+        "common_criteria": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+          "bytes": 2521
+        },
+        "common_important_checks": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_important_checks.json",
+          "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+          "bytes": 1937
+        },
+        "source_access": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+          "bytes": 1751
+        },
+        "output_contract": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+          "bytes": 2062
+        },
+        "targeted_coverage_map": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted_coverage_map.json",
+          "sha256": "937d3bb4f6a41ca2522ea66a43a06b47ea48272f85b0724b5717b5320e2ebba9",
+          "bytes": 2245
+        },
+        "neutral_targeted_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/neutral_targeted_task.md",
+          "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+          "bytes": 1421
+        },
+        "actual_launched_task": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/actual_launched_TASK.md",
+          "sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7",
+          "bytes": 14966
+        },
+        "targeted_card": {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted-card.json",
+          "sha256": "610c48ab981cbd4c1192d039cd06ede912a7aaf2b00b6cb7808f64ec03e81c6e"
+        }
+      },
+      "criteria_counts": {
+        "full_brief_obligations": 12,
+        "common_dimensions": 8,
+        "common_important_checks": 5,
+        "target_scope_checks": 3
+      },
+      "actual_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "actual_artifact_count": 0,
+      "designated_final": null,
+      "scientific_source_quality": "UNASSESSED_NO_CANDIDATE_BODY",
+      "neutral_admission_integrity": {
+        "positive_actual_nativeGoal_start_count": 1,
+        "frozen_terminal_owned_quiet_confirmed": true,
+        "actual_source_freeze_sha256": "0f7298bd6c96d9f7a2b2eb3a9d504de5258388d133e49ad9132ca25b35a05e3b",
+        "current_version_positive_ref_hashes": {
+          "card_sha256": "21efe6309dd123591da4596dea97d3c4a632087942e24c64d79a60a99415804c",
+          "owner_registration_sha256": "d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee",
+          "resource_outbox_sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+        },
+        "noGoal_blocked_intermediate_roles_excluded": true
+      },
+      "assessment_scope": "actual required output absence only; missing science UNASSESSED/no blankPASS/no causal methodwinner/pipelinecredit"
+    }
+  ],
+  "budget": {
+    "source_seconds": 1200,
+    "phase2_inclusive_seconds": 600,
+    "whole_seconds_includes_handoffs": 1800,
+    "start": "first semantic actualTask/criteria read afterpacketready",
+    "no_reset": true
+  },
+  "blinding": {
+    "held": "aliases/model/Goal/status/history/usage/cost/nativeprivatekey until immutableP1",
+    "exposure": "actualTask/card domain/role/pair hints unavoidable; no perfectblinding claim"
+  },
+  "protocol": "ER9-independent-output-v1; delivery contract absence independent from scientific quality/native outcome/cost/causal pipelinecredit",
+  "no_invented_blank_science_PASS": true
+}

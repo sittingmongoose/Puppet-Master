@@ -1,0 +1,60 @@
+{
+  "schema": "er9.exact-holdout-source-card-projection.v1",
+  "original_card_sha256": "a0c0d90385802fa09555ff6b3930edb4ad92bd422a86da2ea90a9a39033a1725",
+  "retained_exact_fields": {
+    "schema": "er9.locked-confirmation-case.v1",
+    "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+    "case_id": "H2-v1",
+    "holdout_code": "H2",
+    "brief_path": "LAB_ROOT/dev/diagnostic-runner/confirmation-preparation/released/H2.md",
+    "coverage_path": "LAB_ROOT/dev/diagnostic-runner/confirmation-preparation/released/H2-coverage.json",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "common_output_contract": "prompts/output_contract.md",
+    "initial_input": "BRIEF_ONLY_CANDIDATE_SOURCE_DISCOVERY",
+    "artifacts": {
+      "designated_final": "out/final/proposal.md",
+      "lead_inventory": "out/final/leads.json",
+      "source_catalog": "out/final/sources.json",
+      "witness_catalog": "out/final/witnesses.json"
+    },
+    "critical_source_and_delivery_duties": {
+      "complete_actual_final4_required": true,
+      "independent_implementation_precedents_min": 2,
+      "real_issue_fix_regression_chain_required": true
+    },
+    "source_answers_or_prior_development_in_inputs": false,
+    "whole_case_or_all_diagnostic_PASS_required": false
+  },
+  "omitted_fields": [
+    "actual_runtime_tools_resource_pins_required_before_outputs",
+    "allocation",
+    "candidate_family",
+    "control_competent_and_contemporaneous",
+    "control_stages",
+    "exact_locked_bundle",
+    "execute_all_four_after_early_FAILURE",
+    "execution_gate",
+    "method_id",
+    "no_feedback_between_confirmation_comparisons",
+    "observed_model",
+    "original_attempts_and_costs_preserved",
+    "pipeline_closure",
+    "policy_ref",
+    "quality",
+    "recipe",
+    "release_receipt_ref",
+    "requested_effort",
+    "requested_model",
+    "required_resource_binding",
+    "reservation_ref",
+    "resource_version",
+    "selection_lock_ref",
+    "source_card_ref",
+    "source_pair_id",
+    "source_slot",
+    "status",
+    "track",
+    "treatment_stages"
+  ]
+}

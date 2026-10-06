@@ -1,0 +1,35 @@
+{
+  "schema": "er9.c04-control-diagnosis-owned-source-pins.v1",
+  "created_utc": "2026-10-06T04:36:00.213969+00:00",
+  "files": {
+    "project.py": "1a9cdff1a701aba1b0d56dcbc47da6bfb6f142a70538b1c59c0478cb051e50a8",
+    "DIAGNOSIS.json": "5d9b72937494b7fd3dc8754fd0af6bd7181e56aaad313360ff538790cd3cce60",
+    "NATIVE_GOAL_STATUS.json": "fb7ce1c1c64ba587889ba4786613545dca586cf26137519a57aabb3c68fe5536",
+    "VERIFICATION.json": "619d40a425204367ab5fc9c87f8a25a2ad8eebefaf9a83875a6ad5dde675063a",
+    "REPORT.md": "a9ccca12c983aa2e32f23d237ff924d5c89014e2d0dd5808743ab436752deff9",
+    "PROSPECTIVE_DIAGNOSTIC_OUTBOX.json": "54c63c081aeecd5dc06663968296da3a0f315bf296064b4eb6426634b8c58ce8",
+    "MANIFEST.json": "fef3c197f1932664f430ed85c387e2ac2cdf76938b8835c2e09ddf46069dfcdc"
+  },
+  "readonly_quiescent": true,
+  "original_stage_and_runtime_pointers": {
+    "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+    "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/profile.py": "2dbce693d3b6ff143059ff5fa13c8f8f186bc6eed29ea00dcae9681857593623",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/stage_worker.py": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/SOURCE_PINS.json": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621",
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+  },
+  "models_goals_probes_or_canaries": 0,
+  "no_runtime_patch": true
+}

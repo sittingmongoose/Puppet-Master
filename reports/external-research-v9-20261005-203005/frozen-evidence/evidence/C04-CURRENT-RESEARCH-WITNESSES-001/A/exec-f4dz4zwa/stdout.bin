@@ -1,0 +1,41 @@
+{
+ "case1_disjoint_edits": [
+  {
+   "lat": 52.521,
+   "lon": 13.4,
+   "name": "Plot A (renamed)",
+   "note": "birch, moss"
+  },
+  []
+ ],
+ "case2_same_field_edited_both": [
+  {
+   "lat": 52.52,
+   "lon": 13.4,
+   "name": "Plot A"
+  },
+  [
+   {
+    "field": "note",
+    "base": "birch",
+    "mine": "v1 text",
+    "theirs": "v2 text"
+   }
+  ]
+ ],
+ "case3_theirs_deleted_mine_edited": [
+  {
+   "lat": 52.52,
+   "lon": 13.4,
+   "name": "Plot A"
+  },
+  [
+   {
+    "field": "note",
+    "base": "birch",
+    "mine": "v1 text",
+    "theirs": null
+   }
+  ]
+ ]
+}

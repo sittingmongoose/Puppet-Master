@@ -1,0 +1,7 @@
+sqlite3 runtime library version: 3.46.1
+rtree virtual table created OK
+UNEXPECTED: NULL bbox accepted
+rows in rtree index: 2 | rows in observation table: 2
+-> geometry-less record stays visible in the table but is absent from the spatial index
+rtreecheck('obs_rtree'): ok
+scope: stdlib sqlite3 in isolated python; checks documented rtree constraints, not app code

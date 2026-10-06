@@ -1,0 +1,529 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "FROZEN_EXPORTS_034_EMPTY10_ACTUAL_CONTRACT_AND_CURRENT_PHASE2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/dispatch.json",
+      "sha256": "5c739fa4fa76d3277bbf40d192ef69a1c9867653ad3ff8928a9ad8de2208c429",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/dispatch.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/actual_launched_TASK.md",
+      "sha256": "08e1327f6c50b97f397a5228ed52f50427569ef38edfdaacb6f39f06bf32ef5f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted_coverage_map.json",
+      "sha256": "5d9211d40118bbf04e9e441e9a8d0525522cb28d729b739f7f6729427a59145d",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/neutral_targeted_task.md",
+      "sha256": "6ace23689e5940e407b97f605e2f735f28f4270a0febe1266753ae34b7a9bbda",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted-card.json",
+      "sha256": "e7c2eafaaed31c289745a55036f9e3066b9801151698206d1b5cd83fa1f44392",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E02/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/actual_launched_TASK.md",
+      "sha256": "ef1c587c0f26739b9b5938c044e26aa936d8e9556ea370cf8ed97f651fe138c1",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted_coverage_map.json",
+      "sha256": "66b7526479ae625d8f21657fe9d88620748f3f4b35b30fbd11f4da4daf6f3570",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/neutral_targeted_task.md",
+      "sha256": "04bdef46591c1c78b30a913b67fcf3faaf0e97bc8d7f78b30075b767281c2121",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted-card.json",
+      "sha256": "5caf7c854bc43ddf802c6aa056d56747772e050b4524d3a2fad38798f5bcfd33",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E03/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/actual_launched_TASK.md",
+      "sha256": "ca1203f8e25455e6c3f9b6d10f7b77d5152cf72667e88fa1c486e205f4d12491",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted_coverage_map.json",
+      "sha256": "66b7526479ae625d8f21657fe9d88620748f3f4b35b30fbd11f4da4daf6f3570",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/neutral_targeted_task.md",
+      "sha256": "04bdef46591c1c78b30a913b67fcf3faaf0e97bc8d7f78b30075b767281c2121",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted-card.json",
+      "sha256": "5caf7c854bc43ddf802c6aa056d56747772e050b4524d3a2fad38798f5bcfd33",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E09/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/actual_launched_TASK.md",
+      "sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted_coverage_map.json",
+      "sha256": "937d3bb4f6a41ca2522ea66a43a06b47ea48272f85b0724b5717b5320e2ebba9",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/neutral_targeted_task.md",
+      "sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted-card.json",
+      "sha256": "610c48ab981cbd4c1192d039cd06ede912a7aaf2b00b6cb7808f64ec03e81c6e",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E10/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/actual_launched_TASK.md",
+      "sha256": "85eb4f0ebbb4fa80ab7302c5325b2be2f84446101dcaeef39f8f0e69e0955e79",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted_coverage_map.json",
+      "sha256": "7efef027941405fbfa4f36c8611100bf83e09ec2a1344c40cc946e7e24d8a73a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/neutral_targeted_task.md",
+      "sha256": "739fbc8adfc6953c1ea3fe85d94e73d5b50300d92e3cf10d57ae940a22942f73",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted-card.json",
+      "sha256": "2af702a6580ce63a592fc5c9d6012f4e7897941ffc443fa93d656546913a6663",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E05/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/actual_launched_TASK.md",
+      "sha256": "4b041f8dcf4343ea430c455f40980faba6a589733128613b408ac5509d4c3e33",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted_coverage_map.json",
+      "sha256": "1e91aafe13771cd7b5ceb2b9f584c3bfbbeb52c7f8ea3d961f4b92e9077c54f0",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/neutral_targeted_task.md",
+      "sha256": "b8f87005491a674d8d78136849fe5457f90e1a22d3c2216d6f83e6c31104e92c",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted-card.json",
+      "sha256": "81fd28ca4ac2c13b33640abf6382e9cb8ca5e6e4b045fe0a615422d59ddb8d4a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E01/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/actual_launched_TASK.md",
+      "sha256": "71e33c7153bb08aeeb89986f29f553c1af4c9e6fb8d4256dd118015b05cde522",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted_coverage_map.json",
+      "sha256": "002009ea99f5c3be815500a9b9704ca32b3b43c4efce12881e50be9c4673ccb5",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/neutral_targeted_task.md",
+      "sha256": "22765077e8b5628bcffd3c78ad1d51c9f7254e1580fc35b55077c0570a1c4697",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted-card.json",
+      "sha256": "5ba8472a61369d6cba81109f1f4fbc1e5c974409b204120980d4af0ced77e2db",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E08/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/actual_launched_TASK.md",
+      "sha256": "c7d45dbbd5d024911a6c874a3b21b79b058b844e3b5e4601044a38aabf553c4e",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted_coverage_map.json",
+      "sha256": "4962b8939642e6091b145052465e95317510e5dafc939a9fd15907033b518c85",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/neutral_targeted_task.md",
+      "sha256": "5274b7e4d4e16300ea29e7d05168281428e84189233fbb2a64c87ca84ec7cb53",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted-card.json",
+      "sha256": "1224a22a0b613d06480b9eb24b5a920053f6c909d92145a2a5df9ad772bc1321",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E04/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/actual_launched_TASK.md",
+      "sha256": "5ea363d6f245e77a8f97ddd40e5a96b6bac392365d402a1bf639d43629a9a3b3",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted_coverage_map.json",
+      "sha256": "126ece141331ba4e819d0ecf844c0f4100c5929a5eaa8fd42016c8954d805f68",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/neutral_targeted_task.md",
+      "sha256": "32062fe8ea995ad4eb4950069b982783d93bfdf953e95acfe3ac6c44c297f5e4",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted-card.json",
+      "sha256": "30e84a4a64f0467c47e2402332ed943ab9f0663aef27a5a8288a53c023009b0c",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E07/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/actual_launched_TASK.md",
+      "sha256": "faedf6f0844b8262a0eeb7bd6208da944dd7a094f1645c4981cc3bd9e7d975a2",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/actual_launched_TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/brief.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_important_checks.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/common_criteria.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted_coverage_map.json",
+      "sha256": "5d9211d40118bbf04e9e441e9a8d0525522cb28d729b739f7f6729427a59145d",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted_coverage_map.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/full_brief_obligations.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/neutral_targeted_task.md",
+      "sha256": "6ace23689e5940e407b97f605e2f735f28f4270a0febe1266753ae34b7a9bbda",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/neutral_targeted_task.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/output_contract.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/source_access.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted-card.json",
+      "sha256": "e7c2eafaaed31c289745a55036f9e3066b9801151698206d1b5cd83fa1f44392",
+      "relative_path": "packets/INDEPENDENT-EMPTY-DELIVERY-1-001/task/E06/targeted-card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/EMPTY_DELIVERY_1_CURRENT_NATIVE_PROJECTION_001.json",
+      "sha256": "d8d82eeffa8077a6f814bda67c4371b42e522c363806782ef647fde39cf91bb9",
+      "relative_path": "phase2/EMPTY_DELIVERY_1_CURRENT_NATIVE_PROJECTION_001.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/EMPTY_DELIVERY_1_OWNER_CURRENTNESS_001.json",
+      "sha256": "1d83feb1d051e7d75ed73ac04b8655c63e9f32d3e976d03b4462e7d1a05b49df",
+      "relative_path": "phase2/EMPTY_DELIVERY_1_OWNER_CURRENTNESS_001.json"
+    }
+  ],
+  "scope": "10 genuineGoalpositive current terminalquiet outputempty actualcontracts; D16AexcludedalreadyTD5/noGoalblocked/intermediateexcluded; source scientificqualityUNASSESSED",
+  "exclusions": [
+    "privatekeys",
+    "rawmodelIO/Goalobjectives",
+    "privateOS/session/database/auth",
+    "rawpubliccapture bodies",
+    "unselectedhistoricalcandidateoutputs"
+  ]
+}

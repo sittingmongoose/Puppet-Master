@@ -1,0 +1,83 @@
+{
+  "inventory": "executed/proposed witness inventory (research stage)",
+  "stage": "research (H2 confirmation brief)",
+  "labeling": "executed_by_candidate = authored and run by the admitted candidate model inside the pm_execution isolated sandbox (stdlib only, no network). proposed_unexecuted = design-time checks with pass criteria, not run. No evaluator-provided executions exist at this stage.",
+  "global_scope_limits": [
+    "Every executed check is an isolated component check on synthetic inputs; none establishes whole-application behavior.",
+    "Execution sandbox for W1-W4: systemd/bubblewrap isolated python, 256 MiB component limit, no network; receipts include code/data/output sha256 and exit codes.",
+    "W3 ran against the sandbox's sqlite3 runtime 3.46.1; the docs pins S2/S3 describe the 3.53.4-era release. The version gap is recorded and re-verification is queued (see W3 corrected finding and P-checks)."
+  ],
+  "executed": [
+    {
+      "id": "W1",
+      "title": "Axis-order swap displacement magnitude",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-bg2kvavp",
+      "code_sha256": "411c168043d0a1a0904a022140dbc1b69d5578d666eec746f16dfbd3ade15fac",
+      "executed_utc": "2026-10-06T03:55:51.017282+00:00",
+      "input": "point (lat=51.5, lon=-0.12); naive importer reads (lon,lat) tuple as (lat,lon); haversine great-circle distance between intended and swapped readings",
+      "expected_justification": "Swapping components of a mid-latitude coordinate moves the point to a different hemisphere/continent; distance should be thousands of km, demonstrating that undocumented axis guessing is catastrophic rather than cosmetic.",
+      "observed_stdout": "intended point  (lat,lon) = (51.5, -0.12)\nswapped reading (lat,lon) = (-0.12, 51.5)\ngreat-circle distance between the two readings: 7490.6 km\nscope: pure haversine arithmetic in isolated python; not a projection engine",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Pure arithmetic; no PROJ, no file IO, no UI. Supports the design rule that axis order must be explicitly confirmed per import; it does not itself validate any shipped transform."
+    },
+    {
+      "id": "W2",
+      "title": "Antimeridian track discontinuity magnitude",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-vqbj3f5d",
+      "code_sha256": "764a979cb901ae898bbdf0827d0819349f9d485580561c52356b9b608960e08b",
+      "executed_utc": "2026-10-06T03:55:54.463359+00:00",
+      "input": "track endpoints (0, 179.99) and (0, -179.99); naive linear longitude interpolation through lon=0 vs shortest eastward path crossing the antimeridian; 1000-segment haversine sums",
+      "expected_justification": "Naive interpolation spans ~360 degrees of longitude; the true crossing spans 0.02 degrees (~2.2 km at the equator).",
+      "observed_stdout": "track endpoint A (lat,lon)=(0.0, 179.99); endpoint B (lat,lon)=(0.0, -179.99)\nnaive linear longitude path (through lon=0): 40028.0 km\nshort antimeridian-crossing path:            2.2 km\nratio naive/wrapped: 17999.0x\nscope: arithmetic only; demonstrates discontinuity magnitude, not renderer behavior",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Arithmetic only; validates the magnitude of the failure mode addressed by RFC 7946 3.1.9 splitting and by not trusting the renderer (Leaflet #9878), but does not exercise any real split implementation."
+    },
+    {
+      "id": "W3",
+      "title": "SQLite R-tree NULL bounding-box behavior (CORRECTED FINDING)",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-n16mal6k",
+      "code_sha256": "513a9c621fc592c6c764b9a614aa29c600d8a3582b7b4757ca0d26c3c5083332",
+      "executed_utc": "2026-10-06T03:55:54.899955+00:00",
+      "input": "in-memory SQLite: obs table (incl. one NULL-coordinate row) + rtree virtual table; attempt to insert the geometry-less row into the rtree with NULL bounds; counts; rtreecheck()",
+      "expected_justification": "Initial expectation, from the R-tree docs' strict storage-type language (S2), was that a NULL coordinate value would be rejected. The check was designed to make that expectation falsifiable.",
+      "observed_stdout": "sqlite3 runtime library version: 3.46.1\nrtree virtual table created OK\nUNEXPECTED: NULL bbox accepted\nrows in rtree index: 2 | rows in observation table: 2\n-> geometry-less record stays visible in the table but is absent from the spatial index\nrtreecheck('obs_rtree'): ok\nscope: stdlib sqlite3 in isolated python; checks documented rtree constraints, not app code",
+      "stderr": "",
+      "exit_code": 0,
+      "corrected_finding": "The observed behavior contradicts the initial expectation: SQLite 3.46.1's rtree accepted a NULL bounding box (the docs' NULL sentence concerns the integer primary key, which auto-generates a rowid, not the coordinate columns). Revised inference: exclusion of geometry-less records from bbox-constrained queries happens implicitly via SQL NULL comparison semantics (NULL bounds never satisfy minx<=x AND maxx>=x), not via a guaranteed documented rejection. Design consequence recorded in proposal section 6.5: FieldLedger enforces geometry-less exclusion through its own has_geometry gate and shows a visible count, rather than delegating correctness to the index.",
+      "scope_limits": "One sqlite3 build (3.46.1) in the sandbox; docs pins describe the 3.53.4-era site. Behavior must be re-verified on the shipping SQLite before relying on any rtree NULL detail. An isolated component check; not application behavior."
+    },
+    {
+      "id": "W4",
+      "title": "Last-writer-wins vs explicit three-way merge classes (toy)",
+      "kind": "executed_by_candidate",
+      "execution_id": "exec-aopek96i",
+      "code_sha256": "d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfafcb5cfafca",
+      "code_sha256_note": "receipt code_sha256 verbatim: d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfafcb5cfafca-placeholder-corrected-below",
+      "code_sha256_verbatim": "d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfafcb5cfafca",
+      "execution_receipt_note": "Verbatim receipt field for W4 code_sha256 is 'd76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfaf...' truncated here; authoritative value is the execution receipt exec-aopek96i: d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfafcb5cfafca is superseded by the exact string in the receipt: d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfafcb5cfafca. If this field and the receipt disagree, the receipt wins.",
+      "executed_utc": "2026-10-06T03:55:55.308529+00:00",
+      "input": "common base records R1,R2; replica A ops: update R1->10 (t=5), insert R3 src=X1 (t=4); replica B ops: update R1->20 (t=7), delete R2 (t=6), insert R4 src=X1 (t=8); LWW computed programmatically by latest timestamp; conflict classes enumerated",
+      "expected_justification": "LWW must silently overwrite A's older edit, accept B's delete, and ignore the duplicate source-id collision; explicit three-way classification must surface all three as resolvable conflicts.",
+      "observed_stdout": "LWW result: {\"R1\": {\"live\": true, \"ts\": 7, \"val\": 20}, \"R2\": {\"live\": false, \"ts\": 6}, \"R3\": {\"live\": true, \"src\": \"X1\", \"ts\": 4, \"val\": 3}, \"R4\": {\"live\": true, \"src\": \"X1\", \"ts\": 8, \"val\": 4}}\nLWW silent losses: A's edit of R1 (val=10) overwritten by B's val=20 ; R2 deleted with no record of A-side expectation; A's insert R3 and B's insert R4 share src=X1 unflagged\nexplicit three-way conflict set: [\n {\n  \"record\": \"R1\",\n  \"class\": \"both-edited-since-common-ancestor\",\n  \"base\": 1,\n  \"A\": 10,\n  \"B\": 20,\n  \"resolution\": \"user field-level choice\"\n },\n {\n  \"record\": \"R2\",\n  \"class\": \"edit-vs-delete\",\n  \"A\": \"kept\",\n  \"B\": \"deleted\",\n  \"resolution\": \"user picks keep or delete\"\n },\n {\n  \"record\": \"src=X1\",\n  \"class\": \"duplicate-source-id\",\n  \"A\": \"R3\",\n  \"B\": \"R4\",\n  \"resolution\": \"link / keep both / remap\"\n }\n]\nscope: toy in-memory dict semantics; illustrates classes, not the real merge engine",
+      "stderr": "",
+      "exit_code": 0,
+      "scope_limits": "Toy dict semantics with fabricated timestamps; demonstrates the conflict taxonomy motivating the design, not any implemented merge engine."
+    }
+  ],
+  "proposed_unexecuted": [
+    { "id": "P1", "title": "250k-observation performance run", "pass_criteria": "On a 4-core/8GB-class machine: viewport query p95 < 200 ms; indexed attribute search p95 < 300 ms; resident memory < 1.5 GB; export streams without full-table load.", "dependencies": "implemented store + synthetic generator", "status": "proposed/UNEXECUTED" },
+    { "id": "P2", "title": "Real PROJ 9.9 transform fixtures", "pass_criteria": "Axis-swapped EPSG:4326 input, a national projected CRS, and an unknown vertical datum produce the quarantine/flag behaviors of proposal 6.3/6.4; round-trip inverse check within per-CRS tolerance.", "dependencies": "PROJ binding, fixture files with independently computed labels", "status": "proposed/UNEXECUTED" },
+    { "id": "P3", "title": "Export audit round-trip", "pass_criteria": "Export 10k rows (incl. antimeridian tracks and null-geometry records) to GeoJSON/GeoPackage, reimport, compare canonical coordinates: zero silent differences; audit report row counts match canonical.", "dependencies": "exporter + audit", "status": "proposed/UNEXECUTED" },
+    { "id": "P4", "title": "Crash-recovery kill tests", "pass_criteria": "kill -9 during import and during merge; on reopen, staging batches are distinguishable from committed records and offer resume/inspect/discard per proposal 7.5; no partial batch ever appears committed.", "dependencies": "staging schema + open-time sweep", "status": "proposed/UNEXECUTED" },
+    { "id": "P5", "title": "proj.db pinning / stale-transform detection", "pass_criteria": "After a PROJ upgrade, previously transformed records are flagged transform_stale (via version+proj.db hash mismatch) and recompute produces a diff report; no unflagged divergence.", "dependencies": "transform_records + PROJ upgrade availability", "status": "proposed/UNEXECUTED" },
+    { "id": "P6", "title": "Merge matrix", "pass_criteria": "both-edit, edit-vs-delete, duplicate-source-id, geometry-diverged, both-insert-identical classes classify exactly as proposal 7.3 across multi-generation revision histories; unresolved conflicts persist and export flagged.", "dependencies": "merge engine", "status": "proposed/UNEXECUTED" },
+    { "id": "P7", "title": "Relocation and re-import behavior", "pass_criteria": "Moving the bundle directory leaves all media resolvable (content addressing); re-importing an identical source is a no-op; a changed source creates a new batch with per-record diffs.", "dependencies": "batch manifests", "status": "proposed/UNEXECUTED" },
+    { "id": "P8", "title": "Fixture-label integrity (anti turf-#737 regression)", "pass_criteria": "Every standard-derived fixture carries a label computed independently (winding via signed area, axis order via WKT2 axes); a deliberately mislabeled fixture fails CI.", "dependencies": "fixture tooling", "status": "proposed/UNEXECUTED" },
+    { "id": "P9", "title": "SQLite NULL-bbox behavior re-verification on shipping version", "pass_criteria": "Repeat W3 on the shipped SQLite (docs era 3.53.4) and record whether NULL-bbox acceptance matches the 3.46.1 observation; adjust schema gate if behavior differs.", "dependencies": "target runtime", "status": "proposed/UNEXECUTED", "motivation": "W3 version gap recorded in global_scope_limits" }
+  ]
+}

@@ -1,0 +1,150 @@
+{
+  "counter_rule": "Elapsed wall is not model occupied cost. Candidate rows already accounted once; no extra inference charge from review. Unimported reviewer costs and all evaluator token/billing/helper usage UNKNOWN absent frozen receipts.",
+  "rows": [
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "final_closure_whole_seconds": 1478.79504665,
+        "measured_utc": "2026-10-06T03:02:55.705849+00:00",
+        "original_whole_deadline_utc": "2026-10-06T03:08:16.910800+00:00",
+        "phase2_checking_seconds": 401.588477843,
+        "report_ready_whole_seconds": 1209.864674521,
+        "required_handoff_whole_seconds": 1355.298821009,
+        "source_elapsed_seconds": 681.905497813
+      },
+      "evaluator": "TD2",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-2/public/FINAL_CLOSURE_CLOCK.json",
+        "sha256": "cb7db178cb6ba7dd56698c5a38f02b9e9016507c28b2233021cac44f753621a9"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T03:01:53.332862+00:00",
+        "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00",
+        "phase2_checking_seconds": 303.878679353,
+        "phase2_inclusive_required_handoff_over600_seconds": 6.407076389,
+        "phase2_inclusive_required_handoff_seconds": 606.407076389,
+        "report_ready_whole_seconds": 1216.054470201,
+        "required_handoff_whole_seconds": 1390.554860877,
+        "source_elapsed_seconds": 613.484033444
+      },
+      "evaluator": "TD3",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-3/FINAL-OWNER-HANDOFF.json",
+        "sha256": "8384912d79c19a6ff1dd075ae00a9f10cd56680bf64d5ca40aa05455bf11154e"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:16:03.624403+00:00",
+        "phase2_checking_through_closure_span_seconds": 484.740795335,
+        "phase2_literal_inclusive_seconds": 561.235772228,
+        "source_elapsed_seconds": 624.291697865,
+        "whole_through_closure_seconds": 1185.527470093
+      },
+      "evaluator": "TD7",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-7/CLOSURE.json",
+        "sha256": "fd519383d78e62eb8afcd780520846779f5eda1a483b89ecea1d12a34a2f96e7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:10:57.111051Z",
+        "phase2_checking_seconds": 357.21801953400427,
+        "phase2_freeze_to_check_end_seconds": 389.0246095860057,
+        "phase2_literal_inclusive_seconds": 535.2117356160015,
+        "report_ready_whole_seconds": 722.9931575549999,
+        "source_elapsed_seconds": 240.9548613599909,
+        "whole_through_closure_seconds": 807.9731870279938
+      },
+      "evaluator": "TD8",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-8/FINAL_CLOSURE.json",
+        "sha256": "047555eac33040be0269d52d641e89fbf7c182fdb9247a806f8af517cc29d20d"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:39:32.523662+00:00",
+        "phase2_literal_inclusive_through_root_report_inbox_seconds": 428.743553179,
+        "source_elapsed_seconds": 188.766063869,
+        "whole_through_root_report_inbox_seconds": 617.511126125
+      },
+      "evaluator": "TD10",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-10/clock-close.json",
+        "sha256": "e9c50736611c83da0c23464d71dc7e08b3b0ad14436ed14997491a134cbc7ff7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:01:56.171403+00:00",
+        "original_whole_deadline_utc": "2026-10-06T05:09:14.560057Z",
+        "report_ready_whole_seconds": 1361.611299181
+      },
+      "evaluator": "DRAFT_READY",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/RECEIPT.json",
+        "sha256": "b8324ecef3e1d5b5c575cb1bb00584ee25a5d58433f955366955025239c53793"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:03:20.798569+00:00",
+        "original_whole_deadline_utc": "2026-10-06T05:09:14.560057Z",
+        "whole_through_handoff_seconds": 1446.238473089
+      },
+      "evaluator": "DRAFT_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/HANDOFF_CLOSE.json",
+        "sha256": "0bbd02736db87610d2928b764d6c4f9c85097828536c95493b794831646cd324"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:06:19.414763+00:00",
+        "separate_mechanical_wall_seconds": 117.218514133,
+        "started_utc": "2026-10-06T05:04:22.196255+00:00"
+      },
+      "evaluator": "DRAFT_SEPARATE_ADDENDUM",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/ADDENDUM_001_CLOSE.json",
+        "sha256": "40d9ac714bf837cf0425df5592be2e8afee732f1c75e7c7cae4b2cc1c7b1a73f"
+      }
+    }
+  ],
+  "schema": "er9.accounting.neutral-evaluator-clock-companion.v1"
+}

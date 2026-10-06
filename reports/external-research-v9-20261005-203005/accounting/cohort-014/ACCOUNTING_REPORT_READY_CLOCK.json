@@ -1,0 +1,17 @@
+{
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "final_required_handoff_elapsed_seconds": "UNKNOWN_NOT_YET_MEASURED",
+  "provider_usage": "UNKNOWN",
+  "report_ready_elapsed_seconds": 142.140717663,
+  "report_ready_monotonic_ns": 93889707711491,
+  "report_ready_utc": "2026-10-06T05:11:10.850810+00:00",
+  "required_outgoing_notices_follow_this_checkpoint": true,
+  "schema": "er9.accounting.report-ready-clock.v1",
+  "scope": "Own bounded accounting work clock; no candidate/new native charge, not model occupied time. Report-ready is a checkpoint, not final handoff.",
+  "start_pin": {
+    "path": "accounting/cohort-014/START.json",
+    "sha256": "11af307f3cbd735b4e8828785f616d33db1459ef1c5d59497c9c0c4a77eee773"
+  },
+  "whole_authorized_seconds": 1800
+}

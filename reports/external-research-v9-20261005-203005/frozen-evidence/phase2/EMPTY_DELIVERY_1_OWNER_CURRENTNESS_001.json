@@ -1,0 +1,201 @@
+{
+  "schema": "er9.empty-role-current-owner-registration-proof.v1",
+  "evaluation_id": "independent-empty-delivery-1",
+  "source_version_ledger_pin": {
+    "path": "LAB_ROOT/ops/dispatcher/EMPTY_ROLE_VERSION_LEDGER_001.json",
+    "sha256": "2d7dba4cb999691ae8b2f23a401522c67b0aa8f67d789212cfb0cf8de03cec3b"
+  },
+  "scientific_slots_source": {
+    "path": "LAB_ROOT/cases/diagnostics/QUEUE.json",
+    "sha256": "7fe3a19d92a9ebf231069006cd03e4e0bbeb1dc7ea126b09207b2408bb72e9cf"
+  },
+  "rows": [
+    {
+      "alias": "E01",
+      "job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V03-A-BUNDLE-R001",
+      "source_slot": "D-V03-A",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V03-A-BUNDLE-R001/registration.json",
+        "sha256": "304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade"
+      },
+      "current_card_sha256": "45feb32171e2146e1607dadbd8c7ad7f9997e90138cd3d5debc971b0a515660d",
+      "current_resource_outbox_pin": {
+        "path": "dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+        "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+      },
+      "source_job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002",
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E02",
+      "job_id": "D-V16-B-control-diagnostic-a001",
+      "pair_id": "D-V16-B",
+      "source_slot": "D-V16-B",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-B-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7"
+      },
+      "current_card_sha256": "886c8a82c273753a6ee88ef282564bbd1cc4ab5f825a747f62fe6f4db5003c46",
+      "current_resource_outbox_pin": null,
+      "source_job_id": null,
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E03",
+      "job_id": "D-V01-A-treatment-diagnostic-a001",
+      "pair_id": "D-V01-A",
+      "source_slot": "D-V01-A",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-A-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f"
+      },
+      "current_card_sha256": "6b16d8655d5f1bceaaddb5364d5d6ebafd702c12b64bf608190e06330f45a935",
+      "current_resource_outbox_pin": null,
+      "source_job_id": null,
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E04",
+      "job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V10-B-BUNDLE-R001",
+      "source_slot": "D-V10-B",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V10-B-BUNDLE-R001/registration.json",
+        "sha256": "2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a"
+      },
+      "current_card_sha256": "c66b09fe88934d00f719343db1a7c258c4b442db290a4738f937cd38da9359bb",
+      "current_resource_outbox_pin": {
+        "path": "dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+        "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+      },
+      "source_job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002",
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E05",
+      "job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V11-A-BUNDLE-R001",
+      "source_slot": "D-V11-A",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-A-BUNDLE-R001/registration.json",
+        "sha256": "b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740"
+      },
+      "current_card_sha256": "89c2f88df7e42eddb7110642cee85eb3bc494b33c146be1f4744687dcf6ce832",
+      "current_resource_outbox_pin": {
+        "path": "dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+        "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+      },
+      "source_job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002",
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E06",
+      "job_id": "D-V16-B-treatment-diagnostic-a001",
+      "pair_id": "D-V16-B",
+      "source_slot": "D-V16-B",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V16-B-diagnostic-preparation-treatment-diagnostic-dec006-r002.json",
+        "sha256": "436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f"
+      },
+      "current_card_sha256": "886c8a82c273753a6ee88ef282564bbd1cc4ab5f825a747f62fe6f4db5003c46",
+      "current_resource_outbox_pin": null,
+      "source_job_id": null,
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E07",
+      "job_id": "D-V08-B-treatment-critic_and_final-a001",
+      "pair_id": "D-V08-B",
+      "source_slot": "D-V08-B",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V08-B-diagnostic-preparation-treatment-critic_and_final-dec006-r002.json",
+        "sha256": "5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3"
+      },
+      "current_card_sha256": "e6b8c10efd463dc5a3aa9b55f904595a4866b36f709f3ae6d0e4ea132a1d40b3",
+      "current_resource_outbox_pin": null,
+      "source_job_id": null,
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E08",
+      "job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "pair_id": "D-V02-B-BUNDLE-R001",
+      "source_slot": "D-V02-B",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-B-BUNDLE-R001/registration.json",
+        "sha256": "4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed"
+      },
+      "current_card_sha256": "9fafad7c74a99f7d866da30d9c5f50989d81fd8c8301acf47e593142b8c2f5ab",
+      "current_resource_outbox_pin": {
+        "path": "dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+        "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+      },
+      "source_job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002",
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E09",
+      "job_id": "D-V01-A-control-diagnostic-a001",
+      "pair_id": "D-V01-A",
+      "source_slot": "D-V01-A",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/seed-recovery/prepared/registration/D-V01-A-diagnostic-preparation-control-diagnostic-dec006-r002.json",
+        "sha256": "072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e"
+      },
+      "current_card_sha256": "6b16d8655d5f1bceaaddb5364d5d6ebafd702c12b64bf608190e06330f45a935",
+      "current_resource_outbox_pin": null,
+      "source_job_id": null,
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    },
+    {
+      "alias": "E10",
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "pair_id": "D-V02-A-BUNDLE-R001",
+      "source_slot": "D-V02-A",
+      "owner_registration_pin": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V02-A-BUNDLE-R001/registration.json",
+        "sha256": "d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee"
+      },
+      "current_card_sha256": "21efe6309dd123591da4596dea97d3c4a632087942e24c64d79a60a99415804c",
+      "current_resource_outbox_pin": {
+        "path": "dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/OUTBOX.json",
+        "sha256": "56907b670facdf7da88bfd3d4e3e39165ddf01545e6f4529b69289d11db7822f"
+      },
+      "source_job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003",
+      "superseded_by": null,
+      "software_successor": null,
+      "resource_successor": null,
+      "currentness_rule": "exact ownerregistration/outbox/card/stage refs byteverified; source slot preserved, not freshcredit fromnative retry count"
+    }
+  ],
+  "no_candidate_body_or_scientific_grade": true,
+  "D16A_control_excluded_already_TD5": true
+}

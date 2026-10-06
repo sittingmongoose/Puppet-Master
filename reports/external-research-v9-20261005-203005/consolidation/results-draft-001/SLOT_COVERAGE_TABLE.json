@@ -1,0 +1,1205 @@
+{
+  "status": "DRAFT_INCOMPLETE_CAMPAIGN",
+  "snapshot_only_not_liveness": true,
+  "counts": {
+    "diagnostics": 32,
+    "fresh_integrated_targets": 12,
+    "locked_confirmation_targets": 4
+  },
+  "diagnostics": [
+    {
+      "slot_id": "D-V01-A",
+      "selected_pair_id_at_snapshot": "D-V01-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V01-B",
+      "selected_pair_id_at_snapshot": "D-V01-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "TD7"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V02-A",
+      "selected_pair_id_at_snapshot": "D-V02-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "TD8"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V02-B",
+      "selected_pair_id_at_snapshot": "D-V02-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "TD9"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V03-A",
+      "selected_pair_id_at_snapshot": "D-V03-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "TD10"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V03-B",
+      "selected_pair_id_at_snapshot": "D-V03-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V04-A",
+      "selected_pair_id_at_snapshot": "D-V04-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V04-B",
+      "selected_pair_id_at_snapshot": "D-V04-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V05-A",
+      "selected_pair_id_at_snapshot": "D-V05-A-LUNA-R1-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 2,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V05-B",
+      "selected_pair_id_at_snapshot": "D-V05-B-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 2,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V06-A",
+      "selected_pair_id_at_snapshot": "D-V06-A-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V06-B",
+      "selected_pair_id_at_snapshot": "D-V06-B-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V07-A",
+      "selected_pair_id_at_snapshot": "D-V07-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V07-B",
+      "selected_pair_id_at_snapshot": "D-V07-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V08-A",
+      "selected_pair_id_at_snapshot": "D-V08-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "D08-old"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V08-B",
+      "selected_pair_id_at_snapshot": "D-V08-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V09-A",
+      "selected_pair_id_at_snapshot": "D-V09-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 2,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V09-B",
+      "selected_pair_id_at_snapshot": "D-V09-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 2,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V10-A",
+      "selected_pair_id_at_snapshot": "D-V10-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": true
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V10-B",
+      "selected_pair_id_at_snapshot": "D-V10-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V11-A",
+      "selected_pair_id_at_snapshot": "D-V11-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V11-B",
+      "selected_pair_id_at_snapshot": "D-V11-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V12-A",
+      "selected_pair_id_at_snapshot": "D-V12-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V12-B",
+      "selected_pair_id_at_snapshot": "D-V12-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V13-A",
+      "selected_pair_id_at_snapshot": "D-V13-A-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V13-B",
+      "selected_pair_id_at_snapshot": "D-V13-B-DEFERRED-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V14-A",
+      "selected_pair_id_at_snapshot": "D-V14-A-LUNA-R1",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "D14A-original",
+        "TD2"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V14-B",
+      "selected_pair_id_at_snapshot": "D-V14-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "D14B-original",
+        "TD4"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V15-A",
+      "selected_pair_id_at_snapshot": "D-V15-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "D15A-original",
+        "TD3"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V15-B",
+      "selected_pair_id_at_snapshot": "D-V15-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "D15B-original",
+        "TD6"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V16-A",
+      "selected_pair_id_at_snapshot": "D-V16-A",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "TD5"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    },
+    {
+      "slot_id": "D-V16-B",
+      "selected_pair_id_at_snapshot": "D-V16-B",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED"
+    }
+  ],
+  "fresh_integrated": [
+    {
+      "slot_id": "I-01",
+      "selected_pair_id_at_snapshot": "I-01-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "I01-old-final",
+        "I01-R-research"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V01",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-02",
+      "selected_pair_id_at_snapshot": "I-02-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [
+        "I02-R-research"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V01",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-03",
+      "selected_pair_id_at_snapshot": "I-03-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 5,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V05",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-04",
+      "selected_pair_id_at_snapshot": "I-04-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 5,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V05",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-05",
+      "selected_pair_id_at_snapshot": "I-05-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 3,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "P2",
+        "P3"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V14",
+      "family": "GPT-6 Luna",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-06",
+      "selected_pair_id_at_snapshot": "I-06-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V14",
+      "family": "GPT-6 Luna",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-07",
+      "selected_pair_id_at_snapshot": "I-07-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 3,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V08",
+      "family": "GPT-6 Luna",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-08",
+      "selected_pair_id_at_snapshot": "I-08-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 3,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [
+        "P4"
+      ],
+      "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V08",
+      "family": "GPT-6 Luna",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-09",
+      "selected_pair_id_at_snapshot": "I-09-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V10",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-10",
+      "selected_pair_id_at_snapshot": "I-10-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V10",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-11",
+      "selected_pair_id_at_snapshot": "I-11-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V16",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    },
+    {
+      "slot_id": "I-12",
+      "selected_pair_id_at_snapshot": "I-12-FRESH-DELIVERY-R001",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 0,
+          "remaining_nonterminal_stages": 3,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "method_id": "V16",
+      "family": "GLM 5.3 Flash",
+      "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+    }
+  ],
+  "confirmation": [
+    {
+      "slot_id": "C-01",
+      "selected_pair_id_at_snapshot": "C-01-RESOURCE-R002-BUNDLE",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "locked_recipe": "A",
+      "holdout_label": "H1",
+      "source_quality": "UNASSESSED",
+      "sealed_brief_contents_read": false
+    },
+    {
+      "slot_id": "C-02",
+      "selected_pair_id_at_snapshot": "C-02-RESOURCE-R002-BUNDLE",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "locked_recipe": "A",
+      "holdout_label": "H2",
+      "source_quality": "UNASSESSED",
+      "sealed_brief_contents_read": false
+    },
+    {
+      "slot_id": "C-03",
+      "selected_pair_id_at_snapshot": "C-03-RESOURCE-R002-BUNDLE",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 1,
+          "verified_operational_complete": "UNKNOWN"
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "locked_recipe": "B",
+      "holdout_label": "H1",
+      "source_quality": "UNASSESSED",
+      "sealed_brief_contents_read": false
+    },
+    {
+      "slot_id": "C-04",
+      "selected_pair_id_at_snapshot": "C-04-RESOURCE-R002-BUNDLE",
+      "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+      "arm_stage_metadata": [
+        {
+          "arm": "control",
+          "native_started_stages": 2,
+          "remaining_nonterminal_stages": 2,
+          "verified_operational_complete": "UNKNOWN"
+        },
+        {
+          "arm": "treatment",
+          "native_started_stages": 1,
+          "remaining_nonterminal_stages": 0,
+          "verified_operational_complete": false
+        }
+      ],
+      "finished_reports_in_readset": [],
+      "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+      "fresh_matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "locked_recipe": "B",
+      "holdout_label": "H2",
+      "source_quality": "UNASSESSED",
+      "sealed_brief_contents_read": false
+    }
+  ]
+}

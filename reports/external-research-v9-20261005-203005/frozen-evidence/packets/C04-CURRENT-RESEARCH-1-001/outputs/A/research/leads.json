@@ -1,0 +1,117 @@
+{
+  "schema": "er9.leads-catalog.v1",
+  "stage": "research",
+  "opportunities": [
+    {
+      "id": "O1",
+      "type": "opportunity",
+      "title": "EXIF-assisted observation capture",
+      "detail": "Prefill coordinates/time from photograph EXIF with explicit user confirmation; provenance tag exif-gps. Never auto-writes geometry.",
+      "status": "deferred (post-v1)",
+      "evidence": "Engineering inference from §5/§8 provenance contract; no external pin needed."
+    },
+    {
+      "id": "O2",
+      "type": "opportunity",
+      "title": "Direct device-to-device exchange",
+      "detail": "Same exchange-card + revision/merge machinery over local Wi-Fi/USB; removes manual bundle hand-off. Conflict UX unchanged.",
+      "status": "deferred; exchange-card format already defined in §6.2 keeps this cheap",
+      "evidence": "Design inference grounded in P2 (Syncthing) precedent."
+    },
+    {
+      "id": "O3",
+      "type": "opportunity",
+      "title": "Hosted exchange service (later)",
+      "detail": "Pull-based sync over the revision log; requires abandoning the v1 no-accounts rule; conflict UI unchanged.",
+      "status": "deferred; explicitly non-goal for v1",
+      "evidence": "Brief lists hosted service as later opportunity."
+    },
+    {
+      "id": "O4",
+      "type": "opportunity",
+      "title": "Broader map sources",
+      "detail": "MBTiles adapter is source-agnostic; each new source is primarily a licensing review (see §9), not new rendering code.",
+      "status": "deferred",
+      "evidence": "[S12] MBTiles container; [S13]/[S14] license contrast."
+    },
+    {
+      "id": "O5",
+      "type": "opportunity",
+      "title": "Assist-only automated classification",
+      "detail": "Photo/audio classification suggestions with mandatory human commit; never auto-edits records.",
+      "status": "deferred",
+      "evidence": "Brief lists as later opportunity."
+    }
+  ],
+  "alternatives": [
+    {
+      "id": "Alt-A",
+      "type": "alternative",
+      "title": "QGIS profile + offline-editing workflow instead of custom app",
+      "detail": "QGIS bundles PROJ/GDAL (P1) and GeoPackage support (S17); less new code, stronger CRS ergonomics. Trade-offs: no built-in two-copy merge with the §6 contract, plugin burden, heavy packaging for tablets.",
+      "status": "viable alternative; recommended as fast first deployment only if the group already runs QGIS",
+      "evidence": "[S1][S2][S17]; proposal §12.2."
+    },
+    {
+      "id": "Alt-B",
+      "type": "alternative",
+      "title": "GeoPackage/SpatiaLite on-disk format instead of plain SQLite + R*Tree",
+      "detail": "Better GIS interop; costs native-lib packaging and change tracking is informative-only (last_change 'should be treated as informative'), so content-hash invalidation still required.",
+      "status": "kept as lead; v1 uses plain SQLite+R*Tree",
+      "evidence": "[S17]; [S8]."
+    }
+  ],
+  "unresolved_dependencies": [
+    {
+      "id": "L1",
+      "type": "unresolved-dependency",
+      "title": "ODbL produced-works boundary for shared bundles",
+      "detail": "Whether group-shared bundles containing an OSM-derived basemap trigger share-alike for anything beyond the basemap file, given observations are the group's own data. Requires license review against the group's sharing practice.",
+      "bounded_fallback": "Natural-Earth-only basemaps (public domain [S14]) where unresolvable.",
+      "evidence": "[S13]."
+    },
+    {
+      "id": "L2",
+      "type": "unresolved-dependency",
+      "title": "PROJ datum-grid availability offline",
+      "detail": "Which datum transformations require grid files and PROJ's exact failure mode when a grid is absent were not pinned in this stage. v1 must detect and fail loudly naming the missing grid.",
+      "bounded_fallback": "Restrict v1 to null transformations (identical datums) + flagged loud failures otherwise.",
+      "evidence": "[S1] (+init datum-shift caveat); [S2] side-car data mention."
+    },
+    {
+      "id": "L3",
+      "type": "lead",
+      "title": "GeoPackage storage option (Alt-B)",
+      "detail": "Preserved: interop path with explicit informative-only change tracking.",
+      "status": "open"
+    },
+    {
+      "id": "L4",
+      "type": "unresolved-dependency",
+      "title": "Vector-MBTiles rendering cost on 4-core/8 GB",
+      "detail": "Dense vector tiles may strain the render budget; raster MBTiles is the bounded fallback.",
+      "evidence": "[S12] allows both formats; no measurement made (U4)."
+    },
+    {
+      "id": "L5",
+      "type": "lead",
+      "title": "Mapeo-style CRDT realtime sync",
+      "detail": "Real-time collaboration later; would need an engine redesign beyond the revision log; kept as a research lead only, not claimed supported.",
+      "status": "open; no primary source pinned in this stage (do not treat as evidence-backed)"
+    },
+    {
+      "id": "L6",
+      "type": "unresolved-dependency",
+      "title": "Unreachable primary pages",
+      "detail": "docs.getodk.org (3 attempts) and operations.osmfoundation.org/policies/tiles/ (3 attempts) returned boundary transport errors (OSError). Substitutions captured: getodk/collect repo metadata + README; OSM copyright 'Additional services' section. Retry both from a permitted network to tighten pins.",
+      "evidence": "sources.json unreachable_hosts."
+    },
+    {
+      "id": "L7",
+      "type": "unresolved-dependency",
+      "title": "First release containing GDAL PR #3311 not byte-verified",
+      "detail": "Timeline inference says 3.3.x (merge 2020-12-22; 3.2.0 released 2020-11-02 [S6a]; 3.3.0 released 2021-05-03 [S6b]); blob presence in v3.3.0 unverified (U6).",
+      "bounded_fallback": "Cite the PR merge commit directly when relying on the mechanism."
+    }
+  ]
+}

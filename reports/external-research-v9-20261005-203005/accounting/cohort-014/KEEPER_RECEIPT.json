@@ -1,0 +1,143 @@
+{
+  "attempts_pin": {
+    "path": "accounting/cohort-014/attempts.safe.json",
+    "sha256": "be41b382007743353ffcdfc5afb5f358c811ad37528c205553116351aac77be3"
+  },
+  "candidate_actual_family_counts": {
+    "GLM": {
+      "attempts": 51,
+      "confirmed_native_starts": 51,
+      "known_tokens": 75907341
+    },
+    "Luna": {
+      "attempts": 129,
+      "confirmed_native_starts": 129,
+      "known_tokens": 480678411
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 18,
+      "confirmed_native_starts": 0,
+      "known_tokens": 0
+    }
+  },
+  "candidate_totals": {
+    "attempts": 198,
+    "known_tokens": 556585752,
+    "native_goal_starts_known": 180,
+    "occupied_seconds_known": 124746.09801902602,
+    "occupied_seconds_unknown_rows": 14,
+    "starts_unknown_rows": 0,
+    "usage_unknown_rows": 7
+  },
+  "capture_interval_utc": {
+    "end": "2026-10-06T05:09:55.006730+00:00",
+    "start": "2026-10-06T05:09:54.432946+00:00"
+  },
+  "continuation_rule": "This is a dated accounting snapshot, not a campaign finish/stop/cap or scientific assessment. UNKNOWN helpers/physical billing/tails remain UNKNOWN. No ACK wait.",
+  "current_changed_sources": [],
+  "neutral_clock_companion_pin": {
+    "path": "accounting/cohort-014/evaluator-clocks.safe.json",
+    "sha256": "52d2ff0ff90304e2834f58ef2a4d8c9b12a21afc8a3afef3b1c54a3a9a76e8aa"
+  },
+  "new_attempt_lineage_metadata_groups": {
+    "clock_fresh_marker": {
+      "actual_attempt_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_families": {
+        "Luna": 10
+      },
+      "confirmed_native_starts": 10,
+      "known_tokens": 41717990,
+      "usage_unknown_rows": 0
+    },
+    "clock_repair_suffix_marker": {
+      "actual_attempt_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+        "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+        "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "actual_families": {
+        "GLM": 6,
+        "Luna": 13
+      },
+      "confirmed_native_starts": 19,
+      "known_tokens": 30621035,
+      "usage_unknown_rows": 3
+    },
+    "other_new_actual_attempt": {
+      "actual_attempt_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-research-a001"
+      ],
+      "actual_families": {
+        "GLM": 1
+      },
+      "confirmed_native_starts": 1,
+      "known_tokens": 2352430,
+      "usage_unknown_rows": 0
+    }
+  },
+  "prior012_non_atomic_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior013_selection_pin": {
+    "path": "accounting/cohort-013/PUBLIC_SELECTION.json",
+    "sha256": "4d5edbcaabcc7f6750d3fbc3cb21e0a6af83e41f7cd3f09e01954d3af4739130"
+  },
+  "root_counter_separate": {
+    "add_to_provider": false,
+    "billing_dollars": "UNKNOWN",
+    "helper_inclusion": "UNKNOWN",
+    "observation_timestamp": "2026-10-06T05:07:54Z",
+    "remaining_tokens": null,
+    "status": "active",
+    "time_used_seconds": 31124,
+    "tokens_used": 22351369,
+    "updated_epoch": 1791263274
+  },
+  "root_journal_verified_pin": {
+    "path": "state/supervisor_goal_counters.jsonl",
+    "sha256": "5f45dc75a4d9f7d46239daf0d1e7df1814f6903cfcbe9173c98d7d94a9459874"
+  },
+  "schema": "er9.accounting.restart-receipt.v1",
+  "snapshot_pin": {
+    "path": "accounting/cohort-014/snapshot.safe.json",
+    "sha256": "414ef94aa5b512d56de2f51380a2024186b1e102c6f1cbad7b609b140b406711"
+  }
+}

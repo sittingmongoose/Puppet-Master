@@ -1,0 +1,312 @@
+{
+  "catalog": "research-stage source catalog",
+  "stage": "research (H2 confirmation brief)",
+  "captured_on": "2026-10-06",
+  "capture_method": "mcp pm_boundary public_https_get (exact HTTP response body bytes)",
+  "capture_identity_note": "Each entry records sha256 of the captured response body, the tool capture_id, capture timestamp, and bytes observed. Where only the first 32768 bytes were delivered, the delivered-range limitation is stated.",
+  "eligibility_note": "All sources are independently selected public primary documentation, standards, licenses, or public issue trackers. No campaign/evaluator/other-arm material was retrieved or used.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://www.rfc-editor.org/rfc/rfc7946.txt",
+      "title": "RFC 7946: The GeoJSON Format",
+      "publisher": "IETF (Butler, Daly, Doyle, Gillies, Hagen, Schaub)",
+      "version_pin": "RFC 7946, August 2016 (Standards Track)",
+      "capture": {
+        "sha256": "cb52f07b9cc6c841750d75850988fe8f32c7b7f0e1f7420f2069d5b5ded124f8",
+        "capture_id": "fde701a50ae143aba6ab53c3a71a644e",
+        "captured_utc": "2026-10-06T03:50:50.989778+00:00",
+        "bytes_observed": 49143,
+        "delivered_note": "first 32768 bytes delivered; covers sections 1 through 9, which include all locators cited"
+      },
+      "exact_locators": [
+        "Section 3.1.1 Position: 'The first two elements are longitude and latitude, or easting and northing, precisely in that order'",
+        "Section 3.1.6 Polygon: right-hand rule; 'parsers SHOULD NOT reject Polygons that do not follow the right-hand rule'",
+        "Section 3.1.9 Antimeridian Cutting: geometry crossing the antimeridian 'SHOULD be represented by cutting it in two'",
+        "Section 3.1.10 Uncertainty and Precision: digit count 'MUST NOT be interpreted as an indication' of uncertainty",
+        "Section 3.2 Feature: unlocated Feature uses 'geometry': null",
+        "Section 4 Coordinate Reference System: WGS 84 only; alternative CRS support removed due to interoperability issues; processors not expected to have CRS databases or network access",
+        "Section 5.2 The Antimeridian: bbox across antimeridian has northeast-corner longitude less than southwest corner",
+        "Section 5.3 The Poles: 'MUST NOT use latitude values greater than 90 or less than -90'"
+      ],
+      "applicability": "Defines the export/interchange coordinate semantics, antimeridian and incomplete-coordinate handling, and winding tolerance policy used in the proposal."
+    },
+    {
+      "id": "S2",
+      "url": "https://www.sqlite.org/rtree.html",
+      "title": "The SQLite R*Tree Module",
+      "publisher": "SQLite.org documentation",
+      "version_pin": "docs site as captured 2026-10-06 (site corresponds to current release era; homepage pin S3 records 3.53.4)",
+      "capture": {
+        "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55",
+        "capture_id": "625a3ca2210c42eaa063008940e6b874",
+        "captured_utc": "2026-10-06T03:50:02.220638+00:00",
+        "bytes_observed": 41813,
+        "delivered_note": "first 32768 bytes delivered; sections 1 through 6.2 covered; section 7.2 rtreecheck() seen in TOC only"
+      },
+      "exact_locators": [
+        "Section 3.1: first column is 64-bit signed integer; coordinate columns stored as 32-bit floating point ('rtree') or 32-bit integers ('rtree_i32'); non-conforming values silently converted",
+        "Section 3.4 Roundoff Error: bounds rounded outward; contained-within queries should expand boxes slightly (0.000012%)",
+        "Section 3.5: writes during an open R-Tree scan fail with SQLITE_LOCKED; recommended pattern is materialize ids then update",
+        "Section 4: 'An R*Tree index does not normally provide the exact answer but merely reduces the set of potential answers'",
+        "Section 4.1: auxiliary columns since SQLite 3.24.0 (2018-06-04)",
+        "Section 7.2 (TOC): integrity check using the rtreecheck() SQL function"
+      ],
+      "applicability": "Basis of the spatial-index design, viewport query policy, bulk-operation pattern, and the index-is-a-filter principle (Precedent A)."
+    },
+    {
+      "id": "S3",
+      "url": "https://www.sqlite.org/index.html",
+      "title": "SQLite Home Page (Latest Release pin)",
+      "publisher": "SQLite.org",
+      "version_pin": "Version 3.53.4 (2026-07-24) as displayed at capture",
+      "capture": {
+        "sha256": "12ea0901282e7b4794061d085e10d172380ad973bbb58d37ffb530f18b93ac41",
+        "capture_id": "3845b997092f40cbb0563d20ecb973ab",
+        "captured_utc": "2026-10-06T03:52:14.224386+00:00",
+        "bytes_observed": 8886,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "'Latest Release' block: 'Version 3.53.4 (2026-07-24)'",
+        "License statement: SQLite source code is public domain"
+      ],
+      "applicability": "Version/license binding for the storage engine (V10 coherent release binding)."
+    },
+    {
+      "id": "S4",
+      "url": "https://www.geopackage.org/",
+      "title": "OGC GeoPackage (official site)",
+      "publisher": "Open Geospatial Consortium",
+      "version_pin": "GeoPackage 1.4.0 adopted (document 12-128r19, linked at docs.ogc.org/is/12-128r19/12-128r19.html)",
+      "capture": {
+        "sha256": "3271e4efd117c16b240cf68be38f58cc0032ca2062db05e39caf5ac89d81102b",
+        "capture_id": "628eb4bfb95a464983ecec1f267f8f9b",
+        "captured_utc": "2026-10-06T03:52:12.480940+00:00",
+        "bytes_observed": 19539,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Highlighted News panel: 'OGC has adopted GeoPackage 1.4.0, a new version of the encoding standard'",
+        "Body: GeoPackage Encoding Standard describes conventions for storing vector features, tile matrix sets, attributes, extensions within an SQLite database",
+        "Body: 'particularly useful on mobile devices ... where there is limited connectivity and bandwidth'",
+        "FAQ: GeoPackage vs MBTiles (projections, multiple tile sets, tile numbering)",
+        "FAQ: media type application/geopackage+sqlite3",
+        "Panel: OGC executable test suite (cite teamengine; github opengeospatial/ets-gpkg10)"
+      ],
+      "applicability": "Version pin and scope facts for the GeoPackage export format and the deferred GeoPackage-native alternative."
+    },
+    {
+      "id": "S5",
+      "url": "https://www.ogc.org/standards/geopackage/",
+      "title": "OGC standards landing page for GeoPackage",
+      "publisher": "Open Geospatial Consortium",
+      "version_pin": "page updated 2026-01-28 per og:updated_time",
+      "capture": {
+        "sha256": "b288bbbaca10c222e4cc9beb91b48e3b9477a83b672025e8fc3ff64f93e4da3a",
+        "capture_id": "f52ff0bf5f4343ebb0adb3ed418e3be8",
+        "captured_utc": "2026-10-06T03:50:04.238473+00:00",
+        "bytes_observed": 524289,
+        "delivered_note": "body truncated at 524288 bytes; delivered text is JS-heavy landing chrome; used as corroboration of the landing page's existence only, version fact taken from S4"
+      },
+      "exact_locators": [
+        "Page title: 'GeoPackage Standard - Open SQLite Format for Geospatial Data'"
+      ],
+      "applicability": "Corroboration only; no load-bearing fact taken from this capture."
+    },
+    {
+      "id": "S6",
+      "url": "https://proj.org/en/stable/index.html",
+      "title": "PROJ documentation (stable)",
+      "publisher": "OSGeo PROJ project",
+      "version_pin": "PROJ 9.9.0 (page title 'PROJ 9.9.0 documentation'; last updated 03 Oct 2026; docs branch 9.9 per GitHub edit link)",
+      "capture": {
+        "sha256": "57265d9c9da475e90e7164d2142708ba5450ad324142fa5cd662e456f2a6b5d0",
+        "capture_id": "b8881636f6004d76bab4d7586bd574f4",
+        "captured_utc": "2026-10-06T03:50:52.186842+00:00",
+        "bytes_observed": 8552,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Page title element: 'PROJ 9.9.0 documentation'",
+        "Body: PROJ transforms coordinates between CRSs; X/MIT open source license"
+      ],
+      "applicability": "Version binding for the transformation engine (V10 binding)."
+    },
+    {
+      "id": "S7",
+      "url": "https://proj.org/en/9.9/faq.html",
+      "title": "PROJ 9.9.0 FAQ",
+      "publisher": "OSGeo PROJ project",
+      "version_pin": "PROJ 9.9 versioned docs (readthedocs-version-slug: 9.9)",
+      "capture": {
+        "sha256": "ce7a78fc02c0e80e9449298883a5994da49e78c36d8bd8a99646f5088549d33d",
+        "capture_id": "8df10331792f4745bbcfe5338e3427ae",
+        "captured_utc": "2026-10-06T03:52:59.363323+00:00",
+        "bytes_observed": 26483,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Section 'Why is the axis ordering in PROJ not consistent?': PROJ respects authority-defined axis order per ISO 19111; 'Before version 6, PROJ did not respect the standard either'; geodetic CRSs typically expect latitude/longitude while internally PROJ expects longitude/latitude; projinfo EPSG:4326 WKT2 shows AXIS latitude ORDER[1] then longitude ORDER[2]",
+        "Section 'What is the best format for describing coordinate reference systems?': WKT or SRIDs preferred; 'Conversions between WKT and PROJ strings will in most cases cause a loss of information, potentially leading to erroneous transformations'; WKT2 preferred",
+        "Section 'Can I transform from abc to xyz?': projinfo -s EPSG:25832 -t EPSG:4093 -o PROJ lists candidate operations with PROJ pipeline strings",
+        "Section 'Why am I getting the error Cannot find proj.db?': proj.db is a resource file; located via PROJ_DATA env var (PROJ_LIB before PROJ 9.1), then built-in resource dir, then current directory"
+      ],
+      "applicability": "Basis of the axis-order contract, WKT2 storage choice, import-time transform validation, and proj.db pinning design (Precedent B)."
+    },
+    {
+      "id": "S8",
+      "url": "https://www.openstreetmap.org/copyright",
+      "title": "OpenStreetMap Copyright and License",
+      "publisher": "OpenStreetMap Foundation",
+      "version_pin": "page as captured 2026-10-06",
+      "capture": {
+        "sha256": "102fbce266900703831065d1c6c4c52b008a588fb53ca8e69d4f88b9717db6b3",
+        "capture_id": "0b0d821dd73a454c9f339587c028b815",
+        "captured_utc": "2026-10-06T03:50:05.253777+00:00",
+        "bytes_observed": 21314,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Section 'OpenStreetMap licensing': data licensed under ODbL by OSMF; free to copy/distribute/transmit/adapt with credit; 'If you alter or build upon our data, you may distribute the result only under the same license'",
+        "Section 'How to credit OpenStreetMap': must display attribution notice and make clear data is available under ODbL",
+        "Section 'Additional services': 'Although OpenStreetMap is open data, we cannot provide a free-of-charge map API or map tiles for third-parties', linking API/Tile/Nominatim usage policies at operations.osmfoundation.org"
+      ],
+      "applicability": "License obligations for any OSM-derived bundled map pack; establishes that public tile servers are not a bulk offline source."
+    },
+    {
+      "id": "S9",
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "title": "OSMF Tile Usage Policy",
+      "publisher": "OpenStreetMap Foundation",
+      "version_pin": "not captured",
+      "capture": {
+        "sha256": null,
+        "capture_id": null,
+        "captured_utc": null,
+        "bytes_observed": 0,
+        "delivered_note": "FETCH FAILED: boundary error OSError on operations.osmfoundation.org (and gaierror on operations.osmf.org variant), 2026-10-06. Recorded as a limitation; policy existence and linkage pinned via S8 'Additional services' section."
+      },
+      "exact_locators": [],
+      "applicability": "Numeric tile-usage limits remain UNCERTAIN; only relevant if the optional OSM-derived pack route is chosen. Natural Earth path (S10) is unaffected."
+    },
+    {
+      "id": "S10",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "title": "Natural Earth - Terms of Use",
+      "publisher": "Natural Earth (NACIS-affiliated project)",
+      "version_pin": "page as captured 2026-10-06",
+      "capture": {
+        "sha256": "7154eaae126fc1588222a0135fc4406d0fa3674b40ac97b52b26a8cd8ab75aeb",
+        "capture_id": "5d3e5911b28044ebb8708b9105f9680b",
+        "captured_utc": "2026-10-06T03:52:13.647539+00:00",
+        "bytes_observed": 38013,
+        "delivered_note": "first 32768 bytes delivered; the full terms-of-use body is within the delivered range"
+      },
+      "exact_locators": [
+        "Terms body: 'All versions of Natural Earth raster + vector map data found on this website are in the public domain'",
+        "Terms body: 'No permission is needed to use Natural Earth. Crediting the authors is unnecessary.'"
+      ],
+      "applicability": "License basis for the selected bundled v1 basemap (public domain), including offline redistribution in project bundles and exports."
+    },
+    {
+      "id": "S11",
+      "url": "https://docs.syncthing.net/users/syncing.html",
+      "title": "Syncthing documentation: Understanding Synchronization",
+      "publisher": "Syncthing project",
+      "version_pin": "docs footer 'Written for v2.1.0' (site version v2.1.0-24-g1f79d9e)",
+      "capture": {
+        "sha256": "f551dc5f08c17ff20fb6807e18a776279d15163a208c14d7974ae1155eedecf5",
+        "capture_id": "d5f7e5c2834545978ebbd01906c31cfe",
+        "captured_utc": "2026-10-06T03:50:52.906511+00:00",
+        "bytes_observed": 17159,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Section 'Conflicting Changes': modified-on-two-devices conflict renames one copy to '<filename>.sync-conflict-<date>-<time>-<modifiedBy>.<ext>'; older mtime loses; ties by device-ID bits; modification-vs-deletion can yield a conflict copy; conflict files propagate between devices",
+        "Section 'Temporary Files': never writes directly to destination; temp copy then move into place; leftover temp files kept up to a day"
+      ],
+      "applicability": "Precedent C: explicit, visible, propagating conflict artifacts and atomic write pattern adopted by the merge/recovery design."
+    },
+    {
+      "id": "S12",
+      "url": "https://api.github.com/repos/Turfjs/turf/issues/737",
+      "title": "Turf.js issue #737: Exterior ring CCW for @turf/rewind",
+      "publisher": "GitHub / Turfjs",
+      "version_pin": "issue created 2017-05-12, closed 2017-05-13 (state_reason completed); milestone 4.3.0",
+      "capture": {
+        "sha256": "5ce0a06053871d078e636f57246bdcc35dda6639dfa8e8aafe957abfc530549f",
+        "capture_id": "5ebd419292004ea2ba96afe402e30766",
+        "captured_utc": "2026-10-06T03:52:57.266453+00:00",
+        "bytes_observed": 7520,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Issue body: cites polygon winding per RFC 7946 section 3.1.6 (exterior CCW, interior CW) with links to rfc7946 and macwright.org winding article"
+      ],
+      "applicability": "Start of the investigated issue-fix-regression chain; shows a real product violating RFC 7946 winding after the RFC existed."
+    },
+    {
+      "id": "S13",
+      "url": "https://github.com/Turfjs/turf/pull/741.diff",
+      "title": "Turf.js PR #741 'Reverse winding @turf/rewind' (unified diff)",
+      "publisher": "GitHub / Turfjs",
+      "version_pin": "merged 2017-05-13T07:43:57Z into milestone 4.3.0",
+      "capture": {
+        "sha256": "25ef8e90e45fb9372fd8ca3d7b657b33161c69c7f6d4889e7fbd7b7719304286",
+        "capture_id": "3ffb5167eea64f158060fb5b4a4b4707",
+        "captured_utc": "2026-10-06T03:52:59.045463+00:00",
+        "bytes_observed": 22106,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "packages/turf-rewind/index.js: outer-ring comparison flipped from 'isClockWise(coords[0]) === reverse' to '!== reverse'; inner-ring comparison inverted correspondingly",
+        "packages/turf-rewind/README.md: 'outer ring clockwise' corrected to 'outer ring counterclockwise'",
+        "packages/turf-rewind/test.js: two regression tests added ('Support Geometry Objects', 'Prevent Input Mutation')",
+        "packages/turf-rewind/test/in/polygon-clockwise.geojson: fixture replaced with genuinely clockwise ring [[0,0],[1,1],[1,0],[0,0]] (previous fixture content visible in diff as removed lines and was counter-clockwise despite the name)",
+        "packages/turf-rewind/test/in/feature-collection.geojson and test/out/*: new/updated expected outputs"
+      ],
+      "applicability": "Fix and regression-test evidence for the chain; concrete proof that a mislabeled fixture made the old suite pass while the library violated the standard."
+    },
+    {
+      "id": "S14",
+      "url": "https://api.github.com/search/issues?q=repo%3ALeaflet%2FLeaflet+antimeridian+in%3Atitle&per_page=5",
+      "title": "GitHub issue search: Leaflet antimeridian (search API response)",
+      "publisher": "GitHub API",
+      "version_pin": "search performed 2026-10-06",
+      "capture": {
+        "sha256": "91d5d96900b338e04375b44badff595b1566b5fb8fe27add7184d638b74fa69c",
+        "capture_id": "e571f93c37364cbca62b41e6404d3907",
+        "captured_utc": "2026-10-06T03:50:52.632301+00:00",
+        "bytes_observed": 17345,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "items[0]: Leaflet issue #9878 'Map flashes white when panning near antimeridian', state open, created 2025-09-12",
+        "items[2]: PR #5164 'Fix for wrapping inside the antimeridian (issue #5149)', merged_at null (not merged), milestone 1.0.3"
+      ],
+      "applicability": "Evidence that renderer-level antimeridian handling is historically unreliable and currently incomplete; motivates FieldLedger-side splitting of dateline-crossing tracks."
+    },
+    {
+      "id": "S15",
+      "url": "https://leafletjs.com/",
+      "title": "Leaflet - an open-source JavaScript library for interactive maps (homepage)",
+      "publisher": "Leaflet project (Volodymyr Agafonkin and contributors)",
+      "version_pin": "page pins leaflet@1.9.4 from unpkg with SRI integrity attributes; announcement of Leaflet 2.0.0-alpha.1 (2025)",
+      "capture": {
+        "sha256": "bfdb62bfcdf94bdf115fff7f08867fe60a0df1759778220e8bcc1b47e1f9eedf",
+        "capture_id": "627630597f71426f87ff0b8f6a91960f",
+        "captured_utc": "2026-10-06T03:52:14.398471+00:00",
+        "bytes_observed": 14114,
+        "delivered_note": "complete"
+      },
+      "exact_locators": [
+        "Head: link/script tags 'leaflet@1.9.4' with integrity hashes",
+        "Features > Interaction: 'Keyboard navigation'",
+        "Features > Customization: 'Custom map projections (with EPSG:3857/4326/3395 out of the box)'",
+        "Announcement banner: 'August 16, 2025 - Leaflet 2.0.0-alpha.1 has been released!'"
+      ],
+      "applicability": "Version binding and capability claims for the v1 renderer; 2.0 alpha noted as a reason to pin 1.9.4."
+    }
+  ]
+}

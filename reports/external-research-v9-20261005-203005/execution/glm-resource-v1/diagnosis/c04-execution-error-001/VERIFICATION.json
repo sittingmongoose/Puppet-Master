@@ -1,0 +1,16 @@
+{
+  "schema": "er9.c04-control-projection-verification.v1",
+  "created_utc": "2026-10-06T04:34:37.053763+00:00",
+  "status": "PASS_METADATA_ONLY",
+  "request_freeze_native_and_runtime_pins_match": true,
+  "selected_runtime_source_pin_count": 17,
+  "error_exact_known_neutral_source_pattern": true,
+  "original_action_total_guard_clock_identity": true,
+  "late_rpc_reply_after_cleanup_pause_request": true,
+  "late_read_active_then_direct_final_paused_same_goal_session": true,
+  "resource_and_recursive_release_quiet": true,
+  "protocol_parse_errors": 0,
+  "native_model_goal_calls": 0,
+  "no_artifact_or_candidate_body_reads": true,
+  "all_original_or_live_files_unchanged": true
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "TD10_FINISHED_REPORT_PUBLIC_001",
+  "authority": "root grants exact currentscientificreport/assessment/neutralclock aftersource+P2closure; selectedonlyno linkedprivateverification",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/REPORT.md",
+      "sha256": "e22652e5193ef115827aafdcb476d7b106528861525fe24564cdfbf9b4b1c4ce",
+      "relative_path": "assessments/independent-targeted-10/REPORT.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/assessment.json",
+      "sha256": "eb43ec34d0ec102c9e4deacb38d6478855feaaa71de39ca54dd251e1acfc64c5",
+      "relative_path": "assessments/independent-targeted-10/assessment.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/clock-close.json",
+      "sha256": "e9c50736611c83da0c23464d71dc7e08b3b0ad14436ed14997491a134cbc7ff7",
+      "relative_path": "assessments/independent-targeted-10/clock-close.json"
+    }
+  ],
+  "exclusions": [
+    "rawprivateproofs/sourcecapture bodies",
+    "privatekeys/rawnativeModelIO",
+    "unselectedreferenced files"
+  ],
+  "original_closure_lock_sha256": "ce56b11bcd0c3d82a1d6a87121eda850a3b01031581a623c0c12995b8d034f5e",
+  "no_regrade_or_clock_reset": true
+}

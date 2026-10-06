@@ -1,0 +1,80 @@
+{
+  "scope": "Root-supplied current metadata; owner reported, not new independent runtime/source checks",
+  "messages_asof": "2026-10-06 before this draft freeze",
+  "publication": {
+    "latest_owner_verified_commit": "68d7d44a2fbca94ba14665cc8e5e414339f16a86",
+    "cohort": "023",
+    "previous_commit": "022934ef1a6340e2be75113953026dc5535815020a7",
+    "previous_safe_raw_file_counts": [
+      2292,
+      7
+    ],
+    "counts_apply_to_previous_commit_only": true
+  },
+  "supervisor_counter": {
+    "observed_utc": "2026-10-06T04:25:00Z",
+    "tokens_used": 19923288,
+    "time_used_seconds": 28544,
+    "status": "ACTIVE",
+    "remaining_tokens": null,
+    "helper_inclusion": "UNKNOWN",
+    "owner_reported_journal_path": "state/supervisor_goal_counters.jsonl",
+    "owner_reported_journal_sha256": "19cc9348d2b80a574fc033eba25cb28bd58342961d5e8cef2bfac2fd83fcdb51",
+    "journal_not_read": true,
+    "not_additive_to_candidate_provider_counters": true
+  },
+  "new_clock_metadata": {
+    "root_cursor_asof": "2026-10-06T04:39:26Z",
+    "root_reported_native_journal_starts": 155,
+    "root_reported_active_G_L": [
+      2,
+      3
+    ],
+    "first_G_clock_activation": {
+      "job": "I02 fresh treatment CLOCK-R001",
+      "path": "ops/dispatcher/GLM_CLOCK_FIRST_ACTIVATION_001.json",
+      "sha256": "da28752832ad0bb075cbe0ad2c653f99e8a0c81165bdc2b7e08d06315bf89eb0",
+      "meaning": "Owner reports positive genuine native activation/model Max/action-clock+STAGE_CLOCK/configTask before Goal/kernel outer proof; no completion or source credit"
+    },
+    "L_first_three": "Owner reports shared unscored fresh prerequisites on Luna1.5; no scored quality-completion credit",
+    "L_first_activation_proof_hash": "Owner supplied prefix0b4c0a only; full pin UNEXPOSED here, prefix is not a citation; clock/config/kernel proof described as before inference",
+    "G_7pairs_46descriptors": "Owner says selected old unentered substitutions; not seven new logical targets and descriptor selection alone not fresh-start proof",
+    "I01_C04": "Remain original whole runtime bindings; research tools1.3/core1.2, final1.4 label distinct; no clock reclassification"
+  },
+  "deferred_clock002": {
+    "target_pairs": 5,
+    "target_stages": 12,
+    "source_stages": 5,
+    "total_registered_stages": 17,
+    "registration_hash_prefix_owner_reported": "69ca47",
+    "full_registration_hash": "UNEXPOSED; prefix not a citation",
+    "D13B": "Both old entered Goal1 FAILED remain excluded"
+  },
+  "new_L_retest": {
+    "decision": "DEC012",
+    "slots": [
+      "I-05",
+      "I-06",
+      "I-07",
+      "I-08"
+    ],
+    "method_ids": [
+      "V14",
+      "V14",
+      "V08",
+      "V08"
+    ],
+    "root_reported_derived_roles": 22,
+    "critical_path_seconds_per_arm": 2700,
+    "all_role_source_closure": "Root reports ready; no new source/body grading by consolidator",
+    "not_new_hypotheses_or_extra_targets": true
+  },
+  "limitations": [
+    "No live-state conclusion",
+    "No source checking/grade changes",
+    "No candidate bodies/native IO/auth read",
+    "No sealed holdout brief bodies read",
+    "Provider dollars and helper billing UNKNOWN",
+    "Owner current metadata remains distinct from earlier accounting/workload cutoffs"
+  ]
+}

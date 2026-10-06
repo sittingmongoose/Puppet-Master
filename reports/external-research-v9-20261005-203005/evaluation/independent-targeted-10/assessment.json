@@ -1,0 +1,46 @@
+{
+  "end_clock_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/clock-close.json",
+  "evaluation_id": "independent-targeted-10",
+  "final_pin_manifest_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/closure-lock.json",
+  "full_pipeline_credit": false,
+  "outcomes": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "case_outcome": "INCOMPLETE",
+      "full_pipeline_quality": "UNASSESSED",
+      "native_goal_final_status": "paused",
+      "native_outcome": "HOLD",
+      "required_final_delivery": "INCOMPLETE",
+      "scientific_outcome": "UNASSESSED"
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "case_outcome": "INCOMPLETE",
+      "full_pipeline_quality": "UNASSESSED",
+      "native_goal_final_status": "paused",
+      "native_outcome": "HOLD",
+      "required_final_delivery": "INCOMPLETE",
+      "scientific_outcome": "UNASSESSED"
+    }
+  ],
+  "pair_id": "D-V03-A-BUNDLE-R001",
+  "phase1_immutable_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/phase1-judgment.json",
+  "phase1_immutable_sha256": "960805bf117f2aa87a26a4fb7b12b389e2350080e34df746c6bab9e65ad68f2c",
+  "phase2_inclusive_seconds_at_report": 369.631928262,
+  "phase2_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/phase2-provenance.json",
+  "phase2_sha256": "2d9f20a0c26a01ef4f1fbe57c28c3eb82639ab02ed15025202ab50b940c98f7c",
+  "physical_model_provider": "UNKNOWN",
+  "protocol_version": "ER9-independent-output-v1",
+  "report_handoff_time_remains_inside_inclusive_budgets": true,
+  "report_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/REPORT.md",
+  "reservation_time_is_not_start": true,
+  "schema": "er9.independent-assessment.v1",
+  "scientific_equivalence_claim": false,
+  "source_clock_reset": false,
+  "source_defect_count": "NOT_INTERPRETABLE_AS_ZERO_ERROR; no assessable substantive scientific output",
+  "source_phase_seconds": 188.766063869,
+  "whole_seconds_at_report": 558.399501208,
+  "winner": null
+}

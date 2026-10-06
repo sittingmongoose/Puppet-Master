@@ -1,0 +1,13 @@
+{
+ "rtree_compiled_in": true,
+ "sqlite_version": "3.46.1",
+ "insert_250k_s": 2.737,
+ "rtree_viewport_ms": 0.65,
+ "rtree_viewport_hits": 196,
+ "fullscan_ms": 16.23,
+ "fullscan_hits": 196,
+ "plan": [
+  "SCAN r VIRTUAL TABLE INDEX 2:D0B1D2B3",
+  "SEARCH o USING INTEGER PRIMARY KEY (rowid=?)"
+ ]
+}

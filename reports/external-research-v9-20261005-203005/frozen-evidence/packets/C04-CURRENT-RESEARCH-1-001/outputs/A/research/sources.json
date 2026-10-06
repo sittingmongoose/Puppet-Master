@@ -1,0 +1,248 @@
+{
+  "schema": "er9.source-catalog.v1",
+  "stage": "research",
+  "captured_by": "candidate",
+  "capture_tool": "mcp__pm_boundary__public_https_get",
+  "capture_note": "All captures are exact HTTP response-body bytes as delivered by the admitted boundary tool on 2026-10-06 UTC. sha256 = SHA-256 of the full captured body. 'delivery' entries give the byte range transmitted in-conversation; larger captures remain on disk at capture_path for follow-up byte reads.",
+  "unreachable_hosts": [
+    {
+      "url": "https://docs.getodk.org/collect-saved-forms/",
+      "attempts": 3,
+      "error": "boundary failure: OSError",
+      "substitution": "ODK facts cited from captured getodk/collect repo metadata and README instead (S15a, S15b)."
+    },
+    {
+      "url": "https://operations.osmfoundation.org/policies/tiles/",
+      "attempts": 3,
+      "error": "boundary failure: OSError",
+      "substitution": "Tile-policy point cited from captured OSM copyright page 'Additional services' section (S13)."
+    }
+  ],
+  "sources": [
+    {
+      "id": "S1",
+      "title": "PROJ docs: Version 4 to 6 API Migration (PROJ 9.9.0 stable docs)",
+      "url": "https://proj.org/development/migration.html",
+      "resolved_url": "https://proj.org/en/stable/development/migration.html",
+      "pin": "proj_create_crs_to_crs + proj_normalize_for_visualization code example; 'Backward incompatibilities' section",
+      "exact_locator": "Sections #code-example and #backward-incompatibilities. Captured text includes: 'proj_normalize_for_visualization() ensures that the coordinate order expected and returned by proj_trans() will be longitude, latitude for geographic CRS, and easting, northing for projected CRS'; 'the use of PROJ strings to describe CRS is strongly discouraged'; '+init=epsg:XXXX ... no datum shift term (towgs84, nadgrids, geoidgrids) will be added' under pj_transform.",
+      "capture_identity": { "sha256": "0f598f12807e35fd3347244365c344091647f1890cc401699df326786c02baab", "capture_id": "e287d56e94414fd293f6f0a34da735fb", "bytes": 58449, "status": 200, "captured_utc": "2026-10-06T04:05:32Z", "delivery_bytes": 32768, "capture_path": "public_captures/0f598f12807e35fd3347244365c344091647f1890cc401699df326786c02baab.body" },
+      "version_observed": "PROJ 9.9.0 documentation (stable)",
+      "applicability": "Grounds the axis-order/normalization contract (proposal §5.2, §5.4) and 'prefer authority codes over PROJ strings'."
+    },
+    {
+      "id": "S2",
+      "title": "GDAL RFC 73: Integration of PROJ6 for WKT2, late binding capabilities, time-support and unified CRS database",
+      "url": "https://gdal.org/development/rfc/rfc73_proj6_wkt2_srsbarn.html",
+      "resolved_url": "https://gdal.org/en/stable/development/rfc/rfc73_proj6_wkt2_srsbarn.html",
+      "pin": "Status table 'Implemented in GDAL 3.0'; §Motivation, §WGS84 Pivot, §CSV database",
+      "exact_locator": "Status: 'Implemented in GDAL 3.0'. §WGS84 Pivot: pivot through WGS84 'can introduce error of about two meters'. §CSV database: SQLite-based proj.db enables 'area-aware validation'.",
+      "capture_identity": { "sha256": "e6ac2762f70fc27565c109f643bfe0c0986f3024d3f28c600d0c5ac44cd33ee0", "capture_id": "95613d865eeb481eb7e0f3cb17b6d157", "bytes": 59480, "status": 200, "captured_utc": "2026-10-06T04:06:08Z", "delivery_bytes": 32768, "capture_path": "public_captures/e6ac2762f70fc27565c109f643bfe0c0986f3024d3f28c600d0c5ac44cd33ee0.body" },
+      "version_observed": "GDAL stable docs, RFC last modified 2019-05-02",
+      "applicability": "Engine-change history behind real failures #906/#1974; motivates transformation versioning + revalidation (proposal §5.4)."
+    },
+    {
+      "id": "S3",
+      "title": "GDAL issue #906: ogr2ogr with MySQL 8 (Wrong Axis Order) — and related axis-order issue search results",
+      "url": "https://github.com/OSGeo/gdal/issues/906",
+      "resolved_url": "https://api.github.com/search/issues?q=repo%3AOSGeo%2Fgdal+%22axis+order%22+in%3Atitle&sort=comments&order=desc&per_page=10 (API capture containing item #906, #1974-context PRs #3311/#11384/#11380, #12897)",
+      "pin": "Item #906: GDAL 2.3.1, MySQL 8 rejects 'POINT (136.88 35.17)' with SRID 4326: 'Latitude 136.881499 is out of range'; milestone 2.3.2; created 2018-09-07; assignee rouault",
+      "exact_locator": "JSON item number 906, field 'body' paragraphs '[Wrong Axis Order]' and the mysql ERROR 3617 quote; also item 12897 (fguuid:jgd2024.bl unrecognized SRS causing wrong axis order interpretation, created 2025-08-09, closed 2025-08-26).",
+      "capture_identity": { "sha256": "9ca3f743bcb045ca4c0bdbfc468e44a9a73598d5ead8e0024191e9a772bd0fc5", "capture_id": "986300f001804289ad452d49936d4dad", "bytes": 40070, "status": 200, "captured_utc": "2026-10-06T04:06:08Z", "delivery_bytes": 32768, "capture_path": "public_captures/9ca3f743bcb045ca4c0bdbfc468e44a9a73598d5ead8e0024191e9a772bd0fc5.body" },
+      "version_observed": "GitHub REST v3 search results as of capture",
+      "applicability": "Real user-facing wrong-axis-order failure (proposal §3.2); #12897 evidences unknown-identifier handling (§5.3)."
+    },
+    {
+      "id": "S4",
+      "title": "GDAL issue #1974: GDAL 3.0.1 Transforming pixel,line position to latlon produces invalid results",
+      "url": "https://github.com/OSGeo/gdal/issues/1974",
+      "pin": "GDAL 3.0.1 returns 'inf inf inf' where GDAL 2.2.3 returned '24.8871 60.3400'; CRS EPSG:3879 with AXIS[\"Northing\",NORTH],AXIS[\"Easting\",EAST]; created 2019-11-01, closed by rouault",
+      "exact_locator": "JSON fields: number=1974, title, body 'On older versions of GDAL (tested on 2.2.3)... On GDAL 3.0.1, the below code produces: inf inf inf', projection WKT containing EPSG:3879 authority.",
+      "capture_identity": { "sha256": "37e25e2ba8fd04ba6a3b6ca4ef6c0452cdd405f0577a29941b52398acde18fef", "capture_id": "e4eed1023f794704b73d27232d16fc58", "bytes": 5969, "status": 200, "captured_utc": "2026-10-06T04:06:38Z", "delivery_bytes": 5969, "capture_path": "public_captures/37e25e2ba8fd04ba6a3b6ca4ef6c0452cdd405f0577a29941b52398acde18fef.body" },
+      "version_observed": "GitHub REST v3 issue object as of capture",
+      "applicability": "Primary failure in the investigated chain (proposal §3.1); boundary/axis case motivating §5.5.1."
+    },
+    {
+      "id": "S5",
+      "title": "GDAL PR #3311 files: axis-order-aware GeoJSON export fix + regression test",
+      "url": "https://github.com/OSGeo/gdal/pull/3311",
+      "resolved_url": "https://api.github.com/repos/OSGeo/gdal/pulls/3311/files?per_page=20",
+      "pin": "Merged 2020-12-22; head commit 7ff336af4184f53ecd9b0bf60f717f5e66764a77; files: gdal/ogr/ogrsf_frmts/geojson/ogrgeojsonwriter.cpp (+17) and autotest/ogr/ogr_geojson.py (+47)",
+      "exact_locator": "Test hunk '@@ -3107,3 +3107,50' defining test_ogr_geojson_export_geometry_axis_order with six cases (EPSG:4326 authority order POINT (49 2) -> [2.0, 49.0]; OAMS_TRADITIONAL_GIS_ORDER; OGC:CRS84; EPSG:32631; EPSG:2393 northing/easting; no CRS). Writer hunk '@@ -1502,9 +1502,26' adds swap when 'poSRS->EPSGTreatsAsLatLong() || poSRS->EPSGTreatsAsNorthingEasting()' and mapping == {1,2}. PR body (from S3 capture, item 3311): 'this fix has the potential to break use cases of GDAL < 3 that still worked up to now. Sigh...'",
+      "capture_identity": { "sha256": "739637a1f9dc37747405931b3b98b0d3c85d568f7d2b4ba3512bccd210b15602", "capture_id": "479ae57aeb2043c1b2cdf91390d31507", "bytes": 4483, "status": 200, "captured_utc": "2026-10-06T04:06:39Z", "delivery_bytes": 4483, "capture_path": "public_captures/739637a1f9dc37747405931b3b98b0d3c85d568f7d2b4ba3512bccd210b15602.body" },
+      "version_observed": "PR state as of capture (closed/merged 2020-12-22T17:58:16Z)",
+      "applicability": "Required issue->fix->regression-test chain; port target for proposed check P2 (proposal §11)."
+    },
+    {
+      "id": "S6a",
+      "title": "GDAL release v3.2.0 (API object)",
+      "url": "https://api.github.com/repos/OSGeo/gdal/releases/tags/v3.2.0",
+      "pin": "published_at 2020-11-02T09:35:16Z",
+      "exact_locator": "JSON field published_at / created_at 2020-11-02.",
+      "capture_identity": { "sha256": "aac8de63f2753e18cccd3dbd1e268e9079e712aa4200d976b3cc8363b6f76958", "capture_id": "a6500d3c924347138f8409865b43c064", "bytes": 11565, "status": 200, "captured_utc": "2026-10-06T04:06:39Z", "delivery_bytes": 11565, "capture_path": "public_captures/aac8de63f2753e18cccd3dbd1e268e9079e712aa4200d976b3cc8363b6f76958.body" },
+      "version_observed": "v3.2.0",
+      "applicability": "Fix #3311 postdates 3.2.0 -> not in 3.2.0 (proposal §3.5)."
+    },
+    {
+      "id": "S6b",
+      "title": "GDAL release v3.3.0 (API object)",
+      "url": "https://api.github.com/repos/OSGeo/gdal/releases/tags/v3.3.0",
+      "pin": "published_at 2021-05-03T12:37:48Z",
+      "exact_locator": "JSON field published_at / created_at 2021-05-03.",
+      "capture_identity": { "sha256": "7b92f435ee6dd4097761983704d27ac8e7da009d799feea5cea5db19c8eaa606", "capture_id": "970906aedf434513a97bd06d3a4404ef", "bytes": 9994, "status": 200, "captured_utc": "2026-10-06T04:08:11Z", "delivery_bytes": 9994, "capture_path": "public_captures/7b92f435ee6dd4097761983704d27ac8e7da009d799feea5cea5db19c8eaa606.body" },
+      "version_observed": "v3.3.0",
+      "applicability": "First major release after the #3311 merge; first-shipped release is an inference from these dates (U6)."
+    },
+    {
+      "id": "S6c",
+      "title": "GDAL latest release v3.13.3 (API object)",
+      "url": "https://api.github.com/repos/OSGeo/gdal/releases/latest",
+      "pin": "tag v3.13.3, published 2026-08-18T09:39:09Z, 'Bug fix release'",
+      "exact_locator": "JSON fields tag_name, published_at, body.",
+      "capture_identity": { "sha256": "445a3edb39193a658473f124c5fd0566f416dd1e28a15c445e6fa82ade472f26", "capture_id": "dfbc0fedfed4438992facdaa0d4418ba", "bytes": 19992, "status": 200, "captured_utc": "2026-10-06T04:06:09Z", "delivery_bytes": 19992, "capture_path": "public_captures/445a3edb39193a658473f124c5fd0566f416dd1e28a15c445e6fa82ade472f26.body" },
+      "version_observed": "v3.13.3",
+      "applicability": "Current-stable anchor for release/branch applicability statement (§3.5)."
+    },
+    {
+      "id": "S7",
+      "title": "SQLite documentation: Write-Ahead Logging",
+      "url": "https://www.sqlite.org/wal.html",
+      "pin": "§1 Overview (advantages/disadvantages lists); §2.1 Checkpointing; §4 The WAL File",
+      "exact_locator": "'WAL does not work over a network filesystem'; 'A COMMIT occurs when a special record indicating a commit is appended to the WAL'; 'The WAL file is part of the persistent state of the database and should be kept with the database if the database is copied or moved'; WAL handles large transactions since version 3.11.0 (2016-02-15).",
+      "capture_identity": { "sha256": "f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e", "capture_id": "72b2102385f74298a6fd2c5b6528a722", "bytes": 42143, "status": 200, "captured_utc": "2026-10-06T04:05:37Z", "delivery_bytes": 32768, "capture_path": "public_captures/f3467b530b883d4a00574fe1a898b3d121ed72764ae28cf66941080ac0badb9e.body" },
+      "version_observed": "SQLite current docs (page last modified 2026-09-11 per Last-Modified header)",
+      "applicability": "Storage-engine choice and bundle-copy rules (proposal §7.2)."
+    },
+    {
+      "id": "S8",
+      "title": "SQLite documentation: The SQLite R*Tree Module",
+      "url": "https://www.sqlite.org/rtree.html",
+      "pin": "§3.4 Roundoff Error; §3.5 Reading And Writing At The Same Time; §4.1 Auxiliary Columns; §7.2 rtreecheck()",
+      "exact_locator": "'the lower-bound coordinates are rounded down and the upper-bound coordinates are rounded up'; contained-within queries 'should expand their contained-within query boxes slightly (by 0.000012%)'; 32-bit float storage for default rtree; SQLITE_LOCKED caveat for mid-query writes; auxiliary columns since 3.24.0.",
+      "capture_identity": { "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55", "capture_id": "61598542e80c4e23ba26b4ed8c4d8d2b", "bytes": 41813, "status": 200, "captured_utc": "2026-10-06T04:05:37Z", "delivery_bytes": 32768, "capture_path": "public_captures/de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55.body" },
+      "version_observed": "SQLite current docs (last modified 2026-09-11)",
+      "applicability": "Spatial index design + boundary-window rule (§5.5.1, §7.3); executed witness W2."
+    },
+    {
+      "id": "S9",
+      "title": "SQLite documentation: Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "§1 Introduction; §3.11 Deleting The Rollback Journal; §4.2 Hot Rollback Journals; §9 Things That Can Go Wrong",
+      "exact_locator": "'transactions appear to be atomic even if the transaction is interrupted by an operating system crash or power failure'; 'If a power failure or system crash occurs prior to this point, then recovery processes ... make it appear as if no changes were ever made'; §9 enumerates broken fsync/partial deletion hazards.",
+      "capture_identity": { "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1", "capture_id": "4094d08b6a56487fb30221cc2c45d975", "bytes": 77968, "status": 200, "captured_utc": "2026-10-06T04:08:12Z", "delivery_bytes": 32768, "capture_path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body" },
+      "version_observed": "SQLite current docs (last modified 2026-09-11)",
+      "applicability": "Recovery contract for interrupted save/import/merge (§6.4); W4 consistency evidence."
+    },
+    {
+      "id": "S10",
+      "title": "SQLite documentation: Internal Versus External BLOBs",
+      "url": "https://www.sqlite.org/intern-v-extern-blob.html",
+      "pin": "Rules of thumb list; 3.19.0 update note",
+      "exact_locator": "'For BLOBs smaller than 100KB, reads are faster when the BLOBs are stored directly in the database file. For BLOBs larger than 100KB, reads from a separate file are faster.'; 'A database page size of 8192 or 16384 gives the best performance for large BLOB I/O.'; 'Double-check these figures on target hardware before committing to a particular design.'",
+      "capture_identity": { "sha256": "7977fddc668200aca255f1c164dfc76c1df0855a30d266d3a26df5cebc74fcb0", "capture_id": "3c8ecf67950746f09dfd4599ec190857", "bytes": 7492, "status": 200, "captured_utc": "2026-10-06T04:06:09Z", "delivery_bytes": 7492, "capture_path": "public_captures/7977fddc668200aca255f1c164dfc76c1df0855a30d266d3a26df5cebc74fcb0.body" },
+      "version_observed": "Page last updated 2022-04-18 (per footer)",
+      "applicability": "Photo storage outside the DB (§7.2); benchmark caveat honored by P8."
+    },
+    {
+      "id": "S11",
+      "title": "Syncthing documentation: Understanding Synchronization",
+      "url": "https://docs.syncthing.net/users/syncing.html",
+      "pin": "§Conflicting Changes; §Temporary Files; footer 'Version: v2.1.0-24-g1f79d9e' / 'Written for v2.1.0'",
+      "exact_locator": "'one of the files will be renamed to <filename>.sync-conflict-<date>-<time>-<modifiedBy>.<ext>'; 'the file with the older modification time will be marked as the conflicting file'; deletion-vs-modification 'the file is renamed to a conflict copy'; conflict copies 'are treated as normal files ... so they are propagated between devices'; 'Syncthing never writes directly to a destination file'.",
+      "capture_identity": { "sha256": "f551dc5f08c17ff20fb6807e18a776279d15163a208c14d7974ae1155eedecf5", "capture_id": "8c52edd5fa6a49449d9aecafd87d5fa2", "bytes": 17159, "status": 200, "captured_utc": "2026-10-06T04:05:52Z", "delivery_bytes": 17159, "capture_path": "public_captures/f551dc5f08c17ff20fb6807e18a776279d15163a208c14d7974ae1155eedecf5.body" },
+      "version_observed": "Syncthing v2.1.0 docs",
+      "applicability": "Merge/conflict discipline precedent (P2 in §2, §6.2, §6.3, §6.5)."
+    },
+    {
+      "id": "S12",
+      "title": "MBTiles 1.3 specification",
+      "url": "https://github.com/mapbox/mbtiles-spec/blob/master/1.3/spec.md",
+      "resolved_url": "https://raw.githubusercontent.com/mapbox/mbtiles-spec/master/1.3/spec.md",
+      "pin": "§Metadata (required rows name/format; SHOULD bounds/center/minzoom/maxzoom; MAY attribution); §Tiles (TMS global-mercator; Y-axis flip note)",
+      "exact_locator": "'The database MUST contain a table or view named metadata'; 'MUST contain these two rows: name, format'; attribution under 'MAY contain'; 'in the TMS tiling scheme, the Y axis is reversed from the \"XYZ\" coordinate system ... 1256 is 2^11 - 1 - 791'.",
+      "capture_identity": { "sha256": "e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d", "capture_id": "41bd8687590541f396a509cf6f85548c", "bytes": 15807, "status": 200, "captured_utc": "2026-10-06T04:06:39Z", "delivery_bytes": 15807, "capture_path": "public_captures/e85a7d169bbaa7c18da5a9f1cb3a565280dc0bbc891f4ffc0c059cc2b5e5889d.body" },
+      "version_observed": "MBTiles 1.3",
+      "applicability": "Offline basemap container + attribution carriage (§7.1, §7.4, §9)."
+    },
+    {
+      "id": "S13",
+      "title": "OpenStreetMap: Copyright and License page",
+      "url": "https://www.openstreetmap.org/copyright",
+      "pin": "§OpenStreetMap licensing; §How to credit OpenStreetMap; §Additional services",
+      "exact_locator": "'licensed under the Open Data Commons Open Database License (ODbL)'; 'If you alter or build upon our data, you may distribute the result only under the same license'; 'you are required to ... Provide credit ... and Make clear that the data is available under the Open Database License'; 'Although OpenStreetMap is open data, we cannot provide a free-of-charge map API or map tiles for third-parties.'",
+      "capture_identity": { "sha256": "ffd4d280fa465a436ee71f03bd4b7dbde0143da24da8144969900edc65724a8c", "capture_id": "52d19a7d0f04486d983af6fbc2a5a992", "bytes": 21314, "status": 200, "captured_utc": "2026-10-06T04:05:52Z", "delivery_bytes": 21314, "capture_path": "public_captures/ffd4d280fa465a436ee71f03bd4b7dbde0143da24da8144969900edc65724a8c.body" },
+      "version_observed": "osm.org page as served 2026-10-06",
+      "applicability": "Licensing section (§9); ODbL share-alike + attribution; no-free-tiles confirmation."
+    },
+    {
+      "id": "S14",
+      "title": "Natural Earth: Terms of Use",
+      "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+      "pin": "Public-domain statement block",
+      "exact_locator": "'All versions of Natural Earth raster + vector map data found on this website are in the public domain.'; 'No permission is needed to use Natural Earth. Crediting the authors is unnecessary.'",
+      "capture_identity": { "sha256": "1a9f40e7036d7ad96fc137aa73a13287bad674d8bf69f49d2f2b199c0a659dfb", "capture_id": "47635fa6352d461e84b48c5a51be9746", "bytes": 38013, "status": 200, "captured_utc": "2026-10-06T04:05:53Z", "delivery_bytes": 32768, "capture_path": "public_captures/1a9f40e7036d7ad96fc137aa73a13287bad674d8bf69f49d2f2b199c0a659dfb.body" },
+      "version_observed": "Site as served 2026-10-06",
+      "applicability": "Permissive default basemap choice (§9) and bounded fallback for U1."
+    },
+    {
+      "id": "S15a",
+      "title": "ODK Collect repository metadata (API object)",
+      "url": "https://api.github.com/repos/getodk/collect",
+      "pin": "description; homepage docs.getodk.org/collect-intro; pushed_at 2026-10-01; license NOASSERTION (Apache-2.0 badge in README)",
+      "exact_locator": "JSON fields: description 'ODK Collect is an Android app for filling out forms. It's been used to collect billions of data points in challenging environments around the world.'; pushed_at 2026-10-01T09:15:50Z; default_branch master.",
+      "capture_identity": { "sha256": "ab4ab5ed29bec8bedc9c241c471c42570b48978730636470d47d914b34226ae1", "capture_id": "d42f2526e0914811853bcd727c9cb89b", "bytes": 6311, "status": 200, "captured_utc": "2026-10-06T04:10:02Z", "delivery_bytes": 6311, "capture_path": "public_captures/ab4ab5ed29bec8bedc9c241c471c42570b48978730636470d47d914b34226ae1.body" },
+      "version_observed": "Repo state at capture",
+      "applicability": "Field-capture precedent (P5 in §2)."
+    },
+    {
+      "id": "S15b",
+      "title": "ODK Collect README (master)",
+      "url": "https://raw.githubusercontent.com/getodk/collect/master/README.md",
+      "pin": "Intro paragraph; §Release cycle; §Testing a form without a server (adb push path); §Using APIs for local development (Mapbox token vs OSM/USGS/Carto)",
+      "exact_locator": "'designed to be used in resource-constrained environments with challenges such as unreliable connectivity or power infrastructure'; 'adb push my_form.xml /sdcard/Android/data/org.odk.collect.android/files/projects/{project-id}/forms'; 'The \"OpenStreetMap\", \"USGS\" and \"Carto\" sources are also rendered with MapLibre but need no access token'; Apache-2.0 license badge; 'the master branch reflects ongoing development and is not production-ready'.",
+      "capture_identity": { "sha256": "aba7c11f1d05a9e7e82da1fdeb856718b70f6f0a5a7a107c8ea32634c7402af7", "capture_id": "88a66eddbe744329a0f722987b67ce9d", "bytes": 19560, "status": 200, "captured_utc": "2026-10-06T04:10:40Z", "delivery_bytes": 19560, "capture_path": "public_captures/aba7c11f1d05a9e7e82da1fdeb856718b70f6f0a5a7a107c8ea32634c7402af7.body" },
+      "version_observed": "master at capture (pushed 2026-10-01 per S15a)",
+      "applicability": "Project-scoped on-device layout lesson; basemap account/token dependency split (§9)."
+    },
+    {
+      "id": "S16",
+      "title": "Leaflet antimeridian evidence set (API search results)",
+      "url": "https://api.github.com/search/issues?q=repo%3ALeaflet%2FLeaflet+antimeridian+in%3Atitle&per_page=5",
+      "pin": "#1005 (2012-09-18, 'LatLngBounds ... does the exact wrong thing' across the 180th meridian, closed completed); #5164 fix attempt (merged_at null); #5903 'Added Leaflet.Antimeridian to the plugin list' (merged 2017-11-09); #9878 (2025-09-12, open, 'Map flashes white when panning near antimeridian')",
+      "exact_locator": "JSON items in order 9878, 5903, 5164, 1005 with fields state, merged_at, milestone '1.0.3' on 5164, body quotes as pinned.",
+      "capture_identity": { "sha256": "91d5d96900b338e04375b44badff595b1566b5fb8fe27add7184d638b74fa69c", "capture_id": "eb2d66f75698437393220be05ba24636", "bytes": 17345, "status": 200, "captured_utc": "2026-10-06T04:07:39Z", "delivery_bytes": 17345, "capture_path": "public_captures/91d5d96900b338e04375b44badff595b1566b5fb8fe27add7184d638b74fa69c.body" },
+      "version_observed": "Search results as of capture (issue #9878 open)",
+      "applicability": "Renderer dateline limits; Fieldbook owns antimeridian handling (§5.5.2)."
+    },
+    {
+      "id": "S17",
+      "title": "OGC GeoPackage Encoding Standard (geopackage.org spec, OGC 12-128r19, version 1.4 draft)",
+      "url": "https://www.geopackage.org/spec/",
+      "pin": "gpkg_contents.last_change discussion + Requirement 15 + Requirement 16; bounding-box caveat",
+      "exact_locator": "Capture byte range 250000-256000 (read_file probe on capture_path below): 'The last_change SHOULD contain the timestamp of when the content in the referenced table was last updated, in ISO8601 format. Note that since it is not practical to ensure that this value is maintained properly in all cases, this value should be treated as informative.'; 'Requirement 15: Values of the gpkg_contents table last_change column SHALL be in a DATETIME format as per Requirement 5.'; 'Applications may use this bounding box as the extents of a default view but there are no requirements that this bounding box be exact'.",
+      "capture_identity": { "sha256": "97037ee88b22f9a8899e4e35b67b036a6379064c551f07b5edc17d60c25be2e0", "capture_id": "4ac300593b09461891be7a7f12a0cc0b", "bytes": 524288, "of_total_bytes": 1496441, "status": 200, "captured_utc": "2026-10-06T04:08:12Z", "delivery_bytes": 32768, "capture_path": "public_captures/97037ee88b22f9a8899e4e35b67b036a6379064c551f07b5edc17d60c25be2e0.body", "note": "Body truncated by tool at 512 KiB; pinned text verified inside captured range via byte-offset reads." },
+      "version_observed": "OGC 12-128r19 v1.4 (review draft page as served)",
+      "applicability": "Cache invalidation must not trust foreign last_change (§7.3); Alt-B interop note (§12.2)."
+    },
+    {
+      "id": "S18",
+      "title": "PROJ 9.9.0 release notes (API object)",
+      "url": "https://api.github.com/repos/OSGeo/PROJ/releases/latest",
+      "pin": "tag 9.9.0, published 2026-09-15; 'Database: update to EPSG v13.102'; 'add proj_crs_is_dynamic(), and cs2cs: warn when source/destination CRS is dynamic, but no epoch is provided (#4792)'",
+      "exact_locator": "JSON body sections '#### Database' and '#### API'.",
+      "capture_identity": { "sha256": "45627861f8ffb30327ad138895668b4f81a90a18cdded88eb8c950887d6caa48", "capture_id": "cfa60c37877e429783992713cbeac9bf", "bytes": 9657, "status": 200, "captured_utc": "2026-10-06T04:07:39Z", "delivery_bytes": 9657, "capture_path": "public_captures/45627861f8ffb30327ad138895668b4f81a90a18cdded88eb8c950887d6caa48.body" },
+      "version_observed": "PROJ 9.9.0",
+      "applicability": "Current engine anchor; dynamic-CRS epoch refusal rule (§5.3)."
+    },
+    {
+      "id": "S19",
+      "title": "GDAL RFC list (index page)",
+      "url": "https://gdal.org/development/rfc/",
+      "pin": "Entries: 'RFC 81: Support for coordinate epochs in geospatial formats'; 'RFC 99: Geometry coordinate precision'; 'RFC 49: Curve geometries'; 'RFC 61: Support for measured geometries'",
+      "exact_locator": "Sidebar/main list entries with those titles (anchors rfc81_coordinate_epoch.html, rfc99_geometry_coordinate_precision.html).",
+      "capture_identity": { "sha256": "2e28c861b4dc9aefb904606aa33abb10dcdc84fde010b539024674048495065c", "capture_id": "e3679c6270d94fd480c469a6220a6535", "bytes": 40542, "status": 200, "captured_utc": "2026-10-06T04:05:52Z", "delivery_bytes": 32768, "capture_path": "public_captures/2e28c861b4dc9aefb904606aa33abb10dcdc84fde010b539024674048495065c.body" },
+      "version_observed": "GDAL stable docs",
+      "applicability": "Support-boundary references for deferred geometry types and epoch/precision concerns (§5.3)."
+    }
+  ]
+}

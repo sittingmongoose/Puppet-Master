@@ -1,0 +1,89 @@
+{
+  "schema": "er9.report-consolidation.draft-positive-selection.v1",
+  "owner": "/root/diagnostic_eval",
+  "status": "DRAFT_INCOMPLETE_CAMPAIGN",
+  "created_utc": "2026-10-06T05:01:56.171403+00:00",
+  "positive_only": true,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/README.md",
+      "sha256": "169e17d33ec0a6d5407e5e3d31a7181ff80f70de1f72f9572349e29201fb0db5",
+      "bytes": 1094,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/DRAFT_RESULTS.md",
+      "sha256": "fd888c05f3566f2867ac741b10cf4ec775019daf4ef326fad6988744c6ce1a9e",
+      "bytes": 44097,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/RESULTS_TABLE.json",
+      "sha256": "7dbd61eaa20c774fa58f00aeb0d0e2a3baedeea8a7112b23760356ab99d85c6f",
+      "bytes": 30336,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/HYPOTHESES_TABLE.json",
+      "sha256": "84fffec11c6bc96d4d41e38222236daf39c3c7b69fadd6fb3339036cb960ce42",
+      "bytes": 12051,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/SLOT_COVERAGE_TABLE.json",
+      "sha256": "2dd2b36ae298e4c798ec41c13d599a42fecb1915e686299da82535aa471932b7",
+      "bytes": 41669,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/EVIDENCE_INDEX.json",
+      "sha256": "f7a245642c45a2e5d6a405a0fd28bead3a5311ad2d2afdb16bfac30f8c88f0db",
+      "bytes": 27464,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/ROOT_METADATA_NOTES.json",
+      "sha256": "1d836995b25ae25d53d90872ecf6ad33922eb62e71ab1ebf64a07467e687df3f",
+      "bytes": 3248,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/VERIFICATION.json",
+      "sha256": "e739904418a5822a4c17b246803493e47eafd2c590e5e9f9a27a0691fb9c98e1",
+      "bytes": 648,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/RECEIPT.json",
+      "sha256": "b8324ecef3e1d5b5c575cb1bb00584ee25a5d58433f955366955025239c53793",
+      "bytes": 1127,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/SCOPE.json",
+      "sha256": "d5a1307e14f4633159bf4da1298648f0e7130f6ab16888a7cf6a4ab5769fb20c",
+      "bytes": 1405,
+      "role": "authored bounded draft report/table/neutral exact provenance metadata"
+    }
+  ],
+  "scientific_distribution": [
+    "/root",
+    "/root/publisher",
+    "user-facing published research draft"
+  ],
+  "follow_nested_references": false,
+  "excluded": [
+    "build script",
+    "scratch projections",
+    "candidate artifacts/bodies",
+    "native conversations/IO/auth",
+    "raw source captures",
+    "private alias or operational keys",
+    "all unlisted files"
+  ],
+  "all_original_source_judgments_unchanged": true,
+  "all16_32_12_4_slots_represented": true,
+  "new_scientific_grade_or_goal_completion_claim": false,
+  "safe_artifact_count": 10,
+  "Git_publishing_owner": "/root/publisher only"
+}

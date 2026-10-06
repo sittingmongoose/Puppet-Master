@@ -1,0 +1,34 @@
+{
+  "schema": "er9.c04-control-diagnosis-manifest.v1",
+  "created_utc": "2026-10-06T04:36:00.213969+00:00",
+  "projection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/DIAGNOSIS.json",
+    "sha256": "5d9b72937494b7fd3dc8754fd0af6bd7181e56aaad313360ff538790cd3cce60"
+  },
+  "direct_native_goal_status": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/NATIVE_GOAL_STATUS.json",
+    "sha256": "fb7ce1c1c64ba587889ba4786613545dca586cf26137519a57aabb3c68fe5536"
+  },
+  "projector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/project.py",
+    "sha256": "1a9cdff1a701aba1b0d56dcbc47da6bfb6f142a70538b1c59c0478cb051e50a8"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/VERIFICATION.json",
+    "sha256": "619d40a425204367ab5fc9c87f8a25a2ad8eebefaf9a83875a6ad5dde675063a"
+  },
+  "request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+    "sha256": "8661d48f6effca672e95e0d4bdd833977ffab18f94a8baa53501d490bbc4a865"
+  },
+  "transition_request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/CONFIRMATION_C04_STAGE_TRANSITION_001.json",
+    "sha256": "3f2790c2e6f44cbb6bb22a7d7a55db38cf44ee2bb2aeeb1d1f65a6a9428b42f8"
+  },
+  "source_policy": "Only exact saved administrative/typed RPC/Goal/model/tool/resource fields; raw underlying sources remain private evidence pointers, not publication selection.",
+  "native_status_definition": "Direct saved paused target; router/quality/physical process timestamps are separate.",
+  "observer_timing_definition": "Estimated wallclock projection is labeled estimated; exact absolute action stop remains original monotonic administrative receipt field.",
+  "no_original_live_edits": true,
+  "no_candidate_or_science_selection": true,
+  "native_goal_model_calls": 0
+}

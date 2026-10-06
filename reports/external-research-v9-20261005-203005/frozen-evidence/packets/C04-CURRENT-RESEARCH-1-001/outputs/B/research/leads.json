@@ -1,0 +1,115 @@
+{
+  "catalog": "unresolved/optional leads (research stage)",
+  "stage": "research (H2 confirmation brief)",
+  "note": "Leads are preserved opportunities, alternatives, defects-to-watch, and open verification items. None is a v1 minimum requirement; each names the condition under which it becomes worth pursuing.",
+  "leads": [
+    {
+      "id": "L-01",
+      "title": "Region map-pack exchange as a feature",
+      "category": "opportunity",
+      "description": "Survey teams exchange bounded GeoPackage tile/feature packs per region; FieldLedger imports the file, records its license and attribution into the project, and surfaces obligations in exports.",
+      "basis": "GeoPackage as portable SQLite container (S4); ODbL attribution/share-alike obligations (S8); Natural Earth public-domain base (S10).",
+      "condition": "Useful as soon as a second survey region or team appears.",
+      "status": "preserved, not v1 minimum"
+    },
+    {
+      "id": "L-02",
+      "title": "CRDT-based real-time synchronization",
+      "category": "opportunity/alternative",
+      "description": "An Automerge-family CRDT could subsume parts of the explicit merge design for near-real-time collaboration between machines.",
+      "basis": "Deferred mechanism family (V14 breadth lane); not investigated to source depth this stage.",
+      "condition": "Only if teams adopt shared network storage; explicit-conflict merge remains the offline-exchange contract regardless.",
+      "status": "deferred; no automatic-perfect-merge promise exists in this proposal"
+    },
+    {
+      "id": "L-03",
+      "title": "Vector tiles via PMTiles/MapLibre for basemap quality",
+      "category": "alternative",
+      "description": "Replace raster XYZ mappack with a single-file vector tile archive and a vector renderer when basemap detail or size becomes limiting.",
+      "basis": "Deferred rendering family; Leaflet raster path pinned for v1 (S15).",
+      "condition": "If mappack size or visual quality blocks field use.",
+      "status": "deferred"
+    },
+    {
+      "id": "L-04",
+      "title": "EXIF/GNSS provenance extraction from photographs",
+      "category": "opportunity",
+      "description": "Read capture timestamp/GPS from photo EXIF to pre-fill observation time provenance and offer geometry suggestion (never silent adoption).",
+      "basis": "Time-provenance field design in proposal 6.3; EXIF primary spec not yet pinned.",
+      "condition": "After v1 photo attachment flow stabilizes; requires pinning the EXIF specification as a new source.",
+      "status": "deferred; source pin required before design commitment"
+    },
+    {
+      "id": "L-05",
+      "title": "Polygon digitizing and Multi* geometry support",
+      "category": "opportunity",
+      "description": "Extend geometry support beyond Point/LineString; brings winding normalization and RFC 7946 3.1.6/3.1.9 semantics fully into scope.",
+      "basis": "RFC 7946 sections pinned (S1); winding failure precedent investigated via turf chain (S12/S13).",
+      "condition": "When survey protocols require area observations.",
+      "status": "deferred; boundary behavior already designed, needs fixtures"
+    },
+    {
+      "id": "L-06",
+      "title": "PROJ resource-file bundling budget",
+      "category": "open verification",
+      "description": "Measure on-disk size and cold-start cost of bundling PROJ resource files (proj.db et al.) locally under PROJ_DATA.",
+      "basis": "PROJ FAQ proj.db/PROJ_DATA facts (S7).",
+      "condition": "Before first offline installer build.",
+      "status": "open; UNCERTAIN flagged in proposal section 14"
+    },
+    {
+      "id": "L-07",
+      "title": "Re-verify current-state @turf/rewind (post-2017)",
+      "category": "open verification",
+      "description": "Confirm the winding fix remains in current turf releases and whether further winding-related fixes landed; the investigated chain is pinned to 2017 milestone 4.3.0.",
+      "basis": "S12/S13 pins; current-tree re-verification not performed this stage.",
+      "condition": "Before adopting any turf module for geometry predicates.",
+      "status": "open"
+    },
+    {
+      "id": "L-08",
+      "title": "Fuzzy spatial/temporal duplicate finder",
+      "category": "opportunity",
+      "description": "Flag (never auto-merge) observations within X meters and Y seconds of each other across batches, with review UI.",
+      "basis": "Duplicate-handling design in proposal 7.3; thresholds need ecological input.",
+      "condition": "After merge workflow stabilizes; requires user-configurable thresholds.",
+      "status": "deferred"
+    },
+    {
+      "id": "L-09",
+      "title": "Accessibility conformance pass",
+      "category": "open verification",
+      "description": "Contrast, focus order, screen-reader labels for table/map/conflict screens; keyboard-only completion of the full session script.",
+      "basis": "Leaflet advertises keyboard navigation (S15); the rest is FieldLedger UI under design.",
+      "condition": "First UI milestone.",
+      "status": "open"
+    },
+    {
+      "id": "L-10",
+      "title": "Watch: Leaflet antimeridian issues (#9878 open)",
+      "category": "defect-watch",
+      "description": "Leaflet #9878 (map flashes white near antimeridian, open as of 2025) and the unmerged #5164 lineage show dateline handling in the renderer is incomplete; FieldLedger splits tracks itself, but tracker should watch upstream for regressions affecting the raster path.",
+      "basis": "S14 capture.",
+      "condition": "Continuous while Leaflet 1.9.x is pinned; revisit at any 2.0 upgrade (2.0.0-alpha.1 announced 2025, S15).",
+      "status": "watch"
+    },
+    {
+      "id": "L-11",
+      "title": "Capture OSMF Tile Usage Policy when reachable",
+      "category": "open verification",
+      "description": "The tile policy page could not be fetched from this environment (S9 failure recorded); numeric limits for any OSM-derived pack production remain unpinned.",
+      "basis": "S8 pins the no-free-tiles statement and policy links; S9 records the fetch failure.",
+      "condition": "Only if the optional OSM-derived mappack route is exercised.",
+      "status": "open; UNCERTAIN flagged in proposal section 14"
+    },
+    {
+      "id": "L-12",
+      "title": "FTS5 full-text search over notes",
+      "category": "opportunity",
+      "description": "SQLite FTS5 index over observation notes for fast offline search; must be kept in transactional scope with the revision log.",
+      "basis": "SQLite platform capability; FTS docs not pinned this stage.",
+      "condition": "If attribute search proves insufficient at 250k rows.",
+      "status": "deferred; source pin required"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "er9.additive-source-descriptor-clock-clarification.v1",
+  "observed_utc": "2026-10-06T04:55:00.298218+00:00",
+  "original_dispatch_sha256": "5957d5258b1d688fb9b3707943db6c21f3cb0de85817684c3bc68d071d3209e0",
+  "root_latest_authority": "reservation3353 at04:41:16 is prep/admission not actualsourceSTART; no sourcebodyread before originalactual04:53:23",
+  "actual_original_source_start_pin": {
+    "path": "LAB_ROOT/evaluation/independent-confirmation-C04-research-1/source_clock.json",
+    "sha256": "84e316e544b180413775a3e798ecba8847268ea027c92ff330f006d7098f3915"
+  },
+  "actual_original_source_start_utc": "2026-10-06T04:53:23Z",
+  "actual_original_source_start_monotonic_ns": "UNKNOWN_NOT_CAPTURED; do not invent precision",
+  "prepacket_preparation_elapsed_seconds_by_UTC": 727,
+  "source_seconds": 1200,
+  "source_deadline_utc": "2026-10-06T05:13:23Z",
+  "whole_seconds_including_after_start_handoffs": 1800,
+  "whole_deadline_utc": "2026-10-06T05:23:23Z",
+  "phase2_inclusive_seconds": 600,
+  "phase2_priority": "within originalwhole deadline/no reset",
+  "old_dispatch_reservation_budget_clause": "SUPERSEDED_AS_NAMESPACE_ERROR; originalbytes retained, not actualphysical/source clock",
+  "semantic_body_view_not_rewritten": true,
+  "actual_scoring_applicability_unchanged": {
+    "H2_obligations": 10,
+    "common_dimensions": 8,
+    "A_B_12_important5_target3": "NOT_DECLARED_NOT_IMPORTED"
+  },
+  "no_grade_sourcebyte_or_native_mutation": true
+}

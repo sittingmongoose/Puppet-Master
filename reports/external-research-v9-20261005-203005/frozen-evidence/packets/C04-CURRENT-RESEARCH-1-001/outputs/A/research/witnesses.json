@@ -1,0 +1,110 @@
+{
+  "schema": "er9.witness-inventory.v1",
+  "stage": "research",
+  "labels_used": {
+    "executed-by-candidate": "Run by this candidate via mcp__pm_execution__python_execute in the admitted isolation; receipts (code sha256, data sha256, stdout sha256, exit code, resource limits) are reproduced verbatim from the tool receipts. Receipts record that the code ran; they do not prove semantic correctness of a design.",
+    "proposed-unexecuted": "Designed in this stage, not run. No receipt exists. Listed so the next stage can execute them."
+  },
+  "isolation_limits_observed": { "wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "stream_bytes_each": 32768, "network": "new empty namespace" },
+  "executed": [
+    {
+      "id": "W1",
+      "kind": "executed-by-candidate",
+      "title": "Axis-order swap trap (Web Mercator arithmetic)",
+      "execution_id": "exec-ej3rw_46",
+      "date_utc": "2026-10-06T04:09:56Z",
+      "code_sha256": "094847a6d0e2ca06b1f6aa3887efaf6032d2b4741613091287458961ee5d1ffe",
+      "code_summary": "Pure-stdlib EPSG:3857 forward/inverse (R=6378137) + haversine; round-trips (lon 13.405, lat 52.520); then feeds the same two values with latitude in the longitude slot; reports resulting position and great-circle displacement from the intended point.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "Correct order round-trips exactly; swapped order yields a valid-looking but wrong coordinate pair thousands of km away (no exception raised).",
+      "observed_stdout": {
+        "correct_roundtrip_lonlat": [13.405, 52.52],
+        "mercator_xy_m": [1492237.774, 6894699.801],
+        "swapped_result_lonlat": [52.52, 13.405],
+        "axis_swap_error_km": 5556.1
+      },
+      "stdout_sha256": "31e6e9f0e147ec3641b414049c4adf54e9c52c667d955690234d3a10ad865e71",
+      "exit_code": 0,
+      "stderr": "",
+      "scope_limits": "Arithmetic-only demonstration of the axis-order failure class (proposal §3, §5.2); does not exercise PROJ/GDAL or any Fieldbook code; spherical Web Mercator formulas, not library transforms; sandbox resource limits above apply."
+    },
+    {
+      "id": "W2",
+      "kind": "executed-by-candidate",
+      "title": "SQLite R*Tree viewport query over 250k synthetic observations (component check)",
+      "execution_id": "exec-wcj7u11_",
+      "date_utc": "2026-10-06T04:10:01Z",
+      "code_sha256": "5c3cb2d34b153d721450f7998fd227c9ac568c0e0981f583fde3edba3025f3c1",
+      "code_summary": "In-memory SQLite; verifies RTREE compile option; creates records table + rtree virtual table; inserts 250k seeded-uniform points; runs a ~2 km viewport query via rtree join vs unindexed full scan; compares hit counts; EXPLAIN QUERY PLAN captured.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "R*Tree available; plan uses the virtual-table index; indexed query much faster than full scan; identical hit counts (no rows lost).",
+      "observed_stdout": {
+        "rtree_compiled_in": true,
+        "sqlite_version": "3.46.1",
+        "insert_250k_s": 2.737,
+        "rtree_viewport_ms": 0.65,
+        "rtree_viewport_hits": 196,
+        "fullscan_ms": 16.23,
+        "fullscan_hits": 196,
+        "plan": ["SCAN r VIRTUAL TABLE INDEX 2:D0B1D2B3", "SEARCH o USING INTEGER PRIMARY KEY (rowid=?)"]
+      },
+      "stdout_sha256": "623e39ac7789493ad5058a4b292726090387aa24ff3a86360293f67649b1230e",
+      "exit_code": 0,
+      "stderr": "",
+      "scope_limits": "Synthetic uniform points in one 1-degree box; in-memory DB; sandbox CPU/256MB memory — NOT a benchmark of the 4-core/8 GB reference machine and NOT whole-app evidence; supports only the feasibility of the §7.3 indexing design (proposal §7.5, U5)."
+    },
+    {
+      "id": "W3",
+      "kind": "executed-by-candidate",
+      "title": "Three-way field merge semantics (toy function)",
+      "execution_id": "exec-f4dz4zwa",
+      "date_utc": "2026-10-06T04:10:02Z",
+      "code_sha256": "83667a87b29cbf8521c75d48fa7db0bc7de2c0d4b8e57222ae0df00165afbacf",
+      "code_summary": "Per-field 3-way merge(base, mine, theirs): identical edits collapse; disjoint edits auto-merge; same-field divergence and delete-vs-edit produce conflict records carrying base/mine/theirs values.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "Case1 disjoint edits merge with empty conflict list; Case2 note edited on both sides -> conflict {base:'birch', mine:'v1 text', theirs:'v2 text'}; Case3 theirs deleted note while mine edited -> conflict with theirs:null.",
+      "observed_stdout": {
+        "case1_disjoint_edits": "merged {lat:52.521, lon:13.4, name:'Plot A (renamed)', note:'birch, moss'}, conflicts []",
+        "case2_same_field_edited_both": "merged keeps base for untouched fields, conflicts [{field:'note', base:'birch', mine:'v1 text', theirs:'v2 text'}]",
+        "case3_theirs_deleted_mine_edited": "conflicts [{field:'note', base:'birch', mine:'v1 text', theirs:null}]"
+      },
+      "stdout_sha256": "951790243cbb1a26c8f3c8955892c9e44b2aa5f876035b0ce2aa4dbd5a5945a3",
+      "exit_code": 0,
+      "stderr": "",
+      "scope_limits": "20-line reference function on flat JSON fields; demonstrates the conflict-surfacing semantics chosen in §6.2, not the product merger (no revision chains, no geometry, no identifier map)."
+    },
+    {
+      "id": "W4",
+      "kind": "executed-by-candidate",
+      "title": "Commit boundary: uncommitted work invisible and discarded on crash-like close (component check)",
+      "execution_id": "exec-h3g2pzcj",
+      "date_utc": "2026-10-06T04:10:02Z",
+      "code_sha256": "a5e0f085f267a4fe8b4efb2dbfa90d41e04ac618043541575a86bde305c12aa6",
+      "code_summary": "File-backed SQLite DB in WAL mode; connection A commits row 1, opens a transaction, inserts row 2 without committing; connection B counts rows; A closes without commit (crash-like); fresh connection re-counts.",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "journal_mode=wal; B sees 1 row while the transaction is open; after crash-like close only the committed row remains.",
+      "observed_stdout": {
+        "journal_mode": "wal",
+        "seen_while_txn_open_other_conn": 1,
+        "seen_after_crash_like_close": 1,
+        "rows": [[1, "committed-record"]]
+      },
+      "stdout_sha256": "3ab0da24f3d6be2ed3c064206bedd5f9280fc2809c9597a662025dd212b07b93",
+      "exit_code": 0,
+      "stderr": "",
+      "scope_limits": "Consistency sample for SQLite's documented atomic-commit guarantee [S9]; does not test Fieldbook's staging/merge-commit-marker logic, media files, or OS-crash conditions (only clean close without commit)."
+    }
+  ],
+  "proposed_unexecuted": [
+    { "id": "P1", "kind": "proposed/UNEXECUTED", "title": "Import validation suite", "detail": "CRS corpus with known-good answers (EPSG:3879, EPSG:2393, OGC:CRS84, boundary-adjacent points, unknown identifiers) through the real import path; asserts clean/needs-review classification and round-trip tolerances per §5.4.", "blocks": "None; first thing to run once import exists." },
+    { "id": "P2", "kind": "proposed/UNEXECUTED", "title": "Axis-order regression port", "detail": "Port the six cases of GDAL test_ogr_geojson_export_geometry_axis_order [S5] to Fieldbook's export tests.", "blocks": "Export credibility." },
+    { "id": "P3", "kind": "proposed/UNEXECUTED", "title": "Kill-point recovery matrix", "detail": "Inject failures before staging, mid-staging, and after staging but before the commit marker for import/merge; assert reopen state matches §6.3–6.4 (quarantine + visible incomplete work).", "blocks": "Recovery claims." },
+    { "id": "P4", "kind": "proposed/UNEXECUTED", "title": "Export round-trip verification", "detail": "Post-export in-memory re-import comparing full boundary-adjacent set + bounded sample; mismatch fails export loudly (§5.4).", "blocks": "Export trustworthiness." },
+    { "id": "P5", "kind": "proposed/UNEXECUTED", "title": "Duplicate-heuristic evaluation", "detail": "Labeled synthetic duplicates; report precision/recall at default tolerances (2 m / 60 s / 0.9 name similarity).", "blocks": "Duplicate UX tuning only." },
+    { "id": "P6", "kind": "proposed/UNEXECUTED", "title": "Merge no-loss fuzz", "detail": "Generated divergence pairs; invariant: surviving values ⊇ union of inputs minus explicit user resolutions; merge report lists every unresolved item.", "blocks": "Merge contract." },
+    { "id": "P7", "kind": "proposed/UNEXECUTED", "title": "Bundle relocation test", "detail": "Move bundle across filesystems incl. case-insensitive/FAT media; assert open-time integrity (hashes + media refs) passes.", "blocks": "Relocation promise (§6.6)." },
+    { "id": "P8", "kind": "proposed/UNEXECUTED", "title": "Photo storage benchmark on reference hardware", "detail": "Compare DB-blob vs file-backed photo access per [S10]'s 'double-check these figures on target hardware' caveat.", "blocks": "Storage tuning only." },
+    { "id": "P9", "kind": "proposed/UNEXECUTED", "title": "Accessibility audit", "detail": "Keyboard-only pass over table/form/conflict flows, screen-reader labels, WCAG 2.1 AA contrast checks.", "blocks": "UX conformance claim." }
+  ],
+  "receipt_note": "Execution receipts were produced by the admitted pm_execution tool (schema er9.execution.result.v1) with execution_label 'executed by candidate'; code/data/stdout SHA-256 values above are copied from those receipts. Full receipt JSON (resource placement, cleanup, limits) is retained by the tool; the fields here are the candidate's faithful transcription."
+}

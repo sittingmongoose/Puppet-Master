@@ -1,0 +1,5 @@
+track endpoint A (lat,lon)=(0.0, 179.99); endpoint B (lat,lon)=(0.0, -179.99)
+naive linear longitude path (through lon=0): 40028.0 km
+short antimeridian-crossing path:            2.2 km
+ratio naive/wrapped: 17999.0x
+scope: arithmetic only; demonstrates discontinuity magnitude, not renderer behavior

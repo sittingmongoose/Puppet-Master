@@ -1,0 +1,26 @@
+{
+  "schema": "er9.bounded-report-consolidation.receipt.v1",
+  "owner": "/root/diagnostic_eval",
+  "status": "ONE_BOUNDED_DRAFT_READY_CAMPAIGN_INCOMPLETE",
+  "original_started_utc": "2026-10-06T04:39:14.560057Z",
+  "original_deadline_utc": "2026-10-06T05:09:14.560057Z",
+  "original_started_monotonic_ns": 91973417116993,
+  "draft_ready_utc": "2026-10-06T05:01:56.171403+00:00",
+  "draft_ready_monotonic_ns": 93335028416174,
+  "draft_ready_elapsed_seconds": 1361.611299181,
+  "wall_ceiling_seconds": 1800,
+  "clock_reset": false,
+  "known_evaluator_tokens": "UNKNOWN",
+  "known_evaluator_billing": "UNKNOWN",
+  "physical_provider_identity": "UNKNOWN",
+  "requested_configured_evaluator": "gpt-6.1-sol/xhigh from original actual spawn controls; existing worker now consolidates reports, not fresh source grader",
+  "source_checks_new": 0,
+  "grade_changes": 0,
+  "candidate_work_created": 0,
+  "native_queue_interruption": 0,
+  "scientific_recipients": [
+    "/root",
+    "/root/publisher"
+  ],
+  "remaining_work": "Campaign/final audit incomplete; root owns final recommendation and Goal completion; on call without polling"
+}

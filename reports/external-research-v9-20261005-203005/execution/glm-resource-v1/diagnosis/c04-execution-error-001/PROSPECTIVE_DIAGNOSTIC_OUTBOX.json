@@ -1,0 +1,25 @@
+{
+  "schema": "er9.prospective-rpc-timeout-metadata-consult.v1",
+  "created_utc": "2026-10-06T04:36:00.213969+00:00",
+  "state": "OPTIONAL_CONSULT_ONLY_NO_RUNTIME_PATCH",
+  "original_failed_stage": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+  "finding": "Original action-window clamp can yield generic ProtocolError execution_error; no source bug or scientific non-completion cause established.",
+  "possible_future_metadata": [
+    "RPC method and opaque request_id",
+    "requested default timeout and selected original-deadline clamp",
+    "original absolute admission birth/action/cleanup deadline source and SHA",
+    "monotonic send/timeout/reply observation times",
+    "ordinary-versus-cleanup scope"
+  ],
+  "constraints": [
+    "separately source-pinned future version/actual both-arm closure if ever implemented",
+    "no candidate/request/result bodies",
+    "no retrospective replacement of original status/cost",
+    "no new timer origin or change to caps/lifecycle/native Goal/model/permissions",
+    "no completion inferred from artifacts or cleanup",
+    "no entered pair repair/retry or additional Goals"
+  ],
+  "implementation_or_admission_authorized_by_this_file": false,
+  "runtime_or_current_job_changes": 0,
+  "native_goal_model_calls": 0
+}

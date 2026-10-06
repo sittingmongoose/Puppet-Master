@@ -1,0 +1,49 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T04:36:00.213969+00:00",
+  "owner": "execution_engine",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/project.py",
+      "sha256": "1a9cdff1a701aba1b0d56dcbc47da6bfb6f142a70538b1c59c0478cb051e50a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/DIAGNOSIS.json",
+      "sha256": "5d9b72937494b7fd3dc8754fd0af6bd7181e56aaad313360ff538790cd3cce60"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/NATIVE_GOAL_STATUS.json",
+      "sha256": "fb7ce1c1c64ba587889ba4786613545dca586cf26137519a57aabb3c68fe5536"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/VERIFICATION.json",
+      "sha256": "619d40a425204367ab5fc9c87f8a25a2ad8eebefaf9a83875a6ad5dde675063a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/REPORT.md",
+      "sha256": "a9ccca12c983aa2e32f23d237ff924d5c89014e2d0dd5808743ab436752deff9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/PROSPECTIVE_DIAGNOSTIC_OUTBOX.json",
+      "sha256": "54c63c081aeecd5dc06663968296da3a0f315bf296064b4eb6426634b8c58ce8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/MANIFEST.json",
+      "sha256": "fef3c197f1932664f430ed85c387e2ac2cdf76938b8835c2e09ddf46069dfcdc"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/c04-execution-error-001/PIN.json",
+      "sha256": "bf9318df3f7f04f29f8b8347c71d58053d434e94d5291f1388966988aeeda84d"
+    }
+  ],
+  "metadata_only": true,
+  "owner_files_quiescent": true,
+  "excluded": [
+    "all native raw/private data",
+    "all candidate Tasks/conversations/authored artifacts/inventories/source/evaluator facts",
+    "runtime/live jobs",
+    "auth/candidate tool arguments/results/URLs"
+  ],
+  "new_native_goal_model_calls": 0,
+  "original_failed_outcome_and_cost_preserved": true
+}

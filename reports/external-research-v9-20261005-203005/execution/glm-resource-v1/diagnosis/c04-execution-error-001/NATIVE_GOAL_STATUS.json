@@ -1,0 +1,39 @@
+{
+  "schema": "er9.direct-native-goal-status.v1",
+  "created_utc": "2026-10-06T04:34:37.053763+00:00",
+  "jobs": [
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw4ybn0_5040eb55-df4b-466f-b1ce-4150b8e198db",
+      "native_goal_record_update_utc": "2026-10-06T04:04:41.868000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "3bd0e5b7931c66198649d0c8045137ddab81635d85da5ff33c784e43fd704f03",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "execution_error",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "06cfb3c0f5aeb9509ba5d4849866b360880f9b74ecda366fc5dc651de5f56ab2",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791259481868,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    }
+  ],
+  "scope": "One exact terminal C04 treatment research native target; original failure and cost retained. No current/live Goal observation."
+}

@@ -1,0 +1,45 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T05:13:16.830702+00:00",
+  "source_observed_utc": {
+    "end": "2026-10-06T05:09:55.006730+00:00",
+    "start": "2026-10-06T05:09:54.432946+00:00"
+  },
+  "meaningful_update_count": 36,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "accounting/cohort-014/KEEPER_RECEIPT.json",
+      "sha256": "a695f7cde73a606ed00b67d748c79b6dd21ca65a2ae7737ce2e43c9c151a0b11",
+      "bytes": 5526
+    },
+    {
+      "path": "accounting/cohort-014/PUBLIC_SELECTION.json",
+      "sha256": "c0a7839ffe3fab5db887e30da38b6d75b86557de2833c7dc01ea0857c9151427",
+      "bytes": 2176
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T051316.830702Z/BACKUP_RECEIPT.json",
+    "sha256": "f808308ac5cd80fca7e6e066914997e659877c1778bf54d5c6a656bae1e7f990",
+    "bytes": 880
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "94424c0ec6107e1571bd6bee13c8fdb100f5d3d7a6d5fe4c1c02cbb93c011e39",
+      "bytes": 147847
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "94424c0ec6107e1571bd6bee13c8fdb100f5d3d7a6d5fe4c1c02cbb93c011e39",
+      "bytes": 147847
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "2719bd181ba4c7931a2a2ceb33cf6a8a521d58c4cf8c9a521db0fe6d7a18119c",
+      "bytes": 15464
+    }
+  ],
+  "scope": "Distinct014failure-inclusivefrozenaccounting capture only/stable@endnotglobalatomic, oldcostsraceflag preserved/rootproviderseparate/no logicaltarget/sourcequality/cachecredit"
+}

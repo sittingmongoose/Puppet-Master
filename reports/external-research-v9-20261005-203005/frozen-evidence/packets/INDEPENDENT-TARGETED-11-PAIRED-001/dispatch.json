@@ -1,0 +1,228 @@
+{
+  "schema": "er9.paired-targeted-source-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "independent-targeted-11",
+  "pair_id": "D-V07-A-BUNDLE-R001",
+  "scope": "two_terminal_current_targeted_diagnostic_output_views_actual_final_absence_explicit",
+  "prepared_utc": "2026-10-06T05:01:52.170863+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-targeted-11/reservation.json",
+    "sha256": "622dba8441cd41d9356815a2000a58650cd9777e6ee4ad767374820cf08711f7"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "fe85e6d772a96d9f70deb7fd2ca2b1a42667c27dfb6042b69c7654280fcd2f23",
+      "bytes": 2212
+    },
+    "neutral_targeted_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "a4faee07259828b2cd03b7b646881a4bd1c57c84b399a56e8c22f5a29a5be41e",
+      "bytes": 1419
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "targeted_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/targeted-card.json",
+      "sha256": "062157d39859e2de2431f9adc039e265c7486e482c3969dc9539c353f116441a"
+    },
+    "actual_launched_task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "c864809f11fbe1c70cdefcaeed32575ce5eb03b623f01c295a5111ffc192d4c1"
+    },
+    "actual_launched_task_B": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "8a3d0506439cbb5ad67e163bde9e1178a140147d4ac3ec06da6e6117a1a81d13"
+    }
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_A_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "actual_stage": "diagnostic",
+      "designated_final": null,
+      "source_catalog": null,
+      "witness_catalog": null,
+      "leads": null,
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/outputs/A/scratch/ngff-line-map.txt",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "original_relative_path": "scratch/ngff-line-map.txt",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        }
+      ],
+      "missing_catalogs": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "scratch/ngff-line-map.txt",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    },
+    {
+      "alias": "B",
+      "actual_stage": "diagnostic",
+      "designated_final": null,
+      "source_catalog": null,
+      "witness_catalog": null,
+      "leads": null,
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/outputs/B/scratch/ngff_lines.json",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "original_relative_path": "scratch/ngff_lines.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        }
+      ],
+      "missing_catalogs": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "scratch/ngff_lines.json",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "targeted_predeclared_checks": [
+    {
+      "check_id": "D-V07-A-P1",
+      "obligation_ids": [],
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "check_id": "D-V07-A-P2",
+      "obligation_ids": [],
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "check_id": "D-V07-A-P3",
+      "obligation_ids": [],
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "inherited_target_coverage_source_pair_id": "D-V07-A",
+  "coverage_lineage_rule": "exactinheritedscope map bytes preserved, currentpairedidentity explicit; no truthkey or newrubric",
+  "targeted_scope_boundary": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "broader_full_development_proposal_completeness": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE; currentconsequentialclaims still assessed",
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-11-PAIRED-001/integrity-proof.json",
+    "sha256": "10c201d580ce877212e592125582003ea9f2bc2f197f1861b66296c62d5e1620"
+  },
+  "budget": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "whole_includes_report_handoff": true,
+    "reset": false,
+    "start_rule": "START immediatelybeforefirstpermittedsemantic task/source/candidatebody read"
+  },
+  "blinding": {
+    "known_hints": "Case/role/model labels in rootassignment andexactactualTASKs unavoidable; descriptorcatalogpresence is metadata, no perfectblinding claim",
+    "held": "aliases/nativeGoals/status/history/economics/sourcegrades/privatekey untilimmutablePhase1"
+  },
+  "comparison_boundary": "Actual available current targeted artifacts only; missing final/catalogs remain missing. Missing scientific source quality UNASSESSED, delivery absence explicit, no winner/pipelinecredit. No canonicalvariant/bestof selection, nativecompletion or matchedcausalcredit inferred.",
+  "selection_rule": "rootapproved firstchronologicaleligiblepairedslot; noqualityselection; laterdistinctpair separatelyreserved"
+}

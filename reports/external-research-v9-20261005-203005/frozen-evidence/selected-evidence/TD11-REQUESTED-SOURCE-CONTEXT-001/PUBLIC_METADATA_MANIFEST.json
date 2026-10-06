@@ -1,0 +1,37 @@
+{
+  "schema": "er9.requested-public-source-metadata-only.v1",
+  "evaluation_id": "independent-targeted-11",
+  "source_index_files": [
+    {
+      "alias": "A",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD11-REQUESTED-SOURCE-CONTEXT-001/A/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "kind": "requested_public_source_index_metadata",
+      "scope": "only exact current admitted sourcecontext requestedselector; no broaderseed/history/key"
+    },
+    {
+      "alias": "B",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD11-REQUESTED-SOURCE-CONTEXT-001/B/index.json",
+      "sha256": "d43fb7064c22bd0954144919cdc651faa09170d5d81e83d02d69e668113a4744",
+      "bytes": 17243,
+      "kind": "requested_public_source_index_metadata",
+      "scope": "only exact current admitted sourcecontext requestedselector; no broaderseed/history/key"
+    }
+  ],
+  "body_sha256s": [
+    {
+      "alias": "A",
+      "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "bytes": 158591,
+      "location": "LAB_ONLY"
+    },
+    {
+      "alias": "B",
+      "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b",
+      "bytes": 158591,
+      "location": "LAB_ONLY"
+    }
+  ],
+  "raw_body_locator_selector_sha256": "913230d48337e94bbb4a7fbab800f77b6c0bdfff247e1ff2783a5ba4f1073604"
+}

@@ -1,0 +1,565 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "attempts_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "candidate_actual_family_counts": {
+      "additionalProperties": false,
+      "properties": {
+        "GLM": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN_PRE_NATIVE": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "GLM",
+        "Luna",
+        "UNKNOWN_PRE_NATIVE"
+      ],
+      "type": "object"
+    },
+    "candidate_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "type": "number"
+        },
+        "known_tokens": {
+          "type": "number"
+        },
+        "native_goal_starts_known": {
+          "type": "number"
+        },
+        "occupied_seconds_known": {
+          "type": "number"
+        },
+        "occupied_seconds_unknown_rows": {
+          "type": "number"
+        },
+        "starts_unknown_rows": {
+          "type": "number"
+        },
+        "usage_unknown_rows": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "attempts",
+        "known_tokens",
+        "native_goal_starts_known",
+        "occupied_seconds_known",
+        "occupied_seconds_unknown_rows",
+        "starts_unknown_rows",
+        "usage_unknown_rows"
+      ],
+      "type": "object"
+    },
+    "capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "continuation_rule": {
+      "type": "string"
+    },
+    "current_changed_sources": {
+      "items": {},
+      "type": "array"
+    },
+    "neutral_clock_companion_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "new_attempt_lineage_metadata_groups": {
+      "additionalProperties": false,
+      "properties": {
+        "clock_fresh_marker": {
+          "additionalProperties": false,
+          "properties": {
+            "actual_attempt_ids": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "actual_families": {
+              "additionalProperties": false,
+              "properties": {
+                "Luna": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "Luna"
+              ],
+              "type": "object"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            },
+            "usage_unknown_rows": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "actual_attempt_ids",
+            "confirmed_native_starts",
+            "actual_families",
+            "known_tokens",
+            "usage_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "clock_repair_suffix_marker": {
+          "additionalProperties": false,
+          "properties": {
+            "actual_attempt_ids": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "actual_families": {
+              "additionalProperties": false,
+              "properties": {
+                "GLM": {
+                  "type": "number"
+                },
+                "Luna": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "GLM",
+                "Luna"
+              ],
+              "type": "object"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            },
+            "usage_unknown_rows": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "actual_attempt_ids",
+            "confirmed_native_starts",
+            "actual_families",
+            "known_tokens",
+            "usage_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "other_new_actual_attempt": {
+          "additionalProperties": false,
+          "properties": {
+            "actual_attempt_ids": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  }
+                ]
+              },
+              "type": "array"
+            },
+            "actual_families": {
+              "additionalProperties": false,
+              "properties": {
+                "GLM": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "GLM"
+              ],
+              "type": "object"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            },
+            "usage_unknown_rows": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "actual_attempt_ids",
+            "confirmed_native_starts",
+            "actual_families",
+            "known_tokens",
+            "usage_unknown_rows"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "clock_fresh_marker",
+        "clock_repair_suffix_marker",
+        "other_new_actual_attempt"
+      ],
+      "type": "object"
+    },
+    "prior012_non_atomic_flag_preserved": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_interval_utc": {
+          "additionalProperties": false,
+          "properties": {
+            "end": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "end",
+            "start"
+          ],
+          "type": "object"
+        },
+        "changed_sources": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "captured_sha256": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "unchanged_at_capture_end": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "captured_sha256",
+                  "path",
+                  "unchanged_at_capture_end"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "capture_interval_utc",
+        "changed_sources",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "prior013_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "root_counter_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "add_to_provider": {
+          "type": "boolean"
+        },
+        "billing_dollars": {
+          "type": "string"
+        },
+        "helper_inclusion": {
+          "type": "string"
+        },
+        "observation_timestamp": {
+          "type": "string"
+        },
+        "remaining_tokens": {
+          "type": "null"
+        },
+        "status": {
+          "type": "string"
+        },
+        "time_used_seconds": {
+          "type": "number"
+        },
+        "tokens_used": {
+          "type": "number"
+        },
+        "updated_epoch": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "add_to_provider",
+        "billing_dollars",
+        "helper_inclusion",
+        "observation_timestamp",
+        "remaining_tokens",
+        "status",
+        "time_used_seconds",
+        "tokens_used",
+        "updated_epoch"
+      ],
+      "type": "object"
+    },
+    "root_journal_verified_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "snapshot_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "capture_interval_utc",
+    "candidate_totals",
+    "candidate_actual_family_counts",
+    "new_attempt_lineage_metadata_groups",
+    "snapshot_pin",
+    "attempts_pin",
+    "prior013_selection_pin",
+    "prior012_non_atomic_flag_preserved",
+    "current_changed_sources",
+    "root_counter_separate",
+    "root_journal_verified_pin",
+    "neutral_clock_companion_pin",
+    "continuation_rule"
+  ],
+  "type": "object"
+}
