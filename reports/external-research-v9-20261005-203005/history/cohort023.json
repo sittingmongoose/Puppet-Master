@@ -1,0 +1,146 @@
+{
+  "cohort": "deferred-clock-source-and-finite-Luna-policy-023",
+  "snapshot_at": "2026-10-06T04:33:19.522626+00:00",
+  "sources": [
+    {
+      "source": "dev/diagnostic-runner/deferred-targets-001/clock-repair-002/prepare_clock.py",
+      "published": "deferred-clock-preparation-023/code/prepare_clock.py",
+      "source_sha256": "59ed4d241655f8646a262086845404b360c54bd93ce769f2959e6f9c9814ccf8",
+      "public_sha256": "59ed4d241655f8646a262086845404b360c54bd93ce769f2959e6f9c9814ccf8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+      "published": "deferred-clock-preparation-023/code/input_binding.py",
+      "source_sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3",
+      "public_sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/deferred-targets-001/clock-repair-002/test_clock_cohort.py",
+      "published": "deferred-clock-preparation-023/code/test_clock_cohort.py",
+      "source_sha256": "85dfe131b236c6acc5db043fbe0b501cd68e547832039889694183774b348e6e",
+      "public_sha256": "85dfe131b236c6acc5db043fbe0b501cd68e547832039889694183774b348e6e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/deferred-targets-001/clock-repair-002/verify_marker_closure.py",
+      "published": "deferred-clock-preparation-023/code/verify_marker_closure.py",
+      "source_sha256": "f42758b1b3d11cd2941dbc2a865918894fe889eb0695384b1c7acc70bda396b4",
+      "public_sha256": "f42758b1b3d11cd2941dbc2a865918894fe889eb0695384b1c7acc70bda396b4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/diagnostic-runner/deferred-targets-001/clock-repair-002/PUBLICATION_SELECTOR_002.json",
+      "published": "deferred-clock-preparation-023/PUBLICATION_SELECTOR_002.json",
+      "source_sha256": "016c9b9a8ff05fda450214e0817402f5f24e49525641aa16be2eddb5e80e4a13",
+      "public_sha256": "016c9b9a8ff05fda450214e0817402f5f24e49525641aa16be2eddb5e80e4a13",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "supervision/DECISIONS-012-LUNA-CLOCK-FRESH.json",
+      "published": "supervision/DECISIONS-012-LUNA-CLOCK-FRESH.json",
+      "source_sha256": "666f0daee123eb96fb58f41a76d3b1a0584120c74f9de73a966a32ce4977ebf5",
+      "public_sha256": "666f0daee123eb96fb58f41a76d3b1a0584120c74f9de73a966a32ce4977ebf5",
+      "transform": "byte-identical"
+    }
+  ],
+  "neutral_preparation": {
+    "selector_sha256": "016c9b9a8ff05fda450214e0817402f5f24e49525641aa16be2eddb5e80e4a13",
+    "locators": 137,
+    "unique_contents": 128,
+    "code": [
+      "deferred-clock-preparation-023/code/prepare_clock.py",
+      "deferred-clock-preparation-023/code/input_binding.py",
+      "deferred-clock-preparation-023/code/test_clock_cohort.py",
+      "deferred-clock-preparation-023/code/verify_marker_closure.py"
+    ],
+    "deployment_claim": false
+  },
+  "DEC012": "Finite allfour originalLuna I05\u201308 fullfresh commonclock engineeringretet policy; no qualitysubset/all12automaticrepeat/newhypothesis/targetinflation. FirstR excludesoldoutputs; laterroles ownauthoredonly; V06nativeamendmentboth noBoverride; allroleclosure beforefirstnewR.0newGoal/policy calls.",
+  "whole_pipeline_or_winner_claim": false,
+  "old_failures_grades_costs_clocks_preserved": true,
+  "added_finished_TD9_registration_and_restart": [
+    {
+      "source": "evaluation/independent-targeted-9/report.md",
+      "published": "evaluation/independent-targeted-9/report.md",
+      "sha256": "062291b201778757654cbe78c7c9916e44ce460b1b339052fc75d79220f9a0f4",
+      "byte_identical": true,
+      "selector_relative_hint": "assessments/independent-targeted-9/report.md"
+    },
+    {
+      "source": "evaluation/independent-targeted-9/report.json",
+      "published": "evaluation/independent-targeted-9/report.json",
+      "sha256": "37b7903df0c0b028673321bc45f33341e598781bda8ecc400490ab61fda6ee8c",
+      "byte_identical": true,
+      "selector_relative_hint": "assessments/independent-targeted-9/report.json"
+    },
+    {
+      "source": "evaluation/independent-targeted-9/neutral-accounting.json",
+      "published": "evaluation/independent-targeted-9/neutral-accounting.json",
+      "sha256": "78bc95806da3d6ac6da757ee8f513a7f5df29fea82797b75fbeecd2063ae42d3",
+      "byte_identical": true,
+      "selector_relative_hint": "assessments/independent-targeted-9/neutral-accounting.json"
+    },
+    {
+      "source": "evaluation/independent-targeted-9/closure-receipt.json",
+      "published": "evaluation/independent-targeted-9/closure-receipt.json",
+      "sha256": "ae88e6d2f14e6a77773e7561a89ccdca1326eb0694038a8afabd4335460eed82",
+      "byte_identical": true,
+      "selector_relative_hint": "assessments/independent-targeted-9/closure-receipt.json"
+    },
+    {
+      "source": "ops/dispatcher/DEFERRED_CLOCK_PRE_DONOR_ELIGIBILITY_002.json",
+      "published": "admissions/cohort023/DEFERRED_CLOCK_PRE_DONOR_ELIGIBILITY_002.json",
+      "source_sha256": "69ca47cc4c1fe170e0524ee284a14efaf17fe6e125706ed9fe8caef8f8b25fbf",
+      "public_sha256": "a8f18596ae212c8e2fcbaffc84fc96dac179e07dcc9f73d175d5859969e6cf59",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T043235.591819Z/frozen-state--current.json",
+      "published": "restart/cohort023/frozen-state--current.json",
+      "source_sha256": "789370dc3c914c9acb5fc990cd5628c1bd3d0695aa4d34d25b5a8b9ef401fe81",
+      "public_sha256": "2584c12972ec18864fe994e638d92f9a822ca9d8eef9d4391002609153405c88",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T043235.591819Z/frozen-state--campaign.json",
+      "published": "restart/cohort023/frozen-state--campaign.json",
+      "source_sha256": "789370dc3c914c9acb5fc990cd5628c1bd3d0695aa4d34d25b5a8b9ef401fe81",
+      "public_sha256": "2584c12972ec18864fe994e638d92f9a822ca9d8eef9d4391002609153405c88",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T043235.591819Z/frozen-CURRENT.md",
+      "published": "restart/cohort023/frozen-CURRENT.md",
+      "source_sha256": "a947542ba857b20988767ccd7f2cc14b36240f853b6ff4390bb2a540f773653b",
+      "public_sha256": "a947542ba857b20988767ccd7f2cc14b36240f853b6ff4390bb2a540f773653b",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T043235.591819Z/PROJECTION_RECEIPT.json",
+      "published": "restart/cohort023/PROJECTION_RECEIPT.json",
+      "source_sha256": "53b1d91b20f343214fab1fdb226047427b21f226b7892f99288fb975e25acc9f",
+      "public_sha256": "53b1d91b20f343214fab1fdb226047427b21f226b7892f99288fb975e25acc9f",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "state/history/projection-20261006T043235.591819Z/BACKUP_RECEIPT.json",
+      "published": "restart/cohort023/BACKUP_RECEIPT.json",
+      "source_sha256": "3459f428c7c00f41d976db2a84418b0d78cc07be0dd836f8f1d43ceb5e4c464c",
+      "public_sha256": "3459f428c7c00f41d976db2a84418b0d78cc07be0dd836f8f1d43ceb5e4c464c",
+      "transform": "LAB_ROOT metadata labels"
+    }
+  ],
+  "TD9_review_scope": "Bothfinal4absent/deliveryINCOMPLETE/remainderUNASSESSED; narrowBcontrol locatorpreservation useful; bothnativepausedHOLD/no completionwinner",
+  "TD9_conservative_clock": "Earlier04:12:37budget/prepacket vs body04:14:04; chargedsource368.546 vssemantic281.268; closurechargedwhole883.105/P2inclusive514.559 noreset",
+  "deferred_config_registration": "ExclusivefiveBOTHarmALLtargetGoal0/noIntent beforeANYdonor,17rowsregistered, D13Bexcluded/oldseed revisions and targetaliases unchanged; importer0Goals/newclocknativeUNOBSERVED",
+  "later_first_Luna_clock_activations": {
+    "source": "ops/dispatcher/LUNA_CLOCK_FIRST_ACTIVATIONS_001.json",
+    "source_sha256": "0b4c0a8deaa22a16b077f9be461e53e6d92189c3c4402ed033f9ecf9eeaf3e6a",
+    "public_sha256": "0b4c0a8deaa22a16b077f9be461e53e6d92189c3c4402ed033f9ecf9eeaf3e6a",
+    "published": "admissions/cohort023/LUNA_CLOCK_FIRST_ACTIVATIONS_001.json",
+    "scope": "ThreeauthorizedunscoreddonorGoal1 each/freshLunamax/clockACK/preinferencekernel placement; no sourcequality/targetpipelinecredit",
+    "earlier_registration_UNOBSERVED_preserved": true
+  }
+}

@@ -1,0 +1,699 @@
+{
+  "schema": "er9.positive-credential-free-final-clock-operator-selector.v2",
+  "owner_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002",
+  "selection_mode": "POSITIVE_EXACT_FILES_ONLY_NO_RECURSION",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/README.md",
+      "sha256": "ecb8eb86e12c4443d5abb87bf14911af9f79b147edf3239543980672ee72271e",
+      "relative_path": "README.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/prepare_clock.py",
+      "sha256": "59ed4d241655f8646a262086845404b360c54bd93ce769f2959e6f9c9814ccf8",
+      "relative_path": "prepare_clock.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+      "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3",
+      "relative_path": "input_binding.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/test_clock_cohort.py",
+      "sha256": "85dfe131b236c6acc5db043fbe0b501cd68e547832039889694183774b348e6e",
+      "relative_path": "test_clock_cohort.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/SOURCE_PIN.json",
+      "sha256": "dba706b9f2fdafa1282da5f9bbaaabc68827abb7b8daad69ef4a75cf2869281c",
+      "relative_path": "SOURCE_PIN.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/VERIFICATION.json",
+      "sha256": "f63362a572f668dc09bbcf307c27bcf466e13a949badee9fcbbbfed77dd770ba",
+      "relative_path": "VERIFICATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/OUTBOX.json",
+      "sha256": "949143202f2550ee83550322f5c7ed515c405e084907503cdeae95a0be340a6b",
+      "relative_path": "OUTBOX.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/ACTUAL_ROUTE_BINDING.json",
+      "sha256": "49da73ef554e91b476c485ae2ae56090ba1d19a993d6bf76788fb8b683d80f2d",
+      "relative_path": "ACTUAL_ROUTE_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/ELIGIBILITY_SCOPE.json",
+      "sha256": "c0ef8d6830d21b90f843c81dcf7c876e2ec9372c1edbb2a9436e41fdac0b5af8",
+      "relative_path": "ELIGIBILITY_SCOPE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/OLD_BYTE_IDENTITY_FREEZE.json",
+      "sha256": "578450d99e2f7d54a5d0fc222aa11dc7062e6a76da19981df00b2eddc3799ec7",
+      "relative_path": "OLD_BYTE_IDENTITY_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/FULL_COHORT_FREEZE.json",
+      "sha256": "838c4f54af995cf6727345f79399a4eaeb171794d009ede56ad9e89c4004adc7",
+      "relative_path": "FULL_COHORT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/ACTUAL17_CONSTRUCTOR_VERIFICATION.json",
+      "sha256": "c1ec7b87b3b26b8be1ea87221ca6f49a06f1919e71a74d044f72888f3771cc11",
+      "relative_path": "ACTUAL17_CONSTRUCTOR_VERIFICATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+      "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36",
+      "relative_path": "CORE_RESOURCE_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/FINAL_RESOURCE_BINDING.json",
+      "sha256": "8be6d3a7fad18ae41e18b9a3c60138d1d015fda984163a1b6bde40223463de86",
+      "relative_path": "FINAL_RESOURCE_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/SOURCE_PREREQUISITE_CARD.json",
+      "sha256": "2f7700c5ef8821a2b1d7eb3eefbd5ca09c5070e9b74f8e10e12c0aa381a4d403",
+      "relative_path": "SOURCE_PREREQUISITE_CARD.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/registration/SEED-DEV-A-DEFERRED-R001-r001-CLOCK-R002.json",
+      "sha256": "009486af0e566e8265f5b9e78132aec8d4a16cc38f586d3fdba83ea2441b9983",
+      "relative_path": "registration/SEED-DEV-A-DEFERRED-R001-r001-CLOCK-R002.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/registration/SEED-DEV-B-DEFERRED-R001-r001-CLOCK-R002.json",
+      "sha256": "97e172d3582c9915a6411d6d91ab96e53e8a35dfceac3c42e76e0fddeb5b3e5d",
+      "relative_path": "registration/SEED-DEV-B-DEFERRED-R001-r001-CLOCK-R002.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SOURCE_INPUT_FREEZE.json",
+      "sha256": "a8a283522db9e5faa426dca1e9e5d1ab15da136874cd7f5e4237d1d21a0e8473",
+      "relative_path": "source-prerequisites/A/SOURCE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "cf0a68bf579c1d89546592a2f434196902fc0393a6fb5ae7e9d51eb0b2d0bae8",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "b16ebf0d6a14f665d841f830523824942f6d51b7a5b5af7a69e65e75ee9dc786",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "61b08f0ca9fffb45c241d0f18920c6de934b76e1bd1427a6cb78901568709838",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "4fbb08f9975b80c1ec7da82289dfe38a2ac299c6f1be4f3c0a34d2d2280a2995",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "4fbb08f9975b80c1ec7da82289dfe38a2ac299c6f1be4f3c0a34d2d2280a2995",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "a0ace282c98f907392295f21963758e0a22d654b7e4dfcaa01eb33693c31de01",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "0130e075df5d3a63753b4ce25bb506f97bdd3d97ab8875d7c62decf5030ccbb7",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "b9e9a86ea17f7dde1b383fd3f77a3d48201e19d34bd8afa284a35148ffaafb52",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "3564b7e67740675e31bcde6cdc9864a5d5bbd5cddc050782b1e98e1fd02fd1b4",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "3564b7e67740675e31bcde6cdc9864a5d5bbd5cddc050782b1e98e1fd02fd1b4",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "5b04f51ec79afe0ae1168bc3abf22b0d3f3df5e82dfc23e00998b416b301065e",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "e8ac72a88d6131f0161e953f8c3db410ce0d9756b6579f5156b2073ef0f81417",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "0d06c431883e1e189366c7beba1090bd5a4bc4b874dc9ec4b7dc361ecd55c709",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "ac6f03cf3f5d63d49f5f7cd4d2c2fb70b6ccd1cf2bb0481881ac64d8eb4b7448",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "458e79280fd988d849c6b449ec5267cf2cd6257ae40bd14bcf2aba6a33c693f9",
+      "relative_path": "source-prerequisites/A/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SOURCE_INPUT_FREEZE.json",
+      "sha256": "de972df4382683e6d852cd457954c92bb38413b33a9e6750843cad392b9ae319",
+      "relative_path": "source-prerequisites/B/SOURCE_INPUT_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "5459a4c72562c94733523447ff224d1cce1ad967cf96397f8c318bd3016f09f4",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "4ff3c0043f04ac1e29feb224d0005558dd0dc5752ee75e09cc59a62e0eea3888",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "bc32772a27bd60900b8909c8078c51f370dba32da7dffcc383e94fbf281ae1ba",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "9cb50f398f14cfc08a5860028b9166ea1e0a681fd870ea262691aee3dd81b23a",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "bc1f6d901d93edd55a2202d746d1ab22d13e23701298d45fbc54fd1a9399d264",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "b65f27582c5badbcf2db68eb35333092072793ad436443ed79ea8fd6571e44fb",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "c9f258df507534b4a759f583297d6f717cbc03bfbfa9352bcc6a183ac2b6dd1d",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "7c0a8adb06f20847fec78aa45a6f3142c7bfc11b3bd172e1296f45314f712980",
+      "relative_path": "source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/card.json",
+      "sha256": "c6b583313082445430c1f03f212d01ff0e28123303de6e36021152ef1bf884b7",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/registration.json",
+      "sha256": "440ee382a0c1a4965e0305451e5eead1eb7b1f7e7e877c6386695582172c4fb5",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "1030b6bae8be6b5d379cc678b966ec49a1d10910c6e861ca1b9cbfb24a2a72db",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "614d70bfa4ee4b0ee409fa4b05e1186edfc38ec43dd3dbd5012f65e066142573",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "b1f4e03941d83da7c5040623c1d601c967e9e657154c6617b34876b2db6a408f",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "2d5ae861fdaab8e738a0fa5e9d815fc8f783098e4b55ea141882f026c181b4b8",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "27f30150a3c1f88b105e896ac1a4c1f4f21ad7b0ca57d903c121b884398916a0",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "922ef58198c44aa3b7194c7c3356212e662a235c585fe239831d3dd608f79e71",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "b58079bb4d7a815549967151d05e39039e4e6f97e58a98a9b17be146ba03b70a",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "298f13757c83bca1c821c58160da25f83bdcfcdaa499cb347a6666b7c32c19dd",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "c53d06229c69ef4cd1995f68bb9d567ee6eb5e11b4e0e79bf7b577d0c5b8b188",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "f7b8c7b328638d6314ccf1719941ed0ddc013600cade390d251b669e624dd1b7",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "49c5cbe0d3841279137cce90613e65cc00a86df45cf6267dc3045e0b6a0af475",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "ba38dfa6c3fed3d565845c019b5140c859a7ac22cf45a63da89885495aeb0535",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "ba38dfa6c3fed3d565845c019b5140c859a7ac22cf45a63da89885495aeb0535",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "be3cb059cdfa1b76bc1eb7d7b1f83e662f32d1cca9cb6a4b7a5cbe6b42c33a1e",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "4299457f8983b5bf29fc7afb19933975f6fcbb3bac41e921990795fc886fbb78",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "cd926424044bafc79cf23e9f92508eac56bad747efd5f4912fad024789eb293d",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "ff3c73c811b37d940a31e05e7b61064580fbbbb165ed869ec55c42834a718637",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "77ab7d92f22c3d84e34d73064f6de9f78ab8c2bccce5d4231045d01d6a8511f0",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "2cb26467c3ffb968aa9d8237dc8f0b10f8c6ec189a3e6758f0eeca9cae5a90ee",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "46ec57f139964bc13c43b9266e909eaf56714a0d8b431ff20876f26dfa0c8ce6",
+      "relative_path": "pairs/D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/card.json",
+      "sha256": "4f8a15ec6a95a9a1a7d7cc43326289368c1c4a138cacfbba1c300b48a11ac193",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/registration.json",
+      "sha256": "ff40409ae2d7e24833678ca835f5bf9a8a65cd803d911d755d04cb0d7cc6c778",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "2890dbdc1e8836f5a1610f81581050d8dcee69d37e4ef9b5ce34c6e03c6ed830",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "99b9e2879716d3e36d5837920ade84a0c387856860957a4a28d03775e8bc51fe",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "9080adc8a08e5083fe66b3751fbbc4637bfb8969683e23a8b4da85c5caddf91e",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "9b3f6489eb4481b9f73ad2076f2babd80b478b39243ef9a77a1d9b2c8076b1b9",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "f8ebd0dae0f04b84a507538c843e50c51680ad4d0147e6f2a52779cfb790df8c",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "aaf51956351dda34d1a1f2be17ab889c0b18ba8169c99c259fa2f235f339a24e",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "cc90c0037889b29484c7b564e2b6d5bebe5d70b3a01fcfea21d068d92782464f",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "7b85e348ee665e62258dffdf8cdeedb41923dd0824470ad3e0a4c3cb23e87859",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "e30885130f1d14017dccce94caf8630606d67e3206d84caaeff3deef4ab0dd40",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "b6886e704c2d0bea52b77514c03eff2f8b2a9d20191baf238d6811fc6ad476af",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "88ce0962811a5f485acaa326c475fc1b6f617067f778f5ff1cdf89b80c662e8a",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "62d6a80c14313eb2492bb4619e66c128896b5f28cbc8dc8bba94cf8c6270422d",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "4d47d71a38d35dcfff3c734d2ec920ef0c3cbc8e3c6c98c9bb6c7b187883cc5e",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "5eb8c6ab91da9e5df4402ba64622ca75fd211372629605d49dddb1c2fb883fa5",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "6f3b1b2c3dcafc2ecf83a3bc9c81e27eab0b432e2be6bbd2a91701328793da59",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "e259234b6bb37b2c3bd8ee29351d4047ffae0de3f3da1bc5a64708c70ceec650",
+      "relative_path": "pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/card.json",
+      "sha256": "967c76b4501d9ceed30cef16ebf1ebff3533f2665f778eb73165690f09d96c92",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/registration.json",
+      "sha256": "53d769adee560bba8f0eec82e834e52c01dc5dc86c6bbb9f9be36da00991b3e6",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "f7c5f3809bd110f101f331b6f8e99da2d8f6469756067516629b59397dbfd2b7",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "dfedca3f4b8f35aad4d934892685258283917c07f41e80672c3f41488a35111f",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "789a41c008f67d70e44d3d1a828f76dbbb25b757c3d955e4e6e92ef09b15eba3",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "a1323c1d1b8b2e44c0446e5d895bd70f89d72438c689c37d72d7500e10cea30c",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "fc6caecfa9e77f8884b2618b21c2567cbf746e0067b7c0784dd329740c94cf7c",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "fc6caecfa9e77f8884b2618b21c2567cbf746e0067b7c0784dd329740c94cf7c",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "fa2b2009fda2de7d662159e843d991249ac2ce566a5821f42b5ea3a276253562",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "675a6f7097a86c0a20a54d1527378c53afed3cbaf37262a2cda252e66799abab",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "4ce6f91679823d1ff75e346fa74787f39d2f38127d35ca8ee148758af7408065",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "bc0edf51161d97cfee5783f495923169f0b70ebf667b5e166605890c90a89b68",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "bc0edf51161d97cfee5783f495923169f0b70ebf667b5e166605890c90a89b68",
+      "relative_path": "pairs/D-V06-A-DEFERRED-R001-CLOCK-R002/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/card.json",
+      "sha256": "1ad27d35b71b805432c1b54c68f0a899f6e4d8ca26fd463daacfb322468a438f",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/registration.json",
+      "sha256": "9d6ae828678578d2980fd3ef192e2f7d744e11379434d4d7303204b05628ee0b",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "96e5edaa40dc865620c9601dc9e9ee8fc24d09b3555e8122c365fcbd50294864",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "52a6ea541b6c70b329928b678d083862dc60c73aa262606cb8b601fc568bf017",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "36efc1e52c5c45b5693b6e09ce5a87ecfcfba1dc4f518fe1ce1ff9884e9a8433",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "e604161457bd57bcef6e3d21de5c583b912f3b49f033161d512aa55bf858f412",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "3766c602ac63c9948623062998025a3e193176a4a3e31750d295af3ebf094cdf",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "b4bf4a9b455483971741ee81743a9315f6b95c3de026d174fa7d98961dc25dff",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "450f10c409e255953772c056dd22b116ec298c50f33b11b790ed134d1de21035",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4",
+      "relative_path": "pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/card.json",
+      "sha256": "ff5376ef50290424e267e409bbea00a72006ff6c947275d7c49607c83d24afd1",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/card.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/registration.json",
+      "sha256": "1d1354579ee55cb5f54adc74031a36cfc97004818123c9009d5ec9086e940c18",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/registration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+      "sha256": "6fe517c8d24c1e28eeb01d3a6f6f07f6db755d68cc0f2b1a8440938f42ab3d94",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "af568c1ed2c5db26e5f89a4406343821b3d2add3841c8292cf9964cbae2ca3a4",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "aa8b216a2ed861dd3e56520fc02dbc8cb939a39799ee4ecb0a3ec6049c5e6e8e",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "33cfcb1d718682955663e3e535e8131d596d50e5d59aafa6c9eb31414aa6534d",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "f73b9a8d2103e7ffedee4a4eace75c0f521a87ac2be17fcffcc7649ec6480aa8",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "0d1bda31ad2cc94af5f2e9a3637389adfae7674c30e8d8eaa17346212a23538e",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "bf0d62e16e8c40e79a3ae5ecee0f7681f0c047e0ef72629098aa03fdb8357cbe",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "305649ab6bbbccd010a85a04d14f10296560e6ace77edc129d4edf378156fea8",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "sha256": "7d90802d180eecfad8bb4859ea0291c883c736e7ce589925544e938a886d9d72",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+      "sha256": "41d69b752abb8f782ef828d092d91f36ef34820a0768a3d13bc4c31135d278b0",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json",
+      "sha256": "9c68b9846308aca53473ea3608d274422bcbc99322d536b6356b01b09d93afae",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/PRESERVATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md",
+      "sha256": "3fa94e7e32bb84e44d558659808475b07223dd75c78ccb2f6a4acbec2247202d",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+      "sha256": "21d0268f72fce747887634c8bebaa16d2d9133231c3f0e9d74bc6f68a33e9881",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/operator-profile/bundle_profile.json",
+      "sha256": "3595bda565002beee4030337a606cb73cec488c0db55ccca85250834d5e858b2",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/operator-profile/bundle_profile.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json",
+      "sha256": "c4697b6323dfbb542b0bcaf77bd4b253b4ed9c8a93318b5f2f952ae334fb5f35",
+      "relative_path": "pairs/D-V13-A-DEFERRED-R001-CLOCK-R002/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/inputs/delivery_role_manifest.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/PUBLICATION_SELECTOR.json",
+      "sha256": "168ad571054a7be8d99c4107451f4370213d5a5347d42c44124a9152991414e1",
+      "relative_path": "PUBLICATION_SELECTOR.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/verify_marker_closure.py",
+      "sha256": "f42758b1b3d11cd2941dbc2a865918894fe889eb0695384b1c7acc70bda396b4",
+      "relative_path": "verify_marker_closure.py"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/OPS_MARKER_COHORT_BINDING.json",
+      "sha256": "22244f56a9f970dfdf0177eacb1210061c9735764ff1a7ddc94858744144348a",
+      "relative_path": "OPS_MARKER_COHORT_BINDING.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/OPS_MARKER_VERIFICATION.json",
+      "sha256": "de82cea1a8a609b2dabb89648d399ee8045363ab9ac42a719c6462219ea6149a",
+      "relative_path": "OPS_MARKER_VERIFICATION.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/SOURCE_PIN_002.json",
+      "sha256": "a76b40cd3183023dcf4f78c9ac381f29469d024078246ce31b4f18d8bb198e1e",
+      "relative_path": "SOURCE_PIN_002.json"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/READY_OUTBOX_002.json",
+      "sha256": "ef33f9a8de703a969111963fda24c3040a402d152378baa1c361ba929c899c00",
+      "relative_path": "READY_OUTBOX_002.json"
+    }
+  ],
+  "inherited_selector_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/PUBLICATION_SELECTOR.json",
+    "sha256": "168ad571054a7be8d99c4107451f4370213d5a5347d42c44124a9152991414e1"
+  },
+  "actual_marker_body_private_runtime_auth_source_or_native_candidate_failure_evaluator_bodies_selected": false,
+  "same_single_frozen17stage_cohort": true,
+  "native_model_or_process_calls": 0
+}

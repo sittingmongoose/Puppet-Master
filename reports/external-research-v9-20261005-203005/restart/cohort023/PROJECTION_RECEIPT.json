@@ -1,0 +1,42 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T04:32:35.591819+00:00",
+  "source_observed_utc": "2026-10-06T04:29:25.671322+00:00",
+  "meaningful_update_count": 30,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "supervision/DECISIONS-012-LUNA-CLOCK-FRESH.json",
+      "sha256": "666f0daee123eb96fb58f41a76d3b1a0584120c74f9de73a966a32ce4977ebf5",
+      "bytes": 4455
+    },
+    {
+      "path": "ops/publication/cohort022-verification.json",
+      "sha256": "557d567e1ee7e290a142e562ed8ce2a6a6a78145d8866ac63a83fecab99a80b5",
+      "bytes": 2097
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T043235.591819Z/BACKUP_RECEIPT.json",
+    "sha256": "3459f428c7c00f41d976db2a84418b0d78cc07be0dd836f8f1d43ceb5e4c464c",
+    "bytes": 880
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "789370dc3c914c9acb5fc990cd5628c1bd3d0695aa4d34d25b5a8b9ef401fe81",
+      "bytes": 131382
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "789370dc3c914c9acb5fc990cd5628c1bd3d0695aa4d34d25b5a8b9ef401fe81",
+      "bytes": 131382
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "a947542ba857b20988767ccd7f2cc14b36240f853b6ff4390bb2a540f773653b",
+      "bytes": 11085
+    }
+  ],
+  "scope": "Verified022 and rootDEC012prospectivefourLengineeringpolicy only; noregistration/nativeadmission/qualityselection/clockextension or sciencebody inference"
+}

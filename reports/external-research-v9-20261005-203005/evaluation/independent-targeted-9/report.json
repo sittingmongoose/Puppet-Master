@@ -1,0 +1,51 @@
+{
+  "schema": "er9.independent-assessment-report.v1",
+  "evaluation_id": "independent-targeted-9",
+  "pair_id": "D-V02-B-BUNDLE-R001",
+  "saved_utc": "2026-10-06T04:26:08.455462Z",
+  "source_judgment_immutable": true,
+  "phase1": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-judgment.json",
+    "sha256": "f263952416846370821e787efcc2073b8d84d12847cbdfca766e423b18d62a9b"
+  },
+  "phase1_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-lock.json",
+    "sha256": "39c1c0e852342d3b5dbb2a5b09581064e6578b4ece67c29429cdbd2b2feee4d9"
+  },
+  "phase2": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase2-assessment.json",
+    "sha256": "d490c2a7375e3abb57130dd224ec2036bd256a04b9a24f33ce993d98cb2bd651"
+  },
+  "report_markdown": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/report.md",
+    "sha256": "062291b201778757654cbe78c7c9916e44ce460b1b339052fc75d79220f9a0f4"
+  },
+  "accountant_neutral": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/neutral-accounting.json",
+    "sha256": "78bc95806da3d6ac6da757ee8f513a7f5df29fea82797b75fbeecd2063ae42d3"
+  },
+  "delivery_outcomes": {
+    "A": "INCOMPLETE",
+    "B": "INCOMPLETE"
+  },
+  "scientific_outcomes": {
+    "A": "UNASSESSED",
+    "B": "UNASSESSED; limited frozen source locator PARTIAL"
+  },
+  "full_pipeline_quality": "UNASSESSED",
+  "winner": null,
+  "criterion_counts": {
+    "common": 8,
+    "full_B_obligations": 12,
+    "common_important": 5,
+    "target_obligations": 3,
+    "target_important": 3
+  },
+  "body_read_vs_conservative_budget_clock_discrepancy_explicit": true,
+  "phase2_handoffs_charged": true,
+  "clock_addendum_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/clock-authority-addendum.json",
+    "sha256": "5c5e4dab57f3ac1a9a98a0e5768ac4fe4e6518eedb2d71425272ffdef5ec4bb7"
+  },
+  "closure_receipt_pending_report_handoff": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/closure-receipt.json"
+}

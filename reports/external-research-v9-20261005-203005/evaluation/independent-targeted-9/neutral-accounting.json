@@ -1,0 +1,108 @@
+{
+  "schema": "er9.independent-neutral-accounting.v1",
+  "evaluation_id": "independent-targeted-9",
+  "pair_id": "D-V02-B-BUNDLE-R001",
+  "saved_utc": "2026-10-06T04:24:59.019848Z",
+  "rows": [
+    {
+      "alias": "A",
+      "arm": "treatment",
+      "job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "native_result_sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9",
+      "current_goal_starts": 1,
+      "host_followup_turns_started": 0,
+      "native_elapsed_seconds": 585.674449809,
+      "native_usage_observed": {
+        "inputTokens": 1790297,
+        "cachedInputTokens": 1650176,
+        "outputTokens": 26290,
+        "reasoningOutputTokens": 23873,
+        "totalTokens": 1816587
+      },
+      "derived_nonoverlapping_fields": {
+        "uncachedInputTokens": 140121,
+        "nonReasoningOutputTokens": 2417
+      },
+      "goal_local_last_tokensUsed": 166411,
+      "goal_local_last_timeUsedSeconds": 579,
+      "usage_notification_count": 31,
+      "native_http_attempts": "UNKNOWN",
+      "native_responses": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "physical_provider_runtime": "UNKNOWN",
+      "aggregate_memory_max_bytes": 2415919104,
+      "aggregate_memory_peak_bytes": 362201088,
+      "swap_max_bytes": 0,
+      "oom_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN",
+      "admitted_executions": 1
+    },
+    {
+      "alias": "B",
+      "arm": "control",
+      "job_id": "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "native_result_sha256": "4ff9c569381a0c220de584ea8f39d294cc1d9fcb7e8a9efcd888edbd625b1d03",
+      "current_goal_starts": 1,
+      "host_followup_turns_started": 0,
+      "native_elapsed_seconds": 585.57225407,
+      "native_usage_observed": {
+        "inputTokens": 1228744,
+        "cachedInputTokens": 1114112,
+        "outputTokens": 11547,
+        "reasoningOutputTokens": 9334,
+        "totalTokens": 1240291
+      },
+      "derived_nonoverlapping_fields": {
+        "uncachedInputTokens": 114632,
+        "nonReasoningOutputTokens": 2213
+      },
+      "goal_local_last_tokensUsed": 126179,
+      "goal_local_last_timeUsedSeconds": 579,
+      "usage_notification_count": 26,
+      "native_http_attempts": "UNKNOWN",
+      "native_responses": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "physical_provider_runtime": "UNKNOWN",
+      "aggregate_memory_max_bytes": 2415919104,
+      "aggregate_memory_peak_bytes": 363929600,
+      "swap_max_bytes": 0,
+      "oom_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN",
+      "admitted_executions": 1
+    }
+  ],
+  "definition": "Native metrics observed token accounting only; cached input is INCLUDED in inputTokens, reasoningOutputTokens is a SUBSET of outputTokens. Derived uncached/nonreasoning fields are subtraction, not extra usage. input+output=total per arm. Goal-local tokensUsed and timeUsedSeconds are distinct native Goal fields, not additive to usage notifications or parent/UI/provider rows. No billing estimate or cache monetary claim. Imported baseline stages are not current starts.",
+  "clock": {
+    "schema": "er9.clock-authority-addendum.v1",
+    "evaluation_id": "independent-targeted-9",
+    "created_utc": "2026-10-06T04:21:25.130739Z",
+    "instruction_authority": "root clock correction received after immutable Phase 1 freeze; courier confirmed",
+    "conservative_budget_anchor_utc": "2026-10-06T04:12:37.069747Z",
+    "conservative_budget_anchor_monotonic_ns": 90375926797953,
+    "source_deadline_monotonic_ns": 91575926797953,
+    "whole_deadline_monotonic_ns": 92175926797953,
+    "source_deadline_utc": "2026-10-06T04:32:37.069747Z",
+    "whole_deadline_utc": "2026-10-06T04:42:37.069747Z",
+    "body_view_start_utc": "2026-10-06T04:14:04.347375Z",
+    "body_view_start_monotonic_ns": 90463204363036,
+    "phase1_freeze_utc": "2026-10-06T04:18:45.615784Z",
+    "phase1_freeze_monotonic_ns": 90744472772533,
+    "conservative_source_charged_seconds": 368.54597458,
+    "semantic_body_source_seconds": 281.268409497,
+    "phase2_inclusive_anchor_monotonic_ns": 90744472772533,
+    "phase2_inclusive_deadline_monotonic_ns": 91344472772533,
+    "phase2_seconds": 600,
+    "prep_wait_charged": true,
+    "no_reset": true,
+    "original_metadata_preserved": "reservation bytes, additive reservation clarification, semantic source-start and Phase1 judgment/lock bytes remain unchanged. Earlier reservation/sourceNOT_STARTED concerns exposure history only; conservative budget anchor does not assert earlier body exposure.",
+    "discrepancy": "Courier initially classified pre-packet instrumentation as metadata-only; evaluator consequently separately stamped immediate semantic body-view. Root later requires earliest pre-packet instrumentation as conservative budget anchor, adopted without moving any exposure event or scientific grade."
+  },
+  "elapsed_at_report_write": {
+    "source_charged_seconds": 368.54597458,
+    "source_semantic_body_seconds": 281.268409497,
+    "phase2_inclusive_elapsed_at_report_write_seconds": 373.404064352,
+    "whole_conservative_elapsed_at_report_write_seconds": 741.950038932
+  },
+  "source_judgment_excluded": true,
+  "inclusive_phase2_final_receipt": "See closure-receipt.json after report handoffs; no deadline reset."
+}

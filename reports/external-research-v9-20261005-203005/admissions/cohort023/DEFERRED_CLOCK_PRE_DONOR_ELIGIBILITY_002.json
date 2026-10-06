@@ -1,0 +1,64 @@
+{
+  "schema": "er9.actual-pre-donor-coupled-clock-eligibility.v1",
+  "utc": "2026-10-06T04:32:13.690429+00:00",
+  "outbox": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/READY_OUTBOX_002.json",
+    "sha256": "ef33f9a8de703a969111963fda24c3040a402d152378baa1c361ba929c899c00"
+  },
+  "five_pairs": [
+    {
+      "pair_id": "D-V05-A-LUNA-R1-DEFERRED-R001-CLOCK-R002",
+      "original_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "both_wholly_unentered": true
+    },
+    {
+      "pair_id": "D-V05-B-DEFERRED-R001-CLOCK-R002",
+      "original_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001",
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "both_wholly_unentered": true
+    },
+    {
+      "pair_id": "D-V06-A-DEFERRED-R001-CLOCK-R002",
+      "original_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001",
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "both_wholly_unentered": true
+    },
+    {
+      "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+      "original_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001",
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "both_wholly_unentered": true
+    },
+    {
+      "pair_id": "D-V13-A-DEFERRED-R001-CLOCK-R002",
+      "original_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001",
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "both_wholly_unentered": true
+    }
+  ],
+  "new_source_rows_not_previously_registered": true,
+  "old_D13B_entered_excluded": true,
+  "source_ready_marker": {
+    "path": "LAB_ROOT/ops/dispatcher/LUNA_V1_5_READY.json",
+    "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+  },
+  "full_cohort_freeze": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/FULL_COHORT_FREEZE.json",
+    "sha256": "838c4f54af995cf6727345f79399a4eaeb171794d009ede56ad9e89c4004adc7"
+  },
+  "dispatcher_exclusive_stopped": true,
+  "source_roles_are_authorized_unscored_exception_not_target_starts": true
+}

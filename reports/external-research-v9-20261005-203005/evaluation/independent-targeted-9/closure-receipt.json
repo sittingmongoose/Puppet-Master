@@ -1,0 +1,116 @@
+{
+  "schema": "er9.independent-evaluator-closure.v1",
+  "evaluation_id": "independent-targeted-9",
+  "pair_id": "D-V02-B-BUNDLE-R001",
+  "closed_utc": "2026-10-06T04:27:20.174319Z",
+  "closed_monotonic_ns": 91259031305257,
+  "reservation_budget_anchor_utc": "2026-10-06T04:12:37.069747Z",
+  "reservation_budget_anchor_monotonic_ns": 90375926797953,
+  "actual_semantic_body_view_start_utc": "2026-10-06T04:14:04.347375Z",
+  "actual_semantic_body_view_start_monotonic_ns": 90463204363036,
+  "prep_wait_seconds_charged": 87.277565083,
+  "source_charged_seconds": 368.54597458,
+  "source_semantic_body_seconds": 281.268409497,
+  "phase2_inclusive_elapsed_through_source_report_and_neutral_handoffs_seconds": 514.558532724,
+  "whole_charged_elapsed_through_report_handoffs_seconds": 883.104507304,
+  "phase2_budget_seconds": 600,
+  "whole_budget_seconds": 1800,
+  "source_budget_seconds": 1200,
+  "phase2_deadline_monotonic_ns": 91344472772533,
+  "whole_deadline_monotonic_ns": 92175926797953,
+  "phase2_remaining_for_immediate_closure_pin_final_handoff_seconds": 85.441467276,
+  "required_work_complete": true,
+  "source_judgment_immutable": true,
+  "clock_discrepancy_preserved": true,
+  "budget_or_exposure_reset": false,
+  "scientific_handoff_recipient": "/root only; root instructed owner report/publisher routing",
+  "neutral_handoff_recipient": "/root/frozen_exports; accountant-neutral artifact routed through /root",
+  "handoffs_before_this_clock": [
+    "immutable Phase1 lock pin/key-release followup",
+    "Phase1 scientific judgment root handoff",
+    "neutral clock-authority addendum root/courier handoffs",
+    "final scientific report root handoff",
+    "neutral accounting/pins courier handoff"
+  ],
+  "subsequent_final_handoff": "Immediate closure receipt pin and concise neutral final response only; no assessment work or new clock. Final-message sampling tail is not a separate token/cost telemetry measurement.",
+  "new_goal_by_evaluator": false,
+  "evaluator_retests_repairs_or_process_mutation": false,
+  "prior_evaluator_or_campaign_inventory_read": false,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/reservation.json",
+      "sha256": "ba5bac3050c423b46462c6d825f6d00af0b110b844e74ae1ab9ee9fdcf25531c",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/reservation-clock-clarification.json",
+      "sha256": "dc8f27f3155c9e8236fe65bf416227eca43701d0189420a397b601bc52ba60d3",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/source-start.json",
+      "sha256": "08cd150307b6517608dafd32ae09c19930de3c7dfde4968fac0e33200aa40353",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/clock-authority-addendum.json",
+      "sha256": "5c5e4dab57f3ac1a9a98a0e5768ac4fe4e6518eedb2d71425272ffdef5ec4bb7",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-lock.json",
+      "sha256": "39c1c0e852342d3b5dbb2a5b09581064e6578b4ece67c29429cdbd2b2feee4d9",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-judgment.json",
+      "sha256": "f263952416846370821e787efcc2073b8d84d12847cbdfca766e423b18d62a9b",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-judgment.md",
+      "sha256": "fd7c1fb839fa00ac0764d92d5d54ad08df2b149b1df1a55b5f80b027b2921ba2",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/source-map-observation.json",
+      "sha256": "3691659c4a0cfd87af7aa2069496f524980445b03c2ca5bb7c07cbbe66d439ca",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/primary-capture-verification.json",
+      "sha256": "edf70f288c6d6389701b80045b3f00c518a2c64e5e49430eed9383037a7d34da",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/current-owned-quiet-verification.json",
+      "sha256": "f216bfb2389a1305c75f1b5c0d3bdc1dbee942241607f9e4c85bc12dc33d38ab",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/native-session-aggregate-verification.json",
+      "sha256": "640f6bbc845eb76d50a3506f47a7a2160167cc6b7874a7b180f81bfc313d2fe3",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase2-assessment.json",
+      "sha256": "d490c2a7375e3abb57130dd224ec2036bd256a04b9a24f33ce993d98cb2bd651",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/neutral-accounting.json",
+      "sha256": "78bc95806da3d6ac6da757ee8f513a7f5df29fea82797b75fbeecd2063ae42d3",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/report.md",
+      "sha256": "062291b201778757654cbe78c7c9916e44ce460b1b339052fc75d79220f9a0f4",
+      "nonwritable": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/report.json",
+      "sha256": "37b7903df0c0b028673321bc45f33341e598781bda8ecc400490ab61fda6ee8c",
+      "nonwritable": true
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "schema": "er9.positive-native-clock-and-kernel-activation.v1",
+  "observed_utc": "2026-10-06T04:35:15.742655+00:00",
+  "rows": [
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "family": "L",
+      "host_start_observed_utc": "2026-10-06T04:32:22.913397+00:00",
+      "source_native_snapshot_sha256": "ab9214cda41627dfdc15fc7226cc850b1bb8217c26adad3eee43eb324549db73",
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "native_goal_started_turn": true,
+      "original_birth_monotonic_ns": 91561770381260,
+      "original_clock_proof": {
+        "clock_profile_sha256": "80316f5a8029567f46131d6d3a5b1bd346b20ee5a260bb47377aa835f7b5a89e",
+        "original_controller_receipt_sha256": "4e31d0693e3cd2a9c1fde53f3be30d545a4d8a7c0ad50d5eeceab6d41d7c409b",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "original_birth_monotonic_ns": 91561770381260,
+        "original_stage_allocation_seconds": 600,
+        "original_candidate_action_deadline_monotonic_ns": 92146770381260,
+        "original_total_cleanup_stop_monotonic_ns": 92161770381260,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "0a6f960989e88b4db9ac40036d941e49a9ecc2a51ce15c197101c573acaecdc1",
+        "neutral_second_native_text_sha256": "0a6f960989e88b4db9ac40036d941e49a9ecc2a51ce15c197101c573acaecdc1",
+        "scientific_first_native_text_sha256": "da1753c8d46c050e0663a44929eb63de0361cf1c4cf6b8294469b7704489578c",
+        "goal_objective_sha256": "40344c91be20b5a3cc5b72a5942f18644d79c03ddf5d706a7c54fa11c2a42417",
+        "actual_initial_input_array_sha256": "d940d3a1364604532c24331a9ff1293081204c817b253c250bb1b3c612acf606",
+        "clock_profile_sha256": "80316f5a8029567f46131d6d3a5b1bd346b20ee5a260bb47377aa835f7b5a89e",
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "4fbb08f9975b80c1ec7da82289dfe38a2ac299c6f1be4f3c0a34d2d2280a2995",
+        "source_TASK_sha256": "4fbb08f9975b80c1ec7da82289dfe38a2ac299c6f1be4f3c0a34d2d2280a2995",
+        "declaration_sha256": "b16ebf0d6a14f665d841f830523824942f6d51b7a5b5af7a69e65e75ee9dc786"
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-seed-dev-a-deferred-r001-seed-critique-a001-clock-r002.service",
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30244864",
+          "memory.peak": "31256576",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "29945856",
+          "memory.peak": "30916608",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 91563263798270,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "complete_job_memory_max_bytes": 2415919104,
+      "original_role_allocation_seconds": 600,
+      "pipeline_credit": false
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+      "family": "L",
+      "host_start_observed_utc": "2026-10-06T04:32:21.112812+00:00",
+      "source_native_snapshot_sha256": "bd8e4e0397430b4bdf90e89975653b9103f473d2e24d2b3e84aab8db4efb3bfb",
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "native_goal_started_turn": true,
+      "original_birth_monotonic_ns": 91559969790604,
+      "original_clock_proof": {
+        "clock_profile_sha256": "07c393684512659be259d3e273e669950d71c571b29b4b36fd136428524e65fc",
+        "original_controller_receipt_sha256": "6d00e1ee7f91d8cfd902950aae3fb94b482d8c61ecc7b6b45affb075ce23722a",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+        "original_birth_monotonic_ns": 91559969790604,
+        "original_stage_allocation_seconds": 900,
+        "original_candidate_action_deadline_monotonic_ns": 92444969790604,
+        "original_total_cleanup_stop_monotonic_ns": 92459969790604,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "30b6c32fee9164a7a628667aa4dfc2356b36f7aeca815b3d81103d5542ef4090",
+        "neutral_second_native_text_sha256": "30b6c32fee9164a7a628667aa4dfc2356b36f7aeca815b3d81103d5542ef4090",
+        "scientific_first_native_text_sha256": "36f57fc7b76f51f4455f57a01a262dbad9eb8fe2b75c0dfd2cce39c5489fafd4",
+        "goal_objective_sha256": "7e5b4b5a8aaf0a2ad1548b43603dc358e907d83550f06e5fb53ed0877b8029b9",
+        "actual_initial_input_array_sha256": "ac44f2cc0a5b55b691afcbb83272a12b6ac377caf938b3901d12bd991d96463a",
+        "clock_profile_sha256": "07c393684512659be259d3e273e669950d71c571b29b4b36fd136428524e65fc",
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "3564b7e67740675e31bcde6cdc9864a5d5bbd5cddc050782b1e98e1fd02fd1b4",
+        "source_TASK_sha256": "3564b7e67740675e31bcde6cdc9864a5d5bbd5cddc050782b1e98e1fd02fd1b4",
+        "declaration_sha256": "0130e075df5d3a63753b4ce25bb506f97bdd3d97ab8875d7c62decf5030ccbb7"
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-seed-dev-a-deferred-r001-seed-enrichment-a001-clock-r002.service",
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "29892608",
+          "memory.peak": "30904320",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "29855744",
+          "memory.peak": "30867456",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 91561676340209,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "complete_job_memory_max_bytes": 2415919104,
+      "original_role_allocation_seconds": 900,
+      "pipeline_credit": false
+    },
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "family": "L",
+      "host_start_observed_utc": "2026-10-06T04:32:39.316429+00:00",
+      "source_native_snapshot_sha256": "d686582215ce63ac35259cf295d4e00e12df7648e4219d59bf1bb386914d4339",
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "native_goal_started_turn": true,
+      "original_birth_monotonic_ns": 91578173412748,
+      "original_clock_proof": {
+        "clock_profile_sha256": "9b12cbf1ff49ebb579aee7f067a1c0877b0a3445a4854e355b1f4e7a3ce9ac66",
+        "original_controller_receipt_sha256": "e66cc37c815037e48be93cb2c2111b2bae04b57acbf4f144c4387d75e86e6f22",
+        "controller_source_sha256": "26e6fba750be5e64781e2726be5c4473b73868613069854f694189dfbc648da8",
+        "action_field": "native_stop_monotonic_ns",
+        "stage_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "original_birth_monotonic_ns": 91578173412748,
+        "original_stage_allocation_seconds": 600,
+        "original_candidate_action_deadline_monotonic_ns": 92163173412748,
+        "original_total_cleanup_stop_monotonic_ns": 92178173412748,
+        "phase": "saved original controller scalars before Goal or turn; not native activation proof"
+      },
+      "initial_clock_input_binding": {
+        "schema": "er9.luna.pre-goal-initial-clock-input-binding.v1",
+        "stage_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+        "policy": "unchanged-scientific-first-text/exact-builder-neutral-clock-second-text/no-goal-objective-append-v1",
+        "visible_clock_path": "inputs/STAGE_CLOCK.json",
+        "visible_clock_file_sha256": "fe06838857ea5a420820f9da55ffcae29ce0c01e52a4ac70687505061a4f9383",
+        "neutral_second_native_text_sha256": "fe06838857ea5a420820f9da55ffcae29ce0c01e52a4ac70687505061a4f9383",
+        "scientific_first_native_text_sha256": "c63e01030ff72eef8e40ee2aad2ce221e86d78b0101a63e18b111e4566ca413f",
+        "goal_objective_sha256": "8ee43317ebaaffbc2b2399bb7722b784379078d65a81d1f2674e5c6d7d64eb50",
+        "actual_initial_input_array_sha256": "218c0470d0ab5022c62b7bf53664d01c5a3a30bd12eec6512301cbf87081dae0",
+        "clock_profile_sha256": "9b12cbf1ff49ebb579aee7f067a1c0877b0a3445a4854e355b1f4e7a3ce9ac66",
+        "scientific_text_or_goal_objective_appended": false,
+        "actual_initial_text_count": 2,
+        "phase": "prepared before native Goal/turn",
+        "model_consumption": "UNESTABLISHED; delivery must be confirmed by actual initial turn acknowledgement",
+        "source_prompt_sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41",
+        "source_TASK_sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41",
+        "declaration_sha256": "4ff3c0043f04ac1e29feb224d0005558dd0dc5752ee75e09cc59a62e0eea3888"
+      },
+      "clock_input_delivery_status": "SENT_IN_INITIAL_NATIVE_TURN_ACKNOWLEDGED",
+      "outer_resource_placement": {
+        "component": "outer_worker",
+        "unit": "er9-203005-seed-dev-b-deferred-r001-seed-critique-a001-clock-r002.service",
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "30867456",
+          "memory.peak": "31883264",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "30101504",
+          "memory.peak": "31334400",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 91579749734858,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      "complete_job_memory_max_bytes": 2415919104,
+      "original_role_allocation_seconds": 600,
+      "pipeline_credit": false
+    }
+  ],
+  "each_source_snapshot_stable_during_read": true,
+  "source_roles_are_unscored_shared_seed_development": "separate from targeted comparison starts",
+  "source_body_or_auth_read_or_exported": false,
+  "stage_completion_or_quality": "NOT_CLAIMED"
+}
