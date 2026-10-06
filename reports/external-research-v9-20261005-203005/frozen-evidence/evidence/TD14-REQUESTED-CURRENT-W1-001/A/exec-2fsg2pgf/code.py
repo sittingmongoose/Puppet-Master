@@ -1,0 +1,1 @@
+old=1.4208036661148071; new=1.4208036661148072e-9; ratio=old/new; print('old/new ratio:',format(ratio,'.17g')); print('relative error:',format(abs(ratio-1e9)/1e9,'.3g')); assert abs(ratio-1e9)/1e9 < 1e-15; print('PASS: issue values are consistent with a 1e9 rescaling')

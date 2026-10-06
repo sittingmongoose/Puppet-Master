@@ -1,0 +1,35 @@
+{
+  "actual_money": "UNKNOWN",
+  "actual_physical_provider": "UNKNOWN",
+  "all_65_phase1_pins_readonly_unchanged": true,
+  "candidate_goals_run_by_evaluator": 0,
+  "candidate_retests_or_repairs": 0,
+  "closure_monotonic_ns": 96409850804940,
+  "closure_receipt_forwarding_and_final_response_pending": true,
+  "closure_utc": "2026-10-06T05:53:10.993820+00:00",
+  "evaluation_id": "independent-targeted-15",
+  "final_reports_readonly_hash_verified": {
+    "final_report.json": "7a7813c927d6fa98736269a1dedb0cde3ee5fcb6e3558734dd3ea1bb55cbb8f3",
+    "final_report.md": "320c47aa34816551951c630699cdbdee6e593bcb4361d98f028fdc3ed09c619b",
+    "neutral_accounting_final.json": "102ed3ffe453e19a3c6afffd3291a2e38d889f8b6a69a45c53c1db5c6db0d14c",
+    "phase1.json": "af9d6cd9056d2ab9b60c7d95e10188e8190d87b05a690dc3d9375442af5cf822",
+    "phase1_lock.json": "3342acbe9de0b9aef3ee36a359ca7256816507402719c77d44b09a8619169af4"
+  },
+  "opaque_native_goal_ids": "UNKNOWN",
+  "pair_id": "D-V10-B-BUNDLE-R001",
+  "phase2_deadline_monotonic_ns": 96604193440998,
+  "phase2_elapsed_inclusive_seconds": 405.657363942,
+  "phase2_remaining_seconds": 194.342636058,
+  "required_report_handoffs": {
+    "/root": "SENT_ACCEPTED_NO_ACK_WAIT",
+    "/root/cost_accounting": "NEUTRAL_RECEIPT_SENT_ACCEPTED_NO_ACK_WAIT",
+    "/root/frozen_exports": "NEUTRAL_GATES_SELECTORS_SENT_ACCEPTED_NO_ACK_WAIT",
+    "/root/publisher": "SENT_ACCEPTED_NO_ACK_WAIT"
+  },
+  "reset": false,
+  "schema": "er9.independent-evaluation-neutral-closure.v1",
+  "source_elapsed_seconds": 496.072850714,
+  "source_grade_included": false,
+  "whole_deadline_monotonic_ns": 97308120590284,
+  "whole_elapsed_seconds": 901.730214656
+}

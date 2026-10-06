@@ -1,0 +1,30 @@
+{
+  "before_both_deadlines": true,
+  "clock_reset": false,
+  "evaluation_id": "independent-pipeline-5",
+  "evaluator_money": "UNKNOWN",
+  "evaluator_physical_provider": "UNKNOWN",
+  "evaluator_usage": "UNKNOWN",
+  "handoff_result": "Each collaboration send returned success; no ACK awaited.",
+  "handoffs_completed_monotonic_ns": 96400362233885,
+  "handoffs_completed_utc": "2026-10-06T05:53:01.505245+00:00",
+  "neutral_handoffs": [
+    "/root/frozen_exports",
+    "/root/cost_accounting"
+  ],
+  "no_scientific_outcomes_in_this_neutral_receipt": true,
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "phase2_inclusive_elapsed_seconds": 399.948181226,
+  "phase2_literal_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+  "reports": "Immutable selector REPORT_SELECTOR.json SHA-256 fccd23a641d3466a52f2ebc67662eed26503f98a9973ed78121a78056618947f",
+  "schema": "er9.independent-evaluator-handoff-closure.v1",
+  "science_handoffs": [
+    "/root",
+    "/root/publisher"
+  ],
+  "source_checking_interval_seconds": 613.934399478,
+  "source_judgment_rewritten": false,
+  "status": "CLOSED",
+  "whole_elapsed_seconds": 1013.882580704,
+  "whole_original_deadline_utc": "2026-10-06T06:06:07.622668+00:00"
+}

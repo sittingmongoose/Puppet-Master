@@ -1,0 +1,891 @@
+{
+  "schema": "er9.locked-confirmation-clock-retest-feasibility.v1",
+  "task_start_utc": "2026-10-06T05:16:48+00:00",
+  "created_utc": "2026-10-06T05:25:43.875836+00:00",
+  "status": "READY_CONDITIONAL_ENGINEERING_FEASIBILITY_NOT_ADMISSION",
+  "policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-014-CONFIRMATION-CLOCK-FRESH.json",
+    "sha256": "7157f09e6004d0f65d9d6ff8fbc82e141d169eb105432ab89a4bb7705ff93834"
+  },
+  "old_full_source_outbox": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/OUTBOX.json",
+    "sha256": "a4b2c1a82dcbda46def1cac647eaa396f2e95391046fdede4e9eca691770f172"
+  },
+  "workload003": {
+    "source": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-003/WORKLOAD_SCOREBOARD.json",
+      "sha256": "7469aaf2ad544ffe746faf4e24cd4f435c2083d3695906f6e79e2e90950c9605"
+    },
+    "selector": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-003/PUBLICATION_SELECTOR.json",
+      "sha256": "ea0cab8cc86812344ad9b9605f8dbc001321f765821ce09514bf0723426fd582"
+    },
+    "checkpoint_utc": "2026-10-06T05:15:17.640613+00:00",
+    "selected_C_summary": {
+      "requested_pairs": 4,
+      "requested_arms_or_pipelines": 8,
+      "registered_stages": 22,
+      "native_started_stages": 9,
+      "terminal_stages": 21,
+      "remaining_nonterminal_stages": 1,
+      "dependency_blocked_stages": 12,
+      "ready_stages": 1,
+      "active_stages": 0,
+      "not_verified_operational_complete_stages": 20,
+      "true_operational_complete_arms": 0,
+      "unknown_operational_complete_arms": 1
+    },
+    "separate_from_fresh_registry_observation": true
+  },
+  "registry_observation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+    "sha256_at_read": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+    "observed_utc": "2026-10-06T05:25:42.219307+00:00",
+    "single_bounded_read": true,
+    "atomic_with_other_source_files": false,
+    "selected_roles": 22,
+    "selected_old_pairs": 4
+  },
+  "old_registry_status_counts": {
+    "FAILED": 7,
+    "BLOCKED_PREDECESSOR_FAILED": 12,
+    "COMPLETED": 2,
+    "SEALED_READY": 1
+  },
+  "old_nonterminal_stage_ids": [
+    "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001"
+  ],
+  "all_old22_terminal_now": false,
+  "all_observed_terminal_born_roles_owned_quiet": true,
+  "positive_old_native_activations": 9,
+  "all_old22_terminal_owned_quiet_at_future_admission": "SOLE_OPS_MUST_RECHECK; this feasibility is not a live permit",
+  "locked_pairs": [
+    {
+      "original_slot": "C-01",
+      "original_locked_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-01.json",
+        "sha256": "0acfc642339972c7d7120c0e976638f222396b9d03836d2fa017aece301f5f56"
+      },
+      "old_selected_pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "method_id": "CONFIRM-A",
+      "holdout_case_id": "H1-v1",
+      "candidate_family": "GLM",
+      "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "effort": "max",
+      "locked_method_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "registration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "e26abc09b7a7b1cb10e87dce56d9b7eebfa0ee21a186b82fde01244dcdc8035a"
+      },
+      "full_old_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+      },
+      "locked_input_refs": {
+        "brief_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H1.md",
+          "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+        },
+        "coverage_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H1-coverage.json",
+          "sha256": "244191919a265d07a07f2a1906b60a03eaeb9bb7cbacb175c5dc7befa7655701"
+        },
+        "source_access_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        },
+        "common_criteria_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+        },
+        "common_output_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      },
+      "method_factors": [
+        "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+        "V10 early coherent release/artifact/API binding",
+        "Candidate-authored discriminating execution where useful with matched tools",
+        "V16 complete decision-focused current proposal and catalogs"
+      ],
+      "combined_critic_final_treatment": false,
+      "schedule": [
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "arm": "control",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+          "arm": "control",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+          "arm": "treatment",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+          "arm": "treatment",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        }
+      ],
+      "per_arm_native_seconds": {
+        "control": 2700,
+        "treatment": 2700
+      },
+      "first_research_input_hashes": [
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        },
+        {
+          "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        }
+      ],
+      "quality_or_early_PASS_gate": false,
+      "original_mislabeled_occupied_per_arm_metadata": 5400,
+      "allocation_rule": "Exact per-stage sum2700 per arm/5400 both arms, per DEC014; preserve old5400 label bytes without extending allocation"
+    },
+    {
+      "original_slot": "C-02",
+      "original_locked_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-02.json",
+        "sha256": "a442374963dd9d3a6a719f58833a11c7d062c164caa6e12998453deefd83baac"
+      },
+      "old_selected_pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "method_id": "CONFIRM-A",
+      "holdout_case_id": "H2-v1",
+      "candidate_family": "GLM",
+      "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "effort": "max",
+      "locked_method_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "registration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "70c7f0cdaad780cf081fc0fc4418e75422b2caafe046017d16718019d383485f"
+      },
+      "full_old_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+      },
+      "locked_input_refs": {
+        "brief_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2.md",
+          "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+        },
+        "coverage_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2-coverage.json",
+          "sha256": "7445e6e3bf1fd660c8123d766210c4f41fbd90c7031c365dd472a3705f273c07"
+        },
+        "source_access_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        },
+        "common_criteria_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+        },
+        "common_output_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      },
+      "method_factors": [
+        "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+        "V10 early coherent release/artifact/API binding",
+        "Candidate-authored discriminating execution where useful with matched tools",
+        "V16 complete decision-focused current proposal and catalogs"
+      ],
+      "combined_critic_final_treatment": false,
+      "schedule": [
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "arm": "control",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-control-revision-a001",
+          "arm": "control",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+          "arm": "treatment",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+          "arm": "treatment",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        }
+      ],
+      "per_arm_native_seconds": {
+        "control": 2700,
+        "treatment": 2700
+      },
+      "first_research_input_hashes": [
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        },
+        {
+          "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        }
+      ],
+      "quality_or_early_PASS_gate": false,
+      "original_mislabeled_occupied_per_arm_metadata": 5400,
+      "allocation_rule": "Exact per-stage sum2700 per arm/5400 both arms, per DEC014; preserve old5400 label bytes without extending allocation"
+    },
+    {
+      "original_slot": "C-03",
+      "original_locked_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-03.json",
+        "sha256": "fb4cc106eee6d375599d1c9644ae9decf41ad6ce35dfae45332d61574d728d65"
+      },
+      "old_selected_pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "method_id": "CONFIRM-B",
+      "holdout_case_id": "H1-v1",
+      "candidate_family": "GLM",
+      "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "effort": "max",
+      "locked_method_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "registration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "45741058e25c4957af85371f798c3f96e53e470939b3f2dd808c26a534b72115"
+      },
+      "full_old_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+      },
+      "locked_input_refs": {
+        "brief_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H1.md",
+          "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+        },
+        "coverage_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H1-coverage.json",
+          "sha256": "244191919a265d07a07f2a1906b60a03eaeb9bb7cbacb175c5dc7befa7655701"
+        },
+        "source_access_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        },
+        "common_criteria_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+        },
+        "common_output_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      },
+      "method_factors": [
+        "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+        "V10 early coherent release/artifact/API binding",
+        "Candidate-authored discriminating execution where useful with matched tools",
+        "V16 complete decision-focused current proposal and catalogs"
+      ],
+      "combined_critic_final_treatment": true,
+      "schedule": [
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "arm": "control",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-control-revision-a001",
+          "arm": "control",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        },
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+          "arm": "treatment",
+          "stage": "critic_final",
+          "stage_index": 1,
+          "max_seconds": 1500,
+          "max_responses": 150,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        }
+      ],
+      "per_arm_native_seconds": {
+        "control": 2700,
+        "treatment": 2700
+      },
+      "first_research_input_hashes": [
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        },
+        {
+          "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "a0bd5d028acfedcd443b7860e43fb6240627873b354fe2a282ad9884990cbe50"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        }
+      ],
+      "quality_or_early_PASS_gate": false,
+      "original_mislabeled_occupied_per_arm_metadata": 5400,
+      "allocation_rule": "Exact per-stage sum2700 per arm/5400 both arms, per DEC014; preserve old5400 label bytes without extending allocation"
+    },
+    {
+      "original_slot": "C-04",
+      "original_locked_card": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+        "sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa"
+      },
+      "old_selected_pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "method_id": "CONFIRM-B",
+      "holdout_case_id": "H2-v1",
+      "candidate_family": "GLM",
+      "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "effort": "max",
+      "locked_method_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "registration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/registration.json",
+        "sha256": "1ce8d106979c06b250613b51770c60405d8585d8491db8b112e70eec900fde38"
+      },
+      "full_old_closure_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+        "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+      },
+      "locked_input_refs": {
+        "brief_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2.md",
+          "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+        },
+        "coverage_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/released/H2-coverage.json",
+          "sha256": "7445e6e3bf1fd660c8123d766210c4f41fbd90c7031c365dd472a3705f273c07"
+        },
+        "source_access_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        },
+        "common_criteria_path": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/common_criteria.json",
+          "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44"
+        },
+        "common_output_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/prompts/output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        }
+      },
+      "method_factors": [
+        "V14 protected 30% discovery-effort instruction inside research; uptake observed, not assumed",
+        "V10 early coherent release/artifact/API binding",
+        "Candidate-authored discriminating execution where useful with matched tools",
+        "V16 complete decision-focused current proposal and catalogs"
+      ],
+      "combined_critic_final_treatment": true,
+      "schedule": [
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+          "arm": "control",
+          "stage": "critique",
+          "stage_index": 1,
+          "max_seconds": 900,
+          "max_responses": 90,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-revision-a001",
+          "arm": "control",
+          "stage": "revision",
+          "stage_index": 2,
+          "max_seconds": 600,
+          "max_responses": 60,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        },
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "stage": "research",
+          "stage_index": 0,
+          "max_seconds": 1200,
+          "max_responses": 120,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": false
+        },
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+          "arm": "treatment",
+          "stage": "critic_final",
+          "stage_index": 1,
+          "max_seconds": 1500,
+          "max_responses": 150,
+          "execution_enabled": true,
+          "public_get": true,
+          "pipeline_final": true
+        }
+      ],
+      "per_arm_native_seconds": {
+        "control": 2700,
+        "treatment": 2700
+      },
+      "first_research_input_hashes": [
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+          "arm": "control",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        },
+        {
+          "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+          "arm": "treatment",
+          "inputs": [
+            {
+              "relative_path": "source_separation.md",
+              "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+            },
+            {
+              "relative_path": "brief.md",
+              "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+            },
+            {
+              "relative_path": "delivery_objective.md",
+              "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+            },
+            {
+              "relative_path": "output_contract.md",
+              "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+            },
+            {
+              "relative_path": "source_access.json",
+              "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+            }
+          ],
+          "no_prior_role_imports": true,
+          "scientific_body_read": false,
+          "candidate_or_evaluator_body_read": false
+        }
+      ],
+      "quality_or_early_PASS_gate": false,
+      "original_mislabeled_occupied_per_arm_metadata": 5400,
+      "allocation_rule": "Exact per-stage sum2700 per arm/5400 both arms, per DEC014; preserve old5400 label bytes without extending allocation"
+    }
+  ],
+  "current_G1_5_actual_source_choices": {
+    "core_engine_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+      "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+    },
+    "bundle_engine_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+      "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+    },
+    "core_integration_outbox": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "sha256": "b9535522b5d7c3a557412add18d8c08b90bf90e0d616fb90d38d01021601f084"
+    },
+    "bundle_integration_outbox": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "sha256": "58ec7ffc791ff345155b5fdeca0ee14eb20afc0dc8ff2bdb33dd0a4143d92b49"
+    },
+    "tool_source_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+      "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+    },
+    "clock_fragment_constructor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/task_fragment.py",
+      "sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+    },
+    "production_verification": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/VERIFICATION.json",
+      "sha256": "b942c15a71b7369cf5b1f260d6ae32edefe3b6b290b251adf371e4a487b8831e"
+    },
+    "current_ops_core_ready": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+      "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+    },
+    "current_ops_bundle_ready": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+      "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+    }
+  },
+  "mechanical_patterns": {
+    "seven_pair46_role_clock_builder": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/PIN.json",
+      "sha256": "bab230c26f5bbe5d859e200f4fcb262da18d1b362866f3e47ff83dfb0392f7af"
+    },
+    "seven_pair_clock_constructor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/prepare_versions.py",
+      "sha256": "8e12e2e6f02050172bf92711933c56510912cc3a345c5a88750dc7a063ebdf77"
+    },
+    "DEC012_clean_firstR22_policy": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-012-LUNA-CLOCK-FRESH.json",
+      "sha256": "666f0daee123eb96fb58f41a76d3b1a0584120c74f9de73a966a32ce4977ebf5"
+    },
+    "DEC012_clean_firstR22_source": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/SOURCE_PIN.json",
+      "sha256": "b62a546e2ef26f539525942ba0ec1d8a26cae1986782dceee3e16889017e0960"
+    },
+    "DEC012_case_constructor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/prepare.py",
+      "sha256": "665641fd200ed198af509273a07aa9f40a40c05a9ea84730ecc64a7136d69989"
+    },
+    "DEC012_strict_new_role_linker": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/role_birth.py",
+      "sha256": "96d40153da0065247ec98e5b59577e92b176a336a9f2bda4cc9c2d482c7d64cb"
+    },
+    "reuse_scope": "Mechanical closure/input hygiene patterns only. Never reuse L model/runtime or scored candidate/evaluator inputs."
+  },
+  "planned_fixed_scope": {
+    "locked_pairs": 4,
+    "further_pipelines": 8,
+    "new_native_roles": 22,
+    "allocated_seconds_per_arm": 2700,
+    "allocated_seconds_all8_arms": 21600,
+    "extra_target_or_hypothesis_credit": 0,
+    "quality_selected_subset": false,
+    "automatic_further_cohort_repeat": false,
+    "candidate_family": "GLM Flash/max genuine native Goals; max2 active across all stages"
+  },
+  "new_source_choice_plan": "Core clock v3 on R/ordinary critics; bundle clock v3 on final authors and MethodB combined critic_final. Exact both-arm all4 choices frozen before ANY first R; source model/factors/stage caps preserved.",
+  "firstR_clean_source_rule": "Use only pristine original admitted five common input bytes and exact locked scientific Task prefix; add declared common neutral clock suffix and role-birth scalar STAGE_CLOCK file. Never import old candidate results/source captures/catalogs/critics/failed outputs, evaluator feedback, Sol answers, other-arm artifacts, development12/5/3 obligations or scored scientific inputs.",
+  "later_role_rule": "Only newly authenticated current same-arm outputs under a fixed strict role linker, with genuine native Goal/source/clock receipts. Future artifact hashes are born and pinned under the already fixed rule, never invented before existence.",
+  "scope_preservation": "H1/H2 brief/coverage and common criteria hashes exactly preserved; H2ten/common8 per DEC014. No body inspection, reinterpretation or supplemental development target-count instruction.",
+  "required_owner_work": {
+    "case_source_engineer": "case_resource_successors: new separately pinned all4/22-role constructor, full closure and scientific-prefix byte-preservation proof; do not mutate old descriptors or pretend old pairs had native0",
+    "execution_engine": "Existing pinned G clock core/bundle runtime and constructor are READY. No new native/runtime patch is identified by this feasibility.",
+    "ops": "Atomic all-old22 terminal/ownedquiet, all-new22 no start intent/native0, full BOTH ALL4 source choices, exact model/family/caps/source guard and original per-role clock/resource birth before Goal; sole admission",
+    "source_or_quality_review": "Independent and not a first-stage PASS gate; no engineering answer or grade"
+  },
+  "known_version_difference": "Original pipeline selected core1.2/tools1.3 for research/critic and bundle1.2/tools1.4 for final, without this declared trusted original-action telemetry. New common1.5 is an explicit behavioral intervention. Scientific prefix budget visibility is unread/UNKNOWN; no proof that clock absence caused quality or delivery failure.",
+  "original_costs_and_holds": "Preserved; finite retest costs additive. No discard, best-output fishing or retroactive pipeline completion.",
+  "boundary_note": "Early filename/whole-workload-slot discovery exposed administrative inventories beyond the necessary whitelist. Preserved as a disclosure; no authored/scientific/evaluator bodies or answers were opened or used. The frozen output contains only selected administrative fields, locators and hashes.",
+  "new_Goal_model_provider_or_account_calls": 0,
+  "candidate_eval_science_bodies_selected": 0,
+  "launch_import_patch_or_live_state_mutations": 0,
+  "no_wait_or_poll_for_old_completion": true
+}

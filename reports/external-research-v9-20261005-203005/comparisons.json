@@ -1,5 +1,5 @@
 {
-  "scope": "Frozen I01/I02 and original/partial D14/D15 views; no full pair effect claims",
+  "scope": "Earlier frozen scientific comparison views plus later separate operational completeness projection; no full scientific pair effect claim",
   "completed_matched_comparisons": 0,
   "comparisons": [
     {
@@ -24,5 +24,21 @@
       "independent_assessment": "evaluation/dispatch/I02-research-review0001/report.json"
     }
   ],
-  "diagnostic_reports": "evaluation/diagnostics/INDEX.md"
+  "diagnostic_reports": "evaluation/diagnostics/INDEX.md",
+  "completed_matched_comparisons_scope": "Independent full scientific comparison credit, not operational native completion",
+  "operational_completion_snapshot": {
+    "matched_pairs": 2,
+    "whole_pipelines": 5,
+    "pair_ids": [
+      "I-06-LUNA-CLOCK-FRESH-R001",
+      "I-07-LUNA-CLOCK-FRESH-R001"
+    ],
+    "single_extra_pipeline": {
+      "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+      "arm": "treatment"
+    },
+    "source_quality": "Separate independent assessment/pending; prior missingpartner snapshots unchanged",
+    "paired_projection": "operational-completion-026/COMPLETE_MATCHED_NATIVE_PAIRS_001.json",
+    "single_projection": "operational-completion-026/FIRST_COMPLETE_NATIVE_PIPELINE_001.json"
+  }
 }

@@ -1,0 +1,384 @@
+{
+  "evaluation_id": "independent-targeted-14",
+  "evidence_manifest": {
+    "bytes": 1530,
+    "mode": "0400",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/phase2-evidence-manifest.json",
+    "sha256": "44015ada23d0542fc27591e3e1300374f452fe30429f3bfbfebdbbac292bee0e"
+  },
+  "full_pipeline_quality": {
+    "A": "UNASSESSED",
+    "B": "UNASSESSED"
+  },
+  "inclusive_phase2_elapsed_at_report_seconds": 329.5081479430082,
+  "interpretation": [
+    "Alias A is ordinary control; alias B is V10 earlier coherent release/API binding. Exact actual-task hints already made perfect Phase1 blinding impossible.",
+    "A direct Goal complete is supported before cleanup; the sole turn still ends interrupted, and operational component_outcome is HOLD. These fields measure different events. B is active before cleanup, paused at last direct observation, and records original-native-stop TimeoutError; no complete Goal or current final is inferred.",
+    "Both current owned proof flags, original quiet flags, selected host-service terminal cgroups and released private-slice descendants agree on quiet owned scopes. Quiet cleanup is not source quality or successful task completion. Nonzero terminal service-runner exits remain recorded separately from the native result/error.",
+    "The recorded memory and total-wall allocations match: complete-job limit2415919104 bytes, zero swap, identical component memory caps, and900s total wall. No OOM is observed in the supplied counters. Aggregate CPU/tasks/scratch caps and resource fit remain UNKNOWN. Matching these dimensions does not establish matched inference request/response budgets or equal opportunity at every unobserved layer.",
+    "Actual inference tool payload was not observed. Native MCP catalog/restriction metadata is evidence of that limited admission scope; it is not proof of every provider request/tool payload. Native HTTP attempt/response counts and monetary billing remain UNKNOWN.",
+    "Native cumulative usage, Goal tokens and parent/UI/provider counters are distinct scopes. Cached input is part of input; reasoning output is part of output. Totals are not summed across these nested counters, imported baseline starts, projections or host notifications.",
+    "Resource-proof reader namespace describes hashing the then-saved native result before enrichment; its embedded SHA differs from the enriched final result SHA. This is not silently treated as a corrupted identical object. The separately saved pre-embedding bytes/full independent historical reconstruction are UNKNOWN; no reconstruction or old substitution occurred.",
+    "Phase2 current execution inventory includes two attempts per arm. Operational actor/exit/cleanup evidence does not add scientific witness credit for unclaimed experiments or repair the missing B final. Only current A W1 was specifically reviewed under Phase1.",
+    "Temporal method uptake beyond instruction/available output is UNASSESSED without raw native conversation. A output shows coherent documented version checking; B maps show locating but no adopted release-bound recommendation. This single current pair with an absent treatment final yields no matched causal effect, winner, pipeline quality or general method efficacy claim.",
+    "Phase1 judgment/evidence/report remain byte-identical and nonwritable after key review. The stricter inclusive Phase2 deadline is P1lock+600s, including key wait, checking and reports/handoffs; actual key-check start does not reset it."
+  ],
+  "matched_causal_effect": "UNASSESSED",
+  "mechanism_uptake": "UNASSESSED temporal earlier-binding uptake; no new raw modelIO or candidate retest.",
+  "pair_id": "D-V10-A-BUNDLE-R001",
+  "phase1_lock": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/phase1-lock.json",
+    "sha256": "2390232925063a88a56fcf903a59376a46e783706f9bd0751c4bff52d938497f"
+  },
+  "phase1_unchanged": true,
+  "phase2_clock": {
+    "actual_key_check_start_monotonic_seconds": 95435.133403798,
+    "actual_key_check_start_utc": "2026-10-06T05:36:56.276419Z",
+    "clock_reset": false,
+    "evaluation_id": "independent-targeted-14",
+    "inclusive_phase2_anchor_monotonic_seconds": 95333.788147391,
+    "inclusive_phase2_anchor_utc": "2026-10-06T05:35:14.931160Z",
+    "inclusive_phase2_budget_seconds": 600,
+    "inclusive_phase2_deadline_monotonic_seconds": 95933.788147391,
+    "key_wait_included": true,
+    "schema": "er9.independent-phase2-clock.v1",
+    "whole_original_deadline_monotonic_seconds": 96582.694536832
+  },
+  "prepared_utc": "2026-10-06T05:40:44.439307Z",
+  "report_end_monotonic_seconds": 95663.296295334,
+  "rows": [
+    {
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "aggregate_memory_limit_bytes": 2415919104,
+      "alias": "A",
+      "all_owned_scopes_quiet": true,
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "component_memory_limits_bytes": {
+        "native": 805306368,
+        "outer_worker": 805306368,
+        "pm_boundary": 268435456,
+        "pm_execution": 268435456,
+        "sandbox": 268435456
+      },
+      "current_actual_execution_count": 2,
+      "current_actual_executions": [
+        {
+          "actor": "candidate",
+          "cleanup_confirmed": true,
+          "execution_id": "exec-2fsg2pgf",
+          "exit_code": 0,
+          "scope": "Operational receipt only unless specifically claimed and independently reviewed in locked Phase1."
+        },
+        {
+          "actor": "candidate",
+          "cleanup_confirmed": true,
+          "execution_id": "exec-jc5_vp1r",
+          "exit_code": 0,
+          "scope": "Operational receipt only unless specifically claimed and independently reviewed in locked Phase1."
+        }
+      ],
+      "current_freeze_sha256": "7300938e6080b3fb8d439e7f4c15a9563ae4f33edd83aa36f65c12ce08545b69",
+      "current_native_result_sha256": "592fe18d1c7e73f700df43c0bd1a00a1b204de21a6b3c6db7afe57ac6bc1ccec",
+      "declared_full_job_wall_seconds": 900.0,
+      "embedded_pre_enrichment_native_receipt_sha256": "833da65cb4eb92ef1577e1efda3c79a37c05a679c8f730f6c4d4203215f6ee9b",
+      "enforced_native_response_count_cap": false,
+      "error": null,
+      "error_class": null,
+      "freeze_elapsed_seconds": 758.422178065,
+      "freeze_native_goal_starts": 1,
+      "fresh_session_observed": true,
+      "goal_before_cleanup": "complete",
+      "goal_final": "complete",
+      "goal_identity_scope": "Creation timestamp stable across saved/first/last direct observations; no opaque ID exposed.",
+      "held_runner_exit_code": 0,
+      "host_followup_turns_started": 0,
+      "host_goal_replacements_observed": 0,
+      "host_goals_started": 1,
+      "host_initial_turns_started": 1,
+      "host_service_states": [
+        {
+          "active_state": "failed",
+          "component": "host-process",
+          "runner_exit_code": 255,
+          "sub_state": "failed"
+        },
+        {
+          "active_state": "failed",
+          "component": "pm_boundary-host-process",
+          "runner_exit_code": 255,
+          "sub_state": "failed"
+        },
+        {
+          "active_state": "failed",
+          "component": "pm_execution-host-process",
+          "runner_exit_code": 255,
+          "sub_state": "failed"
+        }
+      ],
+      "host_services_terminal_cgroups_empty": true,
+      "job_id": "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "last_direct_goal": {
+        "createdAt": 1791256096,
+        "status": "complete",
+        "timeUsedSeconds": 752,
+        "tokenBudget": null,
+        "tokensUsed": 333560,
+        "updatedAt": 1791256848
+      },
+      "launch_seal_sha256": "db5a1ce5d4ff4e5a143aaf5c8d88a1efc44bc510b60fb3260bed630aed481380",
+      "memory_oom_events_before_worker_exit": {
+        "high": "0",
+        "low": "0",
+        "max": "0",
+        "oom": "0",
+        "oom_group_kill": "0",
+        "oom_kill": "0",
+        "sock_throttled": "0"
+      },
+      "memory_peak_before_worker_exit_bytes": 371875840,
+      "memory_swap_max_bytes": 0,
+      "native_component_outcome": "HOLD",
+      "native_http_attempts": "UNKNOWN",
+      "native_outcome": "native_goal_complete",
+      "native_responses": "UNKNOWN",
+      "native_turn_statuses": [
+        "inProgress",
+        "interrupted"
+      ],
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "observed_model_effort_labels": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "observed_native_usage_scope": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "observed_native_usage_totals": {
+        "cachedInputTokens": 3649024,
+        "inputTokens": 3895553,
+        "outputTokens": 87031,
+        "reasoningOutputTokens": 47353,
+        "totalTokens": 3982584
+      },
+      "opaque_native_Goal_ID": "UNKNOWN_NOT_EXPOSED; thread/session and timestamps are not replacements",
+      "operational_complete_freeze": true,
+      "original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "parent_UI_provider_usage": "UNKNOWN; not summed with native or Goal counters",
+      "parent_response_budget": "UNSUPPORTED; UNKNOWN; no enforced response-count claim",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "private_slice_released_descendants_quiet": true,
+      "provider_request_cache_and_unexposed_tail": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_fit": "UNKNOWN",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "174b04c97e2af744efc5e6ae0c7c4adcc9d1bc6cc20aaa35632a6242714698ab",
+      "resource_proof_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "runtime_elapsed_seconds": 758.360099609,
+      "tool_attempt_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.public_https_get": 6,
+        "pm_boundary.read_file": 24,
+        "pm_boundary.write_file": 4,
+        "pm_execution.python_execute": 2
+      },
+      "tool_catalog_admission_scope": {
+        "actual_inference_tool_payload_observed": false,
+        "native_mcp_catalog_verified": true,
+        "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+        "verified": false
+      },
+      "tool_completed_counts": {
+        "pm_boundary.public_https_get": 6,
+        "pm_boundary.read_file": 21,
+        "pm_boundary.write_file": 1,
+        "pm_execution.python_execute": 2
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.read_file": 3,
+        "pm_boundary.write_file": 3
+      },
+      "usage_notification_count": 39
+    },
+    {
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "aggregate_memory_limit_bytes": 2415919104,
+      "alias": "B",
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "component_memory_limits_bytes": {
+        "native": 805306368,
+        "outer_worker": 805306368,
+        "pm_boundary": 268435456,
+        "pm_execution": 268435456,
+        "sandbox": 268435456
+      },
+      "current_actual_execution_count": 2,
+      "current_actual_executions": [
+        {
+          "actor": "candidate",
+          "cleanup_confirmed": true,
+          "execution_id": "exec-9slv_74m",
+          "exit_code": 0,
+          "scope": "Operational receipt only unless specifically claimed and independently reviewed in locked Phase1."
+        },
+        {
+          "actor": "candidate",
+          "cleanup_confirmed": true,
+          "execution_id": "exec-cechycjd",
+          "exit_code": 0,
+          "scope": "Operational receipt only unless specifically claimed and independently reviewed in locked Phase1."
+        }
+      ],
+      "current_freeze_sha256": "dbaa8883a71dd8bb47405399bc9cf1b534ba87114c7192f17bef085517790b77",
+      "current_native_result_sha256": "591875a3a7bc9b4088abe9935e71aeb526320b60fc66d6c45badd6b67e99f2cb",
+      "declared_full_job_wall_seconds": 900.0,
+      "embedded_pre_enrichment_native_receipt_sha256": "d5785d1c846f8d70c297d1c3999857c23fe2a05781c74f689c88fad2c2dfb7ae",
+      "enforced_native_response_count_cap": false,
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "freeze_elapsed_seconds": 885.821053628,
+      "freeze_native_goal_starts": 1,
+      "fresh_session_observed": true,
+      "goal_before_cleanup": "active",
+      "goal_final": "paused",
+      "goal_identity_scope": "Creation timestamp stable across saved/first/last direct observations; no opaque ID exposed.",
+      "held_runner_exit_code": 0,
+      "host_followup_turns_started": 0,
+      "host_goal_replacements_observed": 0,
+      "host_goals_started": 1,
+      "host_initial_turns_started": 1,
+      "host_service_states": [
+        {
+          "active_state": "failed",
+          "component": "host-process",
+          "runner_exit_code": 255,
+          "sub_state": "failed"
+        },
+        {
+          "active_state": "failed",
+          "component": "pm_boundary-host-process",
+          "runner_exit_code": 255,
+          "sub_state": "failed"
+        },
+        {
+          "active_state": "inactive",
+          "component": "pm_execution-host-process",
+          "runner_exit_code": 0,
+          "sub_state": "dead"
+        }
+      ],
+      "host_services_terminal_cgroups_empty": true,
+      "job_id": "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "last_direct_goal": {
+        "createdAt": 1791256098,
+        "status": "paused",
+        "timeUsedSeconds": 879,
+        "tokenBudget": null,
+        "tokensUsed": 267767,
+        "updatedAt": 1791256978
+      },
+      "launch_seal_sha256": "df752b141eb67f0bb3b976b9b7aa4aed14ef41f6d7ab00825102738f89e87c07",
+      "memory_oom_events_before_worker_exit": {
+        "high": "0",
+        "low": "0",
+        "max": "0",
+        "oom": "0",
+        "oom_group_kill": "0",
+        "oom_kill": "0",
+        "sock_throttled": "0"
+      },
+      "memory_peak_before_worker_exit_bytes": 362496000,
+      "memory_swap_max_bytes": 0,
+      "native_component_outcome": "HOLD",
+      "native_http_attempts": "UNKNOWN",
+      "native_outcome": "HOLD",
+      "native_responses": "UNKNOWN",
+      "native_turn_statuses": [
+        "inProgress",
+        "interrupted"
+      ],
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "observed_model_effort_labels": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "observed_native_usage_scope": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "observed_native_usage_totals": {
+        "cachedInputTokens": 4212736,
+        "inputTokens": 4457099,
+        "outputTokens": 23404,
+        "reasoningOutputTokens": 20907,
+        "totalTokens": 4480503
+      },
+      "opaque_native_Goal_ID": "UNKNOWN_NOT_EXPOSED; thread/session and timestamps are not replacements",
+      "operational_complete_freeze": false,
+      "original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "parent_UI_provider_usage": "UNKNOWN; not summed with native or Goal counters",
+      "parent_response_budget": "UNSUPPORTED; UNKNOWN; no enforced response-count claim",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "private_slice_released_descendants_quiet": true,
+      "provider_request_cache_and_unexposed_tail": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "resource_fit": "UNKNOWN",
+      "resource_oom_observed": false,
+      "resource_profile_sha256": "dd0cdb215c486b6194c46eb76c2e346c1d6423349c96105e1866248a5089e649",
+      "resource_proof_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "runtime_elapsed_seconds": 885.739107655,
+      "tool_attempt_counts": {
+        "pm_boundary.mechanical": 4,
+        "pm_boundary.public_https_get": 9,
+        "pm_boundary.read_file": 28,
+        "pm_execution.python_execute": 2
+      },
+      "tool_catalog_admission_scope": {
+        "actual_inference_tool_payload_observed": false,
+        "native_mcp_catalog_verified": true,
+        "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+        "verified": false
+      },
+      "tool_completed_counts": {
+        "pm_boundary.mechanical": 2,
+        "pm_boundary.public_https_get": 9,
+        "pm_boundary.read_file": 28,
+        "pm_execution.python_execute": 2
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 2
+      },
+      "usage_notification_count": 45
+    }
+  ],
+  "schema": "er9.independent-phase2-report.v1",
+  "science_scope": "Locked Phase1 only. Phase2 runtime/resources/economics do not modify it.",
+  "source_start": {
+    "clock_reset_permitted": false,
+    "eval_id": "independent-targeted-14",
+    "pair_id": "D-V10-A-BUNDLE-R001",
+    "phase2_inclusive_budget_seconds": 600,
+    "schema": "er9.independent-evaluator-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_deadline_monotonic_seconds": 95982.694536832,
+    "source_start_monotonic_seconds": 94782.694536832,
+    "source_start_utc": "2026-10-06T05:26:03.837554Z",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_seconds": 96582.694536832
+  },
+  "whole_elapsed_at_report_seconds": 880.6017585020018
+}

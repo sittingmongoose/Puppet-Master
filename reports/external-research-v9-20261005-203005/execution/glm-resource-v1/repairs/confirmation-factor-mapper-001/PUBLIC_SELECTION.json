@@ -1,0 +1,48 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T05:34:48.472306+00:00",
+  "owner": "execution_engine",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py",
+      "sha256": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/hydrate_role_proofs.py",
+      "sha256": "5dc9eff1df4d0ffff32ff2323b70d8596e148360caa8aa6ac8975dbc337b83e2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/factor_resolver.py",
+      "sha256": "3b232fcc55246b2e232d64af1786ca612a5d468541bc5ab5be75225fbccf6494"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/test_mapper.py",
+      "sha256": "e0a1506b8fafaf4089bf11c8bb157f9b3ae22072cfc85ad086a79dc00d0bf8e8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/VERIFICATION.json",
+      "sha256": "8c03e74c7c2e9459665a018dcdda3dd7916882798d67024fb22c6bbb79279e34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/REPORT.md",
+      "sha256": "d0f115530c010dbd64c3941c8651a07b352e72216dbfefff8e0bcc3933956ca1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/PIN.json",
+      "sha256": "b31a0da4f6c796e3d0803054bd4a8c537a45f0a7d24b958ba6bde4df0d4a1f98"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/INTEGRATION_OUTBOX.json",
+      "sha256": "ff4ac18b9d7d2eac14c07bdf1489e4deafce8a90dcd5b1d550098668f9a2205f"
+    }
+  ],
+  "owner_files_quiescent": true,
+  "source_only": true,
+  "native_model_goal_provider_calls": 0,
+  "excluded": [
+    "actual candidate/source/evaluator bodies/artifacts",
+    "old/live operator metadata or partial dirs",
+    "native/auth/model runtime data",
+    "other owners sources"
+  ]
+}

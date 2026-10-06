@@ -1,0 +1,193 @@
+{
+  "schema": "er9.research.sources.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-NGFF 0.4 Final Community Group Report",
+      "url": "https://ngff.openmicroscopy.org/0.4/",
+      "pin": "0.4 edition as published at the edition URL; capture SHA-256 ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269 (page identifies itself as the 0.4 release and records a 0.4.1 transitional metadata revision)",
+      "locators": ["§2.1 Images / local Zarr v2 layout", "§3.1 axes", "§3.3 coordinateTransformations", "§3.4 multiscales", "§3.5 omero channel display metadata", "§3.6 labels", "§3.7 image-label", "§7 Version History"],
+      "applicability": "Authoritative specification for the proposed local OME-Zarr boundary: axis names/types/order, 2–5 dimensions, scale/translation metadata, channel display metadata, and integer image-label masks. It does not specify our SQLite project, full vector annotation schema, application performance, arbitrary affine transforms, or importer conformance.",
+      "capture": {
+        "capture_id": "5e7f8dc6ec2e497ab1e30a26adb2fd64",
+        "capture_path": "public_captures/ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269.body",
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "bytes": 163120,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Body header/status and targeted byte ranges 60000–72000, 72000–79000, 78000–90000, 100000–112000, 112000–125000."
+      }
+    },
+    {
+      "id": "S2",
+      "title": "OME-TIFF Specification, OME Data Model and File Formats 6.2.2",
+      "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html",
+      "pin": "documentation version 6.2.2; captured body SHA-256 fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+      "locators": ["OME-XML metadata / DimensionOrder", "The TiffData element", "Multi-file OME-TIFF", "UUID and file-name references"],
+      "applicability": "Defines how OME-XML, TIFF IFDs, plane dimension order, explicit mapping, and multi-file UUID references relate. It does not establish a reader's behavior on every producer's malformed or ambiguous metadata.",
+      "capture": {
+        "capture_id": "80975769b9d9430197d2d10031aa71f3",
+        "capture_path": "public_captures/fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584.body",
+        "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "bytes": 48745,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Specification text included in initial response capture, including DimensionOrder, TiffData and multi-file sections."
+      }
+    },
+    {
+      "id": "S3",
+      "title": "tifffile README / implementation notes",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2024.9.20/README.rst",
+      "pin": "Git tag v2024.9.20; README declares version 2024.9.20. Requirements list Zarr 2.18.3, imagecodecs 2024.6.1, and NumPy 2.1.1 among the tested requirements.",
+      "locators": ["Requirements", "Notes / OME-TIFF and TIFF subset", "Examples / metadata and axes", "Use Zarr to read parts of tiled pyramidal images", "Load base layer as Dask array", "Revisions"],
+      "applicability": "Implementation precedent and candidate reader spike pin. Documents selected Zarr-backed reads, dtype/format boundaries, compression dependency, and exclusions including multi-file pyramidal OME-TIFF. Examples and declared tested dependencies do not prove target-machine performance or application correctness.",
+      "capture": {
+        "capture_id": "40971a453b87407d9a461aa5df337ea4",
+        "capture_path": "public_captures/23a5e524f02385a291f1d9b65a3e432f8a0f504df186d4adb6c2336e225721c6.body",
+        "sha256": "23a5e524f02385a291f1d9b65a3e432f8a0f504df186d4adb6c2336e225721c6",
+        "bytes": 31119,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Complete README text supplied in response."
+      }
+    },
+    {
+      "id": "S4",
+      "title": "napari Shapes layer implementation",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.5.6/napari/layers/shapes/shapes.py",
+      "pin": "Git tag v0.5.6; exact source path above; capture SHA-256 a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1",
+      "locators": ["Shapes class docstring: data dimensions and list of supported geometries", "Parameters: affine, units, feature data, and cache behavior", "Shape modes and editing operations"],
+      "applicability": "Evidence for the proposed annotation interaction prototype: vector shape geometry, point-free shape operations, attributes, transforms, and interactive modes are present in this version's implementation. Not evidence of durable project persistence, our undo/redo contract, correct arbitrary image calibration, or out-of-core behavior beyond the documented cache parameter.",
+      "capture": {
+        "capture_id": "156d3903e36e4ad9b04c28a9ac3e36ec",
+        "capture_path": "public_captures/a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1.body",
+        "sha256": "a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1",
+        "bytes": 122948,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Initial 32768-byte source range, including full Shapes API docstring and class initialization."
+      }
+    },
+    {
+      "id": "S5",
+      "title": "napari issue #6068: 3D multiscale Labels mouse sampling IndexError",
+      "url": "https://api.github.com/repos/napari/napari/issues/6068",
+      "pin": "Issue #6068 record captured 2026-10-06; source record SHA-256 9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7",
+      "locators": ["Issue body: expected lowest-resolution display and out-of-bounds sample coordinates while mousing in 3D", "Environment reports napari 0.4.18"],
+      "applicability": "Public failure report used as the start of a fix/test chain. It establishes the reported failure and reproduction, not frequency or behavior outside that reporter's version/setup.",
+      "capture": {
+        "capture_id": "3d281fd733ec4a26bb3e45d96f67fb7e",
+        "capture_path": "public_captures/9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7.body",
+        "sha256": "9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7",
+        "bytes": 14604,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Complete issue JSON body."
+      }
+    },
+    {
+      "id": "S6",
+      "title": "napari PR #6317: Bugfix: Account for multiscale for labels in 3d",
+      "url": "https://api.github.com/repos/napari/napari/pulls/6317",
+      "pin": "Merged commit e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d; merged 2023-10-27; PR milestone 0.4.19",
+      "locators": ["PR body / description", "merge_commit_sha", "closed/merged timestamps", "milestone"],
+      "applicability": "Connects issue #6068 to the repair and identifies merged revision and intended release milestone. The release-notes source S8 independently confirms the repair was listed in v0.4.19.",
+      "capture": {
+        "capture_id": "ac847c7fc2434709b06e37b7c1daec31",
+        "capture_path": "public_captures/25534f906246494898be8e9ff22adf3eb2f2d61fd5e29c77811951d2848a6aec.body",
+        "sha256": "25534f906246494898be8e9ff22adf3eb2f2d61fd5e29c77811951d2848a6aec",
+        "bytes": 19550,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Complete PR API response."
+      }
+    },
+    {
+      "id": "S7",
+      "title": "napari PR #6317 merged diff",
+      "url": "https://github.com/napari/napari/pull/6317.diff",
+      "pin": "Diff for PR #6317, merged as e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d; exact diff SHA-256 c85ba6f299a485afc2351721494533d32f2aa705826c9cb694d590e11227a8b9",
+      "locators": ["napari/layers/labels/labels.py: _get_value_ray coordinate/downsample and level-specific bounding-box changes", "napari/layers/image/image.py: _display_bounding_box_at_level", "napari/layers/labels/_tests/test_labels_multiscale.py: test_3D_multiscale_labels_in_3D and expected values"],
+      "applicability": "Primary implementation and regression-test evidence, stronger than the issue title or PR link alone. The synthetic test samples a small multiscale label pyramid and tests returned values for directions/positions; it does not test this proposed application's formats, arbitrary affine transforms, or export path.",
+      "capture": {
+        "capture_id": "c49e815fd07741bebefd1b3fb04efaff",
+        "capture_path": "public_captures/c85ba6f299a485afc2351721494533d32f2aa705826c9cb694d590e11227a8b9.body",
+        "sha256": "c85ba6f299a485afc2351721494533d32f2aa705826c9cb694d590e11227a8b9",
+        "bytes": 9767,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Complete PR diff, including changed regression test."
+      }
+    },
+    {
+      "id": "S8",
+      "title": "napari v0.4.19 release record",
+      "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.4.19",
+      "pin": "Release tag v0.4.19; target commit bd47bf0ecbfc74f1efa82343dbdfcbefd3f0bded; published 2024-02-01",
+      "locators": ["Bug Fixes bullet for PR #6317", "release tag and target commit"],
+      "applicability": "Confirms release-note applicability of PR #6317 by v0.4.19. It does not assert that every platform/package path is free of related failures.",
+      "capture": {
+        "capture_id": "f80bf5a14ce642d58c7a15f561c14345",
+        "capture_path": "public_captures/fc164f41cce2b1e630e03140acd4113458a6494d0664a0c1dee5cb38e61e93fd.body",
+        "sha256": "fc164f41cce2b1e630e03140acd4113458a6494d0664a0c1dee5cb38e61e93fd",
+        "bytes": 47808,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Release metadata and release-note text supplied through the Bug Fixes section."
+      }
+    },
+    {
+      "id": "S9",
+      "title": "SQLite Atomic Commit In SQLite",
+      "url": "https://www.sqlite.org/atomiccommit.html",
+      "pin": "Mutable official documentation page captured 2026-10-06; pinned evidence is response body SHA-256 5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1; not a release-tagged SQLite library source",
+      "locators": ["Introduction: atomic transaction property and rollback-mode scope", "§3 single-file commit", "§4 rollback", "Hardware Assumptions", "§9 Things That Can Go Wrong"],
+      "applicability": "Supports the transactional-save/recovery design and its assumptions. It is not a guarantee about SMB/NFS or this application's chosen OS/filesystem; WAL uses a different mechanism and is not the mode relied on by this proposal.",
+      "capture": {
+        "capture_id": "ac97a612af914b12810f8716c5866d8d",
+        "capture_path": "public_captures/5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1.body",
+        "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1",
+        "bytes": 77968,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Atomic commit introduction, scope and assumptions, rollback flow through single-file commit, and failure caveats."
+      }
+    },
+    {
+      "id": "S10",
+      "title": "Bio-Formats Supported Formats",
+      "url": "https://bio-formats.readthedocs.io/en/v7.3.1/supported-formats.html",
+      "pin": "Bio-Formats documentation release v7.3.1; captured response SHA-256 89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa",
+      "locators": ["Supported Formats table and its per-format ratings", "OME-TIFF and vendor format entries"],
+      "applicability": "A reader-breadth alternative and lead inventory, not evidence that a format is accurate for the research group's particular files or suitable for a specific bundled application.",
+      "capture": {
+        "capture_id": "062ed43c07944e7189e49e264dac2cbe",
+        "capture_path": "public_captures/89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa.body",
+        "sha256": "89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa",
+        "bytes": 155032,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Version and supported-format table excerpt. Capture is complete; tool preview exposed the start of the table, not all entries."
+      }
+    },
+    {
+      "id": "S11",
+      "title": "napari issue #6320: Multiscale layers shift from center versus corner handling",
+      "url": "https://api.github.com/repos/napari/napari/issues/6320",
+      "pin": "Issue #6320 record captured 2026-10-06; napari environment in report is 0.5.0a2.dev443+gc9da57b1; record says issue remains open",
+      "locators": ["Issue body: report of center-versus-corner offset across multiscale image/label levels", "state=open", "issue's reference to PR #6317 as fixing a separate get_value exception"],
+      "applicability": "Unresolved coordinate-risk lead used to motivate explicit pixel-center and voxel-corner validation. This report is not the issue #6068 fix chain, and no repair or regression test for #6320 is established here.",
+      "capture": {
+        "capture_id": "1bd5e79cacec42fba282c415f4d28bc1",
+        "capture_path": "public_captures/b61597288227cbc106f47fe737b6ad8dbc02e534a745a01a8a2977c97d31fcef.body",
+        "sha256": "b61597288227cbc106f47fe737b6ad8dbc02e534a745a01a8a2977c97d31fcef",
+        "bytes": 6003,
+        "http_status": 200,
+        "body_complete": true,
+        "candidate_inspected": "Complete issue JSON body."
+      }
+    }
+  ]
+}

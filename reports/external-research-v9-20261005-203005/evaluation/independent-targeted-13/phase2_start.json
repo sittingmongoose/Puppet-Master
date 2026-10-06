@@ -1,0 +1,21 @@
+{
+  "schema": "er9.independent-phase2-start.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "utc_phase2_start": "2026-10-06T05:28:06.887922+00:00",
+  "monotonic_phase2_start_seconds": 94905.744912277,
+  "phase2_inclusive_budget_seconds": 600,
+  "phase2_deadline_monotonic_seconds": 95505.744912277,
+  "original_whole_deadline_monotonic_seconds": 96384.32124199,
+  "elapsed_original_whole_at_phase2_start_seconds": 321.4236702870112,
+  "no_clock_reset": true,
+  "clock_includes_key_read_checks_wait_report_and_handoffs": true,
+  "phase1_independent_verification": {
+    "verifier": "/root/frozen_exports",
+    "lock_sha256": "5852dfaa26d5606e4f4f4fecc727b950e6ce586d9396f2f275c747526da4a57c",
+    "reported_verified_file_count": 21,
+    "reported_all_exact_sha_length_and_readonly": true,
+    "verified_before_key_release": true
+  },
+  "key_metadata_first_semantic_read": "NOT_YET_READ"
+}

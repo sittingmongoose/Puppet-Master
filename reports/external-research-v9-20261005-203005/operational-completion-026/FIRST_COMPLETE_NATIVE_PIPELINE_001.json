@@ -1,0 +1,195 @@
+{
+  "schema": "er9.actual-complete-native-pipeline.v1",
+  "observed_utc": "2026-10-06T05:33:27.112737+00:00",
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "arm": "treatment",
+  "source_slot": "I-05",
+  "native_family": "L",
+  "full_pipeline_operational_complete": true,
+  "fully_completed_matched_pair": false,
+  "quality": "PENDING_INDEPENDENT_SOURCE_EVALUATION",
+  "native_stage_count": 3,
+  "original_stage_allocation_sum": 2700,
+  "observed_stage_elapsed_sum": 1719.95447971,
+  "rows": [
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "stage": "research",
+      "original_allocation_seconds": 1200,
+      "actual_elapsed_seconds": 1063.234979609,
+      "positive_native_goal_start": true,
+      "direct_native_goal_status": "complete",
+      "operational_complete": true,
+      "native_quiescent": true,
+      "owned_outer_permit_released": true,
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "42a04975299bd9cffe9383fc729a46e6d14024cfdb57820dcdbc2ef2a02bc738"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+        "sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/stage.json",
+        "sha256": "defae6b23caeb70de42a002546d95e0c210d2cc5a8654a390f261510c4934a99"
+      },
+      "strict_validator_ref": null,
+      "artifacts": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "8a7ae206ee9762796c7066ddb4e2dfca80aecb05a778fa4aefec6e0ab6ccf4f0",
+          "bytes": 8773
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "73311336653655d99624e4f6a54091a074583019205c8007c153cd9f5cc0ffcd",
+          "bytes": 26086
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "6ccffa38f2198d2d671bec1107444f6cc995aaaf3edbd23c535a2bba2eeb6887",
+          "bytes": 13851
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "9338d52d7047ec4af15d5835196f09cd4c81ea3a1fac0c83518937484ee39e43",
+          "bytes": 8673
+        }
+      ]
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+      "stage": "critique",
+      "original_allocation_seconds": 900,
+      "actual_elapsed_seconds": 398.728952055,
+      "positive_native_goal_start": true,
+      "direct_native_goal_status": "complete",
+      "operational_complete": true,
+      "native_quiescent": true,
+      "owned_outer_permit_released": true,
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/OUTPUT_FREEZE.json",
+        "sha256": "20c7594fa8d5f9cba29f35b75c316ea582ec8ef92eeda3f154b5e0bcf2ecec15"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+        "sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/stage.json",
+        "sha256": "cd270e4c4ced5624f5a12d8afcd928ee4d03819e10ade9ab9e4b6695c6feca73"
+      },
+      "strict_validator_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/strict-role-birth/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/VALIDATED.json",
+        "sha256": "4eeaefd81d416ccc0c3d5c34a0776a536b4c1ca0ae5e08dbd7a2893c8b061f6d"
+      },
+      "artifacts": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "f207d8364b018e6f99214afd1d9550f9e2e49402b03a3368ed03732fec39715f",
+          "bytes": 25910
+        }
+      ]
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+      "stage": "revision",
+      "original_allocation_seconds": 600,
+      "actual_elapsed_seconds": 257.990548046,
+      "positive_native_goal_start": true,
+      "direct_native_goal_status": "complete",
+      "operational_complete": true,
+      "native_quiescent": true,
+      "owned_outer_permit_released": true,
+      "identity": {
+        "fresh_empty_history": true,
+        "instruction_sources_empty": true,
+        "model": "gpt-6-luna",
+        "effort": "max",
+        "ephemeral": false
+      },
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/OUTPUT_FREEZE.json",
+        "sha256": "51f689d2abe7e7b37c85670896d48c4c6912eb78d91495fd034b7ea2d9c5063c"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/result.json",
+        "sha256": "4acda0fbb647a05af6b7216f551ca60d2a3ec76dcf7f013b9e0e301be6f25a7e"
+      },
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/stage.json",
+        "sha256": "e7049b021c3b99af406df8671828da382cd8f9bf38dfb198724278ca725873ba"
+      },
+      "strict_validator_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/strict-role-birth/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/VALIDATED.json",
+        "sha256": "b3e6f723e32ccf1c900915e3a96200cb3eecaaf28a21443b9c57624d21bde053"
+      },
+      "artifacts": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final/DELIVERY_MANIFEST.json",
+          "relative_path": "final/DELIVERY_MANIFEST.json",
+          "sha256": "fcdcace9c7ffdab893477ccaed1044d2531122f0007740e04a308410872aa7e7",
+          "bytes": 4213
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final/leads.json",
+          "relative_path": "final/leads.json",
+          "sha256": "8a7ae206ee9762796c7066ddb4e2dfca80aecb05a778fa4aefec6e0ab6ccf4f0",
+          "bytes": 8773
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final/proposal.md",
+          "relative_path": "final/proposal.md",
+          "sha256": "07222400686d8fc9b187cd0b3798785706a6822eaf47d387f7afe52c356a438d",
+          "bytes": 22552
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final/sources.json",
+          "relative_path": "final/sources.json",
+          "sha256": "6ccffa38f2198d2d671bec1107444f6cc995aaaf3edbd23c535a2bba2eeb6887",
+          "bytes": 13851
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final/witnesses.json",
+          "relative_path": "final/witnesses.json",
+          "sha256": "886e79d93d13431c0ae7edf83226c4f4b80b07f36267e2e13bdf1e5c98b4913a",
+          "bytes": 4658
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/final_bundle.json",
+          "relative_path": "final_bundle.json",
+          "sha256": "c2fa859e688fc5c68b046cae9533621cc6907f2d8c041478432b96dd5cb1f959",
+          "bytes": 27961
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/frozen-output/scratch/issue6320.map.json",
+          "relative_path": "scratch/issue6320.map.json",
+          "sha256": "d2c372c2ac684f6fbaa7da16f85c52bafe539fdcf3ff0fdee2a09d6824a04c0f",
+          "bytes": 342523
+        }
+      ]
+    }
+  ],
+  "source_sha256": "2dbb32613111fbc5d619c5f0c930887a6c563f2c3866b132e43bbb14495948d2",
+  "raw_referenced_receipts_selected": false
+}

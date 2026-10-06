@@ -1,0 +1,62 @@
+{
+  "schema": "er9.confirmation-factor-mapper-integration-outbox.v1",
+  "created_utc": "2026-10-06T05:34:48.472306+00:00",
+  "status": "READY_FOR_OPS_OWNED_SOURCE_INTEGRATION",
+  "pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/PIN.json",
+    "sha256": "b31a0da4f6c796e3d0803054bd4a8c537a45f0a7d24b958ba6bde4df0d4a1f98"
+  },
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py",
+    "sha256": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757"
+  },
+  "source_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_bundle_transport.py": "854c5c8f77da3981e767adc3e48c22dd0404896aec5faccba9ae768f43d1584b",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/hydrate_role_proofs.py": "5dc9eff1df4d0ffff32ff2323b70d8596e148360caa8aa6ac8975dbc337b83e2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/factor_resolver.py": "3b232fcc55246b2e232d64af1786ca612a5d468541bc5ab5be75225fbccf6494",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/operator_binding.py": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "CLI": [
+    "python3",
+    "-B",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py",
+    "--plan",
+    "<new immutable existing-schema plan>",
+    "--plan-sha256",
+    "<actual SHA>"
+  ],
+  "plan_schema": "er9.actual-role-birth-binding-plan.v1",
+  "plan_fields_unchanged": true,
+  "mutation_boundary": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001",
+  "new_immutable_destination_required": true,
+  "old_partial_dirs_preserved": true,
+  "exact_card_and_source_sidecar_refs": {
+    "target_card": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/card.json",
+      "sha256": "29f8dbbad77cf915f20217c3848f67d47fc52cfbd5cd4ef7fae9ae3d2cc3f612"
+    },
+    "source_card_sidecars": {
+      "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/launched-card-bindings/C03_T_RESEARCH_001.json",
+        "sha256": "ae3aa7b866100405c8863e94961a2e5bb3ced702edcc3516455fc85b6cac9023"
+      }
+    }
+  },
+  "required_factors": [
+    "V14",
+    "V10",
+    "V16"
+  ],
+  "original_native_runtime": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+    "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+  },
+  "admission_owner": "ops only",
+  "original1500_cap_and_native_clock_no_reset": true,
+  "native_model_goal_provider_calls": 0
+}

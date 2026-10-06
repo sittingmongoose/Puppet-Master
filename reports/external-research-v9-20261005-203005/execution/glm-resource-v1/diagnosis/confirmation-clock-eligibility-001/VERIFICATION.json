@@ -1,0 +1,23 @@
+{
+  "schema": "er9.confirmation-clock-feasibility-verification.v1",
+  "created_utc": "2026-10-06T05:25:43.875836+00:00",
+  "status": "PASS_METADATA_ONLY",
+  "pairs": 4,
+  "roles": 22,
+  "arms": 8,
+  "all_caps_and_original_model_binding_match": true,
+  "all_firstR5input_pins_match_and_botharm_common_identity": true,
+  "common4_nonbrief_inputs_same_across_all8_firstR": true,
+  "per_arm2700_and_all8_21600": true,
+  "old_source_pin_count": 28,
+  "old_source_pins_match": true,
+  "current_G_core_bundle_tool_closures_match": true,
+  "positive_old_born_and_quiet_count": 9,
+  "native_status_exporter": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/status-projection/export.py",
+    "sha256": "921ef67204e4d4116b7e63a9c755fd20599379e819bdda1d659f6d67fbee5e82"
+  },
+  "all_old22_terminal_asserted": false,
+  "zero_Goal_model_science_or_import_calls": true,
+  "single_registry_read_no_live_poll": true
+}

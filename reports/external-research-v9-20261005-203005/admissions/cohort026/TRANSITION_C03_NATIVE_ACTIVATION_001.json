@@ -1,0 +1,410 @@
+{
+  "schema": "er9.positive-native-transition.v1",
+  "observed_utc": "2026-10-06T05:44:32.380631+00:00",
+  "cursor_observed_utc": "2026-10-06T05:44:28.897514+00:00",
+  "active_by_family": {
+    "M": 0,
+    "Z": 2,
+    "L": 1
+  },
+  "running_job_ids": [
+    "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+    "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+    "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000"
+  ],
+  "retained_resource_job_ids": [],
+  "confirmed_native_starts": 200,
+  "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+  "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+  "arm": "treatment",
+  "stage": "critic_final",
+  "status_at_snapshot": "RUNNING",
+  "native_goal_starts": 1,
+  "native_activation": {
+    "start_utc": "2026-10-06T05:41:40.659494+00:00",
+    "activation_utc": "2026-10-06T05:41:46.491979+00:00",
+    "goal_activated": true,
+    "goal_submitted": true,
+    "goal_target_id": "target_muw943hv_803f6956-7e08-4fc3-8545-86ca4aca9b96",
+    "observed_model": {
+      "modelId": "GLM-5.3-Flash",
+      "providerId": "builtin:zai-coding-plan"
+    },
+    "observed_effort": "max",
+    "pre_activation_seconds": 8.144916502002161
+  },
+  "started_turn": true,
+  "original_clock": {
+    "original_birth_monotonic_ns": 95717204067149,
+    "original_total_stop_monotonic_ns": 97217204067149,
+    "native_stop_monotonic_ns": 97187204067149,
+    "guard_stop_monotonic_ns": 97212204067149
+  },
+  "resource_placements_before_goal": {
+    "component_placements": [
+      {
+        "component": "native",
+        "unit": "er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2688401",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+          "MemoryPeak": "436994048",
+          "MemoryMax": "805306368",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "805306368",
+          "memory.swap.max": "0",
+          "memory.current": "428081152",
+          "memory.peak": "436994048",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "518311936",
+          "memory.peak": "525090816",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 95724000801087,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      {
+        "component": "pm_boundary",
+        "unit": "er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2688405",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+          "MemoryPeak": "11919360",
+          "MemoryMax": "268435456",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "268435456",
+          "memory.swap.max": "0",
+          "memory.current": "11243520",
+          "memory.peak": "11919360",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "516935680",
+          "memory.peak": "525090816",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 95724037165924,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      },
+      {
+        "component": "pm_execution",
+        "unit": "er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+        "unit_observation": {
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "running",
+          "MainPID": "2688404",
+          "Result": "success",
+          "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+          "MemoryPeak": "12529664",
+          "MemoryMax": "268435456",
+          "MemorySwapMax": "0"
+        },
+        "component_kernel_limits": {
+          "memory.max": "268435456",
+          "memory.swap.max": "0",
+          "memory.current": "12070912",
+          "memory.peak": "12529664",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "496246784",
+          "memory.peak": "525090816",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "1",
+            "frozen": "0"
+          }
+        },
+        "verified_monotonic_ns": 95724070237161,
+        "actual_component_under_private_aggregate": true,
+        "actual_limits_match": true
+      }
+    ],
+    "retained_helper_placements": [
+      {
+        "pid": 2688393,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724000921485
+      },
+      {
+        "pid": 2688398,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724001070442
+      },
+      {
+        "pid": 2688401,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724001189856
+      },
+      {
+        "pid": 2688389,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724037273372
+      },
+      {
+        "pid": 2688403,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724037372229
+      },
+      {
+        "pid": 2688405,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724037464236
+      },
+      {
+        "pid": 2688391,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724070379921
+      },
+      {
+        "pid": 2688402,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724070501895
+      },
+      {
+        "pid": 2688404,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724070638313
+      }
+    ],
+    "all_existing_private_job_pids": [
+      {
+        "pid": 2688404,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-54c7116289ef4dbcac817f7d7632b0ef.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724071669029
+      },
+      {
+        "pid": 2688385,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724071995895
+      },
+      {
+        "pid": 2688389,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072121496
+      },
+      {
+        "pid": 2688391,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072200220
+      },
+      {
+        "pid": 2688393,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072275274
+      },
+      {
+        "pid": 2688398,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072350981
+      },
+      {
+        "pid": 2688402,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072433801
+      },
+      {
+        "pid": 2688403,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-203005-c-03-resource-r002-bundle-treatment-critic_final-a001.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072504582
+      },
+      {
+        "pid": 2688405,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072827048
+      },
+      {
+        "pid": 2688420,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724072922838
+      },
+      {
+        "pid": 2688421,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-b11f9bdee9fa4a2b8eb42a099b349c2d.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724073033229
+      },
+      {
+        "pid": 2688401,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724073344420
+      },
+      {
+        "pid": 2688523,
+        "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mema83cf40c23274fce9262b083f5b25051.slice/er9-glm-651e5e8ea41440c6b6d8047bced85e23.service",
+        "actual_owned_placement": true,
+        "verified_monotonic_ns": 95724073458098
+      }
+    ],
+    "aggregate_memory_max_bytes": 2415919104,
+    "swap_max_bytes": 0,
+    "verified_before_native_goal": true,
+    "fit": "UNKNOWN"
+  },
+  "source_refs": {
+    "stage.json": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/stage.json",
+      "sha256": "e1c09d2159f20209246b739e8baade15d9501ceca1c6fcdf6d66d926db920368"
+    },
+    "RESOURCE_PROFILE.json": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/RESOURCE_PROFILE.json",
+      "sha256": "703ffdfd468553aefc1aa94622f2871ff6c9e98ca3f8103bf1b5358ef783f1e8"
+    },
+    "RESOURCE_BINDING.json": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/RESOURCE_BINDING.json",
+      "sha256": "7f4bdde2d6a0992612ed3764f15825e6c1d170702b7c806cb09272d3547810da"
+    },
+    "native/receipt.json": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/native/receipt.json",
+      "sha256": "a618ac966cf5f3a46f0da1d6e8a98ee81f3c9df3e116e4df5568e09c59ff5cca"
+    },
+    "native/activation.json": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-role-birth-r001/native/activation.json",
+      "sha256": "9c684e80b3ceb020eb0212aa03fb2829ccb31c928e908f39291858b82502f7e6"
+    }
+  },
+  "runtime_binding_ready": {
+    "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+    "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+  },
+  "actual_role_birth_binding": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/role-birth-ops/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001-binding-r005/ROLE_BIRTH_RECEIPT.json",
+    "sha256": "18a882e7c21cea2689c352c23ba7c346e1598cede31e7f565cdfc7c256c4e894"
+  },
+  "completion_claimed": false,
+  "old_confirmation_clock_choices_preserved": true,
+  "DEC014_new_native_admission_claimed": false
+}

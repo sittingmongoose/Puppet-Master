@@ -1,0 +1,70 @@
+{
+  "schema": "er9.selected-current-claimed-execution-evidence.v1",
+  "evaluation_id": "independent-targeted-14",
+  "requested_execution_id": "exec-2fsg2pgf",
+  "files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-2fsg2pgf",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD14-REQUESTED-CURRENT-W1-001/A/exec-2fsg2pgf/code.py",
+      "sha256": "4ae72d07c0643d1439db8a89ea341b92e9c71f66d8156ca9172587c7560c62c7",
+      "original_sha256": "4ae72d07c0643d1439db8a89ea341b92e9c71f66d8156ca9172587c7560c62c7",
+      "evidence_kind": "candidate_code",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-2fsg2pgf",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD14-REQUESTED-CURRENT-W1-001/A/exec-2fsg2pgf/data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "evidence_kind": "candidate_input",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-2fsg2pgf",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD14-REQUESTED-CURRENT-W1-001/A/exec-2fsg2pgf/stdout.bin",
+      "sha256": "1ceb1747d12cdfc2a498d00410ae34ddb40057ce1f1655d458d292d19875c519",
+      "original_sha256": "1ceb1747d12cdfc2a498d00410ae34ddb40057ce1f1655d458d292d19875c519",
+      "evidence_kind": "candidate_stdout",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-2fsg2pgf",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD14-REQUESTED-CURRENT-W1-001/A/exec-2fsg2pgf/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "evidence_kind": "candidate_stderr",
+      "byte_policy": "exactsubmittedcode/input/streams; no invented expectation"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-2fsg2pgf",
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/TD14-REQUESTED-CURRENT-W1-001/A/exec-2fsg2pgf/execution-facts.json",
+      "sha256": "c66b9dc9b9aa8e01c9c5cc69db077e2d29bce85cf9822ce839815342c882d150",
+      "original_sha256": "ae633a24f7217f5ef143f392967d871d6d513364ecf0ad0ef3d988c313a7673e",
+      "evidence_kind": "candidate_execution_receipt",
+      "redaction_policy": "positiveactor/code/input/stream/exit/bootstrap/cleanup/scope/limits projection; omitprivateunit/path/history/economics/timing",
+      "omitted_original_fields": [
+        "cleanup_query_stderr",
+        "cleanup_query_stdout",
+        "cleanup_stop_stderr",
+        "cleanup_stop_stdout",
+        "completed_utc",
+        "control_group_after_stop",
+        "elapsed_seconds",
+        "limitations",
+        "resource_aggregate_after_execution",
+        "resource_aggregate_observation_error",
+        "resource_placement",
+        "resource_profile_sha256",
+        "stderr",
+        "stdout"
+      ]
+    }
+  ],
+  "scope": "exact current claimed candidate receipt; no retest/expectedfile invention/oldsubstitution",
+  "correspondence": "reviewer verifies independently; courier no semantic mapping"
+}

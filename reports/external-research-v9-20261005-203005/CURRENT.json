@@ -1,12 +1,12 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "C04-research-screen-and-current-partials-025",
-  "publication_snapshot_at": "2026-10-06T05:25:41.356445+00:00",
+  "cohort": "operational-pipeline-milestone-and-finished-targets-026",
+  "publication_snapshot_at": "2026-10-06T05:53:20.385801+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
   "failed_research_stages": 2,
-  "whole_pipelines_completed": 0,
+  "whole_pipelines_completed": 5,
   "matched_comparisons_completed": 0,
   "actual_research_families": [
     "GLM"
@@ -49,7 +49,7 @@
     "exit1": 2
   },
   "diagnostic_reviews_public": "evaluation/diagnostics/INDEX.md",
-  "whole_pipeline_completion_claim": false,
+  "whole_pipeline_completion_claim": true,
   "method_winner": null,
   "native_goal_status_source": "execution/status-projection/cohort-002/NATIVE_GOAL_STATUS.json",
   "earlier_accounting_native_goal_status_erratum": "GLM001..003 fields held router statuses; do not infer native Goal from those. Direct saved status evidence separate.",
@@ -204,5 +204,14 @@
   "TD11_review": "BothdeliveryINCOMPLETE/fullproposalqualityUNASSESSED/limitedsource-locatorfinding",
   "TD12_current_packet": "Actualpartialsourcepacket ungraded in this cohort",
   "one_unscored_A_revision": "21neutral source locators/new3000proposal/old450002unchanged/source0Goals/no targetcredit",
-  "latest_workload_metadata": "consolidation/workload-003/WORKLOAD_SCOREBOARD.json"
+  "latest_workload_metadata": "consolidation/workload-003/WORKLOAD_SCOREBOARD.json",
+  "whole_pipeline_completion_scope": "Operational native allrole/artifact/quiet/release only; scientificquality separate",
+  "operational_matched_pairs_completed": 2,
+  "matched_comparisons_scope": "Independent fullscientific comparison credit, not operational completion",
+  "TD13_review": "BothINCOMPLETE/fullscienceUNASSESSED/source-maplimited/authenticityunlocated",
+  "TD14_review": "Apartialsupportedtargeted/currentquartet/Goalcomplete; BmissingpausedUNASSESSED/nocausalwinner",
+  "P5_scientific_freeze": "LocalizedmoderateW2FAIL/otherpartnermissing atP1; no latercompletefile substitution",
+  "confirmation_clock_engineering": "Conditional4lockedpairs22roles240neutral locators, not deployment or sourcePASS",
+  "P5_final": "Treatment3rolesoperationalcomplete/scientificlocalizedFAIL; controlmissingfinalpausedUNASSESSED; no scientificwinner; partialblinding/nestedexposure/proofenrichment uncertainty disclosed",
+  "TD15_final": "BothdeliveryINCOMPLETE/treatmentmissingUNASSESSED/controlconditionalnonfinalPARTIAL/absentS15S20UNASSESSED/no execution or pipelinecredit"
 }

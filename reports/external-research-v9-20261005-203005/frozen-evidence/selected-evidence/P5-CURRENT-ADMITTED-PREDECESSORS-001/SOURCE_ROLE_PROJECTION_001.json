@@ -1,0 +1,32 @@
+{
+  "schema": "er9.source-role-manifest-neutral-projection.v1",
+  "original_sha256": "3f6c4591e9803e62133508123fb5a95fb6d32d0cf12dcadc2b2608380ba03d64",
+  "entries": [
+    {
+      "artifact_role": "leads.json",
+      "bytes": 8773,
+      "sha256": "8a7ae206ee9762796c7066ddb4e2dfca80aecb05a778fa4aefec6e0ab6ccf4f0",
+      "origin_role": "research"
+    },
+    {
+      "artifact_role": "proposal.md",
+      "bytes": 26086,
+      "sha256": "73311336653655d99624e4f6a54091a074583019205c8007c153cd9f5cc0ffcd",
+      "origin_role": "research"
+    },
+    {
+      "artifact_role": "sources.json",
+      "bytes": 13851,
+      "sha256": "6ccffa38f2198d2d671bec1107444f6cc995aaaf3edbd23c535a2bba2eeb6887",
+      "origin_role": "research"
+    },
+    {
+      "artifact_role": "witnesses.json",
+      "bytes": 8673,
+      "sha256": "9338d52d7047ec4af15d5835196f09cd4c81ea3a1fac0c83518937484ee39e43",
+      "origin_role": "research"
+    }
+  ],
+  "omitted_fields": "all origin_actor/model/effort/family/nativeproof/Goal/session/job/status/outputfreeze/physicalpaths/cost/history/armidentity; exact source role byteSHA/size only",
+  "sourcequality": "no certification or interpretation"
+}

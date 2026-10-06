@@ -1,0 +1,1376 @@
+{
+  "schema": "er9.confirmation-old-role-control-metadata.v1",
+  "created_utc": "2026-10-06T05:25:43.875836+00:00",
+  "registry_observation": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+    "sha256_at_read": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+    "observed_utc": "2026-10-06T05:25:42.219307+00:00",
+    "single_bounded_read": true,
+    "atomic_with_other_source_files": false,
+    "selected_roles": 22,
+    "selected_old_pairs": 4
+  },
+  "rows": [
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T02:37:26.035642+00:00",
+      "ended_utc": "2026-10-06T02:57:11.977176+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/stage.json",
+        "sha256": "40ed66c49eee9e08d1c94e33e2bdabbce9d673b1aa36cbc963f46161ecbcb1f2"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+        "sha256": "99ab419771efb8dd92e79d8e7d5a0cb5dc2571a0ed56925ec9a3775b2ef495e6"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "51629fc2e59b6822002a5d1b81a1f995e0bbb3e4753456823d7c8b8e359352a6"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1174.7139819509903,
+      "raw_prompt_sha256": "99ab419771efb8dd92e79d8e7d5a0cb5dc2571a0ed56925ec9a3775b2ef495e6",
+      "normalized_goal_objective_sha256": "bf7e0880e2df4563c8fd4d044b2a0aaabdcf2a6d2d0a82db0959d0cb252cd1d8",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "62871575ea9694767ffa883e64eac844c388ca42251b8c01bb7a176f1ad3f1e1"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/activation.json",
+          "sha256": "0bb49f639deb45620f89183512b7c752146214bd681eb4a0af46772ecd6a3108"
+        },
+        "startedTurn": true,
+        "session_id": "sess_70b2692f-1559-4029-9bd1-6554eddb471c",
+        "goal_id": "target_muw2j7ia_75a98861-890c-4263-a1fe-a5f2048ce0be",
+        "native_target_created_at_epoch_ms": 1791254253250,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T02:37:34.159763+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/RESOURCE_BINDING.json",
+          "sha256": "724175f8a3acc1deb9635b919d32cd22efa221569ed01a1928977e6780cfe6d1"
+        },
+        "original_birth_monotonic_ns": 84664890039531,
+        "native_stop_monotonic_ns": 85834890039531,
+        "guard_stop_monotonic_ns": 85859890039531,
+        "original_total_stop_monotonic_ns": 85864890039531
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "ee4e7435d3b96384faa711c26f4754a465a59c151e3eec874ab85209c2c5e24c"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-critique-a001/prepared-stage.json",
+        "sha256": "762650726a0cb721ea6d398c3858f1429c5e8972f5659126c0206acc8faacd4c"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-critique-a001/workspace/TASK.md",
+        "sha256": "a832f04e6edd2f44d3c28fb50a2a300bfa4f82b8aa40f8990d556a636ad3fdfc"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-revision-a001/prepared-stage.json",
+        "sha256": "a9b447e8f56720352c4a291b551fa947d9ef979f383ae9d7c33095b07abf90fd"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-control-revision-a001/workspace/TASK.md",
+        "sha256": "f2a181204fb2e0083260058c8134a5a56e0feb19c0ec963cefe49dbacd9ab0f6"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T02:31:05.520657+00:00",
+      "ended_utc": "2026-10-06T02:50:50.013793+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+        "sha256": "ab93a7a3b5cdec899ffb599f8e6b6d2e485fa90d70b7e08d258e530beff1caa5"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/workspace/TASK.md",
+        "sha256": "7bd65920953137b41b9375f9c1d58e5211520f95276230495c93dfc641816d6c"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "378ce44d5fd899124ce836eb334cd522bb9c8aaf1719ff5dbcbe1493ee64ff07"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1174.6185295589967,
+      "raw_prompt_sha256": "7bd65920953137b41b9375f9c1d58e5211520f95276230495c93dfc641816d6c",
+      "normalized_goal_objective_sha256": "3e95d4963a988dcdae56b0fb0a48ff3767887623e4e028923c73194daa700263",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "9feb573bcd3de526df824ec23d01d662df5e3415fb36ad3e2ccc8375ffbcc240"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+          "sha256": "32bd1fb8272cb5d240172285454af891290ed422a5872f57b012e5d45c3f6d02"
+        },
+        "startedTurn": true,
+        "session_id": "sess_4ebff80b-1dfc-4f9f-8e37-c4200d943703",
+        "goal_id": "target_muw2b1o3_c507c1d9-07b8-481b-b055-1967bc56914d",
+        "native_target_created_at_epoch_ms": 1791253872435,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T02:31:13.792603+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/RESOURCE_BINDING.json",
+          "sha256": "28c4583322a42b621960e358f47011c49281c15c17bbf2a3aeed5e66f221afdf"
+        },
+        "original_birth_monotonic_ns": 84284376062312,
+        "native_stop_monotonic_ns": 85454376062312,
+        "guard_stop_monotonic_ns": 85479376062312,
+        "original_total_stop_monotonic_ns": 85484376062312
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "d089599208c446775f3aada9cb058463ad3baa86e30c871da9b7527fa0787e09"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001/prepared-stage.json",
+        "sha256": "0bdffe0ac803302ebed4e67b986ca132e3ddce8893430b42ec4c1e5a38529781"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001/workspace/TASK.md",
+        "sha256": "a832f04e6edd2f44d3c28fb50a2a300bfa4f82b8aa40f8990d556a636ad3fdfc"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001/prepared-stage.json",
+        "sha256": "2b16ea7ca7f5711176ffd6eb80d29f3e6c10317143604a41c361764396aa742e"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001/workspace/TASK.md",
+        "sha256": "d4dd4d16f4ca05393d65042565ac40188d0891965ce97c45a6954736c3efbda2"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-01-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "9d3f6b9f44b0864ad82e452c864415725467872fb514d46db46d7a9788a34e8e"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T03:20:57.168716+00:00",
+      "ended_utc": "2026-10-06T03:40:39.824528+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/stage.json",
+        "sha256": "8cce79653040d5ad73278be644d86309f815e05482ae79494d60a3e86a67a48e"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+        "sha256": "c8e9c69fe38f615fe7f870324142778bc36e6711e9e10f521cb9313414d4437f"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "d80560c0d1fe618916db875c09906b8d1d3e7665e6b9a0d4dcc49f18c4f28fe7"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1174.750209963997,
+      "raw_prompt_sha256": "c8e9c69fe38f615fe7f870324142778bc36e6711e9e10f521cb9313414d4437f",
+      "normalized_goal_objective_sha256": "a0657ecebc99244c341a63f9a6416c95588c25206157e1f1e8b4cd0a82603674",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "83ad40351d8a29bfca601a2cab299ec8749c917cae0342e4e7d9a7f1fc6e72b6"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/activation.json",
+          "sha256": "cca2cd9159b4a349295f3ca104aed1e46334ce96a3a7c522ef0f883d51d93fec"
+        },
+        "startedTurn": true,
+        "session_id": "sess_d218be17-0469-49f3-a9c4-16301e329fa0",
+        "goal_id": "target_muw436ba_de4d5907-e570-467d-8798-483a0a3da126",
+        "native_target_created_at_epoch_ms": 1791256864438,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T03:21:05.280887+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/RESOURCE_BINDING.json",
+          "sha256": "af9b487b354ce3f48b8e3a959f465f42a7c3b86481a5cae400826b275c6ee337"
+        },
+        "original_birth_monotonic_ns": 87276019871031,
+        "native_stop_monotonic_ns": 88446019871031,
+        "guard_stop_monotonic_ns": 88471019871031,
+        "original_total_stop_monotonic_ns": 88476019871031
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "f0089e3f33fa213eab3dae9318345dec3291ff75c706268e0bb704441ceb197a"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-control-critique-a001/prepared-stage.json",
+        "sha256": "311d0b39019723e81fc19352ed490cada8dbefb8a85c050c266f1bba292d333b"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-control-critique-a001/workspace/TASK.md",
+        "sha256": "262e37f92602fbfae15b6c2bb7aaf4c9c70bba668f6d315c2a7317ff73410f3c"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-control-revision-a001/prepared-stage.json",
+        "sha256": "2dd4c2a9d6fe7e456aa02a2898d18dc58f43766135305b59de7ffeb9b4201bfc"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-control-revision-a001/workspace/TASK.md",
+        "sha256": "86eab2959df5f49fee156a3403987bf83a5ed6c3f2c3c35d7e72665402a60df8"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T02:50:56.990074+00:00",
+      "ended_utc": "2026-10-06T03:10:42.923195+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+        "sha256": "87f6723697322ae81370106830fdf419c9bb31a1293cd10e41de365aaf69af0a"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/workspace/TASK.md",
+        "sha256": "d347ae354e2c680be1421306c87400d78679c031f29fd26b1f063c918cf58b4a"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "449a30581b16f78dbf43c7a94323ee58b3b6059f418ce6215348c1b7fdc14c7d"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1175.8806276030082,
+      "raw_prompt_sha256": "d347ae354e2c680be1421306c87400d78679c031f29fd26b1f063c918cf58b4a",
+      "normalized_goal_objective_sha256": "d2744b64b4735f131c976245c78f499dc06306ff6887cebc27a27005f215f43b",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "68a2c2f932039b0dadc80d0379b3a1a81bd5e74988ef51622ecc6a42c7f66d5b"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+          "sha256": "cbd5ec0fea24f9595eb48c9640cf568ae358330a593013a7e55f2ba7c835d236"
+        },
+        "startedTurn": true,
+        "session_id": "sess_82dda672-db34-422d-84b2-5a2a2be23107",
+        "goal_id": "target_muw30kou_b4800fef-d32e-4bc2-871c-23fd23febe98",
+        "native_target_created_at_epoch_ms": 1791255063486,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T02:51:04.274306+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/RESOURCE_BINDING.json",
+          "sha256": "93d471e7d4ad1183ffd36b065a12b8e6087185de2945bdc8ce6e409738525244"
+        },
+        "original_birth_monotonic_ns": 85475844093546,
+        "native_stop_monotonic_ns": 86645844093546,
+        "guard_stop_monotonic_ns": 86670844093546,
+        "original_total_stop_monotonic_ns": 86675844093546
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "1b4693375b1c052e16244c26fe9927dc2832e531b038b9ef1daed47d975ea757"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001/prepared-stage.json",
+        "sha256": "ba459f6d252ce2bd5f2fd837a95583ea494a6b1a9fe6e6619664054869214621"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001/workspace/TASK.md",
+        "sha256": "262e37f92602fbfae15b6c2bb7aaf4c9c70bba668f6d315c2a7317ff73410f3c"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001/prepared-stage.json",
+        "sha256": "9b50b98a9257da9fe5bdbfe1a11c162068885619cfd837bfd4f41938bacfb298"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001/workspace/TASK.md",
+        "sha256": "ce28f150ddbd523150db6f62447786c941a1a9f7d386631989e78b2403eda381"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-02-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "13033edf51e63e2212e51852cc502fc4c388b53bb8b2b144b205e997f1cd0a52"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T03:41:17.614037+00:00",
+      "ended_utc": "2026-10-06T04:01:02.389997+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/stage.json",
+        "sha256": "816244e96105b607bb362938f26a0f89c1e52f81bd4a394a2ca18d4a10c1d1ae"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+        "sha256": "99ab419771efb8dd92e79d8e7d5a0cb5dc2571a0ed56925ec9a3775b2ef495e6"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "17c8ae87ed2309fb0b3754c92830aba91ffecf9e80ba03c99475368e61ea0e47"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1174.433280532001,
+      "raw_prompt_sha256": "99ab419771efb8dd92e79d8e7d5a0cb5dc2571a0ed56925ec9a3775b2ef495e6",
+      "normalized_goal_objective_sha256": "bf7e0880e2df4563c8fd4d044b2a0aaabdcf2a6d2d0a82db0959d0cb252cd1d8",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "b695e2c2fef67fe7777189fcf831fd27030bdfc91de169c47c5d641b80f1b2d5"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/activation.json",
+          "sha256": "cdc3cb63171c311124dbd34e1ea85ba118cf902cc6ae8b1476b8a56266b06cb3"
+        },
+        "startedTurn": true,
+        "session_id": "sess_e1b4b430-be9c-471e-953b-42d772941f5f",
+        "goal_id": "target_muw4tbnn_ba226527-85d3-448b-8d73-60cb1debfc26",
+        "native_target_created_at_epoch_ms": 1791258084419,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T03:41:25.580195+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/RESOURCE_BINDING.json",
+          "sha256": "9d5e52dc2c2590699755846fdf1bf9fbe3bc8bca9a6b1d3628a8e56fd8f50313"
+        },
+        "original_birth_monotonic_ns": 88496470419449,
+        "native_stop_monotonic_ns": 89666470419449,
+        "guard_stop_monotonic_ns": 89691470419449,
+        "original_total_stop_monotonic_ns": 89696470419449
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "646ca31851733a12d5b338bad999246566a29cfabcecd29f3443619b0a6bffbf"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/C-03-RESOURCE-R002-BUNDLE-control-critique-a001/prepared-stage.json",
+        "sha256": "610b1205b2854129e5e2b25fab2df8cdb0202d9ac1333ddc498ffb2e824b74a2"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/C-03-RESOURCE-R002-BUNDLE-control-critique-a001/workspace/TASK.md",
+        "sha256": "a832f04e6edd2f44d3c28fb50a2a300bfa4f82b8aa40f8990d556a636ad3fdfc"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/C-03-RESOURCE-R002-BUNDLE-control-revision-a001/prepared-stage.json",
+        "sha256": "6303dc461c307e968dc07d7dc7b47cf4dd403b50a7fa317aff630f3f3978ee81"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/C-03-RESOURCE-R002-BUNDLE-control-revision-a001/workspace/TASK.md",
+        "sha256": "9372d150faa128a68c7b5436b5342d3b3804373181d3de52896062d493cbfb48"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T03:26:53.711558+00:00",
+      "ended_utc": "2026-10-06T03:45:00.444568+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+        "sha256": "537855e45170a2280d8dd05ae18cf31c3493dddb9748cc03dac57965c8380680"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/workspace/TASK.md",
+        "sha256": "7bd65920953137b41b9375f9c1d58e5211520f95276230495c93dfc641816d6c"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "complete",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "14fc5c21cde345a1324b13e3a3a1064c76cc2fdb186b4fe02104986bf41601b7"
+      },
+      "operational_complete": true,
+      "router_terminal_status": "completed",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1072.769733463996,
+      "raw_prompt_sha256": "7bd65920953137b41b9375f9c1d58e5211520f95276230495c93dfc641816d6c",
+      "normalized_goal_objective_sha256": "3e95d4963a988dcdae56b0fb0a48ff3767887623e4e028923c73194daa700263",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "65c04fec683590e169c1fb99e13fd8befe4c4b101952a9b2498639a08bfd2719"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+          "sha256": "1abe69b7b17cd39561f060be42fc17ec9f2c19b9c546ceb022b35f0431495064"
+        },
+        "startedTurn": true,
+        "session_id": "sess_cf580d3e-0609-48a3-97be-51caeb88b160",
+        "goal_id": "target_muw4ata5_11113203-0c94-4a75-8fc4-931e39a7a1eb",
+        "native_target_created_at_epoch_ms": 1791257220797,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T03:27:01.798948+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/RESOURCE_BINDING.json",
+          "sha256": "f28517f42e809b49637861a89f66563d8a2378b090ff6804fe0b9690514a852c"
+        },
+        "original_birth_monotonic_ns": 87632566971851,
+        "native_stop_monotonic_ns": 88802566971851,
+        "guard_stop_monotonic_ns": 88827566971851,
+        "original_total_stop_monotonic_ns": 88832566971851
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "88c29369e652453eb79ae87f47aea5813578868f50bde9e56f3a4dc1bedaf54d"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 1500,
+      "max_responses": 150,
+      "status": "SEALED_READY",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001/stage.json",
+        "sha256": "e1b7d088f2bd9116e79fac2672b5e6642d3e01838225f52a479bf81f7941912c"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001/workspace/TASK.md",
+        "sha256": "d5dfb6eb5cabfe1f2722cdb84667d90846bf42f502064fe4bf6a865a1e502af4"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-03-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "839480f267558f62daa6f1d3caabc86eca93201cf7e7c2b09791f8dbf56dcccc"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": false,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": "UNKNOWN",
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_YET_TERMINAL_QUIET"
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T04:01:13.595940+00:00",
+      "ended_utc": "2026-10-06T04:20:13.487455+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/stage.json",
+        "sha256": "838c769da6ce7fe989f856781efaec6b56aa4d63e39ec49b850c1a18c93da9e5"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+        "sha256": "c8e9c69fe38f615fe7f870324142778bc36e6711e9e10f521cb9313414d4437f"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "complete",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "98178556faa398f1a2afb8559733ba9554fb8de7c5c97705d152520bf161d88b"
+      },
+      "operational_complete": true,
+      "router_terminal_status": "completed",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1131.9181536120013,
+      "raw_prompt_sha256": "c8e9c69fe38f615fe7f870324142778bc36e6711e9e10f521cb9313414d4437f",
+      "normalized_goal_objective_sha256": "a0657ecebc99244c341a63f9a6416c95588c25206157e1f1e8b4cd0a82603674",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "c20cbbf47c48d2a00387fb1569808e00f6df7f21589072c0864dcd8c4eb7a3de"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/activation.json",
+          "sha256": "6c105e4c8227101bb01299525f5581ccc97d7a4193c2c5cbeef4c46f7017d94f"
+        },
+        "startedTurn": true,
+        "session_id": "sess_868237f1-8c73-4a6c-8793-75c73a83c623",
+        "goal_id": "target_muw5iyzo_b1675a9b-1242-4628-868f-47ac14e5812f",
+        "native_target_created_at_epoch_ms": 1791259281060,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T04:01:21.988896+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/RESOURCE_BINDING.json",
+          "sha256": "a3e7bd152122c3c54fe86a5b0638a142af562ccc90635e7dc4db32f3694c4e78"
+        },
+        "original_birth_monotonic_ns": 89692452381825,
+        "native_stop_monotonic_ns": 90862452381825,
+        "guard_stop_monotonic_ns": 90887452381825,
+        "original_total_stop_monotonic_ns": 90892452381825
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "d57f7528ad0a550931835498e9b4cd645faf7e98767076ba02e85d312e4c4565"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 900,
+      "max_responses": 90,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T04:20:24.211023+00:00",
+      "ended_utc": "2026-10-06T04:35:04.004910+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/stage.json",
+        "sha256": "21f07a199e844e260d7faf22f7d092a6c00aaf80cc4e39c04eba58c7594ace5c"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/workspace/TASK.md",
+        "sha256": "262e37f92602fbfae15b6c2bb7aaf4c9c70bba668f6d315c2a7317ff73410f3c"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/OUTPUT_FREEZE.json",
+        "sha256": "e570f0ccda0f8d6d3bacbd038a6cbe461375f4009314e18e1b95b2a549e6ceaa"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "cap_seconds",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 875.7317991910095,
+      "raw_prompt_sha256": "262e37f92602fbfae15b6c2bb7aaf4c9c70bba668f6d315c2a7317ff73410f3c",
+      "normalized_goal_objective_sha256": "f5020a79d198803c666768be335233642a4dfaca8a268381c8a9c428633e0944",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/receipt.json",
+        "sha256": "6d4994e440788131526b0c07b5da6b49b9d5eea8d72c38451865dd7938fb11d8"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/activation.json",
+          "sha256": "2925847e27fdfb4eaa2bda9a5a601a75a2b9e5033248ca9c978a87010a8d68ea"
+        },
+        "startedTurn": true,
+        "session_id": "sess_132ded4f-63c1-45ce-825a-2a05869523c3",
+        "goal_id": "target_muw67mdc_d44753a6-8d94-475d-9c6f-c67b028c31d1",
+        "native_target_created_at_epoch_ms": 1791260431104,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T04:20:31.999791+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/RESOURCE_BINDING.json",
+          "sha256": "3f15e0e19e5649dd1d8eee8b27da314e1f99d064c0931c8bafa45e651168db5a"
+        },
+        "original_birth_monotonic_ns": 90843065656421,
+        "native_stop_monotonic_ns": 91713065656421,
+        "guard_stop_monotonic_ns": 91738065656421,
+        "original_total_stop_monotonic_ns": 91743065656421
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "254e3dc428ea4957449b01a3491f5c05689dd4748f7df30934ff6e2934b62cc4"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-revision-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "family": "Z",
+      "max_seconds": 600,
+      "max_responses": 60,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-control-revision-a001/prepared-stage.json",
+        "sha256": "6bf4115ef1a0af7f6cf0cb1ceb942b673f2cb6912d1e0d932e0c9f48299148bb"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-control-revision-a001/workspace/TASK.md",
+        "sha256": "ad4e78476db76960dd66208e42bda7dd4cd6aadaef0132106cb7816d04bd22ac"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "family": "Z",
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "start_utc": "2026-10-06T03:45:10.697420+00:00",
+      "ended_utc": "2026-10-06T04:04:52.489786+00:00",
+      "permit_release_confirmed": true,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/stage.json",
+        "sha256": "8661d48f6effca672e95e0d4bdd833977ffab18f94a8baa53501d490bbc4a865"
+      },
+      "source_choice": "glm_complete2304_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+        "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/workspace/TASK.md",
+        "sha256": "d347ae354e2c680be1421306c87400d78679c031f29fd26b1f063c918cf58b4a"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "paused",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "d62c8e4f3511d724cd4cc8e2aa9e9195721115c96f03c69b63558c12dab64f9d"
+      },
+      "operational_complete": false,
+      "router_terminal_status": "execution_error",
+      "native_quiescent": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false,
+      "whole_role_elapsed_seconds": 1175.3189243660017,
+      "raw_prompt_sha256": "d347ae354e2c680be1421306c87400d78679c031f29fd26b1f063c918cf58b4a",
+      "normalized_goal_objective_sha256": "d2744b64b4735f131c976245c78f499dc06306ff6887cebc27a27005f215f43b",
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "06cfb3c0f5aeb9509ba5d4849866b360880f9b74ecda366fc5dc651de5f56ab2"
+      },
+      "actual_native_goal_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/activation.json",
+          "sha256": "0ff3c235b3cff36350a8e6417cedc9e6b78204e3663d1994c54a9a4c7eb00d8a"
+        },
+        "startedTurn": true,
+        "session_id": "sess_55d7e0b3-9206-45a4-98c1-e24dad90618c",
+        "goal_id": "target_muw4ybn0_5040eb55-df4b-466f-b1ce-4150b8e198db",
+        "native_target_created_at_epoch_ms": 1791258317676,
+        "native_record_created_time_definition": "Saved native Goal record creation time, not physical inference/process start UTC",
+        "controller_activation_receipt_utc": "2026-10-06T03:45:18.571433+00:00",
+        "physical_native_start_utc": "UNEXPOSED"
+      },
+      "original_clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/RESOURCE_BINDING.json",
+          "sha256": "2b51f2822c9cd1c960444c2b1593b8a7d8f04667d6d1913bd8febcb208179dae"
+        },
+        "original_birth_monotonic_ns": 88729551516224,
+        "native_stop_monotonic_ns": 89899551516224,
+        "guard_stop_monotonic_ns": 89924551516224,
+        "original_total_stop_monotonic_ns": 89929551516224
+      },
+      "saved_owned_quiet": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "abc075590e5ee6e85e07a42a1806a690e844255d51e1dbc1f557eded1abb5a6f"
+        },
+        "all_private_slice_descendants_quiet": true
+      }
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "stage_index": 1,
+      "family": "Z",
+      "max_seconds": 1500,
+      "max_responses": 150,
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "registry_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+        "sha256": "253e116df54d5897925b6eea80f06ac691573d772f5ded829efaaff57e9c30f0",
+        "observed_utc": "2026-10-06T05:25:42.219307+00:00"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "7398185710f316f3c56cb5769237e823dcf037e81d84413532d795f9761c2239"
+      },
+      "source_choice": "glm_complete2304_bundle_v2",
+      "tools_builder": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+        "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+      },
+      "task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001/workspace/TASK.md",
+        "sha256": "8af0f2a9116f6d612fc5b328ee83853c584d075874563f659538157ab8d2818e"
+      },
+      "task_hash_birth": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/PIPELINE_CLOSURE.json",
+          "sha256": "be17361b749f423f85003ca69eae7ec5ed4bcdf678e098a73c4223339dbd23e9"
+        },
+        "before_either_first_research_required": true,
+        "definition": "Frozen prospective Task/reference in owner full closure. Actual physical Task creation UTC is not independently exposed."
+      },
+      "registry_terminal": true,
+      "native_goal_status": "UNKNOWN",
+      "operational_complete": false,
+      "native_goal_birth": "NOT_EXPOSED: registry reports no native entry; not a global absence proof",
+      "saved_owned_quiet": "NOT_APPLICABLE_TO_NEVER_STARTED_REGISTERED_ROLE"
+    }
+  ],
+  "definitions": "Statuses and timing source types are separate. Blocked no-entry rows preserve operator declaration; no global absence inference. No artifact inventory/source facts/evaluator answer fields."
+}

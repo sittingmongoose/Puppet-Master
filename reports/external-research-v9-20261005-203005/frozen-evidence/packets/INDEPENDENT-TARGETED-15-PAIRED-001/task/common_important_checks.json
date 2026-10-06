@@ -1,0 +1,52 @@
+{
+  "schema": "er9.matched_important_checks.v1",
+  "domain": "B",
+  "status": "PROSPECTIVE_NOT_RUN",
+  "checks": [
+    {
+      "id": "B-P1",
+      "obligation_ids": [
+        "B08",
+        "B09"
+      ],
+      "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "id": "B-P2",
+      "obligation_ids": [
+        "B02",
+        "B03",
+        "B04",
+        "B10"
+      ],
+      "question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "id": "B-P3",
+      "obligation_ids": [
+        "B11"
+      ],
+      "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "id": "B-P4",
+      "obligation_ids": [
+        "B12"
+      ],
+      "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "id": "B-P5",
+      "obligation_ids": [
+        "B01",
+        "B05",
+        "B06",
+        "B07",
+        "B10"
+      ],
+      "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "answer_key": null,
+  "evaluation_scope": "Same checks in both arms; inspect all declared obligations/current consequential claims for full PASS. A decisive failure can leave the rest explicitly UNASSESSED."
+}

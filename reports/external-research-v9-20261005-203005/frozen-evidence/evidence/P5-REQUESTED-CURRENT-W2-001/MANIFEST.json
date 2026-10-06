@@ -1,0 +1,41 @@
+{
+  "schema": "er9.selected-current-claimed-execution-evidence.v1",
+  "evaluation_id": "independent-pipeline-5",
+  "execution_id": "exec-lyo8f_8s",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/P5-REQUESTED-CURRENT-W2-001/0-code.py",
+      "sha256": "be0836daf56ec50411d07cd4b489ef1816b6eaff8d6a80012f54181d10bd0c59",
+      "bytes": 995,
+      "byte_policy": "exact current candidate bytes,no expectedfile invention/retest"
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/P5-REQUESTED-CURRENT-W2-001/0-data.json",
+      "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "bytes": 4,
+      "byte_policy": "exact current candidate bytes,no expectedfile invention/retest"
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/P5-REQUESTED-CURRENT-W2-001/0-stdout.bin",
+      "sha256": "45a9b469e04d2be7049b7cbf9154eb5847765458d79b070ad9728cb623c3ce1b",
+      "bytes": 206,
+      "byte_policy": "exact current candidate bytes,no expectedfile invention/retest"
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/P5-REQUESTED-CURRENT-W2-001/0-stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "byte_policy": "exact current candidate bytes,no expectedfile invention/retest"
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/evidence/P5-REQUESTED-CURRENT-W2-001/0-execution-facts.json",
+      "sha256": "41e3e4925c97e2e787758ad265a306d7b78c554e0ddfe4f532b4a80c49e6d27c",
+      "bytes": 1334,
+      "original_sha256": "c047a2374fa96688b997bc99e6317424b79043e1662cef33cc0995750f818217",
+      "redaction": "omit private physical paths/unit/history/timing/cost; preserve actualactor/bootstrap/cleanup/code/input/stream/exit/limits"
+    }
+  ],
+  "positive_current_receipt_match_count": 1,
+  "missing_execution": null,
+  "scope": "current samearm freshR/C/F claimed witness receipt only,no oldI05receipt/retest/expectedtruth/couriersemanticmapping"
+}

@@ -1,0 +1,572 @@
+{
+  "actual_criteria_counts": {
+    "A_brief_obligations": 12,
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "arms": {
+    "A": {
+      "A_brief_obligations": [
+        {
+          "coverage": "COMPLETE",
+          "id": "A01",
+          "reason": "Minimum workflow and bounded read-only source/import/export plan is present."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A02",
+          "reason": "Explicit axes, binary64 frame convention, origin/units/orientation, mask and annotation scopes are choices; physical ambiguity is gated."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A03",
+          "reason": "Display state, recorded resampling and export meaning are separated."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A04",
+          "reason": "Mechanism and proposed resource/cancel benchmarks exist; actual3GB/runtime suitability remains UNEXECUTED."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A05",
+          "reason": "Whole-file identity, reference/copy, relocation, generations and target-share recovery qualification are explicit proposed design."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A06",
+          "reason": "Styles, keyboard, undo/redo and text feedback are planned; usability is UNEXECUTED."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A07",
+          "reason": "At least two independent useful precedents are present; autonomous discovery is outside this supplied-input diagnostic and remains UNASSESSED."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A08",
+          "reason": "Public issue/test/fix/release chain is verified, but candidate-discovery and parser/test execution are not claimed; fixture privacy qualifier remains unresolved."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A09",
+          "reason": "Useful opportunity and plausible alternatives are distinct from adopted requirements."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A10",
+          "reason": "Coherent documented reader set is bound; exact viewer integration and real-file limits are declared open gates."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A11",
+          "reason": "Actual current arithmetic code/results correspond to the narrow source expectation; all app/parser checks remain proposed."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A12",
+          "reason": "Standalone current final preserves core findings and corrects supported errors; noncritical qualifier and limited optional-lead retention gaps are recorded."
+        }
+      ],
+      "case_outcome": "UNASSESSED",
+      "common_dimensions": [
+        {
+          "coverage": "PARTIAL",
+          "id": "Q1",
+          "reason": "Current diagnostic planning coverage is substantial; full autonomous brief outcome is outside actual scope."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "Q2",
+          "reason": "Consequential documented versions/conditions are checked; fixture privacy is an unverified noncritical qualifier."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "Q3",
+          "reason": "Conditional architecture and component choice distinguish inference/choice from external facts."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "Q4",
+          "reason": "Useful independent precedents and chain survive, but sources were supplied and a few optional leads dropped."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "Q5",
+          "reason": "Narrow actual arithmetic witness verified; proposed checks are honestly UNEXECUTED."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "Q6",
+          "reason": "Core semantic preservation and supported corrections are verified, with minor catalog/qualifier gaps."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "Q7",
+          "reason": "Integration/performance/calibration/share/coordinate gates explicit; no blanket rejection."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "Q8",
+          "reason": "The designated quartet is present and reproducible by pins; native completion/economics are separately held."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "coverage": "PARTIAL",
+          "id": "A-P1",
+          "reason": "Independent mechanisms and real chain are verified; supplied-input discovery duty remains outside actual target."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A-P2",
+          "reason": "Consequential data-contract/version claims are sourced or marked choices/gates."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A-P3",
+          "reason": "W1 verified and confined to arithmetic; proposed validation preserved as unexecuted."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "A-P4",
+          "reason": "Verified corrections preserve core useful content; minor qualifier and lead-retention gaps remain."
+        },
+        {
+          "coverage": "COMPLETE",
+          "id": "A-P5",
+          "reason": "Planning workflow, portability, resource gates, usability and optional alternatives are present."
+        }
+      ],
+      "consequential_error_found": false,
+      "delivery_status": "DELIVERED_CURRENT_TARGETED_QUARTET",
+      "designated_final_present": true,
+      "four_required_roles_present": true,
+      "full_pipeline_quality": "UNASSESSED",
+      "outcome_scope": "No whole-case or full-pipeline PASS; core consequential source corrections supported, minor unresolved qualification/preservation gaps recorded.",
+      "source_quality": "PARTIAL_SUPPORTED_TARGETED_RESULT",
+      "target_obligations": [
+        {
+          "coverage": "COMPLETE",
+          "id": "D-V10-A-01",
+          "reason": "Selected supplied source/version mechanism is checked: older and current released APIs differ; captured current master/tag docs agree. This is not a claim of a current mismatch or autonomous discovery."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-02",
+          "reason": "Consequential behavior/context is correctly qualified; the private-fixture qualifier remains independently unverified."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-03",
+          "reason": "Complete designated quartet and honest checks exist; limited useful-lead retention gaps prevent a blanket complete-preservation claim."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "coverage": "COMPLETE",
+          "id": "D-V10-A-P1",
+          "reason": "Supported version/calibration/scope corrections verified; no new consequential error found in assessed claims."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-P2",
+          "reason": "Core useful content and uncertainty preserved; noncritical qualifier and optional lead gaps are explicit."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-P3",
+          "reason": "Output shows ordinary source/version checking and honest witness scope. Temporal uptake, matched budgets and method attribution are deferred to Phase2; no causal credit in Phase1."
+        }
+      ],
+      "unresolved_critical_dependencies": [
+        "exact napari/Qt compatible release",
+        "real-file3GB and latency/cancel/memory envelope",
+        "instrument calibration fixtures",
+        "target-share recovery",
+        "coordinate/export adapter validation"
+      ]
+    },
+    "B": {
+      "A_brief_obligations": [
+        {
+          "coverage": "UNASSESSED",
+          "id": "A01",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A02",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A03",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A04",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A05",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A06",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A07",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A08",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A09",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A10",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A11",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A12",
+          "reason": "No designated final in current frozen view; broad scientific obligation quality cannot be recovered from two source line maps."
+        }
+      ],
+      "case_outcome": "INCOMPLETE",
+      "common_dimensions": [
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q1",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q2",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q3",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q4",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q5",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q6",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "Q7",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "Q8",
+          "reason": "Required final and three catalogs absent; exact partial locator maps are not promoted to final/source-quality proof."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "coverage": "UNASSESSED",
+          "id": "A-P1",
+          "reason": "Same predeclared check retained; no current final/catalog claim inventory. Delivery absence is separately explicit."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A-P2",
+          "reason": "Same predeclared check retained; no current final/catalog claim inventory. Delivery absence is separately explicit."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A-P3",
+          "reason": "Same predeclared check retained; no current final/catalog claim inventory. Delivery absence is separately explicit."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A-P4",
+          "reason": "Same predeclared check retained; no current final/catalog claim inventory. Delivery absence is separately explicit."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "A-P5",
+          "reason": "Same predeclared check retained; no current final/catalog claim inventory. Delivery absence is separately explicit."
+        }
+      ],
+      "delivery_status": "INCOMPLETE_FINAL_AND_ALL_THREE_CATALOGS_ABSENT",
+      "designated_final_present": false,
+      "four_required_roles_present": false,
+      "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT",
+      "full_pipeline_quality": "UNASSESSED",
+      "partial_artifacts": "Two exact locator maps; static line correspondence verified, no promotion or scientific completion credit.",
+      "source_quality": "UNASSESSED",
+      "target_obligations": [
+        {
+          "coverage": "UNASSESSED",
+          "id": "D-V10-A-01",
+          "reason": "D03 delivery is incomplete; no designated final/catalogs. The two maps are faithfully sourced partial work, not substantive correction/preservation conclusions."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "D-V10-A-02",
+          "reason": "D03 delivery is incomplete; no designated final/catalogs. The two maps are faithfully sourced partial work, not substantive correction/preservation conclusions."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-03",
+          "reason": "D03 delivery is incomplete; no designated final/catalogs. The two maps are faithfully sourced partial work, not substantive correction/preservation conclusions."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "coverage": "UNASSESSED",
+          "id": "D-V10-A-P1",
+          "reason": "Missing required current final prevents semantic result/mechanism comparison; no promoted partial. P2 records actual incomplete delivery only."
+        },
+        {
+          "coverage": "PARTIAL",
+          "id": "D-V10-A-P2",
+          "reason": "Missing required current final prevents semantic result/mechanism comparison; no promoted partial. P2 records actual incomplete delivery only."
+        },
+        {
+          "coverage": "UNASSESSED",
+          "id": "D-V10-A-P3",
+          "reason": "Missing required current final prevents semantic result/mechanism comparison; no promoted partial. P2 records actual incomplete delivery only."
+        }
+      ]
+    }
+  },
+  "blinding": {
+    "scope_limited_integrity_and_W1": "Phase1 neutral freeze proof and explicitly requested narrow candidate witness receipt only.",
+    "task_arm_instructions_and_stage_identifiers": "Unavoidable identity/method hints in exact actual task bodies; no perfect blinding claim.",
+    "withheld_until_lock": [
+      "private key",
+      "native Goal/status/history",
+      "usage/economics",
+      "prior grades"
+    ]
+  },
+  "evaluation_id": "independent-targeted-14",
+  "evidence_manifest": {
+    "bytes": 26328,
+    "mode": "0400",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/phase1-evidence-manifest.json",
+    "sha256": "417b864d66db81f3bf59a065105b67261085bb8d654a727cae999f10680a8529"
+  },
+  "identity": {
+    "physical_provider": "UNKNOWN",
+    "physical_runtime": "UNKNOWN",
+    "requested_assigned_effort": "xhigh",
+    "requested_assigned_fork": "none",
+    "requested_assigned_model": "gpt-6.1-sol"
+  },
+  "limitations": [
+    "No new candidate execution, repair, retest, feedback, Goal or campaign.",
+    "Phase1 independently assesses the exact selected source content and narrow claimed witness; actual native completion, temporal method uptake and runtime/usage scopes remain withheld.",
+    "Raw source retrieval is exact courier-selected historical-at-capture primary evidence, not fresh internet currentness. Moving snapshots are graded only at their recorded bytes.",
+    "Privacy/availability of the particular upstream test fixture remains UNKNOWN; public reproducer attachment existence is visible in issue319.",
+    "Case outcomes are not weighted/aggregate scores; UNASSESSED scope remains explicit."
+  ],
+  "negative_controls": {
+    "blanket_rejection_not_credited": true,
+    "current_capture_receipt_not_replaced_by_same_byte_history": true,
+    "empty_or_missing_delivery_not_credited": true,
+    "executed_arithmetic_not_parser_or_app_proof": true,
+    "link_or_line_counts_not_comprehension": true,
+    "optional_adoption_not_required_fact": true
+  },
+  "nonconsequential_issues": [
+    {
+      "alias": "A",
+      "defect_id": "TD14-A-QUALIFIER-01",
+      "description": "The statement that the upstream TVIPS fixture is private is not established for this particular fixture by the admitted test diff and generic CHANGES policy. Issue319 offers a public reproduction attachment. The 2019 CHANGES entry describes separating public/private files as work in progress; it does not identify TVIPS_bin4.tif. Public reproducer availability and repository test-corpus membership must be distinguished. No private image was inspected and exact byte equivalence of the attachment to the upstream test fixture is UNKNOWN. The honest no-parser-execution statement remains valid.",
+      "kind": "UNVERIFIED_NONCRITICAL_SOURCE_QUALIFIER",
+      "locator": "A final Calibration failure and repair chain; sources S7 applicability",
+      "severity": "minor",
+      "state": "UNASSESSED"
+    },
+    {
+      "alias": "A",
+      "defect_id": "TD14-A-PRESERVE-02",
+      "description": "Core supported content and useful optional lanes survive. Two supplied useful leads are no longer separately accessible in the current catalog: the issue/community-evidence process lead and the tifffile asxarray/coords/units import-inspector lead. S2 lines157-166 support the latter capability at the documented version. This is a limited preservation/catalog gap, not evidence that the library or conditional reader recommendation is false.",
+      "kind": "OPTIONAL_LEAD_RETENTION_GAP",
+      "locator": "A supplied seed lead_inventory L4,L11 versus current leads L1-L8",
+      "severity": "minor",
+      "state": "PARTIAL"
+    }
+  ],
+  "pair_id": "D-V10-A-BUNDLE-R001",
+  "phase1_end_monotonic_seconds": 95333.765481693,
+  "prepared_utc": "2026-10-06T05:35:14.908459Z",
+  "schema": "er9.independent-phase1-judgment.v1",
+  "scope": "Current supplied-input targeted diagnostic available outputs only; full development/autonomous discovery and full pipeline quality UNASSESSED. No winner, matched causal effect, successful source acquisition=comprehension, or native completion inferred.",
+  "source_observations": [
+    {
+      "assessment": "SUPPORTED_AS_DOCUMENTED_CANDIDATE_SET",
+      "claim": "Candidate release/dependency set and new versus older TIFF-backed Zarr API",
+      "evidence": [
+        "S2 current-tag capture metadata and body cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48 lines 67-84,146-169,761-782",
+        "S3 current-tag capture metadata and body 5cc4bd99b4cfa6cc06be8a3e3f9068e9ce592d8c3db7ad458989e84b62c7e206 lines 38,728-751"
+      ],
+      "id": "TD14-C01",
+      "reason": "The actual current HTTP receipts independently bind the two tag URLs. The newer README lists the selected tested dependencies, introduces return_as and deprecates aszarr; the older example uses aszarr=True. The final does not claim the deprecated keyword was removed, installation occurred, or napari integration passed."
+    },
+    {
+      "assessment": "SUPPORTED_CAPTURE_SCOPE_ONLY",
+      "claim": "Current released README and captured master README agree",
+      "evidence": [
+        "S2 current HTTP tag receipt f55fbe28ea6143fca597630af305cd30",
+        "S4 admitted master metadata 820a5a9673af4adaa05c9da2031ae009",
+        "Both body SHA cdd8ac84f44555750b8d61d04d46259ca9e2cb52b3d460b11a0323cad59e1a48"
+      ],
+      "id": "TD14-C02",
+      "reason": "Exact complete body equality is established together with distinct endpoint receipts. This establishes captured README coherence, not all source code, API binaries, later master state or application compatibility."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_EXPLICIT_LIMITS",
+      "claim": "TVIPS numeric failure, test, repair and release applicability",
+      "evidence": [
+        "S5 issue319 body 0b200363bbef7d0ba8a35469051759b636e298688807ecceb99eb6f1e1b01692",
+        "S6 repair edede6002c817f056d75125ade0b20332d549cca patch read_tvips_header, body fb9c86d83644b900b61af5b0847de46cf524dfa9c4aa1bab595d7e6f2a91857f",
+        "S7 test 7d9eaeddc710af068f9e8c2cf30b10a7d0e5c938 patch test_issue_tvips_pixelsize, body c7a90e9646d73e124061cf1b28cc07e4ccfefb0af959947c51059e36549b4a7c",
+        "S8 release503cb4eb -> changelog8c91499 -> repairedede600 -> test7d9eaedd parent chain, body a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a"
+      ],
+      "id": "TD14-C03",
+      "reason": "The stated old/new issue values, title/body discrepancy, disabled conversion, explicit regression assertion and release ancestry are verified. Test-before-fix chronological ordering is preserved. The final removes the seed overclaim that included 2026.2.20 in the affected interval and does not promise every later instrument/release is fixed."
+    },
+    {
+      "assessment": "VERIFIED_CANDIDATE_EXECUTION_NARROW_SCOPE",
+      "claim": "Executed W1 ratio witness",
+      "evidence": [
+        "W1 exact code SHA4ae72d07c0643d1439db8a89ea341b92e9c71f66d8156ca9172587c7560c62c7",
+        "W1 actual result projection SHA c66b9dc9b9aa8e01c9c5cc69db077e2d29bce85cf9822ce839815342c882d150",
+        "W1 stdout SHA1ceb1747d12cdfc2a498d00410ae34ddb40057ce1f1655d458d292d19875c519",
+        "S5 reporter values"
+      ],
+      "id": "TD14-C04",
+      "reason": "The values are embedded in the actual candidate code; separate data.json is null, not a missing TIFF fixture. The independently justified expectation is a factor of approximately 10^9 from the issue decimals and removed division. Actor, code, streams and exit0 correspond exactly. The final correctly confines this to arithmetic, and labels parser/application/3GB/coordinate/recovery tests UNEXECUTED. No evaluator rerun occurred."
+    },
+    {
+      "assessment": "SUPPORTED_AND_CHOICE_DISTINGUISHED",
+      "claim": "NGFF geometry vocabulary and application affine extension",
+      "evidence": [
+        "S1 NGFF d9164040dd61b3e4688494de1a58a69251b13f24 body7ca442655b11a8cdaf4e62f61e701e27cb9fe1144e4d992c523f43c42395a6d0 lines177-189,272-318"
+      ],
+      "id": "TD14-C05",
+      "reason": "Names, units and sequential restricted transforms support the geometry vocabulary. An application-owned affine for orientation is identified as a choice beyond restricted NGFF transforms; no claim that arbitrary affine metadata conforms to NGFF is made."
+    },
+    {
+      "assessment": "SUPPORTED_DOC_SNAPSHOT_ONLY",
+      "claim": "napari lazy display, channels, multiscale, units and display/sample separation",
+      "evidence": [
+        "S9 image docs body2897310cc50d5ac6c920bc34cad61f001521842246af2444300603af75893963 sections image data, multiscale, channel_axis, adjusting contrast",
+        "S10 units bodyef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11 lines5-10,16-47"
+      ],
+      "id": "TD14-C06",
+      "reason": "The mechanisms support a conditional plugin design. Moving main snapshots are disclosed; exact installed napari/Qt release and integration remain explicit gates. There is no measured memory/latency assertion or universal annotation capability claim."
+    },
+    {
+      "assessment": "SUPPORTED_WITH_SCOPE",
+      "claim": "QuPath project and export precedents",
+      "evidence": [
+        "S11 projects bodyd43691575723d67efacba4cd10583feec21ab24a3b27ef690502be9998fe106f lines118-150",
+        "S12 export bodydf12ec58ce64a72dea1596677e444ade4684b12328555ed36fda1175c341f420 lines125-153"
+      ],
+      "id": "TD14-C07",
+      "reason": "Distinct project entries/image server URIs and per-machine shared-drive paths support relocation lessons; shape exports use full-resolution top-left pixel coordinates with cross-tool caveats. The final does not establish microscopy GeoJSON RFC compliance from these docs or universal QuPath fit."
+    },
+    {
+      "assessment": "QUALIFIED_ENGINEERING_CHOICE",
+      "claim": "Generation saves and shared-storage recovery",
+      "evidence": [
+        "S13 rename body8772946a809a0db54f4854f200908f10bee758ea452e8df5efd955bc3b8e6e57 lines109-113,308-311,371-375",
+        "A final Save, recovery and portability"
+      ],
+      "id": "TD14-C08",
+      "reason": "Atomic replacement, same-filesystem limits and the NFS failure ambiguity support the conditional design. Cross-file generation consistency, crash durability, Windows/SMB and actual-share recovery are proposed validation, not observed guarantees. The current design replaces the seed per-file save overstatement with prior generations and verification."
+    },
+    {
+      "assessment": "SUPPORTED_MECHANISM_UNEXECUTED_APP_TARGET",
+      "claim": "Bounded TIFF-backed access, support boundary and 3GB resources",
+      "evidence": [
+        "S2 body lines20-24,183-188,761-782",
+        "S9 lazy/multiscale docs",
+        "A final Support boundary and Validation"
+      ],
+      "id": "TD14-C09",
+      "reason": "The source documents TIFF-region/Zarr-store mechanisms and format limitations. The final explicitly rejects the inference that this is an arbitrary NGFF reader or proved 3GB responsiveness. Performance, instrument fixtures, codecs and exact viewer integration remain gates. Cache/identity/annotation/export contracts are proposed product choices."
+    },
+    {
+      "assessment": "PRESENT_AS_PROPOSED_DESIGN",
+      "claim": "Minimum planning obligations and opportunity/alternative content",
+      "evidence": [
+        "A final architecture/workflow/data contract/save/support/validation",
+        "A leads catalog6e45beef33b061bc75f8207d38c8cf44fd4ff2fac5cfdf4423eede538d45ae49"
+      ],
+      "id": "TD14-C10",
+      "reason": "The authored final addresses read-only import, metadata ambiguity, view/sample distinction, plane/volume/acquisition scope, binary64/frame convention, save/reopen/hash-verified relocation, cancel/progress validation, keyboard/undo styles, export manifests, optional NGFF export and QuPath/Qt alternatives. This is planning coverage, not built application validation."
+    },
+    {
+      "assessment": "EXACT_SOURCE_LOCATOR_MAPS_ONLY",
+      "claim": "B partial maps",
+      "evidence": [
+        "B line-map SHA c5a4be88d3656151320a4fdf94cb76c8f07e0e58390f0e80fcaecc4d26d4740b",
+        "B tifffile-readme-map SHA4f49c8869210404e3ad43a9692cd6232435e6a5222152e136aed440a982a83c7",
+        "S6 repair body and S4 master body"
+      ],
+      "id": "TD14-C11",
+      "reason": "Every numbered line equals its corresponding admitted source line: 1 of1 for commit JSON and875 of875 for README. This is useful mechanical locating, not a standalone conclusion, release recommendation, critique, witnessed source understanding or adopted final."
+    },
+    {
+      "assessment": "SUPPORTED_BOOKKEEPING_CORRECTION",
+      "claim": "Current source catalog repairs a supplied capture hash",
+      "evidence": [
+        "A seed source_catalog S10 has shortened/different terminal hash",
+        "A current sources S8 and admitted source index/body a5e2ca8bea612640b94ca334fd06d07d3ce70bd0b458845eaab14d57b613da4a"
+      ],
+      "id": "TD14-C12",
+      "reason": "The current exact SHA matches the source body/index; no semantic correctness is inferred solely from repairing the hash."
+    }
+  ],
+  "source_start": {
+    "clock_reset_permitted": false,
+    "eval_id": "independent-targeted-14",
+    "pair_id": "D-V10-A-BUNDLE-R001",
+    "phase2_inclusive_budget_seconds": 600,
+    "schema": "er9.independent-evaluator-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_deadline_monotonic_seconds": 95982.694536832,
+    "source_start_monotonic_seconds": 94782.694536832,
+    "source_start_utc": "2026-10-06T05:26:03.837554Z",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_seconds": 96582.694536832
+  }
+}

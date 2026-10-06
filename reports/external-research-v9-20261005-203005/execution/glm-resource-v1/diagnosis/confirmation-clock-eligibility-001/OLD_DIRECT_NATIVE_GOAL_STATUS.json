@@ -1,0 +1,295 @@
+{
+  "schema": "er9.direct-native-goal-status.v1",
+  "created_utc": "2026-10-06T05:25:43.875836+00:00",
+  "jobs": [
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw2j7ia_75a98861-890c-4263-a1fe-a5f2048ce0be",
+      "native_goal_record_update_utc": "2026-10-06T02:56:56.573000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/final-session.redacted.json",
+        "sha256": "f7fdec6165f7ce18973d82058864dbd17c55f25ee6ca5d62ab78b5b9f0111ed0",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "62871575ea9694767ffa883e64eac844c388ca42251b8c01bb7a176f1ad3f1e1",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791255416573,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-01-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw2b1o3_c507c1d9-07b8-481b-b055-1967bc56914d",
+      "native_goal_record_update_utc": "2026-10-06T02:50:36.031000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "4083d9198866022ef676fc74928155030fd450c1f2d3ea6abe95a0b0673ca89c",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "9feb573bcd3de526df824ec23d01d662df5e3415fb36ad3e2ccc8375ffbcc240",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791255036031,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw436ba_de4d5907-e570-467d-8798-483a0a3da126",
+      "native_goal_record_update_utc": "2026-10-06T03:40:27.734000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/final-session.redacted.json",
+        "sha256": "3a0e650b6e7090ffde98d6520f6f7f8e699bdf54d14e27f554dc67589a4ae3fb",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "83ad40351d8a29bfca601a2cab299ec8749c917cae0342e4e7d9a7f1fc6e72b6",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791258027734,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-02-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw30kou_b4800fef-d32e-4bc2-871c-23fd23febe98",
+      "native_goal_record_update_utc": "2026-10-06T03:10:27.612000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "908564dc011c5ead99a3a7d3b84b8edfc3b88bdeda1e9ccadc42b831eb7f62b2",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "68a2c2f932039b0dadc80d0379b3a1a81bd5e74988ef51622ecc6a42c7f66d5b",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791256227612,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw4tbnn_ba226527-85d3-448b-8d73-60cb1debfc26",
+      "native_goal_record_update_utc": "2026-10-06T04:00:48.176000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/final-session.redacted.json",
+        "sha256": "6901032ebec78c3e7405e5b411779071777b56ae93a9472733e208d3c50360f5",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "b695e2c2fef67fe7777189fcf831fd27030bdfc91de169c47c5d641b80f1b2d5",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791259248176,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-03-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "COMPLETED",
+      "native_goal_status": "complete",
+      "goal_id": "target_muw4ata5_11113203-0c94-4a75-8fc4-931e39a7a1eb",
+      "native_goal_record_update_utc": "2026-10-06T03:44:41.303000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "71b40b6ff72ebc40dd026b42a44bb7c9e1f1ec60ac6c66606b8fb39607290c29",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-03-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "65c04fec683590e169c1fb99e13fd8befe4c4b101952a9b2498639a08bfd2719",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791258281303,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "COMPLETED",
+      "native_goal_status": "complete",
+      "goal_id": "target_muw5iyzo_b1675a9b-1242-4628-868f-47ac14e5812f",
+      "native_goal_record_update_utc": "2026-10-06T04:20:00.658000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/final-session.redacted.json",
+        "sha256": "62fa10795975766c1f953c39684633f4db13f80099bbceab2577b8addb53d1f7",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "completed",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-research-a001/native/receipt.json",
+        "sha256": "c20cbbf47c48d2a00387fb1569808e00f6df7f21589072c0864dcd8c4eb7a3de",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791260400658,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "control",
+      "stage": "critique",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw67mdc_d44753a6-8d94-475d-9c6f-c67b028c31d1",
+      "native_goal_record_update_utc": "2026-10-06T04:34:54.756000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/final-session.redacted.json",
+        "sha256": "4b5e5f58d1048e4814adec12333ba2805f068b66110fa6328b48a9d1f9ce68b9",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "cap_seconds",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-control-critique-a001/native/receipt.json",
+        "sha256": "6d4994e440788131526b0c07b5da6b49b9d5eea8d72c38451865dd7938fb11d8",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791261294756,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    },
+    {
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+      "arm": "treatment",
+      "stage": "research",
+      "deployment_kind": "candidate_stage",
+      "registry_operational_status": "FAILED",
+      "native_goal_status": "paused",
+      "goal_id": "target_muw4ybn0_5040eb55-df4b-466f-b1ce-4150b8e198db",
+      "native_goal_record_update_utc": "2026-10-06T04:04:41.868000+00:00",
+      "source_evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/final-session.redacted.json",
+        "sha256": "3bd0e5b7931c66198649d0c8045137ddab81635d85da5ff33c784e43fd704f03",
+        "source_kind": "saved_final_native_UI_object",
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt",
+        "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+      },
+      "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+      "router_terminal_status": "execution_error",
+      "router_status_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-RESOURCE-R002-BUNDLE-treatment-research-a001/native/receipt.json",
+        "sha256": "06cfb3c0f5aeb9509ba5d4849866b360880f9b74ecda366fc5dc651de5f56ab2",
+        "selector": "/status",
+        "definition": "Driver/router result only; not used to populate native_goal_status"
+      },
+      "native_goal_updated_at_epoch_ms": 1791259481868,
+      "status_selector": "/projection/target/status",
+      "goal_id_selector": "/projection/target/targetId",
+      "event_time_selector": "/projection/target/updatedAt"
+    }
+  ],
+  "scope": "Only exact terminal positive native receipt locators in selected old confirmation lineages; active/ready roles excluded. Router status/candidate quality not inferred."
+}

@@ -1,0 +1,19 @@
+{
+  "schema": "er9.selected-public-source-entry.v1",
+  "source_id": "S9",
+  "entry": {
+    "candidate_path": "inputs/source_context/0011.body",
+    "url": "https://api.github.com/repos/duckdb/duckdb/issues/12596/timeline?per_page=100",
+    "version_or_commit": "sha256:453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489",
+    "sha256": "453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489",
+    "capture_id": "ce4cfbafcf9f412791d0fb2b9a770dbd",
+    "capture_limitations": {
+      "status": 200,
+      "body_complete": true,
+      "truncated": false
+    }
+  },
+  "exact_admitted_index_sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+  "model_comprehension": "UNKNOWN",
+  "acquisition_only": true
+}

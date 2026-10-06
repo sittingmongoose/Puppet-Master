@@ -1,0 +1,82 @@
+{
+  "assigned_evaluator_selector": {
+    "effort": "xhigh",
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol"
+  },
+  "candidate_current_native_usage_by_arm": {
+    "control": {
+      "actual_role_elapsed_sum_seconds": 1675.900876564,
+      "distinct_current_job_count": 3,
+      "native_usage_notification_sums": {
+        "cachedInputTokens": 9456384,
+        "inputTokens": 10162399,
+        "outputTokens": 108126,
+        "reasoningOutputTokens": 63918,
+        "totalTokens": 10270525
+      },
+      "original_role_allowance_sum_seconds": 2700,
+      "scope": "Sum each exact distinct CURRENT native role once. Cached/reasoning are reported separately as nested or inclusion-UNKNOWN subsets; never added again to totalTokens. This is not provider-request count, money, evaluator cost or historical/campaign cost. Role imports add zero new inference themselves."
+    },
+    "treatment": {
+      "actual_role_elapsed_sum_seconds": 1719.805109655,
+      "distinct_current_job_count": 3,
+      "native_usage_notification_sums": {
+        "cachedInputTokens": 9702656,
+        "inputTokens": 10329892,
+        "outputTokens": 84342,
+        "reasoningOutputTokens": 51167,
+        "totalTokens": 10414234
+      },
+      "original_role_allowance_sum_seconds": 2700,
+      "scope": "Sum each exact distinct CURRENT native role once. Cached/reasoning are reported separately as nested or inclusion-UNKNOWN subsets; never added again to totalTokens. This is not provider-request count, money, evaluator cost or historical/campaign cost. Role imports add zero new inference themselves."
+    }
+  },
+  "candidate_money": "UNKNOWN",
+  "candidate_physical_provider": "UNKNOWN",
+  "clocks": {
+    "before_original_whole_stop": true,
+    "before_phase2_literal_stop": true,
+    "clock_reset": false,
+    "evaluation_id": "independent-pipeline-5",
+    "handoffs_remaining": "Exact positive report selectors to root/publisher and neutral closure to courier/accountant; no ACK wait.",
+    "original_whole_deadline_monotonic_ns": 97186479653181,
+    "original_whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+    "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+    "phase2_anchor": "source_freeze; key wait, reporting and handoffs included",
+    "phase2_clock_anchor": "source_freeze; includes key wait, review, report and handoff; no reset",
+    "phase2_deadline_monotonic_ns": 96600414052659,
+    "phase2_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+    "phase2_elapsed_seconds_at_report_completion": 327.17535741,
+    "phase2_literal_inclusive_seconds": 600,
+    "report_complete_monotonic_ns": 96327589410069,
+    "report_complete_utc": "2026-10-06T05:51:48.732421+00:00",
+    "schema": "er9.independent-evaluator-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_checking_interval_seconds": 613.934399478,
+    "source_deadline_monotonic_ns": 96586479653181,
+    "source_deadline_utc": "2026-10-06T05:56:07.622668+00:00",
+    "source_freeze_monotonic_ns": 96000414052659,
+    "source_freeze_utc": "2026-10-06T05:46:21.557065+00:00",
+    "source_start_monotonic_ns": 95386479653181,
+    "source_start_utc": "2026-10-06T05:36:07.622668+00:00",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 97186479653181,
+    "whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+    "whole_elapsed_seconds_at_report_completion": 941.109756888
+  },
+  "cost_scope": "Six exact distinct CURRENT native role attempts only; no olderI05/historical/campaign sum; imports zero new inference themselves; native metrics not double-counted into provider/parent/cache/reasoning scopes. No scientific outcomes in this neutral closure.",
+  "evaluation_id": "independent-pipeline-5",
+  "evaluator_actual_token_usage": "UNKNOWN",
+  "evaluator_money": "UNKNOWN",
+  "evaluator_physical_provider": "UNKNOWN",
+  "opaque_nativeGoalIDs": "UNKNOWN",
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "runtime_usage_source": {
+    "bytes": 53912,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2/P5_CURRENT_PIPELINE_ROLE_LIFECYCLE_001.json",
+    "sha256": "ec2f2a73320dae846e302c1b284cb9e711460b3fcca6043ee08ce6bf8382b136"
+  },
+  "schema": "er9.evaluator-neutral-accounting-closure.v1",
+  "status": "REPORT_COMPLETE_HANDOFFS_IMMINENT"
+}

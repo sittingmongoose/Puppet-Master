@@ -1,0 +1,28 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "TD12_FINISHED_REPORT_AND_ADDITIVE_CLOCK_001",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/report.json",
+      "sha256": "2e189d47a006c798a9486dcf5d17cc02375556fd2cd4ffa57a440ab3b40999dd",
+      "bytes": 38702
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/report.md",
+      "sha256": "489baf761e1f9d32ebef48a0f1ad2bb4751cbec8be144aff2297981a480f26d0",
+      "bytes": 6157
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/clock-qualification.json",
+      "sha256": "1c851a3e18a851d3d940f9d3fd43745336169e84a1a8b53fd91fda9aeea2b565",
+      "bytes": 4560
+    }
+  ],
+  "authorization": "root/evaluator explicit two final reports and neutral additive clock qualifier only",
+  "exclusions": [
+    "raw native/auth/privatekeys/OS verification refs",
+    "capture rawbodies",
+    "general source lineage recursive traversal"
+  ],
+  "clock_rule": "sourcegrade/report originalbytes retained; checking and sourcefreeze inclusive gap explicit,noreset"
+}

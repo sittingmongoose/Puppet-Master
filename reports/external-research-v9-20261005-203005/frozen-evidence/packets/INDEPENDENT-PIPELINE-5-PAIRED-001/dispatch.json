@@ -1,0 +1,215 @@
+{
+  "schema": "er9.current-integrated-final-pair-source-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "independent-pipeline-5",
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "scope": "current_integrated_final_pair_available_actual_designated_final_and_terminal_missing_partner",
+  "prepared_utc": "2026-10-06T05:35:31.966453+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-pipeline-5/reservation.json",
+    "sha256": "ae7d3e24325f194fce6124b512e961ae7bf92f796a4895b3ea391b39e6a17968"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "targeted_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/targeted-card.json",
+      "sha256": "90d9360c537c83f58417b737b9ca80ac2aea40dbee38321a76678e9aafbfee6a"
+    },
+    "actual_launched_task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "2c123fa5e4011ac47f084fe5ec34546b4b7cae1093a4bcbe55bae5dc0e1413d1"
+    },
+    "actual_launched_task_B": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "f8cea8009769c0772d118bb6ad2e6a64e75a0294c3a076bd95d1ad3ad5d48d3c"
+    }
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_A_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "actual_stage": "revision",
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/outputs/A/final/proposal.md",
+        "sha256": "07222400686d8fc9b187cd0b3798785706a6822eaf47d387f7afe52c356a438d",
+        "bytes": 22552
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/outputs/A/final/sources.json",
+        "sha256": "6ccffa38f2198d2d671bec1107444f6cc995aaaf3edbd23c535a2bba2eeb6887",
+        "bytes": 13851
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/outputs/A/final/witnesses.json",
+        "sha256": "886e79d93d13431c0ae7edf83226c4f4b80b07f36267e2e13bdf1e5c98b4913a",
+        "bytes": 4658
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/outputs/A/final/leads.json",
+        "sha256": "8a7ae206ee9762796c7066ddb4e2dfca80aecb05a778fa4aefec6e0ab6ccf4f0",
+        "bytes": 8773
+      },
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/outputs/A/scratch/issue6320.map.json",
+          "sha256": "d2c372c2ac684f6fbaa7da16f85c52bafe539fdcf3ff0fdee2a09d6824a04c0f",
+          "bytes": 342523,
+          "original_relative_path": "scratch/issue6320.map.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        }
+      ],
+      "missing_catalogs": [],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "final/DELIVERY_MANIFEST.json",
+          "sha256": "fcdcace9c7ffdab893477ccaed1044d2531122f0007740e04a308410872aa7e7",
+          "bytes": 4213,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "final_bundle.json",
+          "sha256": "c2fa859e688fc5c68b046cae9533621cc6907f2d8c041478432b96dd5cb1f959",
+          "bytes": 27961,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/issue6320.map.json",
+          "sha256": "d2c372c2ac684f6fbaa7da16f85c52bafe539fdcf3ff0fdee2a09d6824a04c0f",
+          "bytes": 342523,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    },
+    {
+      "alias": "B",
+      "actual_stage": "revision",
+      "designated_final": null,
+      "source_catalog": null,
+      "witness_catalog": null,
+      "leads": null,
+      "partial_artifacts": [],
+      "missing_catalogs": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "other_frozen_artifact_presence_metadata": [],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "targeted_predeclared_checks": [],
+  "inherited_target_coverage_source_pair_id": null,
+  "coverage_lineage_rule": "exactinheritedscope map bytes preserved, currentpairedidentity explicit; no truthkey or newrubric",
+  "targeted_scope_boundary": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF",
+  "broader_full_development_proposal_completeness": "full actual integrated development brief applies to available designated final; missing partner scientific quality UNASSESSED",
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-PIPELINE-5-PAIRED-001/integrity-proof.json",
+    "sha256": "cf5561cc619bd99b614b26fa31276ee19089c2f79c208d0af30777cc1f56b7b0"
+  },
+  "budget": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "whole_includes_report_handoff": true,
+    "reset": false,
+    "start_rule": "START immediatelybeforefirstpermittedsemantic task/source/candidatebody read"
+  },
+  "blinding": {
+    "known_hints": "Case/role/model labels in rootassignment andexactactualTASKs unavoidable; descriptorcatalogpresence is metadata, no perfectblinding claim",
+    "held": "aliases/nativeGoals/status/history/economics/sourcegrades/privatekey untilimmutablePhase1"
+  },
+  "comparison_boundary": "Actual available current targeted artifacts only; missing final/catalogs remain missing. Missing scientific source quality UNASSESSED, delivery absence explicit, no winner/pipelinecredit. No canonicalvariant/bestof selection, nativecompletion or matchedcausalcredit inferred.",
+  "selection_rule": "root prospective priority first newly operationally completed current integrated pipeline available final pair; no scientific qualityselection; prior FIFO partial units retained"
+}

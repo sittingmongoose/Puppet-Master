@@ -1,0 +1,24 @@
+{
+  "schema": "er9.additive-phase2-clock-precision.v1",
+  "recorded_utc": "2026-10-06T05:31:41.357119+00:00",
+  "authority": "root neutral clock clarification before final handoff closure; preserve original source and all old receipt bytes",
+  "rows": [
+    {
+      "evaluation_id": "independent-targeted-12",
+      "phase1_freeze_utc": "2026-10-06T05:26:16.790538Z",
+      "phase2_key_checking_start_utc": "2026-10-06T05:26:55.478293Z",
+      "freeze_to_checking_gap_seconds": 38.687755,
+      "literal_inclusive_600_stop_utc": "2026-10-06T05:36:16.790538Z",
+      "checking_600_stop_utc": "2026-10-06T05:36:55.478293Z"
+    },
+    {
+      "evaluation_id": "independent-targeted-13",
+      "phase1_freeze_lock_utc": "2026-10-06T05:27:06.727373Z",
+      "phase2_key_checking_start_utc": "2026-10-06T05:28:06.887922Z",
+      "freeze_to_checking_gap_seconds": 60.160549,
+      "literal_inclusive_600_stop_utc": "2026-10-06T05:37:06.727373Z",
+      "checking_600_stop_utc": "2026-10-06T05:38:06.887922Z"
+    }
+  ],
+  "rule": "Actual checking intervals, literal source-freeze-to-closure inclusive interval, and original whole interval distinct; all waits/report/handoffs charged, no reset/extension/relabel/sourcegradechange"
+}

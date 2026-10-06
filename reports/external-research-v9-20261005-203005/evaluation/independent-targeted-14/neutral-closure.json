@@ -1,0 +1,105 @@
+{
+  "accountant_first_direct_delivery": "Rejected by collaboration tool: agent thread limit reached; neutral receipt relayed via root. Final neutral closure routed through root without ACK wait.",
+  "accounting_rules": "Each native cumulative total is one observation scope. Cached input is included in input; reasoning output included in output. Goal counters separate; parent/UI/provider counts UNKNOWN. No re-counted imported starts, duplicate projections, money estimate or scientific grade.",
+  "ack_wait_performed": false,
+  "actual_phase2_key_check_start_monotonic_seconds": 95435.133403798,
+  "actual_phase2_key_check_start_utc": "2026-10-06T05:36:56.276419Z",
+  "closure_monotonic_seconds": 95742.703812395,
+  "closure_utc": "2026-10-06T05:42:03.846826Z",
+  "courier_metadata_sent_before_closure": true,
+  "current_candidate_accounting": [
+    {
+      "alias": "A",
+      "last_direct_goal_time_used_seconds": 752,
+      "last_direct_goal_tokens_used_separate_scope": 333560,
+      "money": "UNKNOWN",
+      "native_runtime_elapsed_seconds": 758.360099609,
+      "observed_model_effort_labels": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "observed_native_usage_totals": {
+        "cachedInputTokens": 3649024,
+        "inputTokens": 3895553,
+        "outputTokens": 87031,
+        "reasoningOutputTokens": 47353,
+        "totalTokens": 3982584
+      },
+      "parent_UI_usage": "UNKNOWN",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "provider_cache_billing": "UNKNOWN",
+      "provider_request_response_counts": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "unexposed_cancelled_tail": "UNKNOWN",
+      "usage_notification_count": 39
+    },
+    {
+      "alias": "B",
+      "last_direct_goal_time_used_seconds": 879,
+      "last_direct_goal_tokens_used_separate_scope": 267767,
+      "money": "UNKNOWN",
+      "native_runtime_elapsed_seconds": 885.739107655,
+      "observed_model_effort_labels": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "observed_native_usage_totals": {
+        "cachedInputTokens": 4212736,
+        "inputTokens": 4457099,
+        "outputTokens": 23404,
+        "reasoningOutputTokens": 20907,
+        "totalTokens": 4480503
+      },
+      "parent_UI_usage": "UNKNOWN",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "provider_cache_billing": "UNKNOWN",
+      "provider_request_response_counts": "UNKNOWN",
+      "requested_effort": "max",
+      "requested_model": "gpt-6-luna",
+      "unexposed_cancelled_tail": "UNKNOWN",
+      "usage_notification_count": 45
+    }
+  ],
+  "deadline_reset": false,
+  "evaluation_id": "independent-targeted-14",
+  "evaluator_identity": {
+    "cached_usage": "UNKNOWN",
+    "money": "UNKNOWN",
+    "physical_provider": "UNKNOWN",
+    "physical_runtime": "UNKNOWN",
+    "requested_assigned_effort": "xhigh",
+    "requested_assigned_fork": "none",
+    "requested_assigned_model": "gpt-6.1-sol",
+    "token_usage": "UNKNOWN"
+  },
+  "inclusive_phase2_anchor_monotonic_seconds": 95333.788147391,
+  "inclusive_phase2_deadline_monotonic_seconds": 95933.788147391,
+  "inclusive_phase2_elapsed_seconds": 408.9156650040095,
+  "key_wait_and_report_handoffs_included": true,
+  "neutral_only": true,
+  "pair_id": "D-V10-A-BUNDLE-R001",
+  "phase1_locked_monotonic_seconds": 95333.788147391,
+  "phase1_locked_utc": "2026-10-06T05:35:14.931160Z",
+  "schema": "er9.neutral-evaluator-clock-cost-closure.v1",
+  "science_handoffs_sent_before_closure": [
+    "/root",
+    "/root/publisher"
+  ],
+  "source_phase_elapsed_seconds": 551.0936105589935,
+  "source_start": {
+    "clock_reset_permitted": false,
+    "eval_id": "independent-targeted-14",
+    "pair_id": "D-V10-A-BUNDLE-R001",
+    "phase2_inclusive_budget_seconds": 600,
+    "schema": "er9.independent-evaluator-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_deadline_monotonic_seconds": 95982.694536832,
+    "source_start_monotonic_seconds": 94782.694536832,
+    "source_start_utc": "2026-10-06T05:26:03.837554Z",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_seconds": 96582.694536832
+  },
+  "whole_deadline_monotonic_seconds": 96582.694536832,
+  "whole_elapsed_seconds": 960.009275563003
+}

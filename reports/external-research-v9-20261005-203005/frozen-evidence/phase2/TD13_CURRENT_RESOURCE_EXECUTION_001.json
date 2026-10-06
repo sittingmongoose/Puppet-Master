@@ -1,0 +1,553 @@
+{
+  "schema": "er9.current-resource-execution-positive-projection.v1",
+  "evaluation_id": "independent-targeted-13",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "resource_profile_sha256": "708a95241480be00768ac4fd976324aa1fe0ee4e8eeb655dbd57ccbc76ad911e",
+      "private_slice_release_sha256": "9ae2de8a3fe5b34e524e2a9a49cd99c827991a56227a7739df1f92835cf62d34",
+      "launch_seal_sha256": "2e7123bae10736a0986f4f84c74d073178e7288ee3f4706c8ebff93fc39fda26",
+      "native_result_sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55",
+      "profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 85691344145835,
+        "original_total_stop_monotonic_ns": 86591344145835,
+        "allocation_monotonic_ns": 85692240980690,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "2220032",
+          "memory.peak": "407752704",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "407752704",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 86590867122027
+      },
+      "resource_oom_observed": false,
+      "aggregate_kernel_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "90038272",
+        "memory.peak": "407752704",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "98f133685ad5c4e29e0076c195a6a4f0817d4fb83a10de37d32b3587ee980df7",
+      "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "current_actual_execution_receipts": [
+        {
+          "execution_id": "exec-8q5qexoy",
+          "original_result_sha256": "b2dc7f3b85dc53eaca7ac11e3416029d3d54bb1b400f98e3d15519b22d0f6130",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-8q5qexoy",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "7fe71e6425d4b9b859403cff8b77b094af979d4d2b1e3400ecd5ac3e881192fc",
+            "data_sha256": "27bf9b8849649770f6f16afb1cca6ca5afe5475637b359f995212c9342aa8439",
+            "stdout_bytes": 77,
+            "stdout_sha256": "a04e9e291ec20c7832f1b5f4ae259139081f657687fe956955072fec290fde27",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-bl2hq300",
+          "original_result_sha256": "c242dc01ec3166df134c899016b6da2e12866556fd7107806350aec507245655",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-bl2hq300",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "fff23171cf94404ef95ed8f5ca1a95b23762f9561391eaf711daf8d4dfc5dab0",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "stdout_bytes": 212,
+            "stdout_sha256": "e516f925ffeb30b8a998610ae8656d1f4270ae02df1c4d2268eef319082ff3ab",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-ebc6uceq",
+          "original_result_sha256": "83e5ebad5e41a0766e33147bc8e020943a7c2098d0ba6771f919aca35346672c",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-ebc6uceq",
+            "execution_label": "executed by candidate",
+            "exit_code": 1,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "c4dd196e07548cefc6e44a504c394018891aea5c0afb16ebd6b2a031970d4bea",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "stdout_bytes": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_bytes": 463,
+            "stderr_sha256": "8e3cfdd3b64a77d1ecf568263b5edfb42ffb9272e9a28a4c410a858a8522623d",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        }
+      ],
+      "accounting_scope": "exactcurrent native usage, parent/UI/provider unknowns separate; moneyUNKNOWN; importedbaseline starts not recounted as current starts"
+    },
+    {
+      "alias": "B",
+      "job_id": "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "resource_profile_sha256": "aed309257787366a1d9065df5a3596560a9ce2c736f1e16c300a37060b70d69e",
+      "private_slice_release_sha256": "158678983f2a4176370aed3eda00ce1ea0b28a8c71180af3121f957e7dc2cea4",
+      "launch_seal_sha256": "1e31a20a617df4e6543cd129cefa8084de7d352ce925e86f3ff3df04e6b04f70",
+      "native_result_sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d",
+      "profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 85812336797088,
+        "original_total_stop_monotonic_ns": 86712336797088,
+        "allocation_monotonic_ns": 85813149349568,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "2592768",
+          "memory.peak": "365084672",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "365084672",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 86710274535670
+      },
+      "resource_oom_observed": false,
+      "aggregate_kernel_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "64860160",
+        "memory.peak": "365084672",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "fae61c95737f1a96fe6c0dbe98a198c8b6daa8c5658cc4c0d4b0f1f14671b173",
+      "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "current_actual_execution_receipts": [
+        {
+          "execution_id": "exec-2azd6f8e",
+          "original_result_sha256": "007f194159f3acfb2b6fb2ab71daedc32cee1ac8f64b20edd4ac4e4b9f74c75f",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-2azd6f8e",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "c89767b98990756f5188793277c1686d98c2ee4b4eaa7931711561c72ef8a42b",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "stdout_bytes": 408,
+            "stdout_sha256": "a407f970010b9f6a2ea3e710fe9d3a47e2786cae95386842546e97b331e3c203",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-2ij7ziod",
+          "original_result_sha256": "1394bd3d42f19b3ab5e97fac926dd99907e21e5d542d67cebe7104e5ee587524",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-2ij7ziod",
+            "execution_label": "executed by candidate",
+            "exit_code": 1,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "19e7aee377b5f25ce93df6cdcc17f660c792e8f368a6c6bbcbf0b4fcfa117459",
+            "data_sha256": "ef7c6a7bc998dd638bf4c101ba31f63fe60d31cc9df76c9b1de2ee8da6a09dbf",
+            "stdout_bytes": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stderr_bytes": 417,
+            "stderr_sha256": "0d4d4b19f786c82487e478c2dc7b52141f8be247df6bb52722512a55001138f9",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-bid5jb0d",
+          "original_result_sha256": "ec3c91df1635415dae18300b336650c8b9ff89e8022bcec31663ef75560c2337",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-bid5jb0d",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "f3ab71f2aede07b15351c95869f427df617b49a5b36bed27dd7d4ae7b5f7b70c",
+            "data_sha256": "b5a2f876d45871da4c3f141dfe3c44ba5b4ec2f031d5b3a2cca253ef45949390",
+            "stdout_bytes": 32768,
+            "stdout_sha256": "0d5c69b38404a2e6508b4cb686c2e2057346728623d74a0087490ee1e3456cfa",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": "output_cap"
+          }
+        },
+        {
+          "execution_id": "exec-h11g3a88",
+          "original_result_sha256": "9c7e04a0336882fdee65ccb77f7a81d331fea87f2dfbf4f10a68c29ba3cd878e",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-h11g3a88",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "eb0436c8624a1c79320e959e23f0cc2018fe93968fad763b2994b01e61aa0b8c",
+            "data_sha256": "75e4599a5fd0e3ac6b2f72918179c91b66a995fa0c043deae788d7aa5c7ef29a",
+            "stdout_bytes": 29098,
+            "stdout_sha256": "314919abb6eddd59000e98c694fb8e3382e9b8e58ebb971b4c12aa3a6e2a9323",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        },
+        {
+          "execution_id": "exec-ip9w7mgp",
+          "original_result_sha256": "8331f9128f4742759aac4cbee8163fbc3eafef67ae602c643ac51f2764266813",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-ip9w7mgp",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "eb0436c8624a1c79320e959e23f0cc2018fe93968fad763b2994b01e61aa0b8c",
+            "data_sha256": "d72fe61c5a190c23880e1fa532785d7aa15de6221db4098481cf847b5d1849a6",
+            "stdout_bytes": 32768,
+            "stdout_sha256": "ee6cc393df8bc586d0a94f917a89e4a89e0294c9b01df9b3cb711d387ca8f902",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": "output_cap"
+          }
+        },
+        {
+          "execution_id": "exec-vak57a92",
+          "original_result_sha256": "35d9ceffcd1680bbc5dc832a68f5d48c105ea3ca20e0bfe45604b2e59a8911f3",
+          "positive_fields": {
+            "schema": "er9.execution.result.v1",
+            "actor": "candidate",
+            "execution_id": "exec-vak57a92",
+            "execution_label": "executed by candidate",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "bootstrap_started": true,
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "code_sha256": "39d3500eb6cb935dd22b52e2a1fd39d6525dd51109c3b6b6229243083a6b7d54",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "stdout_bytes": 359,
+            "stdout_sha256": "07c83758f9432703a466ed5e18f4a75a25514f0ea456db2f0c9896cf7aed40ed",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "cleanup_confirmed": true,
+            "cleanup_classification": "collected_unit_absent",
+            "control_group_absent_after_stop": null,
+            "control_group_populated_after_stop": null,
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found",
+            "cleanup_state_returncode": 0,
+            "cleanup_stop_returncode": 5,
+            "stopped_by_adapter": null
+          }
+        }
+      ],
+      "accounting_scope": "exactcurrent native usage, parent/UI/provider unknowns separate; moneyUNKNOWN; importedbaseline starts not recounted as current starts"
+    }
+  ],
+  "no_rawmodelio_or_candidatefacts": true,
+  "no_source_grade_or_clock_rewrite": true
+}

@@ -1,0 +1,29 @@
+{
+  "schema": "er9.independent-neutral-terminal-handoff.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "terminal_utc": "2026-10-06T05:35:04.296986+00:00",
+  "terminal_monotonic_seconds": 95323.151362657,
+  "source_elapsed_seconds": 261.25086871501117,
+  "literal_inclusive_phase2_elapsed_through_report_and_neutral_clock_handoffs_seconds": 477.5669747879874,
+  "actual_key_checking_interval_elapsed_seconds": 417.4064503799891,
+  "original_whole_elapsed_through_report_and_neutral_clock_handoffs_seconds": 738.8301206670003,
+  "literal_inclusive_phase2_within_600": true,
+  "original_whole_within_1800": true,
+  "no_clock_reset": true,
+  "old_clock_bytes_and_all_21_phase1_pins_preserved": true,
+  "handoffs": {
+    "root_report_pointers": "SEND_ACCEPTED",
+    "authorized_publisher_report_pointers": "SEND_ACCEPTED",
+    "root_neutral_clock_closure": "SEND_ACCEPTED",
+    "authorized_publisher_neutral_clock_closure": "SEND_ACCEPTED",
+    "courier_neutral_clock_closure": "SEND_ACCEPTED",
+    "direct_accountant_attempt": "DENIED_LIVE_AGENT_PATH_NOT_FOUND",
+    "accountant_fallback_root_route_request": "SEND_ACCEPTED",
+    "actual_accountant_receipt": "UNKNOWN_NO_ACK_WAIT"
+  },
+  "no_ack_wait": true,
+  "key_or_science_content_in_neutral_receipt": false,
+  "candidate_tests_repairs_prompts_goals_or_cleanup_performed": false,
+  "pending_source_or_operational_review_work": false
+}

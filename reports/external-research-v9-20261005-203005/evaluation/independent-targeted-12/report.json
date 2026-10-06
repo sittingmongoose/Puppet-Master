@@ -1,0 +1,851 @@
+{
+  "clocks": {
+    "all_reporting_and_handoffs_included_in_final_closure_receipt": true,
+    "phase1_elapsed_seconds": 294.521585858,
+    "phase2_clock": {
+      "clock_scope": "Includes Phase2 gate wait, semantic read, analysis, reporting and handoffs; no later reset.",
+      "evaluation_id": "independent-targeted-12",
+      "pair_id": "D-V07-B-BUNDLE-R001",
+      "phase1_freeze_sha256": "95d80ecbaf75ea126e3a3627ce3c9c57f59ef0ca18428a65c11a8a4f5bdfffe9",
+      "phase2_access": "NOT_STARTED_WAITING_AUTHORIZED_FOLLOWUP",
+      "phase2_deadline_monotonic_ns": 95434335282000,
+      "phase2_deadline_utc": "2026-10-06T05:36:55.478293Z",
+      "phase2_inclusive_budget_seconds": 600,
+      "phase2_start_monotonic_ns": 94834335282000,
+      "phase2_start_utc": "2026-10-06T05:26:55.478293Z",
+      "schema": "er9.independent-phase2-inclusive-clock.v1",
+      "whole_deadline_monotonic_ns": 96301125994602,
+      "whole_elapsed_seconds_at_phase2_start": 333.209287398
+    },
+    "phase2_inclusive_elapsed_seconds_at_report": 228.695705223,
+    "source_start": {
+      "budgets_seconds": {
+        "phase2_inclusive": 600,
+        "source": 1200,
+        "whole_including_post_start_reporting_and_handoffs": 1800
+      },
+      "evaluation_id": "independent-targeted-12",
+      "pair_id": "D-V07-B-BUNDLE-R001",
+      "schema": "er9.independent-evaluator-source-start.v1",
+      "source_start_monotonic_ns": 94501125994602,
+      "source_start_utc": "2026-10-06T05:21:22.268948Z",
+      "source_status": "STARTED"
+    },
+    "whole_elapsed_seconds_at_report": 561.904992621
+  },
+  "evaluation_id": "independent-targeted-12",
+  "evaluator_selector": {
+    "fork_turns": "none",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "findings_distribution": "Root /root and explicitly designated report/publisher owner only. Courier receives neutral positive selectors, hashes and clocks only.",
+  "no_whole_case_PASS": true,
+  "no_winner_or_pipeline_causal_credit": true,
+  "pair_id": "D-V07-B-BUNDLE-R001",
+  "phase1": {
+    "delivery": "INCOMPLETE_CURRENT_CONTRACT_BOTH_ARMS",
+    "freeze_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-freeze.json",
+    "freeze_sha256": "95d80ecbaf75ea126e3a3627ce3c9c57f59ef0ca18428a65c11a8a4f5bdfffe9",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-judgment.json",
+    "scientific_full_scope": "UNASSESSED",
+    "sha256": "b0fcf5bafda4e602ae738432ce9f270ddda2f0b8d0eb0ee2d266c677758a89ae",
+    "source_judgment": "UNCHANGED"
+  },
+  "phase2": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase2-assessment.json",
+    "rows": [
+      {
+        "alias": "A",
+        "arm": "treatment",
+        "current_execution_receipt_count": 3,
+        "current_execution_receipts": [
+          {
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "8d0b17e8d02822baac24f5fef47151349f1408e0943feb3d4f9ff8675502d724",
+            "correctness": "UNASSESSED_CODE_INPUT_EXPECTATION_AND_STREAM_BODIES_NOT_READ",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "error_content": "UNKNOWN_STREAM_BODY_NOT_PROVIDED",
+            "execution_id": "exec-ajhfqe4a",
+            "exit_code": 1,
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "result_sha256": "c466dd47c58e559395593241240c680699511e3f9bfab4e324af925754db0330",
+            "scope": "Exact current operational receipt and matching file inventory; tool success/exit 0 does not establish behavioral witness PASS.",
+            "stderr_bytes": 470,
+            "stderr_sha256": "57f53ce0f61c90d54face0a07bc3426984365c236dcedd832ab56d8f9d9c564e",
+            "stdout_bytes": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          },
+          {
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "d489b1a4083e7877a938775645cf2ca7acbe08861d0f5fdc353a93816b1706a4",
+            "correctness": "UNASSESSED_CODE_INPUT_EXPECTATION_AND_STREAM_BODIES_NOT_READ",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "error_content": "UNKNOWN_STREAM_BODY_NOT_PROVIDED",
+            "execution_id": "exec-lujq9biw",
+            "exit_code": 0,
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "result_sha256": "f1bef8678f09fc82fd03f57b88c5076a69d6fbab46235fc2444b45ce169bfe79",
+            "scope": "Exact current operational receipt and matching file inventory; tool success/exit 0 does not establish behavioral witness PASS.",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_bytes": 262,
+            "stdout_sha256": "435bfd0c6da4420736df1216c9216878baf1ad659cbb9a7ce54921ad89432125",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          },
+          {
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "7f604c0fd23072e9b963c3916dd417f30c8d990c5ee96df82689b0847c8fca8b",
+            "correctness": "UNASSESSED_CODE_INPUT_EXPECTATION_AND_STREAM_BODIES_NOT_READ",
+            "data_sha256": "d9ca83c0a87c7432d54914037b66172db2166e39667973d989774cb977e7928f",
+            "error_content": "UNKNOWN_STREAM_BODY_NOT_PROVIDED",
+            "execution_id": "exec-xg67a3nh",
+            "exit_code": 0,
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "result_sha256": "6fd1406c7d366ec756bb4ebafd3b2878e1bbfe6c8f9422547c97c040eb429fb9",
+            "scope": "Exact current operational receipt and matching file inventory; tool success/exit 0 does not establish behavioral witness PASS.",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_bytes": 412,
+            "stdout_sha256": "9fa781f1576fa796f644d0593212521b5f4818fa082feefc602db5f2f4200ee0",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          }
+        ],
+        "freeze_sha256": "c552c0ecca3843f4aeb4620389c64c29c5eb5314aaeaca91aed101a40123c1f3",
+        "goal": {
+          "candidate_goals_set_by_host": 1,
+          "completion": "NOT_OBSERVED; last direct Goal paused and terminal turn interrupted",
+          "first_direct": {
+            "createdAt": 1791255501,
+            "status": "active",
+            "timeUsedSeconds": 0,
+            "tokenBudget": null,
+            "tokensUsed": 0,
+            "updatedAt": 1791255501
+          },
+          "goal_replacements_observed": 0,
+          "host_followup_turns_started": 0,
+          "host_initial_turns_started": 1,
+          "last_direct": {
+            "createdAt": 1791255501,
+            "status": "paused",
+            "timeUsedSeconds": 579,
+            "tokenBudget": null,
+            "tokensUsed": 261014,
+            "updatedAt": 1791256080
+          },
+          "native_owned_continuation_observed": false,
+          "native_turns_completed": 0,
+          "native_turns_interrupted": 1,
+          "native_turns_started": 1,
+          "native_turns_terminal": 1,
+          "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+          "session_and_thread_are_separate_from_GoalID": true,
+          "status_before_cleanup": "active",
+          "status_final": "paused",
+          "turn_statuses": [
+            {
+              "method": "turn/started",
+              "observed_monotonic_ns": 85920044059359,
+              "status": "inProgress"
+            },
+            {
+              "method": "turn/completed",
+              "observed_monotonic_ns": 86499439227580,
+              "status": "interrupted"
+            }
+          ],
+          "visible_Goal_tool_calls": {},
+          "visible_Goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls"
+        },
+        "job_id": "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "mechanism_uptake": "UNASSESSED; operational tool counts are not evidence of faithful declared-method uptake",
+        "native_accounting": {
+          "Goal_last_tokensUsed": 261014,
+          "Goal_tokensUsed_numerically_equals_uncached_input_plus_output": true,
+          "billing_dollars": "UNKNOWN",
+          "counter_scope_caution": "Arithmetic equality in these observations is not an independently established universal Goal-token accounting contract. Goal and native cumulative rows remain separate and must not be summed.",
+          "definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+          "host_rpc_counts": {
+            "config/read": 1,
+            "initialize": 1,
+            "mcpServerStatus/list": 1,
+            "model/list": 1,
+            "thread/goal/get": 570,
+            "thread/goal/set": 2,
+            "thread/start": 1,
+            "turn/interrupt": 1,
+            "turn/start": 1
+          },
+          "host_rpc_poll_count_is_not_model_response_count": true,
+          "inventory_check": {
+            "actual_inference_tool_payload_observed": false,
+            "native_mcp_catalog_verified": true,
+            "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+            "verified": false
+          },
+          "native_event_counts": {
+            "account/rateLimits/updated": 45,
+            "account/updated": 1,
+            "item/agentMessage/delta": 306,
+            "item/completed": 122,
+            "item/started": 123,
+            "remoteControl/status/changed": 1,
+            "thread/goal/updated": 47,
+            "thread/started": 1,
+            "thread/status/changed": 2,
+            "thread/tokenUsage/updated": 45,
+            "turn/completed": 1,
+            "turn/started": 1,
+            "warning": 1
+          },
+          "native_event_turn_completed_is_terminal_event_not_success": true,
+          "native_http_attempts": "UNKNOWN",
+          "native_model_response_cap_enforced": false,
+          "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+          "native_response_policy": "wall-goal-token-observation-v1",
+          "native_responses": "UNKNOWN",
+          "observed_cumulative_usage": {
+            "cachedInputTokens": 4196608,
+            "inputTokens": 4429888,
+            "outputTokens": 27734,
+            "reasoningOutputTokens": 24082,
+            "totalTokens": 4457622
+          },
+          "parent_UI_provider_cache_money_and_unexposed_tail": "UNKNOWN; separate nonadditive scopes",
+          "positive_client_metadata_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 14,
+            "pm_boundary.read_file": 25,
+            "pm_execution.python_execute": 3
+          },
+          "positive_client_metadata_success_rows": 43,
+          "tool_attempt_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 14,
+            "pm_boundary.read_file": 25,
+            "pm_execution.python_execute": 3
+          },
+          "tool_completed_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 14,
+            "pm_boundary.read_file": 25,
+            "pm_execution.python_execute": 3
+          },
+          "tool_failed_counts": {},
+          "tool_success_is_not_candidate_execution_correctness": true,
+          "uncached_input_arithmetic": 233280,
+          "usage_notification_count": 45
+        },
+        "native_error": {
+          "class": "TimeoutError",
+          "elapsed_seconds": 585.694814762,
+          "held_process_exit_code": 0,
+          "message": "original native stop reached",
+          "note": "Held-process wrapper exit 0 is separate from current native HOLD and interrupted turn; source grade is not implied."
+        },
+        "native_outcome": "HOLD",
+        "native_result_sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db",
+        "observed_client_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "owned_quiet": {
+          "all_owned_scopes_quiet": true,
+          "host_terminal_projections": [
+            {
+              "component": "host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 255,
+              "sha256": "5852ebbd5df38749cae8a428bb58302341bb58585c53edb8f6f3b12c38d4db17",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "failed",
+                "native_host_pid": 0,
+                "sub_state": "failed"
+              }
+            },
+            {
+              "component": "pm_boundary-host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 255,
+              "sha256": "342d8195b9f17c9b6bd9ba8307dea9af32056488377c2e7f921c2cfe57ab9779",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "failed",
+                "native_host_pid": 0,
+                "sub_state": "failed"
+              }
+            },
+            {
+              "component": "pm_execution-host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 0,
+              "sha256": "7ac63a6604599c424408d02ffa301fce45b6cd95437257d92d3d01e3449898b8",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "inactive",
+                "native_host_pid": 0,
+                "sub_state": "dead"
+              }
+            }
+          ],
+          "independent_live_probe": "NOT_RUN; trusted exact current pinned projection only",
+          "key_owned_execution_unit_count": 3,
+          "key_owned_service_count": 3,
+          "original_quiet_flags": {
+            "client_tool_cgroups_quiet": true,
+            "client_tool_process_groups_absent": true,
+            "execution_units_quiet": true,
+            "held_process_groups_absent": true,
+            "native_cgroup_quiet": true
+          },
+          "proof_fields": {
+            "all_owned_scopes_quiet": true,
+            "client_tool_owned_processes_quiet": true,
+            "execution_units_quiet": true,
+            "mutations_performed": false,
+            "native_owned_processes_quiet": true,
+            "native_receipt_sha256": "e28d1633bcb6e96428abf6b92160268319cb6826e8d806fc8f243e81355d127e",
+            "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+            "receipt_sha256": "d7dc8e910e883f51e40b0476e72724323916f22455d5375d3ca3e1f4b6d7ae9f",
+            "schema": "er9.luna.private-slice-owned-scope-proof.v1.3"
+          },
+          "proof_mutations_performed": false
+        },
+        "physical_provider_runtime_attestation": "UNKNOWN",
+        "requested_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "resources": {
+          "aggregate_memory_limit_bytes": 2415919104,
+          "allocation_to_release_seconds": 589.763033148,
+          "birth_to_release_seconds": 590.47770197,
+          "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+          "fit": "UNKNOWN; sampled memory peak and no observed OOM do not prove general workload fit",
+          "hash_chain": {
+            "current_runtime_chain_description": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+            "embedded_pre_enrichment_native_receipt_sha256": "e28d1633bcb6e96428abf6b92160268319cb6826e8d806fc8f243e81355d127e",
+            "evaluator_verified_actual_reader_source": "NOT_READ; no reconstruction or mismatch accusation",
+            "final_native_result_sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db",
+            "resource_projection_chain_description": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+            "separately_saved_preembedding_bytes": "UNKNOWN"
+          },
+          "kernel_memory_before_worker_exit": {
+            "cgroup.events": {
+              "frozen": "0",
+              "populated": "1"
+            },
+            "memory.current": "67846144",
+            "memory.events": {
+              "high": "0",
+              "low": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_group_kill": "0",
+              "oom_kill": "0",
+              "sock_throttled": "0"
+            },
+            "memory.max": "2415919104",
+            "memory.peak": "367718400",
+            "memory.swap.max": "0"
+          },
+          "original_total_budget_seconds": 600.0,
+          "peak_before_release_bytes": 367718400,
+          "profile": {
+            "aggregate_kernel_limits": {
+              "cgroup.events": {
+                "frozen": "0",
+                "populated": "0"
+              },
+              "memory.current": "0",
+              "memory.events": {
+                "high": "0",
+                "low": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_group_kill": "0",
+                "oom_kill": "0",
+                "sock_throttled": "0"
+              },
+              "memory.max": "2415919104",
+              "memory.peak": "0",
+              "memory.swap.max": "0"
+            },
+            "aggregate_memory_max_bytes": 2415919104,
+            "allocation_monotonic_ns": 85915091571682,
+            "component_memory_max_bytes": {
+              "native": 805306368,
+              "outer_worker": 805306368,
+              "pm_boundary": 268435456,
+              "pm_execution": 268435456,
+              "sandbox": 268435456
+            },
+            "fit": "UNKNOWN",
+            "host_reserve_bytes": 3221225472,
+            "memory_swap_max_bytes": 0,
+            "original_birth_monotonic_ns": 85914376902860,
+            "original_total_stop_monotonic_ns": 86514376902860,
+            "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+            "schema": "er9.luna.private-memory-profile.v1",
+            "scope": "complete owned job including controller/guards, sibling services and all execution overlap"
+          },
+          "release": {
+            "after": {
+              "ActiveState": "inactive",
+              "LoadState": "loaded",
+              "MemoryMax": "2415919104",
+              "MemoryPeak": "367718400",
+              "MemorySwapMax": "0",
+              "SubState": "dead"
+            },
+            "all_private_slice_descendants_quiet": true,
+            "before_kernel": {
+              "cgroup.events": {
+                "frozen": "0",
+                "populated": "0"
+              },
+              "memory.current": "29466624",
+              "memory.events": {
+                "high": "0",
+                "low": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_group_kill": "0",
+                "oom_kill": "0",
+                "sock_throttled": "0"
+              },
+              "memory.max": "2415919104",
+              "memory.peak": "367718400",
+              "memory.swap.max": "0"
+            },
+            "release_monotonic_ns": 86504854604830,
+            "stop_returncode": 0
+          },
+          "release_before_original_deadline": true,
+          "resource_oom_observed": false
+        },
+        "source_grade": "UNCHANGED_FROM_PHASE1",
+        "stage_sha256": "7186c130dc883b25959a3930e2a780b9b4aaebf4bf4904403604f601eaa8353c"
+      },
+      {
+        "alias": "B",
+        "arm": "control",
+        "current_execution_receipt_count": 2,
+        "current_execution_receipts": [
+          {
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "cc21860a8077b671a6223302bcc5772b5bc44bcf8ab05ce2715b7d5c547645fb",
+            "correctness": "UNASSESSED_CODE_INPUT_EXPECTATION_AND_STREAM_BODIES_NOT_READ",
+            "data_sha256": "347c4314c6de326a1ff247aa7b794164840c8a7f3819bbb045a83f3d425f8bde",
+            "error_content": "UNKNOWN_STREAM_BODY_NOT_PROVIDED",
+            "execution_id": "exec-0w2oc0ov",
+            "exit_code": 0,
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "result_sha256": "81ce1608a465855bb6cab3f350d03ffe5f6d5f3087d20dad4d7695759a0eaded",
+            "scope": "Exact current operational receipt and matching file inventory; tool success/exit 0 does not establish behavioral witness PASS.",
+            "stderr_bytes": 0,
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_bytes": 328,
+            "stdout_sha256": "be46e86ab0a0f9b1630ddb6ea679f684453ec40be49b8295d7ced6d114473910",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          },
+          {
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "cleanup_stop_returncode": 5,
+            "code_sha256": "69d24d19577e156d294d74c3a740da16e297e9c087242c5a846f8e78c5df22a7",
+            "correctness": "UNASSESSED_CODE_INPUT_EXPECTATION_AND_STREAM_BODIES_NOT_READ",
+            "data_sha256": "347c4314c6de326a1ff247aa7b794164840c8a7f3819bbb045a83f3d425f8bde",
+            "error_content": "UNKNOWN_STREAM_BODY_NOT_PROVIDED",
+            "execution_id": "exec-pi9fnogh",
+            "exit_code": 1,
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "result_sha256": "464f37d614d81f6337bf526915cd149c64275c44a9b5c1c910bc1c60f6d4c2a7",
+            "scope": "Exact current operational receipt and matching file inventory; tool success/exit 0 does not establish behavioral witness PASS.",
+            "stderr_bytes": 636,
+            "stderr_sha256": "4ce9c3be4c25e9672236338570a6200f1aace024177eab1f38bb26c033360b32",
+            "stdout_bytes": 0,
+            "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          }
+        ],
+        "freeze_sha256": "b6fda9505452b252548af617e2bcb5cd2a8049b717fc08a7c6f3d34250c3267b",
+        "goal": {
+          "candidate_goals_set_by_host": 1,
+          "completion": "NOT_OBSERVED; last direct Goal paused and terminal turn interrupted",
+          "first_direct": {
+            "createdAt": 1791255499,
+            "status": "active",
+            "timeUsedSeconds": 0,
+            "tokenBudget": null,
+            "tokensUsed": 0,
+            "updatedAt": 1791255499
+          },
+          "goal_replacements_observed": 0,
+          "host_followup_turns_started": 0,
+          "host_initial_turns_started": 1,
+          "last_direct": {
+            "createdAt": 1791255499,
+            "status": "paused",
+            "timeUsedSeconds": 579,
+            "tokenBudget": null,
+            "tokensUsed": 312530,
+            "updatedAt": 1791256079
+          },
+          "native_owned_continuation_observed": false,
+          "native_turns_completed": 0,
+          "native_turns_interrupted": 1,
+          "native_turns_started": 1,
+          "native_turns_terminal": 1,
+          "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+          "session_and_thread_are_separate_from_GoalID": true,
+          "status_before_cleanup": "active",
+          "status_final": "paused",
+          "turn_statuses": [
+            {
+              "method": "turn/started",
+              "observed_monotonic_ns": 85918342344459,
+              "status": "inProgress"
+            },
+            {
+              "method": "turn/completed",
+              "observed_monotonic_ns": 86497976413991,
+              "status": "interrupted"
+            }
+          ],
+          "visible_Goal_tool_calls": {},
+          "visible_Goal_tool_count_scope": "visible item telemetry only; zero is not proof of no native Goal calls"
+        },
+        "job_id": "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "mechanism_uptake": "UNASSESSED; operational tool counts are not evidence of faithful declared-method uptake",
+        "native_accounting": {
+          "Goal_last_tokensUsed": 312530,
+          "Goal_tokensUsed_numerically_equals_uncached_input_plus_output": true,
+          "billing_dollars": "UNKNOWN",
+          "counter_scope_caution": "Arithmetic equality in these observations is not an independently established universal Goal-token accounting contract. Goal and native cumulative rows remain separate and must not be summed.",
+          "definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+          "host_rpc_counts": {
+            "config/read": 1,
+            "initialize": 1,
+            "mcpServerStatus/list": 1,
+            "model/list": 1,
+            "thread/goal/get": 570,
+            "thread/goal/set": 2,
+            "thread/start": 1,
+            "turn/interrupt": 1,
+            "turn/start": 1
+          },
+          "host_rpc_poll_count_is_not_model_response_count": true,
+          "inventory_check": {
+            "actual_inference_tool_payload_observed": false,
+            "native_mcp_catalog_verified": true,
+            "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+            "verified": false
+          },
+          "native_event_counts": {
+            "account/rateLimits/updated": 48,
+            "account/updated": 1,
+            "item/agentMessage/delta": 192,
+            "item/completed": 134,
+            "item/started": 135,
+            "remoteControl/status/changed": 1,
+            "thread/goal/updated": 50,
+            "thread/started": 1,
+            "thread/status/changed": 2,
+            "thread/tokenUsage/updated": 48,
+            "turn/completed": 1,
+            "turn/started": 1,
+            "warning": 1
+          },
+          "native_event_turn_completed_is_terminal_event_not_success": true,
+          "native_http_attempts": "UNKNOWN",
+          "native_model_response_cap_enforced": false,
+          "native_response_measure": "HTTP attempts UNKNOWN; native wall bounded; Goal identity monitored; tokens observed",
+          "native_response_policy": "wall-goal-token-observation-v1",
+          "native_responses": "UNKNOWN",
+          "observed_cumulative_usage": {
+            "cachedInputTokens": 3439872,
+            "inputTokens": 3729054,
+            "outputTokens": 23348,
+            "reasoningOutputTokens": 19786,
+            "totalTokens": 3752402
+          },
+          "parent_UI_provider_cache_money_and_unexposed_tail": "UNKNOWN; separate nonadditive scopes",
+          "positive_client_metadata_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 3,
+            "pm_boundary.read_file": 40,
+            "pm_execution.python_execute": 2
+          },
+          "positive_client_metadata_success_rows": 46,
+          "tool_attempt_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 3,
+            "pm_boundary.read_file": 40,
+            "pm_execution.python_execute": 2
+          },
+          "tool_completed_counts": {
+            "pm_boundary.mechanical": 1,
+            "pm_boundary.public_https_get": 3,
+            "pm_boundary.read_file": 40,
+            "pm_execution.python_execute": 2
+          },
+          "tool_failed_counts": {},
+          "tool_success_is_not_candidate_execution_correctness": true,
+          "uncached_input_arithmetic": 289182,
+          "usage_notification_count": 48
+        },
+        "native_error": {
+          "class": "TimeoutError",
+          "elapsed_seconds": 585.692986908,
+          "held_process_exit_code": 0,
+          "message": "original native stop reached",
+          "note": "Held-process wrapper exit 0 is separate from current native HOLD and interrupted turn; source grade is not implied."
+        },
+        "native_outcome": "HOLD",
+        "native_result_sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66",
+        "observed_client_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "owned_quiet": {
+          "all_owned_scopes_quiet": true,
+          "host_terminal_projections": [
+            {
+              "component": "host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 255,
+              "sha256": "26587ddc81a57c3a8a5d57d5f65f469a59fdec36199e9c8e7bab81c76da3d8d1",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "failed",
+                "native_host_pid": 0,
+                "sub_state": "failed"
+              }
+            },
+            {
+              "component": "pm_boundary-host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 255,
+              "sha256": "418e36945aec1a08a938aed0ea0fe24e7a06a1081b44b2d8d47a490dba156007",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "failed",
+                "native_host_pid": 0,
+                "sub_state": "failed"
+              }
+            },
+            {
+              "component": "pm_execution-host-process",
+              "original_cgroup_absent_or_empty": true,
+              "service_runner_exit_code": 0,
+              "sha256": "7bcb1cef48aa37b578dca3ab70a539d9515a65d6445a755ceac37053fe7a0056",
+              "terminal_cgroup_empty": true,
+              "terminal_state": {
+                "active_state": "inactive",
+                "native_host_pid": 0,
+                "sub_state": "dead"
+              }
+            }
+          ],
+          "independent_live_probe": "NOT_RUN; trusted exact current pinned projection only",
+          "key_owned_execution_unit_count": 2,
+          "key_owned_service_count": 3,
+          "original_quiet_flags": {
+            "client_tool_cgroups_quiet": true,
+            "client_tool_process_groups_absent": true,
+            "execution_units_quiet": true,
+            "held_process_groups_absent": true,
+            "native_cgroup_quiet": true
+          },
+          "proof_fields": {
+            "all_owned_scopes_quiet": true,
+            "client_tool_owned_processes_quiet": true,
+            "execution_units_quiet": true,
+            "mutations_performed": false,
+            "native_owned_processes_quiet": true,
+            "native_receipt_sha256": "681df2c84d1d16d927b1a1761340700c547e86e02cfe597b213f8a8f37a6422d",
+            "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+            "receipt_sha256": "2de10bfc2625067c20ff1863c5a749e464643daa3f4b5ba975a33bfe117100cf",
+            "schema": "er9.luna.private-slice-owned-scope-proof.v1.3"
+          },
+          "proof_mutations_performed": false
+        },
+        "physical_provider_runtime_attestation": "UNKNOWN",
+        "requested_identity": {
+          "effort": "max",
+          "model": "gpt-6-luna"
+        },
+        "resources": {
+          "aggregate_memory_limit_bytes": 2415919104,
+          "allocation_to_release_seconds": 590.377477556,
+          "birth_to_release_seconds": 591.193397538,
+          "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+          "fit": "UNKNOWN; sampled memory peak and no observed OOM do not prove general workload fit",
+          "hash_chain": {
+            "current_runtime_chain_description": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+            "embedded_pre_enrichment_native_receipt_sha256": "681df2c84d1d16d927b1a1761340700c547e86e02cfe597b213f8a8f37a6422d",
+            "evaluator_verified_actual_reader_source": "NOT_READ; no reconstruction or mismatch accusation",
+            "final_native_result_sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66",
+            "resource_projection_chain_description": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+            "separately_saved_preembedding_bytes": "UNKNOWN"
+          },
+          "kernel_memory_before_worker_exit": {
+            "cgroup.events": {
+              "frozen": "0",
+              "populated": "1"
+            },
+            "memory.current": "59863040",
+            "memory.events": {
+              "high": "0",
+              "low": "0",
+              "max": "0",
+              "oom": "0",
+              "oom_group_kill": "0",
+              "oom_kill": "0",
+              "sock_throttled": "0"
+            },
+            "memory.max": "2415919104",
+            "memory.peak": "365252608",
+            "memory.swap.max": "0"
+          },
+          "original_total_budget_seconds": 600.0,
+          "peak_before_release_bytes": 365252608,
+          "profile": {
+            "aggregate_kernel_limits": {
+              "cgroup.events": {
+                "frozen": "0",
+                "populated": "0"
+              },
+              "memory.current": "0",
+              "memory.events": {
+                "high": "0",
+                "low": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_group_kill": "0",
+                "oom_kill": "0",
+                "sock_throttled": "0"
+              },
+              "memory.max": "2415919104",
+              "memory.peak": "0",
+              "memory.swap.max": "0"
+            },
+            "aggregate_memory_max_bytes": 2415919104,
+            "allocation_monotonic_ns": 85913672631502,
+            "component_memory_max_bytes": {
+              "native": 805306368,
+              "outer_worker": 805306368,
+              "pm_boundary": 268435456,
+              "pm_execution": 268435456,
+              "sandbox": 268435456
+            },
+            "fit": "UNKNOWN",
+            "host_reserve_bytes": 3221225472,
+            "memory_swap_max_bytes": 0,
+            "original_birth_monotonic_ns": 85912856711520,
+            "original_total_stop_monotonic_ns": 86512856711520,
+            "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+            "schema": "er9.luna.private-memory-profile.v1",
+            "scope": "complete owned job including controller/guards, sibling services and all execution overlap"
+          },
+          "release": {
+            "after": {
+              "ActiveState": "inactive",
+              "LoadState": "loaded",
+              "MemoryMax": "2415919104",
+              "MemoryPeak": "365252608",
+              "MemorySwapMax": "0",
+              "SubState": "dead"
+            },
+            "all_private_slice_descendants_quiet": true,
+            "before_kernel": {
+              "cgroup.events": {
+                "frozen": "0",
+                "populated": "0"
+              },
+              "memory.current": "23404544",
+              "memory.events": {
+                "high": "0",
+                "low": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_group_kill": "0",
+                "oom_kill": "0",
+                "sock_throttled": "0"
+              },
+              "memory.max": "2415919104",
+              "memory.peak": "365252608",
+              "memory.swap.max": "0"
+            },
+            "release_monotonic_ns": 86504050109058,
+            "stop_returncode": 0
+          },
+          "release_before_original_deadline": true,
+          "resource_oom_observed": false
+        },
+        "source_grade": "UNCHANGED_FROM_PHASE1",
+        "stage_sha256": "46afe34831050a21401ef26115b34121a907b943536133e343cdf988bd6c2213"
+      }
+    ],
+    "sha256": "0f06631990cade50695aa87545d17221ec55a93f293cf9b4ca032bd33bb3ade2"
+  },
+  "physical_evaluator_provider": "UNKNOWN",
+  "schema": "er9.independent-targeted-assessment-report.v1"
+}

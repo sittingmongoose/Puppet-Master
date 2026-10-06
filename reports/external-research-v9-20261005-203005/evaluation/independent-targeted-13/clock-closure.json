@@ -1,0 +1,58 @@
+{
+  "schema": "er9.independent-neutral-clock-closure.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "source_start_utc": "2026-10-06T05:22:45.464261+00:00",
+  "source_start_monotonic_seconds": 94584.32124199,
+  "source_freeze_utc": "2026-10-06T05:27:06.715121+00:00",
+  "source_freeze_monotonic_seconds": 94845.572110705,
+  "source_elapsed_seconds": 261.25086871501117,
+  "phase1_lock_utc": "2026-10-06T05:27:06.727373+00:00",
+  "phase1_lock_monotonic_seconds": 94845.584387869,
+  "actual_key_checking_start_utc": "2026-10-06T05:28:06.887922+00:00",
+  "actual_key_checking_start_monotonic_seconds": 94905.744912277,
+  "key_release_wait_charged_seconds": 60.16052440799831,
+  "literal_inclusive_phase2_elapsed_seconds": 413.89888786899974,
+  "actual_key_checking_interval_elapsed_seconds": 353.7383634610014,
+  "original_whole_elapsed_seconds": 675.1620337480126,
+  "closure_utc": "2026-10-06T05:34:00.626287+00:00",
+  "closure_monotonic_seconds": 95259.483275738,
+  "source_budget_seconds": 1200,
+  "literal_inclusive_phase2_budget_seconds": 600,
+  "whole_budget_seconds": 1800,
+  "literal_inclusive_phase2_deadline_utc": "2026-10-06T05:37:06.727373+00:00",
+  "literal_inclusive_phase2_deadline_monotonic_seconds": 95445.584387869,
+  "original_whole_deadline_monotonic_seconds": 96384.32124199,
+  "source_within_budget": true,
+  "inclusive_phase2_within_budget": true,
+  "whole_within_budget": true,
+  "original_clock_bytes_preserved": true,
+  "no_clock_reset": true,
+  "all_21_phase1_pins_still_exact_readonly": true,
+  "report_handoffs_completed_before_closure": {
+    "root": "SEND_ACCEPTED",
+    "authorized_publisher": "SEND_ACCEPTED",
+    "ack_wait_performed": false
+  },
+  "accountant_clock_handoff": {
+    "direct_receiver": "/root/accountant",
+    "direct_attempt": "DENIED_RECIPIENT_NOT_FOUND",
+    "fallback": "Neutral closure receipt sent to root and courier for accountant routing; no ACK wait."
+  },
+  "clock_pointer_handoff_scope": "This receipt closes report/source/checking work after root+publisher report handoffs. Immediate neutral receipt deliveries occur under the same strict deadline and are separately terminalized in handoff-receipt.json.",
+  "private_key_or_science_content": "NOT_INCLUDED",
+  "pinned_clock_receipts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source_start.json",
+      "sha256": "460fb2418eb577d4f9671e2734a311a5b9d2e4fa268bc51dfba3f484fdf88fab"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2_start.json",
+      "sha256": "3a42a28121c4f80e1c5b0da7861e9824695bc894cec009536da7bae4f98abc4f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/clock-qualification.json",
+      "sha256": "23bcaf5a0c56f1454f96fcb9de5a7fc15afc4da765e8a78a7a85bbdc587749d6"
+    }
+  ]
+}

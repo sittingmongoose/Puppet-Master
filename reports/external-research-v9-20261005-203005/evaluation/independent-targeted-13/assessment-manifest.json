@@ -1,0 +1,89 @@
+{
+  "schema": "er9.independent-assessment-positive-artifact-manifest.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "assigned_selector": "gpt-6.1-sol/xhigh/forknone",
+  "physical_provider_runtime": "UNKNOWN",
+  "artifacts": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1.json",
+      "sha256": "817bf1264b43e1494e16e0204147380ec0ccfea111b6a2a73c571aaa9b859d6f",
+      "bytes": 35776,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1.md",
+      "sha256": "19e7905b09827ad3b1be15662659cf6f747a538b6c0b39ffc3bb64fe61c28bdd",
+      "bytes": 2596,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1-lock.json",
+      "sha256": "5852dfaa26d5606e4f4f4fecc727b950e6ce586d9396f2f275c747526da4a57c",
+      "bytes": 6685,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source-freeze.json",
+      "sha256": "630c3446a57032d81402798bf903be025000468bafc54534227655562615e588",
+      "bytes": 5860,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2.json",
+      "sha256": "bc23a864e7a10a6e412cbf53f9faf70c07ec7146952cf94ac128b41a4b86aa84",
+      "bytes": 37876,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2.md",
+      "sha256": "457a21c83ee47c8ba082e91e5fabfa02eec0459e6e86ab992ab42bd16ceb74a4",
+      "bytes": 3226,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/assessment.json",
+      "sha256": "496c1452b8ac9ba7e3c8ff11ebe2095b08c88834bdb91669daf516d7faa089e3",
+      "bytes": 3142,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/assessment.md",
+      "sha256": "efa242f97d8fd639eaade847f64c57a15a119be9e4fe066b1c0036608d17c39a",
+      "bytes": 1360,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source_start.json",
+      "sha256": "460fb2418eb577d4f9671e2734a311a5b9d2e4fa268bc51dfba3f484fdf88fab",
+      "bytes": 575,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2_start.json",
+      "sha256": "3a42a28121c4f80e1c5b0da7861e9824695bc894cec009536da7bae4f98abc4f",
+      "bytes": 929,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/clock-qualification.json",
+      "sha256": "23bcaf5a0c56f1454f96fcb9de5a7fc15afc4da765e8a78a7a85bbdc587749d6",
+      "bytes": 1779,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/clock-closure.json",
+      "sha256": "1b8779e59b250f564ad5436ad8bb5d4a2a10ee618478d70362e7cf368ecec6ff",
+      "bytes": 3021,
+      "readonly": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/handoff-receipt.json",
+      "sha256": "822c1f6048d9dc6758a7beb4f8a7779da15294ef74fdb0cdf1b2ec7f0853d7f0",
+      "bytes": 1427,
+      "readonly": true
+    }
+  ],
+  "raw_primary_captures_private_key_native_conversation_exported": false,
+  "clock_precision": "Use clock-qualification.json, clock-closure.json and handoff-receipt.json for literal inclusive Phase2; phase2_start.json is actual key/checking START only. Existing bytes preserved."
+}

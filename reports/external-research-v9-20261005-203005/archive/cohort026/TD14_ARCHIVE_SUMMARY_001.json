@@ -1,0 +1,31 @@
+{
+  "authority_selector_sha256s": [
+    "c9fc3bf606106bc1ed5bc7fb3cee52539064e64ffa0b2ee1297d15a39ca54219",
+    "216cfccef23dd46225bf2d6b36f8b675b2f84137ee92ea7606cbb9f15b401226",
+    "2deaa88cbdb4b00ddd61e6267096d2cc483ba30101469eb82b7f4e372d22f873"
+  ],
+  "baselines_policy": "actual_admitted_baselines_not_selected_or_copied",
+  "body_bytes": 358333,
+  "body_count": 15,
+  "coverage": "PARTIAL_EXACT_TD14_FIFTEEN_BODY_METADATA_PAIRS_BASELINES_EXCLUDED_NOT_QUEUE_RECONCILED",
+  "exclusions": [
+    "actual_admitted_baselines8",
+    "fixture images/privatefixture",
+    "native/auth/private/context/Git",
+    "newnetwork/sourceinterpretation/candidatefeedback"
+  ],
+  "files_count": 30,
+  "independent_archive_reread": "ALL30_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/09a5f23498001ab3db0c34d6b1fd4f1cdc35bdd4ed8b11fedb4a4b7f75e01d49/MANIFEST.json",
+  "manifest_sha256": "d0d089b1dabbc5647b10ae9a4aae9d7c6b14cf90d9e912df6ecbf3a8b85b895c",
+  "metadata_bytes": 11627,
+  "metadata_count": 15,
+  "overlap_policy": "15selectedbodylineages; equalSHAandprioroverlapnotnewuniqueevidence",
+  "prior_archives": "UNCHANGED",
+  "raw_repository_policy": "publicbody/metadata/rawlocators external only; compactpinreceipt maypublish",
+  "restart": "ExactTD14selected30files complete; further evidence requires separate positivepins; wholequeue reconciliation pending",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 369960,
+  "selection_sha256": "09a5f23498001ab3db0c34d6b1fd4f1cdc35bdd4ed8b11fedb4a4b7f75e01d49",
+  "within_batch_distinct_body_sha_count": 13
+}

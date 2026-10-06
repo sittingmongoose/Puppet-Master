@@ -1,0 +1,767 @@
+{
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "full_B_brief_obligations": 12,
+    "target_scope_checks": 3
+  },
+  "assigned_effort": "xhigh",
+  "assigned_model": "gpt-6.1-sol",
+  "blinding": "No key/history/grades/economics/native status read before this judgment. Actual launched task arm labels are unavoidable hints; perfect blinding not claimed.",
+  "common_dimensions": [
+    {
+      "A": "UNASSESSED_SOURCE; INCOMPLETE_DELIVERY",
+      "B": "PARTIAL_SELECTED_CLAIMS_AND_PROPOSED_DESIGN; INCOMPLETE_DELIVERY",
+      "id": "Q1",
+      "name": "Required question and plan-obligation coverage"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q2",
+      "name": "Correct source interpretation, version, conditions, normative force and applicability"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q3",
+      "name": "Justified inference, component choice and plan consequences"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q4",
+      "name": "Verified useful discovery, alternatives, failures and breadth"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q5",
+      "name": "Correctness and scope of executed witnesses and proposed validation"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q6",
+      "name": "Supported semantic preservation and no new consequential errors"
+    },
+    {
+      "A": "UNASSESSED",
+      "B": "PARTIAL; SEE_SOURCE_CLAIMS_AND_LIMITS",
+      "id": "Q7",
+      "name": "Honest uncertainty, scope/refusal and critical dependencies"
+    },
+    {
+      "A": "UNASSESSED_SOURCE; INCOMPLETE_DELIVERY",
+      "B": "PARTIAL_SELECTED_CLAIMS_AND_PROPOSED_DESIGN; INCOMPLETE_DELIVERY",
+      "id": "Q8",
+      "name": "Reproducible final delivery; economics and execution evidence reported separately"
+    }
+  ],
+  "common_important_checks": [
+    {
+      "A": "NOT_ESTABLISHED_FINAL_ABSENT; SOURCE_UNASSESSED",
+      "B": "NOT_ESTABLISHED_FINAL_ABSENT; PARTIAL_EVIDENCE_AS_NOTED",
+      "check_id": "B-P1",
+      "note": "Useful independent supplied precedents and real chain verified in B partial; designated final absent and autonomous discovery not credited."
+    },
+    {
+      "A": "NOT_ESTABLISHED_FINAL_ABSENT; SOURCE_UNASSESSED",
+      "B": "NOT_ESTABLISHED_FINAL_ABSENT; PARTIAL_EVIDENCE_AS_NOTED",
+      "check_id": "B-P2",
+      "note": "Selected B partial source/data/replay/condition claims supported with critical dependencies explicit; full API/version binding and S20 remain unassessed."
+    },
+    {
+      "A": "NOT_ESTABLISHED_FINAL_ABSENT; SOURCE_UNASSESSED",
+      "B": "NOT_ESTABLISHED_FINAL_ABSENT; PARTIAL_EVIDENCE_AS_NOTED",
+      "check_id": "B-P3",
+      "note": "No current execution claimed; proposed validations honest. Prior summary receipts not promoted."
+    },
+    {
+      "A": "NOT_ESTABLISHED_FINAL_ABSENT; SOURCE_UNASSESSED",
+      "B": "NOT_ESTABLISHED_FINAL_ABSENT; PARTIAL_EVIDENCE_AS_NOTED",
+      "check_id": "B-P4",
+      "note": "Supported content preserved and applicability narrowed in B partial; no complete current final to judge."
+    },
+    {
+      "A": "NOT_ESTABLISHED_FINAL_ABSENT; SOURCE_UNASSESSED",
+      "B": "NOT_ESTABLISHED_FINAL_ABSENT; PARTIAL_EVIDENCE_AS_NOTED",
+      "check_id": "B-P5",
+      "note": "B partial covers workflow, exchange, resource/recovery/usability and opportunity/alternative, with conditional choices; broader pipeline completeness is separately UNASSESSED."
+    }
+  ],
+  "delivery_defect": {
+    "arms": [
+      "A",
+      "B"
+    ],
+    "basis": "Exact frozen dispatch and integrity proof designate no final and preserve missing required catalogs. Empty or partial delivery receives no PASS.",
+    "id": "TD15-DELIVERY-01",
+    "severity": "DELIVERY_BLOCKING",
+    "source_grounded_semantic_error": false
+  },
+  "evaluation_id": "independent-targeted-15",
+  "execution_scope": {
+    "candidate_code_executed_by_evaluator": 0,
+    "candidate_goals_started": 0,
+    "candidate_retests_or_repairs": 0,
+    "current_claimed_executions": 0,
+    "prior_witnesses": "UNASSESSED_PRIOR_CLAIMS_NOT_CURRENT_EXECUTIONS"
+  },
+  "forbidden_inferences": [
+    "partial promoted to designated final",
+    "old output/evaluation substituted",
+    "treatment winner",
+    "matched causal repair credit",
+    "native Goal completion from file presence",
+    "full pipeline quality credit",
+    "autonomous discovery from supplied inputs",
+    "physical provider/money/opaque Goal IDs invented"
+  ],
+  "freeze_monotonic_ns": 96004193440998,
+  "freeze_utc": "2026-10-06T05:46:25.336454+00:00",
+  "full_brief_obligation_coverage": [
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial workflow and bounded Python/SQL relationship in lines 26-33 and 126-141.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B01",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial data contract lines 81-89; S2 caveat independently supported.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B02",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial order/kernel/provenance and replay boundaries lines 91-106.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B03",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial invalidation states and conservative fallback lines 100-102.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B04",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial project/environment/source/event/output identity and exchange lines 55-79, 128-141.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B05",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial proposed bounds/cache/cancel/locking/save recovery lines 108,116-124; no measurements.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B06",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial OS permission/resource and accessible feedback plan lines 108-114; production mechanism unchosen.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B07",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Useful independent document/runtime/data mechanisms verified from supplied/current sources; autonomous discovery forbidden in targeted supplied-input scope.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B08",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Supplied issue/fix chain and added 1.5.2 source-test presence supported; no release-binary execution credit.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B09",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Partial useful reject-pane opportunity and marimo/sequential alternatives lines 143-147; conditional architecture.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B10",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "PARTIAL_AUTHORED_NONFINAL",
+      "B_note": "Zero current executions claimed; proposed validation lines 151-163 honest; prior receipts UNASSESSED.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B11",
+      "required": true
+    },
+    {
+      "A": "UNASSESSED_NO_CURRENT_AUTHORED_BODY",
+      "B": "INCOMPLETE_DELIVERY",
+      "B_note": "Required standalone current final and catalogs absent. Supplied baseline comparison supports useful preservation/qualification only in partial.",
+      "full_brief_completion": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE",
+      "obligation_id": "B12",
+      "required": true
+    }
+  ],
+  "meaning_of_empty_error_list": "No verified new error among inspected selected partial claims; not whole-output certification, equal arm quality, or proof of no defects.",
+  "money": "UNKNOWN",
+  "native_goal_ids": "UNKNOWN",
+  "neutral_recipients": [
+    "/root/frozen_exports",
+    "/root/cost_accounting"
+  ],
+  "outcomes": {
+    "A": {
+      "case_outcome": "INCOMPLETE",
+      "delivery": "Required current proposal, source, witness and lead catalogs absent; no authored partial offered.",
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "UNASSESSED"
+    },
+    "B": {
+      "case_outcome": "INCOMPLETE",
+      "delivery": "Required current proposal and three catalogs absent. Research proposal, source catalog and scanner map are nonfinal partials only.",
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "PARTIAL_SELECTED_CLAIMS_SUPPORTED; NO_OVERALL_PASS"
+    }
+  },
+  "pair_id": "D-V10-B-BUNDLE-R001",
+  "phase": "PHASE1_IMMUTABLE_SOURCE_JUDGMENT_BEFORE_KEY",
+  "phase2_deadline_monotonic_ns": 96604193440998,
+  "phase2_rule": "literal inclusive 600 seconds from this immutable freeze, including key wait, checking, report and all handoffs; no reset; whole deadline also applies",
+  "physical_provider": "UNKNOWN",
+  "positive_partial_findings": [
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C01",
+      "proposal_lines": [
+        26,
+        39,
+        95,
+        98
+      ],
+      "reason": "Schema requires code-cell IDs, outputs and integer-or-null prompt counts; four standard output kinds. Document storage is kept distinct from kernel state, complete execution history, freshness and replay.",
+      "source_ids": [
+        "S4"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C02",
+      "proposal_lines": [
+        41,
+        84
+      ],
+      "reason": "Default structural-error stop, explicit skip/reject-table path, temporary rejects, and unprojected-column cast-error caveat are present. Durable ledger and all-column validation are proposed product rules, not claims of engine execution.",
+      "source_ids": [
+        "S2"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C03",
+      "proposal_lines": [
+        12,
+        122
+      ],
+      "reason": "In-process one read-write process versus multiple read-only processes is distinguished from Quack remote multi-process writes, beta as of 1.5.2, and shared-directory caution. No local multi-writer guarantee is made.",
+      "source_ids": [
+        "S3"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C04",
+      "proposal_lines": [
+        30,
+        40,
+        102,
+        147
+      ],
+      "reason": "Pure-Python storage, static global references/definitions DAG, lazy stale marking, page-order-independent execution, untracked mutation/attribute assignment, queued-descendant cancellation and unique globals support the bounded precedent. Arbitrary Python analysis remains conditional.",
+      "source_ids": [
+        "S5",
+        "S6"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C05",
+      "proposal_lines": [
+        12,
+        31,
+        42,
+        104
+      ],
+      "reason": "README supports parameter cells and distinct input/output notebook paths. Candidate owns graph order, provenance and isolation; it does not assert Papermill supplies them.",
+      "source_ids": [
+        "S14"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C06",
+      "proposal_lines": [
+        12,
+        32,
+        75,
+        114
+      ],
+      "reason": "PEP 723 is embedded single-file-script metadata, not a project configuration, resolver or environment lock. Metadata-triggered installation risk is real. Treat this as a supported clarification: the seed already called its fields PEP-723-style and assigned installation to tools, so no invented literal seed-error repair credit.",
+      "source_ids": [
+        "S17"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C07",
+      "proposal_lines": [
+        46,
+        48,
+        49,
+        51,
+        53
+      ],
+      "reason": "Issue reproduction conditions and versions match; timeline subject links PR 12679; merge metadata and guard/test patch match. Tag dates bracket the merge, but do not establish first fixed release. Current text correctly refrains from the seed's date-only v1.1.0 membership inference.",
+      "source_ids": [
+        "S1",
+        "S9",
+        "S10",
+        "S11",
+        "S12",
+        "S13"
+      ]
+    },
+    {
+      "assessment": "SUPPORTED_AT_CAPTURE",
+      "claim_id": "B-C08",
+      "proposal_lines": [
+        10,
+        27,
+        50,
+        155
+      ],
+      "reason": "PyPI 1.5.2 requires Python >=3.10.0 and has CPython 3.11-3.13 wheels; tag resolves to 8a5851971fae891f292c2714d86046ee018e9737. Pinned test has three two-row expectations including parallel=false. This proves metadata and source-test presence, not install/test success or binary behavior.",
+      "source_ids": [
+        "S23",
+        "S24",
+        "S25"
+      ]
+    },
+    {
+      "assessment": "PRESERVED_AS_PROPOSED_CONDITIONAL_DESIGN",
+      "claim_id": "B-C09",
+      "proposal_lines": [
+        77,
+        83,
+        85,
+        86,
+        87,
+        88,
+        100,
+        102,
+        106,
+        108,
+        112,
+        114,
+        118,
+        120,
+        124,
+        128,
+        147,
+        151,
+        153,
+        163
+      ],
+      "reason": "Useful source identity, preview limits, missing/null distinction, schema and row/order policy, sidecar provenance, conservative opaque-code fallback, status degradation, separate clean replay, accessible feedback, OS isolation, bounded-data gate, save/recovery, alternative and opportunity remain useful proposed rules. Runtime pins, sandbox, performance and cross-platform behavior are explicitly unverified. No performance or full runtime result is credited.",
+      "source_ids": []
+    }
+  ],
+  "primary_source_pins": [
+    {
+      "body": {
+        "bytes": 21522,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S1.body",
+        "role": "primary_source_body",
+        "sha256": "e38b15690edbd1170f96dfc8cd5622fa975c32347916e1942ce92f359322ad12"
+      },
+      "metadata": {
+        "bytes": 767,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S1.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "f54d4f725e11dce18d1986f49fed9682f52a1986e7810b44ddea8d9b2c74a8df"
+      },
+      "source_id": "S1"
+    },
+    {
+      "body": {
+        "bytes": 12080,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S2.body",
+        "role": "primary_source_body",
+        "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad"
+      },
+      "metadata": {
+        "bytes": 782,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S2.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "9ce5e3b8c06a91fbd0ad69c122d25d55aa4468773a81dc8b816e92ead859effb"
+      },
+      "source_id": "S2"
+    },
+    {
+      "body": {
+        "bytes": 3565,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S3.body",
+        "role": "primary_source_body",
+        "sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f"
+      },
+      "metadata": {
+        "bytes": 768,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S3.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "45bb0720c5f0d5057bdcb406005a3d8cae5c1dd4a7227b2fa737c3d2a551ea1b"
+      },
+      "source_id": "S3"
+    },
+    {
+      "body": {
+        "bytes": 16104,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S4.body",
+        "role": "primary_source_body",
+        "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a"
+      },
+      "metadata": {
+        "bytes": 769,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S4.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "7355bcea594f2ab25a8c735cde640b6a0f31e3dc7719d5491d78b63e653d03e9"
+      },
+      "source_id": "S4"
+    },
+    {
+      "body": {
+        "bytes": 9040,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S6.body",
+        "role": "primary_source_body",
+        "sha256": "e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f"
+      },
+      "metadata": {
+        "bytes": 759,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S6.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "3aa7ab53df746379b009912e31207172b6cc86ebf88ca5e2f526f012cc8b4e88"
+      },
+      "source_id": "S6"
+    },
+    {
+      "body": {
+        "bytes": 10585,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S9.body",
+        "role": "primary_source_body",
+        "sha256": "453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489"
+      },
+      "metadata": {
+        "bytes": 753,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S9.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "47d86fbc62d07dadb4abf6b22930705200987d08c2e369f40a56700109a5c8b2"
+      },
+      "source_id": "S9"
+    },
+    {
+      "body": {
+        "bytes": 15986,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S10.body",
+        "role": "primary_source_body",
+        "sha256": "a8070fb9adc318735a76fabec97ce756542dffb69ecd98c8b9e877d5a15eadc3"
+      },
+      "metadata": {
+        "bytes": 731,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S10.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "c486724e2bfe48511bfbe1730fb518db0440cba547933f9243cfa8ea9970521b"
+      },
+      "source_id": "S10"
+    },
+    {
+      "body": {
+        "bytes": 3390,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S11.body",
+        "role": "primary_source_body",
+        "sha256": "31d9efa2ad145366ac537e1e9036e59932b2d8600ae20ab5a18ec0cc51cd5825"
+      },
+      "metadata": {
+        "bytes": 750,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S11.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "684d68f11158aa6fe7e2d403458e728b81b335d52e5c1f5ed3ae59b6aa7f14a6"
+      },
+      "source_id": "S11"
+    },
+    {
+      "body": {
+        "bytes": 7498,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S14.body",
+        "role": "primary_source_body",
+        "sha256": "2eee9aa7da7e9851c7dc7b36273a8cee5a2d3b6dc4d3c5699407d9bb1121621e"
+      },
+      "metadata": {
+        "bytes": 745,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S14.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "e1c199b55d44994448a291034043b7886c9af1fe5d9f2579dfbac370a1797f90"
+      },
+      "source_id": "S14"
+    },
+    {
+      "body": {
+        "bytes": 34641,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S17.body",
+        "role": "primary_source_body",
+        "sha256": "17de64ccc1b03003dcd031abb0372c6c946ae9bbdc802ae3af7ede4437507e59"
+      },
+      "metadata": {
+        "bytes": 745,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/S17.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "9664e8ab45ac9799b14cb323054ab1f7082776fdd3982c77769af875a2f5f19b"
+      },
+      "source_id": "S17"
+    },
+    {
+      "body": {
+        "bytes": 34887,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S23-4d7b940d89e94ca4981682ee15785391.body",
+        "role": "primary_source_body",
+        "sha256": "1a15a3d04fba818a7393fce7094c6149c8f45ab00fb9419a6e96679672c01bf7"
+      },
+      "metadata": {
+        "bytes": 1025,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S23-4d7b940d89e94ca4981682ee15785391.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "bdf5c834b12d79adea0e9c83e30e3f9e39c723000c32616c1f9e9ad4e40baf2a"
+      },
+      "source_id": "S23"
+    },
+    {
+      "body": {
+        "bytes": 12984,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S24-8cae8cac00d341a1867e5b2a08c8287c.body",
+        "role": "primary_source_body",
+        "sha256": "d95878b55b858f972cfe98dcd19256d5a4575e2e491ebb2461bb9c8ecafbdf17"
+      },
+      "metadata": {
+        "bytes": 1162,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S24-8cae8cac00d341a1867e5b2a08c8287c.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "f35dc5ea78ff04e05267cd1e5763433ef542749d8ad67bb55c5648e8c3e917e3"
+      },
+      "source_id": "S24"
+    },
+    {
+      "body": {
+        "bytes": 868,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S25-dcc05ac22cef4d32ba05a591f2b9dc30.body",
+        "role": "primary_source_body",
+        "sha256": "fc8cbe4752f2668e6273c687abde998867e8d9de32b1258cbae261000f4231b3"
+      },
+      "metadata": {
+        "bytes": 1317,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/S25-dcc05ac22cef4d32ba05a591f2b9dc30.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "19777b0bfc9cc7f967c72807361d11abdbe810cb585847decc67f45188690fa2"
+      },
+      "source_id": "S25"
+    },
+    {
+      "body": {
+        "bytes": 4037,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S12.body",
+        "role": "primary_source_body",
+        "sha256": "695c4faccba61e5a1b2ea492312c2215c729894485362988450a9343629b4f94"
+      },
+      "metadata": {
+        "bytes": 703,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S12.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "e0e669684e8e8233cad9023a6ea6f9faaf01fca10abea3682bd0296e4dd218de"
+      },
+      "source_id": "S12"
+    },
+    {
+      "body": {
+        "bytes": 18423,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S13.body",
+        "role": "primary_source_body",
+        "sha256": "837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d"
+      },
+      "metadata": {
+        "bytes": 703,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S13.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "1701ce0e718ce2c7171d520171edaffc16f5c2aa5ae0e4f6544dcebf6de9af13"
+      },
+      "source_id": "S13"
+    },
+    {
+      "body": {
+        "bytes": 16847,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S5.body",
+        "role": "primary_source_body",
+        "sha256": "d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca"
+      },
+      "metadata": {
+        "bytes": 713,
+        "mode": "0o444",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/S5.metadata.json",
+        "role": "capture_metadata",
+        "sha256": "4d7da2de576186a7d86fcf5dc781001bc745741b70d382ec40762fed6a57452c"
+      },
+      "source_id": "S5"
+    }
+  ],
+  "protocol_version": "ER9-independent-output-v1",
+  "schema": "er9.independent-output-assessment.phase1.v1",
+  "science_recipients": [
+    "/root",
+    "/root/publisher"
+  ],
+  "scope": "Current D-V10-B-BUNDLE-R001 diagnostic artifacts only; supplied seed/source baseline is preservation input, never a prior-output substitute. Full B pipeline and autonomous discovery UNASSESSED.",
+  "source_allowlist_pins": [
+    {
+      "bytes": 11777,
+      "mode": "0o444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-SOURCE-AND-BASELINE-001/MANIFEST.json",
+      "role": "source_allowlist",
+      "sha256": "a44f0ada08c4f5ceb02c68b4e384ae1ecc4c4071becf1ba0889f8dc927653ac2"
+    },
+    {
+      "bytes": 3490,
+      "mode": "0o444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-CURRENT-CAPTURES-001/MANIFEST.json",
+      "role": "source_allowlist",
+      "sha256": "07053e10e5b97853a9fe99e4e974c021713f5631f1799728a7a9718270afb4a5"
+    },
+    {
+      "bytes": 2279,
+      "mode": "0o444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD15-REQUESTED-EXTRA-ADMITTED-SOURCES-001/MANIFEST.json",
+      "role": "source_allowlist",
+      "sha256": "1973e98e67bef6dd30a7f7e4d436b130cfeec51bba9b5d58f6edd66b04e78089"
+    }
+  ],
+  "source_elapsed_seconds": 496.072850714,
+  "source_lookup_absences": [
+    "S15 raw UUID unlocated",
+    "S15 rendered UUID unlocated",
+    "S20 UUID unlocated"
+  ],
+  "targeted_checks": [
+    {
+      "A": "UNASSESSED_SOURCE",
+      "B": "PARTIAL_SUPPORTED_PRESERVATION_AND_QUALIFICATION",
+      "check_id": "D-V10-B-P1",
+      "note": "No forced mismatch or source-grounded reason to reject all preserved mechanisms found. No complete final or full same-release compatibility PASS."
+    },
+    {
+      "A": "INCOMPLETE_DELIVERY; SOURCE_UNASSESSED",
+      "B": "INCOMPLETE_DELIVERY; USEFUL_CONDITIONAL_PARTIAL",
+      "check_id": "D-V10-B-P2",
+      "note": "B retains meaningful conditions/uncertainty and useful required content; neither arm delivers final roles."
+    },
+    {
+      "A": "UNASSESSED_MECHANISM_UPTAKE",
+      "B": "PARTIAL_VISIBLE_BINDING_IN_AUTHORED_TEXT; ACTUAL_NATIVE_MECHANISM_AND_MATCHED_CAUSAL_EFFECT_UNASSESSED",
+      "check_id": "D-V10-B-P3",
+      "note": "Source captures/pins are acquisition evidence, not model comprehension. No treatment winner, repair-effect comparison or matched-budget causal credit."
+    }
+  ],
+  "unassessed_claims_and_dependencies": [
+    {
+      "claim_id": "B-U01",
+      "proposal_lines": [
+        10,
+        27,
+        35
+      ],
+      "reason": "S20 captured docs version selector not located in exact admitted index or current capture store. Its catalog pin and partial-capture limit are retained; current-docs 1.5 applicability is not independently established here."
+    },
+    {
+      "claim_id": "B-U02",
+      "proposal_lines": [
+        28
+      ],
+      "reason": "S15 raw and rendered Python lifecycle/policy capture UUIDs unlocated. S16 is an unreviewed third-party lifecycle snapshot. Exact EOL assertions remain UNASSESSED, rather than a source-grounded error."
+    },
+    {
+      "claim_id": "B-U03",
+      "proposal_lines": [
+        19,
+        151
+      ],
+      "reason": "Current candidate claims no executions. Supplied prior witness summaries/code hashes are not full original code/input/stdout receipts and are not current scientific execution evidence. No prior execution is credited or independently rerun."
+    },
+    {
+      "claim_id": "B-U04",
+      "proposal_lines": [
+        29,
+        114,
+        118,
+        124,
+        163
+      ],
+      "reason": "Actual notebook-stack compatibility, production sandbox, 5 GB bounds, platform save/locking and complete same-release API behavior remain unverified; candidate qualifies them honestly. No full dependency-set PASS."
+    },
+    {
+      "claim_id": "B-U05",
+      "reason": "Auxiliary scanner map is byte-pinned and its guard region was inspected, but underlying referenced public body provenance was not independently courier-verified. It is authored partial/locator evidence, not an executed witness or substitute final."
+    }
+  ],
+  "verified_new_consequential_semantic_errors": [],
+  "whole_deadline_monotonic_ns": 97308120590284
+}

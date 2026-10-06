@@ -1,0 +1,69 @@
+{
+  "schema": "er9.independent-targeted-assessment.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "assigned_evaluator_selector": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none"
+  },
+  "evaluator_physical_provider_runtime": "UNKNOWN",
+  "source_judgment_immutable": true,
+  "report_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1.json",
+      "sha256": "817bf1264b43e1494e16e0204147380ec0ccfea111b6a2a73c571aaa9b859d6f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1.md",
+      "sha256": "19e7905b09827ad3b1be15662659cf6f747a538b6c0b39ffc3bb64fe61c28bdd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase1-lock.json",
+      "sha256": "5852dfaa26d5606e4f4f4fecc727b950e6ce586d9396f2f275c747526da4a57c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source-freeze.json",
+      "sha256": "630c3446a57032d81402798bf903be025000468bafc54534227655562615e588"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2.json",
+      "sha256": "bc23a864e7a10a6e412cbf53f9faf70c07ec7146952cf94ac128b41a4b86aa84"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2.md",
+      "sha256": "457a21c83ee47c8ba082e91e5fabfa02eec0459e6e86ab992ab42bd16ceb74a4"
+    }
+  ],
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_B_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "scientific_conclusion": {
+    "A_required_delivery": "INCOMPLETE",
+    "B_required_delivery": "INCOMPLETE",
+    "A_missing_final_source_science": "UNASSESSED",
+    "B_missing_final_source_science": "UNASSESSED",
+    "full_final_or_pipeline_quality": "UNASSESSED",
+    "partial_credit": "Source locators preserved; internal reconstruction verified only. No independent primary capture/pin/authenticity or authored correction/witness interpretation established.",
+    "quality_difference": "UNASSESSED",
+    "winner": "NOT_ESTABLISHED",
+    "promoted_final": "NONE",
+    "matched_causal_credit": "NONE"
+  },
+  "operational_conclusion": {
+    "A_native_outcome": "HOLD_PAUSED_AT_ORIGINAL_STOP",
+    "B_native_outcome": "HOLD_PAUSED_AT_ORIGINAL_STOP",
+    "all_owned_scopes_quiet": true,
+    "current_executions_A": 3,
+    "current_executions_B": 6,
+    "candidate_physical_provider_runtime": "UNKNOWN",
+    "opaque_nativeGoalIDs": "UNKNOWN",
+    "native_response_counts_HTTP_attempts": "UNKNOWN",
+    "money": "UNKNOWN",
+    "full_receipt_details": "phase2.json"
+  },
+  "clock_closure": "See separately written neutral clock-closure.json after report handoffs. No clock reset or ACK wait."
+}

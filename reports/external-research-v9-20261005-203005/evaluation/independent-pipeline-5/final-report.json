@@ -1,0 +1,1268 @@
+{
+  "clocks": {
+    "before_original_whole_stop": true,
+    "before_phase2_literal_stop": true,
+    "clock_reset": false,
+    "evaluation_id": "independent-pipeline-5",
+    "handoffs_remaining": "Exact positive report selectors to root/publisher and neutral closure to courier/accountant; no ACK wait.",
+    "original_whole_deadline_monotonic_ns": 97186479653181,
+    "original_whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+    "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+    "phase2_anchor": "source_freeze; key wait, reporting and handoffs included",
+    "phase2_clock_anchor": "source_freeze; includes key wait, review, report and handoff; no reset",
+    "phase2_deadline_monotonic_ns": 96600414052659,
+    "phase2_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+    "phase2_elapsed_seconds_at_report_completion": 327.17535741,
+    "phase2_literal_inclusive_seconds": 600,
+    "report_complete_monotonic_ns": 96327589410069,
+    "report_complete_utc": "2026-10-06T05:51:48.732421+00:00",
+    "schema": "er9.independent-evaluator-source-start.v1",
+    "source_budget_seconds": 1200,
+    "source_checking_interval_seconds": 613.934399478,
+    "source_deadline_monotonic_ns": 96586479653181,
+    "source_deadline_utc": "2026-10-06T05:56:07.622668+00:00",
+    "source_freeze_monotonic_ns": 96000414052659,
+    "source_freeze_utc": "2026-10-06T05:46:21.557065+00:00",
+    "source_start_monotonic_ns": 95386479653181,
+    "source_start_utc": "2026-10-06T05:36:07.622668+00:00",
+    "whole_budget_seconds": 1800,
+    "whole_deadline_monotonic_ns": 97186479653181,
+    "whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+    "whole_elapsed_seconds_at_report_completion": 941.109756888
+  },
+  "evaluation_id": "independent-pipeline-5",
+  "final_readout": "Treatment current pipeline operationally completes, but its independently assessed available final is not scientific PASS (localized W2 determinant error). Control final is absent after its bounded terminal failure; scientific quality UNASSESSED. No matched causal scientific winner or full-pipeline source quality is established.",
+  "neutral_destinations": [
+    "/root/frozen_exports",
+    "/root/cost_accounting"
+  ],
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "phase1_all_pins_lock_reference": {
+    "bytes": 19464,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-all-pins-lock.json",
+    "sha256": "9598f6241161a811fe909b653bd8ed69bb1d004020613c917ab270a29467a1da"
+  },
+  "phase1_freeze_reference": {
+    "bytes": 1599,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-freeze-receipt.json",
+    "sha256": "82a3ce47526171122396a148d826da94604d98236e0ba4cc2274ed82aafd5d37"
+  },
+  "phase1_reference": {
+    "bytes": 35458,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-judgment.json",
+    "sha256": "e65af2d48a18b8c861c055f95427f0e0bd7f12e6e406770c5d0de127662fde8e"
+  },
+  "phase1_report_reference": {
+    "bytes": 5952,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-report.md",
+    "sha256": "5ed5309b378742bbd6b8a2e7bfac894fdd69b6d09e1df96de1a17dd7e26f0497"
+  },
+  "phase1_scientific_judgment": {
+    "actions_not_taken": [
+      "No retest or evaluator execution",
+      "No native Goal",
+      "No new candidate or source prompt",
+      "No candidate repair",
+      "No sibling or historical report search",
+      "No Git/canonical edit"
+    ],
+    "blinding": {
+      "exposure_disclosure": {
+        "bytes": 982,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/exposure-disclosure.json",
+        "sha256": "1f2abf92feaac872bb8593b69212a1e19cb91403c0bce3748a09fcdf84185b0c"
+      },
+      "perfect_blinding": false,
+      "premature_runtime_metadata_exposure": {
+        "bytes": 1281,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/premature-metadata-exposure.json",
+        "sha256": "e9ffb4dfb7a9c36dcd17c6c562b2f9c8716f4bbf1bbd27c35ac7465a6267a88b"
+      },
+      "qualification": "Operational final availability/failure milestone was disclosed at reservation. Actual task/final/lead labels expose assignment. Requested role manifest additionally exposed nested current predecessor actor/status/job/session fields before P1; courier acknowledged screening failure. No oldI05 source/grades, runtime key or cost used. No scientific conclusion relies on native status."
+    },
+    "catalog_consistency_notes": [
+      {
+        "note": "W2 code_lines reorders the world/back assertions relative to center/corner definitions compared with the exact executed 995-byte script. Its quoted code_sha256 matches the actual script, not reconstruction from that line array. Exact script was supplied and pinned; no forged execution inferred.",
+        "severity": "MINOR"
+      },
+      {
+        "note": "Adopted lead L1 still describes the research arithmetic witness as testing one center-point correspondence only. Current W2 additionally checks one half-index corner numerically. Viewer/pyramid edge placement remains unexecuted, so the lead risk stays valid; its arithmetic-history description is stale.",
+        "severity": "MINOR"
+      }
+    ],
+    "clocks": {
+      "clock_reset": false,
+      "evaluation_id": "independent-pipeline-5",
+      "original_whole_deadline_monotonic_ns": 97186479653181,
+      "original_whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+      "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+      "phase2_anchor": "source_freeze; key wait, reporting and handoffs included",
+      "phase2_clock_anchor": "source_freeze; includes key wait, review, report and handoff; no reset",
+      "phase2_deadline_monotonic_ns": 96600414052659,
+      "phase2_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+      "phase2_literal_inclusive_seconds": 600,
+      "schema": "er9.independent-evaluator-source-start.v1",
+      "source_budget_seconds": 1200,
+      "source_checking_interval_seconds": 613.934399478,
+      "source_deadline_monotonic_ns": 96586479653181,
+      "source_deadline_utc": "2026-10-06T05:56:07.622668+00:00",
+      "source_freeze_monotonic_ns": 96000414052659,
+      "source_freeze_utc": "2026-10-06T05:46:21.557065+00:00",
+      "source_start_monotonic_ns": 95386479653181,
+      "source_start_utc": "2026-10-06T05:36:07.622668+00:00",
+      "whole_budget_seconds": 1800,
+      "whole_deadline_monotonic_ns": 97186479653181,
+      "whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00"
+    },
+    "common_dimensions": [
+      {
+        "assessment": "SUBSTANTIAL_COMPLETE_CONTENT_COVERAGE",
+        "basis": "A01-A12 addressed; current numerical defect does not erase valid workflow.",
+        "id": "Q1"
+      },
+      {
+        "assessment": "SUPPORTED_SOURCE_INTERPRETATION_WITH_LOCALIZED_CURRENT_NUMERIC_ERROR",
+        "basis": "All 11 source families checked at actual pins/conditions; P5-D01 retained.",
+        "id": "Q2"
+      },
+      {
+        "assessment": "SUPPORTED_BOUNDED_INFERENCE_AND_CHOICES",
+        "basis": "Component promises confined to documented mechanisms; integration and support are explicit product choices/test gates.",
+        "id": "Q3"
+      },
+      {
+        "assessment": "SUPPORTED_USEFUL_DISCOVERY_AND_ALTERNATIVES",
+        "basis": "Independent mechanisms, real failure/fix/test chain and bounded optional leads verified.",
+        "id": "Q4"
+      },
+      {
+        "assessment": "PARTIAL_WITH_VERIFIED_DEFECT",
+        "basis": "W2 actual execution proven, but determinant expectation/output is wrong; no evaluator rerun or full-app credit.",
+        "id": "Q5"
+      },
+      {
+        "assessment": "PARTIAL_WITH_NEW_LOCALIZED_ERROR",
+        "basis": "Supported source meaning preserved; W2 introduced P5-D01.",
+        "id": "Q6"
+      },
+      {
+        "assessment": "HONEST_SCOPE_AND_UNEXECUTED_DEPENDENCIES",
+        "basis": "No implemented/qualified app, compatible lock, target benchmark or #6320 repair asserted.",
+        "id": "Q7"
+      },
+      {
+        "assessment": "REPRODUCIBLE_PINNED_DELIVERY_WITH_DOCUMENTATION_LIMITS",
+        "basis": "A final4 and sources/witness bytes pinned; current W2 actual script located. Catalog code_lines is semantically similar but not byte-identical to the executed file. Economics/native execution history remain separate.",
+        "id": "Q8"
+      }
+    ],
+    "common_important_checks": [
+      {
+        "A": "SUPPORTED",
+        "B": "UNASSESSED_MISSING_DELIVERY",
+        "basis": "Verified separate reader/UI/persistence mechanisms and the complete public #6068/#6317 regression chain.",
+        "id": "A-P1",
+        "obligations": [
+          "A07",
+          "A08"
+        ]
+      },
+      {
+        "A": "SUPPORTED_AS_BOUNDED_PROPOSAL",
+        "B": "UNASSESSED_MISSING_DELIVERY",
+        "basis": "Explicit data/display/derived-operation contracts and qualified component pins; no app or resource result invented.",
+        "id": "A-P2",
+        "obligations": [
+          "A02",
+          "A03",
+          "A10"
+        ]
+      },
+      {
+        "A": "FAIL_LOCALIZED_WITNESS_RESULT",
+        "B": "UNASSESSED_MISSING_DELIVERY",
+        "basis": "P5-D01: W2 prints and catalogs an incorrect determinant despite correct actual code execution and other arithmetic values.",
+        "id": "A-P3",
+        "obligations": [
+          "A11"
+        ]
+      },
+      {
+        "A": "PARTIAL_NEW_LOCALIZED_ERROR",
+        "B": "UNASSESSED_MISSING_DELIVERY",
+        "basis": "Main supported source facts and conditions preserved; one newly introduced erroneous W2 numeric result and supporting-catalog consistency notes prevent unqualified semantic-preservation PASS.",
+        "id": "A-P4",
+        "obligations": [
+          "A12"
+        ]
+      },
+      {
+        "A": "COVERED_AS_PROPOSED_CONTRACT",
+        "B": "UNASSESSED_MISSING_DELIVERY",
+        "basis": "Workflow, recovery/portability, resource investigation and honest tests, styles/keyboard and optional alternatives addressed.",
+        "id": "A-P5",
+        "obligations": [
+          "A01",
+          "A04",
+          "A05",
+          "A06",
+          "A09"
+        ]
+      }
+    ],
+    "current_final_acquisition_check": {
+      "metadata_manifest": {
+        "bytes": 4314,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/final-acquisition-MANIFEST.json",
+        "sha256": "28a48b086bf8bad1b54c316a3b294582e123454a26d420212894968fad9085ad"
+      },
+      "scientific_effect": "Historical same-arm complete public source bytes remain independently inspected, so current fetch failure does not fabricate or invalidate the established issue/fix/test chain.",
+      "supported": "Current final-stage S1/S3 complete 200-response hashes equal frozen public bodies, and S7 exact capture b9851fc3dcb64708a3257e69c64fa7c7 has the full diff hash. Current #6068 issue and v0.4.19 release endpoints show HTTP403.",
+      "unassessed": "The PR-metadata 403 facet and response cause/body were not independently supplied here. Capturing identical bytes does not prove candidate reading/comprehension; final semantic conclusions were evaluated against actual source bytes independently."
+    },
+    "defects": [
+      {
+        "actual_code_defect": "The final print computes A[0][1]*A[1][0], only b*c, omitting the subtraction in a*d-b*c. No assertion independently checks the determinant.",
+        "actual_receipt": "Trusted current code/input/stdout/stderr/exit pins match the claimed execution exec-lyo8f_8s; exit 0 proves this code completed, not that its determinant label is true.",
+        "affected_dimensions": [
+          "Q2",
+          "Q5",
+          "Q6",
+          "Q8"
+        ],
+        "affected_obligations": [
+          "A11",
+          "A12"
+        ],
+        "claim": "W2 expected_behavior and stdout identify determinant as -0.1 for A=((0,-0.2),(0.5,0)).",
+        "consequence": "A false geometric numeric result is presented as an expected executed-witness result; prevents unqualified correctness/whole-case PASS.",
+        "evidence": [
+          {
+            "bytes": 4658,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/A-witnesses.json",
+            "sha256": "886e79d93d13431c0ae7edf83226c4f4b80b07f36267e2e13bdf1e5c98b4913a"
+          },
+          {
+            "bytes": 995,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/W2/0-code.py",
+            "sha256": "be0836daf56ec50411d07cd4b489ef1816b6eaff8d6a80012f54181d10bd0c59"
+          },
+          {
+            "bytes": 206,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/W2/0-stdout.bin",
+            "sha256": "45a9b469e04d2be7049b7cbf9154eb5847765458d79b070ad9728cb623c3ce1b"
+          },
+          {
+            "bytes": 1334,
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/W2/0-execution-facts.json",
+            "sha256": "41e3e4925c97e2e787758ad265a306d7b78c554e0ddfe4f532b4a80c49e6d27c"
+          }
+        ],
+        "id": "P5-D01",
+        "independent_expectation": "For the displayed 2x2 linear map, det(A)=a*d-b*c=0*0-(-0.2*0.5)=+0.1. This manual algebra uses the determinant definition independently of candidate expected/output values.",
+        "limits": "The mapping (12,30)->(94,-14), inverse, center (100,-20) and array corner (100.1,-20.25) are correctly calculated. The matrix is nonsingular. This does not show that the proposed app transform or all geometry is wrong, and no orientation/full-app failure is inferred.",
+        "severity": "MODERATE_LOCALIZED_NUMERICAL_WITNESS_CORRECTNESS"
+      }
+    ],
+    "evaluation_id": "independent-pipeline-5",
+    "framework": {
+      "common_dimensions": 8,
+      "common_important_checks": 5,
+      "full_A_brief_obligations": 12,
+      "scoring": "No aggregate/weighted score or invented target rubric.",
+      "targeted_checks": "NOT_APPLICABLE_INTEGRATED_FULL_BRIEF"
+    },
+    "integrity": {
+      "assessment": "All admitted copied bytes matched courier SHA-256 pins and are read-only. Neutral proof declares owned quiet for both current units and matches actual unit/cgroup/PID/exec record hashes; original raw lifecycle/history is held. Positive quiescence is artifact-freeze evidence, not scientific source quality.",
+      "packet": {
+        "bytes": 11136,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/dispatch.json",
+        "sha256": "0aff5749da12196e078d4dcd51592277cef6480f4304be0feb22aaf1476b7c29"
+      },
+      "source_only_integrity_proof": {
+        "bytes": 1542,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/integrity_proof.json",
+        "sha256": "cf5561cc619bd99b614b26fa31276ee19089c2f79c208d0af30777cc1f56b7b0"
+      }
+    },
+    "negative_controls": {
+      "blanket_rejection": "A valid source discoveries and correct W2 values preserved.",
+      "empty_delivery": "B not credited or assigned a fabricated scientific FAIL.",
+      "isolated_component": "No full application behavior inferred.",
+      "lead_appendix": "Required meaning is in standalone proposal; optional leads assessed separately.",
+      "link_count": "Source/fix/test content inspected, not counted.",
+      "native_complete": "No pipeline/source PASS or matched causal winner inferred."
+    },
+    "obligations_A": [
+      {
+        "basis": "All import/inspect/view/annotate/save/close/reopen/export steps, read-only originals, support exclusions and failure choices are explicit.",
+        "id": "A01",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_PROPOSED_CONTRACT"
+      },
+      {
+        "basis": "Named axes, order, units, source/world matrices, sample-center convention and half-index corner, orientation, per-level transforms and annotation selectors are explicit. W2 determinant defect is localized and does not invalidate its correct point/corner values.",
+        "id": "A02",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_PROPOSED_CONTRACT"
+      },
+      {
+        "basis": "ViewState remains display-only; crop/resample creates derived identity and recorded operation; CSV/sidecar, rendered overlay and crop losses are distinct.",
+        "id": "A03",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_PROPOSED_CONTRACT"
+      },
+      {
+        "basis": "Selected access/cache/cancel/progress and strip/codec cost limits investigated; 512 MiB is a proposed setting and 3 GB/8-core/16 GB performance is honestly unmeasured.",
+        "id": "A04",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_WITH_UNEXECUTED_RESOURCE_GATE"
+      },
+      {
+        "basis": "File and directory-store identities, pending hash, relocation/rebind choices, copied/reference bundles, staging-before-record commit, backups and recovery qualification are explicit.",
+        "id": "A05",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_PROPOSED_CONTRACT"
+      },
+      {
+        "basis": "Styles, explicit annotation scopes, transactional command history, bounded mask changes, undo/redo after reopen, keyboard gates and actionable feedback addressed; no executed UI claim.",
+        "id": "A06",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_PROPOSED_CONTRACT"
+      },
+      {
+        "basis": "tifffile/OME file semantics and napari geometry editing are independently useful implementation mechanisms; SQLite adds separate persistence precedent. Their responsibilities and applicability limits are distinguished.",
+        "id": "A07",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED"
+      },
+      {
+        "basis": "Independently verified #6068 report -> #6317 association and merged diff -> named regression test -> v0.4.19 release-note applicability, with narrow causal limits.",
+        "id": "A08",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED"
+      },
+      {
+        "basis": "NGFF mask interchange opportunity, Bio-Formats reader alternative and other deferred leads remain useful and optional; no adoption treated as obligatory.",
+        "id": "A09",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED"
+      },
+      {
+        "basis": "Reader/project/viewer boundaries and a Qt/VisPy fallback are coherent; package lock, codec matrix, filesystem and integrated gates remain explicit critical implementation dependencies rather than validated capabilities.",
+        "id": "A10",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "SUPPORTED_AS_BOUNDED_PROTOTYPE"
+      },
+      {
+        "basis": "Actual current W2 code/input/streams/exit provenance verified. Point, inverse and center/corner expectations are correct and narrow scope honest, but the claimed determinant is mathematically wrong (P5-D01). Proposed app checks are clearly UNEXECUTED.",
+        "id": "A11",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "PARTIAL_WITH_VERIFIED_DEFECT"
+      },
+      {
+        "basis": "Source conditions, issue limits, optional leads and core workflow are preserved against exact current same-arm research/critique. Final expands coordinate/directory/mask/recovery contracts. New W2 determinant assertion is an error. Delivery-role manifest omits critique as a adoptable final role; this cannot establish that critique was not supplied, because current admitted predecessor pins include it.",
+        "id": "A12",
+        "review_coverage": "COMPLETE",
+        "satisfaction": "PARTIAL_WITH_NEW_LOCALIZED_ERROR"
+      }
+    ],
+    "obligations_B": [
+      {
+        "id": "A01",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A02",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A03",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A04",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A05",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A06",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A07",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A08",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A09",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A10",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A11",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      },
+      {
+        "id": "A12",
+        "review_coverage": "UNASSESSED",
+        "satisfaction": "UNASSESSED_MISSING_DELIVERY"
+      }
+    ],
+    "outcomes": {
+      "A": {
+        "case_outcome": "FAIL",
+        "delivery": "CURRENT_DESIGNATED_FINAL4_PRESENT",
+        "full_pipeline_quality": "UNASSESSED",
+        "reason": "P5-D01 is a verified false numerical result in the only current executed consequential witness; preserve all correctly supported design/source content. This was not an early decisive screen and remaining full-brief scope was reviewed.",
+        "review_coverage": "COMPLETE_FOR_DECLARED_FULL_BRIEF_AND_CURRENT_DESIGN_CLAIMS",
+        "source_quality": "SUBSTANTIAL_VERIFIED_SUPPORT_WITH_LOCALIZED_NUMERICAL_WITNESS_DEFECT"
+      },
+      "B": {
+        "case_outcome": "UNASSESSED",
+        "delivery": "INCOMPLETE_DESIGNATED_FINAL_AND_ALL_THREE_CATALOGS_ABSENT",
+        "full_pipeline_quality": "UNASSESSED",
+        "reason": "No current designated final or candidate source/witness/lead catalogs exist in supplied current pair. Delivery absence is explicit, not a fabricated low scientific score.",
+        "scientific_quality": "UNASSESSED"
+      },
+      "matched_causal_method_credit": "NOT_ESTABLISHED",
+      "native_completion_scientific_credit": "NONE_INFERRED",
+      "pair_outcome": "INCOMPLETE_COMPARISON",
+      "scientific_winner": "NOT_ESTABLISHED"
+    },
+    "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+    "phase": "PHASE1_IMMUTABLE_SOURCE_OUTPUT_JUDGMENT",
+    "phase2_rule": "P1 science and all source pins immutable before key; any subsequent runtime/identity/cost review is additive only and cannot rewrite this judgment.",
+    "preservation": {
+      "critique_input_boundary": "The four-role delivery-reference manifest contains research final-role references and no adoptable critique role; exact current stage admitted predecessor evidence nevertheless includes critique-review.md. Absence from that role registry is not proof of absence from stage inputs. No native reading/comprehension conclusion inferred.",
+      "improvements": "Final gives an explicit half-index array corner and reviewed affine, deterministic store inventory identity, bounded mask patches/versions and staging-before-database-reference ordering. These are proposed contracts, not demonstrated app behavior.",
+      "inputs": "Only courier-selected exact current fresh same-arm research proposal/catalogs, current critique review and delivery-role manifest were admitted. Current critique is candidate-authored material, not an evaluator answer key; its conclusions were checked against primary captures rather than inherited as grades.",
+      "remaining_implementation_gates": "Exact package/decoder matrix, robust canonical store-manifest serialization, mask layout/cache/large-edit qualification, cross-file durability, writer metadata policy and integrated accessibility remain implementation/validation work. A full app build is outside the task.",
+      "supported_preserved": [
+        "read-only originals and display-vs-data separation",
+        "named axes/units/origins and explicit correction/refusal",
+        "single-file OME-TIFF/local NGFF boundary and decoder/package caveats",
+        "narrow #6068/#6317 regression chain and separate unresolved #6320 lead",
+        "rollback-journal/local-writer and filesystem/flush caveats",
+        "closed bundle reference/copy relocation choices",
+        "styles, keyboard, selectors, undo/redo and export meaning",
+        "NGFF mask interchange, Bio-Formats and fsspec alternatives kept optional"
+      ]
+    },
+    "protocol_version": "ER9-independent-output-v1",
+    "schema": "er9.independent-output-judgment.v1",
+    "scope": "Actual current integrated full development-A final pair; A designated final4 available, B final4 absent. No old I05 substitution.",
+    "selector": {
+      "assigned_model": "gpt-6.1-sol",
+      "assigned_reasoning_effort": "xhigh",
+      "fork_turns": "none",
+      "physical_provider": "UNKNOWN"
+    },
+    "source_pins": {
+      "S1": {
+        "body": {
+          "bytes": 163120,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S1.body",
+          "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269"
+        },
+        "metadata": {
+          "bytes": 1063,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S1.metadata.json",
+          "sha256": "1441b2c34193caeccdeb59083c131e8203a7347b3e2ee1c942b745468bb5fd51"
+        },
+        "pin": "0.4 edition as published at the edition URL; capture SHA-256 ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269 (page identifies itself as the 0.4 release and records a 0.4.1 transitional metadata revision)",
+        "url": "https://ngff.openmicroscopy.org/0.4/"
+      },
+      "S10": {
+        "body": {
+          "bytes": 155032,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S10.body",
+          "sha256": "89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa"
+        },
+        "metadata": {
+          "bytes": 1156,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S10.metadata.json",
+          "sha256": "c63cdfb30f01297311a3995b6cb804729b40a12fd8801afa93e14ea52f7a6eee"
+        },
+        "pin": "Bio-Formats documentation release v7.3.1; captured response SHA-256 89b490995bacd225a544166b0275233d6584c27e7f29eb36ef159597968c12fa",
+        "url": "https://bio-formats.readthedocs.io/en/v7.3.1/supported-formats.html"
+      },
+      "S11": {
+        "body": {
+          "bytes": 6003,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S11.body",
+          "sha256": "b61597288227cbc106f47fe737b6ad8dbc02e534a745a01a8a2977c97d31fcef"
+        },
+        "metadata": {
+          "bytes": 1152,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S11.metadata.json",
+          "sha256": "b8996741a33cab5ae666293e3bed9d7c033aa1d54bd96242f09da7b8eeaf582f"
+        },
+        "pin": "Issue #6320 record captured 2026-10-06; napari environment in report is 0.5.0a2.dev443+gc9da57b1; record says issue remains open",
+        "url": "https://api.github.com/repos/napari/napari/issues/6320"
+      },
+      "S2": {
+        "body": {
+          "bytes": 48745,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S2.body",
+          "sha256": "fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584"
+        },
+        "metadata": {
+          "bytes": 1144,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S2.metadata.json",
+          "sha256": "e486b4152974efeb54597998bc60b4fe2b1b0f4fd8fec9eefbc61f5c49368217"
+        },
+        "pin": "documentation version 6.2.2; captured body SHA-256 fcc4fb9dbcee7ad66a73a10735eb2aec335805c448a239f375ade9d0702e2584",
+        "url": "https://docs.openmicroscopy.org/ome-model/6.2.2/ome-tiff/specification.html"
+      },
+      "S3": {
+        "body": {
+          "bytes": 31119,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S3.body",
+          "sha256": "23a5e524f02385a291f1d9b65a3e432f8a0f504df186d4adb6c2336e225721c6"
+        },
+        "metadata": {
+          "bytes": 1175,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S3.metadata.json",
+          "sha256": "e922e6b3948f21c04bb5fd1d98682200f1cb715d90f18be66bc254f645c2ee0f"
+        },
+        "pin": "Git tag v2024.9.20; README declares version 2024.9.20. Requirements list Zarr 2.18.3, imagecodecs 2024.6.1, and NumPy 2.1.1 among the tested requirements.",
+        "url": "https://raw.githubusercontent.com/cgohlke/tifffile/v2024.9.20/README.rst"
+      },
+      "S4": {
+        "body": {
+          "bytes": 122948,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S4.body",
+          "sha256": "a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1"
+        },
+        "metadata": {
+          "bytes": 1218,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S4.metadata.json",
+          "sha256": "48fd33f829fd01efe457d69292de4f7139e6b9de2f69be93e0e809a392fa2e02"
+        },
+        "pin": "Git tag v0.5.6; exact source path above; capture SHA-256 a2cbf1a542beff08d29e7118b62cc6df3f82c8e928a40ffb861d6ea9076faed1",
+        "url": "https://raw.githubusercontent.com/napari/napari/v0.5.6/napari/layers/shapes/shapes.py"
+      },
+      "S5": {
+        "body": {
+          "bytes": 14604,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S5.body",
+          "sha256": "9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7"
+        },
+        "metadata": {
+          "bytes": 1156,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S5.metadata.json",
+          "sha256": "0ddee683feb10e764068e1f69a835a665daa517e1625ec3123c09aa481c8c6b2"
+        },
+        "pin": "Issue #6068 record captured 2026-10-06; source record SHA-256 9e627ab4137fee647f024445b2a86545e16bd9b2b9813f8ab065f58faead00a7",
+        "url": "https://api.github.com/repos/napari/napari/issues/6068"
+      },
+      "S6": {
+        "body": {
+          "bytes": 19550,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S6.body",
+          "sha256": "25534f906246494898be8e9ff22adf3eb2f2d61fd5e29c77811951d2848a6aec"
+        },
+        "metadata": {
+          "bytes": 1151,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S6.metadata.json",
+          "sha256": "7c96f0528f1fe9021975008956bbc445a01a88fb2212efed2988c2626db3ca5a"
+        },
+        "pin": "Merged commit e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d; merged 2023-10-27; PR milestone 0.4.19",
+        "url": "https://api.github.com/repos/napari/napari/pulls/6317"
+      },
+      "S7": {
+        "body": {
+          "bytes": 9767,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S7.body",
+          "sha256": "c85ba6f299a485afc2351721494533d32f2aa705826c9cb694d590e11227a8b9"
+        },
+        "metadata": {
+          "bytes": 1215,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S7.metadata.json",
+          "sha256": "131e882a6d1cb2afc3ea517cb2d1fd8c6810a3b5ff53c0aeadb5e473782953e4"
+        },
+        "pin": "Diff for PR #6317, merged as e2baaa7b3ff8a0bd7d6e3c8db5ab39ff6746bb7d; exact diff SHA-256 c85ba6f299a485afc2351721494533d32f2aa705826c9cb694d590e11227a8b9",
+        "url": "https://github.com/napari/napari/pull/6317.diff"
+      },
+      "S8": {
+        "body": {
+          "bytes": 47808,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S8.body",
+          "sha256": "fc164f41cce2b1e630e03140acd4113458a6494d0664a0c1dee5cb38e61e93fd"
+        },
+        "metadata": {
+          "bytes": 1183,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S8.metadata.json",
+          "sha256": "6e6f0f2e88bfc88b9fe8bd905b91597085d1337fb7b85d8592253f71ec804061"
+        },
+        "pin": "Release tag v0.4.19; target commit bd47bf0ecbfc74f1efa82343dbdfcbefd3f0bded; published 2024-02-01",
+        "url": "https://api.github.com/repos/napari/napari/releases/tags/v0.4.19"
+      },
+      "S9": {
+        "body": {
+          "bytes": 77968,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S9.body",
+          "sha256": "5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1"
+        },
+        "metadata": {
+          "bytes": 1056,
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/inputs/captures/S9.metadata.json",
+          "sha256": "c68b0cae8495ac01dedc83c4bd1888ddecd69cfba1c4ceacb99be8a8a8ae41b4"
+        },
+        "pin": "Mutable official documentation page captured 2026-10-06; pinned evidence is response body SHA-256 5a5be7b660217c9408c8a81eaf2faa2d08832ed3790f895a0a713916ad856ea1; not a release-tagged SQLite library source",
+        "url": "https://www.sqlite.org/atomiccommit.html"
+      }
+    },
+    "source_results": [
+      {
+        "assessment": "SUPPORTED_WITH_STATED_LIMITS",
+        "consequence": "Supports named-axis and local NGFF boundary plus optional integer-mask exchange. Does not support arbitrary affine metadata, full project model or performance.",
+        "independently_inspected": "Zarr v2 image hierarchy; axes; sequential coordinateTransformations; multiscale scale then optional translation; omero display metadata; labels and image-label.",
+        "source_id": "S1"
+      },
+      {
+        "assessment": "SUPPORTED_WITH_STATED_LIMITS",
+        "consequence": "Page number alone is insufficient. Single-file initial boundary and explicit mapping fixtures are justified choices, not universal reader conformance.",
+        "independently_inspected": "DimensionOrder default rasterization; TiffData overrides including reverse temporal order; UUID/FileName multi-file mapping.",
+        "source_id": "S2"
+      },
+      {
+        "assessment": "SUPPORTED_WITH_STATED_LIMITS",
+        "consequence": "Valid reader/partial-access precedent. Tested requirement versions are not a compatible whole-app lock, 3 GB benchmark or safe-write guarantee.",
+        "independently_inspected": "v2024.9.20 requirements/notes; TIFF subset and multi-file pyramidal exclusion; selected Zarr region read; Dask chunks; r and r+ examples; fsspec reference export.",
+        "source_id": "S3"
+      },
+      {
+        "assessment": "SUPPORTED_WITH_STATED_LIMITS",
+        "consequence": "Supports a vector interaction spike. Shapes is not a Points/mask persistence model or proof of integrated coordinate/keyboard behavior.",
+        "independently_inspected": "v0.5.6 Shapes class data vertices, geometry types, editing modes, affine/axes/units/features/style parameters; Dask-only cache parameter.",
+        "source_id": "S4"
+      },
+      {
+        "assessment": "SUPPORTED_AS_PUBLIC_FAILURE_REPORT",
+        "consequence": "Reported coarsest-resolution 3D Labels sampling IndexError; no frequency or universal-version claim.",
+        "independently_inspected": "Issue #6068 body, traceback, reproduction and 0.4.18 environment.",
+        "source_id": "S5"
+      },
+      {
+        "assessment": "SUPPORTED_ASSOCIATION_AND_PIN",
+        "consequence": "Direct association to the issue is established; milestone alone would not prove release applicability.",
+        "independently_inspected": "PR body explicitly closes #6068; merged commit and date; 0.4.19 milestone.",
+        "source_id": "S6"
+      },
+      {
+        "assessment": "SUPPORTED_IMPLEMENTATION_AND_REGRESSION_CHAIN",
+        "consequence": "Real implementation and regression-value assertions establish the requested narrow issue/fix/test chain. No regression test was rerun by evaluator; no full app, affine, calibration or export qualification inferred.",
+        "independently_inspected": "Full 9767-byte diff, base layer 3D level selection, image level bounding box, Labels downsampled ray endpoints, and complete new test_3D_multiscale_labels_in_3D fixture/assertions.",
+        "source_id": "S7"
+      },
+      {
+        "assessment": "SUPPORTED_RELEASE_NOTE_APPLICABILITY",
+        "consequence": "Fix was listed in v0.4.19. Does not prove all installations or related paths correct.",
+        "independently_inspected": "v0.4.19 tag, target_commitish, published_at and PR #6317 Bug Fixes entry.",
+        "source_id": "S8"
+      },
+      {
+        "assessment": "SUPPORTED_WITH_STATED_ASSUMPTIONS",
+        "consequence": "Supports local transactional database choice. Does not make database plus sidecars/bundles atomic, and does not qualify SMB/NFS.",
+        "independently_inspected": "Atomic commit introduction and rollback scope; hardware assumptions; locking and incomplete-flush failure caveats.",
+        "source_id": "S9"
+      },
+      {
+        "assessment": "SUPPORTED_AS_BOUNDED_ALTERNATIVE_LEAD",
+        "consequence": "Bio-Formats is a plausible instrument-specific adapter alternative; the ratings/list do not qualify the lab files.",
+        "independently_inspected": "v7.3.1 page/version, format list, ratings legend and definitions.",
+        "source_id": "S10"
+      },
+      {
+        "assessment": "SUPPORTED_UNRESOLVED_RISK_LEAD",
+        "consequence": "No #6320 repair/test chain is established. Final correctly keeps it separate from #6068/#6317.",
+        "independently_inspected": "Issue #6320 open state and body: 2D/3D resolution-switch center/corner shift, separate get_value exception, example and development-version environment.",
+        "source_id": "S11"
+      }
+    ],
+    "usage_before_key": {
+      "actual_token_usage": "UNKNOWN",
+      "money": "UNKNOWN",
+      "opaque_native_goal_ids": "UNKNOWN",
+      "physical_provider": "UNKNOWN"
+    }
+  },
+  "phase2_runtime_review": {
+    "actions": "Only exact current postfreeze runtime/resource/lifecycle metadata read; no raw model IO, historical report, candidate source/repair or retest.",
+    "alias_identity": {
+      "A": "treatment current revision",
+      "B": "control current revision"
+    },
+    "clocks": {
+      "before_original_whole_stop": true,
+      "before_phase2_literal_stop": true,
+      "clock_reset": false,
+      "evaluation_id": "independent-pipeline-5",
+      "handoffs_remaining": "Exact positive report selectors to root/publisher and neutral closure to courier/accountant; no ACK wait.",
+      "original_whole_deadline_monotonic_ns": 97186479653181,
+      "original_whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+      "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+      "phase2_anchor": "source_freeze; key wait, reporting and handoffs included",
+      "phase2_clock_anchor": "source_freeze; includes key wait, review, report and handoff; no reset",
+      "phase2_deadline_monotonic_ns": 96600414052659,
+      "phase2_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+      "phase2_elapsed_seconds_at_report_completion": 327.17535741,
+      "phase2_literal_inclusive_seconds": 600,
+      "report_complete_monotonic_ns": 96327589410069,
+      "report_complete_utc": "2026-10-06T05:51:48.732421+00:00",
+      "schema": "er9.independent-evaluator-source-start.v1",
+      "source_budget_seconds": 1200,
+      "source_checking_interval_seconds": 613.934399478,
+      "source_deadline_monotonic_ns": 96586479653181,
+      "source_deadline_utc": "2026-10-06T05:56:07.622668+00:00",
+      "source_freeze_monotonic_ns": 96000414052659,
+      "source_freeze_utc": "2026-10-06T05:46:21.557065+00:00",
+      "source_start_monotonic_ns": 95386479653181,
+      "source_start_utc": "2026-10-06T05:36:07.622668+00:00",
+      "whole_budget_seconds": 1800,
+      "whole_deadline_monotonic_ns": 97186479653181,
+      "whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00",
+      "whole_elapsed_seconds_at_report_completion": 941.109756888
+    },
+    "current_pipeline_role_rows": [
+      {
+        "actual_elapsed_seconds": 566.540478758,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "control",
+        "direct_first_goal": {
+          "createdAt": 1791262962,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791262962
+        },
+        "direct_last_goal": {
+          "createdAt": 1791262962,
+          "status": "complete",
+          "timeUsedSeconds": 560,
+          "tokenBudget": null,
+          "tokensUsed": 266968,
+          "updatedAt": 1791263522
+        },
+        "error_class": null,
+        "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+        "freeze_sha256": "13236dd9169776076bfc68251470b43e040a9922721c03023a69d60f046a3692",
+        "host_record_sha256s": [
+          "d63d50bb1377e8e9bab28675ac32185d5d1957bfe0239ec340a68b5e60b5f143",
+          "be8c30a935636960f7d39b2cab6092dfe0c786a7a1e61ffccc60f9533d349c86",
+          "ff3b54d2add4de728599ab5754469998f1594205d979f5c8a8563997733111e3"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "native_goal_status_before_cleanup": "complete",
+        "native_goal_status_final": "complete",
+        "native_outcome": "native_goal_complete",
+        "native_sha256": "fd5bd33d43543b3b871c49e25c4c61728b49ee84d1449ca78b0801ab05f27f9e",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 3562752,
+            "inputTokens": 3805856,
+            "outputTokens": 23864,
+            "reasoningOutputTokens": 18422,
+            "totalTokens": 3829720
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": true,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 900,
+        "original_registry_status": "COMPLETED",
+        "private_slice_release_sha256": "1deebbe31eb31be02958bd45dc5282d8500582a499c7e5bea89becb69b5a86d1",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "1d0ec2f248d7dbb130e0c5d2e5cb0830b7ca1e291690c293f2b3ded881c20445",
+        "stage": "critique",
+        "stage_sha256": "4d65b032a141d2a7fbaeb8e70e6d5e5a93acede4b54e2b296e6c6a963a899b41"
+      },
+      {
+        "actual_elapsed_seconds": 523.724286924,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "control",
+        "direct_first_goal": {
+          "createdAt": 1791262343,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791262343
+        },
+        "direct_last_goal": {
+          "createdAt": 1791262343,
+          "status": "complete",
+          "timeUsedSeconds": 517,
+          "tokenBudget": null,
+          "tokensUsed": 374295,
+          "updatedAt": 1791262861
+        },
+        "error_class": null,
+        "first_research_old_candidate_inputs_declared": false,
+        "freeze_sha256": "18213b8d6cdfd1246b21d5d5490e9b5b14c40c27370c67d8f2df91a437259dad",
+        "host_record_sha256s": [
+          "62e2ab79eb4d1af0c336d83fc2e240d922edeb899e156d9a6d118763b05d626a",
+          "13714adb41ddf818a7cc8220e642162ee7e488fd550749723802190aa04ac7f2",
+          "c807420507f868d00858c314dad95af4436f95c687e8d061716f806a87933098"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "native_goal_status_before_cleanup": "complete",
+        "native_goal_status_final": "complete",
+        "native_outcome": "native_goal_complete",
+        "native_sha256": "4439fb11c024d6074b388a690008072b7506ddd705716d81f2c33e69f4f89cae",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 4854528,
+            "inputTokens": 5171640,
+            "outputTokens": 57183,
+            "reasoningOutputTokens": 31457,
+            "totalTokens": 5228823
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": true,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 1200,
+        "original_registry_status": "COMPLETED",
+        "private_slice_release_sha256": "d9869cee4eaecf075ce3504be61959f8d7d822796c2fbe64cf3f375889d1ffee",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "cadf1ddf9e3a5692d8b1218e6e37c372e0e2a51a17ac6900265dc167c12836e6",
+        "stage": "research",
+        "stage_sha256": "739460eafb0f2ee55ee850152c1dd2daf45080373afbc03562c1f5a12922e728"
+      },
+      {
+        "actual_elapsed_seconds": 585.636110882,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "control",
+        "direct_first_goal": {
+          "createdAt": 1791263581,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791263581
+        },
+        "direct_last_goal": {
+          "createdAt": 1791263581,
+          "status": "paused",
+          "timeUsedSeconds": 579,
+          "tokenBudget": null,
+          "tokensUsed": 172878,
+          "updatedAt": 1791264161
+        },
+        "error_class": "TimeoutError",
+        "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+        "freeze_sha256": "df585ce1bd2abd08bda0678b96afdba8ad4b1e693888cf3d886b68899f4b9eaf",
+        "host_record_sha256s": [
+          "2f77c254ec63707d02aba66e66950aba78041b41f10954f7dde56d0eee4058c4",
+          "97bf0bb48618458773cf0a57d8285610ea0d33df09b73be09246d642508d7c27",
+          "f1d9503bc603710a46029ea8902cad82374b2db4c223b00eea777a6516c996bd"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "native_goal_status_before_cleanup": "active",
+        "native_goal_status_final": "paused",
+        "native_outcome": "HOLD",
+        "native_sha256": "8f66c5a68682d0703586912547e866b40325aaff6d2bb05d86be1d4023eef4bb",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 1039104,
+            "inputTokens": 1184903,
+            "outputTokens": 27079,
+            "reasoningOutputTokens": 14039,
+            "totalTokens": 1211982
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": false,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 600,
+        "original_registry_status": "FAILED",
+        "private_slice_release_sha256": "a974ea00622c26acd31da0a06166e4ba284ad4a0ad28af7d815323e15178d93c",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "bff0b76323e14c891f74b96acc80d36cc701dea19445f6cd5aa28ed365b25db4",
+        "stage": "revision",
+        "stage_sha256": "b8deecfb6dde1ad807e360f842fa749d7607bda0c70b860d6e1d896b7d81105f"
+      },
+      {
+        "actual_elapsed_seconds": 398.697376993,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "treatment",
+        "direct_first_goal": {
+          "createdAt": 1791263422,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791263422
+        },
+        "direct_last_goal": {
+          "createdAt": 1791263422,
+          "status": "complete",
+          "timeUsedSeconds": 392,
+          "tokenBudget": null,
+          "tokensUsed": 218768,
+          "updatedAt": 1791263815
+        },
+        "error_class": null,
+        "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+        "freeze_sha256": "20c7594fa8d5f9cba29f35b75c316ea582ec8ef92eeda3f154b5e0bcf2ecec15",
+        "host_record_sha256s": [
+          "efb439c9d68e4f3221758bad64f520169821ed030c89f49b0c9597a2da54575c",
+          "e262b030c3c140c57de70d583983fdba9185c24f117f2225b3515ac855fb6d80",
+          "8e3a44c322d0c6c22243b3a69ad0c88b2e72252270818e33e9c1115120d4306d"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "native_goal_status_before_cleanup": "complete",
+        "native_goal_status_final": "complete",
+        "native_outcome": "native_goal_complete",
+        "native_sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 2611200,
+            "inputTokens": 2811188,
+            "outputTokens": 18780,
+            "reasoningOutputTokens": 11019,
+            "totalTokens": 2829968
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": true,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 900,
+        "original_registry_status": "COMPLETED",
+        "private_slice_release_sha256": "df71111f9181d881958989d0416086925577772d29de059c598a7064f1adf8b1",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "918179a46138d026f0e2561da2d086c0257cc8715a82718b429806d3be1a7a29",
+        "stage": "critique",
+        "stage_sha256": "cd270e4c4ced5624f5a12d8afcd928ee4d03819e10ade9ab9e4b6695c6feca73"
+      },
+      {
+        "actual_elapsed_seconds": 1063.173255529,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "treatment",
+        "direct_first_goal": {
+          "createdAt": 1791262345,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791262345
+        },
+        "direct_last_goal": {
+          "createdAt": 1791262345,
+          "status": "complete",
+          "timeUsedSeconds": 1057,
+          "tokenBudget": null,
+          "tokensUsed": 310700,
+          "updatedAt": 1791263402
+        },
+        "error_class": null,
+        "first_research_old_candidate_inputs_declared": false,
+        "freeze_sha256": "42a04975299bd9cffe9383fc729a46e6d14024cfdb57820dcdbc2ef2a02bc738",
+        "host_record_sha256s": [
+          "dab2284eaea73a950139b2871ad6421627b5b28b203a64bb60cd96398d454668",
+          "310e2dc87468ab13e966ec9bbb5dbc9d2d203c453bd203e5116e59c84dbf4600",
+          "0850333d5367b24e2dc7b7b3ce2c2c241fa733ff2ced009441ad966f691f4d70"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "native_goal_status_before_cleanup": "complete",
+        "native_goal_status_final": "complete",
+        "native_outcome": "native_goal_complete",
+        "native_sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 5438720,
+            "inputTokens": 5707387,
+            "outputTokens": 42033,
+            "reasoningOutputTokens": 24983,
+            "totalTokens": 5749420
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": true,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 1200,
+        "original_registry_status": "COMPLETED",
+        "private_slice_release_sha256": "b87776a7a7e871aba2814f2cfb87cc3771f94723949635402570d60aea5c2263",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "4c0e61f6180aaaafcf01e131236f7010f8442b60478326d50c12993d9aaaf3a6",
+        "stage": "research",
+        "stage_sha256": "defae6b23caeb70de42a002546d95e0c210d2cc5a8654a390f261510c4934a99"
+      },
+      {
+        "actual_elapsed_seconds": 257.934477133,
+        "all_owned_scopes_quiet": true,
+        "all_private_slice_descendants_quiet": true,
+        "arm": "treatment",
+        "direct_first_goal": {
+          "createdAt": 1791263838,
+          "status": "active",
+          "timeUsedSeconds": 0,
+          "tokenBudget": null,
+          "tokensUsed": 0,
+          "updatedAt": 1791263838
+        },
+        "direct_last_goal": {
+          "createdAt": 1791263838,
+          "status": "complete",
+          "timeUsedSeconds": 251,
+          "tokenBudget": null,
+          "tokensUsed": 182110,
+          "updatedAt": 1791264090
+        },
+        "error_class": null,
+        "first_research_old_candidate_inputs_declared": "NOT_APPLICABLE_LATER_ROLE",
+        "freeze_sha256": "51f689d2abe7e7b37c85670896d48c4c6912eb78d91495fd034b7ea2d9c5063c",
+        "host_record_sha256s": [
+          "2c04d7c7a6a0946aa5dec1b2b6b95c38606a053c77d1644d0d9b9799fbfd4704",
+          "40c50a79904f9fd26be18fe5e41952fb47b346c944e7fab8d9ea190ca01e2074",
+          "98041896e6e18ead5c7f4911c7fbf662b327cc8d109faba58a686756ded45f0d"
+        ],
+        "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+        "native_goal_status_before_cleanup": "complete",
+        "native_goal_status_final": "complete",
+        "native_outcome": "native_goal_complete",
+        "native_sha256": "4acda0fbb647a05af6b7216f551ca60d2a3ec76dcf7f013b9e0e301be6f25a7e",
+        "native_usage_positive_fields": {
+          "usage_totals": {
+            "cachedInputTokens": 1652736,
+            "inputTokens": 1811317,
+            "outputTokens": 23529,
+            "reasoningOutputTokens": 15165,
+            "totalTokens": 1834846
+          }
+        },
+        "observed_identity": {
+          "effort": "max",
+          "fresh_empty_history": true,
+          "instruction_sources_empty": true,
+          "model": "gpt-6-luna"
+        },
+        "opaqueGoalID": "UNKNOWN_NOT_EXPOSED_SESSION_THREAD_DISTINCT",
+        "operational_complete_original": true,
+        "original_all5quiet": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "original_deadline_seconds": 600,
+        "original_registry_status": "COMPLETED",
+        "private_slice_release_sha256": "b0270ea05ea95b82e2496dcacb380411f92c48de5abb7a1962f1ad2fc9353a4f",
+        "registry_permit_release_confirmed": true,
+        "requested_effort": "max",
+        "requested_model": "gpt-6-luna",
+        "resource_oom_observed": false,
+        "resource_profile_sha256": "283b1ad132803c111736983fd7afca8a1c41fb2c5a1a7fe9e1a196530152d847",
+        "stage": "revision",
+        "stage_sha256": "e7049b021c3b99af406df8671828da382cd8f9bf38dfb198724278ca725873ba"
+      }
+    ],
+    "evaluation_id": "independent-pipeline-5",
+    "evaluator_actual_usage": "UNKNOWN",
+    "money": "UNKNOWN",
+    "native_attempt_counter_scope": "Six actual current distinct native role jobs; individual host initial turn count and visible Goal lifecycle scalars are observed. Native HTTP attempts/response count UNKNOWN and response-count cap not enforced. Missing counters are UNKNOWN rather than zero. Goal get/set RPC count is not a count of new candidate Goals.",
+    "native_current_usage_by_arm": {
+      "control": {
+        "actual_role_elapsed_sum_seconds": 1675.900876564,
+        "distinct_current_job_count": 3,
+        "native_usage_notification_sums": {
+          "cachedInputTokens": 9456384,
+          "inputTokens": 10162399,
+          "outputTokens": 108126,
+          "reasoningOutputTokens": 63918,
+          "totalTokens": 10270525
+        },
+        "original_role_allowance_sum_seconds": 2700,
+        "scope": "Sum each exact distinct CURRENT native role once. Cached/reasoning are reported separately as nested or inclusion-UNKNOWN subsets; never added again to totalTokens. This is not provider-request count, money, evaluator cost or historical/campaign cost. Role imports add zero new inference themselves."
+      },
+      "treatment": {
+        "actual_role_elapsed_sum_seconds": 1719.805109655,
+        "distinct_current_job_count": 3,
+        "native_usage_notification_sums": {
+          "cachedInputTokens": 9702656,
+          "inputTokens": 10329892,
+          "outputTokens": 84342,
+          "reasoningOutputTokens": 51167,
+          "totalTokens": 10414234
+        },
+        "original_role_allowance_sum_seconds": 2700,
+        "scope": "Sum each exact distinct CURRENT native role once. Cached/reasoning are reported separately as nested or inclusion-UNKNOWN subsets; never added again to totalTokens. This is not provider-request count, money, evaluator cost or historical/campaign cost. Role imports add zero new inference themselves."
+      }
+    },
+    "opaque_nativeGoalIDs": "UNKNOWN; API thread/session handles are distinct and not substitutes",
+    "operational_assessment": {
+      "control": "CURRENT research and critique native projections complete. Revision reaches original native stop: TimeoutError, active before cleanup then paused, required final4 absent. Failed final write observed; no completed final substituted.",
+      "first_research_old_inputs": "Both exact current first-research declared flags are false; their supplied input-pin inventory is brief/access/output duties. That declaration is not a guessed numeric absent counter or proof of every opaque inference payload.",
+      "full_pipeline_scientific_quality": "UNASSESSED; native lifecycle success does not qualify every role science or integrated design.",
+      "matched_causal_credit": "NOT_ESTABLISHED; missing control final precludes scientific matched comparison. Equal original per-role allowance and memory caps alone do not establish a causal winner or measured protected-discovery effect.",
+      "scientific_winner": "NOT_ESTABLISHED",
+      "source_quality": "Phase1 A FAIL localized determinant defect and B UNASSESSED scientific quality remain unchanged.",
+      "treatment": "All three CURRENT research/critique/revision native Goal projections complete before cleanup, required current final4 present, all selected owned scopes quiet and permits/slices released. This is operational completion only."
+    },
+    "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+    "physical_provider": "UNKNOWN",
+    "resource_assessment": {
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "all_six_owned_quiet_and_slice_release_positive": true,
+      "all_six_resource_oom_observed": false,
+      "complete_owned_job_aggregate_memory_max_bytes_each": 2415919104,
+      "current_R_C_F_allowance_seconds_each_arm": [
+        1200,
+        900,
+        600
+      ],
+      "current_final_original_allowance_seconds_each": 600,
+      "final_A_observed_peak_bytes": 373669888,
+      "final_B_observed_peak_bytes": 373239808,
+      "proof_chain_qualification": "Selected projection reports the exact current proof-reader hash matches actual owned proof and launch seal, not an inherited old source-version substitution. Embedded pre-enrichment native receipt hashes differ from enriched final result hashes; source-order enrichment sequence and separately retained preembedding bytes remain UNKNOWN. Positive quiescence fields are retained without claiming a fully reconstructed enrichment chain.",
+      "scope": "Memory envelope covers owned controller/guards, sibling services and overlapping execution. W2 isolated CPU/memory/task/network limits are a different scope and not a complete-job resource result. No app 3 GB benchmark or future-machine fit inferred.",
+      "swap_max_bytes_each": 0
+    },
+    "runtime_key_read_after_phase1_freeze": true,
+    "runtime_key_read_monotonic_ns": 96061160005826,
+    "runtime_key_read_utc": "2026-10-06T05:47:22.302969+00:00",
+    "runtime_packets": [
+      {
+        "bytes": 68245,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2/key.json",
+        "sha256": "20a1d89dd3017fb6d778f825d053d36cb1d61adb6855ef598322f6ecc423c99a"
+      },
+      {
+        "bytes": 54841,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2/P5_CURRENT_FINAL_PAIR_RUNTIME_001.json",
+        "sha256": "9fb99fa7f1d7c775d98ba297171ee71b81216545a98aa7627341efe6c3ae8d4c"
+      },
+      {
+        "bytes": 10499,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2/P5_CURRENT_FINAL_PAIR_RESOURCE_EXECUTION_001.json",
+        "sha256": "4f8f64ced5c6e4d2fdd7f35fd70ab5fdd7781269d199a8da9e25ac613b64cfb7"
+      },
+      {
+        "bytes": 53912,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2/P5_CURRENT_PIPELINE_ROLE_LIFECYCLE_001.json",
+        "sha256": "ec2f2a73320dae846e302c1b284cb9e711460b3fcca6043ee08ce6bf8382b136"
+      }
+    ],
+    "schema": "er9.independent-evaluator-phase2-runtime-review.v1",
+    "source_judgment_unchanged": true,
+    "telemetry_limits": {
+      "cost": "Native usage notifications are observed cumulative accounting. Cache/reasoning subsets, provider request/money and cancelled unexposed tail are not invented or double-counted. Current imported predecessor bytes are not charged as a new inference job.",
+      "error_scope": "Native process, held wrapper and dispatcher exit fields have distinct scopes. B TimeoutError/missing final is preserved; differing wrapper exit codes are not collapsed into a semantic grade.",
+      "goal_receipt": "First/direct-last lifecycle status, unchanged createdAt, tokensUsed and timeUsedSeconds are positive observed scalars; opaque Goal ID remains UNKNOWN.",
+      "observed_identity": "All selected current native identities report gpt-6-luna/max and fresh empty history. Physical provider runtime attestation is UNKNOWN.",
+      "tool_inventory": "Native MCP catalog verified in projection; actual inference tool payload was not observed and inventory_check.verified=false. No full payload restriction assurance inferred."
+    }
+  },
+  "protocol_version": "ER9-independent-output-v1",
+  "publication_destinations": [
+    "/root",
+    "/root/publisher"
+  ],
+  "schema": "er9.independent-evaluator-final-report.v1",
+  "status": "COMPLETE_WITH_EXPLICIT_QUALIFICATIONS"
+}

@@ -1,0 +1,82 @@
+{
+  "authority": "Root additive clock precision received via parent; retain prior bytes and distinguish literal inclusive window from checking interval.",
+  "checking_600_deadline_utc": "2026-10-06T05:36:55.478293Z",
+  "checking_anchor_start_monotonic_ns": 94834335282000,
+  "checking_anchor_start_utc": "2026-10-06T05:26:55.478293Z",
+  "checking_deadline_is_not_governing_literal_deadline": true,
+  "current_checking_elapsed_seconds": 321.735641077,
+  "current_literal_inclusive_elapsed_seconds_conservative_charged": 360.423396077,
+  "current_literal_inclusive_elapsed_seconds_monotonic": 360.423342617,
+  "current_whole_elapsed_seconds": 654.944928475,
+  "evaluation_id": "independent-targeted-12",
+  "final_handoff_within_remaining_budget": true,
+  "gap_is_charged_under_literal_inclusive_phase2": true,
+  "gap_is_charged_under_whole": true,
+  "gap_monotonic_seconds": 38.68770154,
+  "gap_utc_seconds": 38.687755,
+  "literal_inclusive_phase2_deadline_monotonic_ns": 95395647580460,
+  "literal_inclusive_phase2_deadline_utc": "2026-10-06T05:36:16.790538Z",
+  "literal_inclusive_phase2_start_monotonic_ns": 94795647580460,
+  "literal_inclusive_phase2_start_utc": "2026-10-06T05:26:16.790538Z",
+  "no_clock_reset": true,
+  "no_source_grade_or_findings_change": true,
+  "old_closure_checking_elapsed_seconds": 280.987358778,
+  "old_closure_literal_inclusive_elapsed_seconds_utc_gap_charged": 319.67511377799997,
+  "original_SOURCE_START_monotonic_ns": 94501125994602,
+  "original_SOURCE_START_utc": "2026-10-06T05:21:22.268948Z",
+  "pair_id": "D-V07-B-BUNDLE-R001",
+  "phase2_inclusive_limit_seconds": 600,
+  "positive_original_pins": [
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/source-start.json",
+      "sha256": "4c838f477879a862700235f5c6f937a71b94d2e13756aac3c84181b68e716822"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-freeze.json",
+      "sha256": "95d80ecbaf75ea126e3a3627ce3c9c57f59ef0ca18428a65c11a8a4f5bdfffe9"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase2-clock.json",
+      "sha256": "e87604320b60fb3a6c1860d0e5c2936cb29e7c223adf5b7860eba90ba6f1039b"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase2-assessment.json",
+      "sha256": "0f06631990cade50695aa87545d17221ec55a93f293cf9b4ca032bd33bb3ade2"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/report.json",
+      "sha256": "2e189d47a006c798a9486dcf5d17cc02375556fd2cd4ffa57a440ab3b40999dd"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/report.md",
+      "sha256": "489baf761e1f9d32ebef48a0f1ad2bb4751cbec8be144aff2297981a480f26d0"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/final-freeze.json",
+      "sha256": "02e1113339849f790a290353620d69e2cf9f436ed0e086094df778d44defa755"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/closure.json",
+      "sha256": "04da9a267e2c394a1ebf0e8f21aeaf683ea4caf5f356807e57ccc87cf2f1c1ef"
+    }
+  ],
+  "prior_phase2_start_labels_qualification": "The 05:26:55.478293Z phase2_start labels in phase2-clock.json and downstream report/closure are checking anchors. They are not the literal inclusive Phase2 start, which is Phase1 freeze 05:26:16.790538Z.",
+  "prior_receipts_and_report_bytes_preserved": true,
+  "qualified_monotonic_ns": 95156070923077,
+  "qualified_utc": "2026-10-06T05:32:17.213918Z",
+  "remaining_literal_inclusive_phase2_seconds": 239.576603923,
+  "remaining_whole_seconds": 1145.0550715250001,
+  "report_ready_checking_elapsed_seconds": 228.695705223,
+  "report_ready_literal_inclusive_elapsed_seconds_utc_gap_charged": 267.383460223,
+  "root_courier_report_handoffs_before_original_closure_remain_charged": true,
+  "schema": "er9.independent-evaluator-additive-clock-qualification.v1",
+  "whole_limit_seconds": 1800
+}

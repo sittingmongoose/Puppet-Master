@@ -1,0 +1,95 @@
+{
+  "schema": "er9.research.leads.v1",
+  "stage": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+  "leads": [
+    {
+      "id": "L1",
+      "kind": "unresolved coordinate risk",
+      "title": "Pyramid scale and pixel-center versus voxel-corner alignment",
+      "source_ids": ["S11", "S6", "S7"],
+      "status": "Open public issue #6320 reports a multiscale center/corner shift. No fix or regression-test chain for #6320 was established. PR #6317 fixes a separate 3D Labels value-sampling exception and is not a repair of #6320.",
+      "applicability": "Directly relevant to transformed annotation identity and overlay alignment. The code-level arithmetic witness checks one center-point correspondence only; it leaves pixel-edge/corner placement unverified.",
+      "next_check": "Before selecting a viewer integration or shipping multiscale support, add anisotropic and isotropic pyramid fixtures with unique values, nonzero origins, pixel centers and voxel corners; verify every viewer data-level and export path."
+    },
+    {
+      "id": "L2",
+      "kind": "alternative reader",
+      "title": "Bio-Formats adapter for group instruments outside the TIFF/NGFF core",
+      "source_ids": ["S10"],
+      "status": "Supported lead: v7.3.1 documentation has a broad supported-format table with per-format pixel/metadata and related ratings. The research did not inspect individual reader implementation/tests for any instrument-specific format.",
+      "applicability": "Potentially useful for named CZI, ND2, LIF, or other formats the laboratory confirms it needs. The documentation list is not proof that each producer version, acquisition mode, metadata or compression is reliable for these files.",
+      "next_check": "Survey instruments and representative untouched samples; for each needed format, inspect the exact version-specific reader page/issues/tests, then compare axes, samples and calibration against the vendor application or known metadata. Add only passing formats."
+    },
+    {
+      "id": "L3",
+      "kind": "optional interchange",
+      "title": "OME-NGFF image-label for integer segmentation masks",
+      "source_ids": ["S1"],
+      "status": "The 0.4 specification provides a label group and image-label metadata for integer-valued masks, scales and colors, and a relative source-image reference.",
+      "applicability": "A useful overlay exchange path after the source axes/scales are verified. It does not replace rich point/polygon records, selectors, annotations on a single plane/time, undo history, or the project database.",
+      "next_check": "Create a small labeled image with a channel/time selector and multiple scales; round-trip with an independent OME-Zarr reader and verify each level, physical transform, color entry and source link."
+    },
+    {
+      "id": "L4",
+      "kind": "future storage opportunity",
+      "title": "Read-only shared chunk sources and remote-capable storage",
+      "source_ids": ["S1"],
+      "status": "NGFF describes a chunk-addressable Zarr layout and local/cloud storage contexts; this is a format opportunity, not evidence for the proposed application's remote behavior.",
+      "applicability": "Could let the team share large read-only images without copying full decoded arrays once local access is qualified. Cloud services are outside the first release; shared storage remains bundle exchange and read-only references.",
+      "next_check": "First benchmark local filesystem and shared-folder behavior. If demand appears, test chunk latency/retry/cache policies on a concrete supported object or network store before adding remote paths."
+    },
+    {
+      "id": "L5",
+      "kind": "optional virtual-reference experiment",
+      "title": "tifffile ReferenceFileSystem export for TIFF-backed virtual arrays",
+      "source_ids": ["S3"],
+      "status": "The pinned README documents `write_fsspec` for TIFF/sequence references and reopening through a reference filesystem. This was not executed.",
+      "applicability": "May offer a metadata/index wrapper without transcoding large originals. It still relies on original byte ranges, codecs, stable source identity and reader compatibility; it does not itself make the original TIFF Zarr-conformant, portable, or faster on the team's workstation.",
+      "next_check": "Prototype on one tested single-file OME-TIFF; relocate the source, verify hash binding, inspect a selection through the reference, and measure cold access. Do not use as the default project identity."
+    },
+    {
+      "id": "L6",
+      "kind": "format support boundary",
+      "title": "Single-file and decoder matrix remains a critical release dependency",
+      "source_ids": ["S2", "S3"],
+      "status": "OME-TIFF can reference multiple files and IFD mappings; tifffile 2024.9.20 documents that multi-file pyramidal OME-TIFF is not supported and identifies compression dependencies and TIFF subset exclusions.",
+      "applicability": "The proposed single-file OME-TIFF boundary is an engineering choice. There are no actual lab files or codec tests in this stage.",
+      "next_check": "Build an explicit matrix by reader/tag, TIFF variant, OME axes/order, codec, dtype, pyramid, and calibration field. Reject unknown entries visibly; do not promote by extension or one successful vendor file."
+    },
+    {
+      "id": "L7",
+      "kind": "persistence and filesystem dependency",
+      "title": "SQLite atomicity and archive publication require a qualified filesystem",
+      "source_ids": ["S9"],
+      "status": "SQLite describes transaction atomicity under lock, flush, and filesystem assumptions; the cited article covers rollback mode and separately points to WAL behavior.",
+      "applicability": "Local single-writer project DB is a proposal. No SMB/NFS locking, fsync, archive-rename, power-loss, or OS behavior was tested.",
+      "next_check": "Qualify every workstation OS and shared-storage route via crash injection, transaction integrity, close/copy/reopen, and failure while publishing staged bundles. If active shared-DB locking is unreliable, keep local work copies and exchange closed snapshots."
+    },
+    {
+      "id": "L8",
+      "kind": "viewer-integration dependency",
+      "title": "napari geometry is a useful editor component, not the project model",
+      "source_ids": ["S4", "S5", "S6", "S7", "S11"],
+      "status": "Shapes exposes n-dimensional vertices, styles/features, transforms, and editing modes at v0.5.6. Public multiscale issues also show that data-level sampling and scale/corner behavior need direct testing.",
+      "applicability": "Use an adapter pilot. Persistence, scope semantics, coordinate inversion and our undo/redo are app responsibilities unless explicitly proven otherwise.",
+      "next_check": "Round-trip each gesture through canvas→named source coordinates→SQLite→canvas across slice/time/channel, transform, reopen and undo/redo; compare a custom canvas only if the adapter fails a predefined correctness gate."
+    },
+    {
+      "id": "L9",
+      "kind": "deferred capability",
+      "title": "Segmentation, registration, multiuser conflict resolution, and cloud services",
+      "source_ids": ["S1", "S10"],
+      "status": "Kept as optional future opportunities; none is part of the minimum workflow, and the research found no need to make them an initial dependency.",
+      "applicability": "Preserve a clean provenance/transform contract now so a future algorithm or storage service can be represented as a derived operation without silently changing originals.",
+      "next_check": "Revisit only after the local save/reopen/export path and source-coordinate fidelity have passed acceptance."
+    }
+  ],
+  "discovery_method": {
+    "modifier": "V14 protected discovery lane",
+    "prospective_commitment": "Roughly 30% of planned discovery effort was reserved for different mechanism families and useful opportunities outside whole-product viewer precedent: file/axis standards, chunk access, transactional persistence, mask interchange, and reader alternatives.",
+    "timing_claim": "No exact elapsed-time partition was recorded; no measured share or verification of every lead is claimed.",
+    "covered_families": ["bioimaging format standards", "TIFF/Zarr/Dask partial access", "GUI annotation layers", "SQLite recovery", "mask interchange", "Bio-Formats reader breadth"],
+    "deferred_families": ["other microscopy readers and instrument issue histories", "multi-user merge protocols", "remote chunk caching", "additional standards for vector annotation interchange", "GPU-specific large-volume rendering"],
+    "note": "Discovery breadth does not qualify any dependency for production use. Refer to proposal validation gates and source-specific applicability."
+  }
+}

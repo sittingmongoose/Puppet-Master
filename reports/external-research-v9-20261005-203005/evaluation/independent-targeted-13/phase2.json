@@ -1,0 +1,822 @@
+{
+  "schema": "er9.independent-output-phase2.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "phase": "POST_IMMUTABLE_PHASE1_OPERATIONAL_CHECKS",
+  "source_grade_rewrite": false,
+  "phase1_judgment_sha256": "817bf1264b43e1494e16e0204147380ec0ccfea111b6a2a73c571aaa9b859d6f",
+  "phase1_lock_sha256": "5852dfaa26d5606e4f4f4fecc727b950e6ce586d9396f2f275c747526da4a57c",
+  "all_21_phase1_pins_still_exact_readonly": true,
+  "independent_phase1_verification_before_release": {
+    "verifier": "/root/frozen_exports",
+    "lock_sha256": "5852dfaa26d5606e4f4f4fecc727b950e6ce586d9396f2f275c747526da4a57c",
+    "reported_verified_file_count": 21,
+    "reported_all_exact_sha_length_and_readonly": true,
+    "verified_before_key_release": true
+  },
+  "authorized_phase2_input_sha256s": {
+    "key": "a81d8e73cd3cc262389d6a8cb3c64dde1cf62d9171fd10ed572faaf40b856f3f",
+    "runtime": "72319d6bfba202538c013b056d63e79ae1509b076dc3a73b80d6923524ec3347",
+    "resources_execution": "015b67091a6b1d3925153d225597660ecb627e8be3e45418f3c23746ca3a1620"
+  },
+  "private_key_or_raw_native_conversation_exported": false,
+  "original_source_start_utc": "2026-10-06T05:22:45.464261+00:00",
+  "phase2_start_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/phase2_start.json",
+  "phase2_elapsed_at_report_write_seconds": 236.25354592798976,
+  "original_whole_elapsed_at_report_write_seconds": 557.6772176410013,
+  "inclusive600_and_original1800_enforced": true,
+  "neutral_clock_closure": "Written after report handoffs, no ACK wait; includes report and handoff elapsed.",
+  "matched_input_metadata": {
+    "pins_per_arm": 37,
+    "common_matching_pins": 35,
+    "differing_input_filenames": [
+      "arm_instruction.md",
+      "delivery_role_manifest.json"
+    ],
+    "scope": "Pin metadata only; no source/history bodies reopened. Declared arm instruction and current-stage delivery manifest differences retained."
+  },
+  "matched_resource_metadata": "Both job wall envelopes900s, whole owned memory cap2415919104B/swap0, same component caps and candidate execution limits. This supports operational allocation comparison only; no completed matched method-quality effect.",
+  "rows": [
+    {
+      "alias": "A",
+      "arm_after_key": "control",
+      "job_id": "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "requested_candidate_selector": {
+        "model": "gpt-6-luna",
+        "effort": "max"
+      },
+      "observed_api_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "thread_session_identity_scope": "Not promoted to opaque Goal identity. Private thread/session identifiers are not exported.",
+      "native_activation_observed": true,
+      "fresh_session_observed": true,
+      "candidate_goals_set_by_host": 1,
+      "goal_replacements_observed": 0,
+      "host_initial_turns_started": 1,
+      "host_followup_turns_started": 0,
+      "native_owned_continuation_observed": false,
+      "native_outcome": "HOLD",
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_delivery_completion": "NOT_ESTABLISHED_HOLD_PAUSED",
+      "first_direct_goal": {
+        "createdAt": 1791255277,
+        "status": "active",
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "updatedAt": 1791255277
+      },
+      "last_direct_goal": {
+        "createdAt": 1791255277,
+        "status": "paused",
+        "timeUsedSeconds": 879,
+        "tokenBudget": null,
+        "tokensUsed": 199951,
+        "updatedAt": 1791256157
+      },
+      "native_turns": {
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1
+      },
+      "turn_statuses": [
+        {
+          "method": "turn/started",
+          "observed_monotonic_ns": 85696747029457,
+          "status": "inProgress"
+        },
+        {
+          "method": "turn/completed",
+          "observed_monotonic_ns": 86576446178222,
+          "status": "interrupted"
+        }
+      ],
+      "operational_errors": {
+        "error_class": "TimeoutError",
+        "error": "original native stop reached",
+        "runtime_projection_held_process_exit_code": 0,
+        "original_output_freeze_held_runner_exit_code": 126,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "cc197c5164a193e53eeebe168112f7148ee4d20170e5c302b2910f947fd92b75",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "eb7f9238ed922e6528597b0b7882644d979c0ac2aaffcfc6606bb442fd102320",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "12794604841d9f91eeb16550d59ad6a6dfb269e8ddbd9f96438d16c9a1d86745",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "exit_scope_rule": "Distinct frozen-runner, native-record held-process and host service exit fields preserved separately; no scope collapse or success inferred."
+      },
+      "budgets_resources": {
+        "original_declared_whole_job_wall_seconds": 900.0,
+        "runtime_projection_elapsed_seconds": 886.295921015,
+        "original_output_freeze_elapsed_seconds": 886.378310047,
+        "last_direct_goal_time_used_seconds": 879,
+        "closed_before_original_total_stop": true,
+        "observed_complete_job_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "aggregate_peak_bytes_at_release": 407752704,
+        "resource_oom_observed": false,
+        "resource_fit": "UNKNOWN",
+        "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+        "oom_events_at_release": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "memory_scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "execution_limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "resource_profile_sha256": "708a95241480be00768ac4fd976324aa1fe0ee4e8eeb655dbd57ccbc76ad911e",
+        "private_slice_release_sha256": "9ae2de8a3fe5b34e524e2a9a49cd99c827991a56227a7739df1f92835cf62d34"
+      },
+      "owned_quiet": {
+        "all_owned_scopes_quiet": true,
+        "private_slice_descendants_quiet": true,
+        "original_quiet_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "evaluator_cleanup_mutations": false,
+        "scope": "Trusted current exact owned service/cgroup/PID and execution-unit projections. No process cleanup or PGID attribution performed by evaluator."
+      },
+      "usage_accounting": {
+        "usage_notification_count": 43,
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 2825984,
+          "inputTokens": 3002050,
+          "outputTokens": 23885,
+          "reasoningOutputTokens": 20209,
+          "totalTokens": 3025935
+        },
+        "native_direct_goal_tokens_used_separate": 199951,
+        "native_responses": "UNKNOWN",
+        "native_http_attempts": "UNKNOWN",
+        "native_response_count_cap_enforced": false,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "parent_UI_provider_rows": "UNKNOWN_NOT_ADDED",
+        "response_provider_cache_pricing_and_cancelled_unexposed_tail": "UNKNOWN",
+        "dollar_cost": "UNKNOWN",
+        "imported_baseline_starts": "NOT_RECOUNTED_AS_CURRENT_STARTS"
+      },
+      "tools": {
+        "completed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.public_https_get": 15,
+          "pm_boundary.read_file": 22,
+          "pm_execution.python_execute": 3
+        },
+        "attempt_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.public_https_get": 15,
+          "pm_boundary.read_file": 22,
+          "pm_execution.python_execute": 3
+        },
+        "failed_counts": {},
+        "current_metadata_call_count": 41,
+        "metadata_counts": [
+          {
+            "namespace": "pm_boundary",
+            "tool": "mechanical",
+            "success": true,
+            "count": 1
+          },
+          {
+            "namespace": "pm_boundary",
+            "tool": "public_https_get",
+            "success": true,
+            "count": 15
+          },
+          {
+            "namespace": "pm_boundary",
+            "tool": "read_file",
+            "success": true,
+            "count": 22
+          },
+          {
+            "namespace": "pm_execution",
+            "tool": "python_execute",
+            "success": true,
+            "count": 3
+          }
+        ],
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        },
+        "actual_inference_tool_payload": "UNKNOWN"
+      },
+      "current_candidate_execution_attempts": [
+        {
+          "execution_id": "exec-8q5qexoy",
+          "result_sha256": "b2dc7f3b85dc53eaca7ac11e3416029d3d54bb1b400f98e3d15519b22d0f6130",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "7fe71e6425d4b9b859403cff8b77b094af979d4d2b1e3400ecd5ac3e881192fc",
+          "data_sha256": "27bf9b8849649770f6f16afb1cca6ca5afe5475637b359f995212c9342aa8439",
+          "stdout_bytes": 77,
+          "stdout_sha256": "a04e9e291ec20c7832f1b5f4ae259139081f657687fe956955072fec290fde27",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-bl2hq300",
+          "result_sha256": "c242dc01ec3166df134c899016b6da2e12866556fd7107806350aec507245655",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "fff23171cf94404ef95ed8f5ca1a95b23762f9561391eaf711daf8d4dfc5dab0",
+          "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "stdout_bytes": 212,
+          "stdout_sha256": "e516f925ffeb30b8a998610ae8656d1f4270ae02df1c4d2268eef319082ff3ab",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-ebc6uceq",
+          "result_sha256": "83e5ebad5e41a0766e33147bc8e020943a7c2098d0ba6771f919aca35346672c",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 1,
+          "bootstrap_started": true,
+          "code_sha256": "c4dd196e07548cefc6e44a504c394018891aea5c0afb16ebd6b2a031970d4bea",
+          "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 463,
+          "stderr_sha256": "8e3cfdd3b64a77d1ecf568263b5edfb42ffb9272e9a28a4c410a858a8522623d",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        }
+      ],
+      "receipt_chain": {
+        "freeze_native_host_and_execution_result_joins": "VERIFIED_FOR_SELECTED_CURRENT_PINS",
+        "freeze_sha256": "ad70e9d5ff4f4f34607d5fb82aff42c0c5261713896b03ce6a3c35114f7a8821",
+        "native_result_sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55",
+        "embedded_pre_enrichment_native_receipt_sha256": "98f133685ad5c4e29e0076c195a6a4f0817d4fb83a10de37d32b3587ee980df7",
+        "resource_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "launch_seal_sha256": "2e7123bae10736a0986f4f84c74d073178e7288ee3f4706c8ebff93fc39fda26",
+        "resource_projection_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+        "runtime_projection_chain_scope": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+        "evaluator_independently_read_actual_resource_reader_source": false,
+        "separately_saved_preembedding_receipt_bytes": "UNKNOWN",
+        "scope_rule": "Embedded pre-enrichment and enriched final receipt hashes retained in distinct namespaces; no equality asserted or receipt bytes reconstructed."
+      },
+      "science_scope": "Phase1 remains immutable. Execution attempt receipts do not supply a missing proposal/catalog or an authored witness expectation and do not rewrite scientific quality."
+    },
+    {
+      "alias": "B",
+      "arm_after_key": "treatment",
+      "job_id": "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "requested_candidate_selector": {
+        "model": "gpt-6-luna",
+        "effort": "max"
+      },
+      "observed_api_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "billing_dollars": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "thread_session_identity_scope": "Not promoted to opaque Goal identity. Private thread/session identifiers are not exported.",
+      "native_activation_observed": true,
+      "fresh_session_observed": true,
+      "candidate_goals_set_by_host": 1,
+      "goal_replacements_observed": 0,
+      "host_initial_turns_started": 1,
+      "host_followup_turns_started": 0,
+      "native_owned_continuation_observed": false,
+      "native_outcome": "HOLD",
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_delivery_completion": "NOT_ESTABLISHED_HOLD_PAUSED",
+      "first_direct_goal": {
+        "createdAt": 1791255398,
+        "status": "active",
+        "timeUsedSeconds": 0,
+        "tokenBudget": null,
+        "tokensUsed": 0,
+        "updatedAt": 1791255398
+      },
+      "last_direct_goal": {
+        "createdAt": 1791255398,
+        "status": "paused",
+        "timeUsedSeconds": 879,
+        "tokenBudget": null,
+        "tokensUsed": 441045,
+        "updatedAt": 1791256278
+      },
+      "native_turns": {
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_terminal": 1,
+        "native_turns_interrupted": 1
+      },
+      "turn_statuses": [
+        {
+          "method": "turn/started",
+          "observed_monotonic_ns": 85817770520630,
+          "status": "inProgress"
+        },
+        {
+          "method": "turn/completed",
+          "observed_monotonic_ns": 86697419415458,
+          "status": "interrupted"
+        }
+      ],
+      "operational_errors": {
+        "error_class": "TimeoutError",
+        "error": "original native stop reached",
+        "runtime_projection_held_process_exit_code": 0,
+        "original_output_freeze_held_runner_exit_code": 126,
+        "host_terminal_projections": [
+          {
+            "component": "host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "1e7043a200b3447bd81e783b9d2096b406280b2dbf440d80ecf2e8178faabe6d",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_boundary-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 255,
+            "sha256": "f87a50aafd94dd3ce60ec346a0c15cd73a5ebba0e1ed160ba271e92222946266",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "failed",
+              "native_host_pid": 0,
+              "sub_state": "failed"
+            }
+          },
+          {
+            "component": "pm_execution-host-process",
+            "original_cgroup_absent_or_empty": true,
+            "service_runner_exit_code": 0,
+            "sha256": "582e52821c08cac6b169b9582e2f1a87ea65c7b4e55182cfd6d35e0b01c01a1c",
+            "terminal_cgroup_empty": true,
+            "terminal_state": {
+              "active_state": "inactive",
+              "native_host_pid": 0,
+              "sub_state": "dead"
+            }
+          }
+        ],
+        "exit_scope_rule": "Distinct frozen-runner, native-record held-process and host service exit fields preserved separately; no scope collapse or success inferred."
+      },
+      "budgets_resources": {
+        "original_declared_whole_job_wall_seconds": 900.0,
+        "runtime_projection_elapsed_seconds": 885.816290035,
+        "original_output_freeze_elapsed_seconds": 885.864939749,
+        "last_direct_goal_time_used_seconds": 879,
+        "closed_before_original_total_stop": true,
+        "observed_complete_job_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "aggregate_peak_bytes_at_release": 365084672,
+        "resource_oom_observed": false,
+        "resource_fit": "UNKNOWN",
+        "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+        "oom_events_at_release": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "memory_scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "execution_limits": {
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "network": "new empty namespace",
+          "stream_bytes_each": 32768,
+          "tasks": 16,
+          "wall_seconds": 5
+        },
+        "resource_profile_sha256": "aed309257787366a1d9065df5a3596560a9ce2c736f1e16c300a37060b70d69e",
+        "private_slice_release_sha256": "158678983f2a4176370aed3eda00ce1ea0b28a8c71180af3121f957e7dc2cea4"
+      },
+      "owned_quiet": {
+        "all_owned_scopes_quiet": true,
+        "private_slice_descendants_quiet": true,
+        "original_quiet_flags": {
+          "client_tool_cgroups_quiet": true,
+          "client_tool_process_groups_absent": true,
+          "execution_units_quiet": true,
+          "held_process_groups_absent": true,
+          "native_cgroup_quiet": true
+        },
+        "evaluator_cleanup_mutations": false,
+        "scope": "Trusted current exact owned service/cgroup/PID and execution-unit projections. No process cleanup or PGID attribution performed by evaluator."
+      },
+      "usage_accounting": {
+        "usage_notification_count": 78,
+        "observed_cumulative_native_usage": {
+          "cachedInputTokens": 7494656,
+          "inputTokens": 7849476,
+          "outputTokens": 86225,
+          "reasoningOutputTokens": 40463,
+          "totalTokens": 7935701
+        },
+        "native_direct_goal_tokens_used_separate": 441045,
+        "native_responses": "UNKNOWN",
+        "native_http_attempts": "UNKNOWN",
+        "native_response_count_cap_enforced": false,
+        "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+        "parent_UI_provider_rows": "UNKNOWN_NOT_ADDED",
+        "response_provider_cache_pricing_and_cancelled_unexposed_tail": "UNKNOWN",
+        "dollar_cost": "UNKNOWN",
+        "imported_baseline_starts": "NOT_RECOUNTED_AS_CURRENT_STARTS"
+      },
+      "tools": {
+        "completed_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.public_https_get": 22,
+          "pm_boundary.read_file": 44,
+          "pm_execution.python_execute": 6
+        },
+        "attempt_counts": {
+          "pm_boundary.mechanical": 1,
+          "pm_boundary.public_https_get": 22,
+          "pm_boundary.read_file": 45,
+          "pm_execution.python_execute": 6
+        },
+        "failed_counts": {
+          "pm_boundary.read_file": 1
+        },
+        "current_metadata_call_count": 74,
+        "metadata_counts": [
+          {
+            "namespace": "pm_boundary",
+            "tool": "mechanical",
+            "success": true,
+            "count": 1
+          },
+          {
+            "namespace": "pm_boundary",
+            "tool": "public_https_get",
+            "success": true,
+            "count": 22
+          },
+          {
+            "namespace": "pm_boundary",
+            "tool": "read_file",
+            "success": false,
+            "count": 1
+          },
+          {
+            "namespace": "pm_boundary",
+            "tool": "read_file",
+            "success": true,
+            "count": 44
+          },
+          {
+            "namespace": "pm_execution",
+            "tool": "python_execute",
+            "success": true,
+            "count": 6
+          }
+        ],
+        "inventory_check": {
+          "actual_inference_tool_payload_observed": false,
+          "native_mcp_catalog_verified": true,
+          "scope": "source-controlled restriction plus pinned client dynamicToolSpec; request payload UNKNOWN",
+          "verified": false
+        },
+        "actual_inference_tool_payload": "UNKNOWN"
+      },
+      "current_candidate_execution_attempts": [
+        {
+          "execution_id": "exec-2azd6f8e",
+          "result_sha256": "007f194159f3acfb2b6fb2ab71daedc32cee1ac8f64b20edd4ac4e4b9f74c75f",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "c89767b98990756f5188793277c1686d98c2ee4b4eaa7931711561c72ef8a42b",
+          "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "stdout_bytes": 408,
+          "stdout_sha256": "a407f970010b9f6a2ea3e710fe9d3a47e2786cae95386842546e97b331e3c203",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-2ij7ziod",
+          "result_sha256": "1394bd3d42f19b3ab5e97fac926dd99907e21e5d542d67cebe7104e5ee587524",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 1,
+          "bootstrap_started": true,
+          "code_sha256": "19e7aee377b5f25ce93df6cdcc17f660c792e8f368a6c6bbcbf0b4fcfa117459",
+          "data_sha256": "ef7c6a7bc998dd638bf4c101ba31f63fe60d31cc9df76c9b1de2ee8da6a09dbf",
+          "stdout_bytes": 0,
+          "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stderr_bytes": 417,
+          "stderr_sha256": "0d4d4b19f786c82487e478c2dc7b52141f8be247df6bb52722512a55001138f9",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-bid5jb0d",
+          "result_sha256": "ec3c91df1635415dae18300b336650c8b9ff89e8022bcec31663ef75560c2337",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "f3ab71f2aede07b15351c95869f427df617b49a5b36bed27dd7d4ae7b5f7b70c",
+          "data_sha256": "b5a2f876d45871da4c3f141dfe3c44ba5b4ec2f031d5b3a2cca253ef45949390",
+          "stdout_bytes": 32768,
+          "stdout_sha256": "0d5c69b38404a2e6508b4cb686c2e2057346728623d74a0087490ee1e3456cfa",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": "output_cap",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-h11g3a88",
+          "result_sha256": "9c7e04a0336882fdee65ccb77f7a81d331fea87f2dfbf4f10a68c29ba3cd878e",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "eb0436c8624a1c79320e959e23f0cc2018fe93968fad763b2994b01e61aa0b8c",
+          "data_sha256": "75e4599a5fd0e3ac6b2f72918179c91b66a995fa0c043deae788d7aa5c7ef29a",
+          "stdout_bytes": 29098,
+          "stdout_sha256": "314919abb6eddd59000e98c694fb8e3382e9b8e58ebb971b4c12aa3a6e2a9323",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-ip9w7mgp",
+          "result_sha256": "8331f9128f4742759aac4cbee8163fbc3eafef67ae602c643ac51f2764266813",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "eb0436c8624a1c79320e959e23f0cc2018fe93968fad763b2994b01e61aa0b8c",
+          "data_sha256": "d72fe61c5a190c23880e1fa532785d7aa15de6221db4098481cf847b5d1849a6",
+          "stdout_bytes": 32768,
+          "stdout_sha256": "ee6cc393df8bc586d0a94f917a89e4a89e0294c9b01df9b3cb711d387ca8f902",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": "output_cap",
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        },
+        {
+          "execution_id": "exec-vak57a92",
+          "result_sha256": "35d9ceffcd1680bbc5dc832a68f5d48c105ea3ca20e0bfe45604b2e59a8911f3",
+          "actor": "candidate",
+          "execution_label": "executed by candidate",
+          "exit_code": 0,
+          "bootstrap_started": true,
+          "code_sha256": "39d3500eb6cb935dd22b52e2a1fd39d6525dd51109c3b6b6229243083a6b7d54",
+          "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "stdout_bytes": 359,
+          "stdout_sha256": "07c83758f9432703a466ed5e18f4a75a25514f0ea456db2f0c9896cf7aed40ed",
+          "stderr_bytes": 0,
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "cleanup_confirmed": true,
+          "cleanup_classification": "collected_unit_absent",
+          "stopped_by_adapter": null,
+          "limits": {
+            "cpu_seconds": 3,
+            "memory_bytes": 268435456,
+            "network": "new empty namespace",
+            "stream_bytes_each": 32768,
+            "tasks": 16,
+            "wall_seconds": 5
+          },
+          "inventory_result_sha_join_verified": true,
+          "witness_semantic_quality": "UNASSESSED",
+          "code_input_output_semantic_bodies_read": false,
+          "scope": "Current candidate execution attempt receipt only; no corresponding authored witness claim/expectation was delivered. Exit0 is not a source or witness PASS."
+        }
+      ],
+      "receipt_chain": {
+        "freeze_native_host_and_execution_result_joins": "VERIFIED_FOR_SELECTED_CURRENT_PINS",
+        "freeze_sha256": "0da9d5eea818a6e59f49a7f20c1823b8025c0f520e1fa7b482f89e62fa2d7976",
+        "native_result_sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d",
+        "embedded_pre_enrichment_native_receipt_sha256": "fae61c95737f1a96fe6c0dbe98a198c8b6daa8c5658cc4c0d4b0f1f14671b173",
+        "resource_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+        "launch_seal_sha256": "1e31a20a617df4e6543cd129cefa8084de7d352ce925e86f3ff3df04e6b04f70",
+        "resource_projection_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+        "runtime_projection_chain_scope": "embedded native_receipt_sha256 and final result hash are distinct; enrichment sequence provenance UNKNOWN pending exact owner source proof",
+        "evaluator_independently_read_actual_resource_reader_source": false,
+        "separately_saved_preembedding_receipt_bytes": "UNKNOWN",
+        "scope_rule": "Embedded pre-enrichment and enriched final receipt hashes retained in distinct namespaces; no equality asserted or receipt bytes reconstructed."
+      },
+      "science_scope": "Phase1 remains immutable. Execution attempt receipts do not supply a missing proposal/catalog or an authored witness expectation and do not rewrite scientific quality."
+    }
+  ],
+  "separate_unknowns": [
+    "evaluator physical provider/runtime UNKNOWN",
+    "candidate physical provider/runtime UNKNOWN",
+    "opaque native Goal IDs UNKNOWN; sessions separate",
+    "provider requests/model response counts UNKNOWN",
+    "money/pricing UNKNOWN",
+    "aggregate CPU/tasks/scratch caps UNKNOWN",
+    "resource sufficiency/fit UNKNOWN despite no observedOOM",
+    "source authenticity/version/applicability UNASSESSED per lockedPhase1",
+    "candidate witness semantic quality UNASSESSED"
+  ],
+  "evaluator_errors": [
+    {
+      "kind": "TOOL_OUTPUT_TRUNCATION",
+      "details": "Initial authorized key/runtime/resource display was too large. Exact hashes were verified; subsequent bounded selected-field metadata views covered required operational fields without any source-grade rewrite."
+    },
+    {
+      "kind": "LOCAL_PROJECTION_SHAPE_ERROR",
+      "details": "One verification helper assumed admitted input pins were a dict; actual runtime schema used a list. Helper stopped after successful current hash joins. A bounded follow-up read the list metadata and completed all21 Phase1 pin verification and37/35 input-pin comparison. No external artifact was edited."
+    }
+  ],
+  "prohibited_actions_performed": [],
+  "causal_quality_or_winner": "NOT_ESTABLISHED",
+  "science_unchanged": "Both final deliveries INCOMPLETE; missing final and full-pipeline science UNASSESSED. Partial maps remain partial maps."
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "er9.confirmation-compound-factor-mapper-verification.v1",
+  "created_utc": "2026-10-06T05:34:48.472306+00:00",
+  "status": "PASS_ZERO_INFERENCE",
+  "tests_passed": 3,
+  "elapsed_seconds": 0.014,
+  "test_command": "python3 -B -m unittest discover -s dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001 -p test_mapper.py -v",
+  "tests": [
+    "all4actual closed cards map V14/V10/V16 and existing unchanged DTO accepts",
+    "missing/wrong lock, foreign bundle, unknown compound, recipe/topology conflict reject; literalV06 still rejected by unchanged DTO",
+    "actualpositive C03G sidecar\u2192seal\u2192stage\u2192owner\u2192card joins; wrongarm rejects; original mutation boundary preserved"
+  ],
+  "synthetic_empty_entry_fixture": "DTO-factor-only smoke fixture; production method factors are nonempty and actual entries/strict ancestry validation unchanged. No actual artifact import/hydration performed.",
+  "source_card_validation_body_byteidentical": true,
+  "hydrate_only_functional_change": "method_factors=[card.method_id] replaced by declared_method_factors(card)",
+  "role_birth_bind_and_main_bodies_byteidentical": true,
+  "original_generic_DTO_and_tools1_4_source_manifest_unchanged": true,
+  "old_source_Task_card_native_runtime_caps_partial_dirs_cost_untouched": true,
+  "native_model_goal_provider_calls": 0
+}

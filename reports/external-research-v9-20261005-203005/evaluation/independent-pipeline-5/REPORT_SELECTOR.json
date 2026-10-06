@@ -1,0 +1,48 @@
+{
+  "credential_material": "NONE",
+  "evaluation_id": "independent-pipeline-5",
+  "final_json": {
+    "bytes": 67251,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/final-report.json",
+    "sha256": "74df43964b4c894827596621703e7096364fe727d6ced6bb037c5743d3e7f6bb"
+  },
+  "final_markdown": {
+    "bytes": 8415,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/final-report.md",
+    "sha256": "153f151732259bb63b23b3a401524a3df96d3935a2ad97d3536b602464fa6bf9"
+  },
+  "neutral_accounting_closure": {
+    "bytes": 4311,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/neutral-accounting-closure.json",
+    "sha256": "8a5c42c0c661a30e8f95d45e6a04fca7257933dbf40c3d31f7e3ef761d91387b"
+  },
+  "neutral_destinations": [
+    "/root/frozen_exports",
+    "/root/cost_accounting"
+  ],
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "phase1_all_pins_lock": {
+    "bytes": 19464,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-all-pins-lock.json",
+    "sha256": "9598f6241161a811fe909b653bd8ed69bb1d004020613c917ab270a29467a1da"
+  },
+  "phase1_judgment": {
+    "bytes": 35458,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase1-judgment.json",
+    "sha256": "e65af2d48a18b8c861c055f95427f0e0bd7f12e6e406770c5d0de127662fde8e"
+  },
+  "phase2_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+  "phase2_review": {
+    "bytes": 25739,
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-5/phase2-review.json",
+    "sha256": "98d367f0fcb0031c8198a9f1aee437f5437799c853dbc0631c26e4f2f1be8917"
+  },
+  "positive_science_destinations": [
+    "/root",
+    "/root/publisher"
+  ],
+  "report_completed_monotonic_ns": 96327589410069,
+  "report_completed_utc": "2026-10-06T05:51:48.732421+00:00",
+  "schema": "er9.credential-free-positive-report-selector.v1",
+  "whole_deadline_utc": "2026-10-06T06:06:07.622668+00:00"
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "er9.owned-positive-publication-selection.v1",
+  "created_utc": "2026-10-06T05:28:22.037122+00:00",
+  "owner": "execution_engine",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/project.py",
+      "sha256": "2c52d64e6cdb609ec95c1bc8c082a4057abb10671a75022dffbf07524039cd54"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/FEASIBILITY.json",
+      "sha256": "691ce88a81419fe0556a2ebbcc6bc82fa18699aee31deb79d8cc3ff45c731699"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/OLD_ROLE_STATUS.safe.json",
+      "sha256": "63e5bd339d83ade0eff81f155531a312ae3fe5fd6c67faceeff1b2b6596dc794"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/OLD_DIRECT_NATIVE_GOAL_STATUS.json",
+      "sha256": "26702ea3b2e3d8a208eeaa02037c99992cc8cabd01eea2db4523844238c13940"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/VERIFICATION.json",
+      "sha256": "786cebe7982da5cb49a4dea662ab45f90cd8b2e369ca2e0ef9a07526b12899ea"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/REPORT.md",
+      "sha256": "b894aed9057b3d1a0150d4a713138f51dfcebc090b2c143b5b1f3e7b358edbde"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/OWNER_INTEGRATION_OUTBOX.json",
+      "sha256": "b2a100b7c12810a0c64623380bfe8b950bcfad1c905c47c0c35eeb0244f22702"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/MANIFEST.json",
+      "sha256": "ff36854ecba3c71c81129ec81a39288f595c2b7604f76ef3a20932043bb34e91"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/PIN.json",
+      "sha256": "9d30f9e98d626365f8664110604455cb2c4fecc02fe7aac9ee7787d04e9fda39"
+    }
+  ],
+  "metadata_only": true,
+  "owner_files_quiescent": true,
+  "positive_source_scope": "Conditional all4/22-role feasibility and exact input/source hashes; no deployment/quality grade/new target credit",
+  "excluded": [
+    "all raw registry/native/private data",
+    "all brief/criteria/coverage/Task/candidate/source/evaluator bodies",
+    "all authored/scored outputs or inventories",
+    "all old live jobs",
+    "other owners files"
+  ],
+  "native_model_goal_calls": 0
+}

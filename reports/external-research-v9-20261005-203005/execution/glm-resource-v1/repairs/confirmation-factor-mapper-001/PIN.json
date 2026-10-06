@@ -1,0 +1,43 @@
+{
+  "schema": "er9.confirmation-factor-mapper-source-pin.v1",
+  "created_utc": "2026-10-06T05:34:48.472306+00:00",
+  "status": "READY_SOURCE_ONLY_ZERO_INFERENCE",
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py",
+    "sha256": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757"
+  },
+  "source_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_bundle_transport.py": "854c5c8f77da3981e767adc3e48c22dd0404896aec5faccba9ae768f43d1584b",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/role_birth_binding.py": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/hydrate_role_proofs.py": "5dc9eff1df4d0ffff32ff2323b70d8596e148360caa8aa6ac8975dbc337b83e2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/repairs/confirmation-factor-mapper-001/factor_resolver.py": "3b232fcc55246b2e232d64af1786ca612a5d468541bc5ab5be75225fbccf6494",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/operator_binding.py": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "files": {
+    "role_birth_binding.py": "6e5c4e5e51c80f6ac4b0c429fdcab86fc7d64e34b6b8059b3b2a6d14656a3757",
+    "hydrate_role_proofs.py": "5dc9eff1df4d0ffff32ff2323b70d8596e148360caa8aa6ac8975dbc337b83e2",
+    "factor_resolver.py": "3b232fcc55246b2e232d64af1786ca612a5d468541bc5ab5be75225fbccf6494",
+    "test_mapper.py": "e0a1506b8fafaf4089bf11c8bb157f9b3ae22072cfc85ad086a79dc00d0bf8e8",
+    "VERIFICATION.json": "8c03e74c7c2e9459665a018dcdda3dd7916882798d67024fb22c6bbb79279e34",
+    "REPORT.md": "d0f115530c010dbd64c3941c8651a07b352e72216dbfefff8e0bcc3933956ca1"
+  },
+  "source_repair_request": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/C03_COMPOUND_FACTOR_SOURCE_REPAIR_REQUEST_001.json",
+    "sha256": "ff25f30aa11ff09c240f5aa51ecaf59d1ee8ba48a310af336de5070f73467a66"
+  },
+  "preserved_old_source_mapper": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/hydrate_role_proofs_v002.py",
+    "sha256": "b7f9200f7cbbb447b224a7a68c0b67572e70966b30059060879411819e00cd4c"
+  },
+  "preserved_old_birth_helper": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/role_birth_binding_v002.py",
+    "sha256": "37d3ad17b5d4d496fc26280ba80f3142a7211c5423919ae3348ea2b2bcbb168c"
+  },
+  "original_source_owned_destination_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001",
+  "native_model_goal_provider_calls": 0,
+  "no_actual_hydration_or_admission": true
+}

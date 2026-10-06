@@ -1,0 +1,36 @@
+{
+  "evaluation_id": "independent-targeted-14",
+  "pair_id": "D-V10-A-BUNDLE-R001",
+  "phase1_all71_unchanged_and_nonwritable": true,
+  "pins": [
+    {
+      "bytes": 56842,
+      "hash_verified": true,
+      "mode": "0600",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-14_PHASE2_KEY_001.json",
+      "publication_of_raw_file": false,
+      "sha256": "091dd4a3d9fe36b7e9a8876b1caef3d29e2ec5afba213015b856907a6bd953c3"
+    },
+    {
+      "bytes": 67263,
+      "hash_verified": true,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-14_CURRENT_RUNTIME_001.json",
+      "publication_of_raw_file": false,
+      "sha256": "4219cd7c5f0d647367a6cd43117dce66c7b4bd815abef79d493f4c2ed605cffb"
+    },
+    {
+      "bytes": 15892,
+      "hash_verified": true,
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD14_CURRENT_RESOURCE_EXECUTION_001.json",
+      "publication_of_raw_file": false,
+      "sha256": "423221cbe9824694d19a70c7c88748b517e5bc1f311c8cd51adae9d397ec422f"
+    }
+  ],
+  "private_key_mode": "0600; hash verified; not rewritten/copied/published",
+  "private_references_dereferenced": false,
+  "raw_native_conversation_read": false,
+  "schema": "er9.independent-phase2-evidence-pins.v1",
+  "verified_utc": "2026-10-06T05:40:44.433618Z"
+}

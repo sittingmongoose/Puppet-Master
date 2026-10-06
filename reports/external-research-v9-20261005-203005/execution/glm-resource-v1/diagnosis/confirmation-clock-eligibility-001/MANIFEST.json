@@ -1,0 +1,33 @@
+{
+  "schema": "er9.confirmation-clock-feasibility-manifest.v1",
+  "created_utc": "2026-10-06T05:28:22.037122+00:00",
+  "feasibility": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/FEASIBILITY.json",
+    "sha256": "691ce88a81419fe0556a2ebbcc6bc82fa18699aee31deb79d8cc3ff45c731699"
+  },
+  "old_role_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/OLD_ROLE_STATUS.safe.json",
+    "sha256": "63e5bd339d83ade0eff81f155531a312ae3fe5fd6c67faceeff1b2b6596dc794"
+  },
+  "direct_saved_native_goal_status": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/OLD_DIRECT_NATIVE_GOAL_STATUS.json",
+    "sha256": "26702ea3b2e3d8a208eeaa02037c99992cc8cabd01eea2db4523844238c13940"
+  },
+  "projector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/project.py",
+    "sha256": "2c52d64e6cdb609ec95c1bc8c082a4057abb10671a75022dffbf07524039cd54"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/confirmation-clock-eligibility-001/VERIFICATION.json",
+    "sha256": "786cebe7982da5cb49a4dea662ab45f90cd8b2e369ca2e0ef9a07526b12899ea"
+  },
+  "policy": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-014-CONFIRMATION-CLOCK-FRESH.json",
+    "sha256": "7157f09e6004d0f65d9d6ff8fbc82e141d169eb105432ab89a4bb7705ff93834"
+  },
+  "administrative_source_policy": "Exact whitelist metadata and hashes only; no raw native/registry/workspaces/criteria/brief/candidate/evaluator bodies in positive selection.",
+  "time_policy": "One registry observation; workload cutoff, original monotonic clock, controller receipts and native Goal record times kept separate. No future/live quiet assertion.",
+  "native_goal_projection_policy": "Direct saved target statuses only. Blocked/ready roles remain UNKNOWN; no router-label/artifact completion inference.",
+  "task_start_utc": "2026-10-06T05:16:48+00:00",
+  "no_native_or_live_mutations": true
+}
