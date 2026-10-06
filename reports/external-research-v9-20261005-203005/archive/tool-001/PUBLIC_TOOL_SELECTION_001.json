@@ -1,0 +1,37 @@
+{
+  "dependencies": "Python3.9+stdlib only; no external packages",
+  "excluded": [
+    "raw bodies",
+    "host/private/native/runtime state",
+    "original evaluator/candidate metadata"
+  ],
+  "files": [
+    {
+      "bytes": 5159,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/evidence-archive/public/ARCHIVE_TOOL_001/archive_positive.py",
+      "relative_path": "archive_positive.py",
+      "sha256": "2605ad07ca6539755eac9144b4250bb97ec138f97e7653e6dd19661940e6818c"
+    },
+    {
+      "bytes": 2620,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/evidence-archive/public/ARCHIVE_TOOL_001/test_archive_positive.py",
+      "relative_path": "test_archive_positive.py",
+      "sha256": "7459249c612b42314a57715dfd13476b88cc4c69d20155041adedae68ddf9f8e"
+    },
+    {
+      "bytes": 2743,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/evidence-archive/public/ARCHIVE_TOOL_001/README.md",
+      "relative_path": "README.md",
+      "sha256": "066a9465c1b42929fe8067aedbf5bb56c05e7ff8f9ead97ad17f5ab5a734ad66"
+    },
+    {
+      "bytes": 3181,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/evidence-archive/public/ARCHIVE_TOOL_001/COVERAGE.json",
+      "relative_path": "COVERAGE.json",
+      "sha256": "0b9b55b24b83366c51fc44c675c057f89aa0c464e6e83e129a89c0c3780074d4"
+    }
+  ],
+  "frozen": true,
+  "schema": "er9.positive-public-archive-tool-selection.v1",
+  "scope": "portable stdlib finalizer/six boundary tests/docs/compact external path+SHA partial coverage only"
+}

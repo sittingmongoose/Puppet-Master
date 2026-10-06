@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "assessment_boundary": {
+      "type": "string"
+    },
+    "billing_dollars": {
+      "type": "string"
+    },
+    "candidate_physical_provider_and_http_attempts": {
+      "type": "string"
+    },
+    "candidate_reference_only": {
+      "additionalProperties": false,
+      "properties": {
+        "existing_attempt_id": {
+          "type": "string"
+        },
+        "existing_goal_id": {
+          "type": "string"
+        },
+        "freeze_elapsed_seconds": {
+          "type": "number"
+        },
+        "job_status": {
+          "type": "string"
+        },
+        "native_elapsed_seconds": {
+          "type": "number"
+        },
+        "native_goal_status": {
+          "type": "string"
+        },
+        "native_receipt_pin": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": "string"
+            },
+            "sha256": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "new_charge_tokens": {
+          "type": "number"
+        },
+        "router_terminal_status": {
+          "type": "string"
+        },
+        "rule": {
+          "type": "string"
+        },
+        "usage": {
+          "additionalProperties": false,
+          "properties": {
+            "cachedInputTokens": {
+              "type": "number"
+            },
+            "inputTokens": {
+              "type": "number"
+            },
+            "outputTokens": {
+              "type": "number"
+            },
+            "reasoningOutputTokens": {
+              "type": "number"
+            },
+            "totalTokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "inputTokens",
+            "cachedInputTokens",
+            "outputTokens",
+            "reasoningOutputTokens",
+            "totalTokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "existing_attempt_id",
+        "existing_goal_id",
+        "native_receipt_pin",
+        "usage",
+        "native_elapsed_seconds",
+        "freeze_elapsed_seconds",
+        "native_goal_status",
+        "router_terminal_status",
+        "job_status",
+        "new_charge_tokens",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "clock_rule": {
+      "type": "string"
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "evaluator_observed_effort": {
+      "type": "string"
+    },
+    "evaluator_observed_model": {
+      "type": "string"
+    },
+    "evaluator_provider_tokens": {
+      "type": "string"
+    },
+    "interphase_wait_and_report_prep_seconds": {
+      "type": "number"
+    },
+    "no_clock_reset_or_extension": {
+      "type": "boolean"
+    },
+    "observed_pre_source_seconds_since_reservation": {
+      "type": "number"
+    },
+    "phases": {
+      "additionalProperties": false,
+      "properties": {
+        "phase1": {
+          "additionalProperties": false,
+          "properties": {
+            "elapsed_seconds": {
+              "type": "number"
+            },
+            "finished_monotonic_ns": {
+              "type": "number"
+            },
+            "finished_utc": {
+              "type": "string"
+            },
+            "started_monotonic_ns": {
+              "type": "number"
+            },
+            "started_utc": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "started_utc",
+            "finished_utc",
+            "started_monotonic_ns",
+            "finished_monotonic_ns",
+            "elapsed_seconds"
+          ],
+          "type": "object"
+        },
+        "phase2": {
+          "additionalProperties": false,
+          "properties": {
+            "elapsed_seconds": {
+              "type": "number"
+            },
+            "finished_monotonic_ns": {
+              "type": "number"
+            },
+            "finished_utc": {
+              "type": "string"
+            },
+            "started_monotonic_ns": {
+              "type": "number"
+            },
+            "started_utc": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "started_utc",
+            "finished_utc",
+            "started_monotonic_ns",
+            "finished_monotonic_ns",
+            "elapsed_seconds"
+          ],
+          "type": "object"
+        },
+        "report_write": {
+          "additionalProperties": false,
+          "properties": {
+            "elapsed_seconds": {
+              "type": "number"
+            },
+            "finished_monotonic_ns": {
+              "type": "number"
+            },
+            "finished_utc": {
+              "type": "string"
+            },
+            "started_monotonic_ns": {
+              "type": "number"
+            },
+            "started_utc": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "started_utc",
+            "finished_utc",
+            "started_monotonic_ns",
+            "finished_monotonic_ns",
+            "elapsed_seconds"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "phase1",
+        "phase2",
+        "report_write"
+      ],
+      "type": "object"
+    },
+    "pre_source_scope": {
+      "type": "string"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "whole_assessment_elapsed_seconds": {
+      "type": "number"
+    },
+    "whole_review_including_report_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "evaluation_id",
+    "source_pin",
+    "phases",
+    "whole_assessment_elapsed_seconds",
+    "whole_review_including_report_seconds",
+    "interphase_wait_and_report_prep_seconds",
+    "observed_pre_source_seconds_since_reservation",
+    "pre_source_scope",
+    "no_clock_reset_or_extension",
+    "candidate_reference_only",
+    "evaluator_provider_tokens",
+    "evaluator_observed_model",
+    "evaluator_observed_effort",
+    "candidate_physical_provider_and_http_attempts",
+    "billing_dollars",
+    "clock_rule",
+    "assessment_boundary",
+    "validation_errors"
+  ],
+  "type": "object"
+}

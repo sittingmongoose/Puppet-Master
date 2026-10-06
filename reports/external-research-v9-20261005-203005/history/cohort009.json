@@ -1,0 +1,64 @@
+{
+  "cohort": "archive-and-evaluator-clocks-009",
+  "snapshot_at": "2026-10-06T00:36:14.323326+00:00",
+  "sources": [
+    {
+      "source": "ops/evidence-archive/PUBLIC_TOOL_SELECTION_001.json",
+      "public": "archive/tool-001/PUBLIC_TOOL_SELECTION_001.json",
+      "sha256": "97768c49a79489aee38963f42a83343e652fb1107406f69f36da33177ac7a7fb",
+      "byte_identical": true
+    },
+    {
+      "source": "ops/evidence-archive/public/ARCHIVE_TOOL_001/archive_positive.py",
+      "public": "archive/tool-001/archive_positive.py",
+      "sha256": "2605ad07ca6539755eac9144b4250bb97ec138f97e7653e6dd19661940e6818c",
+      "byte_identical": true
+    },
+    {
+      "source": "ops/evidence-archive/public/ARCHIVE_TOOL_001/test_archive_positive.py",
+      "public": "archive/tool-001/test_archive_positive.py",
+      "sha256": "7459249c612b42314a57715dfd13476b88cc4c69d20155041adedae68ddf9f8e",
+      "byte_identical": true
+    },
+    {
+      "source": "ops/evidence-archive/public/ARCHIVE_TOOL_001/README.md",
+      "public": "archive/tool-001/README.md",
+      "sha256": "066a9465c1b42929fe8067aedbf5bb56c05e7ff8f9ead97ad17f5ab5a734ad66",
+      "byte_identical": true
+    },
+    {
+      "source": "ops/evidence-archive/public/ARCHIVE_TOOL_001/COVERAGE.json",
+      "public": "archive/tool-001/COVERAGE.json",
+      "sha256": "0b9b55b24b83366c51fc44c675c057f89aa0c464e6e83e129a89c0c3780074d4",
+      "byte_identical": true
+    },
+    {
+      "source": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
+      "public": "accounting/cohort-007-eval2-clocks-001/PUBLIC_SELECTION.json",
+      "sha256": "27c389487f28481abd75950625e33e3d04fe6801afec985bfb72810897dd737b",
+      "byte_identical": true
+    },
+    {
+      "source": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.json",
+      "public": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.json",
+      "sha256": "88f097358c67c69608a5d4cf31805584cb495912ce655f729d4d353ec8d30084",
+      "byte_identical": true
+    },
+    {
+      "source": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.schema.json",
+      "public": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.schema.json",
+      "sha256": "f817846a1005acc17abdce9665ccc83e3bdc8490908e49a114dbaba463d54c6a",
+      "byte_identical": true
+    },
+    {
+      "source": "accounting/cohort-007-eval2-clocks-001/EVAL2_CLOCKS.md",
+      "public": "accounting/cohort-007-eval2-clocks-001/EVAL2_CLOCKS.md",
+      "sha256": "a657058a7bc1bc60ca2fad57b7372e0fce2868b775fac7c86878ad5bac684bf5",
+      "byte_identical": true
+    }
+  ],
+  "new_candidate_inference_claim": false,
+  "complete_archive_claim": false,
+  "original_judgments_costs_clocks_unchanged": true,
+  "full_pipeline_or_winner_claim": false
+}

@@ -1,0 +1,19 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.json",
+      "sha256": "88f097358c67c69608a5d4cf31805584cb495912ce655f729d4d353ec8d30084"
+    },
+    {
+      "path": "accounting/cohort-007-eval2-clocks-001/eval2-clocks.safe.schema.json",
+      "sha256": "f817846a1005acc17abdce9665ccc83e3bdc8490908e49a114dbaba463d54c6a"
+    },
+    {
+      "path": "accounting/cohort-007-eval2-clocks-001/EVAL2_CLOCKS.md",
+      "sha256": "a657058a7bc1bc60ca2fad57b7372e0fce2868b775fac7c86878ad5bac684bf5"
+    }
+  ],
+  "cohort": "007-eval2-clocks-001",
+  "exclusion": "Clock and existing-cost reference metadata only; no assessment, semantic bodies, machine state or unlisted files.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

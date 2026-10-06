@@ -1,0 +1,67 @@
+{
+  "assessment_boundary": "Native Goal status, router outcome, job failure and independent quality judgment are different facts. This projection does not assess or alter source coverage or quality.",
+  "billing_dollars": "UNKNOWN",
+  "candidate_physical_provider_and_http_attempts": "UNKNOWN",
+  "candidate_reference_only": {
+    "existing_attempt_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+    "existing_goal_id": "01a10e6d-7d6e-7603-9c16-7e60a1a76acd",
+    "freeze_elapsed_seconds": 585.649430624,
+    "job_status": "FAILED",
+    "native_elapsed_seconds": 585.563808303,
+    "native_goal_status": "paused",
+    "native_receipt_pin": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+      "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+    },
+    "new_charge_tokens": 0,
+    "router_terminal_status": "HOLD",
+    "rule": "Reference an existing charged actor/Goal; cached input is included in input and reasoning is a subset of output. Native and freeze elapsed intervals overlap, never add them.",
+    "usage": {
+      "cachedInputTokens": 4887296,
+      "inputTokens": 5203609,
+      "outputTokens": 59681,
+      "reasoningOutputTokens": 31736,
+      "totalTokens": 5263290
+    }
+  },
+  "clock_rule": "Whole review contains phase1, phase2, interphase wait/prep and report-writing. Never add slices to whole again. Wall clocks are not model/API occupied time or critical path.",
+  "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+  "evaluator_observed_effort": "UNKNOWN",
+  "evaluator_observed_model": "UNKNOWN",
+  "evaluator_provider_tokens": "UNKNOWN",
+  "interphase_wait_and_report_prep_seconds": 565.582755949,
+  "no_clock_reset_or_extension": true,
+  "observed_pre_source_seconds_since_reservation": 1548.893206,
+  "phases": {
+    "phase1": {
+      "elapsed_seconds": 457.105438333,
+      "finished_monotonic_ns": 75647855684662,
+      "finished_utc": "2026-10-06T00:07:08.998665Z",
+      "started_monotonic_ns": 75190750246329,
+      "started_utc": "2026-10-05T23:59:31.893206Z"
+    },
+    "phase2": {
+      "elapsed_seconds": 527.175318055,
+      "finished_monotonic_ns": 76740613758666,
+      "finished_utc": "2026-10-06T00:25:21.756714Z",
+      "started_monotonic_ns": 76213438440611,
+      "started_utc": "2026-10-06T00:16:34.581388Z"
+    },
+    "report_write": {
+      "elapsed_seconds": 193.607181404,
+      "finished_monotonic_ns": 76934220940070,
+      "finished_utc": "2026-10-06T00:28:35.363866Z",
+      "started_monotonic_ns": 76740613758666,
+      "started_utc": "2026-10-06T00:25:21.756714Z"
+    }
+  },
+  "pre_source_scope": "Observed reservation/prep/wait only; unobserved dispatch birth UNKNOWN. Separate from post-source review.",
+  "schema": "er9.accounting.eval2-clocks.v1",
+  "source_pin": {
+    "path": "evaluation/independent-pipeline-2/review0001/COST_RECEIPT.json",
+    "sha256": "6351a085c8a7cf87fcd1b627ad92f3f7b2e02fdfa1f8768dcb015bb997a35dcd"
+  },
+  "validation_errors": [],
+  "whole_assessment_elapsed_seconds": 1549.863512337,
+  "whole_review_including_report_seconds": 1743.470693741
+}
