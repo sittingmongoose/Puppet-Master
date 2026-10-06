@@ -1,0 +1,82 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T072725.972436Z/BACKUP_RECEIPT.json",
+    "sha256": "424d6a4368a32c6d45f75b149edcae9b441e8217faa98f5474f8487a53b5946c"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 53,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T07:27:25.972436+00:00",
+  "scope": "Verified028029/account016 dated capture/rootcounter19/Warmreview clocks/storageincident metadata only; no grade or campaignfinish.",
+  "source_observed_utc": "2026-10-06T07:24:44Z",
+  "sources": [
+    {
+      "bytes": 3361,
+      "path": "ops/publication/cohort028-verification.json",
+      "sha256": "5cf2a2e6de078b07e91463c7883add555c192894463ba1311df8f95907dc4db2"
+    },
+    {
+      "bytes": 2428,
+      "path": "ops/publication/cohort029-verification.json",
+      "sha256": "51f0475de1ab766b44953f9a3a3395a7b57e9751363387dfcd92f50da42b97df"
+    },
+    {
+      "bytes": 4155,
+      "path": "accounting/cohort-016/KEEPER_RECEIPT.json",
+      "sha256": "8548157a8d32e166cbe814f693730f85c170cfbca5021212528e319c451cb721"
+    },
+    {
+      "bytes": 3167,
+      "path": "accounting/cohort-016/PUBLIC_SELECTION.json",
+      "sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140"
+    },
+    {
+      "bytes": 1521,
+      "path": "accounting/cohort-016/CLOSURE.json",
+      "sha256": "fef7968762745b4549c3db6c282e868f853eccfe8016c8707b1cd12409de367f"
+    },
+    {
+      "bytes": 501,
+      "path": "accounting/cohort-016/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "62ce9c4108b9c88dd5943448b9265f2b2ca34cd7ef0cdf72ba64db735351a1d7"
+    },
+    {
+      "bytes": 6427,
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "6ebfd6c0f21179215d47361658fcaa6401eeb32a737039e0b1317fcbfe1a7b36"
+    },
+    {
+      "bytes": 1122,
+      "path": "supervision/STORAGE-ENOSPC-001.json",
+      "sha256": "47b0ecb40527034a1ea5baffae81a0d92b56052e70db608ac36c699b2058cbaf"
+    },
+    {
+      "bytes": 373,
+      "path": "evaluation/independent-warm-recovery-2/source_start.json",
+      "sha256": "2e9e437038f3bfdb86adf3fcef8a9c814174a29c42c1c13a1d63270fe720fbba"
+    },
+    {
+      "bytes": 5600,
+      "path": "/tmp/er9-independent-warm-recovery-1-fresh/closure_receipt.json",
+      "sha256": "aefbdd11398b20e9cb9c7b33533c79277342d829dc59a413dc5ed626e21f910c"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 201015,
+      "path": "state/current.json",
+      "sha256": "099267c6967ee66ecf6d62c32671eae0ebc530a9fa1e7183c986b8eb4e48ec7d"
+    },
+    {
+      "bytes": 201015,
+      "path": "state/campaign.json",
+      "sha256": "099267c6967ee66ecf6d62c32671eae0ebc530a9fa1e7183c986b8eb4e48ec7d"
+    },
+    {
+      "bytes": 31467,
+      "path": "CURRENT.md",
+      "sha256": "64f7059e6ddaf9e8b5c53c47a11e53e3504656925f87c6fb72c12e8747455059"
+    }
+  ]
+}

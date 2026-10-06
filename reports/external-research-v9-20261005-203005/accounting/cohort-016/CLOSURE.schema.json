@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "billing_dollars": {
+      "type": "string"
+    },
+    "campaign_complete": {
+      "type": "boolean"
+    },
+    "clock_reset": {
+      "type": "boolean"
+    },
+    "closed_monotonic_ns": {
+      "type": "number"
+    },
+    "closed_utc": {
+      "type": "string"
+    },
+    "helper_provider_usage": {
+      "type": "string"
+    },
+    "later_closure_pointer_notices_and_final_delivery": {
+      "type": "string"
+    },
+    "new_candidate_Goals_or_provider_invocations_by_accounting": {
+      "type": "boolean"
+    },
+    "owner_acknowledgments": {
+      "type": "string"
+    },
+    "primary_required_notice_tool_returns_observed": {
+      "type": "boolean"
+    },
+    "primary_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "raw_native_protocol_modelIO_bulk_read_or_restored": {
+      "type": "boolean"
+    },
+    "report_ready_elapsed_seconds_subset": {
+      "type": "number"
+    },
+    "retained_cost_metadata_sufficient": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "start_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "storage_preservation_reader_coordination_included": {
+      "type": "boolean"
+    },
+    "whole_limit_seconds": {
+      "type": "number"
+    },
+    "whole_through_required_root_foreman_publisher_keeper_ops_notices_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "start_pin",
+    "closed_utc",
+    "closed_monotonic_ns",
+    "whole_through_required_root_foreman_publisher_keeper_ops_notices_seconds",
+    "whole_limit_seconds",
+    "clock_reset",
+    "primary_required_notice_tool_returns_observed",
+    "owner_acknowledgments",
+    "report_ready_elapsed_seconds_subset",
+    "primary_selection_pin",
+    "storage_preservation_reader_coordination_included",
+    "raw_native_protocol_modelIO_bulk_read_or_restored",
+    "retained_cost_metadata_sufficient",
+    "new_candidate_Goals_or_provider_invocations_by_accounting",
+    "helper_provider_usage",
+    "billing_dollars",
+    "later_closure_pointer_notices_and_final_delivery",
+    "campaign_complete",
+    "scope"
+  ],
+  "type": "object"
+}

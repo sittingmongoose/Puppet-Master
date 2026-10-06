@@ -1,0 +1,28 @@
+{
+  "billing_dollars": "UNKNOWN",
+  "campaign_complete": false,
+  "clock_reset": false,
+  "closed_monotonic_ns": 101901969077965,
+  "closed_utc": "2026-10-06T07:24:43.112200+00:00",
+  "helper_provider_usage": "UNKNOWN",
+  "later_closure_pointer_notices_and_final_delivery": "UNKNOWN_OUTSIDE_THIS_RECEIPT_MEASUREMENT",
+  "new_candidate_Goals_or_provider_invocations_by_accounting": false,
+  "owner_acknowledgments": "UNKNOWN_NOT_WAITED_FOR",
+  "primary_required_notice_tool_returns_observed": true,
+  "primary_selection_pin": {
+    "path": "accounting/cohort-016/PUBLIC_SELECTION.json",
+    "sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140"
+  },
+  "raw_native_protocol_modelIO_bulk_read_or_restored": false,
+  "report_ready_elapsed_seconds_subset": 238.759857198,
+  "retained_cost_metadata_sufficient": true,
+  "schema": "er9.accounting.required-notice-closure.v1",
+  "scope": "Own bounded mechanical accounting work includes source-pinned storage preservation coordination, later exact neutral Warm clock import and required notices. Report-ready is subset, not extra elapsed charge. No native admission, scientific assessment or campaign stop performed.",
+  "start_pin": {
+    "path": "accounting/cohort-016/START.json",
+    "sha256": "1eec5a9fed22a133e516fd2e0d8a653916d7c759fd2998c471c4af6813f6fec4"
+  },
+  "storage_preservation_reader_coordination_included": true,
+  "whole_limit_seconds": 1800,
+  "whole_through_required_root_foreman_publisher_keeper_ops_notices_seconds": 424.308640756
+}

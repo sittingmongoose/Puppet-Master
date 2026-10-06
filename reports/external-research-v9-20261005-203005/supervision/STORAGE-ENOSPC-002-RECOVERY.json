@@ -1,0 +1,31 @@
+{
+  "accounting_owner_attestation": "cohort016 never reads redacted protocol/model-IO bulk; required cost/native/proof metadata retained",
+  "archive_manifest": {
+    "path": "/mnt/Cursor/PuppetMaster-Evidence/tests/er9-storage-20261006T0710/terminal-redacted/BATCH-20261006T071708620971Z.json",
+    "root_manifest_body_not_read": true,
+    "sha256": "8f4fce52544d92ec4c4c598885617d51845f530d3fb05e92175396043fb2059e"
+  },
+  "candidate_goal_restart": false,
+  "clock_reset": false,
+  "finite_queue_continues": true,
+  "foreign_or_sibling_cleanup": false,
+  "native_goal_status": "ACTIVE",
+  "ops_recovery_capacity_receipt": {
+    "available_bytes": 7927799808,
+    "estimate_not_proven_maximum": true,
+    "observed_utc": "2026-10-06T07:26:08.295431+00:00",
+    "path": "ops/dispatcher/STORAGE_RECOVERY_ADMISSION_RESUME_001.json",
+    "root_exact_sha_verified": true,
+    "sha256": "de6fe880d13a672e6bd7fc305efc3d557c9e0e5c10e6936da51e1d75b6f06fea"
+  },
+  "ops_reported_recovered_gib": 5.01,
+  "ops_reported_source_SHA_length_and_exact_restore_test_passed": true,
+  "prior_incident": {
+    "path": "supervision/STORAGE-ENOSPC-001.json",
+    "sha256": "47b0ecb40527034a1ea5baffae81a0d92b56052e70db608ac36c699b2058cbaf"
+  },
+  "recorded_at_utc": "2026-10-06T07:30:15.716857+00:00",
+  "remaining_infrastructure_receipt": "C01 control critique PRIVATE_SLICE_RELEASE.json empty; preserve original and recover separatelydated exact ownedquiet check via pinned API",
+  "schema": "er9-supervisor-storage-incident/v1",
+  "source_grade_inference": false
+}

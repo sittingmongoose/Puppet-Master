@@ -1,0 +1,45 @@
+# Local biomedical image review workspace
+
+## Recovery status and purpose
+
+This is a complete current proposal authored from the frozen brief and eligible evidence. The admitted exact same-arm predecessor files could not be resolved by the bounded file interface, so this proposal cannot certify claim-by-claim preservation or correction of those files. It preserves that unknown explicitly. The system is a research tool for six university researchers exchanging project bundles through shared storage; it is not a diagnostic product.
+
+## Evidence and component choice
+
+Use a thin desktop application with napari 0.9.2 as the first visualization and vector-annotation candidate, a project-owned manifest and journal, and OME-NGFF 0.4 as a bounded interchange and metadata target. This is a design choice, not a report that these pieces already interoperate. Keep project state and import policy outside viewer layer state so it can be validated, versioned and reopened independently.
+
+OME-NGFF 0.4 describes named axes and coordinate transformations; the captured specification allows 2–5 axes and defines sequential scale and translation transforms for multiscale datasets [S1]. This is useful as a data contract precedent. The napari 0.9.2 release describes an interactive multidimensional image viewer; its Shapes guide is a high-level guide to points, paths, lines, rectangles, ellipses and polygons [S2, S3]. It is a separate interaction precedent, but the captured guide does not establish persistence, mask behavior, accessibility or speed.
+
+A third, independent storage precedent is Zarr issue #3516: its reporter describes unreadable ZipStore output from Dask `to_zarr` on Zarr 3.1.3 while a LocalStore comparison did not fail [S4]. PR #4450 was open and unmerged in the captured state; its visible patch adds ZipStore copy/writer tests [S5, S6]. This is evidence of a reported failure and proposed code/test coverage, not a merged or released fix, passing test, reproduced defect or LocalStore durability/performance result. Therefore the first design should not rely on ZipStore for durable project writes. Keep the incident as a release-gate lead and recheck its disposition before selecting a backend. These three precedents contribute metadata/interchange, interaction and storage-risk evidence independently.
+
+## Data contract and annotation model
+
+On import, record source URI or relative path, file identity, size and available timestamps; retain the original metadata bytes and parsed interpretation separately. Offer an explicit background content fingerprint for relocation/reopen checks. The application never writes into source images. A display window/level, channel selection, slice or time point is view state and must not change samples. Resampling, reorientation or any geometric/intensity derivation is a separate operation with input identity, parameters, software version and output identity.
+
+Store each dataset's axis names, order, type, units when present, shape and transform chain. Treat displayed coordinates, array indices and physical coordinates as distinct values. For a supported NGFF scale/translation step define `p[i] = translation[i] + scale[i] * index[i]` in the declared axis order and compatible units [S1]. Product choice: integer index positions denote voxel centers. Persist the convention, permutation, origin, units and transform ID with each annotation and export. Never infer unknown units or orientation. If metadata is ambiguous, retain the raw metadata, show the interpretation and ask the user to correct or cancel import. Validate permutations, inverse mapping, non-spatial axes and units before relying on them.
+
+An annotation records its kind, geometry or mask reference, source fingerprint, dataset/transform ID, axes, coordinate space and extent: single slice, selected time/channel, volume, or acquisition. Use viewer shapes for vector editing only after a persistence round-trip check. Treat raster masks as a separate tiled label asset referenced by the project, not as a capability established by the Shapes guide. Reusable styles and keyboard navigation are project settings. Annotation edits use undo/redo and are journaled as discrete operations.
+
+## Incremental workflow
+
+1. Create a project and choose reference mode for large external images or an explicit portable copy for suitably small data. Show the portability trade-off before import.
+2. Inspect metadata and provenance with bounded metadata reads first. Offer supported-region/tile access, progress and cancellation; set a documented cache budget and avoid an intentional second full decoded copy. The 3 GB source on an 8-core/16 GB workstation is a target to measure, not an established capability.
+3. Display channels, window/level, slice and time controls without mutating source samples. Show original data separately from derived views. Keyboard operation and legible metadata/errors are minimum design requirements.
+4. Annotate with explicit spatial and frame context. Unsupported axes, calibration or input types remain visible as unsupported; preserve the project and source, explain the reason, and offer cancel or an explicit corrected-import choice.
+5. Save through a staged project generation: write changed assets to a temporary generation, validate references, flush data, then replace the manifest where the filesystem supports the required rename semantics. Keep a recoverable journal/checkpoint and do not discard the last valid generation until commit is confirmed. Provide progress and cancellation at safe operation boundaries. These are proposed choices; network and shared-storage durability is filesystem-dependent.
+6. Reopen on another machine by resolving the stored relative/external path and checking identity. If the path moved or fingerprint differs, request explicit relinking and show the mismatch; never silently bind annotations to a different image. Use a single-writer lock for a project and report stale/conflicting copies. Bundle exchange is supported as copies; live concurrent editing is out of scope.
+7. Export an annotation table with pixel and physical coordinates, axis order, units, frame/slice/channel scope, source fingerprint and transform ID. Export overlays only with an explicit coordinate mapping. A small derived image gets a sidecar operation record naming resampling, intensity mapping, axes and output format; verify unchanged source identity and disclose what the export omits.
+
+## Initial support boundary and alternatives
+
+For the first increment, qualify read-only local directory datasets that conform to a documented OME-NGFF 0.4 profile and have interpretable axes/transforms. This is a proposed boundary, not a claim that a reader has passed. Select actual fixtures and pin reader versions before promising support. Other microscopy formats, stores, malformed or ambiguous metadata, unsupported transforms and remote paths fail closed with explanation and preserved source/project; add formats only with representative fixtures and reopen/export checks. Do not promise universal compatibility.
+
+Napari is the opportunity for a useful existing multidimensional interaction component; an alternative is a smaller Qt desktop shell with a narrower in-house viewer if plugin/version coupling or annotation persistence fails qualification. Keep NGFF directory storage and project metadata loosely coupled. Avoid ZipStore as the durable write path until issue #3516's patch is merged, tests pass in the applicable release and crash/reopen behavior is independently checked. The reported LocalStore comparison is not enough to call it safe.
+
+## Validation plan
+
+Executed witness W1 checks only arithmetic for one three-axis scale/translation and a GiB/MiB block count; it does not exercise an image, reader, viewer, storage backend, memory ceiling or application [W1]. The following remain proposed/UNEXECUTED: (V1) axis permutation, unit, origin, center convention and inverse-coordinate fixtures; (V2) representative multidimensional NGFF reads including random tiles and cancellation while measuring peak resident memory against the 16 GB/3 GB target; (V3) save interruption at each commit boundary, recovery to the last valid generation and relocation with matching/mismatching fingerprints on supported filesystems; (V4) annotation edit/undo/reopen, mask and vector round-trips, table/overlay coordinate checks, derived-image provenance and source hash comparison; (V5) keyboard-only operation, legibility and actionable error feedback. No application-level compatibility or performance check is claimed.
+
+## Sources
+
+Source identities, capture hashes, exact locators and limitations are in `sources.json`; witness code, input, result and limits are in `witnesses.json`. Optional investigations and unresolved dependencies are in `leads.json`.

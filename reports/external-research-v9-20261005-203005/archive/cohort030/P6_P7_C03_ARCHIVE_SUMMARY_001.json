@@ -1,0 +1,75 @@
+{
+  "P6_initial001_not_selected": true,
+  "authority_selector_sha256s": [
+    "66f95f40bbfa5a367ca12664236c15dfaedbfc031e6785f79c2b99f9dc06b276",
+    "6ad51a0641d89d052e298adb0c968974442414bdfaa290debd4a300a8bc22c17",
+    "40e24ef92e517721919d021b3d06d50b92fdc19de5803e722b3bd595eb984e2b",
+    "3fabb361121d7d995d6dae435b70bf30f87ea3cb35b26af390579707be91096c"
+  ],
+  "body_bytes": 7121367,
+  "body_count": 86,
+  "cohorts": [
+    {
+      "authority_selector_sha256": "66f95f40bbfa5a367ca12664236c15dfaedbfc031e6785f79c2b99f9dc06b276",
+      "body_bytes": 4307299,
+      "body_count": 34,
+      "metadata_bytes": 38899,
+      "metadata_count": 34,
+      "selection": "P6-REQUESTED-CURRENT-SOURCE-PRESERVATION-WITNESS-001"
+    },
+    {
+      "authority_selector_sha256": "6ad51a0641d89d052e298adb0c968974442414bdfaa290debd4a300a8bc22c17",
+      "body_bytes": 1688532,
+      "body_count": 25,
+      "metadata_bytes": 29127,
+      "metadata_count": 25,
+      "selection": "P7-REQUESTED-CURRENT-SOURCE-PRESERVATION-WITNESS-001"
+    },
+    {
+      "authority_selector_sha256": "40e24ef92e517721919d021b3d06d50b92fdc19de5803e722b3bd595eb984e2b",
+      "body_bytes": 1036543,
+      "body_count": 20,
+      "metadata_bytes": 22917,
+      "metadata_count": 20,
+      "selection": "C03-REQUESTED-CURRENT-SOURCE-PRESERVATION-WITNESS-001"
+    },
+    {
+      "authority_selector_sha256": "3fabb361121d7d995d6dae435b70bf30f87ea3cb35b26af390579707be91096c",
+      "body_bytes": 88993,
+      "body_count": 7,
+      "metadata_bytes": 5810,
+      "metadata_count": 7,
+      "selection": "C03-REQUESTED-INDEPENDENT-PRIMARY-URLS-001"
+    }
+  ],
+  "coverage": "PARTIAL_EXACT_P6_002_P7_C03_PUBLIC_BODY_METADATA_ONLY_NOT_QUEUE_RECONCILED",
+  "excluded_inputs_and_executions": true,
+  "exclusions": [
+    "baseline scientificinputs/candidateexecutions",
+    "P6 initial001 extraUUID",
+    "private/native/auth/modelIO",
+    "newnetwork/recursiveLABscan/sourcegrading/candidatefeedback"
+  ],
+  "files_count": 172,
+  "http_status_counts": {
+    "200": 85,
+    "404": 1
+  },
+  "incomplete_count": 2,
+  "independent_archive_reread": "ALL172_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+  "invalid_utf8_count": 0,
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/c741d1c7b3477c5cd6b56cebd884103fe038ea9a79ba0f1f1acef3d308ae40aa/MANIFEST.json",
+  "manifest_sha256": "d0bcdbf98379dff2da10666cd9c3dc826d1ac00fb7423fae5f60404ab6cbe508",
+  "metadata_bytes": 96753,
+  "metadata_count": 86,
+  "overlap_policy": "selected file lineages; duplicate SHA and previous cohorts not new unique evidence",
+  "prior_archives": "UNCHANGED",
+  "raw_repository_policy": "body/metadata/rawlocators NASonly; compactpinreceipt maypublish",
+  "restart": "Exactfourallowlists rows.body+metadata complete; future evidence separatepositivepins; wholequeue reconciliation pending",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 7218120,
+  "selection_sha256": "c741d1c7b3477c5cd6b56cebd884103fe038ea9a79ba0f1f1acef3d308ae40aa",
+  "source_quality": "UNKNOWN_NO_SEMANTIC_ASSESSMENT",
+  "truncated_count": 2,
+  "unlocated_reference_count": 1
+}

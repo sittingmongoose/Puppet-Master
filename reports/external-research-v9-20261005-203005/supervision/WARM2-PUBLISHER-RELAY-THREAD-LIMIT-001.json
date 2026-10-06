@@ -1,0 +1,18 @@
+{
+  "actual_error": "agent thread limit reached",
+  "event": "ordinary_publisher_scientific_handoff_relay_denied",
+  "literal_phase2_deadline_utc": "2026-10-06T07:37:49.319934Z",
+  "no_ack_wait_or_clock_reset": true,
+  "original_review_caps_unchanged": true,
+  "phase1_assessment_sha256": "9a16266cad6af394dbdb4c393a19145ab11542398681343cfc397fb96b9917a4",
+  "phase1_freeze_utc": "2026-10-06T07:27:49.319934Z",
+  "phase1_report_sha256": "b61c4849bf0c92fa6ba76404602d1c44b3c89ff5321ed770e9170bd0a63cfee3",
+  "publication_pending": true,
+  "recorded_at_utc": "2026-10-06T07:28:51.027665+00:00",
+  "retry_policy": "ordinary handoff after later known actual completion; no settings/model/owner substitution",
+  "review_unit": "independent-warm-recovery-2",
+  "root_scientific_handoff_received": true,
+  "schema": "er9-supervisor-incidence/v1",
+  "target": "/root/publisher",
+  "tool": "collaboration.send_message"
+}
