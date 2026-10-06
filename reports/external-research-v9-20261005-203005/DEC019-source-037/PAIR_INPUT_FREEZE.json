@@ -1,0 +1,26 @@
+{
+  "actual_family": "Z",
+  "additional_warm_factors": [
+    "clock awareness",
+    "readiness failfast",
+    "tools1.5",
+    "own-prior navigation",
+    "explicit failed-parent reuse"
+  ],
+  "clean_matched_or_fresh_or_logical_target_credit": false,
+  "donor_selection_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/I01_ORIGINAL_T_FAILED_R_AUTHENTIC_DONOR_001/SELECTION.json",
+    "sha256": "ff0087a716b7935a80b4ed2e88f8195caf02dd9b5c14f0970d8bb8c41eb6f51b"
+  },
+  "effort": "Max",
+  "model": "GLM 5.3 Flash",
+  "old_costs_preserved": true,
+  "old_research_status": "FAILED/paused",
+  "original_card_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-01-FRESH-DELIVERY-R001/card.json",
+    "sha256": "7a06c1e96dd79c3a2b3c3d7d620a25fd20e0980a80b5911557939cbd08435bb6"
+  },
+  "pair_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001",
+  "schema": "er9.descriptive-warm-input-freeze.v1",
+  "source_slot": "I-01"
+}

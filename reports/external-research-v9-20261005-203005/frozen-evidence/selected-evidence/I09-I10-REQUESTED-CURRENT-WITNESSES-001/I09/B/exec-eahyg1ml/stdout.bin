@@ -1,0 +1,10 @@
+float64-JSON round-trip exact for all calibration values: True
+  f32 abs error for 0.3625: +1.192e-08
+  f32 abs error for 2.9033: +4.692e-08
+  f32 abs error for 0.001: +4.750e-11
+  f32 abs error for 1048576.5: +0.000e+00
+  f32 abs error for 123456.789125: -6.250e-05
+max voxel-index error, float32 physical coords:
+  single-axis 3 GB extent: 177
+  2D slice 54772 px:       0
+  volume 1442^3:           0

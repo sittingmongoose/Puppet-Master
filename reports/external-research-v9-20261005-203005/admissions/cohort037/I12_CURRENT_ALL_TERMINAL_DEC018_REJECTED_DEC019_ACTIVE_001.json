@@ -1,0 +1,232 @@
+{
+  "observed_utc": "2026-10-06T12:14:23.369452+00:00",
+  "I12_all6_rows": [
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:41:57.885071+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "ea67bab28dbb60461f96c7e15063ee5f9ac248063d0dc5426ed0ba65126a50d9"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "5a48660094d920530d4199f81cb5cfd9d9becc542aa084a5672793ce5c183eab"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "754ea1b0f4fbc069d9c82511511d23ea49112964d69a86daedcbbf300bc77224",
+          "bytes": 4244
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "831ef828bdaf203125d2fc0dad29a7d84ea5d091633399cffe1aea80f92c2a81",
+          "bytes": 25177
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "c50c17178e99c95c04a84c066bfc9019ec4a794dfd7456c2a5433107ed934e1c",
+          "bytes": 11457
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "784a2cdefbeb507714c758065982bf8fd8a45c0d1f25c79a6860bcc6bb02f7c7",
+          "bytes": 7154
+        }
+      ],
+      "elapsed_seconds": 794.5299970750057
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:52:42.093215+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "c8b789a3fd17b154c183ab2d2ab784862eb60ab89c1d61de16d96774125a60c0"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "2dab0737dfd98107c8a80cb8a60096fa2742603fa6f207ec07b6e71c2c0a872f"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "49158d818cf4ddc236623bb3bb4b0af47e78e80a3a9afc669dc934a5b1d3244f",
+          "bytes": 22052
+        }
+      ],
+      "elapsed_seconds": 481.1282480439986
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T12:02:50.491231+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "0d0394812dd7d25a9735aaa8953cdef4d8f05ffad4e6026fa2aeaabc79561beb"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "8b0644df2d07014e2c677e3464636b337ec87cbeb6c37d22b9642d328cfd5827"
+      },
+      "operational_complete": false,
+      "native_status": "cap_seconds",
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": [],
+      "elapsed_seconds": 574.1055551430036
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:28:28.043627+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "324b14371d9a0c394946185a053616958cd0eea7ab2330e16d4c5c783101ac98"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "fd09170f86c7fe9ec8e763943c238843136bc583696ec173ac9478278c7d461b"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "1851b9f10f6c521454ae4798cba51a008788461f3bb9f09518c77d6c95ce8827",
+          "bytes": 6880
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "11dc4378fd96363cea544162eddc51bfb32448cbacb63ba5116c0e96261dd601",
+          "bytes": 31688
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "9849e3087bdef035997c30c316c00a819de46d483e458a872684366528b4d530",
+          "bytes": 15967
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "c2df25c8e23449695191475836785fc8e671dd54ce89370bf3ed3f1d1a34f179",
+          "bytes": 10570
+        }
+      ],
+      "elapsed_seconds": 1021.00909305799
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:40:59.442885+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "eefc799258f2605320fc6adf183964052ac9efdcbef77662f96b63d9afdb19a7"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "d03d88c3d5d358c281cd6a2c8af369a7a4bea6ff96928aff87a4fa3bd33ef197"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "c70872d502f21571710528b2ece8e1e07a31559b9a2096097685ef9f1a56d769",
+          "bytes": 24040
+        }
+      ],
+      "elapsed_seconds": 594.7097208400082
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:53:48.357952+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "727006c8b67180c9a5a7cebc205ac5f87c623dd8adef70d5e123bbfd3f08e975"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "c21e67231bbdb81f4b8ff1a23d5c962587f9515631062b55a42f8afb4c57a741"
+      },
+      "operational_complete": false,
+      "native_status": "execution_error",
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": [],
+      "elapsed_seconds": 574.0125352830073
+    }
+  ],
+  "I12_operational_complete_pipelines": 0,
+  "DEC018_paired_rejection_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/REJECTION.json",
+    "sha256": "10dcfab9e7e8473e820b6fc70da6f5827b46afdda1609ddd6473b8f5dd6bd0d4"
+  },
+  "live_rows": [
+    {
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "family": "Z",
+      "native_goal_starts": 1,
+      "original_birth_monotonic_ns": 118992761150014,
+      "max_seconds": 900,
+      "max_responses": 90,
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/stage.json",
+        "sha256": "6954b3d524baedde171efeda53b490e8f865f881c984e20abcf6e81568135a8e"
+      },
+      "prelaunch_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/DEC019_IMPORT_001/PRELAUNCH_BOTH_CHOICES.json",
+        "sha256": "8ee70faf7f964ccb973d28fb49de7e335f8986e5de9939e9697c9a0478947e80"
+      }
+    }
+  ],
+  "retained_rows": [],
+  "positive_native_starts": 267,
+  "quality": "UNASSESSED",
+  "no_new_logical_credit": true
+}

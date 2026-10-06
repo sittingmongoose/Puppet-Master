@@ -1,0 +1,24 @@
+{
+ "check": "B: interrupted-save recovery via tmp + atomic commit; ordering semantics",
+ "loaded_v1": true,
+ "after_crash_transform_id": "t-001",
+ "after_crash_still_v1": true,
+ "after_crash_unchanged_bytes": true,
+ "after_retry_transform_id": "t-002",
+ "events": {
+  "first_load": [
+   "loaded committed manifest transform_id=t-001"
+  ],
+  "after_crash": [
+   "loaded committed manifest transform_id=t-001",
+   "torn tmp (130 bytes) quarantined, not applied"
+  ],
+  "after_retry": [
+   "loaded committed manifest transform_id=t-002"
+  ]
+ },
+ "stable_order_ties_preserve_input": true,
+ "deterministic_total_order": true,
+ "stable_differs_from_unspecified": true
+}
+EXIT_OK

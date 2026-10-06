@@ -1,0 +1,184 @@
+{
+  "schema": "er9.independent-current-targeted-final-safe-summary.v1",
+  "evaluation_id": "independent-targeted-27",
+  "pair_id": "D-V05-B",
+  "clock": {
+    "source_start_utc": "2026-10-06T10:57:43.767550+00:00",
+    "source_start_monotonic": 114682.624586023,
+    "phase1_freeze_utc": "2026-10-06T11:02:19.630703+00:00",
+    "phase1_freeze_monotonic": 114958.487735681,
+    "key_read_utc": "2026-10-06T11:03:30.471452+00:00",
+    "key_read_monotonic": 115029.328476958,
+    "report_complete_utc": "2026-10-06T11:06:49.567057+00:00",
+    "report_complete_monotonic": 115228.424101519,
+    "phase2_elapsed_seconds_at_report": 269.93636583800253,
+    "whole_elapsed_seconds_at_report": 545.7995154960081,
+    "phase2_inclusive_deadline_monotonic": 115558.487735681,
+    "whole_deadline_monotonic": 116482.624586023,
+    "clock_reset": false,
+    "key_wait_included": true,
+    "handoff_inside_original_clock_required": true
+  },
+  "phase1_science_report_json": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.json",
+    "sha256": "6cf83fd9268b4ac0ff88fbcb5b20cf16bd383f31e320b1233b95ae68ef3f4242",
+    "bytes": 111636
+  },
+  "phase1_science_report_md": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.md",
+    "sha256": "6ec6b44be20888c744b2261e3ae80ce538b59493a8c5ba1e6d5073fe4a0edf98",
+    "bytes": 24701
+  },
+  "immutable_phase1_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-freeze.json",
+    "sha256": "00d8ffae57fb98c960b64315228df54b1d038472e5691e12f7f96a4be15a9408",
+    "bytes": 6957
+  },
+  "phase1_source_input_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/source-input-pins.json",
+    "sha256": "fc5200625164fd1aa537f2a42388911a8e626cdde14435a212f17f1235063065",
+    "bytes": 5129
+  },
+  "source_semantic_case_outcome": "UNASSESSED",
+  "case_delivery_outcome": "INCOMPLETE",
+  "roles": [
+    {
+      "alias": "A",
+      "actual_role": "final_author",
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "delivery_assessment": "INCOMPLETE_REQUIRED_FINAL_DELIVERY",
+      "source_scientific_quality": "UNASSESSED",
+      "source_role_scope_outcome": "INCOMPLETE",
+      "native_goal_state_before_cleanup": "active",
+      "native_goal_state_after_cleanup": "paused",
+      "native_outcome": "HOLD",
+      "observed_session_turn_terminal_state": "interrupted",
+      "owned_scopes_reported_quiet": true,
+      "runtime_does_not_change_scientific_assessment": true
+    },
+    {
+      "alias": "B",
+      "actual_role": "flash_check",
+      "required_artifacts": [
+        "out/flash/review.md"
+      ],
+      "missing_required_artifacts": [],
+      "delivery_assessment": "REQUIRED_REVIEW_SUPPLIED",
+      "source_scientific_quality": "UNASSESSED",
+      "source_role_scope_outcome": "UNASSESSED",
+      "native_goal_state_before_cleanup": "complete",
+      "native_goal_state_after_cleanup": "complete",
+      "native_outcome": "native_goal_complete",
+      "observed_session_turn_terminal_state": "interrupted",
+      "owned_scopes_reported_quiet": true,
+      "runtime_does_not_change_scientific_assessment": true
+    },
+    {
+      "alias": "B",
+      "actual_role": "resolve_final",
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "delivery_assessment": "INCOMPLETE_REQUIRED_FINAL_DELIVERY",
+      "source_scientific_quality": "UNASSESSED",
+      "source_role_scope_outcome": "INCOMPLETE",
+      "native_goal_state_before_cleanup": "active",
+      "native_goal_state_after_cleanup": "paused",
+      "native_outcome": "HOLD",
+      "observed_session_turn_terminal_state": "interrupted",
+      "owned_scopes_reported_quiet": true,
+      "runtime_does_not_change_scientific_assessment": true
+    }
+  ],
+  "actual_criteria_counts": {
+    "full_brief_obligations": 12,
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "all_phase1_reports_and_input_pins_unchanged_readonly": true,
+  "pair_winner": null,
+  "scientific_pass": false,
+  "findings": [
+    {
+      "id": "TD27-A-DELIVERY",
+      "type": "REQUIRED_CURRENT_FINAL_ABSENT",
+      "severity": "CRITICAL_DELIVERY",
+      "alias": "A",
+      "role": "final_author",
+      "finding": "All four current required final artifacts are listed missing in the verified inventory. The only supplied A artifact is scratch/json_probe.txt, whose JSON object does not satisfy any final role.",
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+          "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+          "locator": "Exact stage output override; DEC010"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+          "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+          "locator": "anonymous_outputs[A]"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/A/role-1/scratch/json_probe.txt",
+          "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009"
+        }
+      ],
+      "semantic_error_claim": false
+    },
+    {
+      "id": "TD27-B-RESOLVE-DELIVERY",
+      "type": "REQUIRED_CURRENT_FINAL_ABSENT",
+      "severity": "CRITICAL_DELIVERY",
+      "alias": "B",
+      "role": "resolve_final",
+      "finding": "All four current required final artifacts are listed missing in the verified inventory. The separately supplied flash review satisfies its own artifact slot and cannot replace the resolve-final proposal or catalogs.",
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+          "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+          "locator": "Exact stage output override; DEC010"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+          "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+          "locator": "anonymous_outputs[B]"
+        }
+      ],
+      "semantic_error_claim": false
+    }
+  ],
+  "unassessed_remainder": [
+    "Actual seed proposal and lead/source/witness catalogs",
+    "Actual frozen draft/critique/revision role contents and changes",
+    "Governing source_context bodies and source capture/index records named in tasks",
+    "Fresh primary-source captures cited by flash review",
+    "W3 candidate-authored code, synthetic inputs, expected results, actual stdout/stderr/exit and receipts",
+    "All current final proposal/catalog scientific content, because absent",
+    "Source-correct correction/preservation, new consequential errors or false rejection",
+    "Full-development coverage, autonomous source discovery, native state, full-pipeline completion, economics and matched-budget causal/quality differences"
+  ],
+  "phase2_boundary": "Exact current metadata join verified against the original held key after immutable source judgment. Native Goal/session/cleanup context remains separate from source correctness and final delivery. No raw key, private ModelIO, economics, native thread/Goal identifiers, prior grades or source-body promotion selected.",
+  "source_grade_rewritten": false,
+  "whole_pipeline_completed": false,
+  "causal_inference": null
+}

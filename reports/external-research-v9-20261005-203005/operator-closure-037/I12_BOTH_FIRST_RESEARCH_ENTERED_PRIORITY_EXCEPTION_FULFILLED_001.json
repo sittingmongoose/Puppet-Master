@@ -1,0 +1,100 @@
+{
+  "observed_utc": "2026-10-06T11:29:27.758094+00:00",
+  "rows": [
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "arm": "control",
+      "status": "RUNNING",
+      "native_goal_starts": 1,
+      "start_utc_original_birth_observation": "2026-10-06T11:28:41.223772+00:00",
+      "original_birth_monotonic_ns": 116540076394632,
+      "activation_events": [
+        {
+          "utc": "2026-10-06T11:28:55.838376+00:00",
+          "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+          "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+          "actual_native_goal_starts": 1,
+          "target_id": "target_muwliey7_ee527095-0afc-4e29-b72c-e24f63ba5a30",
+          "session_id": "sess_8bbdc497-6a5d-4a12-8b94-6232d53253be",
+          "observed_model": {
+            "modelId": "GLM-5.3-Flash",
+            "providerId": "builtin:zai-coding-plan"
+          },
+          "observed_effort": "max",
+          "activation_path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/native/activation.json",
+          "activation_sha256": "74beaa4d9c3b9f4895a89317bb81a7a4c610f174e93ed4d81e1f78979c7d0a1f"
+        }
+      ],
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/stage.json",
+        "sha256": "8c648906d9faa64829f772872f086ea9428248778c53ca26e714aa21f26bf281"
+      },
+      "runtime_ready_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_READINESS_V1_READY.json",
+        "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+      },
+      "prior_fullall6_static_closure": {
+        "path": "LAB_ROOT/ops/dispatcher/READINESS_FAILFAST_ADOPTION_001/SELECTION.json",
+        "sha256": "058fd27ccbe4b227f80b249d6ae30d19c7df7f71c812c6752d0fc298f6583367"
+      },
+      "freeze_ref": null
+    },
+    {
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "arm": "treatment",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "start_utc_original_birth_observation": "2026-10-06T11:11:20.212886+00:00",
+      "original_birth_monotonic_ns": 115499066757645,
+      "activation_events": [
+        {
+          "utc": "2026-10-06T11:11:34.684703+00:00",
+          "kind": "SCORED_NATIVE_GOAL_ACTIVATED",
+          "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+          "actual_native_goal_starts": 1,
+          "target_id": "target_muwkw3pe_378d8230-84d9-4771-9c18-21312fdef226",
+          "session_id": "sess_5f7e69cc-df06-4de4-bec7-487c4f801a5a",
+          "observed_model": {
+            "modelId": "GLM-5.3-Flash",
+            "providerId": "builtin:zai-coding-plan"
+          },
+          "observed_effort": "max",
+          "activation_path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/native/activation.json",
+          "activation_sha256": "3543afe5c8e8bf5ac30086b5dfb6c12d734f430a003e7f5b7293e5504bd98913"
+        }
+      ],
+      "stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/stage.json",
+        "sha256": "c3ae69056775cd61407295ee65c7acc5ccc9ae9356f901487a8f2072ce414df5"
+      },
+      "runtime_ready_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_READINESS_V1_READY.json",
+        "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+      },
+      "prior_fullall6_static_closure": {
+        "path": "LAB_ROOT/ops/dispatcher/READINESS_FAILFAST_ADOPTION_001/SELECTION.json",
+        "sha256": "058fd27ccbe4b227f80b249d6ae30d19c7df7f71c812c6752d0fc298f6583367"
+      },
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "324b14371d9a0c394946185a053616958cd0eea7ab2330e16d4c5c783101ac98"
+      }
+    }
+  ],
+  "single_scheduling_exception_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/I12_PAIRED_FIRST_RESEARCH_WINDOW_PRIORITY_002.json",
+    "sha256": "4bdfa2169271459a55ad40b0fb8066c3c9efc4d25413f9caab7d1eae9ec3661a"
+  },
+  "default_descendant_repair_order_now_resumed": true,
+  "no_goal_or_birth_reset": true,
+  "no_completion_quality_pipeline_credit_inferred": true,
+  "cursor": {
+    "updated_utc": "2026-10-06T11:29:14.649088+00:00",
+    "running_job_ids": [
+      "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+    ],
+    "scored_native_goal_starts_confirmed": 260,
+    "retained_resource_job_ids": []
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schema": "er9.independent-evaluator-phase1-freeze.v1",
+  "eval_id": "independent-targeted-26",
+  "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+  "phase1_immutable": true,
+  "phase1_freeze_utc": "2026-10-06T10:48:49.876354Z",
+  "phase1_freeze_monotonic": 114148.733340951,
+  "source_elapsed_seconds": 1054.8061884729977,
+  "phase2_start_rule": "literal immutable phase1 freeze, includes key wait/check/report/mandatory handoffs",
+  "phase2_max_seconds": 600,
+  "phase2_deadline_monotonic": 114748.733340951,
+  "whole_deadline_monotonic": 114893.927152478,
+  "whole_clock_reset": false,
+  "current_key_read_before_freeze": false,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/input-pins.json",
+      "sha256": "3636155f1f26d4a9f7dda25bf9da464bff1a89c99293c0e277274309ac78b4c9",
+      "bytes": 39496,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-judgement.json",
+      "sha256": "a0c901bbb645eed7a38a8e6770e52279d278fb15ef14bf110f85992551515806",
+      "bytes": 13969,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-report.md",
+      "sha256": "aa786b1637b549a5dfd05a8b0a96d908ab1bb6c25f2403054b1deebaa8be0384",
+      "bytes": 9634,
+      "mode": "0444"
+    }
+  ]
+}

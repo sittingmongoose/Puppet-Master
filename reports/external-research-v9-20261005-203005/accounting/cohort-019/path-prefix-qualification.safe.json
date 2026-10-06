@@ -1,0 +1,86 @@
+{
+  "owner_pin": {
+    "path": "ops/frozen-exports/observations/C03_C04_REQUIRED_PATH_PREFIX_QUALIFICATION_001.json",
+    "sha256": "3e304008d3ee1251b52abc3cf2665213fa93f3094142a444178c80cba1e4f139"
+  },
+  "rows": [
+    {
+      "alias": "A",
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "normalized_actual_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "old_P1_judgment_unchanged": true,
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "original_dispatch_sha256": "c6d4588326886ca58569c9506d9732c34beaab1f0f4ed3ec43833af09b1a630f",
+      "producer_invalid_json_artifacts": [],
+      "producer_original_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ]
+    },
+    {
+      "alias": "B",
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "normalized_actual_missing_required_artifacts": [],
+      "old_P1_judgment_unchanged": true,
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "original_dispatch_sha256": "c6d4588326886ca58569c9506d9732c34beaab1f0f4ed3ec43833af09b1a630f",
+      "producer_invalid_json_artifacts": [],
+      "producer_original_missing_required_artifacts": []
+    },
+    {
+      "alias": "A",
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "normalized_actual_missing_required_artifacts": [],
+      "old_P1_judgment_unchanged": true,
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "original_dispatch_sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a",
+      "producer_invalid_json_artifacts": [
+        "out/research/sources.json"
+      ],
+      "producer_original_missing_required_artifacts": []
+    },
+    {
+      "alias": "B",
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "normalized_actual_missing_required_artifacts": [],
+      "old_P1_judgment_unchanged": true,
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "original_dispatch_sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a",
+      "producer_invalid_json_artifacts": [],
+      "producer_original_missing_required_artifacts": []
+    }
+  ],
+  "schema": "er9.accounting.required-path-prefix-qualification.v1",
+  "scope": "Inventoryout/research path-prefix normalization only. OriginalP1/clocks unchanged; producerinvalidJSON flags separatelyretained. Presence is not nativeOP completion or source/P1regrade. Scientific syntax/quality field intentionallynotselected."
+}

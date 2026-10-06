@@ -1,0 +1,227 @@
+{
+  "schema": "er9.requested-current-witness-source-only.v1",
+  "evaluation": "independent-pipeline-14-research-I11",
+  "selector_sha256": "42713bcf3ba6e843cba054b600fd9fa656c66e261eef07060cad48f98ae96900",
+  "entries": [
+    {
+      "evaluation": "independent-pipeline-14-research-I11",
+      "alias": "A",
+      "execution_id": "exec-jehhegi9",
+      "files": [
+        {
+          "kind": "code.py",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/A/exec-jehhegi9/code.py",
+          "sha256": "dd52ce32f12e6234cd50be7ad119516e762d50afd2ebc48d2e598ed45af795b5",
+          "length": 1119,
+          "original_sha256": "dd52ce32f12e6234cd50be7ad119516e762d50afd2ebc48d2e598ed45af795b5",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "data.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/A/exec-jehhegi9/data.json",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "length": 4,
+          "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stdout.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/A/exec-jehhegi9/stdout.bin",
+          "sha256": "dbd65842a6448aaeb0c712f1cc07c101994246f71e885047eaca9fe40b9274f8",
+          "length": 422,
+          "original_sha256": "dbd65842a6448aaeb0c712f1cc07c101994246f71e885047eaca9fe40b9274f8",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stderr.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/A/exec-jehhegi9/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "length": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "result.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/A/exec-jehhegi9/result.json",
+          "sha256": "c9fa440cb1b40c9d8d7108b6fed2c763ed1bfcc58916fa9e574964f1d64a52ac",
+          "length": 1773,
+          "original_sha256": "2a21ab50f379d82246f4c758af6707cd0db90774eb97d75299838495d429341c",
+          "copy_rule": "safe projection"
+        }
+      ],
+      "missing_files": [],
+      "original_result_sha256": "2a21ab50f379d82246f4c758af6707cd0db90774eb97d75299838495d429341c",
+      "redaction_record": {
+        "result_fields_omitted_or_redacted": [
+          "cleanup_query_stderr",
+          "cleanup_query_stdout",
+          "cleanup_stop_stderr",
+          "cleanup_stop_stdout",
+          "completed_utc",
+          "control_group_after_stop",
+          "elapsed_seconds",
+          "execution_id",
+          "execution_label",
+          "resource_aggregate_after_execution",
+          "resource_aggregate_observation_error",
+          "resource_placement",
+          "resource_profile_sha256",
+          "schema",
+          "stderr",
+          "stdout",
+          "unit_active_state_after_stop",
+          "unit_load_state_after_stop"
+        ],
+        "private_key_exported": false,
+        "source_root_paths_exported": false
+      }
+    },
+    {
+      "evaluation": "independent-pipeline-14-research-I11",
+      "alias": "B",
+      "execution_id": "exec-s5vm45gy",
+      "files": [
+        {
+          "kind": "code.py",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-s5vm45gy/code.py",
+          "sha256": "84f73833ecc7001b7e9226576dd442c1f58b2bfe93a5632fa7e3bbbde97628d4",
+          "length": 1016,
+          "original_sha256": "84f73833ecc7001b7e9226576dd442c1f58b2bfe93a5632fa7e3bbbde97628d4",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "data.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-s5vm45gy/data.json",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "length": 4,
+          "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stdout.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-s5vm45gy/stdout.bin",
+          "sha256": "fbce1213df7dc3ee44a43c7bcdf2aa655bd45cc5f094f9ee383e64df8c820446",
+          "length": 260,
+          "original_sha256": "fbce1213df7dc3ee44a43c7bcdf2aa655bd45cc5f094f9ee383e64df8c820446",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stderr.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-s5vm45gy/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "length": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "result.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-s5vm45gy/result.json",
+          "sha256": "4dcb96870f733627983b7bf88ac70e9eb879d444219bd6fc6a793aeeb5ef5414",
+          "length": 1773,
+          "original_sha256": "9811647dce712047e278d399f89e7ef352e1b342ce050eff867513bfc599e4e3",
+          "copy_rule": "safe projection"
+        }
+      ],
+      "missing_files": [],
+      "original_result_sha256": "9811647dce712047e278d399f89e7ef352e1b342ce050eff867513bfc599e4e3",
+      "redaction_record": {
+        "result_fields_omitted_or_redacted": [
+          "cleanup_query_stderr",
+          "cleanup_query_stdout",
+          "cleanup_stop_stderr",
+          "cleanup_stop_stdout",
+          "completed_utc",
+          "control_group_after_stop",
+          "elapsed_seconds",
+          "execution_id",
+          "execution_label",
+          "resource_aggregate_after_execution",
+          "resource_aggregate_observation_error",
+          "resource_placement",
+          "resource_profile_sha256",
+          "schema",
+          "stderr",
+          "stdout",
+          "unit_active_state_after_stop",
+          "unit_load_state_after_stop"
+        ],
+        "private_key_exported": false,
+        "source_root_paths_exported": false
+      }
+    },
+    {
+      "evaluation": "independent-pipeline-14-research-I11",
+      "alias": "B",
+      "execution_id": "exec-tt683_91",
+      "files": [
+        {
+          "kind": "code.py",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-tt683_91/code.py",
+          "sha256": "5986a1fa577dd01e9fa506a48008356cbb887fab4daa42ac30a30bcaa981403a",
+          "length": 1034,
+          "original_sha256": "5986a1fa577dd01e9fa506a48008356cbb887fab4daa42ac30a30bcaa981403a",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "data.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-tt683_91/data.json",
+          "sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "length": 4,
+          "original_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stdout.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-tt683_91/stdout.bin",
+          "sha256": "058c03bca356fefa5adf9ed724816293c32182069ac25e146b58daf0c73c68f8",
+          "length": 259,
+          "original_sha256": "058c03bca356fefa5adf9ed724816293c32182069ac25e146b58daf0c73c68f8",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "stderr.bin",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-tt683_91/stderr.bin",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "length": 0,
+          "original_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "copy_rule": "byte-exact positive file"
+        },
+        {
+          "kind": "result.json",
+          "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/I11-REQUESTED-CURRENT-WITNESSES-001/B/exec-tt683_91/result.json",
+          "sha256": "f603b5d0da4df0482614c1a284bcc91e48dbdc5d8cdb5023ade74be533da3088",
+          "length": 1773,
+          "original_sha256": "0d18b0c9827f1ec69dfff48e2ce5f30ced146f6c9b7a84a7f3b2afb61cbda4ae",
+          "copy_rule": "safe projection"
+        }
+      ],
+      "missing_files": [],
+      "original_result_sha256": "0d18b0c9827f1ec69dfff48e2ce5f30ced146f6c9b7a84a7f3b2afb61cbda4ae",
+      "redaction_record": {
+        "result_fields_omitted_or_redacted": [
+          "cleanup_query_stderr",
+          "cleanup_query_stdout",
+          "cleanup_stop_stderr",
+          "cleanup_stop_stdout",
+          "completed_utc",
+          "control_group_after_stop",
+          "elapsed_seconds",
+          "execution_id",
+          "execution_label",
+          "resource_aggregate_after_execution",
+          "resource_aggregate_observation_error",
+          "resource_placement",
+          "resource_profile_sha256",
+          "schema",
+          "stderr",
+          "stdout",
+          "unit_active_state_after_stop",
+          "unit_load_state_after_stop"
+        ],
+        "private_key_exported": false,
+        "source_root_paths_exported": false
+      }
+    }
+  ],
+  "boundary": "Exact requested current files only; actual bootstrap/scope/exit/cleanup facts retained, failures retained. No semantic interpretation, retest, execution, historical store substitution or scientific findings. Missing evidence is UNKNOWN; all requested IDs retained."
+}

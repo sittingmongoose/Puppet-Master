@@ -1,0 +1,27 @@
+{
+  "schema": "er9.positive-audit-publication-selector.v1",
+  "scope": "Publication contract metadata only; no new science/native/Goal/quality credit",
+  "allow_recursive_copy": false,
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/audit/finish-publication-001/START.json",
+      "sha256": "f0d2fdf60a511eefc07728b67e9429ea2867faf82f3802411ed74de5a7fc8e00",
+      "bytes": 575
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/audit/finish-publication-001/FINISH_AUDIT.json",
+      "sha256": "935ec4a083be54b8550bae42a232f77a091fa603dd0e43e0315dc8c76b1ade0c",
+      "bytes": 13673
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/audit/finish-publication-001/FINISH_AUDIT.md",
+      "sha256": "c0b9fe1c54c282b3bb6edd58b6edacd087f97c65084fa9af69fc044b4386a7b8",
+      "bytes": 5421
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/audit/finish-publication-001/HANDOFF_CLOCK.json",
+      "sha256": "59d8149ad8976c06abd3aca83cbe38100f38bf5565b3c298e641b54700761659",
+      "bytes": 613
+    }
+  ]
+}

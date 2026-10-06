@@ -1,0 +1,17 @@
+{
+  "schema": "er9.bounded-audit-required-handoff-clock.v1",
+  "instrumented_start_utc": "2026-10-06T12:16:36+00:00",
+  "required_content_handoffs_delivered_before_sample": true,
+  "recipients": [
+    "/root",
+    "/root/frozen_exports",
+    "/root/publication_inventory"
+  ],
+  "sample_utc": "2026-10-06T12:23:43.112119+00:00",
+  "elapsed_seconds_inclusive_content_handoffs": 427.112119,
+  "max_seconds": 600,
+  "timer_reset": false,
+  "status": "FINISHED_WITH_PENDING_CAMPAIGN_PUBLICATION_OBLIGATIONS",
+  "zero_model_native_experiments": true,
+  "terminal_clock_is_nested_not_added_to_candidate_charge": true
+}

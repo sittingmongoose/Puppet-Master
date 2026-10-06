@@ -1,0 +1,12 @@
+{
+  "observed_utc": "2026-10-06T11:24:12.795409+00:00",
+  "supersedes_priority_rationale_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/I12_PAIRED_FIRST_RESEARCH_WINDOW_PRIORITY_001.json",
+    "sha256": "4658c54463547480dac3782d35694bac5bb775966b6d9e63d43b787936baa278"
+  },
+  "selected_job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+  "single_next_free_GLM_slot_exception_ahead_of_any_unentered_repair_or_descendant": true,
+  "effective_only_while_selected_goal0": true,
+  "default_order_resumes_after_actual_selected_activation": true,
+  "running_jobs_source_caps_clocks_unchanged": true
+}

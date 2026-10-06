@@ -1,0 +1,2033 @@
+{
+  "schema": "er9.independent-current-targeted-source-review.v1",
+  "evaluation_id": "independent-targeted-27",
+  "pair_id": "D-V05-B",
+  "phase": "PHASE1_SOURCE_ONLY",
+  "authored_utc": "2026-10-06T11:01:45.385314+00:00",
+  "authored_monotonic": 114924.24235182,
+  "source_clock": {
+    "schema": "er9.independent-evaluator-source-clock.v1",
+    "evaluation_id": "independent-targeted-27",
+    "pair_id": "D-V05-B",
+    "source_start_utc": "2026-10-06T10:57:43.767550+00:00",
+    "source_start_monotonic": 114682.624586023,
+    "source_seconds_limit": 1200,
+    "whole_seconds_limit": 1800,
+    "phase2_seconds_limit": 600,
+    "phase2_clock_origin": "immutable phase1 freeze",
+    "first_semantic_dispatch_read": "after this clock was saved"
+  },
+  "source_elapsed_seconds_at_authored": 241.61776579699654,
+  "scope": "Current actual final_author + flash_check + resolve_final mixed roles. Review is restricted to the exact courier source allowlist. Missing final delivery is explicit; flash/scratch are never promoted. No full-development, autonomous-discovery, full-pipeline, native-completion or pair-winner conclusion.",
+  "actual_criteria_counts": {
+    "full_brief_obligations": 12,
+    "common_dimensions": 8,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "assessment_coverage_definition": "Coverage describes the evaluator's assessment, separately from candidate delivery/obligation coverage. PARTIAL denotes only a documented delivery or text/scope observation; it does not certify source correctness. Every unresolved semantic component remains UNASSESSED.",
+  "phase1_case_outcome": "INCOMPLETE",
+  "source_semantic_case_outcome": "UNASSESSED",
+  "pair_winner": null,
+  "scientific_pass": false,
+  "roles": [
+    {
+      "alias": "A",
+      "actual_role": "final_author",
+      "task_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+        "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+        "locator": "Exact stage output override; Current native stage scope; Prospective final delivery transport version — DEC010"
+      },
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "available_frozen_artifacts": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/A/role-1/scratch/json_probe.txt",
+          "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009"
+        }
+      ],
+      "final_promotion": false,
+      "delivery_assessment": "INCOMPLETE_REQUIRED_FINAL_DELIVERY",
+      "scientific_quality": "UNASSESSED",
+      "role_scope_outcome": "INCOMPLETE",
+      "scope": "Current complete standalone final proposal and three catalogs required; scratch or predecessor reviews do not substitute. DEC010 changes serialization only, retaining the same four content roles.",
+      "delivery_evidence_basis": "Exact current task contract plus verified courier artifact inventory in dispatch; no full-directory scan, native state, or host completion status used.",
+      "full_brief_obligations": [
+        {
+          "id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q4",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "dimensions": [
+            "Q2",
+            "Q5",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "The current role requires a standalone final and three catalogs, all listed missing. Delivery is INCOMPLETE; supported semantic preservation, correctness, source accuracy and unresolved-lead quality remain UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+              "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        }
+      ],
+      "common_dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Current final proposal/catalog content is missing. Required useful coverage cannot be credited; missing final delivery is decisive."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Current final proposal/catalog content is missing. The four required current final roles are absent; reproducible final delivery is INCOMPLETE. Economics and execution evidence remain separately withheld."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "id": "B-P1",
+          "obligation_ids": [
+            "B08",
+            "B09"
+          ],
+          "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P2",
+          "obligation_ids": [
+            "B02",
+            "B03",
+            "B04",
+            "B10"
+          ],
+          "question": "Are the chosen design’s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P3",
+          "obligation_ids": [
+            "B11"
+          ],
+          "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P4",
+          "obligation_ids": [
+            "B12"
+          ],
+          "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Required current final delivery is INCOMPLETE. Its semantic preservation, actual correction and error-free status remain UNASSESSED; no false-completeness assertion is imputed to absent output."
+        },
+        {
+          "id": "B-P5",
+          "obligation_ids": [
+            "B01",
+            "B05",
+            "B06",
+            "B07",
+            "B10"
+          ],
+          "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        }
+      ],
+      "targeted_obligations": [
+        {
+          "id": "D-V05-B-01",
+          "text": "Use an affordable-candidate draft/critique/revision bundle covering clean replay, invalidation or output provenance. Fixture admission privately confirms supported correction and a real introduced/collateral error. Candidate sees all original context, not truth labels.",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "The current final is not supplied. Actual method uptake, semantic correction/preservation and source-context use are UNASSESSED; no inference from the existence of other-stage input inventory names."
+        },
+        {
+          "id": "D-V05-B-02",
+          "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q6",
+            "Q7"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "The current final is not supplied. Actual method uptake, semantic correction/preservation and source-context use are UNASSESSED; no inference from the existence of other-stage input inventory names."
+        },
+        {
+          "id": "D-V05-B-03",
+          "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+          "dimensions": [
+            "Q1",
+            "Q5",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "The current final is not supplied. Complete-result delivery component is INCOMPLETE; source locators, honesty, preservation and error status remain UNASSESSED."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "id": "D-V05-B-P1",
+          "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Same predeclared semantic claims cannot be independently checked: draft/critique/revision/source/witness context is not in this evaluator allowlist."
+        },
+        {
+          "id": "D-V05-B-P2",
+          "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No complete current final is available for this alias. Retention and preservation are UNASSESSED; incomplete final delivery is explicit."
+        },
+        {
+          "id": "D-V05-B-P3",
+          "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Current final artifact delivery is missing; actual mechanism uptake and matched-budget repair differences are UNASSESSED. No implicit pair comparison is made."
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "actual_role": "flash_check",
+      "task_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+        "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+        "locator": "Exact stage output override; Current native stage scope"
+      },
+      "required_artifacts": [
+        "out/flash/review.md"
+      ],
+      "missing_required_artifacts": [],
+      "available_frozen_artifacts": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+          "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85"
+        }
+      ],
+      "final_promotion": false,
+      "delivery_assessment": "REQUIRED_REVIEW_SUPPLIED",
+      "scientific_quality": "UNASSESSED",
+      "role_scope_outcome": "UNASSESSED",
+      "scope": "Scoped flash check of changed consequential replay/invalidation claims and dependencies; final authorship is expressly excluded.",
+      "delivery_evidence_basis": "Exact current task contract plus verified courier artifact inventory in dispatch; no full-directory scan, native state, or host completion status used.",
+      "full_brief_obligations": [
+        {
+          "id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "SCOPED_REVIEW_TEXT_ONLY",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "F1, F2 and supported-content bullets discuss cell/output/dependency provenance and replay limits. Underlying draft and governing source bodies are unavailable in this allowlist, so correctness is UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+              "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85"
+            }
+          ]
+        },
+        {
+          "id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "SCOPED_REVIEW_TEXT_ONLY",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "F1 proposes exact dependency lineage and explicit stale/unverified treatment; F2 narrows a late module-watcher stale-marking precedent. Actual behavior, original changed wording and correction accuracy remain UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+              "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85"
+            }
+          ]
+        },
+        {
+          "id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q4",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "OUTSIDE_INSPECTED_FLASH_SUBSET",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "This full-development obligation is context for the diagnostic; the actual flash role does not require a complete development proposal. No complete coverage or independent discovery credit is inferred from the review.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+              "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "dimensions": [
+            "Q2",
+            "Q5",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "SCOPED_REVIEW_TEXT_ONLY",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Review explicitly says no new code check was executed; it distinguishes W3 as a candidate model simulation and upstream tests as source evidence. W3 code/input/results and tool receipts are not admitted here and remain UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+              "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85"
+            }
+          ]
+        },
+        {
+          "id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "context_only_except_flash_relevance",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NOT_A_FULL_FINAL_ROLE",
+          "observed": "SCOPED_REVIEW_TEXT_ONLY",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Review lists content to preserve, actionable corrections and uncertainty; it is not the standalone current final. Preservation in the seed and current resolve-final is UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+              "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85"
+            }
+          ]
+        }
+      ],
+      "common_dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "The supplied review addresses the declared flash scope and includes actionable edits and preserved-content bullets. Full diagnostic result and full development coverage are not established."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "PR merge/head identifiers, patch/test locators and issue/source capture hashes are stated, with main-versus-release and report-versus-verified-behavior caveats. Governing captured bytes are absent; source interpretation and actual applicability remain UNASSESSED."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "F1 translates dependency-lineage concerns into event-record/replay changes and proposed race validation. This is visible engineering inference; the seed claim and source premises are not independently verified."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "No autonomous-discovery or independently useful-precedent/issue-chain credit can be established from supplied review text alone. Full sources and selection/capture evidence are unavailable."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "No new execution is claimed, and proposed validation is visibly separated. The cited W3 executed model check cannot be verified without its actual code/input/results/receipts."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "The review explicitly names valid content to retain and narrows assertions. Whether those are supported, whether any false rejection occurs, and whether a new consequential error was introduced remain UNASSESSED without original bundle/source context."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Visible caveats exclude release applicability, upstream test execution, CI verification, production/race-suite execution and universal issue behavior. Factual accuracy of those source assertions remains UNASSESSED."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "The exact required flash review is supplied; this is a role-delivery observation, not a final or scientific PASS. No economics or execution completion evidence was read."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "id": "B-P1",
+          "obligation_ids": [
+            "B08",
+            "B09"
+          ],
+          "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "Review mentions nbformat and marimo but does not establish candidate-discovered independence or a complete verified issue/fix/test chain. Those full-brief duties are not the flash stage deliverable and are UNASSESSED."
+        },
+        {
+          "id": "B-P2",
+          "obligation_ids": [
+            "B02",
+            "B03",
+            "B04",
+            "B10"
+          ],
+          "question": "Are the chosen design’s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "F1-F3 offer dependency-lineage and source-applicability edits with explicit limits. Correctness requires seed and source bodies excluded from this packet; UNASSESSED."
+        },
+        {
+          "id": "B-P3",
+          "obligation_ids": [
+            "B11"
+          ],
+          "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "Review claims no newly executed check and limits W3 to a model simulation. Actual W3 evidence is unavailable; execution support remains UNASSESSED, with no invented execution defect."
+        },
+        {
+          "id": "B-P4",
+          "obligation_ids": [
+            "B12"
+          ],
+          "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "Supported-content bullets and non-release/non-resolution caveats are visible. Current final retention, genuine correction, false completeness and new consequential error status remain UNASSESSED."
+        },
+        {
+          "id": "B-P5",
+          "obligation_ids": [
+            "B01",
+            "B05",
+            "B06",
+            "B07",
+            "B10"
+          ],
+          "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "Full minimum workflow/portability/resources/opportunity coverage is outside the narrow inspected review; no final substitution or completeness credit."
+        }
+      ],
+      "targeted_obligations": [
+        {
+          "id": "D-V05-B-01",
+          "text": "Use an affordable-candidate draft/critique/revision bundle covering clean replay, invalidation or output provenance. Fixture admission privately confirms supported correction and a real introduced/collateral error. Candidate sees all original context, not truth labels.",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "Review refers to seed proposal/catalogs and source captures; original draft/critique/revision roles and witness catalogs are not admitted for evaluator inspection. Bundle relation, supported correction and collateral-error detection remain UNASSESSED."
+        },
+        {
+          "id": "D-V05-B-02",
+          "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q6",
+            "Q7"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "Review discusses consequential lineage/replay/version claims with proposed edits and preservation caveats. Actual supplied full source context is absent from the evaluator allowlist; semantic correction remains UNASSESSED."
+        },
+        {
+          "id": "D-V05-B-03",
+          "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+          "dimensions": [
+            "Q1",
+            "Q5",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "Required flash artifact is supplied with source locators and visibly proposed validation. It is not the complete current final. No new-error or false-rejection judgment can be made without source/bundle context."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "id": "D-V05-B-P1",
+          "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Same predeclared semantic claims cannot be independently checked: draft/critique/revision/source/witness context is not in this evaluator allowlist."
+        },
+        {
+          "id": "D-V05-B-P2",
+          "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Review preservation/qualification proposals are visible, but actual final retention is outside this role and absent. No blanket-rejection or final-quality conclusion is inferred."
+        },
+        {
+          "id": "D-V05-B-P3",
+          "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "A scoped flash-review artifact is visibly supplied and contains actionable findings. Freshness, source correctness, budget matching, resolver adoption and error/false-rejection differences are UNASSESSED; no full-pipeline credit."
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "actual_role": "resolve_final",
+      "task_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+        "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+        "locator": "Exact stage output override; Current native stage scope; Prospective final delivery transport version — DEC010"
+      },
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "available_frozen_artifacts": [],
+      "final_promotion": false,
+      "delivery_assessment": "INCOMPLETE_REQUIRED_FINAL_DELIVERY",
+      "scientific_quality": "UNASSESSED",
+      "role_scope_outcome": "INCOMPLETE",
+      "scope": "Current complete standalone final proposal and three catalogs required; scratch or predecessor reviews do not substitute. DEC010 changes serialization only, retaining the same four content roles.",
+      "delivery_evidence_basis": "Exact current task contract plus verified courier artifact inventory in dispatch; no full-directory scan, native state, or host completion status used.",
+      "full_brief_obligations": [
+        {
+          "id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q4",
+            "Q5"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "dimensions": [
+            "Q1",
+            "Q3",
+            "Q4",
+            "Q7"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "dimensions": [
+            "Q2",
+            "Q5",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No current final exists in the verified supplied artifact inventory; this obligation's scientific content remains UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        },
+        {
+          "id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "role_requirement_applicability": "current_final_content_with_targeted_diagnostic_boundary",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "candidate_obligation_coverage": "NO_DELIVERED_CURRENT_FINAL",
+          "observed": "MISSING_CURRENT_FINAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "The current role requires a standalone final and three catalogs, all listed missing. Delivery is INCOMPLETE; supported semantic preservation, correctness, source accuracy and unresolved-lead quality remain UNASSESSED.",
+          "evidence": [
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+              "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+              "locator": "Exact stage output override"
+            },
+            {
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+              "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+              "locator": "anonymous_outputs"
+            }
+          ]
+        }
+      ],
+      "common_dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Current final proposal/catalog content is missing. Required useful coverage cannot be credited; missing final delivery is decisive."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_FINAL",
+          "explanation": "Current final proposal/catalog content is missing. Scientific source interpretation, inference, preservation or witness quality cannot be assessed from scratch or another role's review."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Current final proposal/catalog content is missing. The four required current final roles are absent; reproducible final delivery is INCOMPLETE. Economics and execution evidence remain separately withheld."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "id": "B-P1",
+          "obligation_ids": [
+            "B08",
+            "B09"
+          ],
+          "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P2",
+          "obligation_ids": [
+            "B02",
+            "B03",
+            "B04",
+            "B10"
+          ],
+          "question": "Are the chosen design’s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P3",
+          "obligation_ids": [
+            "B11"
+          ],
+          "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        },
+        {
+          "id": "B-P4",
+          "obligation_ids": [
+            "B12"
+          ],
+          "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "Required current final delivery is INCOMPLETE. Its semantic preservation, actual correction and error-free status remain UNASSESSED; no false-completeness assertion is imputed to absent output."
+        },
+        {
+          "id": "B-P5",
+          "obligation_ids": [
+            "B01",
+            "B05",
+            "B06",
+            "B07",
+            "B10"
+          ],
+          "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_ESTABLISHED",
+          "explanation": "The designated current final is missing; semantic components of this check remain UNASSESSED."
+        }
+      ],
+      "targeted_obligations": [
+        {
+          "id": "D-V05-B-01",
+          "text": "Use an affordable-candidate draft/critique/revision bundle covering clean replay, invalidation or output provenance. Fixture admission privately confirms supported correction and a real introduced/collateral error. Candidate sees all original context, not truth labels.",
+          "dimensions": [
+            "Q1",
+            "Q2",
+            "Q3",
+            "Q4"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "The current final is not supplied. Actual method uptake, semantic correction/preservation and source-context use are UNASSESSED; no inference from the existence of other-stage input inventory names."
+        },
+        {
+          "id": "D-V05-B-02",
+          "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+          "dimensions": [
+            "Q2",
+            "Q3",
+            "Q6",
+            "Q7"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "NOT_SCORED_AS_COMPLETE_FINAL",
+          "explanation": "The current final is not supplied. Actual method uptake, semantic correction/preservation and source-context use are UNASSESSED; no inference from the existence of other-stage input inventory names."
+        },
+        {
+          "id": "D-V05-B-03",
+          "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+          "dimensions": [
+            "Q1",
+            "Q5",
+            "Q6",
+            "Q7",
+            "Q8"
+          ],
+          "required": true,
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "delivery_outcome": "INCOMPLETE",
+          "explanation": "The current final is not supplied. Complete-result delivery component is INCOMPLETE; source locators, honesty, preservation and error status remain UNASSESSED."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "id": "D-V05-B-P1",
+          "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?",
+          "evaluator_assessment_coverage": "UNASSESSED",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Same predeclared semantic claims cannot be independently checked: draft/critique/revision/source/witness context is not in this evaluator allowlist."
+        },
+        {
+          "id": "D-V05-B-P2",
+          "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "No complete current final is available for this alias. Retention and preservation are UNASSESSED; incomplete final delivery is explicit."
+        },
+        {
+          "id": "D-V05-B-P3",
+          "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?",
+          "evaluator_assessment_coverage": "PARTIAL",
+          "scientific_assessment": "UNASSESSED",
+          "explanation": "Current final artifact delivery is missing; actual mechanism uptake and matched-budget repair differences are UNASSESSED. No implicit pair comparison is made."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "TD27-A-DELIVERY",
+      "type": "REQUIRED_CURRENT_FINAL_ABSENT",
+      "severity": "CRITICAL_DELIVERY",
+      "alias": "A",
+      "role": "final_author",
+      "finding": "All four current required final artifacts are listed missing in the verified inventory. The only supplied A artifact is scratch/json_probe.txt, whose JSON object does not satisfy any final role.",
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+          "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+          "locator": "Exact stage output override; DEC010"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+          "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+          "locator": "anonymous_outputs[A]"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/A/role-1/scratch/json_probe.txt",
+          "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009"
+        }
+      ],
+      "semantic_error_claim": false
+    },
+    {
+      "id": "TD27-B-RESOLVE-DELIVERY",
+      "type": "REQUIRED_CURRENT_FINAL_ABSENT",
+      "severity": "CRITICAL_DELIVERY",
+      "alias": "B",
+      "role": "resolve_final",
+      "finding": "All four current required final artifacts are listed missing in the verified inventory. The separately supplied flash review satisfies its own artifact slot and cannot replace the resolve-final proposal or catalogs.",
+      "source_pins": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+          "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+          "locator": "Exact stage output override; DEC010"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+          "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+          "locator": "anonymous_outputs[B]"
+        }
+      ],
+      "semantic_error_claim": false
+    }
+  ],
+  "flash_claim_inventory": [
+    {
+      "id": "F1",
+      "observed_text": "Dependency-version lineage is proposed for current output labeling, sidecar/event records, replay bundle and race validation.",
+      "source_assessment": "UNASSESSED",
+      "missing_evidence": "Original proposal §§4,6,7,13; actual source patch/tests and W3 code/input/results are not allowed inputs.",
+      "preservation_or_error_verdict": "UNASSESSED"
+    },
+    {
+      "id": "F2",
+      "observed_text": "The review narrows PR #10912 to module-watcher autoreload timing and distinguishes merged main from released behavior and separate unresolved cross-app issues.",
+      "source_assessment": "UNASSESSED",
+      "missing_evidence": "PR metadata/patch/test captures and release history are not allowed inputs.",
+      "preservation_or_error_verdict": "UNASSESSED"
+    },
+    {
+      "id": "F3",
+      "observed_text": "The review treats #9881 as an open user report/reproduction rather than verified or resolved runtime behavior, and separates it from #10912.",
+      "source_assessment": "UNASSESSED",
+      "missing_evidence": "Issue API capture and relevant source/version context are not allowed inputs.",
+      "preservation_or_error_verdict": "UNASSESSED"
+    }
+  ],
+  "applicable_checks": {
+    "completed": "Exact role contracts, source/input hashes, available supplied artifacts, missing-final inventory, flash textual scope/proposed-versus-new-execution labels and every criterion mapping.",
+    "not_completed": "Independent verification of source claims, genuine bundle deltas/corrections/collateral errors, witnesses, release applicability, native execution, budgets/costs or final adoption."
+  },
+  "inspected_subset": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+      "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/source-card-projection.json",
+      "sha256": "459bc11fbeb58723a1fc5f35ddd43c0f255e0406af4801f94bf4daf4b84dc389",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+      "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+      "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+      "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/common_important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/targeted_coverage_map.json",
+      "sha256": "499af1cda1f7a27c33c5675a984a0733fe8a4f4e934fb9f4d313e48ba2b6edb3",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/full_brief_obligations.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/neutral_targeted_task.md",
+      "sha256": "56432a02034c0fb8947db985f2ebc1ecc5bc27bf9a23586c6d9426cb4f6885b0",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+      "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85",
+      "semantic_read": true
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/A/role-1/scratch/json_probe.txt",
+      "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009",
+      "semantic_read": true
+    }
+  ],
+  "remainder_unassessed": [
+    "Actual seed proposal and lead/source/witness catalogs",
+    "Actual frozen draft/critique/revision role contents and changes",
+    "Governing source_context bodies and source capture/index records named in tasks",
+    "Fresh primary-source captures cited by flash review",
+    "W3 candidate-authored code, synthetic inputs, expected results, actual stdout/stderr/exit and receipts",
+    "All current final proposal/catalog scientific content, because absent",
+    "Source-correct correction/preservation, new consequential errors or false rejection",
+    "Full-development coverage, autonomous source discovery, native state, full-pipeline completion, economics and matched-budget causal/quality differences"
+  ],
+  "supporting_allowlist_pins": {
+    "schema": "er9.phase1-source-input-pins.v1",
+    "evaluation_id": "independent-targeted-27",
+    "verified_utc": "2026-10-06T10:58:08.860108+00:00",
+    "verified_monotonic": 114707.717157893,
+    "allowlist": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/SOURCE_ALLOWLIST.json",
+      "sha256": "1bdee4f3acc22be0daf8e4456f6a1388ac026add2f8c07de35cd0b7fe1abe557"
+    },
+    "files": [
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/dispatch.json",
+        "sha256": "54fe8803fff88fac1c0d25bb57be3196fa1e6daf4bc35becdc6ec565862a9606",
+        "bytes": 7913,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/source-card-projection.json",
+        "sha256": "459bc11fbeb58723a1fc5f35ddd43c0f255e0406af4801f94bf4daf4b84dc389",
+        "bytes": 2269,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_1.md",
+        "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc",
+        "bytes": 12393,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_B_2.md",
+        "sha256": "1f1cf8677944a5cc0e4de0c08eb7bbb00723e45dbf82ad3887ed1edda39aade5",
+        "bytes": 16313,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/actual_task_A_1.md",
+        "sha256": "fb928d6166609f4d6ea0d072517d88bef16d3e373eece8353f943b1e25932c59",
+        "bytes": 15467,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/brief.md",
+        "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+        "bytes": 5830,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/common_important_checks.json",
+        "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+        "bytes": 1952,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/common_criteria.json",
+        "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+        "bytes": 2521,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/targeted_coverage_map.json",
+        "sha256": "499af1cda1f7a27c33c5675a984a0733fe8a4f4e934fb9f4d313e48ba2b6edb3",
+        "bytes": 2243,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/full_brief_obligations.json",
+        "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+        "bytes": 4577,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/neutral_targeted_task.md",
+        "sha256": "56432a02034c0fb8947db985f2ebc1ecc5bc27bf9a23586c6d9426cb4f6885b0",
+        "bytes": 1430,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/output_contract.md",
+        "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+        "bytes": 2062,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/task/source_access.json",
+        "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+        "bytes": 1751,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/B/role-1/flash/review.md",
+        "sha256": "b5cf9e06ce1530d6adeae94f3f75e80d9221c9a5e1b43904db79df24e1aa0b85",
+        "bytes": 7268,
+        "verified": true
+      },
+      {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/independent-targeted-27/outputs/A/role-1/scratch/json_probe.txt",
+        "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009",
+        "bytes": 14,
+        "verified": true
+      }
+    ]
+  },
+  "forbidden_inputs_not_read": [
+    "Phase2 private key",
+    "Native/model IO or completion status",
+    "Candidate identities beyond unavoidable current Task labels",
+    "Costs and economics",
+    "Old grades/reports/history",
+    "Sibling or unsupplied artifacts"
+  ],
+  "blinding_limit": "Actual current launched Task bytes explicitly expose normal-versus-flash mechanism text and control/treatment current stage IDs. This is unavoidable packet content; perfect treatment blinding is not claimed. Physical model provenance remains UNKNOWN.",
+  "private_key_state": "NOT_READ_BEFORE_PHASE1_FREEZE",
+  "no_repair_no_feedback": true,
+  "executed_semantic_witnesses_by_evaluator": [],
+  "boundary": "Source/input pin verification certifies byte identity only. The two delivery findings do not establish equal scientific quality, a winner, or an error-free flash review."
+}

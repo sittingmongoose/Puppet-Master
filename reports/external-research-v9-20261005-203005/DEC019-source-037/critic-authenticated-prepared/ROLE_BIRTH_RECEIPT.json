@@ -1,0 +1,31 @@
+{
+  "Task_tool_model_caps_choice_unchanged_at_binding": true,
+  "accepted_imports_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/critic-authenticated-prepared/ACCEPTED_OWN_PRIOR_IMPORTS.json",
+    "sha256": "67ffa09596c4c98a55cf2eebbe615a260055cd8abb44593ad34281a0174f3bb7"
+  },
+  "actual_clocks": "not allocated by this constructor; original new-role birth and limits computed by dispatch/worker before Goal",
+  "arm": "treatment",
+  "extra_logical_target_credit": false,
+  "index_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/critic-authenticated-prepared/workspace/inputs/prior_file_index.json",
+    "sha256": "e8248740eee98561495f9f3a52a19508b12a397b2bca9ab52fdd31765cc77fe8"
+  },
+  "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+  "model_or_native_calls": 0,
+  "new_critic_parent": null,
+  "original_failed_parent_selection_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/I01_ORIGINAL_T_FAILED_R_AUTHENTIC_DONOR_001/SELECTION.json",
+    "sha256": "ff0087a716b7935a80b4ed2e88f8195caf02dd9b5c14f0970d8bb8c41eb6f51b"
+  },
+  "pair_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001",
+  "plan_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/critic-PLAN.json",
+    "sha256": "c8012d2c919ac40889786aecc512476c7fe4c9a08dc0523af3866f532106bb3f"
+  },
+  "schema": "er9.actual-role-birth-binding-receipt.v1",
+  "stage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/critic-authenticated-prepared/role-bound-stage.json",
+    "sha256": "565b4cfbf4bea60f7bf85e2a89f82482d68dac1f7072fd67efdac2bf88c63ab0"
+  }
+}

@@ -1,0 +1,35 @@
+{
+ "json_exact_for_all": true,
+ "max_float32_rel_err": 3.9736429702230673e-08,
+ "rows": [
+  {
+   "value": "123456.123456789",
+   "json_roundtrip_exact": true,
+   "float32_value": "123456.125",
+   "float32_abs_err": 0.0015432109939865768,
+   "float32_rel_err": 1.2500076551704764e-08
+  },
+  {
+   "value": "0.30000000000000004",
+   "json_roundtrip_exact": true,
+   "float32_value": "0.30000001192092896",
+   "float32_abs_err": 1.1920928910669204e-08,
+   "float32_rel_err": 3.9736429702230673e-08
+  },
+  {
+   "value": "100000.25",
+   "json_roundtrip_exact": true,
+   "float32_value": "100000.25",
+   "float32_abs_err": 0.0,
+   "float32_rel_err": 0.0
+  },
+  {
+   "value": "0.04999999999",
+   "json_roundtrip_exact": true,
+   "float32_value": "0.05000000074505806",
+   "float32_abs_err": 7.55058057744229e-10,
+   "float32_rel_err": 1.510116115790481e-08
+  }
+ ]
+}
+EXIT_OK

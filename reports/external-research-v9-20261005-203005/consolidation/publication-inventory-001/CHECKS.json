@@ -1,0 +1,42 @@
+{
+  "checked_utc": "2026-10-06T12:35:45.637184+00:00",
+  "checks": {
+    "all_48_pairs_have_both_arms": true,
+    "all_declared_pins_match_observed_bytes": true,
+    "all_interned_pins_resolve": true,
+    "all_required_outputs_have_explicit_state": true,
+    "all_selected_arms_have_exact_stage_refs": true,
+    "campaign_not_closed": true,
+    "corrected_generator_opaque_luna_result": true,
+    "logical_arm_count_96": true,
+    "no_forbidden_body_field_export": true,
+    "no_new_logical_credit_for_retained_history": true,
+    "physical_provider_and_billing_not_inferred": true,
+    "snapshot_non_atomic": true,
+    "target_counts_64_24_8": true,
+    "unique_logical_pair_arm_rows": true,
+    "unique_stage_definition_ids": true
+  },
+  "counts": {
+    "current_stage_refs": 174,
+    "logical_arms": 96,
+    "pairs": 48,
+    "pins": 2882,
+    "resolved_pin_references": 4773,
+    "retained_history_stage_refs": 502,
+    "unique_stage_definitions": 705
+  },
+  "deterministic_pass": true,
+  "inventory_sha256": "0ca13bd84503b1e138f5d9b0b22a677b30254abf6c38ad1fdb8d259ca3612cb5",
+  "limits": "Metadata/source-scope checks only; no scientific body, output correctness, candidate grade, native COMPLETE, campaign completion, or publication completeness assessment.",
+  "mutable_source_changes_after_capture": [
+    {
+      "captured_sha256": "30a21b6ecd319a25db270e825f9d96822382a94ab95ba76023c2972872799929",
+      "later_sha256": "d6e683eb64bbe1cbaa67066e98e8772c7c8b585566e8a43746d59d3a9d6f5821",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/queue_cursor.json",
+      "qualification": "NOT_ATOMIC; captured view remains dated, no stage/clock promotion"
+    }
+  ],
+  "pin_mismatches": [],
+  "schema": "er9.publication-inventory-checks.v1"
+}

@@ -1,0 +1,16 @@
+{
+  "authorized_whole_seconds": 1800,
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "elapsed_seconds": 907.120193855,
+  "helper_provider_usage": "UNKNOWN",
+  "monotonic_ns": 120334306305820,
+  "required_handoffs_follow_this_checkpoint": true,
+  "schema": "er9.accounting.report-ready-clock.v1",
+  "scope": "Own boundedwork report-readycheckpoint; all waits/sourcebinding resolution/validation included, finalrequiredhandoff clock follows. Not modeloccupied or candidate billing; later sourcejoin is datedseparately.",
+  "start_pin": {
+    "path": "accounting/cohort-019/START.json",
+    "sha256": "b2dd8d33ac435930d725492ad20da1b64eb34ad2fc4760bf7e970879e4f58676"
+  },
+  "utc": "2026-10-06T12:31:55.449412+00:00"
+}

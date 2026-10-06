@@ -1,0 +1,7 @@
+display order:        ['c0', 'c1', 'c2']
+S1 execution order:   [('c2', 1, 'S1'), ('c0', 2, 'S1'), ('c1', 3, 'S1')]  (differs from display order c0,c1,c2)
+S1 statuses:          {'c0': 'current', 'c1': 'current', 'c2': 'current'}
+after editing c0:     {'c0': 'stale', 'c1': 'stale', 'c2': 'stale'}  (transitive invalidation)
+after kernel restart: {'c0': 'unverified', 'c1': 'unverified', 'c2': 'unverified'}  (restart never marks old outputs current)
+after failed run c0:  {'c0': 'failed', 'c1': 'unverified', 'c2': 'unverified'}
+W2_OK

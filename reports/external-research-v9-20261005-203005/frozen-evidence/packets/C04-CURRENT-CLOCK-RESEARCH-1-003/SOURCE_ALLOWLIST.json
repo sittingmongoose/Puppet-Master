@@ -1,0 +1,100 @@
+{
+  "schema": "er9.phase1-source-only-allowlist.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/dispatch.json",
+      "sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a",
+      "bytes": 8981
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/integrity-proof.json",
+      "sha256": "b9f8191031bd11795f0fb13ce998ebd776db7885f60300bac840c30d68fd8ebc",
+      "bytes": 1236
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/A/research/leads.json",
+      "sha256": "59c9b5adde05edaffd1000cac793e13c620422d8b2088dba93f34645dd162727",
+      "bytes": 4293
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/A/research/proposal.md",
+      "sha256": "98f112c5f046967dedf71fdb67fe9fa1d574eaa30b8a484cede0eba190da8a63",
+      "bytes": 27077
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/A/research/sources.json",
+      "sha256": "6eef876f90df763505949b009f56504a587661c4ccf8ce90df81d7eac3328b3a",
+      "bytes": 15066
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/A/research/witnesses.json",
+      "sha256": "a23f50eb1bfde131c759b391ef7f2703b4bd06f4985550c76bad0df57b83e45a",
+      "bytes": 5845
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/B/research/leads.json",
+      "sha256": "071232910cd79162c7caf32069c805f37bfc5087b0f4766f6a3dd40f7bc3f77f",
+      "bytes": 4413
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/B/research/proposal.md",
+      "sha256": "00f0d82790cb0aa1a9c438c4119040e921d13358441d31093c88cff92a5a1913",
+      "bytes": 28827
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/B/research/sources.json",
+      "sha256": "064c98fceab1b374ee42a4061e9bb309bda18fdb37322d347d631bbfc6bb05c8",
+      "bytes": 10362
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/B/research/witnesses.json",
+      "sha256": "3aa465834e663574af65c487c95dbc2c2d17426ccd478f2a9658346475757c85",
+      "bytes": 5627
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/actual-holdout-card.json",
+      "sha256": "8daaed0026e1c938f99ce968ef7a7498e7b1adb1947e671fec37ed5f8ad8dc09",
+      "bytes": 2172
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/actual_launched_Task_A.md",
+      "sha256": "071f2b8f0ba5fc078aaacebf9cc2b7539f632b73009b6aab74acd0b95fc025bc",
+      "bytes": 14633
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/actual_launched_Task_B.md",
+      "sha256": "ea270d0160fac1558204d85a715de0ce42c56a6eaf487eaf56eb863db9828e01",
+      "bytes": 12956
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/brief.md",
+      "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+      "bytes": 4971
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/coverage_map.json",
+      "sha256": "7445e6e3bf1fd660c8123d766210c4f41fbd90c7031c365dd472a3705f273c07",
+      "bytes": 4240
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    }
+  ],
+  "dispatch_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/dispatch.json",
+    "sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a"
+  },
+  "held_phase2_key": true
+}

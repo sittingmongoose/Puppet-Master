@@ -1,0 +1,26 @@
+{
+  "tests": [
+    {
+      "both_settled": true,
+      "continuation_statuses": [
+        "BLOCKED_DEC018_PAIRED_NATIVE_REPAIR_FAILED",
+        "BLOCKED_DEC018_PAIRED_NATIVE_REPAIR_FAILED",
+        "BLOCKED_DEC018_PAIRED_NATIVE_REPAIR_FAILED"
+      ],
+      "native_calls": 0
+    },
+    {
+      "both_settled": false,
+      "continuation_statuses": [
+        "WAITING_RUNTIME_BINDING",
+        "WAITING_RUNTIME_BINDING",
+        "WAITING_RUNTIME_BINDING"
+      ],
+      "native_calls": 0
+    }
+  ],
+  "result": "PASS",
+  "source_paired_gate_not_relaxed": true,
+  "candidate_or_model_calls": 0,
+  "actual_state_mutations": false
+}

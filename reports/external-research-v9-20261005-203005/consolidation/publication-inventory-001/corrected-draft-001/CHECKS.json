@@ -1,0 +1,48 @@
+{
+  "checked_utc": "2026-10-06T12:33:17.092670+00:00",
+  "checks": {
+    "all_48_pairs_have_both_arms": true,
+    "all_declared_pins_match_observed_bytes": true,
+    "all_interned_pins_resolve": true,
+    "all_required_outputs_have_explicit_state": true,
+    "all_selected_arms_have_exact_stage_refs": true,
+    "campaign_not_closed": true,
+    "corrected_generator_opaque_luna_result": true,
+    "logical_arm_count_96": true,
+    "no_forbidden_body_field_export": true,
+    "no_new_logical_credit_for_retained_history": true,
+    "physical_provider_and_billing_not_inferred": true,
+    "snapshot_non_atomic": true,
+    "target_counts_64_24_8": true,
+    "unique_logical_pair_arm_rows": true,
+    "unique_stage_definition_ids": true
+  },
+  "counts": {
+    "current_stage_refs": 174,
+    "logical_arms": 96,
+    "pairs": 48,
+    "pins": 2880,
+    "resolved_pin_references": 4771,
+    "retained_history_stage_refs": 502,
+    "unique_stage_definitions": 705
+  },
+  "deterministic_pass": true,
+  "inventory_sha256": "b651b7d931f25070cc079eeccbe97099d95547212db03a86decb9d8a9d4d686d",
+  "limits": "Metadata/source-scope checks only; no scientific body, output correctness, candidate grade, native COMPLETE, campaign completion, or publication completeness assessment.",
+  "mutable_source_changes_after_capture": [
+    {
+      "captured_sha256": "4a015ccfb9d525fa7b60f01847cb773ea52ea85fb577c431b48f3b0a22d77aca",
+      "later_sha256": "4d22d6a5ab1b030d65e45b946c862bfa6694761169a8f3fb1f1ece51cc9e3049",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+      "qualification": "NOT_ATOMIC; captured view remains dated, no stage/clock promotion"
+    },
+    {
+      "captured_sha256": "6d5450e4b5370223e3dda1c1c50349f08e9eddacda2a5f3e0a1b64f929aa875b",
+      "later_sha256": "1efed39861d5d326880add77f8d2a69e9b440f89899a170d7851d3e1851e7014",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/queue_cursor.json",
+      "qualification": "NOT_ATOMIC; captured view remains dated, no stage/clock promotion"
+    }
+  ],
+  "pin_mismatches": [],
+  "schema": "er9.publication-inventory-checks.v1"
+}

@@ -1,0 +1,1558 @@
+{
+  "any_scoped_review_match_slots": 47,
+  "counts_overlap_not_partition_of48": true,
+  "logical_counts": {
+    "confirmation": 4,
+    "fresh_integrated": 12,
+    "targeted": 32
+  },
+  "owner_observed_utc": "2026-10-06T11:38:06.284353+00:00",
+  "owner_pin": {
+    "path": "ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_004.json",
+    "sha256": "b2922945a3bb0c015fad0a29ae252747b8db51c513e11edf2f57a3f14ba573a8"
+  },
+  "schema": "er9.accounting.finite-dated-scope.v1",
+  "scope": "18 unmatched logicalSLOTS contain69 dated unmatchedrole rows, not18roles.47slots with anyscopedmatch and18with someunmatchedrole can overlap; not47fullyfinished comparisons. I12unmatched at this earlierdate remainsunchanged; laterP17research closure separate. No scientific_grade fields accessed/copied; stage/current-index/warm/source scopes not wholecomparisons ornew32/12/4targets.",
+  "slots": [
+    {
+      "accepted_current_job_ids": [
+        "D-V01-A-control-diagnostic-a001",
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V01-A-control-diagnostic-a001",
+            "D-V01-A-treatment-diagnostic-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V01-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-7",
+          "matched_current_job_ids": [
+            "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+            "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 3962,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/CLOSURE.json",
+              "sha256": "fd519383d78e62eb8afcd780520846779f5eda1a483b89ecea1d12a34a2f96e7"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V01-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        },
+        {
+          "evaluation_id": "independent-targeted-8",
+          "matched_current_job_ids": [
+            "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "D-V02-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-9",
+          "matched_current_job_ids": [
+            "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V02-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-10",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V03-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-13",
+          "matched_current_job_ids": [
+            "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "D-V03-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+        "D-V04-A-treatment-compare_final-a001",
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-21",
+          "matched_current_job_ids": [
+            "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+            "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        },
+        {
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-21_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "338170a39221fbb7f4d154087ecad40783c38293725d271e3142170807d74c55",
+          "matched_current_job_ids": [
+            "D-V04-A-control-compare_final-a001",
+            "D-V04-A-treatment-compare_final-a001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V04-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "coordinator_key_filename": "TD22_CURRENT_ROLE_KEY_ADAPTER_001.json",
+          "coordinator_key_sha256": "034249654dded21303c9b6d93f48594b080d28b3c519f06294eda72414aad90d",
+          "matched_current_job_ids": [
+            "D-V04-B-control-compare_final-a001",
+            "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+            "D-V04-B-treatment-compare_final-a001",
+            "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V04-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "independent-targeted-28_PHASE2_KEY.json",
+          "coordinator_key_sha256": "649f2df56fb76a7e5815d05b0ef9fde2760c49bdf52c64eedb5a60eede63c049",
+          "matched_current_job_ids": [
+            "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V05-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "independent-targeted-27_PHASE2_KEY.json",
+          "coordinator_key_sha256": "ad7cb4dcf277b5b838e19112e2bd41f7c0989969feb08a938804e333dc36ff2e",
+          "matched_current_job_ids": [
+            "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+            "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V05-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-25_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "889237558d6da9a732b486fae0d1923b715d76376980d57242f778b7a063850d",
+          "matched_current_job_ids": [
+            "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V06-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-26_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "7c2e973ebb6f5149c0dbf8a23b17ca2afe84aa21c0cc8d56b1eabf7f4a7d89ed",
+          "matched_current_job_ids": [
+            "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V06-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-11",
+          "matched_current_job_ids": [
+            "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+            "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1851,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/completion.json",
+              "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V07-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-12",
+          "matched_current_job_ids": [
+            "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1833,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/closure.json",
+              "sha256": "04da9a267e2c394a1ebf0e8f21aeaf683ea4caf5f356807e57ccc87cf2f1c1ef"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V07-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V08-A-control-critic-a001",
+        "D-V08-A-control-final_author-a001",
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-D-V08-A",
+          "matched_current_job_ids": [
+            "D-V08-A-control-critic-a001",
+            "D-V08-A-treatment-critic_and_final-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1574,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/FINISHED.json",
+              "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V08-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": [
+        "D-V08-A-control-final_author-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001",
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V08-B-treatment-critic_and_final-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V08-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-control-resolve_final-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-24_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "cce7bc5b32bb3c93667228d7142906f53741c0c0f980156f07c4f6bced8575b5",
+          "matched_current_job_ids": [
+            "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+            "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+            "D-V09-A-control-resolve_final-a001",
+            "D-V09-A-treatment-implementation_critic-a001",
+            "D-V09-A-treatment-resolve_final-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V09-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "coordinator_key_filename": "TD23_CURRENT_ROLE_KEY_ADAPTER_001.json",
+          "coordinator_key_sha256": "cacfa8f81c105b804ecd69779d17640d92b4f55e331a1492e4b1425bb559b824",
+          "matched_current_job_ids": [
+            "D-V09-B-control-resolve_final-a001",
+            "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+            "D-V09-B-treatment-resolve_final-a001",
+            "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V09-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-14",
+          "matched_current_job_ids": [
+            "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 4264,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-14/neutral-closure.json",
+              "sha256": "4e483cfd52bd8802cff6697244f180f853d99cb2bdfe1f925c7b49a38276118b"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V10-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-15",
+          "matched_current_job_ids": [
+            "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        },
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V10-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        },
+        {
+          "evaluation_id": "independent-targeted-16",
+          "matched_current_job_ids": [
+            "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1898,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-16/completion.json",
+              "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V11-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-17",
+          "matched_current_job_ids": [
+            "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1549,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-17/closure.json",
+              "sha256": "7745eb8d75234ab1e4ab4fff2f0f4c9f515a60d1d735e48a1aa2a0bccac6bd39"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V11-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-18",
+          "matched_current_job_ids": [
+            "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 4270,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-18/closure.json",
+              "sha256": "a2685571a3d68a37c39d2b630c6c9c64038ddc4470409245ba505a32e730da20"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V12-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-19",
+          "matched_current_job_ids": [
+            "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+            "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 2156,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-19/closure.json",
+              "sha256": "5b0b9938cd85e34a174c3e665a8d6700a657fadc78860121b2c8728f3bef535b"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V12-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "I08currentRonlyfinalnull orD13Aemptydeliverycontract; nofullpipeline/sourcecomplete inference",
+          "coordinator_key_filename": "INDEPENDENT-EMPTY-DELIVERY-CURRENT-2_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "e4d34c6f456c9707c043d1efb975a9c253400b16f9fc3d60cbbcb7caa0f30a94",
+          "matched_current_job_ids": [
+            "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+            "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+          ],
+          "review_state": "CLOSED_ACTUAL_FINAL_CURRENT_SOURCE_SCOPE",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V13-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-20",
+          "matched_current_job_ids": [
+            "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+            "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 2037,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-20/CLOSURE.json",
+              "sha256": "a419b6374e5d0155ede2dbc7e1552e9ab9f643dc9fa66d6aa95c2d3945c4d7ba"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V13-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V14-A-LUNA-R1-control-diagnostic-a002",
+            "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+          ],
+          "neutral_closure_metadata": {
+            "assessment_complete_from_this_metadata": "UNKNOWN",
+            "budget_metadata_only": {
+              "elapsed_seconds": 1490.801607373,
+              "hard_max_seconds": 1800,
+              "original_clock_reset": false,
+              "within_original_bound": true
+            },
+            "dedicated_neutral_FINISHED_or_closure_receipt": "UNKNOWN_NOT_EXPOSED_IN_KNOWN_SELECTION",
+            "frozen_addendum_pin": {
+              "bytes": 17136,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/PHASE2_ADDENDUM.json",
+              "sha256": "32c33eef9678f0005a361a1a689525ecd2be6bfd3305e326ea7caac1251c5f47"
+            },
+            "not_inferred_from_report_presence": true,
+            "saved_utc": "2026-10-05T23:01:00.026441Z"
+          },
+          "no_later_scoped_successor_substitution": true,
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V14-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V14-B-control-diagnostic-a002",
+            "D-V14-B-treatment-diagnostic-a002"
+          ],
+          "neutral_closure_metadata": {
+            "assessment_complete_from_this_metadata": "UNKNOWN",
+            "budget_metadata_only": {
+              "elapsed_seconds": 1119.839054457,
+              "hard_max_seconds": 1800,
+              "original_clock_reset": false,
+              "within_original_bound": true
+            },
+            "dedicated_neutral_FINISHED_or_closure_receipt": "UNKNOWN_NOT_EXPOSED_IN_KNOWN_SELECTION",
+            "frozen_addendum_pin": {
+              "bytes": 16201,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/PHASE2_ADDENDUM.json",
+              "sha256": "af371e9d193a9c33215f453576081efabff9183237b14202688fd846bfcccd44"
+            },
+            "not_inferred_from_report_presence": true,
+            "saved_utc": "2026-10-05T23:01:00.049460Z"
+          },
+          "no_later_scoped_successor_substitution": true,
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V14-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V15-A-control-diagnostic-a002",
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V15-A-control-diagnostic-a002",
+            "D-V15-A-treatment-diagnostic-a002"
+          ],
+          "neutral_closure_metadata": {
+            "clock_reset": false,
+            "closed_utc": "2026-10-05T22:50:40.573654Z",
+            "explicit_original_budget_closure_pin": {
+              "bytes": 1279,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/BUDGET_CLOSURE.json",
+              "sha256": "67d233bd9d54a01f04a3eb9f805b70c05af444e077d0f7110851c690c0f42600"
+            },
+            "hard_max_seconds": 1800,
+            "original_clock_fields": {
+              "elapsed_original_clock_seconds": 1769.035593866
+            },
+            "parent_boundary_separate_dedicated_FINISHED": "UNKNOWN_NOT_EXPOSED",
+            "separate_extension_neutral_clock_pin": {
+              "bytes": 1691,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+              "sha256": "aed77d4662fcb9cda76db2d55364616eba3a19e91de66c346841ea84599baf43"
+            }
+          },
+          "no_later_scoped_successor_substitution": true,
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V15-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V15-B-control-diagnostic-a002",
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "Original a002 parent final-boundary + additive source-only research view; later TD2/TD3/TD4 successors excluded; no new grade",
+          "identity_receipt_pin": {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-001/IDENTITY_001_JOB_BINDINGS.json",
+            "sha256": "7c2a74c3cb9b2503086f644dda239c4f3b795783008487b7274681fad62bac0c"
+          },
+          "matched_current_job_ids": [
+            "D-V15-B-control-diagnostic-a002",
+            "D-V15-B-treatment-diagnostic-a002"
+          ],
+          "neutral_closure_metadata": {
+            "clock_reset": false,
+            "closed_utc": "2026-10-05T23:18:51.841260Z",
+            "explicit_original_budget_closure_pin": {
+              "bytes": 1656,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+              "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+            },
+            "hard_max_seconds": 1800,
+            "original_clock_fields": {
+              "closure_logged_elapsed_seconds": 1951.288343771,
+              "deadline_utc": "2026-10-05T23:16:20.550141Z"
+            },
+            "parent_boundary_separate_dedicated_FINISHED": "UNKNOWN_NOT_EXPOSED",
+            "separate_extension_neutral_clock_pin": {
+              "bytes": 1396,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+              "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5"
+            }
+          },
+          "no_later_scoped_successor_substitution": true,
+          "review_state": "ORIGINAL_FROZEN_SOURCE_AND_FINALBOUNDARY_SCOPE_PINNED",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "D-V15-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V16-A-control-diagnostic-a001",
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-targeted-5",
+          "matched_current_job_ids": [
+            "D-V16-A-control-diagnostic-a001",
+            "D-V16-A-treatment-diagnostic-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 2046,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/closure.json",
+              "sha256": "5fbbcac5cb0a8d9b55160fb2adec97e8a899e6b8ed84a732a9df189364d4dbfb"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V16-A",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "D-V16-B-control-diagnostic-a001",
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-empty-delivery-1",
+          "matched_current_job_ids": [
+            "D-V16-B-control-diagnostic-a001",
+            "D-V16-B-treatment-diagnostic-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 1334,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-empty-delivery-1/closure_receipt.json",
+              "sha256": "104290994fe36e20fffc2d0af30ac1943e7aad3a78b586fc4a1c2dfd36c33723"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "D-V16-B",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "A",
+      "unmatched_current_job_ids": []
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-8-research-I01",
+          "matched_current_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 4135,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/CLOSURE.json",
+              "sha256": "a02af77976e304784b8b0a7d2b2f92790e1a907e42177e73ffbe36fec9ceeabb"
+            },
+            {
+              "bytes": 625,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-8-research-I01/FINAL_HANDOFF_RECEIPT.json",
+              "sha256": "ee1962ff8825fc393bf20c15a122fde9c0510b376949efedb1494a7d81a2b384"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        },
+        {
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "coordinator_key_filename": "P8_I01_FRESH_RESEARCH_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "f29d87bcd23d38f8ba03e6315edff30f41bda6e10704b8bc88f0750f8723fff2",
+          "matched_current_job_ids": [
+            "I-01-FRESH-DELIVERY-R001-control-research-a001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-01",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-9-research-I02",
+          "matched_current_job_ids": [
+            "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "I-02",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-10-research-I03",
+          "matched_current_job_ids": [
+            "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "I-03",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "typed source/role/research/final scope only no fullpipeline inference",
+          "coordinator_key_filename": "P11_CURRENT_I04_RESEARCH_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "35d9beb34b4e29706324cb9dff1298c6c62fcda90161c4da296c58abbf1632bc",
+          "matched_current_job_ids": [
+            "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "EXACT_HISTORICAL_SOURCE_SCOPE_JOB_MATCH; neutral closure pins separatelyqualified",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-04",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-5",
+          "matched_current_job_ids": [
+            "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "I-05",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-6",
+          "matched_current_job_ids": [
+            "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+          ],
+          "neutral_closure_pins": [
+            {
+              "bytes": 2120,
+              "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-6/completion.json",
+              "sha256": "461dce3f5a36a9c66645b6f472059d287b6da1ec62b819b2ef85c11881b5f646"
+            }
+          ],
+          "review_state": "CLOSED_RECEIPT_PRESENT"
+        }
+      ],
+      "logical_slot": "I-06",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "evaluation_id": "independent-pipeline-7",
+          "matched_current_job_ids": [
+            "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+            "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+          ],
+          "neutral_closure_pins": [],
+          "review_state": "EXACT_CURRENT_KEY_REVIEW_MATCH_CLOSURE_UNKNOWN"
+        }
+      ],
+      "logical_slot": "I-07",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "I08currentRonlyfinalnull orD13Aemptydeliverycontract; nofullpipeline/sourcecomplete inference",
+          "coordinator_key_filename": "INDEPENDENT-TARGETED-30_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "d0b573e063cabc3b57fbcb7a71446155114ab44914b96e073c5d0674bf42ccee",
+          "matched_current_job_ids": [
+            "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+            "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "CLOSED_ACTUAL_FINAL_CURRENT_SOURCE_SCOPE",
+          "scientific_grade": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-08",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "I09-CURRENT-RESEARCH-P12_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "c6b21c4bec03e283c6149b7852ecde9d8468a069503431f99cfcfb772a35820e",
+          "matched_current_job_ids": [
+            "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-09",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "I10-CURRENT-RESEARCH-P13_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "ade8dc4a30f2422bdd10f3bbbe2345b8df71e4022bae77013cb99e7db344875a",
+          "matched_current_job_ids": [
+            "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-10",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "I11-CURRENT-RESEARCH-P14_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "ffa233a2d75b037bc067cd06c6fd2000bfcad0e679fdf003363777fbf71cdbf7",
+          "matched_current_job_ids": [
+            "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+            "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "I-11",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "actual_scope_review_matches": [],
+      "logical_slot": "I-12",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "track": "B",
+      "unmatched_current_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "C01-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "4af94f4f0f71792ea92c89880129abc06b268535964e5e4a74f8877a497b38bf",
+          "matched_current_job_ids": [
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "C-01",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC014_four_confirmation",
+      "track": "C",
+      "unmatched_current_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "C02-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "6730f535ad552c4e73e5b531bb8c5bb19fc276bf2447078ab7e39b79170ba9b9",
+          "matched_current_job_ids": [
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "C-02",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC014_four_confirmation",
+      "track": "C",
+      "unmatched_current_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "C03-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "73568ee79db39fa3363ec5c9d6acebaa3939392607bf8fda1ef6b974cc094b7a",
+          "matched_current_job_ids": [
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "C-03",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC014_four_confirmation",
+      "track": "C",
+      "unmatched_current_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+      ]
+    },
+    {
+      "accepted_current_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "actual_scope_review_matches": [
+        {
+          "actual_scope": "current research/rolepartial/finalabsence as typeddispatch; notfullcomparison",
+          "coordinator_key_filename": "C04-CURRENT-CLOCK-RESEARCH-1_PHASE2_KEY_001.json",
+          "coordinator_key_sha256": "02078ce7862d7c967e49a9d4d8e7e2ec4c0fd3502ca0e0c3343e216f4e3740c7",
+          "matched_current_job_ids": [
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+            "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+          ],
+          "review_state": "NEW_EXACT_SOURCE_SCOPE_RESERVATION_OR_GATE; closedclock separatequeue018/019",
+          "source_grades": "HELD_NOT_READ"
+        }
+      ],
+      "logical_slot": "C-04",
+      "review_coverage": "EXACT_JOB_MATCH_SCOPED_ONLY; missing_final_intermediate_and_emptyscope_not_fullpipeline_or_matchedcredit",
+      "selection_stratum": "DEC014_four_confirmation",
+      "track": "C",
+      "unmatched_current_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001"
+      ]
+    }
+  ],
+  "slots_with_unmatched_dated_role_rows": 18,
+  "unmatched_dated_role_rows": 69
+}

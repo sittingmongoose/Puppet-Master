@@ -1,0 +1,71 @@
+{
+  "observed_utc": "2026-10-06T12:24:53.472637+00:00",
+  "critic_job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+  "critic_freeze_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/OUTPUT_FREEZE.json",
+    "sha256": "9fb2ce2255f72349f1cb4d2443bdd097fc2a98708fc73d84fbdf32f83ead21de"
+  },
+  "critic_private_release_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/PRIVATE_SLICE_RELEASE.json",
+    "sha256": "293baec5b7a7f71016268e9917cc20bd4d3999ea144a543e9424072a0f13b8af"
+  },
+  "source_constructor_receipt_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/role-birth/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/actual-source-bound-dec019/ROLE_BIRTH_RECEIPT.json",
+    "sha256": "7de772ea6ab4287c742463cf4a8942a3c92cdeb052581a9610a33c35b8d95e15"
+  },
+  "direct_new_critic_parent_proofs": {
+    "actual_stage_ref": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/stage.json",
+      "sha256": "6954b3d524baedde171efeda53b490e8f865f881c984e20abcf6e81568135a8e"
+    },
+    "capsule_ref": {
+      "path": "LAB_ROOT/ops/dispatcher/DEC019_ROLE_BIRTH/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/CAPSULES.json",
+      "sha256": "9b7d15a115a69e028a0cb063615ebb037708c6846ea10a09acb0835b4f52f544"
+    },
+    "closed_context_ref": {
+      "path": "LAB_ROOT/ops/dispatcher/DEC019_ROLE_BIRTH/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/CLOSED_CONTEXT.json",
+      "sha256": "9af8e5bd3eb4472ae0e6d73c1a2ace21f9bf4cdc03a52d14177048de7422de46"
+    },
+    "freeze_ref": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/OUTPUT_FREEZE.json",
+      "sha256": "9fb2ce2255f72349f1cb4d2443bdd097fc2a98708fc73d84fbdf32f83ead21de"
+    },
+    "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+    "release_ref": {
+      "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/PRIVATE_SLICE_RELEASE.json",
+      "sha256": "293baec5b7a7f71016268e9917cc20bd4d3999ea144a543e9424072a0f13b8af"
+    }
+  },
+  "actual_direct_critic_goal_status": "complete",
+  "final_job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+  "final_native_goal_starts": 1,
+  "actual_stage_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/stage.json",
+    "sha256": "497a46e64b11893b376cf5b44db236d07266248f26ffaede62a5b461d9f11211"
+  },
+  "runtime_ready_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+    "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+  },
+  "original_birth_monotonic_ns": 119857173771989,
+  "max_seconds": 600,
+  "max_responses": 60,
+  "carrier_profile_ref": {
+    "path": "LAB_ROOT/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/BUNDLE_PROFILE.json",
+    "sha256": "1316c5b4bcf7173abb53944070825562e95cc3cbf75908db13f71f8df51fc4ca"
+  },
+  "prelaunch_both_choices_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC019_IMPORT_001/PRELAUNCH_BOTH_CHOICES.json",
+    "sha256": "8ee70faf7f964ccb973d28fb49de7e335f8986e5de9939e9697c9a0478947e80"
+  },
+  "original_failed_research_status_unchanged": true,
+  "no_original_matched_fresh_pipeline_credit": true,
+  "cursor": {
+    "updated_utc": "2026-10-06T12:24:47.427882+00:00",
+    "running_job_ids": [
+      "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001"
+    ],
+    "scored_native_goal_starts_confirmed": 268,
+    "retained_resource_job_ids": []
+  }
+}

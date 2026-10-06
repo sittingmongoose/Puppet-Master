@@ -1,0 +1,68 @@
+{
+  "schema": "er9.neutral-current-finish-clock-pinset.v1",
+  "observed_utc": "2026-10-06T12:14:29.606110+00:00",
+  "files": [
+    {
+      "evaluation_id": "independent-pipeline-15-research-I08",
+      "neutral_closure_pin": {
+        "path": "LAB_ROOT/evaluation/independent-pipeline-15-research-I08/completion-receipt.json",
+        "sha256": "a188318ab08b71dc253702dd3e89ab1f28771cf5d8f242225385f166937d56d7",
+        "bytes": 1293
+      },
+      "scientific_outcomes": "HELD_NOT_READ",
+      "reportready_not_automatic_handoffclosure": true
+    },
+    {
+      "evaluation_id": "independent-empty-delivery-current-2",
+      "neutral_closure_pin": {
+        "path": "LAB_ROOT/evaluation/independent-empty-delivery-current-2/COMPLETION_RECEIPT.json",
+        "sha256": "fa3d77c313464289401d61b449956cea0c985283d879580a74758ebe9d89a2f6",
+        "bytes": 9373
+      },
+      "scientific_outcomes": "HELD_NOT_READ",
+      "reportready_not_automatic_handoffclosure": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-16-I08-current-roles",
+      "neutral_closure_pin": {
+        "path": "LAB_ROOT/evaluation/independent-pipeline-16-I08-current-roles/completion-receipt.json",
+        "sha256": "60ef0da4be0785763e3118d69d2223162d09aefd31559b73ea55922eb887af5a",
+        "bytes": 9244
+      },
+      "scientific_outcomes": "HELD_NOT_READ",
+      "reportready_not_automatic_handoffclosure": true
+    },
+    {
+      "evaluation_id": "independent-pipeline-17-research-I12",
+      "neutral_closure_pin": {
+        "path": "LAB_ROOT/evaluation/independent-pipeline-17-research-I12/completion_clock_receipt.json",
+        "sha256": "d8389c462b676bbe74a380390ba5aac1c011ea067ed95c1dd180ae6c8de914b9",
+        "bytes": 3183
+      },
+      "scientific_outcomes": "HELD_NOT_READ",
+      "reportready_not_automatic_handoffclosure": true
+    }
+  ],
+  "root29_hash_only": {
+    "journal_path": "LAB_ROOT/state/supervisor_goal_counters.jsonl",
+    "immutable29_prefix_sha256": "ff8386a2bd92427bf6062f03305ae716786e92cb75cf6e36ac2c8fe14dabfb1a",
+    "immutable28_prefix_sha256": "358cbc7fdf0a5d7001bac0d2b1fd7050dd27e93628055defac8a94ff496ca388",
+    "row29_with_newline_sha256": "5d21be9912e3d022bcaea6c9160ec1fc6a516737f3fc6a2adc724245ef17dd9e",
+    "native_tokens_used_rootreported": 42360569,
+    "native_time_seconds_rootreported": 55786,
+    "helper_inclusion": "UNKNOWN",
+    "provider_combined": false,
+    "frozen018_unchanged": true,
+    "no_current_whole_journal_claim_after_later_append": true
+  },
+  "scope_coverage_pin": {
+    "path": "LAB_ROOT/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_004.json",
+    "sha256": "b2922945a3bb0c015fad0a29ae252747b8db51c513e11edf2f57a3f14ba573a8"
+  },
+  "prefix_courier_qualification_pin": {
+    "path": "LAB_ROOT/ops/frozen-exports/observations/C03_C04_REQUIRED_PATH_PREFIX_QUALIFICATION_001.json",
+    "sha256": "3e304008d3ee1251b52abc3cf2665213fa93f3094142a444178c80cba1e4f139"
+  },
+  "all_source_reports_P1_unchanged": true,
+  "final_consolidation_pending_native_tail_and_newoutputs": true
+}

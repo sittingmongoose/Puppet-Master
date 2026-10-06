@@ -1,0 +1,20 @@
+{
+  "model_provider_tokens_billing": "UNKNOWN",
+  "observer_metadata": {
+    "earlier_operator_claim_MODEL_string_was_incorrect": true,
+    "exact_actor_equality_passed": true,
+    "known_model_shape_mismatch": false,
+    "new_native_calls": 0,
+    "observed_utc": "2026-10-06T12:05:34.023549+00:00",
+    "source_runtime_Task_clocks_or_actor_changed": false
+  },
+  "ops_audit_prep_elapsed_seconds": "UNKNOWN_NOT_SEPARATELY_MEASURED",
+  "owner_pin": {
+    "path": "ops/dispatcher/DEC019_ACTUAL_MODEL_SHAPE_FALSE_ALARM_CORRECTION_001.json",
+    "sha256": "eb3e36e3014f8e62f524dde3e378913008913ffe4e9646d322e2607cbf099633"
+  },
+  "schema": "er9.accounting.false-alarm-audit-cost-qualification.v1",
+  "scope": "Falsealarm preserved; exact actorMODEL type/equality correction only. No rawdictionary/modelIO/scientific bodyselected. No zero audit/prep/helper cost or extra source/native allocation invented.",
+  "source20_changes_or_extra_repair_inference": "NOT_INFERRED_NO_SOURCE_RUNTIME_TASK_GOAL_CHANGE_PER_OWNER",
+  "source_helper_elapsed_or_cost": "UNEXPOSED"
+}

@@ -1,0 +1,6 @@
+x_true        = 60000.001
+x_float32     = 60000.0
+error_px      = -0.000999999996565748 ( 0.000999999996565748 px )
+float32 ULP@6e4= 0.0
+v1_f32 != v2_f32 : False -> vertices 0.0003 px apart collide in float32: True
+json roundtrip exact: True 60000.00123456789

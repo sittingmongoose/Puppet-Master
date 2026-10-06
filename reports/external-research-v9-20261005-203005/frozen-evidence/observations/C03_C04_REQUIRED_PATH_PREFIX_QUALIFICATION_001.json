@@ -1,0 +1,87 @@
+{
+  "schema": "er9.additive-current-artifact-requirement-path-qualification.v1",
+  "rows": [
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "alias": "A",
+      "original_dispatch_sha256": "c6d4588326886ca58569c9506d9732c34beaab1f0f4ed3ec43833af09b1a630f",
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "normalized_actual_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "producer_original_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "producer_invalid_json_artifacts": [],
+      "source_syntax_or_quality": "UNKNOWN_COORDINATOR_NO_BODY_PARSE_OR_GRADE; producer marker separatefrom literalreader",
+      "old_P1_judgment_unchanged": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "alias": "B",
+      "original_dispatch_sha256": "c6d4588326886ca58569c9506d9732c34beaab1f0f4ed3ec43833af09b1a630f",
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "normalized_actual_missing_required_artifacts": [],
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "producer_original_missing_required_artifacts": [],
+      "producer_invalid_json_artifacts": [],
+      "source_syntax_or_quality": "UNKNOWN_COORDINATOR_NO_BODY_PARSE_OR_GRADE; producer marker separatefrom literalreader",
+      "old_P1_judgment_unchanged": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "alias": "A",
+      "original_dispatch_sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a",
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "normalized_actual_missing_required_artifacts": [],
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "producer_original_missing_required_artifacts": [],
+      "producer_invalid_json_artifacts": [
+        "out/research/sources.json"
+      ],
+      "source_syntax_or_quality": "UNKNOWN_COORDINATOR_NO_BODY_PARSE_OR_GRADE; producer marker separatefrom literalreader",
+      "old_P1_judgment_unchanged": true
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "alias": "B",
+      "original_dispatch_sha256": "aff61b130d3bac1d028b96eb7833bcda1fe2d510719bfb483ed17d782698e18a",
+      "original_declared_missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "normalized_actual_missing_required_artifacts": [],
+      "normalization": "stage required out/research prefix -> freeze artifact research prefix; exactartifactbytes/pins unchanged",
+      "producer_original_missing_required_artifacts": [],
+      "producer_invalid_json_artifacts": [],
+      "source_syntax_or_quality": "UNKNOWN_COORDINATOR_NO_BODY_PARSE_OR_GRADE; producer marker separatefrom literalreader",
+      "old_P1_judgment_unchanged": true
+    }
+  ],
+  "correction": "courier missing_required_stage_artifacts compared unnormalized out/required paths to freeze-relative paths, overstating missing fields; original dispatch and P1 bytes retained, exact available sourcefiles untouched",
+  "no_scientific_regrade_clock_reset_or_candidate_feedback": true
+}

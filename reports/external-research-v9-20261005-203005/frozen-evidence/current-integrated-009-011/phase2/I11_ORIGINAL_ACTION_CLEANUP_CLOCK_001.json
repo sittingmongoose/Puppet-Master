@@ -1,0 +1,32 @@
+{
+  "schema": "er9.current-original-action-cleanup-clock-projection.v1",
+  "evaluation_id": "independent-pipeline-14-research-I11",
+  "rows": [
+    {
+      "alias": "A",
+      "profile_sha256": "d0ed10ec034917d1831c8c6243ed9331434aee63978584e20dc9118d28226239",
+      "binding_sha256": "66057b04c603ba09cf5222e515a71e38919ff011de61a92db607e714bc40f6fa",
+      "authority": "same exact selected current terminal stage metadata; original action profile and referencedbinding bytehash match",
+      "original_clock_fields": {
+        "original_birth_monotonic_ns": 109506477869161,
+        "original_candidate_action_deadline_monotonic_ns": 110676477869161,
+        "original_stage_allocation_seconds": 1200,
+        "original_total_cleanup_stop_monotonic_ns": 110706477869161
+      },
+      "no_clock_reset_or_new_allocation": true
+    },
+    {
+      "alias": "B",
+      "profile_sha256": "f36aa342ab2185f71988bb4d73562d96967464014cc2cfa482e2f1a27c404874",
+      "binding_sha256": "1a025a459185351778bd2a4e619a8eaa0e74fef6326766e84230d4608cbb95a2",
+      "authority": "same exact selected current terminal stage metadata; original action profile and referencedbinding bytehash match",
+      "original_clock_fields": {
+        "original_birth_monotonic_ns": 109451248891574,
+        "original_candidate_action_deadline_monotonic_ns": 110621248891574,
+        "original_stage_allocation_seconds": 1200,
+        "original_total_cleanup_stop_monotonic_ns": 110651248891574
+      },
+      "no_clock_reset_or_new_allocation": true
+    }
+  ]
+}

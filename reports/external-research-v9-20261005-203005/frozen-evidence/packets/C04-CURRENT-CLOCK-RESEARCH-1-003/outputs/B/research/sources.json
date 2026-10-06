@@ -1,0 +1,101 @@
+[
+  {
+    "id": "S1",
+    "url": "https://www.sqlite.org/rtree.html",
+    "title": "The SQLite R*Tree Module",
+    "publisher": "SQLite.org",
+    "exact_locator": "Sections 3.1 (column types, silent conversion), 3.4 'Roundoff Error' (32-bit float storage; contained-within queries can miss at edges; expand query boxes ~0.000012%), 3.5 'Reading And Writing At The Same Time' (SQLITE_LOCKED; materialize ids to temp table), 4.1 auxiliary '+columns', 7.2 rtreecheck()",
+    "captured_utc": "2026-10-06T08:46:08Z",
+    "capture": {"tool": "public_https_get", "capture_id": "4212dd92b6f64a15a1c9082985c567fc", "sha256": "de560a2eda272b455958d5e08cc2aebc0cd7d60b0a5edb3582f022812294cd55", "bytes": 41813, "complete_response": true, "delivery_first_32768B_range_sha256": "b4e964fbd13d24645cd6bdcd25726741531ad22aae108fadad3c378647a1df93"},
+    "supports": "F4; spatial-index storage behavior, edge-exclusion rule, write-during-scan lock rule",
+    "applicability": "Direct: FieldBook viewport index design and integrity checks"
+  },
+  {
+    "id": "S2",
+    "url": "https://gdal.org/en/stable/tutorials/osr_api_tut.html",
+    "title": "OGR Coordinate Reference Systems and Coordinate Transformation tutorial",
+    "publisher": "OSGeo GDAL (stable docs, last_modified 2026-08-18)",
+    "exact_locator": "Section 'CRS and axis order' (anchor #crs-and-axis-order): 'constant matter of confusion ... source of various interoperability issues'; GDAL 3.0 default honours authority axis order; SetAxisMappingStrategy(OAMS_TRADITIONAL_GIS_ORDER / OAMS_AUTHORITY_COMPLIANT / OAMS_CUSTOM)",
+    "captured_utc": "2026-10-06T08:47:48Z",
+    "capture": {"tool": "public_https_get", "capture_id": "9a2720aa81e34a479c3d7abdb906098b", "sha256": "db51c0711380e1a36188bd9857ffe1c3e9201e6f765796a264c7b75648623b14", "bytes": 92028, "redirect": "301 to /en/stable/ path"},
+    "supports": "F1; axis-order contract and explicit-mapping API shape",
+    "applicability": "Direct: FieldBook CRS registry axis_order field; explicit mapping rule"
+  },
+  {
+    "id": "S3",
+    "url": "https://github.com/OSGeo/PROJ/issues/4631",
+    "title": "Add option to skip extent validation in proj_normalize_for_visualization()",
+    "publisher": "OSGeo/PROJ GitHub issue (opened & closed 2025-12-04, state_reason completed)",
+    "exact_locator": "Body: EPSG:8047 (ED50->ED87->WGS84) normalization returns NULL because EPSG:1147 (Norway N65) and EPSG:1146 (North Sea) extents do not intersect; affects pyproj always_xy=True; manual +proj=axisswap +order=2,1 workaround described as error-prone",
+    "captured_utc": "2026-10-06T08:49:01Z",
+    "capture": {"tool": "public_https_get (api.github.com)", "capture_id": "101aea4c0709434789b0cc4f9a7a9eb2", "sha256": "fb7983ef9e9f8bc28f38c3188908b3d2c5ecb08e3991dde417163afb943d9e37", "bytes": 8915, "complete_response": true},
+    "supports": "F2 (failure half of the issue->fix->regression chain)",
+    "applicability": "Direct: axis-order normalization entangled with domain validation; workaround-fragility lesson"
+  },
+  {
+    "id": "S4",
+    "url": "https://github.com/OSGeo/PROJ/pull/4632/files",
+    "title": "PR #4632: fix normalizeForVisualization to skip extent checks for axis-swap operations (files/patch list)",
+    "publisher": "OSGeo/PROJ GitHub PR (merged_at 2025-12-04T19:20:30Z, milestone 9.8.0, head 6e42eb13b903a9c9225acf62ba1a7334711dbadc)",
+    "exact_locator": "src/iso19111/operation/singleoperation.cpp (+35/-2, normalizeForVisualization rebuilds via ConcatenatedOperation::create over flattened ops, preserves domains, name suffix '(with axis order normalized for visualization)'); src/iso19111/operation/concatenatedoperation.cpp (+4, propagates hasBallparkTransformation); test/unit/test_operation.cpp (+27 regression in TEST(operation, normalizeForVisualization): EPSG:8047 normalize now succeeds, PROJ string exports, name/domains asserted)",
+    "captured_utc": "2026-10-06T08:49:02Z",
+    "capture": {"tool": "public_https_get (api.github.com pulls files)", "capture_id": "86feb72142344d038cc0c6f6c0d32af7", "sha256": "30befc664bbfd7cc248dc742bc54677e648e90be86df59e809d9c6bb61dbedf7", "bytes": 6438, "complete_response": true},
+    "supports": "F2 (fix + regression-test half of the chain); release/branch applicability = 9.8.0 milestone",
+    "applicability": "Direct: transform provenance propagation; version-pin requirement"
+  },
+  {
+    "id": "S5",
+    "url": "https://github.com/OSGeo/gdal/issues/15337",
+    "title": "OpenFileGDB: spatial index misses features on Web Mercator layers with PROJ 9.7.1",
+    "publisher": "OSGeo/gdal GitHub issue (created 2026-10-04, state OPEN at capture)",
+    "exact_locator": "Body: GetMinMaxProjYForSpatialIndex() transforms (0, +/-89.9) from CloneGeogCS() without OAMS_TRADITIONAL_GIS_ORDER; reporter version table PROJ 9.7.0 vs 9.7.1 -> northing limits [−44927335.4, 44927335.4] vs [0.0, 0.0]; ogrinfo -spat Feature Count 0 with index vs 1 with OPENFILEGDB_USE_SPATIAL_INDEX=NO; writer path may persist zero northings; proposed patch sets SetAxisMappingStrategy on both CRSs",
+    "captured_utc": "2026-10-06T08:46:08Z",
+    "capture": {"tool": "public_https_get (api.github.com search, item 1 of q=repo:OSGeo/gdal axis order)", "capture_id": "0139bcc202b04e4386b93eee609affd9", "sha256": "4a0e9f4eba12c6b242f0518d6f1caaeb325f812c8e8b2a7134bbfad920214e60", "bytes": 40035, "delivery_first_32768B_range_sha256": "e09a8f494f6255b2e0843ea399cd61f4d69caadc9bafbaaf7ece27150436eded", "note": "issue item captured within search payload; dedicated issue fetch not repeated"},
+    "supports": "F3; live open regression of the same failure class; 'index derived via implicit axis mapping silently misses' lesson; open => fix NOT assumed",
+    "applicability": "Direct: FieldBook rule to build index coordinates only from explicit axis metadata"
+  },
+  {
+    "id": "S6",
+    "url": "https://docs.couchdb.org/en/stable/replication/conflicts.html",
+    "title": "Replication and conflict model (CouchDB 3.5 docs, §2.3)",
+    "publisher": "Apache CouchDB",
+    "exact_locator": "§2.3.1 ('both versions exist on both sides'; deterministic arbitrary winner; 'It could look as if the changes ... have been lost'; 'any sensible ... application will, at minimum, have to present the conflicting versions'); §2.3.2 (single-node 409 conflict avoidance); §2.3.3 revision tree, deleted leaves retain identity, compaction keeps rev lists with pruning; §2.3.4 conflicts=true / open_revs=all, winner order not meaningful",
+    "captured_utc": "2026-10-06T08:49:05Z",
+    "capture": {"tool": "public_https_get", "capture_id": "0a3a508ff70444d2856d13425708a4ae", "sha256": "18adf909bb47723d798e06f3e0bad84f228b5952aab6a923cd8a63b0ff30aec5", "bytes": 79028, "delivery_first_32768B_range_sha256": "d4628ffde8f908426a13a68452897128b10e20c85ceb9e93b525532d4d706acc"},
+    "supports": "F5; no-silent-winner merge contract; conflicts as first-class queryable records",
+    "applicability": "Direct: FieldBook merge/conflict/revision model"
+  },
+  {
+    "id": "S7",
+    "url": "https://www.naturalearthdata.com/about/terms-of-use/",
+    "title": "Natural Earth — Terms of Use",
+    "publisher": "Natural Earth (NACIS community)",
+    "exact_locator": "Body text: 'All versions of Natural Earth raster + vector map data found on this website are in the public domain. You may use the maps in any manner, including modifying the content and design...'; 'No permission is needed to use Natural Earth. Crediting the authors is unnecessary.'; accuracy disclaimers; embedded third-party releases (Washington Post, EC JRC IES, XNR, International Mapping Associates; Wikidata names CC0)",
+    "captured_utc": "2026-10-06T08:47:48Z",
+    "capture": {"tool": "public_https_get", "capture_id": "7e05e9335b9a46f1b1a47a2078b96340", "sha256": "1ef41cb2a341ebfb27353d8539ca798d54115f2fe616aff89dc21ecf7db9f92c", "bytes": 38013, "delivery_first_32768B_range_sha256": "0efdc3910b20722d8dc666ae23af49a45d2474d5eeedaf365249776cc49e22d9"},
+    "supports": "F6; the actual selected bundled map source's permissions investigated and captured",
+    "applicability": "Direct: v1 basemap bundling permitted without share-alike; license_manifest content"
+  },
+  {
+    "id": "S8",
+    "url": "https://api.github.com/search/issues?q=repo:OSGeo/PROJ+axis+order+state:closed",
+    "title": "GitHub search results: PROJ axis-order closed issues/PRs (incl. #4842 context, PRs #4770/#4758/#4632/#4708)",
+    "publisher": "GitHub API",
+    "exact_locator": "Item PR #4632 merged_at 2025-12-04T19:20:30Z milestone '9.8.0' (milestone closed 2026-03-02, 35 closed issues); Issue #4842 body states 'PROJ 9.8.1 (Rel. 9.8.1, April 10th, 2026) — the current release' (reporter claim); PR #4708 body: before/after of vertical ballpark fallback ('+proj=affine +s33=-1 ... wrong' vs registered operation + axisswap 'correct'), backport 9.8 label, tests in test/unit/test_operationfactory.cpp",
+    "captured_utc": "2026-10-06T08:47:47Z",
+    "capture": {"tool": "public_https_get (api.github.com search)", "capture_id": "fd739487fa3245058599dc5c23d42543", "sha256": "74e791a576a05a7eaf2f7d06ba09d150f76048f006a9696501b8d8937da8add4", "bytes": 59824, "delivery_first_32768B_range_sha256": "2c2a876c27e7288be5a8f67e29e013311cdc1377bc60d5f0796aba5f54888aee"},
+    "supports": "F2 release applicability; silent-ballpark-fallback provenance lesson; WKT export consistency (#4842) warns against hashing raw WKT as CRS identity",
+    "applicability": "Supporting; version landscape and vertical-transform lead L5"
+  },
+  {
+    "id": "S9",
+    "url": "https://api.github.com/search/issues?q=repo:OSGeo/gdal+axis+order",
+    "title": "GitHub search results: GDAL axis-order issues (incl. open #15337, open #2979 gdal_grid lat/lon WKT order)",
+    "publisher": "GitHub API",
+    "exact_locator": "total_count 293; item 1 = issue #15337 (open, 2026-10-04); item 2 = #2979 (open since 2020-09-29, gdal_grid VRT/CSV WKT lat-lon order rotated output)",
+    "captured_utc": "2026-10-06T08:46:08Z",
+    "capture": {"tool": "public_https_get (api.github.com search)", "capture_id": "0139bcc202b04e4386b93eee609affd9", "sha256": "4a0e9f4eba12c6b242f0518d6f1caaeb325f812c8e8b2a7134bbfad920214e60", "same_capture_as": "S5 item-level"},
+    "supports": "F1/F3 prevalence: axis-order defects recur across tools and years",
+    "applicability": "Supporting context"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "arm": "treatment",
+  "destination_root": "OPS_NEW_IMMUTABLE_ROLE_BIRTH_DESTINATION",
+  "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+  "new_critic_parent": {
+    "actual_stage_ref": "ACTUAL_NEW_CRITIC_STAGE_PATH_AND_SHA",
+    "capsule_ref": "ACTUAL_NEW_CRITIC_TYPED_NATIVE_CAPSULE_PATH_AND_SHA",
+    "closed_context_ref": "ACTUAL_NEW_CRITIC_CLOSED_CONTEXT_PATH_AND_SHA",
+    "freeze_ref": "ACTUAL_NEW_CRITIC_PATH_AND_SHA",
+    "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+    "release_ref": "ACTUAL_NEW_CRITIC_PRIVATE_RELEASE_PATH_AND_SHA"
+  },
+  "origin_job_ids": [
+    "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+    "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001"
+  ],
+  "registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/registration.json",
+    "sha256": "d8bddf3490ce31294725ace80416cbc48a8c853c447cf8397893c4bff2ae6c21"
+  },
+  "schema": "er9.actual-role-birth-binding-plan.v1",
+  "template_only_not_bound": true
+}

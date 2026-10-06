@@ -1,0 +1,154 @@
+{
+  "clock_reset": false,
+  "completion_layers": "Flash direct Goal scalar is complete; safe native turn telemetry is interrupted and native_turns_completed=0. These are distinct layers, neither substitutes for the other. Author final Goal scalar is paused after original stop. Quiet/closed flags are scoped captured metadata, not a physical provider attestation.",
+  "created_utc": "2026-10-06T11:14:23.712959+00:00",
+  "evaluation_id": "independent-targeted-28",
+  "handoff_wait_policy": "Outgoing handoffs charged to original clock; do not wait for acknowledgments.",
+  "independent_gate": {
+    "bytes": 747,
+    "mode": "0444",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/TD28_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+    "sha256": "8fd4dbc8786bba97152cd7c60d0c87f915d80e009b7baee6f7d4fbc804d464fe"
+  },
+  "mandatory_handoffs": [
+    "root scientific",
+    "publisher scientific with own-case safe selectors",
+    "courier neutral clocks/pins",
+    "accountant neutral resource clocks/accounting"
+  ],
+  "mechanism_uptake_boundary": "The flash role actually produced its prescribed review, with source retrieval/read/write telemetry and a complete final Goal scalar. It did not complete current final resolution. Both author roles have timeout/HOLD and paused-final Goal scalars; these do not establish source defects or erase available bounded flash content. No end-to-end completed V05 scientific comparison is licensed.",
+  "no_candidate_feedback_repair_or_retest": true,
+  "no_raw_model_io_or_history": true,
+  "original_phase2_inclusive_seconds": 600,
+  "original_whole_seconds": 1800,
+  "p2_elapsed_seconds_at_report": 284.985763165,
+  "pair_id": "D-V05-A",
+  "phase": "PHASE2_AFTER_INDEPENDENT_ALL_P1_FREEZE_GATE",
+  "phase1_freeze": {
+    "bytes": 50210,
+    "mode": "0444",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase1-freeze.json",
+    "sha256": "43f36d0543e5920aa6274ef8460c9ae7bf9af3b2492687515f4892faf8986332"
+  },
+  "phase1_judgment": {
+    "bytes": 43858,
+    "mode": "0444",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-28/phase1-assessment.json",
+    "sha256": "dc456a0eaf2c7794c5ebafc16332f22549726f76abc9c96bf6f5245edbd64add"
+  },
+  "phase1_pins_reverified": {
+    "file_count": 150,
+    "hash_or_0444_violations": []
+  },
+  "private_key_original_mode_preserved": "0600",
+  "released_original_key_pin": {
+    "bytes": 97765,
+    "mode": "0600",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/independent-targeted-28_PHASE2_KEY.json",
+    "sha256": "649f2df56fb76a7e5815d05b0ef9fde2760c49bdf52c64eedb5a60eede63c049"
+  },
+  "roles": [
+    {
+      "actual_role": "flash_check",
+      "alias": "A-role1",
+      "all_owned_scopes_quiet_observed": true,
+      "arm_after_gate": "treatment",
+      "candidate_goals_set_by_host_observed": 1,
+      "closed_before_original_total_stop_observed": true,
+      "current_execution_inventory_count": 0,
+      "error": null,
+      "error_class": null,
+      "fresh_session_observed": true,
+      "goal_replacements_observed": 0,
+      "goal_started_turn_observed": true,
+      "host_followup_turns_started_observed": 0,
+      "native_goal_status_before_cleanup": "complete",
+      "native_goal_status_final": "complete",
+      "native_outcome": "native_goal_complete",
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "native_turns_started": 1,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "science_changed": false,
+      "scientific_effect": "No source-grade change. Goal/cleanup/inventory status is not a semantic correctness judgment."
+    },
+    {
+      "actual_role": "resolve_final",
+      "alias": "A-role2",
+      "all_owned_scopes_quiet_observed": true,
+      "arm_after_gate": "treatment",
+      "candidate_goals_set_by_host_observed": 1,
+      "closed_before_original_total_stop_observed": true,
+      "current_execution_inventory_count": 1,
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "fresh_session_observed": true,
+      "goal_replacements_observed": 0,
+      "goal_started_turn_observed": true,
+      "host_followup_turns_started_observed": 0,
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_outcome": "HOLD",
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "native_turns_started": 1,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "science_changed": false,
+      "scientific_effect": "No source-grade change. Goal/cleanup/inventory status is not a semantic correctness judgment."
+    },
+    {
+      "actual_role": "final_author",
+      "alias": "B-role1",
+      "all_owned_scopes_quiet_observed": true,
+      "arm_after_gate": "control",
+      "candidate_goals_set_by_host_observed": 1,
+      "closed_before_original_total_stop_observed": true,
+      "current_execution_inventory_count": 1,
+      "error": "original native stop reached",
+      "error_class": "TimeoutError",
+      "fresh_session_observed": true,
+      "goal_replacements_observed": 0,
+      "goal_started_turn_observed": true,
+      "host_followup_turns_started_observed": 0,
+      "native_goal_status_before_cleanup": "active",
+      "native_goal_status_final": "paused",
+      "native_outcome": "HOLD",
+      "native_turns_completed": 0,
+      "native_turns_interrupted": 1,
+      "native_turns_started": 1,
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "science_changed": false,
+      "scientific_effect": "No source-grade change. Goal/cleanup/inventory status is not a semantic correctness judgment."
+    }
+  ],
+  "runtime_additive_correction": {
+    "correction": "initial phase1_judgment_sha256 field mistakenly repeated freeze hash; this additive002 pins actual already-immutable judgment; original001 bytes preserved, runtimefacts/grade/clocks unchanged",
+    "predecessor_runtime_sha256": "41f905a49bf608b45cef664be87e6e9544aa11b4fe7ceed805fe8fad9c806123"
+  },
+  "safe_runtime_projection": {
+    "bytes": 97073,
+    "mode": "0444",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-28_CURRENT_RUNTIME_002.json",
+    "sha256": "d3a2b4d17f6fb75c5720e5d6eca64108a6c9ff734b7bc7235c7be49e721a738b"
+  },
+  "schema": "er9.independent-postfreeze-assessment.v1",
+  "science_outcome_preserved": "A.flash_check has partial independently supported source content and complete role delivery. A.resolve_final and B.final_author canonical final deliveries remain INCOMPLETE, science UNASSESSED. No promotion, whole PASS, pair winner, equality, full-pipeline qualification or causal effect.",
+  "typed_adapter_key_join": {
+    "held_key_sha256_in_safe_runtime": "e7edcd10489670e0845e95428f4462e0fb9b074010ceb4da37d1e62fa40c0106",
+    "original_released_key_sha256": "649f2df56fb76a7e5815d05b0ef9fde2760c49bdf52c64eedb5a60eede63c049",
+    "qualification": "Courier identifies safe runtime held_key_sha256 as a newly typed exact-role join derived from the original key, not the original bytes. Original key exact A/B job order was independently compared to the three safe rows and matches. Typed adapter derivation source bytes were not separately inspected; no same-hash claim."
+  },
+  "unexposed_scope": [
+    "direct opaque native Goal identifier",
+    "API session/thread distinctness beyond scalar fresh_session metadata",
+    "physical provider/runtime attestation",
+    "provider request/response counts where UNKNOWN",
+    "provider-root dollars, cache money and cancelled/unexposed tail",
+    "whole hidden diagnostic semantic error inventory"
+  ],
+  "whole_elapsed_seconds_at_report": 920.687974039,
+  "witness_boundary": "Each final-author role has one positive current execution inventory, but no code/input/result body was read or re-executed in this Phase2. Inventory presence and success metadata do not qualify expectations, correctness, application behavior or an absent current final. Flash has no execution inventory."
+}

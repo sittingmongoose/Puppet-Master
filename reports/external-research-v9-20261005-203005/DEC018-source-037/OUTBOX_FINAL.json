@@ -1,0 +1,66 @@
+{
+  "actual_T_gate_eligibility": "UNKNOWN_UNASSESSED until native authored output compared mechanically; no candidate donor bytes read by source engineer",
+  "automatic_repeat": false,
+  "both_repair600_then_original_topology": true,
+  "donor_courier_metadata": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/COURIER_REMAINING_CURRENT_RESEARCH_UNITS_001.json",
+    "sha256": "b0ae4b6948ad2c83f1659dc4559911500901599ab767a986a240981df3e331c9"
+  },
+  "frozen_utc": "2026-10-06T11:09:16.592264+00:00",
+  "full_source_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/PAIRED_SOURCE_CLOSURE.json",
+    "sha256": "8b24d1fa360003866bb122c765c49b7b43e95d9867ca2efee0992aba7e6f9acb"
+  },
+  "metadata_selection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/C04_NATIVE_CATALOG_REPAIR_DONOR_METADATA_001/SELECTION.json",
+    "sha256": "38eba8885d574468aacbbb655159cc7f440f1ab0027aa07addc4096ce1bf4611"
+  },
+  "native_allocation_authorized": false,
+  "new_logical_targets": 0,
+  "no_host_JSON_repair_or_auto_adoption": true,
+  "paired_gate_entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/paired_gate.py",
+    "sha256": "2db287d1bbd1d6aceb4957c423e8b86d8c84ba9e06839c65644363042737a324"
+  },
+  "ready": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/READY.json",
+    "sha256": "09e607e0afcf2ecfc968d6476d809603bb652963cec758d4ca75f72cc4d261d1"
+  },
+  "registration": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/registration.json",
+    "sha256": "51497fb4004844b04067cdb2673d2ea01bd32476de88af14a92c861625125337"
+  },
+  "role_birth_constructor_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/SOURCE_PIN.json",
+    "sha256": "9cb04d1e4c73452394b3a96b27a63062f1c692204568ca1d25700a959a02b010"
+  },
+  "root_concrete_review_required_for_finite_allocation": true,
+  "runtime_source_markers": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_READINESS_V1_READY.json",
+      "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+      "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+    }
+  ],
+  "schema": "er9.c04-paired-native-catalog-repair-owner-outbox.v1",
+  "source_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/CONTRACT.json",
+    "sha256": "aa7a43e6999d6bd4278803a1db3ff969b22806fea3ee83d0709a1f7dea4f0d73"
+  },
+  "source_native_calls": 0,
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/SOURCE_PIN.json",
+    "sha256": "9cb04d1e4c73452394b3a96b27a63062f1c692204568ca1d25700a959a02b010"
+  },
+  "structural_frontier": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/C04_T_RESEARCH_FAILED_PARENT_STRUCTURAL_FRONTIER_001.json",
+    "sha256": "07ac518a85f6cb4224606f2843ec0a3893788ef76a28f7956fc437dcac4989df"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/VERIFICATION.json",
+    "sha256": "a13aad801711dd2a6e1747c51a28590f0df3bc5e34d94cbce2ec5d7cbdbe7771"
+  }
+}

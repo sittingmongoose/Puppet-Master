@@ -1,0 +1,37 @@
+{
+  "actor": "candidate",
+  "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+  "bootstrap_started": true,
+  "cleanup_classification": "collected_unit_absent",
+  "cleanup_confirmed": true,
+  "cleanup_state_returncode": 0,
+  "cleanup_stop_returncode": 5,
+  "code_sha256": "4d24c839b87bdba1d6748d8664187272a5b5a2c6976daa63205be9679dde68bc",
+  "control_group_absent_after_stop": null,
+  "control_group_populated_after_stop": null,
+  "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+  "exit_code": 0,
+  "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+  "limitations": [
+    "isolated component check only",
+    "stderr excludes trusted bootstrap prefix; stderr-observed.bin retains wire bytes",
+    "arbitrary stdlib code; kernel isolation supplied by Bubblewrap/systemd, not AST filters",
+    "clock/randomness remain available; deterministic behavior must be candidate-authored",
+    "execution receipts do not prove semantic correctness or candidate consumption"
+  ],
+  "limits": {
+    "cpu_seconds": 3,
+    "memory_bytes": 268435456,
+    "network": "new empty namespace",
+    "stream_bytes_each": 32768,
+    "tasks": 16,
+    "wall_seconds": 5
+  },
+  "stderr_bytes": 0,
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdout_bytes": 672,
+  "stdout_sha256": "c9adce3fa04e87b84a05a20afa188951e457d9972a8a3d9ca912d2c542de46d7",
+  "stopped_by_adapter": null,
+  "original_result_sha256": "3d6802d07a42ed44b3640dcb6d27a1d3708c3bf8b9d920a908ea4357040e0bca",
+  "projection_rule": "actor/scope/bootstrap/exit/cleanup/hash/limits only; private paths/unit/identity/timing/cost/history withheld"
+}

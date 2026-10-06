@@ -1,0 +1,145 @@
+{
+  "actual_future_clock_input_sha256": null,
+  "arm": "control",
+  "clock_behavior_version": "er9.common-original-action-clock-awareness.v1",
+  "complete_final_owner_role": false,
+  "declared_native_runner": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+  "declared_native_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+    "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+  },
+  "declared_tool_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "extra_logical_target_credit": false,
+  "first_research_old_candidate_payloads": false,
+  "freeze_out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/OUTPUT_FREEZE.json",
+  "full_pipeline_linking_rules": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/STRICT_ROLE_BIRTH_CONTRACT.json",
+    "sha256": "8b7c1f35b39f66aa364e0112bdfa0ef767e9f063d9deea5876bd65a038cbf060"
+  },
+  "glm_resource": {
+    "bundle_profile": null,
+    "capture_dir": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/public_captures",
+    "clock_fragment": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/clock_fragment.md",
+      "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+    },
+    "effort": "max",
+    "evidence_dir": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/tool-evidence",
+    "execution_enabled": true,
+    "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+    "public_get": true,
+    "source_pins": {
+      "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+      "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/profile.py": "0cac76df78e153c5b0f1408b08881d422ace1379ab57f767acaa98aeea8c813b",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+      "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+      "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+      "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+    },
+    "tools_config_builder": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+      "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+    },
+    "version": "glm_complete2304_clock_readiness_v1"
+  },
+  "input_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+  },
+  "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+  "max_responses": 60,
+  "max_seconds": 600,
+  "mechanical_catalog_repair_role": true,
+  "native_family": "Z",
+  "native_source_binding_status": "SOURCE_READY_CONDITIONAL_DEC014_NO_ADMISSION",
+  "new_role_original_birth_not_reset": true,
+  "old_Goal_or_clock_reset": false,
+  "old_costs_failures_retained": true,
+  "original_scientific_Task_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/workspace/TASK.md",
+    "sha256": "ea270d0160fac1558204d85a715de0ce42c56a6eaf487eaf56eb863db9828e01"
+  },
+  "original_scientific_prefix_bytes": 12133,
+  "out": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/native",
+  "pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/COMMON_RUNTIME_CLOSURE.json",
+    "sha256": "4165fde9650aa90a58390fa5fd733ec5d2376ca345d5f607f2646d1fbbd5a22a"
+  },
+  "pair_id": "C-04-NATIVE-CATALOG-REPAIR-R001",
+  "paired_repair_gate_required_before_continuation": false,
+  "predecessor_binding_required": false,
+  "prompt_file": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/TASK.md",
+  "prompt_sha256": "f5500f547a199c2a186d5fefde2ab84cdf172db058d9491fd2c243040ddf52da",
+  "repair_donor_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/DONOR_CONTRACT.json",
+    "sha256": "77db7b67c38b683bf6065cbd2f63c92668491511d8562de6f4fb760c7bddd1bb"
+  },
+  "required_artifacts": [
+    "out/research/proposal.md",
+    "out/research/sources.json",
+    "out/research/witnesses.json",
+    "out/research/leads.json"
+  ],
+  "required_common_resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/COMMON_RUNTIME_CLOSURE.json",
+    "sha256": "4165fde9650aa90a58390fa5fd733ec5d2376ca345d5f607f2646d1fbbd5a22a"
+  },
+  "required_resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+    "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+  },
+  "reserved_dynamic_clock_input": "inputs/STAGE_CLOCK.json",
+  "reserved_dynamic_prior_index": null,
+  "response_cap_enforcement": "SUPPORTED_NATIVE_LIMIT",
+  "runtime_binding_required": true,
+  "source_job_id": "C-04-control-research-a001",
+  "source_original_pair_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "a9a46e7c3d902432178be3af0a002e7fb06967e076281417086d4f2026477359"
+  },
+  "source_original_stage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/prepared-stage.json",
+    "sha256": "17cb1d5099a4b0e4874dd88dd66d166e4c576a6b9edaa111e5c963d61725e425"
+  },
+  "source_separation_overlay": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/COMMON_SOURCE_SEPARATION_OVERLAY_002.md",
+    "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+  },
+  "source_stage_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-control-research-a001/prepared-stage.json",
+    "sha256": "c368ea8ced24a01f7072a54c80f0ac04620a965cfac83c177502033e0a8aad8d"
+  },
+  "source_task_prefix_bytes": 12133,
+  "source_task_prefix_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-full-closure002/C-04-RESOURCE-R002-BUNDLE/C-04-RESOURCE-R002-BUNDLE-control-research-a001/workspace/TASK.md",
+    "sha256": "c8e9c69fe38f615fe7f870324142778bc36e6711e9e10f521cb9313414d4437f"
+  },
+  "stage": "research",
+  "strict_role_birth_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/STRICT_ROLE_BIRTH_CONTRACT.json",
+    "sha256": "8b7c1f35b39f66aa364e0112bdfa0ef767e9f063d9deea5876bd65a038cbf060"
+  },
+  "tools_config": null,
+  "tools_config_sha256": null,
+  "workspace": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace"
+}

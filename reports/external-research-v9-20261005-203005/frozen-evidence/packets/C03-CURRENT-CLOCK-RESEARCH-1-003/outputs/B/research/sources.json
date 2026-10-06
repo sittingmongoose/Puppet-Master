@@ -1,0 +1,163 @@
+{
+  "catalog_version": "research-stage-1",
+  "captured_utc_session": "2026-10-06T07:57-08:00Z",
+  "pin_semantics": "sha256 = exact HTTP response body bytes as delivered by the capture tool; capture_id = tool-assigned capture identifier. Applicability states why the source supports the proposal claim. Semantic acquisition by the candidate is stated per entry; byte-level capture is authoritative.",
+  "sources": [
+    {
+      "id": "S01",
+      "url": "https://raw.githubusercontent.com/bbc/audiowaveform/master/README.md",
+      "publisher": "BBC (audiowaveform project)",
+      "kind": "primary documentation",
+      "pin": {"sha256": "516077a1fb67d8d4ab1a388c1fd2bb187f149b9b7a11194487570b88c14a6f8d", "capture_id": "aca52bd28a5d47758a50d75bb4f1d9e4", "captured_utc": "2026-10-06T07:57:53Z", "bytes": 19925},
+      "locator": "Sections: intro (min/max over N input samples, --zoom); '--input-filename' note \"Opus support requires libsndfile 1.0.29 or later\"; 'License: See COPYING'; header note \"Ongoing development ... moved to https://codeberg.org/chrisn/audiowaveform\"",
+      "used_for": "Waveform peak model; input codec boundary facts; upstream relocation note; license NOT verified in-session (see L2)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S02",
+      "url": "https://raw.githubusercontent.com/bbc/audiowaveform/master/doc/DataFormat.md",
+      "publisher": "BBC (audiowaveform project)",
+      "kind": "primary documentation (file format spec)",
+      "pin": {"sha256": "d15ce7670c0506a1bf1b3b777c7827286efd97d25e85de46a829c80d1f67bda8", "capture_id": "0c8add0d467041a0b969cd0916d0f3d9", "captured_utc": "2026-10-06T07:58:15Z", "bytes": 6649},
+      "locator": "Binary header tables: Version(int32), Flags(bit0=8/16-bit), Sample rate, Samples per pixel, Length, Channels(v2 only); \"The version 1 data format supports only a single audio channel; the audiowaveform program converts stereo audio to mono when generating waveform data\"; JSON fields list",
+      "used_for": "Precedent B: waveform cache design; lesson that upstream cache files carry no source identity and v1 silently collapses channels — both avoided in our .wpk design",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S03",
+      "url": "https://raw.githubusercontent.com/bbc/peaks.js/master/README.md",
+      "publisher": "BBC (peaks.js project)",
+      "kind": "primary documentation",
+      "pin": {"sha256": "f70c470bdedfa0e04301ee13537836b8502725bb20f8e91d595ba5c970ccfd72", "capture_id": "eccc839cb4684e3b93a2142dda942c90", "captured_utc": "2026-10-06T07:57:53Z", "bytes": 13522},
+      "locator": "Features list (\"Mouse, touch, scroll wheel, and keyboard interaction\", \"Create point or segment marker annotations\"); 'Pre-computed waveform data' (\"You should also use the -b 8 option ... Peaks.js does not currently support 16-bit waveform data files\"); 'Web Audio based waveform data' (\"involves downloading the entire audio file to the browser and is CPU intensive\"); relocation note to codeberg",
+      "used_for": "Precedent B: cue/marker UX, keyboard accessibility expectation, precomputed-peaks-vs-decode-on-open tradeoff; bounded Alternative A description",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S04",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/master/CHANGELOG.md",
+      "publisher": "libsndfile project",
+      "kind": "primary documentation (release changelog)",
+      "pin": {"sha256": "55c4b29cf61a77f192f2a620379249077a1327920474cea2c201bb9a4c1fe91f", "capture_id": "862ad85447254ed0996058c70f4eb7f1", "captured_utc": "2026-10-06T07:58:15Z", "bytes": 8337},
+      "locator": "[1.1.0] 2022-03-27 'MPEG Encode/Decode Support. Uses libmpg123 for decode, liblame for encode. Encoding and decoding support is independent'; also 1.1.0 Fixed: 'Missing samples when doing a partial read of Ogg file from index till the end of file, thanks @arthurt (issue #643)'; [1.2.0] 2022-12-25 Removed: 'Maximum samplerate limit' (655350 Hz cap from 1.1.0); [1.2.1] 2023-08-12 Fixed: 'Reading of MP3 files without Xing or INFO headers'",
+      "used_for": "Supported-codec boundary facts (§2); version applicability of the #643 fix (1.1.0); MP3 build-dependency",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S05",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/issues/643",
+      "publisher": "libsndfile (GitHub issue JSON)",
+      "kind": "primary issue record",
+      "pin": {"sha256": "3a311cd692d6b1c494d54aa353e5a36135bec8a08688608d12fbf92c71f34701", "capture_id": "0d0bcfc0fe944c7db183846108d39c00", "captured_utc": "2026-10-06T07:59:04Z", "bytes": 9989},
+      "locator": "Issue #643 title 'missing samples when doing a partial read of ogg file from index till the end of file'; created 2020-10-22; closed 2021-02-16; milestone v1.1.0; body repro: seek 389999 of 396519 frames, sf_readf_float 65536 -> 5496 frames (1024 missing); 'number of missing samples seems to always be a power of two'",
+      "used_for": "The followed issue chain (§4.1): symptom and repro numbers",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S06",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/issues/643/timeline?per_page=50",
+      "publisher": "libsndfile (GitHub issue timeline JSON)",
+      "kind": "primary issue discussion",
+      "pin": {"sha256": "f94f49e60c7b217ab0b4740ea159aed827adcdd3477fc58fbf9d6d0e06b615d7", "capture_id": "d843edcede5a43cda8d8e95296aa8133", "captured_utc": "2026-10-06T07:59:05Z", "bytes": 32768, "truncated_at_capture_limit": true, "truncation_note": "capture delivered first 32768 of 121886 bytes; later timeline events (incl. cross-reference entries) not inspected"},
+      "locator": "Comment 2020-10-23 (krisfed): bisect result 'ea87e01ca25b41012db18ef3d1acb8e14f2aba1f is the first bad commit — Vorbis: Use new ogg functions, add bisection seek support' (Arthur Taylor, 2019-02-20); comment 2020-11-05: bad start indices >= 2*samplerate+1; comment 2020-11-09 (arthurt): near-seek read-and-discard path vs bisection path, 'wasn't picked up by the test suite because it must not test seeks of more than 2 seconds'; 2020-11-10: 'unaccounted for decoder delay ... first 20ms ... after vorbis_synthesis_restart()'; 2020-11-30: 'not taking into account the full-lapped nature of vorbis blocks', Vorbis I spec §1.3.2 window shapes reference",
+      "used_for": "Root-cause diagnosis, test-suite gap, and bisection commit for §4.1",
+      "status": "captured (truncated); read by candidate; truncation preserved"
+    },
+    {
+      "id": "S07",
+      "url": "https://api.github.com/search/issues?q=repo%3Alibsndfile%2Flibsndfile+type%3Apr+author%3Aarthurt+created%3A2020-11-01..2021-03-01",
+      "publisher": "libsndfile (GitHub search JSON; PR record embedded)",
+      "kind": "primary PR record",
+      "pin": {"sha256": "d0b980e933e12c8f9f7e4ba1b82010760bda3d6747cc5f88e450c8e1607d128b", "capture_id": "1abfa332e0ad4d699a2c7c1a394ecabc", "captured_utc": "2026-10-06T07:59:42Z", "bytes": 8624},
+      "locator": "PR #709 'Fix for Issue 643: Vorbis Seek Offset' — merged_at 2021-02-16T05:37:51Z; body: 'Previously the vorbis_seek() function did not take the lapped nature of Vorbis block into account when using the bisection search. Also, introduces vorbis_skip() ... Fixes #643'",
+      "used_for": "Fix identity and merge date for §4.1",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S08",
+      "url": "https://api.github.com/repos/libsndfile/libsndfile/pulls/709/files?per_page=20",
+      "publisher": "libsndfile (GitHub PR files JSON)",
+      "kind": "primary patch record",
+      "pin": {"sha256": "5ffa07b12303164d42427b75b63b35b2e8600e58346b3847f658948e99c34e53", "capture_id": "52e9f9c6adf644a0881708843b04d3ac", "captured_utc": "2026-10-06T08:00:09Z", "bytes": 21283},
+      "locator": "Single changed file src/ogg_vorbis.c (+243/−101), merge-head blob 1b6b386a207637bb9da83914c2837006aa6bb967; patch adds '#define VORBIS_SEEK_THRESHOLD 2', vorbis_skip(), vorbis_seek_trysearch() searching 'a half large-block before our target', vorbis_calculate_granulepos() with log string 'Cannot calculate ambiguous last page duration. Sample count may be wrong.'; NO tests/ file in the PR",
+      "used_for": "Fix content; honest regression-test finding (no test in merged PR); ambiguity-exposure precedent for §3.2",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S09",
+      "url": "https://manual.audacityteam.org/man/recovery.html",
+      "publisher": "Audacity (development manual)",
+      "kind": "primary documentation",
+      "pin": {"sha256": "e67200a0bdaa0be7ca955ceb0a9c3588704dfee954f41beb69504d882dc2cb51", "capture_id": "cdcc45ea544d41579a4c8f468e5ab9bc", "captured_utc": "2026-10-06T07:58:16Z", "bytes": 14974, "page_version_note": "footer 'This version created on 2026-09-02'"},
+      "locator": "'Audacity will attempt automatic recovery of projects (open and unsaved) following a crash'; 'After recovery, the data is still in unsaved state'; snapshots/rollback to 'latest safe snapshot'; note: 'The project history is not recoverable' and 'cannot recover the text contents of a label whose text was being added at the time of the crash'",
+      "used_for": "Precedent A recovery semantics; our decision to declare undo-history durability out of scope and say so in-product (§5, §10)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/search/issues?q=repo%3Aaudacity%2Faudacity+aup3+corrupt&per_page=5",
+      "publisher": "Audacity (GitHub search JSON; issue records embedded)",
+      "kind": "primary issue records (embedded)",
+      "pin": {"sha256": "7075501a7cf2f62c1d42ee438d417e1d60afd4935ace1fe9a5f47b3ac95d1a67", "capture_id": "31f7a00f0d324780a53d438cdb026352", "captured_utc": "2026-10-06T07:59:05Z", "bytes": 29234},
+      "locator": "Issue #8332 (open feature, 2025-02-24): 'The reason is that Audacity writes to that file to store \"autosave\" state' — file mtime changes on open in AU3 & AU4; proposed copy-to-app-support workflow; issues listed include 'autosave cannot corrupt user's projects, as I've heard users report'",
+      "used_for": "Precedent A cautionary lesson: never write into the user's original files; our originals-untouched + bundle-internal autosave design (§7)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S11",
+      "url": "same capture as S10",
+      "publisher": "Audacity (GitHub issue record embedded in S10 capture)",
+      "kind": "primary issue record",
+      "pin": {"sha256": "7075501a7cf2f62c1d42ee438d417e1d60afd4935ace1fe9a5f47b3ac95d1a67", "capture_id": "31f7a00f0d324780a53d438cdb026352", "locator_within_capture": "items[1]"},
+      "locator": "Issue #11244 (open, AU3-bug label, 2026-06-24): 'Save Project As corrupts projects and causes waveform loss (DBConnection.cpp line 473)', Audacity 3.7.8, Windows 11; 'Waveform data disappears from the project'; SqliteSampleBlock::Load::step errors",
+      "used_for": "Monolithic-store corruption class motivating loose-file bundle + atomic saves (§3.1, §7)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S12",
+      "url": "same capture as S10",
+      "publisher": "Audacity (GitHub issue record embedded in S10 capture)",
+      "kind": "primary issue record",
+      "pin": {"sha256": "7075501a7cf2f62c1d42ee438d417e1d60afd4935ace1fe9a5f47b3ac95d1a67", "capture_id": "31f7a00f0d324780a53d438cdb026352", "locator_within_capture": "items[4]"},
+      "locator": "Issue #1552 (open, P3, 2021-08-29): 'Export Labels cannot export selected label tracks or selections within label tracks' — all labels exported regardless of selection",
+      "used_for": "Cue-table export must honor explicit scope; recorded as UX contract detail (§8) and anti-lesson",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S13",
+      "url": "https://api.github.com/search/issues?q=repo%3Abbc%2Fpeaks.js+rounding",
+      "publisher": "peaks.js (GitHub search JSON; issue record embedded)",
+      "kind": "primary issue record (embedded)",
+      "pin": {"sha256": "e689f7b6650371dc572dc085afa138add26c42f526cba90c864c81e018cb76ed", "capture_id": "5daa9b7fc7784d669c83e6689835a4b5", "captured_utc": "2026-10-06T07:58:15Z", "locator_within_capture": "items[0]"},
+      "locator": "Issue #530 'Issue with current time.' (created 2024-06-13, closed 2024-06-28): getCurrentTime() rounds to ceiling (0.346999 -> 0.347) while zoomview shows the unrounded value — display/API mismatch",
+      "used_for": "Display-vs-authoritative-coordinate lesson (§3.3): display values are floors, never anchors; fix commit not traced (lead L3)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S14",
+      "url": "same capture as S13",
+      "publisher": "peaks.js (GitHub PR record embedded in S13 capture)",
+      "kind": "primary PR record (embedded)",
+      "pin": {"sha256": "e689f7b6650371dc572dc085afa138add26c42f526cba90c864c81e018cb76ed", "capture_id": "5daa9b7fc7784d669c83e6689835a4b5", "locator_within_capture": "items[2]"},
+      "locator": "PR #171 '1.x.dev segment edit' (created 2016-12-07, closed 2022-11-10, merged_at null — NOT merged): 'the new pixel position was derived by converting from the dragged pixel position into a time and then back into a pixel position. This caused a precision/rounding error ... both handles of the segment would move uncontrollably ... the pixel position is now used as the ground truth'",
+      "used_for": "Design lesson only (unmerged PR, used as prior art not as a fix record): keep the lossless coordinate authoritative (§3.3)",
+      "status": "captured; read by candidate"
+    },
+    {
+      "id": "S15",
+      "url": "https://api.github.com/search/issues?q=repo%3Abbc%2Faudiowaveform+wrong+duration",
+      "publisher": "audiowaveform (GitHub search JSON)",
+      "kind": "search-result record",
+      "pin": {"sha256": "ec11e21697e537c98253bb29dd45294ff37f4568e603c991f13944b4aba77355", "capture_id": "3779219b48a542d68ffcca39efe92f4d", "captured_utc": "2026-10-06T07:57:54Z"},
+      "locator": "Only result: issue #58 'Auto -End parameter' (open feature request, 2018) — not a defect chain",
+      "used_for": "Negative search result documented: no 'wrong duration' defect chain found in this repo via this query; recorded to prevent overclaiming",
+      "status": "captured; read by candidate"
+    }
+  ],
+  "sources_sought_not_reached": [
+    {"target": "audiowaveform COPYING (license text)", "reason": "budget; license claim marked unverified (L2)"},
+    {"target": "libsndfile tests/ contents for later >2s-seek regression tests", "reason": "budget; #643-chain test absence is stated only for PR #709's file list (S08), not for the whole repo history (L4)"},
+    {"target": "peaks.js #530 fix commit + regression test", "reason": "budget; issue closed 2024-06-28 but fix commit untraced (L3)"},
+    {"target": "peak-data.js / waveform-data.js docs", "reason": "superseded by S02/S03 facts"}
+  ]
+}

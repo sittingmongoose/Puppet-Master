@@ -1,0 +1,1399 @@
+{
+  "later_receipt_read_interval_utc": {
+    "end": "2026-10-06T12:26:48.127405+00:00",
+    "start": "2026-10-06T12:26:48.090116+00:00"
+  },
+  "merged_view_summary_separate_from_primary": {
+    "actual_candidate_attempts_unchanged": 286,
+    "later_resolved_known_tokens_increment": 10282437,
+    "merged_known_tokens": 660493517,
+    "merged_occupied_seconds_known": 178230.22428081304,
+    "merged_occupied_unknown_rows": 31,
+    "merged_usage_unknown_rows": 33,
+    "new_actor_or_target_credit": 0,
+    "new_native_starts_from_join": 0,
+    "new_sdk_provider_record_rows": 172,
+    "positive_starts_unchanged": 267,
+    "primary_known_tokens_unchanged": 650211080,
+    "proved_zero_rows_unchanged": 18,
+    "unknown_start_rows_unchanged": 1
+  },
+  "owner_locator_pin": {
+    "path": "ops/dispatcher/ACCOUNTING019_ACTUAL_RUNTIME_RECEIPT_USAGE_LOCATORS_001.json",
+    "sha256": "78b593ea4b63298f7073b498775335baef0f1790f96a7bf56e1e67ae8f881ba3"
+  },
+  "owner_observed_utc": "2026-10-06T12:19:27.903221+00:00",
+  "primary_attempt_table_pin": {
+    "path": "accounting/cohort-019/attempts.safe.json",
+    "sha256": "f00ad1ef7e8fbbc25cdab67a4c761160b20369e469b591729d04ceae98813573"
+  },
+  "primary_capture_unchanged": true,
+  "primary_snapshot_pin": {
+    "path": "accounting/cohort-019/BASE_CAPTURE_SNAPSHOT.safe.json",
+    "sha256": "921b4a04a5cbd1650db6e035c68f9a7100af74ca780db196be663a7559a9480e"
+  },
+  "rows": [
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 1028032,
+          "cacheWriteTokens": 0,
+          "inputTokens": 1153488,
+          "outputTokens": 32732,
+          "reasoningTokens": 0,
+          "totalTokens": 1186220
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 124913
+          },
+          "inputTokens": 253682,
+          "modelErrorCount": 0,
+          "modelRequestCount": 18,
+          "outputTokens": 33938,
+          "reasoningTokens": 0,
+          "sessionId": "sess_73428abb-be5a-49f5-ac0a-70ee59228ffe",
+          "totalTokens": 287620
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "614ba0e62281307386a53856888f4f80c7eb2f1a288bda6365c7c37ca1ae8877",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 18,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_73428abb-be5a-49f5-ac0a-70ee59228ffe"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 1316195,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 665.5853585320001,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 19421,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "614ba0e62281307386a53856888f4f80c7eb2f1a288bda6365c7c37ca1ae8877"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "53b69af654b82f81053d49cf0308a39b90d34c5c4700472169c70b2b197cbfb9"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 1028032,
+        "input": 1282257,
+        "output": 33938,
+        "reasoning_output_subset": 0,
+        "total": 1316195
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 202944,
+          "cacheWriteTokens": 0,
+          "inputTokens": 268131,
+          "outputTokens": 8009,
+          "reasoningTokens": 0,
+          "totalTokens": 276140
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 65112,
+          "modelErrorCount": 0,
+          "modelRequestCount": 8,
+          "outputTokens": 8009,
+          "reasoningTokens": 0,
+          "sessionId": "sess_647c84c8-2a41-4f52-af2f-c836b92c3e5b",
+          "totalTokens": 73121
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "3d281b92c188d8f8244b87179746211649cbd8e233cd0d2307f083c1d875396f",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 8,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_647c84c8-2a41-4f52-af2f-c836b92c3e5b"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 276140,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 573.1591171710024,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 8355,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "3d281b92c188d8f8244b87179746211649cbd8e233cd0d2307f083c1d875396f"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "349163591c03c85f58544744e73619200acb190773f09db1e67ba2bc9ccbed2f"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 202944,
+        "input": 268131,
+        "output": 8009,
+        "reasoning_output_subset": 0,
+        "total": 276140
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 107520,
+          "cacheWriteTokens": 0,
+          "inputTokens": 190322,
+          "outputTokens": 8479,
+          "reasoningTokens": 0,
+          "totalTokens": 198801
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 82660,
+          "modelErrorCount": 0,
+          "modelRequestCount": 6,
+          "outputTokens": 8479,
+          "reasoningTokens": 0,
+          "sessionId": "sess_9efecbd3-d7c6-452b-8d1f-4c098139791c",
+          "totalTokens": 91139
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "ee9d509f1fdac20806759bf00a5d4f1162c1c6323548d769afd7d36be130e02e",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 6,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_9efecbd3-d7c6-452b-8d1f-4c098139791c"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 198801,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.1055893849989,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 6221,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "ee9d509f1fdac20806759bf00a5d4f1162c1c6323548d769afd7d36be130e02e"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "536524f0080f6842c17df83c110b67ec93c377be281a27d1707d5597ca2d0e4c"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 107520,
+        "input": 190322,
+        "output": 8479,
+        "reasoning_output_subset": 0,
+        "total": 198801
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 515392,
+          "cacheWriteTokens": 0,
+          "inputTokens": 632393,
+          "outputTokens": 22722,
+          "reasoningTokens": 0,
+          "totalTokens": 655115
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 116737
+          },
+          "inputTokens": 237142,
+          "modelErrorCount": 0,
+          "modelRequestCount": 12,
+          "outputTokens": 23839,
+          "reasoningTokens": 0,
+          "sessionId": "sess_7b0ab5ff-b701-42fd-9547-c7bcf01d3946",
+          "totalTokens": 260981
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "d8c1d1151909514a86e7df304bd93434d2db27afbf255180a864d70b58a996d2",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 12,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_7b0ab5ff-b701-42fd-9547-c7bcf01d3946"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 776637,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 642.8605509579938,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 12996,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "d8c1d1151909514a86e7df304bd93434d2db27afbf255180a864d70b58a996d2"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/receipt.json",
+        "sha256": "356f57fb83873ed999ce94f3923bdf6fabdc349fb671b4f77ad35d7e813fc90a"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 515392,
+        "input": 752798,
+        "output": 23839,
+        "reasoning_output_subset": 0,
+        "total": 776637
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 164800,
+          "cacheWriteTokens": 0,
+          "inputTokens": 231570,
+          "outputTokens": 13951,
+          "reasoningTokens": 0,
+          "totalTokens": 245521
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 66572,
+          "modelErrorCount": 0,
+          "modelRequestCount": 7,
+          "outputTokens": 13951,
+          "reasoningTokens": 0,
+          "sessionId": "sess_6cb690f5-a0c4-4eca-b536-4526da9f8ae9",
+          "totalTokens": 80523
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "3fa6a1f1f1e4d65223a450f8b3191885cbab94c00ba8487e96baf9163c2cb075",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 7,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_6cb690f5-a0c4-4eca-b536-4526da9f8ae9"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 245521,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.1991478949931,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 7289,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "3fa6a1f1f1e4d65223a450f8b3191885cbab94c00ba8487e96baf9163c2cb075"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "46be196ccc39041dde46cf8ea4681856822136c94cd784f5468b737e5b24e696"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 164800,
+        "input": 231570,
+        "output": 13951,
+        "reasoning_output_subset": 0,
+        "total": 245521
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 580992,
+          "cacheWriteTokens": 0,
+          "inputTokens": 735152,
+          "outputTokens": 25034,
+          "reasoningTokens": 0,
+          "totalTokens": 760186
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 153903
+          },
+          "inputTokens": 311659,
+          "modelErrorCount": 0,
+          "modelRequestCount": 11,
+          "outputTokens": 26026,
+          "reasoningTokens": 0,
+          "sessionId": "sess_42c23e03-d4cb-482e-954b-c69cc6e6d2a6",
+          "totalTokens": 337685
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "007541e6ecc3b3c66f4ea2278ee0f937ca3829e2a295959d292b890ff9600102",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 11,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_42c23e03-d4cb-482e-954b-c69cc6e6d2a6"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 918934,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 770.9748949979985,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 11935,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "007541e6ecc3b3c66f4ea2278ee0f937ca3829e2a295959d292b890ff9600102"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "554ad579c4e9720910f6f2bddb63cb5ae90e6be0a4e21949f524672716988bb7"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 580992,
+        "input": 892908,
+        "output": 26026,
+        "reasoning_output_subset": 0,
+        "total": 918934
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 56128,
+          "cacheWriteTokens": 0,
+          "inputTokens": 98443,
+          "outputTokens": 8018,
+          "reasoningTokens": 0,
+          "totalTokens": 106461
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 42212,
+          "modelErrorCount": 0,
+          "modelRequestCount": 5,
+          "outputTokens": 8018,
+          "reasoningTokens": 0,
+          "sessionId": "sess_b6ba7a20-61c8-4546-9001-cad3a981b32c",
+          "totalTokens": 50230
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "ed7fbcef0a35dd209cf2b6687d07ba766799ca0915d2c72c8912e0610946a276",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 5,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_b6ba7a20-61c8-4546-9001-cad3a981b32c"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 106461,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 573.8435369549989,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 5152,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "ed7fbcef0a35dd209cf2b6687d07ba766799ca0915d2c72c8912e0610946a276"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "e5520829b6b9bc3b270703697ab48852a37aaaeb0ca6a63c190e49a1575c1434"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 56128,
+        "input": 98443,
+        "output": 8018,
+        "reasoning_output_subset": 0,
+        "total": 106461
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 649856,
+          "cacheWriteTokens": 0,
+          "inputTokens": 814669,
+          "outputTokens": 26501,
+          "reasoningTokens": 0,
+          "totalTokens": 841170
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 164634
+          },
+          "inputTokens": 332927,
+          "modelErrorCount": 0,
+          "modelRequestCount": 10,
+          "outputTokens": 29600,
+          "reasoningTokens": 0,
+          "sessionId": "sess_16426a13-3809-440c-9eb6-412a9f9d87d4",
+          "totalTokens": 362527
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "67e3e94598eb5dce7ceb63bd0e777e8bfa419c659acd3f642e0c92d37ac60f2c",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 10,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_16426a13-3809-440c-9eb6-412a9f9d87d4"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 1012562,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 703.6471198090003,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 10880,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "67e3e94598eb5dce7ceb63bd0e777e8bfa419c659acd3f642e0c92d37ac60f2c"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/native/receipt.json",
+        "sha256": "8eede694205a67d29e363ead041d24afc06236f10e2d0045363b3a8ba0307b30"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 649856,
+        "input": 982962,
+        "output": 29600,
+        "reasoning_output_subset": 0,
+        "total": 1012562
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 98112,
+          "cacheWriteTokens": 0,
+          "inputTokens": 158813,
+          "outputTokens": 8119,
+          "reasoningTokens": 0,
+          "totalTokens": 166932
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 60629,
+          "modelErrorCount": 0,
+          "modelRequestCount": 6,
+          "outputTokens": 8119,
+          "reasoningTokens": 0,
+          "sessionId": "sess_b854fa8f-48d7-4065-83d8-efb2e8a13a3d",
+          "totalTokens": 68748
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "66b8c21bb504ae2b8f2a7c7d79043332bca20cf010bab6b4f2ec101b6f99f495",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 6,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_b854fa8f-48d7-4065-83d8-efb2e8a13a3d"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 166932,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.1942081750021,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 6219,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "66b8c21bb504ae2b8f2a7c7d79043332bca20cf010bab6b4f2ec101b6f99f495"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "3529b6d1e43841577097f8355f6b11f02a24659e2db39989ddc51e8659e8d07f"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 98112,
+        "input": 158813,
+        "output": 8119,
+        "reasoning_output_subset": 0,
+        "total": 166932
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 996480,
+          "cacheWriteTokens": 0,
+          "inputTokens": 1149340,
+          "outputTokens": 29422,
+          "reasoningTokens": 0,
+          "totalTokens": 1178762
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 152390
+          },
+          "inputTokens": 308443,
+          "modelErrorCount": 0,
+          "modelRequestCount": 16,
+          "outputTokens": 30788,
+          "reasoningTokens": 0,
+          "sessionId": "sess_ff813d4e-dcdf-46a2-92ec-eb9c8cc58162",
+          "totalTokens": 339231
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "c878664740ec63d186fd5a8cb9738fca5e63bf2b5962abccd948bd8c96f720ff",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 16,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_ff813d4e-dcdf-46a2-92ec-eb9c8cc58162"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 1336181,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 649.5807920419902,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 17282,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "c878664740ec63d186fd5a8cb9738fca5e63bf2b5962abccd948bd8c96f720ff"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/native/receipt.json",
+        "sha256": "e6a835419ead3766b4d947c7b2583bcd7bae9f48901e514beb56f2e16a35b5c8"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 996480,
+        "input": 1305393,
+        "output": 30788,
+        "reasoning_output_subset": 0,
+        "total": 1336181
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 107520,
+          "cacheWriteTokens": 0,
+          "inputTokens": 170014,
+          "outputTokens": 15883,
+          "reasoningTokens": 0,
+          "totalTokens": 185897
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 62379,
+          "modelErrorCount": 0,
+          "modelRequestCount": 6,
+          "outputTokens": 15883,
+          "reasoningTokens": 0,
+          "sessionId": "sess_c9d49df7-b0ec-49fc-8eaa-d64f6fa61909",
+          "totalTokens": 78262
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "f5e7988aa8ce1f974e497ccc901220d03339bc7ee67b639786747291e6d407c8",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 6,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_c9d49df7-b0ec-49fc-8eaa-d64f6fa61909"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 185897,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 573.9445200659975,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 6223,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "f5e7988aa8ce1f974e497ccc901220d03339bc7ee67b639786747291e6d407c8"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "533657722eecabe59cb30ed6866402e94f24c68239b0c76a47f8168f1c6eebc7"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 107520,
+        "input": 170014,
+        "output": 15883,
+        "reasoning_output_subset": 0,
+        "total": 185897
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 488256,
+          "cacheWriteTokens": 0,
+          "inputTokens": 616246,
+          "outputTokens": 32680,
+          "reasoningTokens": 0,
+          "totalTokens": 648926
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 127778
+          },
+          "inputTokens": 259390,
+          "modelErrorCount": 0,
+          "modelRequestCount": 9,
+          "outputTokens": 34141,
+          "reasoningTokens": 0,
+          "sessionId": "sess_8bbdc497-6a5d-4a12-8b94-6232d53253be",
+          "totalTokens": 293531
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "4ad0032864d16f3f6341aaa1a0086baecefb656fd66f2a037d2baf79359b703c",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 9,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_8bbdc497-6a5d-4a12-8b94-6232d53253be"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 781999,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 794.5104350610054,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 9819,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "4ad0032864d16f3f6341aaa1a0086baecefb656fd66f2a037d2baf79359b703c"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/native/receipt.json",
+        "sha256": "2429e522be06dc32eee43a2870c9b3eba37dcf46e9cf85a1ccfc3931417d569e"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 488256,
+        "input": 747858,
+        "output": 34141,
+        "reasoning_output_subset": 0,
+        "total": 781999
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 511232,
+          "cacheWriteTokens": 0,
+          "inputTokens": 630821,
+          "outputTokens": 23338,
+          "reasoningTokens": 0,
+          "totalTokens": 654159
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 119317
+          },
+          "inputTokens": 242413,
+          "modelErrorCount": 0,
+          "modelRequestCount": 12,
+          "outputTokens": 24410,
+          "reasoningTokens": 0,
+          "sessionId": "sess_251aee69-e329-4de1-80a8-f38638812cb2",
+          "totalTokens": 266823
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "36e674dc82f5c17186c90e2d20cd95eb4ed11b4b25cebceca067f8592725acd2",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 12,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_251aee69-e329-4de1-80a8-f38638812cb2"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 778327,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 481.1097127709945,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 12989,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "36e674dc82f5c17186c90e2d20cd95eb4ed11b4b25cebceca067f8592725acd2"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "d2023095b5fc0da9e4a1dd533a88a6b7b9a5ef2ecd4774ac668dd62bb6667a88"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 511232,
+        "input": 753917,
+        "output": 24410,
+        "reasoning_output_subset": 0,
+        "total": 778327
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 274368,
+          "cacheWriteTokens": 0,
+          "inputTokens": 367472,
+          "outputTokens": 20316,
+          "reasoningTokens": 0,
+          "totalTokens": 387788
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 92962,
+          "modelErrorCount": 0,
+          "modelRequestCount": 9,
+          "outputTokens": 20316,
+          "reasoningTokens": 0,
+          "sessionId": "sess_09a8c534-b1d8-4dbe-99c5-820ced6a3d71",
+          "totalTokens": 113278
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "485bc541cb0acc8a060af76c6ef3d60a1ca32c87dfba0870555830ea9c2599fb",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 9,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_09a8c534-b1d8-4dbe-99c5-820ced6a3d71"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 387788,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.091114972005,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 9424,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "485bc541cb0acc8a060af76c6ef3d60a1ca32c87dfba0870555830ea9c2599fb"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "5aa14861a00e106ab69dfe925d0728072318202e9655d97d145363b09a413612"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 274368,
+        "input": 367472,
+        "output": 20316,
+        "reasoning_output_subset": 0,
+        "total": 387788
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 518080,
+          "cacheWriteTokens": 0,
+          "inputTokens": 631120,
+          "outputTokens": 34537,
+          "reasoningTokens": 0,
+          "totalTokens": 665657
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 112768
+          },
+          "inputTokens": 229730,
+          "modelErrorCount": 0,
+          "modelRequestCount": 11,
+          "outputTokens": 35787,
+          "reasoningTokens": 0,
+          "sessionId": "sess_5f7e69cc-df06-4de4-bec7-487c4f801a5a",
+          "totalTokens": 265517
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "85665befda82ae9b432591d6f228e148cb4d87d8748650a0eee0da90da747dcc",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 11,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_5f7e69cc-df06-4de4-bec7-487c4f801a5a"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 783869,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 1020.995031227998,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 11942,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "85665befda82ae9b432591d6f228e148cb4d87d8748650a0eee0da90da747dcc"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/native/receipt.json",
+        "sha256": "122cf8ee33ad77f52a30034e54489f59bfcd5bdf33a2bf4634efecf4b2c8b43a"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 518080,
+        "input": 748082,
+        "output": 35787,
+        "reasoning_output_subset": 0,
+        "total": 783869
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 464576,
+          "cacheWriteTokens": 0,
+          "inputTokens": 569717,
+          "outputTokens": 24985,
+          "reasoningTokens": 0,
+          "totalTokens": 594702
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 104833
+          },
+          "inputTokens": 213434,
+          "modelErrorCount": 0,
+          "modelRequestCount": 11,
+          "outputTokens": 25879,
+          "reasoningTokens": 0,
+          "sessionId": "sess_90acc1e4-d11c-4f1a-962f-1e7b6f65e9a7",
+          "totalTokens": 239313
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "433e5465f46c5f3b0d4eceead63b3e28f3690609166be77217fbfab6bdd71243",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 11,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_90acc1e4-d11c-4f1a-962f-1e7b6f65e9a7"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 704197,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 594.6904016140033,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "COMPLETED",
+      "provider_export_pin": {
+        "bytes": 11925,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "433e5465f46c5f3b0d4eceead63b3e28f3690609166be77217fbfab6bdd71243"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "395e6c71b41a19f82be6550082a60d5283ce8be336ccb99709721cb57598f6fd"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 464576,
+        "input": 678318,
+        "output": 25879,
+        "reasoning_output_subset": 0,
+        "total": 704197
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 26176,
+          "cacheWriteTokens": 0,
+          "inputTokens": 59461,
+          "outputTokens": 10447,
+          "reasoningTokens": 0,
+          "totalTokens": 69908
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 33177,
+          "modelErrorCount": 0,
+          "modelRequestCount": 4,
+          "outputTokens": 10447,
+          "reasoningTokens": 0,
+          "sessionId": "sess_aab52b7a-a84c-4ce2-a2f3-0d4433c557b2",
+          "totalTokens": 43624
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "20e8be4db0bc19f1440f2caca7e2418597ec671e0170925bab88f6f0d62e4359",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 4,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_aab52b7a-a84c-4ce2-a2f3-0d4433c557b2"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 69908,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 573.9946504920081,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 4083,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "20e8be4db0bc19f1440f2caca7e2418597ec671e0170925bab88f6f0d62e4359"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/native/receipt.json",
+        "sha256": "473e41a6f0831f73d33ff248ac1962cc6e6d25d664b425dc598e87e040885b4c"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 26176,
+        "input": 59461,
+        "output": 10447,
+        "reasoning_output_subset": 0,
+        "total": 69908
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 96768,
+          "cacheWriteTokens": 0,
+          "inputTokens": 149281,
+          "outputTokens": 9784,
+          "reasoningTokens": 0,
+          "totalTokens": 159065
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 52294,
+          "modelErrorCount": 0,
+          "modelRequestCount": 6,
+          "outputTokens": 9784,
+          "reasoningTokens": 0,
+          "sessionId": "sess_83d0ddf9-5150-417c-a369-925f1d0e2e14",
+          "totalTokens": 62078
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-navigation-index-r001/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "4c94002e86cd5e01fe017ac0dd29ebbcbe1674747add509d74a350fd90cff5fb",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 6,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_83d0ddf9-5150-417c-a369-925f1d0e2e14"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 159065,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.0264708970062,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 6219,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-navigation-index-r001/native/provider-usage.redacted.jsonl",
+        "sha256": "4c94002e86cd5e01fe017ac0dd29ebbcbe1674747add509d74a350fd90cff5fb"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-navigation-index-r001/native/receipt.json",
+        "sha256": "0fd26a904b27bd43b520a90c8c3f82e5a13fb7692625d8a90254e19c88ae6a95"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 96768,
+        "input": 149281,
+        "output": 9784,
+        "reasoning_output_subset": 0,
+        "total": 159065
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 7680,
+          "cacheWriteTokens": 0,
+          "inputTokens": 33174,
+          "outputTokens": 34499,
+          "reasoningTokens": 0,
+          "totalTokens": 67673
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 25476,
+          "modelErrorCount": 0,
+          "modelRequestCount": 3,
+          "outputTokens": 34499,
+          "reasoningTokens": 0,
+          "sessionId": "sess_20059f3f-3581-4ebe-81ed-29fe24e33d55",
+          "totalTokens": 59975
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "7f8e7543b70129a22b9ea16b764c1ec44fdf78e58535ce9a254851fafb08f0e8",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 3,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_20059f3f-3581-4ebe-81ed-29fe24e33d55"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 67673,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 572.9308548080007,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 3008,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/native/provider-usage.redacted.jsonl",
+        "sha256": "7f8e7543b70129a22b9ea16b764c1ec44fdf78e58535ce9a254851fafb08f0e8"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/native/receipt.json",
+        "sha256": "21d5a7bbd091915b1e4e8f127630e5fa5207348238a14248ee4f29a4251a1942"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 7680,
+        "input": 33174,
+        "output": 34499,
+        "reasoning_output_subset": 0,
+        "total": 67673
+      }
+    },
+    {
+      "active_missing_export_not_zero": false,
+      "attempt_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "actual_provider_HTTP_attempts": "UNKNOWN",
+        "billing_dollars": "UNKNOWN",
+        "last_usage_delta_by_request_totals": {
+          "cacheReadTokens": 0,
+          "cacheWriteTokens": 0,
+          "inputTokens": 8277,
+          "outputTokens": 1073,
+          "reasoningTokens": 0,
+          "totalTokens": 9350
+        },
+        "native_aggregate": {
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "inputBaselineBySource": {
+            "main_turn": 0
+          },
+          "inputTokens": 8277,
+          "modelErrorCount": 0,
+          "modelRequestCount": 2,
+          "outputTokens": 1073,
+          "reasoningTokens": 0,
+          "sessionId": "sess_b8bf0ec0-4064-4cbf-85e2-f2c06a1aea0f",
+          "totalTokens": 9350
+        },
+        "physical_payload_attestation": "UNKNOWN",
+        "provider_usage_projection_reference_not_added_again": {
+          "available": true,
+          "database": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/native/private-runtime/storage/cli/db/db.sqlite",
+          "export_sha256": "43e033a17a23dab2e0cb4a5911bb97db026e0f499b973611e652b124770ae159",
+          "query_scope": "exact session_id only; read-only SQLite connection",
+          "row_count": 2,
+          "semantics": "individual native request attempts, including Goal verification; no conversation UI input-baseline subtraction",
+          "session_id": "sess_b8bf0ec0-4064-4cbf-85e2-f2c06a1aea0f"
+        },
+        "usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "known_tokens_resolved_increment": 9350,
+      "native_Goal_status_last_saved": "UNKNOWN",
+      "native_execution_occupied_seconds_reference": 574.1000026350084,
+      "native_starts_primary_unchanged": 1,
+      "observed_family": "GLM",
+      "observed_model_selector": "GLM-5.3-Flash",
+      "owner_status_at_observation": "FAILED",
+      "provider_export_pin": {
+        "bytes": 1951,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/native/provider-usage.redacted.jsonl",
+        "sha256": "43e033a17a23dab2e0cb4a5911bb97db026e0f499b973611e652b124770ae159"
+      },
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/native/receipt.json",
+        "sha256": "e60bac657acd57d419780ed8f2956b2c4bf4e040872e8eca6a7811b3b777ae26"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "usage_basis": "native_provider_request_sum_known_values",
+      "usage_reference": {
+        "cached_input_included": 0,
+        "input": 8277,
+        "output": 1073,
+        "reasoning_output_subset": 0,
+        "total": 9350
+      }
+    },
+    {
+      "active_missing_export_not_zero": true,
+      "attempt_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "billing_dollars": "UNKNOWN",
+      "counter_views_separate": {
+        "last_usage_delta_by_request_totals": null,
+        "native_aggregate": null
+      },
+      "known_tokens_resolved_increment": null,
+      "native_starts_primary_unchanged": 1,
+      "owner_status_at_observation": "RUNNING",
+      "provider_export_pin": null,
+      "receipt_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/native/receipt.json",
+        "sha256": "6c240cc7adc488bd1188238cd2c0228bd5f067bfc80049f69417cd2beb761165"
+      },
+      "receipt_pin_exact_body_not_used_if_active": true,
+      "usage_basis": "UNKNOWN_ACTIVE_EXPORT_NOT_PRESENT",
+      "usage_reference": null
+    }
+  ],
+  "schema": "er9.accounting.later-runtime-source-join.v1",
+  "scope": "Exact adopted binding_run_name native receipt/export locators, not guessed conventional job directory. Later dated source join supplements primary UNKNOWNs but never rewrites original019 cutoff or sums full snapshots. Cache includedinput/reasoning subsetoutput. Literal nativeaggregate/lastusage.delta/provider attempt/root/helper counters distinct and not added. Active DEC019 absentexport UNKNOWN; no zero billing, hidden provider/payload/HTTP inference. SDK record IDs/session IDs unique against every original primary export; source alias is same actor-stage, not another Goal."
+}

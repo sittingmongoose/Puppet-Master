@@ -1,0 +1,91 @@
+{
+  "actual_start_utc": "2026-10-06T12:20:40+00:00",
+  "boundary_incident": "BOUNDARY_INCIDENT.json;151 reconstructedresultpins86current; exacthistoricset UNKNOWN ifmoved; earlierbyteslost noSHA; no perfectfirewallclaim",
+  "campaign_finished": false,
+  "current_selection_cutoff": "2026-10-06T12:17:35.728804+00:00",
+  "current_stage_refs": 174,
+  "declared_pin_mismatches": 0,
+  "deterministic_checks_pass": true,
+  "finite004_scope": "18 overlapping unmatched logicalslots/69 dated roles;47scopedmatches not completed comparisons",
+  "inclusive_deadline_utc": "2026-10-06T12:40:40+00:00",
+  "logical_arms": 96,
+  "matrix_capture_end": "2026-10-06T12:33:53.694459+00:00",
+  "not_atomic": true,
+  "pending_publication_reference_count": 2000,
+  "prepared_utc": "2026-10-06T12:35:05.346244+00:00",
+  "publication_pin_states": {
+    "PENDING_PUBLICATION": 2380,
+    "VERIFIED_COMMIT": 502
+  },
+  "publication_verified_map_source": {
+    "commit": "182ad2e0c10ec460bf6ed2bd55d06489d23ace8b",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/publication/commit036-tree-sha256.json",
+    "sha256": "ece7224917655a7a69cad92d288fd5a0593b2fad7aaee14a9522435ccc4a2608"
+  },
+  "publication_warning": "PENDING_PUBLICATION_REFS is a locator list, notbodyexportpermission; no auth/private/nativeModelIO/rawcaptures/sourcepayload/privatekeys in inventory selection.",
+  "remaining_obligations": [
+    "Publisher adjudicate2000extantlocalpendingrefs; notallaresafeexport",
+    "Parent closefiniteDEC019tail; no campaignclosurehere",
+    "Physicalprovider,billingandunexposedactualmodelobservations remain scopedUNKNOWN"
+  ],
+  "retained_history_stage_refs": 502,
+  "schema": "er9.publication-inventory-handoff.v1",
+  "scientific_grade": "UNASSESSED_METADATA_ONLY",
+  "tracks": {
+    "confirmation": 8,
+    "fresh_integrated": 24,
+    "targeted": 64
+  },
+  "unique_pending_pin_count": 2380,
+  "unique_stage_defs_not_nativeGoal_count": 705,
+  "warm_donor_historical_ids": {
+    "DEC019_named_warm_derivative_roles_no_logical_credit": [
+      "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001"
+    ],
+    "historical_original_C03_whole_pipeline_reference_only": [
+      "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001"
+    ],
+    "registered_not_joined_to_selected_or_retained_slot_metadata": [
+      "SEED-DEV-A-RESOURCE-R001-seed-critique-a001",
+      "SEED-DEV-A-RESOURCE-R001-seed-revision-a001",
+      "SEED-DEV-B-RESOURCE-R001-seed-critique-a001",
+      "SEED-DEV-B-RESOURCE-R001-seed-revision-a001"
+    ],
+    "unscored_donor_roles_no_target_credit": [
+      "SEED-DEV-A-base-s001",
+      "SEED-DEV-A-critique-s001",
+      "SEED-DEV-A-revision-s001",
+      "SEED-DEV-A-enrichment-s001",
+      "SEED-DEV-B-base-s001",
+      "SEED-DEV-B-critique-s001",
+      "SEED-DEV-B-revision-s001",
+      "SEED-DEV-B-enrichment-s001",
+      "SEED-DEV-A-FIXED-BASE-critique-s002",
+      "SEED-DEV-A-FIXED-BASE-revision-s002",
+      "SEED-DEV-A-FIXED-BASE-enrichment-s002",
+      "SEED-DEV-B-FIXED-BASE-critique-s002",
+      "SEED-DEV-B-FIXED-BASE-revision-s002",
+      "SEED-DEV-B-FIXED-BASE-enrichment-s002",
+      "SEED-DEV-A-DEFERRED-R001-seed-critique-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-revision-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001",
+      "SEED-DEV-B-DEFERRED-R001-seed-critique-a001",
+      "SEED-DEV-B-DEFERRED-R001-seed-revision-a001",
+      "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+      "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000"
+    ],
+    "warm_single_roles_no_new_logical_targets": [
+      "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+    ]
+  }
+}

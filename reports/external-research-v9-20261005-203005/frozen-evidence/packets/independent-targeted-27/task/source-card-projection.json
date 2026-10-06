@@ -1,0 +1,37 @@
+{
+  "schema": "er9.diagnostic_method_card.v1",
+  "domain": "B",
+  "task_name": "Replay/invalidation revision consequences",
+  "task": "Use an affordable-candidate draft/critique/revision bundle covering clean replay, invalidation or output provenance. Fixture admission privately confirms supported correction and a real introduced/collateral error. Candidate sees all original context, not truth labels.",
+  "question": "Use draft/critique/revision bundles containing both good corrections and errors newly introduced by correction. Show the checker all context needed to understand a changed assertion.",
+  "source_scope": "Complete source/version/context plus draft/critique/revision/witness catalogs; no evaluator findings passed to candidate.",
+  "initial_input_class": "FROZEN_SUPPLIED_DEVELOPMENT_PROPOSAL_AND_FULL_SOURCES",
+  "discovery_conclusion_allowed": false,
+  "integration_limit": "Do not silently add a free fourth complete review. The extra stage and any corrective work count within the recipe. This is a priority integrated contrast.",
+  "brief_path": "briefs/development-B-notebook.md",
+  "common_criteria_path": "common_criteria.json",
+  "source_access_path": "source_access.json",
+  "neutral_task_prompt_path": "diagnostics/D-V05-B-TASK.md",
+  "candidate_artifacts": {
+    "designated_final": "out/final/proposal.md",
+    "source_catalog": "out/final/sources.json",
+    "witness_catalog": "out/final/witnesses.json",
+    "lead_inventory": "out/final/leads.json"
+  },
+  "important_checks": [
+    {
+      "id": "D-V05-B-P1",
+      "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "id": "D-V05-B-P2",
+      "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "id": "D-V05-B-P3",
+      "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "no_truth_key_in_candidate": true,
+  "coverage_path": "diagnostics/D-V05-B-coverage.json"
+}

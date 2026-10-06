@@ -1,0 +1,77 @@
+{
+  "schema": "er9.independent-evaluator-handoff-receipt.v1",
+  "eval_id": "independent-targeted-26",
+  "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+  "authorized_scoped_assessment_complete": true,
+  "phase1_unchanged_after_key": true,
+  "science_handoffs_completed": [
+    "/root",
+    "/root/publisher"
+  ],
+  "neutral_accounting_handoff_completed": "/root/cost_accounting",
+  "neutral_courier_handoff_completed": "/root/frozen_exports",
+  "source_clock_start_monotonic": 113093.927152478,
+  "phase1_freeze_monotonic": 114148.733340951,
+  "clock_observation_utc": "2026-10-06T10:55:29.876650Z",
+  "clock_observation_monotonic": 114548.732189532,
+  "source_elapsed_seconds": 1054.8061884729977,
+  "phase2_elapsed_through_required_handoffs_seconds": 399.9988485810027,
+  "whole_elapsed_through_required_handoffs_seconds": 1454.8050370540004,
+  "phase2_deadline_monotonic": 114748.733340951,
+  "whole_deadline_monotonic": 114893.927152478,
+  "phase2_remaining_seconds_at_observation": 200.00115141899732,
+  "whole_remaining_seconds_at_observation": 345.1949629459996,
+  "clock_reset": false,
+  "final_neutral_pin_notifications_still_charged_until_return": true,
+  "artifact_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/reservation.json",
+      "sha256": "d137ded5dea1921801888bb8fba7c5da0f130852c3ec0f80cb42493f3c3dfb0e",
+      "bytes": 1028,
+      "mode": "0o600"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/source-start.json",
+      "sha256": "89eb7d5004d7cdbf54f9fc4368fddc6af9ef1f1f0931263ca3fe3ecca50f193f",
+      "bytes": 483,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-freeze.json",
+      "sha256": "78b2d51edf56030497a6214626c4f67d8c62d929bb9e17da4bf4857521c54240",
+      "bytes": 1504,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/input-pins.json",
+      "sha256": "3636155f1f26d4a9f7dda25bf9da464bff1a89c99293c0e277274309ac78b4c9",
+      "bytes": 39496,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-judgement.json",
+      "sha256": "a0c901bbb645eed7a38a8e6770e52279d278fb15ef14bf110f85992551515806",
+      "bytes": 13969,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-report.md",
+      "sha256": "aa786b1637b549a5dfd05a8b0a96d908ab1bb6c25f2403054b1deebaa8be0384",
+      "bytes": 9634,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase2-check.json",
+      "sha256": "ec2f03adbea772ff20c0d7031fb8b00c07635ed596cf30474f7e3df578e80acd",
+      "bytes": 12105,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase2-report.md",
+      "sha256": "b61d3153b52f4ebe416aa9a68de5751f42464546e8bafe724cfce50d3f5a585b",
+      "bytes": 4044,
+      "mode": "0o444"
+    }
+  ],
+  "no_candidate_execution_retest_render_assembly_model_run_or_native_Goal": true
+}

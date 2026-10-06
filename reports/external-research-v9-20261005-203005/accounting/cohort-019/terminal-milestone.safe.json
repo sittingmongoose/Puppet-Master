@@ -1,0 +1,469 @@
+{
+  "DEC018_conditional_blocked_roles": [
+    {
+      "birth": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+      "native_goal_starts": 0,
+      "status": "BLOCKED_PREDECESSOR_FAILED"
+    },
+    {
+      "birth": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001",
+      "native_goal_starts": 0,
+      "status": "BLOCKED_PREDECESSOR_FAILED"
+    },
+    {
+      "birth": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001",
+      "native_goal_starts": 0,
+      "status": "BLOCKED_PREDECESSOR_FAILED"
+    }
+  ],
+  "DEC018_gate_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/REJECTION.json",
+    "sha256": "10dcfab9e7e8473e820b6fc70da6f5827b46afdda1609ddd6473b8f5dd6bd0d4"
+  },
+  "DEC018_paired_gate_status": "REJECT_PAIR",
+  "DEC018_repairs": [
+    {
+      "billing_dollars": "UNKNOWN",
+      "freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/OUTPUT_FREEZE.json",
+        "sha256": "bc700a0456a90edcddf56901d8991d55ea81e6cfa323989c3efba9f762fe3e8d"
+      },
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 7680,
+        "input": 33174,
+        "output": 34499,
+        "reasoning_output_subset": 0,
+        "total": 67673
+      },
+      "missing_required_artifacts": [
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "native_quiescent": true,
+      "new_actor_charge_from_reference": false,
+      "occupied_seconds_reference_only": 572.9308548080007,
+      "operational_complete": false,
+      "operator_native_status": "cap_seconds",
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "e171dca95160369196185b68d3c42d96241560ea82244cd6d8a58ed751213292"
+        }
+      },
+      "saved_Goal_status_separate": "UNKNOWN"
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "freeze_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/OUTPUT_FREEZE.json",
+        "sha256": "aa07325c083bce697face76aa611415b9a01ff76d8693cb89e5dca8ac8b6ee29"
+      },
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 0,
+        "input": 8277,
+        "output": 1073,
+        "reasoning_output_subset": 0,
+        "total": 9350
+      },
+      "missing_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "native_quiescent": true,
+      "new_actor_charge_from_reference": false,
+      "occupied_seconds_reference_only": 574.1000026350084,
+      "operational_complete": false,
+      "operator_native_status": "execution_error",
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "365e51a4470e9adc8f9b8d7afc105fca651e03f27d2b75959ec25c1bedc82adc"
+        }
+      },
+      "saved_Goal_status_separate": "UNKNOWN"
+    }
+  ],
+  "I12_all6_roles": [
+    {
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 794.5299970750057,
+      "ended_utc": "2026-10-06T11:41:57.885071+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "ea67bab28dbb60461f96c7e15063ee5f9ac248063d0dc5426ed0ba65126a50d9"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 488256,
+        "input": 747858,
+        "output": 34141,
+        "reasoning_output_subset": 0,
+        "total": 781999
+      },
+      "missing_required_artifacts": [],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 794.5104350610054,
+      "native_status": "completed",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": true,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "5a48660094d920530d4199f81cb5cfd9d9becc542aa084a5672793ce5c183eab"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "5a48660094d920530d4199f81cb5cfd9d9becc542aa084a5672793ce5c183eab"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "research",
+      "status": "COMPLETED"
+    },
+    {
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 481.1282480439986,
+      "ended_utc": "2026-10-06T11:52:42.093215+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "c8b789a3fd17b154c183ab2d2ab784862eb60ab89c1d61de16d96774125a60c0"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 511232,
+        "input": 753917,
+        "output": 24410,
+        "reasoning_output_subset": 0,
+        "total": 778327
+      },
+      "missing_required_artifacts": [],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 481.1097127709945,
+      "native_status": "completed",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": true,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "2dab0737dfd98107c8a80cb8a60096fa2742603fa6f207ec07b6e71c2c0a872f"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "2dab0737dfd98107c8a80cb8a60096fa2742603fa6f207ec07b6e71c2c0a872f"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "critique",
+      "status": "COMPLETED"
+    },
+    {
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 574.1055551430036,
+      "ended_utc": "2026-10-06T12:02:50.491231+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "0d0394812dd7d25a9735aaa8953cdef4d8f05ffad4e6026fa2aeaabc79561beb"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 274368,
+        "input": 367472,
+        "output": 20316,
+        "reasoning_output_subset": 0,
+        "total": 387788
+      },
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 574.091114972005,
+      "native_status": "cap_seconds",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": false,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "8b0644df2d07014e2c677e3464636b337ec87cbeb6c37d22b9642d328cfd5827"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "8b0644df2d07014e2c677e3464636b337ec87cbeb6c37d22b9642d328cfd5827"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "revision",
+      "status": "FAILED"
+    },
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 1021.00909305799,
+      "ended_utc": "2026-10-06T11:28:28.043627+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "324b14371d9a0c394946185a053616958cd0eea7ab2330e16d4c5c783101ac98"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 518080,
+        "input": 748082,
+        "output": 35787,
+        "reasoning_output_subset": 0,
+        "total": 783869
+      },
+      "missing_required_artifacts": [],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 1020.995031227998,
+      "native_status": "completed",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": true,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "fd09170f86c7fe9ec8e763943c238843136bc583696ec173ac9478278c7d461b"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "fd09170f86c7fe9ec8e763943c238843136bc583696ec173ac9478278c7d461b"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "research",
+      "status": "COMPLETED"
+    },
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 594.7097208400082,
+      "ended_utc": "2026-10-06T11:40:59.442885+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "eefc799258f2605320fc6adf183964052ac9efdcbef77662f96b63d9afdb19a7"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 464576,
+        "input": 678318,
+        "output": 25879,
+        "reasoning_output_subset": 0,
+        "total": 704197
+      },
+      "missing_required_artifacts": [],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 594.6904016140033,
+      "native_status": "completed",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": true,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "d03d88c3d5d358c281cd6a2c8af369a7a4bea6ff96928aff87a4fa3bd33ef197"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "d03d88c3d5d358c281cd6a2c8af369a7a4bea6ff96928aff87a4fa3bd33ef197"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "critique",
+      "status": "COMPLETED"
+    },
+    {
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 574.0125352830073,
+      "ended_utc": "2026-10-06T11:53:48.357952+00:00",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "727006c8b67180c9a5a7cebc205ac5f87c623dd8adef70d5e123bbfd3f08e975"
+      },
+      "freeze_sha_verified": true,
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "later_join_usage_reference_only": {
+        "cached_input_included": 26176,
+        "input": 59461,
+        "output": 10447,
+        "reasoning_output_subset": 0,
+        "total": 69908
+      },
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_goal_starts": 1,
+      "native_receipt_elapsed_reference_only": 573.9946504920081,
+      "native_status": "execution_error",
+      "new_actor_charge_from_reference": false,
+      "operational_complete": false,
+      "outer_and_native_elapsed_overlap_not_added": true,
+      "quiet_release_proof": {
+        "quiet_release_metadata": {
+          "all_owned_scopes_quiet": "UNKNOWN",
+          "all_private_units_quiet": "UNKNOWN",
+          "client_tool_cgroups_quiet": "UNKNOWN",
+          "client_tool_process_groups_absent": "UNKNOWN",
+          "execution_units_quiet": "UNKNOWN",
+          "held_process_groups_absent": "UNKNOWN",
+          "native_quiescent": "UNKNOWN",
+          "permit_release_confirmed": "UNKNOWN"
+        },
+        "sha_verified": true,
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "c21e67231bbdb81f4b8ff1a23d5c962587f9515631062b55a42f8afb4c57a741"
+        }
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "c21e67231bbdb81f4b8ff1a23d5c962587f9515631062b55a42f8afb4c57a741"
+      },
+      "saved_Goal_status_separate": "UNKNOWN",
+      "stage": "revision",
+      "status": "FAILED"
+    }
+  ],
+  "later_native_join_pin": {
+    "path": "accounting/cohort-019/runtime-join.safe.json",
+    "sha256": "7905272fc27ace9574f613981e34c8c0b8489c132021e0abed37cdf1a7f4db0d"
+  },
+  "live_DEC019_final_conditional_allocation_not_observed_cost": {
+    "active_usage_export": "UNKNOWN_NOT_PRESENT_IN_OWNER_LOCATOR_WINDOW",
+    "conditional_final_authorized_responses": 60,
+    "conditional_final_authorized_seconds": 600,
+    "critic_authorized_responses": 90,
+    "critic_authorized_seconds": 900,
+    "final_native_entry": "UNKNOWN_UNTIL_POSITIVE_ACTUAL_RECEIPT"
+  },
+  "live_DEC019_observer_rows": [
+    {
+      "family": "Z",
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "native_goal_starts": 1,
+      "original_birth_monotonic_ns": 118992761150014,
+      "prelaunch_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC019_IMPORT_001/PRELAUNCH_BOTH_CHOICES.json",
+        "sha256": "8ee70faf7f964ccb973d28fb49de7e335f8986e5de9939e9697c9a0478947e80"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/stage.json",
+        "sha256": "6954b3d524baedde171efeda53b490e8f865f881c984e20abcf6e81568135a8e"
+      }
+    }
+  ],
+  "owner_checkpoint_pin": {
+    "path": "ops/dispatcher/I12_CURRENT_ALL_TERMINAL_DEC018_REJECTED_DEC019_ACTIVE_001.json",
+    "sha256": "b7783fb728bd1276724f2843ab8ce418d735743c80e9d2051fece7adcfddd92e"
+  },
+  "owner_observed_utc": "2026-10-06T12:14:23.369452+00:00",
+  "primary_capture_interval_utc": {
+    "end": "2026-10-06T12:17:39.880249+00:00",
+    "start": "2026-10-06T12:17:38.929975+00:00"
+  },
+  "schema": "er9.accounting.i12-dec018-dec019-milestone.v1",
+  "scope": "I12/repair operational failure/quiet/release only, no science/source success. DIRECT_NATIVE_GOAL_NOT_COMPLETE blocks conditional roles before Birth per owner gate; no billingzero. All original/failure/ENOSPC/prep costs kept; later receipt values already in merged view, not extra tokens. Liveobserver epoch267 not an added cost or logical target."
+}

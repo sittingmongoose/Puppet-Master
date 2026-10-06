@@ -1,0 +1,89 @@
+{
+  "actual_clock_allocation_here": false,
+  "admission_owner": "ops_recovery",
+  "bind_function": "bind(pinned_plan_ref) -> pinned ROLE_BIRTH_RECEIPT ref; ordinary planABI er9.actual-role-birth-binding-plan.v1",
+  "current_choices": [
+    {
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/RESOURCE_CONTRACT.json",
+          "sha256": "ae5db1d73debfc2fc21f8fb30bb8de695dd172307f82945b497d928a61cbc2e0"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+          "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+        },
+        "version": "glm_complete2304_clock_readiness_v1"
+      },
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+        "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001/prepared-stage.json",
+        "sha256": "38041f11f93873f16c0edcd6fd3320369199b195588854f7d403ac6617b4312d"
+      }
+    },
+    {
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/RESOURCE_CONTRACT.json",
+          "sha256": "8163ed0bf561c418a74fff6899fb04b3f3bede899d634a788b0fc56d8050a248"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+          "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+        },
+        "version": "glm_complete2304_bundle_clock_readiness_v1"
+      },
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+        "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+      },
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/prepared-stage.json",
+        "sha256": "80416e59356f16ac96b15aa2533510e5e92c6ead4e3998bd047dc9a3b16df314"
+      }
+    }
+  ],
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/role_birth.py",
+    "sha256": "71129e3db8f1f2a4a98f220b24e28a5f6eae54eeeeb796e132b3dba3f903a3e5"
+  },
+  "extra_logical_or_clean_matched_fresh_causal_credit": false,
+  "final_plan_template": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/final-PLAN-TEMPLATE.json",
+    "sha256": "696af780557fe669dcc52a2d6aa9bd8771ddea5bf974e1546ab48397c35bc6b2"
+  },
+  "native_G2_capacity_preserved": true,
+  "new_critic_final_guard": "new named critic only; actual complete native Goal/actor/valid review/freeze/closed context/private quiet release required; no invented future hashes",
+  "old_failures_and_costs_plus_new1500": "all retained; no retroactive credit",
+  "permission_baseline": "tools-baseline.json fixes unchanged allowlist; actual worker reconstructs and seals resource+clock+carrier config at original new-role birth before Goal",
+  "prepared_critic_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/critic-authenticated-prepared/ROLE_BIRTH_RECEIPT.json",
+    "sha256": "deca4c4f5f07529f495b2d2419b133f3ef21e4f7c17fbcd8bca607aa17ef1795"
+  },
+  "registration": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/registration.json",
+    "sha256": "d8bddf3490ce31294725ace80416cbc48a8c853c447cf8397893c4bff2ae6c21"
+  },
+  "schema": "er9.named-failed-parent-warm-outbox.v1",
+  "scientific_bodies_or_modelIO_evaluator_exported": false,
+  "source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/SOURCE_PIN.json",
+    "sha256": "fbed150d6abf27510fd91a510238e923bf14123159d95649d9b754c326ab4a25"
+  },
+  "status": "READY_SOURCE_ONLY_PENDING_CONCRETE_ROOT_REVIEW_NO_ADMISSION"
+}

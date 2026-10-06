@@ -1,0 +1,45 @@
+{
+  "catalog": "executed and proposed witness inventory (research stage)",
+  "labels": "executed_by_candidate = run via admitted isolated python_execute; receipts include code/data sha256, stdout sha256, exit code. These are isolated component checks and do not establish full application behavior. proposed = UNEXECUTED.",
+  "executed": [
+    {
+      "id": "W1",
+      "claim": "Stored annotation coordinates must be float64: float32 collapses large-field coordinates and merges nearby vertices; float64 survives JSON round-trip exactly.",
+      "type": "executed_by_candidate",
+      "execution_id": "exec-s5vm45gy",
+      "code_sha256": "84f73833ecc7001b7e9226576dd442c1f58b2bfe93a5632fa7e3bbbde97628d4",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected_justification": "IEEE-754 binary32 has a 24-bit significand, so near 6.0e4 the representable spacing is about 0.0039; a coordinate 60000.001 cannot be represented exactly; two vertices 0.0003 px apart fall within one float32 spacing. Python float is binary64 and json.dumps/loads round-trips binary64 exactly via repr.",
+      "stdout": "x_true        = 60000.001\nx_float32     = 60000.0\nerror_px      = -0.000999999996565748 ( 0.000999999996565748 px )\nfloat32 ULP@6e4= 0.0\nv1_f32 != v2_f32 : False -> vertices 0.0003 px apart collide in float32: True\njson roundtrip exact: True 60000.00123456789\n",
+      "stderr": "",
+      "exit_code": 0,
+      "stdout_sha256": "fbce1213df7dc3ee44a43c7bcdf2aa655bd45cc5f094f9ee383e64df8c820446",
+      "honest_notes": "The 'ULP' probe line printed 0.0 because adding 2**-9 to 60000.0 round-trips to the same float32 under struct pack/unpack - a degenerate probe that itself illustrates float32 granularity at that magnitude; the error and vertex-collision lines carry the finding.",
+      "scope_limits": "Pure arithmetic on number encodings; says nothing about any viewer, storage engine, or application."
+    },
+    {
+      "id": "W2",
+      "claim": "Scale/translation application order is semantically load-bearing: identical numbers yield physical positions 10 px apart under the two orders, and inverting with the wrong order recovers the wrong pixel index. Fixes the project convention to NGFF 0.4's 'scale then translation'.",
+      "type": "executed_by_candidate",
+      "execution_id": "exec-tt683_91",
+      "code_sha256": "5986a1fa577dd01e9fa506a48008356cbb887fab4daa42ac30a30bcaa981403a",
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected_justification": "s*i+t (scale then translate) and s*(i+t) (translate then scale) are different affine maps for s!=1 and t!=0; with s=0.5, t=10, i=2 they give 11.0 and 6.0 um; inverse of 11.0 under the wrong order is 11/0.5-10=12 instead of 2. Consistent with NGFF 0.4 §3.3/§3.4 (S1).",
+      "stdout": "index i = 2.0 px ; scale s = 0.5 um/px ; translation t = 10.0 um\napply scale then translation  : 11.0 um\napply translation then scale  : 6.0 um\ndiffer: True ; delta = 5.0 um = 10.0 px\nrecover index from p=11: (p-t)/s = 2.0  ; wrong-order inverse p/s-t = 12.0\n",
+      "stderr": "",
+      "exit_code": 0,
+      "stdout_sha256": "058c03bca356fefa5adf9ed724816293c32182069ac25e146b58daf0c73c68f8",
+      "honest_notes": "",
+      "scope_limits": "Algebraic check only; corroborates the convention choice sourced to S1; does not test any implementation of the transform service."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "V1", "claim": "Golden-bundle round-trip: create/import/annotate/save/close/reopen at a second path with float64-identical coordinates, transforms, and retained original metadata.", "status": "UNEXECUTED"},
+    {"id": "V2", "claim": "NGFF 0.4 conformance of our own writer output against the MUST-rules captured in S1.", "status": "UNEXECUTED"},
+    {"id": "V3", "claim": "3 GB bounded-access target: scripted pan/slice sweep over a 3 GB tiled TIFF and 3 GB OME-Zarr with a 1.5 GB cache cap; pass = RSS <= ~2.5 GB and no full-array read.", "status": "UNEXECUTED; engineering target only"},
+    {"id": "V4", "claim": "SIGKILL during save/import/export leaves last-good manifest openable and staging resumable or cleanly discardable.", "status": "UNEXECUTED"},
+    {"id": "V5", "claim": "Cancel mid-import leaves no image registered as complete.", "status": "UNEXECUTED"},
+    {"id": "V6", "claim": "Unsupported-input drill (.czi, corrupt TIFF) into a populated project fails per-entry without project damage.", "status": "UNEXECUTED"},
+    {"id": "V7", "claim": "Cross-machine reopen from shared storage; moved referenced file triggers sha256-verified relocation.", "status": "UNEXECUTED"}
+  ]
+}

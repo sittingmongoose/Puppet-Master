@@ -1,0 +1,127 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T113405.979648Z/BACKUP_RECEIPT.json",
+    "sha256": "dda3d36c31412198563719dccc5dc1fbc8d7f46b88f3cf544cecddf6fb67916c"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 58,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T11:34:05.979648+00:00",
+  "scope": "036/account018/workload006/coverage41scopesnotcomparison/queue020/DEC018sourceonly/root27historicalprefix; no sciencebody/grade/nativefromREADY/campaignfinish.",
+  "source_observed_utc": "2026-10-06T11:27:02.892755+00:00",
+  "sources": [
+    {
+      "bytes": 3332,
+      "path": "ops/publication/cohort035-verification.json",
+      "sha256": "8b24bf0410a4e7b2433f9cd1974d41bf0813de5d956090105c086fdb8eb94d06"
+    },
+    {
+      "bytes": 4148,
+      "path": "ops/publication/cohort036-verification.json",
+      "sha256": "94c3a5623ad3182432228e5c623ba9bd37f29080b26f061d8118bf0201faa43a"
+    },
+    {
+      "bytes": 4291,
+      "path": "accounting/cohort-018/KEEPER_RECEIPT.json",
+      "sha256": "7427b6c694a18351d540ea07a5e191e6485f07d123813741886ef95f50853ea6"
+    },
+    {
+      "bytes": 2828,
+      "path": "accounting/cohort-018/PUBLIC_SELECTION.json",
+      "sha256": "8ce1ea396221d22399f06e99693dc577bc5a32db62c6cef4357d117072a4d7f9"
+    },
+    {
+      "bytes": 851,
+      "path": "accounting/cohort-018/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "f1bc4307b274501cdd73ed77470c94cc565f3b825240d8e960877e1eeb311eb0"
+    },
+    {
+      "bytes": 1746,
+      "path": "accounting/cohort-018/CLOSURE.json",
+      "sha256": "6a0ab3c6879caded28fc0de7b4342fbf7d510ccba65ac8eaf535897b46c33e50"
+    },
+    {
+      "bytes": 1105,
+      "path": "accounting/cohort-018/TD24-late-clock.safe.json",
+      "sha256": "72305d071a5a31ba5faaad19f3b804ad816b65117344faca12848f8a072d037d"
+    },
+    {
+      "bytes": 926,
+      "path": "consolidation/workload-006/PUBLICATION_SELECTOR.json",
+      "sha256": "864272f80a3ff203610598a6c215ab73fce1a438f53cc98153f9d818b4b4f6df"
+    },
+    {
+      "bytes": 511,
+      "path": "consolidation/workload-006/NEUTRAL_CAPTURE_RECEIPT.json",
+      "sha256": "063575897b9af946eda4634a8e9c35226fc03ca5dd64eae02488e8ca37f1c469"
+    },
+    {
+      "bytes": 922,
+      "path": "consolidation/workload-006/FINAL.json",
+      "sha256": "44a2c8f666228ffc853a8404d2a90819b1390479928de64926f5b3b55a7e7ddb"
+    },
+    {
+      "bytes": 6142,
+      "path": "ops/assessment-dispatch-001/QUEUE_SNAPSHOT_020.json",
+      "sha256": "525d4ed884657eb0b517dcd487ca3e32e2981acc60888dc22e33eae115d2b009"
+    },
+    {
+      "bytes": 4252,
+      "path": "ops/frozen-exports/observations/C03_C04_REQUIRED_PATH_PREFIX_QUALIFICATION_001.json",
+      "sha256": "3e304008d3ee1251b52abc3cf2665213fa93f3094142a444178c80cba1e4f139"
+    },
+    {
+      "bytes": 9373,
+      "path": "evaluation/independent-empty-delivery-current-2/COMPLETION_RECEIPT.json",
+      "sha256": "fa3d77c313464289401d61b449956cea0c985283d879580a74758ebe9d89a2f6"
+    },
+    {
+      "bytes": 328,
+      "path": "evaluation/independent-pipeline-15-research-I08/source-start.json",
+      "sha256": "d6a3c6817e46fe19a1d60fe51883421438f7f7b8f19676d5414dd3731196b300"
+    },
+    {
+      "bytes": 28871,
+      "path": "dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/PUBLICATION_SELECTOR.json",
+      "sha256": "5c66813e2923df66cf1ab4bf74c423d2c0232aad867aae37897bc8c2e26fab94"
+    },
+    {
+      "bytes": 127451,
+      "path": "ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_003.json",
+      "sha256": "720f8a62b70357683fb5e2e8e28c696ea0eea7c93bb3aad429bf2fd6ca913601"
+    },
+    {
+      "bytes": 3165,
+      "path": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/PUBLIC_SELECTION_v2.json",
+      "sha256": "f9765f7743c3982e295d518be42f01b9cc33a20fec56292a6732347b115a8966"
+    },
+    {
+      "bytes": 2420,
+      "path": "ops/dispatcher/READINESS_FAILFAST_FIRST_ACTUAL_NATIVE_ACTIVATION_001.json",
+      "sha256": "7965cd507ecc524470f3980b5becf3d8c250ace872e37c6e3d7f5cc60b138199"
+    },
+    {
+      "bytes": 1894,
+      "path": "ops/frozen-exports/observations/NEUTRAL_CURRENT_CLOCK_PINSET_003.json",
+      "sha256": "818cb6affe5864a2c1d2281724e92c54b9eff4445d601fc2c197877bf5783ab4"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 238499,
+      "path": "state/current.json",
+      "sha256": "c5e49d605e0c26a75e2329c70d51d010ddb2a0834f9e9f96be09cf030fc09670"
+    },
+    {
+      "bytes": 238499,
+      "path": "state/campaign.json",
+      "sha256": "c5e49d605e0c26a75e2329c70d51d010ddb2a0834f9e9f96be09cf030fc09670"
+    },
+    {
+      "bytes": 40648,
+      "path": "CURRENT.md",
+      "sha256": "6818b536bc3f1fd306a654a5751f505f0f166abb51e9cea6a0e58e7e453012e3"
+    }
+  ]
+}

@@ -1,0 +1,251 @@
+{
+  "schema": "er9.independent-output-report.v1",
+  "protocol": "ER9-independent-output-v1",
+  "evaluation_id": "independent-pipeline-13-research-I10",
+  "pair_id": "I-10-FRESH-DELIVERY-R001-CLOCK-R001",
+  "scope": "exact current research pair only; no later final promotion or full-pipeline conclusion",
+  "source_report_immutable_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase1/report.json",
+    "sha256": "dd8e2f542d04be28a3190484e231517ad13ded108550c31f7cbc23c7d2178912"
+  },
+  "phase1_pins_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase1/pins.json",
+    "sha256": "8365a7863585c1de22efa8b6aa869a93562d8b89af0a7df5d97a068e7289ee2c"
+  },
+  "phase1_conclusions_changed_after_unblinding": false,
+  "alias_mapping_and_resource_rows": [
+    {
+      "alias": "A",
+      "arm": "treatment",
+      "job_id": "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "assessed_stage": "research",
+      "research_source_outcome": "FAIL_SCREEN",
+      "whole_case_outcome": "UNASSESSED",
+      "later_final_quality": "UNASSESSED",
+      "designated_final": null,
+      "operational_current_delivery_complete": true,
+      "missing_actual_research_artifacts": [],
+      "declared_nativeGoal_starts": 1,
+      "direct_goal_activation": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T09:15:06.842172+00:00",
+        "pre_activation_seconds": 7.426835270001902
+      },
+      "native_driver_status_NOT_Goal_status": "completed",
+      "nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_SELECTED",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_effort": "max",
+      "observed_model_metadata": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "native_elapsed_seconds": 976.4137649009936,
+      "freeze_elapsed_seconds": 976.4337205479969,
+      "original_native_max_seconds": 1200,
+      "native_elapsed_within_declared_seconds": true,
+      "resource_fit": "UNKNOWN",
+      "resource_profile_cap_bytes": 2415919104,
+      "observed_aggregate_memory_peak_before_worker_exit_bytes": "876744704",
+      "resource_oom_observed": false,
+      "resource_components_quiet": true,
+      "all_outer_descendants_quiet": true,
+      "remaining_owned_group_members_count": 0,
+      "cleanup": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "resource_profile_sha256": "2039500cea28296fae8670cc3ec4f06778c09f3d34152709eb74de569d041e7f",
+      "source_metadata_hashes": {
+        "freeze_ref": "31fc7911368ac5e541fb0405804573d4abf83170c2651c8ad42b067caa47b15a",
+        "native_receipt_ref": "2ff9a25af99f7d10745ec8dc98586b387ca89cf8712500e045c95a1bead5cfcb",
+        "actual_stage_ref": "8767f1b808610ebe859ce4792b00a2731dfce4c8866d8a69cd34df0c462cdaa9",
+        "card_ref": "4878d5318b1752d2b679203040b9c70ae54a835d8e82cf27492271b40a8e0430",
+        "release_ref": "90dffb6122a4b0b641cc53a34e52a73c3dea36f39d414d5b6008263092d5a48e",
+        "Task_ref": "09c718ae335faaaa8f5ca26cb9a94ddc447827d5d0ca006293f1ec99e6452510"
+      },
+      "literal_reported_counter_scopes": {
+        "native_usage": {
+          "totalTokens": 411776,
+          "inputTokens": 368998,
+          "outputTokens": 42778,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 12,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 12
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1359587,
+          "outputTokens": 41195,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1176768,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1400782
+        },
+        "native_responses": 12,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 12,
+          "export_sha256": "926300d38f994ff95e3b461ae84aab0ecca0f6fa20b0ed7ed429af99ffef36d4"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "counter_scope_rule": "literal scopes distinct; do not sum, reprice, or assume cache inclusion"
+    },
+    {
+      "alias": "B",
+      "arm": "control",
+      "job_id": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "assessed_stage": "research",
+      "research_source_outcome": "FAIL_SCREEN",
+      "whole_case_outcome": "UNASSESSED",
+      "later_final_quality": "UNASSESSED",
+      "designated_final": null,
+      "operational_current_delivery_complete": true,
+      "missing_actual_research_artifacts": [],
+      "declared_nativeGoal_starts": 1,
+      "direct_goal_activation": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T09:15:13.777557+00:00",
+        "pre_activation_seconds": 7.793512265008758
+      },
+      "native_driver_status_NOT_Goal_status": "completed",
+      "nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_SELECTED",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "requested_effort": "max",
+      "observed_effort": "max",
+      "observed_model_metadata": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "native_elapsed_seconds": 908.389199141995,
+      "freeze_elapsed_seconds": 908.4103231930058,
+      "original_native_max_seconds": 1200,
+      "native_elapsed_within_declared_seconds": true,
+      "resource_fit": "UNKNOWN",
+      "resource_profile_cap_bytes": 2415919104,
+      "observed_aggregate_memory_peak_before_worker_exit_bytes": "889769984",
+      "resource_oom_observed": false,
+      "resource_components_quiet": true,
+      "all_outer_descendants_quiet": true,
+      "remaining_owned_group_members_count": 0,
+      "cleanup": {
+        "process_exited": true,
+        "exit_code": 0,
+        "native_quiescent": true
+      },
+      "resource_profile_sha256": "5f47391b9265f0eb65c174c1dbc22fcfc68a0b0405eaea39b96932035b9f3349",
+      "source_metadata_hashes": {
+        "freeze_ref": "4b4cd8ff96886dd4e15dbc4851664f7e28319bf1efea54f5b1cd15ca73701a70",
+        "native_receipt_ref": "c774efb8b6e5e8ca878734943c5ed8a28a28acac4b8fe3d5e7f9f783022f93a6",
+        "actual_stage_ref": "90d99c2fe736859d60f1c109cd7b4743db648c653e1ff602a8630965d42804c4",
+        "card_ref": "4878d5318b1752d2b679203040b9c70ae54a835d8e82cf27492271b40a8e0430",
+        "release_ref": "5b78f664b66410fe9062f2466d48422a0656c699b9b62b3f6603b71e834d609a",
+        "Task_ref": "8b1d33f8fbaaf37cca15a6ed34b5a7f0f6cac93e074497e4f191f859c7ab1c62"
+      },
+      "literal_reported_counter_scopes": {
+        "native_usage": {
+          "totalTokens": 426447,
+          "inputTokens": 386261,
+          "outputTokens": 40186,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 10,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 10
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 1048295,
+          "outputTokens": 38581,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 834688,
+          "cacheWriteTokens": 0,
+          "totalTokens": 1086876
+        },
+        "native_responses": 10,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 10,
+          "export_sha256": "5845031ad884f4c57c832a8410131c2c4f5d983e72d7b87928861e4695ed74b5"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "counter_scope_rule": "literal scopes distinct; do not sum, reprice, or assume cache inclusion"
+    }
+  ],
+  "independent_evaluator_identity": {
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "xhigh",
+    "requested_fork": "none",
+    "physical_model": "UNKNOWN"
+  },
+  "phase2_gate_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase2/key_release_gate.json",
+    "sha256": "b25c8231d231fd026ea1941dada6ce5c63444accd5b58f28cfaf6c53a58465a8"
+  },
+  "phase2_key_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase2/key.json",
+    "sha256": "ade8dc4a30f2422bdd10f3bbbe2345b8df71e4022bae77013cb99e7db344875a"
+  },
+  "runtime_safe_projection_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-13-research-I10/phase2/runtime_projection.json",
+    "sha256": "23c6bee2b611dee388ee90a219a8acc6ee2d801a3ca7e2881cfebe5ae5c330ae"
+  },
+  "source_and_budget_clocks": {
+    "source_started_utc": "2026-10-06T10:53:42.554560+00:00",
+    "source_started_monotonic": 114441.411586752,
+    "phase1_frozen_utc": "2026-10-06T11:05:50.150968+00:00",
+    "phase1_frozen_monotonic": 115169.007938869,
+    "source_elapsed_seconds": 727.5963521170052,
+    "phase2_literal_inclusive_seconds": 600,
+    "phase2_deadline_monotonic": 115769.007938869,
+    "whole_seconds": 1800,
+    "whole_deadline_monotonic": 116241.411586752,
+    "report_prepared_utc": "2026-10-06T11:09:08.197282+00:00",
+    "report_prepared_monotonic": 115367.054220898,
+    "phase2_elapsed_before_required_handoffs_seconds": 198.04628202899767,
+    "whole_elapsed_before_required_handoffs_seconds": 925.6426341460028,
+    "required_handoffs_pending_at_report_preparation": true,
+    "no_clock_reset": true
+  },
+  "economics_interpretation": "Native usage and last usage.delta-per-request totals are distinct literal scopes. Cache/reasoning fields stay nested; no provider/root sum, repricing, inclusive-cost assertion or billed-dollar inference. Exact provider-export bodies not read.",
+  "unknowns_preserved": [
+    "physical evaluator model",
+    "physical provider payload/billed dollars",
+    "opaque native Goal ID",
+    "direct native Goal status",
+    "research resource fit",
+    "earlier/later-role costs or failures",
+    "full-case and final quality"
+  ],
+  "science_interpretation": "A=treatment, B=control. Both current research source screens failed on identified source/expectation defects; this does not imply equal quality, a demonstrated treatment advantage, or final pipeline failure. Operational artifact completion and driver completion do not establish independent source qualification or native Goal completion.",
+  "handoff_routes": {
+    "scientific": [
+      "/root",
+      "/root/publisher"
+    ],
+    "neutral_clock_resource_scoped_usage": [
+      "/root/cost_accounting"
+    ],
+    "neutral_pin_clock": [
+      "/root/frozen_exports"
+    ]
+  },
+  "no_retests_goals_jobs_candidate_feedback_or_privateModelIO": true
+}

@@ -1,0 +1,481 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "base_attempts_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "clock_companion_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "current_primary_changed_sources": {
+      "items": {},
+      "type": "array"
+    },
+    "exact_original_base_capture_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "false_alarm_audit_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "finite_scope_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "later_merged_attempts_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "later_receipt_read_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "later_runtime_owner_observed_utc": {
+      "type": "string"
+    },
+    "merged_later_view_summary_not_added_to_primary": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_candidate_attempts_unchanged": {
+          "type": "number"
+        },
+        "later_resolved_known_tokens_increment": {
+          "type": "number"
+        },
+        "merged_known_tokens": {
+          "type": "number"
+        },
+        "merged_occupied_seconds_known": {
+          "type": "number"
+        },
+        "merged_occupied_unknown_rows": {
+          "type": "number"
+        },
+        "merged_usage_unknown_rows": {
+          "type": "number"
+        },
+        "new_actor_or_target_credit": {
+          "type": "number"
+        },
+        "new_native_starts_from_join": {
+          "type": "number"
+        },
+        "new_sdk_provider_record_rows": {
+          "type": "number"
+        },
+        "positive_starts_unchanged": {
+          "type": "number"
+        },
+        "primary_known_tokens_unchanged": {
+          "type": "number"
+        },
+        "proved_zero_rows_unchanged": {
+          "type": "number"
+        },
+        "unknown_start_rows_unchanged": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "actual_candidate_attempts_unchanged",
+        "later_resolved_known_tokens_increment",
+        "merged_known_tokens",
+        "merged_occupied_seconds_known",
+        "merged_occupied_unknown_rows",
+        "merged_usage_unknown_rows",
+        "new_actor_or_target_credit",
+        "new_native_starts_from_join",
+        "new_sdk_provider_record_rows",
+        "positive_starts_unchanged",
+        "primary_known_tokens_unchanged",
+        "proved_zero_rows_unchanged",
+        "unknown_start_rows_unchanged"
+      ],
+      "type": "object"
+    },
+    "original_primary_capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "primary_totals_unchanged": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "type": "number"
+        },
+        "known_tokens": {
+          "type": "number"
+        },
+        "native_goal_starts_known": {
+          "type": "number"
+        },
+        "occupied_seconds_known": {
+          "type": "number"
+        },
+        "occupied_seconds_unknown_rows": {
+          "type": "number"
+        },
+        "starts_unknown_rows": {
+          "type": "number"
+        },
+        "usage_unknown_rows": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "attempts",
+        "known_tokens",
+        "native_goal_starts_known",
+        "occupied_seconds_known",
+        "occupied_seconds_unknown_rows",
+        "starts_unknown_rows",
+        "usage_unknown_rows"
+      ],
+      "type": "object"
+    },
+    "prior012_race_flag_preserved": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_interval_utc": {
+          "additionalProperties": false,
+          "properties": {
+            "end": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "end",
+            "start"
+          ],
+          "type": "object"
+        },
+        "changed_sources": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "captured_sha256": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "unchanged_at_capture_end": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "captured_sha256",
+                  "path",
+                  "unchanged_at_capture_end"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "capture_interval_utc",
+        "changed_sources",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "prior018_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "root29_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "first29_prefix_sha256": {
+          "type": "string"
+        },
+        "not_added_to_provider": {
+          "type": "boolean"
+        },
+        "row29_counter": {
+          "additionalProperties": false,
+          "properties": {
+            "helper_inclusion": {
+              "type": "string"
+            },
+            "observed_utc": {
+              "type": "string"
+            },
+            "remainingTokens": {
+              "type": "null"
+            },
+            "status": {
+              "type": "string"
+            },
+            "timeUsedSeconds": {
+              "type": "number"
+            },
+            "tokensUsed": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "helper_inclusion",
+            "observed_utc",
+            "remainingTokens",
+            "status",
+            "timeUsedSeconds",
+            "tokensUsed"
+          ],
+          "type": "object"
+        },
+        "row29_with_original_newline_sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first29_prefix_sha256",
+        "not_added_to_provider",
+        "row29_counter",
+        "row29_with_original_newline_sha256"
+      ],
+      "type": "object"
+    },
+    "root_latest_captured_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "helper_inclusion": {
+          "type": "string"
+        },
+        "observed_utc": {
+          "type": "string"
+        },
+        "provider_counts_combined": {
+          "type": "boolean"
+        },
+        "remainingTokens": {
+          "type": "null"
+        },
+        "status": {
+          "type": "string"
+        },
+        "stop_trigger": {
+          "type": "boolean"
+        },
+        "timeUsedSeconds": {
+          "type": "number"
+        },
+        "tokensUsed": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "helper_inclusion",
+        "observed_utc",
+        "provider_counts_combined",
+        "remainingTokens",
+        "status",
+        "stop_trigger",
+        "timeUsedSeconds",
+        "tokensUsed"
+      ],
+      "type": "object"
+    },
+    "rule": {
+      "type": "string"
+    },
+    "runtime_join_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "snapshot_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "terminal_milestone_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "base_attempts_pin",
+    "clock_companion_pin",
+    "current_primary_changed_sources",
+    "false_alarm_audit_pin",
+    "finite_scope_pin",
+    "later_merged_attempts_pin",
+    "later_receipt_read_interval_utc",
+    "later_runtime_owner_observed_utc",
+    "merged_later_view_summary_not_added_to_primary",
+    "original_primary_capture_interval_utc",
+    "primary_totals_unchanged",
+    "prior012_race_flag_preserved",
+    "prior018_selection_pin",
+    "root29_separate",
+    "root_latest_captured_separate",
+    "rule",
+    "runtime_join_pin",
+    "schema",
+    "snapshot_pin",
+    "terminal_milestone_pin",
+    "exact_original_base_capture_pin"
+  ],
+  "type": "object"
+}

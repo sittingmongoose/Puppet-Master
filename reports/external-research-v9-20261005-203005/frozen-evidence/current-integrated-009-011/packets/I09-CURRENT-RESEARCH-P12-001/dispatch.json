@@ -1,0 +1,159 @@
+{
+  "schema": "er9.current-integrated-research-pair-source-packet.v1",
+  "protocol": "ER9-independent-output-v1",
+  "evaluation_id": "independent-pipeline-12-research-I09",
+  "pair_id": "I-09-FRESH-DELIVERY-R001-CLOCK-R001",
+  "scope": "current research only; no final promotion",
+  "prepared_utc": "2026-10-06T10:52:10.892457+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/reservation.json",
+    "sha256": "d43058b5b64342e8a2ef506861287ba5937edc01aace5ae0c4361efcbf0d9dc5"
+  },
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    "coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/coverage_map.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    "actual_card_projection": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/actual-card-projection.json",
+      "sha256": "29d4845f77acbce1a2fb261b70e264034593192b2caed7e0fbedd6632a660a6e"
+    },
+    "actual_launched_Task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/actual_launched_Task_A.md",
+      "sha256": "0b7b136a71f640f2f7813a8df17148c7be14c494579860eea3b6f6aa8fffec6e",
+      "bytes": 13140
+    },
+    "actual_launched_Task_B": {
+      "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/task/actual_launched_Task_B.md",
+      "sha256": "ea741094f75d595bf12331f0c9c4e1c60de9327aa903b0b4e3d796f991d6b6be",
+      "bytes": 14004
+    }
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "assessed_stage": "research",
+      "designated_final": null,
+      "stage_proposal": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/A/research/proposal.md",
+        "sha256": "b0c5e3627b086f8c7051f9b35bffccf6cd633b19a373a561f1cfa60c957f2b41",
+        "bytes": 21033
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/A/research/sources.json",
+        "sha256": "c9c944515a303a101c4048dc9e0c0d2da8bc75589b85f07a7c3dd77058cfe9d6",
+        "bytes": 14554
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/A/research/witnesses.json",
+        "sha256": "195bf043de0d0c6c46a427e607b76e9f95cbcdd3483f4917d170b28a27891e57",
+        "bytes": 6748
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/A/research/leads.json",
+        "sha256": "8ad0486f304958817eaad4499e3584dac4a81a05ad17bf34411dd6e58141cfd4",
+        "bytes": 5341
+      },
+      "actual_stage_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "missing_required_stage_artifacts": [],
+      "stage_proposal_present": true,
+      "missing_source_quality": "UNASSESSED"
+    },
+    {
+      "alias": "B",
+      "assessed_stage": "research",
+      "designated_final": null,
+      "stage_proposal": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/B/research/proposal.md",
+        "sha256": "36750223243a0c5aaab9ea060428a39a2f41e70dd0baaa5ae9af7618aeadb12b",
+        "bytes": 24356
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/B/research/sources.json",
+        "sha256": "1ca353a2e98f48364e900fa265e0cb72cbe3d2ec59776f5340fe9e4b0b2a503e",
+        "bytes": 12829
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/B/research/witnesses.json",
+        "sha256": "ac9124b0badf246297d3cfe580a767fe0d3370ff14c14d9695f3e10c20c4a538",
+        "bytes": 6036
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/outputs/B/research/leads.json",
+        "sha256": "341f73c0393eda558d1fb8f83c990e0234f2e1eb7181e05cdad2e3d4596c3bbb",
+        "bytes": 4267
+      },
+      "actual_stage_required_artifacts": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "missing_required_stage_artifacts": [],
+      "stage_proposal_present": true,
+      "missing_source_quality": "UNASSESSED"
+    }
+  ],
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/current-integrated-009-011/packets/I09-CURRENT-RESEARCH-P12-001/integrity-proof.json",
+    "sha256": "eb81644fdafbf31c510ff4e80ff280f2f0d6245917e1ebfcbdf6e8f8e85c5b8c"
+  },
+  "actual_criteria_counts": {
+    "brief_obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5
+  },
+  "applicability": {
+    "integrated_A_B_obligations": "APPLIES",
+    "common_criteria": "APPLIES",
+    "domain_important_checks": "APPLIES",
+    "diagnostic_target3": "NOT_APPLICABLE",
+    "holdout_H1_10": "NOT_APPLICABLE"
+  },
+  "candidate_outputs_frozen_utc": "2026-10-06T09:14:51.203188+00:00",
+  "later_final_assessment": "UNASSESSED",
+  "budget": {
+    "source_seconds": 1200,
+    "phase2_inclusive_seconds": 600,
+    "whole_seconds": 1800,
+    "prospective_budget_reserved_utc": "2026-10-06T10:51:37.010280Z",
+    "actual_first_semantic_body_view_START": "reviewer persists separately before first view",
+    "reservation_is_SOURCE_START": false,
+    "no_reset": true
+  },
+  "blinding": {
+    "held": "alias mapping/runtime/history/cost until immutable Phase 1",
+    "known_hints": "actual Task may expose labels; no perfect blinding claim"
+  }
+}

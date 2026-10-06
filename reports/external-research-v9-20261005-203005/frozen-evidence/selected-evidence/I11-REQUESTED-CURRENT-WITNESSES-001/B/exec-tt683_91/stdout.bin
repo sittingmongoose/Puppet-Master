@@ -1,0 +1,5 @@
+index i = 2.0 px ; scale s = 0.5 um/px ; translation t = 10.0 um
+apply scale then translation  : 11.0 um
+apply translation then scale  : 6.0 um
+differ: True ; delta = 5.0 um = 10.0 px
+recover index from p=11: (p-t)/s = 2.0  ; wrong-order inverse p/s-t = 12.0

@@ -1,0 +1,54 @@
+{
+  "body_bytes": 4668967,
+  "body_count": 157,
+  "cohorts": [
+    {
+      "authority_selector_sha256": "be7b5e176f019f89b1b5fac5ab2432ba1daa701c104f71bf86dfd716e72e4d98",
+      "files_count": 56,
+      "kind_counts": {
+        "current_admitted_public_source_index": 2,
+        "public_source_capture": 54
+      },
+      "selected_bytes": 1576898,
+      "selection": "TD26-REQUESTED-CURRENT-SOURCE-BASELINE-EXEC-001"
+    },
+    {
+      "authority_selector_sha256": "ca962cb8afffd984c24298a04cd90156fef317bab1c3852e29e1dea2c2921df9",
+      "files_count": 4,
+      "kind_counts": {
+        "public_source_body": 4
+      },
+      "selected_bytes": 1080260,
+      "selection": "TD26-REQUESTED-ADMITTED-SOURCE-0027-0028-001"
+    },
+    {
+      "authority_selector_sha256": "0f2c0d9585362c24db04cab71209720b652055dab3d8e4eeff3806d3dac0fada",
+      "files_count": 102,
+      "kind_counts": {
+        "index_selected_admitted_public_source_bytes": 99,
+        "public_source_index_safe_projection": 3
+      },
+      "selected_bytes": 2128773,
+      "selection": "TD28-REQUESTED-CURRENT-GOVERNING-INPUTS-001"
+    }
+  ],
+  "coverage": "PARTIAL_EXACT_TD26_TD28_162_PUBLIC_BODY_INDEX_FILES_NOT_QUEUE_RECONCILED",
+  "excluded_baseline_count": 22,
+  "excluded_execution_count": 15,
+  "files_count": 162,
+  "independent_archive_reread": "ALL162_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/3ef2cf073d258efd9b417667870ec76376f66475b981ca27e35d8e753a95291b/MANIFEST.json",
+  "manifest_sha256": "96255e7f83e4ce7598014ab3b16c3600b15ac313627192b40d11dd7c29fc92d7",
+  "overlap_policy": "selected lineages retained; duplicateSHA and earliercohort overlap not newunique evidence",
+  "prior_archives": "UNCHANGED",
+  "public_index_bytes": 116964,
+  "public_index_count": 5,
+  "raw_repository_policy": "body/index/rawlocators NASonly; compactmanifestpin maypublish",
+  "restart": "Exact162selectedfiles complete; further evidence separatepositivepins; wholequeue reconciliation pending",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 4785931,
+  "selection_sha256": "3ef2cf073d258efd9b417667870ec76376f66475b981ca27e35d8e753a95291b",
+  "source_quality": "UNKNOWN_NO_SEMANTIC_ASSESSMENT",
+  "status_policy": "exactresponsebytes preserved; no index/source interpretation or inferred acquisition status",
+  "within_batch_distinct_body_sha_count": 54
+}

@@ -1,0 +1,12 @@
+{
+ "true_position_um": 231000.004,
+ "float32_value_um": 231000.0,
+ "float32_abs_error_um": 0.003999999986262992,
+ "float64_abs_error_um": 0.0,
+ "index_true": 16777217,
+ "index_in_float32": 16777216.0,
+ "index_loss": 1.0,
+ "json_roundtrip_float64_equal": true
+}
+EXPECTED: float32 loses the entire 0.004 um offset (ulp at 2.3e5 is 2^-6 um);
+2^24+1 collapses to 2^24 in float32; float64 and its JSON repr round-trip exactly.

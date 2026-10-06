@@ -1,0 +1,115 @@
+{
+  "base_attempts_pin": {
+    "path": "accounting/cohort-019/attempts.safe.json",
+    "sha256": "f00ad1ef7e8fbbc25cdab67a4c761160b20369e469b591729d04ceae98813573"
+  },
+  "clock_companion_pin": {
+    "path": "accounting/cohort-019/evaluator-clocks.safe.json",
+    "sha256": "619da7a96203d09a34f877ea093033b9d26cc65134099853bcf1e1f8e91f176f"
+  },
+  "current_primary_changed_sources": [],
+  "exact_original_base_capture_pin": {
+    "path": "accounting/cohort-019/BASE_CAPTURE_SNAPSHOT.safe.json",
+    "sha256": "921b4a04a5cbd1650db6e035c68f9a7100af74ca780db196be663a7559a9480e"
+  },
+  "false_alarm_audit_pin": {
+    "path": "accounting/cohort-019/false-alarm-audit.safe.json",
+    "sha256": "c1149a02c88368f77694aa8672ecb617c8a3e3c2c906de621e497336fba53149"
+  },
+  "finite_scope_pin": {
+    "path": "accounting/cohort-019/finite-scope.safe.json",
+    "sha256": "0a2fef0b4f78291e8ba3d0a9fe0cdf136a32fa2f65f150037875be218ce76033"
+  },
+  "later_merged_attempts_pin": {
+    "path": "accounting/cohort-019/attempts.merged-later.safe.json",
+    "sha256": "edd3c026a66c50529d303a2a48fbfc25e0c20b9391808a7b50dda94c4bef384a"
+  },
+  "later_receipt_read_interval_utc": {
+    "end": "2026-10-06T12:26:48.127405+00:00",
+    "start": "2026-10-06T12:26:48.090116+00:00"
+  },
+  "later_runtime_owner_observed_utc": "2026-10-06T12:19:27.903221+00:00",
+  "merged_later_view_summary_not_added_to_primary": {
+    "actual_candidate_attempts_unchanged": 286,
+    "later_resolved_known_tokens_increment": 10282437,
+    "merged_known_tokens": 660493517,
+    "merged_occupied_seconds_known": 178230.22428081304,
+    "merged_occupied_unknown_rows": 31,
+    "merged_usage_unknown_rows": 33,
+    "new_actor_or_target_credit": 0,
+    "new_native_starts_from_join": 0,
+    "new_sdk_provider_record_rows": 172,
+    "positive_starts_unchanged": 267,
+    "primary_known_tokens_unchanged": 650211080,
+    "proved_zero_rows_unchanged": 18,
+    "unknown_start_rows_unchanged": 1
+  },
+  "original_primary_capture_interval_utc": {
+    "end": "2026-10-06T12:17:39.880249+00:00",
+    "start": "2026-10-06T12:17:38.929975+00:00"
+  },
+  "primary_totals_unchanged": {
+    "attempts": 286,
+    "known_tokens": 650211080,
+    "native_goal_starts_known": 267,
+    "occupied_seconds_known": 165593.68077034905,
+    "occupied_seconds_unknown_rows": 51,
+    "starts_unknown_rows": 1,
+    "usage_unknown_rows": 53
+  },
+  "prior012_race_flag_preserved": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T03:39:52.102244+00:00",
+      "start": "2026-10-06T03:39:51.273554+00:00"
+    },
+    "changed_sources": [
+      {
+        "captured_sha256": "d5996c535285f74b41fb40ad9a742f54e13cd3350494a935d358664f206a8403",
+        "path": "ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "unchanged_at_capture_end": false
+      }
+    ],
+    "rule": "Historical012 exact bytes/flag unchanged; new013 capture is distinct."
+  },
+  "prior018_selection_pin": {
+    "path": "accounting/cohort-018/PUBLIC_SELECTION.json",
+    "sha256": "8ce1ea396221d22399f06e99693dc577bc5a32db62c6cef4357d117072a4d7f9"
+  },
+  "root29_separate": {
+    "first29_prefix_sha256": "ff8386a2bd92427bf6062f03305ae716786e92cb75cf6e36ac2c8fe14dabfb1a",
+    "not_added_to_provider": true,
+    "row29_counter": {
+      "helper_inclusion": "UNKNOWN",
+      "observed_utc": "2026-10-06 12:02:16 UTC",
+      "remainingTokens": null,
+      "status": "active",
+      "timeUsedSeconds": 55786,
+      "tokensUsed": 42360569
+    },
+    "row29_with_original_newline_sha256": "5d21be9912e3d022bcaea6c9160ec1fc6a516737f3fc6a2adc724245ef17dd9e"
+  },
+  "root_latest_captured_separate": {
+    "helper_inclusion": "UNKNOWN",
+    "observed_utc": "2026-10-06 12:02:16 UTC",
+    "provider_counts_combined": false,
+    "remainingTokens": null,
+    "status": "active",
+    "stop_trigger": false,
+    "timeUsedSeconds": 55786,
+    "tokensUsed": 42360569
+  },
+  "rule": "267positive starts observer, notcostsum/targetcredit. ActiveDEC019missingexportUNKNOWN; originalC01Cstart/usageUNKNOWN remains. All failures/blocked/prep/overlaps kept, source/preservationgateUNASSESSED not success. Root/nativeaggregate/lastdelta/provider/helper/cache/billing scopes notsum/repriced.",
+  "runtime_join_pin": {
+    "path": "accounting/cohort-019/runtime-join.safe.json",
+    "sha256": "352ed3ff91109a182281662081efefab747ea1bf3e02f10f161e9cb4c1d8b402"
+  },
+  "schema": "er9.accounting.restart-receipt.v1",
+  "snapshot_pin": {
+    "path": "accounting/cohort-019/snapshot.safe.json",
+    "sha256": "a44b5ce5ddfe137a852f27ce9a1f0fde662d4eddebab481c649702efee04105f"
+  },
+  "terminal_milestone_pin": {
+    "path": "accounting/cohort-019/terminal-milestone.safe.json",
+    "sha256": "b6718d6ade4d9515ae7743d94e47e8ac198dc22faae7f094990aafa07f133f50"
+  }
+}

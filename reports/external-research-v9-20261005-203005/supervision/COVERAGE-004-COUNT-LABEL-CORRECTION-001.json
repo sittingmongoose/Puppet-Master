@@ -1,0 +1,28 @@
+{
+  "assessment_limits": "47 scoped matches are not47 fully reviewed complete comparisons. Intermediate/history/upstream role semantics remain UNASSESSED as adjudicated; no blanket new grade or candidate feedback. New P16/P17 scoped closures require a separate exact-ID refreshed coverage snapshot, not retroactive004 changes.",
+  "corrected_counts_at004": {
+    "dated_role_rows": 69,
+    "matched_logical_slots": 47,
+    "slots_with_unmatched_current_scope": 18,
+    "total_logical_slots": 48
+  },
+  "cost_changes": false,
+  "created_utc": "2026-10-06T12:21:19.941630+00:00",
+  "evidence": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_004.json",
+      "sha256": "b2922945a3bb0c015fad0a29ae252747b8db51c513e11edf2f57a3f14ba573a8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/UNMATCHED_CURRENT_ROLE_METADATA_001.json",
+      "sha256": "94eb2765c1f885f3411d87ab6b9dd903191c3e131e124ea1d1dbab2ef7506c63"
+    }
+  ],
+  "finding": "Root previously repeated unsupported wording 18 unmatched roles. The dated coverage004 records 18 logical slots with unmatched scope and 69 dated role rows; these are different units.",
+  "native_status_or_completion_changes": false,
+  "permission_changes": false,
+  "publication": "Include this additive correction with dated coverage/state/final summaries that cited the old wording.",
+  "schema": "er9.root.evidence-qualification.v1",
+  "scientific_grade_changes": false,
+  "status": "ADDITIVE_CORRECTION_OLD_BYTES_AND_GRADES_PRESERVED"
+}

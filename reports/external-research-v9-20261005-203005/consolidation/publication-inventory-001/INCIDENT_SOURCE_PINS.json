@@ -1,0 +1,1970 @@
+{
+  "scope": "RECONSTRUCTED_FROM_CURRENT_FREEZE_RECEIPT_PINS; original broad parse lacked per-file extraction log, exact historical set is UNKNOWN if sources moved",
+  "observed_source_count": 151,
+  "current_selected_source_count": 86,
+  "sources": [
+    {
+      "job_id": "D-V01-B-control-diagnostic-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 188891,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "116f7a4a56c4ef10e8ee3c5e06d98e4b849d74ad2a36e3cf24d3a65c11203d7d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V01-B-control-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "116f7a4a56c4ef10e8ee3c5e06d98e4b849d74ad2a36e3cf24d3a65c11203d7d"
+      }
+    },
+    {
+      "job_id": "D-V01-B-treatment-diagnostic-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 186827,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c8e6507dcd7229ee7cb094b6601931f64cdfba64845f653c4bd779d7ee39ca60",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V01-B-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c8e6507dcd7229ee7cb094b6601931f64cdfba64845f653c4bd779d7ee39ca60"
+      }
+    },
+    {
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 187305,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2cf4d0f53bda52a908f6054a67d9154dc6bcf7cf8ca41762a45a5378a1d7891e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2cf4d0f53bda52a908f6054a67d9154dc6bcf7cf8ca41762a45a5378a1d7891e"
+      }
+    },
+    {
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 180871,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136"
+      }
+    },
+    {
+      "job_id": "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 186785,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4ff9c569381a0c220de584ea8f39d294cc1d9fcb7e8a9efcd888edbd625b1d03",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4ff9c569381a0c220de584ea8f39d294cc1d9fcb7e8a9efcd888edbd625b1d03"
+      }
+    },
+    {
+      "job_id": "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 189321,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3f59bfb2aa8e4df01fc20d2d46d3c375f7dd0ca90b24ccdc554239c726637be9"
+      }
+    },
+    {
+      "job_id": "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 268025,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1f15f88609a10ca750f27a463c880dfbbb46ed5acc451213ee5360627aa02801",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1f15f88609a10ca750f27a463c880dfbbb46ed5acc451213ee5360627aa02801"
+      }
+    },
+    {
+      "job_id": "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 268342,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "04e7e682a05619e686616c1b08691a7439d1b0b1fb87fbb5c946bcd04a1773ce",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "04e7e682a05619e686616c1b08691a7439d1b0b1fb87fbb5c946bcd04a1773ce"
+      }
+    },
+    {
+      "job_id": "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 269977,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e9f9d0b583175bc68146424176b8686dc6f940e432673e6cbd1acf29e19bad55"
+      }
+    },
+    {
+      "job_id": "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 293337,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d7b02d7b5a25395baa9cd02d96e945a9ec40ed9cd27f3816dc0446a865af722d"
+      }
+    },
+    {
+      "job_id": "D-V04-A-control-proposal_first_record-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 109815,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "bc4e9bdb4b8ad5f6f4ad2b657422be3a7b00f1dd31f8b73e329b167e2173095f",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V04-A-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "bc4e9bdb4b8ad5f6f4ad2b657422be3a7b00f1dd31f8b73e329b167e2173095f"
+      }
+    },
+    {
+      "job_id": "D-V04-A-treatment-source_first_record-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 116894,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "265825a58ededa4f3b2cafe346fde71abeaebab2ed00678c5f64a2b6640bd64f",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V04-A-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "265825a58ededa4f3b2cafe346fde71abeaebab2ed00678c5f64a2b6640bd64f"
+      }
+    },
+    {
+      "job_id": "D-V04-B-control-proposal_first_record-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 120337,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "54c873823d04ac16e42f598e6762dab50866cd7ce209228b473f8dc8ce5196f9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V04-B-control-proposal_first_record-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "54c873823d04ac16e42f598e6762dab50866cd7ce209228b473f8dc8ce5196f9"
+      }
+    },
+    {
+      "job_id": "D-V04-B-treatment-source_first_record-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 108766,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8f1564c94276759a3f6cedd0ae2df57d9655678f6cb0708232c7081d7c9aaa73",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V04-B-treatment-source_first_record-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8f1564c94276759a3f6cedd0ae2df57d9655678f6cb0708232c7081d7c9aaa73"
+      }
+    },
+    {
+      "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 190478,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6b251a20d67ea77feaedfc21ed774026b6dd673853908177342de7c28ea5fd81",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6b251a20d67ea77feaedfc21ed774026b6dd673853908177342de7c28ea5fd81"
+      }
+    },
+    {
+      "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 137354,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b35e3698866da13b7eb385fd37bf09f918e8d2fda9abc539a312663a42969d12",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b35e3698866da13b7eb385fd37bf09f918e8d2fda9abc539a312663a42969d12"
+      }
+    },
+    {
+      "job_id": "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 96873,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "fa708d5e748797cbe4f69f0ef9d96c137a973febf11a34c6c9fc2a14d95368b1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "fa708d5e748797cbe4f69f0ef9d96c137a973febf11a34c6c9fc2a14d95368b1"
+      }
+    },
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 191216,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f0320828b6e5e069650f03e6d54d87bdabc90414d3a5e48a3ba4c2ca376167e5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f0320828b6e5e069650f03e6d54d87bdabc90414d3a5e48a3ba4c2ca376167e5"
+      }
+    },
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 111591,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7f996f85f51b8db2f6c320869eb672c0f9d5da4ac4dc5535c056f30c585977a5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7f996f85f51b8db2f6c320869eb672c0f9d5da4ac4dc5535c056f30c585977a5"
+      }
+    },
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 91045,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e0d01a67d823458e8910aba6ceb2d651598f945be3860f41431afffd201a7eba",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e0d01a67d823458e8910aba6ceb2d651598f945be3860f41431afffd201a7eba"
+      }
+    },
+    {
+      "job_id": "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 188401,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "77db3a3c91f0cfa169a4d4f84b5228100347174432b681ac81fd97c34f12fe81",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "77db3a3c91f0cfa169a4d4f84b5228100347174432b681ac81fd97c34f12fe81"
+      }
+    },
+    {
+      "job_id": "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 193606,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f7bc81d4c1c233727166fc81f2f85b3beeda7634c3fb2c359ceb864c93bfbd41",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f7bc81d4c1c233727166fc81f2f85b3beeda7634c3fb2c359ceb864c93bfbd41"
+      }
+    },
+    {
+      "job_id": "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 191200,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d417093e247448dbe38a3113dbd94e9365b595aae228c7551b227bf3cdeb1123",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d417093e247448dbe38a3113dbd94e9365b595aae228c7551b227bf3cdeb1123"
+      }
+    },
+    {
+      "job_id": "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 167907,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "97a5cea3aeb26ec8c08bd1528379e86f0efd9686dcff2c7d74ef42d47a864dd7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "97a5cea3aeb26ec8c08bd1528379e86f0efd9686dcff2c7d74ef42d47a864dd7"
+      }
+    },
+    {
+      "job_id": "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 196373,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "69452f45f312df8ab8cd33f592f775d8c70c8494cd2ce293014efbc0458fd08a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "69452f45f312df8ab8cd33f592f775d8c70c8494cd2ce293014efbc0458fd08a"
+      }
+    },
+    {
+      "job_id": "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 193356,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b2e5403beafe172ed22706268fab6f3d46df2b83f369000e288cd9dea1893142",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b2e5403beafe172ed22706268fab6f3d46df2b83f369000e288cd9dea1893142"
+      }
+    },
+    {
+      "job_id": "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 200248,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "da11d5f3a11b1b95786263a794e64942b1cd22785c79a0934b177f76b736ce66"
+      }
+    },
+    {
+      "job_id": "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 199276,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "114645f358cc538001208249af56dc7f348fb1a0bc9d0a66e1bc0afe422163db"
+      }
+    },
+    {
+      "job_id": "D-V08-A-control-critic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 107615,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f4fcf7fad216e536e498121ae572a58b249bb746f14538f94ad1f3e154e79bad",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-control-critic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f4fcf7fad216e536e498121ae572a58b249bb746f14538f94ad1f3e154e79bad"
+      }
+    },
+    {
+      "job_id": "D-V08-A-treatment-critic_and_final-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 168906,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c991d7336a6ef3406ac9788ac3254d20e70929fa7ccbbb34e24c490eff3e296a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V08-A-treatment-critic_and_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c991d7336a6ef3406ac9788ac3254d20e70929fa7ccbbb34e24c490eff3e296a"
+      }
+    },
+    {
+      "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 143970,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7861a3cedd96729c3221814692a5b453fa0cf5a4794a6c90992242e93609fd28",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7861a3cedd96729c3221814692a5b453fa0cf5a4794a6c90992242e93609fd28"
+      }
+    },
+    {
+      "job_id": "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 88554,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "be0763411a52f14f7a593a651330403ca64f416242d0537ca7a4872ded25eca4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "be0763411a52f14f7a593a651330403ca64f416242d0537ca7a4872ded25eca4"
+      }
+    },
+    {
+      "job_id": "D-V09-A-treatment-implementation_critic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 75935,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e48a00702dbc3f10e5be255d9ae3529c90327063b801489759f4385774e7014a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-treatment-implementation_critic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e48a00702dbc3f10e5be255d9ae3529c90327063b801489759f4385774e7014a"
+      }
+    },
+    {
+      "job_id": "D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 86347,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2c8952bb8f2b8f1513683f48e66e52b122a1a7caae27bee2b1f5e59946d63091",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2c8952bb8f2b8f1513683f48e66e52b122a1a7caae27bee2b1f5e59946d63091"
+      }
+    },
+    {
+      "job_id": "D-V09-B-control-whole_critic-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 147525,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "19f3ea3c21894c0022c82c676d0fc6d6bee7e8e9877338367cfb046f40740c2d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-B-control-whole_critic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "19f3ea3c21894c0022c82c676d0fc6d6bee7e8e9877338367cfb046f40740c2d"
+      }
+    },
+    {
+      "job_id": "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 82020,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "ee4d31808d6e7172e8225b5c6d4de6d0eb19b693fde314aa2e2a20cb905cd655",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-B-treatment-implementation_critic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "ee4d31808d6e7172e8225b5c6d4de6d0eb19b693fde314aa2e2a20cb905cd655"
+      }
+    },
+    {
+      "job_id": "D-V09-B-treatment-source_critic-a001-resource-v13-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 87903,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d1393a1e4017bf4df94d225d9f838b94447b655d36f00eec3145640425346bc2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-B-treatment-source_critic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d1393a1e4017bf4df94d225d9f838b94447b655d36f00eec3145640425346bc2"
+      }
+    },
+    {
+      "job_id": "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 238631,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "592fe18d1c7e73f700df43c0bd1a00a1b204de21a6b3c6db7afe57ac6bc1ccec",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "592fe18d1c7e73f700df43c0bd1a00a1b204de21a6b3c6db7afe57ac6bc1ccec"
+      }
+    },
+    {
+      "job_id": "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 270446,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "591875a3a7bc9b4088abe9935e71aeb526320b60fc66d6c45badd6b67e99f2cb",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "591875a3a7bc9b4088abe9935e71aeb526320b60fc66d6c45badd6b67e99f2cb"
+      }
+    },
+    {
+      "job_id": "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 263562,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "00fc3042b5345e780e341d2b60c3ef77d9561686f4ef02a923a3fd6e2913a42b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "00fc3042b5345e780e341d2b60c3ef77d9561686f4ef02a923a3fd6e2913a42b"
+      }
+    },
+    {
+      "job_id": "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 270195,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c58917b9c0ade39039b61c47045c3d9663f892c7e280d06f6df9013f9461f146",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c58917b9c0ade39039b61c47045c3d9663f892c7e280d06f6df9013f9461f146"
+      }
+    },
+    {
+      "job_id": "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 194879,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e5a219cb346a0c1a0e0cbb3d9e354be3f146f3d93756e0113cee22816b56218a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e5a219cb346a0c1a0e0cbb3d9e354be3f146f3d93756e0113cee22816b56218a"
+      }
+    },
+    {
+      "job_id": "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 193961,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "74a0aa3fd540d9f738d9ff3d442d741937984f47fab72a8cc8df4da1784f4ace",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "74a0aa3fd540d9f738d9ff3d442d741937984f47fab72a8cc8df4da1784f4ace"
+      }
+    },
+    {
+      "job_id": "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 199036,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2a6205d3ed35e9648d4e6adaf4699f1609fc99498e66428d3ecc66a24ed8168b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2a6205d3ed35e9648d4e6adaf4699f1609fc99498e66428d3ecc66a24ed8168b"
+      }
+    },
+    {
+      "job_id": "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 192899,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "17b4f762c525945ad9f8de91f263fc050c3041564ca0e56fe213c39bcf9c6ed4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "17b4f762c525945ad9f8de91f263fc050c3041564ca0e56fe213c39bcf9c6ed4"
+      }
+    },
+    {
+      "job_id": "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 274575,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "9fa2ca4210bbb80e8c69df489a8b371caf64ff2446f837db25d57d36adfd4f5e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "9fa2ca4210bbb80e8c69df489a8b371caf64ff2446f837db25d57d36adfd4f5e"
+      }
+    },
+    {
+      "job_id": "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 297859,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "9dac32ba9b1c70345865e1f6996752d80f69453d980866b5a3221cda08f8f0af",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "9dac32ba9b1c70345865e1f6996752d80f69453d980866b5a3221cda08f8f0af"
+      }
+    },
+    {
+      "job_id": "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 257099,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "372364b139bfe319d103a51b62891fc96931cec60919e6399a8780fd4450e197",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "372364b139bfe319d103a51b62891fc96931cec60919e6399a8780fd4450e197"
+      }
+    },
+    {
+      "job_id": "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 270251,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "193f8dbebe23ba700fe036581615577ce732d57429276a24d22d3bec46231205",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "193f8dbebe23ba700fe036581615577ce732d57429276a24d22d3bec46231205"
+      }
+    },
+    {
+      "job_id": "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 189829,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "982d6436ee3d2b015d77b91c7a875d0895f57ddfdd196a1017b526ecab8c0251",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "982d6436ee3d2b015d77b91c7a875d0895f57ddfdd196a1017b526ecab8c0251"
+      }
+    },
+    {
+      "job_id": "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 186341,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6901b8a77f037c51a876e6be804cf96aeff53865f4f7404fc2404b5a60a5d547",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6901b8a77f037c51a876e6be804cf96aeff53865f4f7404fc2404b5a60a5d547"
+      }
+    },
+    {
+      "job_id": "D-V13-B-DEFERRED-R001-control-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 198493,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e9ad3fd96f7ec626f7b6f248d09498aa1c416519d75b11e6c0ce4fc1941136cb",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V13-B-DEFERRED-R001-control-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e9ad3fd96f7ec626f7b6f248d09498aa1c416519d75b11e6c0ce4fc1941136cb"
+      }
+    },
+    {
+      "job_id": "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 187525,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2d139dc0767ad1cd18dddbe6345d5c5d5ddce7772a3490a4493a7e6879222600",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V13-B-DEFERRED-R001-treatment-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2d139dc0767ad1cd18dddbe6345d5c5d5ddce7772a3490a4493a7e6879222600"
+      }
+    },
+    {
+      "job_id": "D-V14-A-LUNA-R1-control-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 246283,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-A-LUNA-R1-control-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "202da0486fa6024b2b54014bfb606d08c15fac643bf1b4358d9a41b7094c3657"
+      }
+    },
+    {
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 249139,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3b256308a7078bd72c32deaafda541bd40176222e519f5f4d540a20c7b2504ad"
+      }
+    },
+    {
+      "job_id": "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 244024,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f20ae3d3091601a86e30cf99cba78cf02f227f5ddf72e8e6d9a538e5a0f53609",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-A-LUNA-R1-treatment-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f20ae3d3091601a86e30cf99cba78cf02f227f5ddf72e8e6d9a538e5a0f53609"
+      }
+    },
+    {
+      "job_id": "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 249933,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7c99141e4e49d3133746acd53c5129e53c1f449a3d49b25ca611677f117fd895"
+      }
+    },
+    {
+      "job_id": "D-V14-B-control-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 260280,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "93dbb51ddd92202eda6cea0c4f4d077ad9b1b813c2cd1fcf602058085bc9f16b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-control-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "93dbb51ddd92202eda6cea0c4f4d077ad9b1b813c2cd1fcf602058085bc9f16b"
+      }
+    },
+    {
+      "job_id": "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 226747,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6bf88c11e74055cb5da6e0d2ae8a46ab832b4851a010c4533cfd2378fff42110",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-control-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6bf88c11e74055cb5da6e0d2ae8a46ab832b4851a010c4533cfd2378fff42110"
+      }
+    },
+    {
+      "job_id": "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 266160,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "50639ec34b2290141436810962b95708ea17d0334532a57f2dbd02581e5c4d77",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "50639ec34b2290141436810962b95708ea17d0334532a57f2dbd02581e5c4d77"
+      }
+    },
+    {
+      "job_id": "D-V14-B-treatment-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 246814,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-treatment-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "1a91e3d95c12a58baa784d71ae5e5472a29c83b7a3873b99c0180637a5898e13"
+      }
+    },
+    {
+      "job_id": "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 285130,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "cc968cb5cab580c4d8ad761ef10b5ac98791d913cfb4a4c26f23ba3ba15136a3",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "cc968cb5cab580c4d8ad761ef10b5ac98791d913cfb4a4c26f23ba3ba15136a3"
+      }
+    },
+    {
+      "job_id": "D-V15-A-control-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 250351,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "529dd260b032e4bc5e925bf2ec55dea815bba529458e36d391c8ff4bbfab78ca",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-control-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "529dd260b032e4bc5e925bf2ec55dea815bba529458e36d391c8ff4bbfab78ca"
+      }
+    },
+    {
+      "job_id": "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 287408,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a2228fa06ba9e31d8c352b5eb73ec1e35a051f306599dcc8e212d709ba32813c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a2228fa06ba9e31d8c352b5eb73ec1e35a051f306599dcc8e212d709ba32813c"
+      }
+    },
+    {
+      "job_id": "D-V15-A-treatment-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 240823,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "01f55b1420c5208c345ab3698a8e12ee46b12696be55e5c8adbc170602dac474",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-treatment-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "01f55b1420c5208c345ab3698a8e12ee46b12696be55e5c8adbc170602dac474"
+      }
+    },
+    {
+      "job_id": "D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 220892,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "91757a3ffae1a1d3e29e3febc9db4affe85714791acb88d2c6b191f41ac9e692",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "91757a3ffae1a1d3e29e3febc9db4affe85714791acb88d2c6b191f41ac9e692"
+      }
+    },
+    {
+      "job_id": "D-V15-B-control-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 258499,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-control-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "cda004e918b3319d857f832638e4708dede2007a5252712747191d0a974487cc"
+      }
+    },
+    {
+      "job_id": "D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 267595,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f6475ad897ca4bba1d0c2d0290eef59e4612e4face038353e01aad6367e14764",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f6475ad897ca4bba1d0c2d0290eef59e4612e4face038353e01aad6367e14764"
+      }
+    },
+    {
+      "job_id": "D-V15-B-treatment-diagnostic-a002",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 246175,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-treatment-diagnostic-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3d1531ec922a22059250cc951821cf7e92431f9b46c88335f8517aba01298df2"
+      }
+    },
+    {
+      "job_id": "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 277755,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "aa52c7889879caf8098d5876c98aa6d21dbb89cfbcef422930d53df5dda61192",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "aa52c7889879caf8098d5876c98aa6d21dbb89cfbcef422930d53df5dda61192"
+      }
+    },
+    {
+      "job_id": "D-V16-A-control-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 174817,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "09a3d353b40aef0353d2e1f95fb2c66ff6eca53371643954a3db427a2df7c18a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-A-control-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "09a3d353b40aef0353d2e1f95fb2c66ff6eca53371643954a3db427a2df7c18a"
+      }
+    },
+    {
+      "job_id": "D-V16-A-treatment-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 188043,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a3496415df9842049345fc300059a227a141c81ae724bea1547bbeba8448befd",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-A-treatment-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a3496415df9842049345fc300059a227a141c81ae724bea1547bbeba8448befd"
+      }
+    },
+    {
+      "job_id": "D-V16-B-control-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 177565,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "495fcab36eb0fedb7c46f53c6b35c2745ce5d6cafd0f3f9eacba5c1ecb3804c9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-B-control-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "495fcab36eb0fedb7c46f53c6b35c2745ce5d6cafd0f3f9eacba5c1ecb3804c9"
+      }
+    },
+    {
+      "job_id": "D-V16-B-treatment-diagnostic-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 177393,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6fe863b4d3ab045acc6ec8419c68e6b2abc8ecabc82e144a76dd59ee0c79cfba",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V16-B-treatment-diagnostic-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6fe863b4d3ab045acc6ec8419c68e6b2abc8ecabc82e144a76dd59ee0c79cfba"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 193472,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "fd5bd33d43543b3b871c49e25c4c61728b49ee84d1449ca78b0801ab05f27f9e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "fd5bd33d43543b3b871c49e25c4c61728b49ee84d1449ca78b0801ab05f27f9e"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 195233,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4439fb11c024d6074b388a690008072b7506ddd705716d81f2c33e69f4f89cae",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4439fb11c024d6074b388a690008072b7506ddd705716d81f2c33e69f4f89cae"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 189739,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8f66c5a68682d0703586912547e866b40325aaff6d2bb05d86be1d4023eef4bb",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8f66c5a68682d0703586912547e866b40325aaff6d2bb05d86be1d4023eef4bb"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-S1-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 317200,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b8d62d167f9a525292f78edd9857e60f3ca2f584f773e20f6615f4e444cd2397",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b8d62d167f9a525292f78edd9857e60f3ca2f584f773e20f6615f4e444cd2397"
+      }
+    },
+    {
+      "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 182450,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c8334526dfb6add511dba985c4cca54d7804855711cc84d9d76153615741f45c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c8334526dfb6add511dba985c4cca54d7804855711cc84d9d76153615741f45c"
+      }
+    },
+    {
+      "job_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 189461,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+      }
+    },
+    {
+      "job_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 175468,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-control-revision-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "471d092a87f901ee0f8fbb92c83aa428f3a654612ed4099727513a715aa038a8"
+      }
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 258000,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6927b010b6c9fc56abef015fe0a63bdce72372aa44e715773194b5b3d7a374f0",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6927b010b6c9fc56abef015fe0a63bdce72372aa44e715773194b5b3d7a374f0"
+      }
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-control-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 106763,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "712e5aacbeb61e83fdd77ba83587d3bc8532c6df50a523a4171baad1bd9de1b1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "712e5aacbeb61e83fdd77ba83587d3bc8532c6df50a523a4171baad1bd9de1b1"
+      }
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-control-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 200472,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e43cf71db410f318d45d033e1316f96d3f647f83287040fa475c89e3357bda5c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e43cf71db410f318d45d033e1316f96d3f647f83287040fa475c89e3357bda5c"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 150418,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c6c6ceeec0b8d9a35c09778c7754142f951683c8eba9614a3e10ca592a35507e"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 318402,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3adf29bf5381dd7c5f8f8d7086b9c9eaf1fb7085b7bd5cab62e86a2327f77eff"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 116949,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4acda0fbb647a05af6b7216f551ca60d2a3ec76dcf7f013b9e0e301be6f25a7e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4acda0fbb647a05af6b7216f551ca60d2a3ec76dcf7f013b9e0e301be6f25a7e"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-S1-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 327071,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "53762d097cbf064a1ff00904bf1065c151edc41ef935f3b44f225a3b6cb8a2ef",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "53762d097cbf064a1ff00904bf1065c151edc41ef935f3b44f225a3b6cb8a2ef"
+      }
+    },
+    {
+      "job_id": "I-05-LUNA-S1-treatment-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 197742,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "21bb445054f1c685763892a24b0f29b34e439921c65dd3e08f7b40bab0e3e7da",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-LUNA-S1-treatment-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "21bb445054f1c685763892a24b0f29b34e439921c65dd3e08f7b40bab0e3e7da"
+      }
+    },
+    {
+      "job_id": "I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 179608,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4d6bb319f1e2d06273f969d44d3f57eeba2729406cdf67dce203382e09a111cb",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4d6bb319f1e2d06273f969d44d3f57eeba2729406cdf67dce203382e09a111cb"
+      }
+    },
+    {
+      "job_id": "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 166415,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c01a8c79b11c31aa0b55100d23deab8742dffff5ee90cf090453ce8b58b4c558",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c01a8c79b11c31aa0b55100d23deab8742dffff5ee90cf090453ce8b58b4c558"
+      }
+    },
+    {
+      "job_id": "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 341937,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "72795d7c7053ff781c64e554cb00d540d03bfe9061bec307e4ad625ad64665b0",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "72795d7c7053ff781c64e554cb00d540d03bfe9061bec307e4ad625ad64665b0"
+      }
+    },
+    {
+      "job_id": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 445932,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f706f61a4fa9faeaaaf98580d7657c45f675e71c9d6634dfd681da53c02ae5de",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f706f61a4fa9faeaaaf98580d7657c45f675e71c9d6634dfd681da53c02ae5de"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 236812,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "9c67c24b082a6eeaee73c40896ce08004822a9e1348dbc84d232e209e27d0638",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "9c67c24b082a6eeaee73c40896ce08004822a9e1348dbc84d232e209e27d0638"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 312568,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "29b5a83b9896bc42f952e139af8ddd951dbc41c8bd32f0e0ed5828c4a92e8f17",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "29b5a83b9896bc42f952e139af8ddd951dbc41c8bd32f0e0ed5828c4a92e8f17"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 191664,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "18b81a40a90ce75276835f98d13781ff394a7487e5e88a8d142de959210c5030",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "18b81a40a90ce75276835f98d13781ff394a7487e5e88a8d142de959210c5030"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-S1-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 36278,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c0d0bf6bcb4ba8bb5ff4fbe63245e91ade731b897b9ef90c3b600feeb0e69278",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c0d0bf6bcb4ba8bb5ff4fbe63245e91ade731b897b9ef90c3b600feeb0e69278"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 349542,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2cc211c0750fb6fd71e0be94a6d1f92948241dd759cb6f510e7580d677b06790",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2cc211c0750fb6fd71e0be94a6d1f92948241dd759cb6f510e7580d677b06790"
+      }
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 351742,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f81d1827bd1bf8ca02981834a92d1aefb73cbc28401246412f9f37fbb1a8605c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f81d1827bd1bf8ca02981834a92d1aefb73cbc28401246412f9f37fbb1a8605c"
+      }
+    },
+    {
+      "job_id": "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 444224,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c6f957caaaf32f98ab790e084b25de9b98f8729b75b101e5660b44cb1a2612d4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c6f957caaaf32f98ab790e084b25de9b98f8729b75b101e5660b44cb1a2612d4"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 194305,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "19ba03d8a475e929b02c735e44550bcb3c573775d0aac9be5397dca546ef20fa",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "19ba03d8a475e929b02c735e44550bcb3c573775d0aac9be5397dca546ef20fa"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 305058,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3608339414f9d93479bfc748283f716f4dc8d217d0f8e76db03fa6006567ab9f",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3608339414f9d93479bfc748283f716f4dc8d217d0f8e76db03fa6006567ab9f"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 191489,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d4154673fa9f2e1258772865b1fcc4f816fbbc019bebabec77670542b6338351",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d4154673fa9f2e1258772865b1fcc4f816fbbc019bebabec77670542b6338351"
+      }
+    },
+    {
+      "job_id": "I-06-LUNA-S1-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 135532,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c60f9202874d43af5cb9cbad56b1db51bc7c379159d33889bf4edb1ce4381eac",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-LUNA-S1-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c60f9202874d43af5cb9cbad56b1db51bc7c379159d33889bf4edb1ce4381eac"
+      }
+    },
+    {
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 346607,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8a8099cfdb1af0d424abaef3e5472c13d68b94d6abcafbaad13b938ef0442dd7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8a8099cfdb1af0d424abaef3e5472c13d68b94d6abcafbaad13b938ef0442dd7"
+      }
+    },
+    {
+      "job_id": "I-06-FRESH-DELIVERY-R001-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 344072,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "331879568fbcf7544eba4f0851fa15a5b638bad1f886f062bda951bbd418ca7d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "331879568fbcf7544eba4f0851fa15a5b638bad1f886f062bda951bbd418ca7d"
+      }
+    },
+    {
+      "job_id": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 234276,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "dc189cf2d79c7f6eb3dff4e63208b3149eb215e4991d91eac5b919190310c808"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 222149,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "42ac637d226d87a3f77b9ddd433a18929f881f2745f17bbd6955c11b4b4ff98e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "42ac637d226d87a3f77b9ddd433a18929f881f2745f17bbd6955c11b4b4ff98e"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 326676,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "26bed9341d848ea2b1876484431a5372b271f6025c0ef86c7f8b08f31a582978",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "26bed9341d848ea2b1876484431a5372b271f6025c0ef86c7f8b08f31a582978"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 211480,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "c0d5e90354461d3656381e6cb09470454a683a0f692f4d2eacc22e57f9de5ad7",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "c0d5e90354461d3656381e6cb09470454a683a0f692f4d2eacc22e57f9de5ad7"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-S1-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 9717,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4745e9d06ee7c893ae5ae6fa87a9f1db53e483e0e840019dd335e8c5c96b7661",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4745e9d06ee7c893ae5ae6fa87a9f1db53e483e0e840019dd335e8c5c96b7661"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 349634,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "ade4f5f6690e83b0ec6c71799f9217e1ebb79d89bc035526be0c7e3ae95f5cc1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R002-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "ade4f5f6690e83b0ec6c71799f9217e1ebb79d89bc035526be0c7e3ae95f5cc1"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 310150,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "69bc65779c5d40d1fb7f7adc669b8144aba480d5286b15d79ac9ab179416a3b9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "69bc65779c5d40d1fb7f7adc669b8144aba480d5286b15d79ac9ab179416a3b9"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-control-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 129437,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "3ea0543bac24372d0c30ff94abb3e8de76da00c94796274a28dcbc1f03615679",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "3ea0543bac24372d0c30ff94abb3e8de76da00c94796274a28dcbc1f03615679"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 193386,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "862f271e508a28dc1a004fe0d30c0d9411cdad206ff2ae5b16533f8394d99df2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "862f271e508a28dc1a004fe0d30c0d9411cdad206ff2ae5b16533f8394d99df2"
+      }
+    },
+    {
+      "job_id": "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 388495,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "671ba65ae0b6163e407146963053e4f635b570bab4db3dfe352828590b87b6c5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "671ba65ae0b6163e407146963053e4f635b570bab4db3dfe352828590b87b6c5"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 329354,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "24a61c4d83d044af23db2ec960946edc79da97a676ec19c02127b60aeda1890b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "24a61c4d83d044af23db2ec960946edc79da97a676ec19c02127b60aeda1890b"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 331495,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d7c0537f66081dacc541f1cedd1d3218b5d8f9d29764296469f2f17b4a80c97b",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d7c0537f66081dacc541f1cedd1d3218b5d8f9d29764296469f2f17b4a80c97b"
+      }
+    },
+    {
+      "job_id": "I-07-LUNA-S1-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 63508,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "35dc00749a8666be9b61737e50f89b4a890fd86bbc7c185d8a5a4fed97090c2e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-LUNA-S1-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "35dc00749a8666be9b61737e50f89b4a890fd86bbc7c185d8a5a4fed97090c2e"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 279971,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "bcd8a864ad9f59d24fd470881a54f3e8ea027b68220e50f38cf24dc2f9bda588",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R002-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "bcd8a864ad9f59d24fd470881a54f3e8ea027b68220e50f38cf24dc2f9bda588"
+      }
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R001-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 343067,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "9bff60b1159cac4403bb2e223996a4e337969e709e3a60cac6b449b6aee3b7fe",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "9bff60b1159cac4403bb2e223996a4e337969e709e3a60cac6b449b6aee3b7fe"
+      }
+    },
+    {
+      "job_id": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 272871,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "b702ac2964633db4dac50640876ac05a881716ada3b9e3a4a8238ca158f01e31",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "b702ac2964633db4dac50640876ac05a881716ada3b9e3a4a8238ca158f01e31"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 190956,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "37ac1e326bc91abdfe655916bdc57200ab614443742d0ade13c26353342cd4b5",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "37ac1e326bc91abdfe655916bdc57200ab614443742d0ade13c26353342cd4b5"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 276853,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "0a90774a6b262a2face40bf17d8a24156c8fd012e87fd2a9bbfa62720f97c233",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "0a90774a6b262a2face40bf17d8a24156c8fd012e87fd2a9bbfa62720f97c233"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 187691,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "33e1e163c2e3bb3847c86b095d8f2a15d663c324c3ba3e94393df45c5b1b0606",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "33e1e163c2e3bb3847c86b095d8f2a15d663c324c3ba3e94393df45c5b1b0606"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-S1-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 322608,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d7c06708ed8144c251c2454989fe3e2f9957865a2ec49eb4a385118763c3f337",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d7c06708ed8144c251c2454989fe3e2f9957865a2ec49eb4a385118763c3f337"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 171709,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "4dff869e00c0c6e853313462ba2385bfa8921bd2f080ec550b5a47bfb88d0828",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "4dff869e00c0c6e853313462ba2385bfa8921bd2f080ec550b5a47bfb88d0828"
+      }
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 339457,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a2ce7bb0765a5098ba6ac2ad9a21ae11af5564a463b7526f55ec7d66e6d7ea74",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a2ce7bb0765a5098ba6ac2ad9a21ae11af5564a463b7526f55ec7d66e6d7ea74"
+      }
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 123066,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "d623314857c441bea7961c3babf18311577f590fdff334fe087e21d2392eb7b4",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "d623314857c441bea7961c3babf18311577f590fdff334fe087e21d2392eb7b4"
+      }
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 193878,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "73b5400f6fb9675919fa846e699e8ca21538f5e54e1e212ec340d1ff4bf32430",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-control-revision-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "73b5400f6fb9675919fa846e699e8ca21538f5e54e1e212ec340d1ff4bf32430"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 183188,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "fbd549182f6062118a44a932cc99060582a149094f0e777dcc934a3b039de88a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "fbd549182f6062118a44a932cc99060582a149094f0e777dcc934a3b039de88a"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 425365,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2cae830db6fe3c2338e0a9fc0db9384a157f31d1599dc78d584feb69eb76dab3",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001-role-birth-r001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2cae830db6fe3c2338e0a9fc0db9384a157f31d1599dc78d584feb69eb76dab3"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "current_selected": true,
+      "source_pin": {
+        "bytes": 336922,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "44c495e6c6c702399633fa20a1944bd46c447a8b8f9f1078126729ebf7152b76",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "44c495e6c6c702399633fa20a1944bd46c447a8b8f9f1078126729ebf7152b76"
+      }
+    },
+    {
+      "job_id": "I-08-LUNA-S1-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 328828,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5160efcf4f7603152728ec27bbd815d03c3f20c2dfaad2e0a37d8fc5c577f03d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-LUNA-S1-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5160efcf4f7603152728ec27bbd815d03c3f20c2dfaad2e0a37d8fc5c577f03d"
+      }
+    },
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 362790,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320"
+      }
+    },
+    {
+      "job_id": "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 348862,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6ef23b83b92fa0dcf1c1f1c1aa4ac97358b347208382cdd516b08df9e6b3ce45",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-08-FRESH-DELIVERY-R001-treatment-research-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6ef23b83b92fa0dcf1c1f1c1aa4ac97358b347208382cdd516b08df9e6b3ce45"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-base-s001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 342226,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "e0d29ddf5c891ea1dcb9de32b6f25917fdf95f6da9c77b3adf5cd7c83b5f14ab",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-base-s001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "e0d29ddf5c891ea1dcb9de32b6f25917fdf95f6da9c77b3adf5cd7c83b5f14ab"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-base-s001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 340690,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "a7126e95773d1f4224f62486079f3efaa39c79db7b9923917e1c3900eb5e2e7e",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-base-s001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "a7126e95773d1f4224f62486079f3efaa39c79db7b9923917e1c3900eb5e2e7e"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-FIXED-BASE-enrichment-s002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 248927,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "37031141261fdd4aeeab3d1101da66b03521f4417e0eab4a1547e888860cae9a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-FIXED-BASE-enrichment-s002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "37031141261fdd4aeeab3d1101da66b03521f4417e0eab4a1547e888860cae9a"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-FIXED-BASE-enrichment-s002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 173686,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "73a65ea1bba3ca3dd89d847dc67b87daf1b6da4e232e41468f67a4b6ca0760e1",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-FIXED-BASE-enrichment-s002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "73a65ea1bba3ca3dd89d847dc67b87daf1b6da4e232e41468f67a4b6ca0760e1"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 193591,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "2e872f6e23f93d5e516583471a0422fc0c803bceae9e5d314b2ceea675ec571d",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "2e872f6e23f93d5e516583471a0422fc0c803bceae9e5d314b2ceea675ec571d"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 270374,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8a13e3dcbe85c76c785f112cce4be2bb8880c00e6180a5f2ef7d5a0879c10f33",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8a13e3dcbe85c76c785f112cce4be2bb8880c00e6180a5f2ef7d5a0879c10f33"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 200519,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "8eb513fcad7940aefefbd008f4c55fc49bb92a56616f731ec0297d5a970ea522",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "8eb513fcad7940aefefbd008f4c55fc49bb92a56616f731ec0297d5a970ea522"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 176541,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "564b00c2b91c504227ae9a089149af4d302d4654039c6acdca195104ae3b8848",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-critique-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "564b00c2b91c504227ae9a089149af4d302d4654039c6acdca195104ae3b8848"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 158707,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "164386c8367ac1a274f86e49517bc44c0b9a5cbedf958ea503f43ef6395e2fb2",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "164386c8367ac1a274f86e49517bc44c0b9a5cbedf958ea503f43ef6395e2fb2"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 255011,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "17c15a8f08be8b8556c49b37cfe9b150af0b154846ac7fc7c0f50e09a8be152a",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-enrichment-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "17c15a8f08be8b8556c49b37cfe9b150af0b154846ac7fc7c0f50e09a8be152a"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 193045,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "f3f3da412678eceff8056e155d48ff254d8afbce4d05ae2d4631353e12390ede",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "f3f3da412678eceff8056e155d48ff254d8afbce4d05ae2d4631353e12390ede"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 151195,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "aa3e17a882cb491b3247dd9a69b0a7a10a2c7ea35138131967ae4b1390fe8089",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "aa3e17a882cb491b3247dd9a69b0a7a10a2c7ea35138131967ae4b1390fe8089"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 416223,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "6c80e91906b0555ec878f9c7f634b1625c096dfc79b4c701983e230a6f74cbc9",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-DEFERRED-R001-seed-revision-a001-CLOCK-R003-A3000/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "6c80e91906b0555ec878f9c7f634b1625c096dfc79b4c701983e230a6f74cbc9"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-A-RESOURCE-R001-seed-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 191447,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "abe56f583bb75dfe76b15d6547edc24df6e43b2758a788fdf36350059fcfa613",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-A-RESOURCE-R001-seed-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "abe56f583bb75dfe76b15d6547edc24df6e43b2758a788fdf36350059fcfa613"
+      }
+    },
+    {
+      "job_id": "SEED-DEV-B-RESOURCE-R001-seed-critique-a001",
+      "current_selected": false,
+      "source_pin": {
+        "bytes": 188954,
+        "curated_content_alias_sha256": null,
+        "expected_hash_matches": true,
+        "expected_sha256": "5aa7c01f7ce51c684ebf318c4cf9048235f99ed242147f50bd45d15d1ca1a04c",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-RESOURCE-R001-seed-critique-a001/native/result.json",
+        "publication_state": "PENDING_PUBLICATION",
+        "sha256": "5aa7c01f7ce51c684ebf318c4cf9048235f99ed242147f50bd45d15d1ca1a04c"
+      }
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "schema": "er9.neutral-clock-positive-pinset.v1",
+  "observed_utc": "2026-10-06T10:50:44.331491+00:00",
+  "files": [
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/source-start.json",
+      "sha256": "9a980043fc992b0cb66d586314c31bf8cfa16669bebbd39e6ea6a0160a6bc4e9",
+      "bytes": 402
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-26/phase1-freeze.json",
+      "sha256": "78b2d51edf56030497a6214626c4f67d8c62d929bb9e17da4bf4857521c54240",
+      "bytes": 1504
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-confirmation-C02-current-research-1/completion_receipt.json",
+      "sha256": "8155ff05cd695a00326e86b9a0becfcf22f508b265f84bec39657862f879b9b8",
+      "bytes": 6048
+    },
+    {
+      "path": "LAB_ROOT/evaluation/independent-targeted-25/terminal.receipt.json",
+      "sha256": "49dbf99af243b1940560869fb588b6669542a100ab7c0a7454b959982d2f0de0",
+      "bytes": 3669
+    }
+  ],
+  "source_grades": "HELD_NOT_READ",
+  "root26_hash_only": {
+    "journal_path": "LAB_ROOT/state/supervisor_goal_counters.jsonl",
+    "whole_sha256": "f60a1f32c6f9a2b0e5aa3a98d586416970303de29957ccb6178d72ebaf197a66",
+    "prior25_prefix_sha256": "f9de74ba8ef853e66c258d580789aa377bdea98e4550fa09ecff707ad12ea00e",
+    "row_sha256": "49aa56c067bf777669423de68ce3cd8834ace376379e9d8b229c48bbe916132a",
+    "observed_utc": "2026-10-06T10:31:38Z",
+    "counter_scope": "root nativeGoal separatefromprovider/helper/account018; helperinclusionUNKNOWN; no sum/stop"
+  },
+  "original_clocks_unchanged": true
+}

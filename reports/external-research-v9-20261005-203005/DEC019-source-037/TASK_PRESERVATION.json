@@ -1,0 +1,32 @@
+{
+  "additional_factors_declared": true,
+  "rows": [
+    {
+      "common_input_SHA_preserved": true,
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "new_Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001/workspace/TASK.md",
+        "sha256": "a4b81de00ee3aa524bf9026fb70c232cd10253f42e9d7cbb5b4f1012ab11b3bd"
+      },
+      "original_Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-01-FRESH-DELIVERY-R001/I-01-FRESH-DELIVERY-R001-treatment-critique-a001/workspace/TASK.md",
+        "sha256": "aafbfdad24fb5de57ca3e193a76f91e58526c7c8b2f6feeaeea861257dc15a37"
+      },
+      "scientific_prefix_bytes_preserved": true
+    },
+    {
+      "common_input_SHA_preserved": true,
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+      "new_Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/workspace/TASK.md",
+        "sha256": "1270270ca9f52796f375c61ab3b3dd1c6e7553234c630539114888cfad052f2a"
+      },
+      "original_Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-01-FRESH-DELIVERY-R001/I-01-FRESH-DELIVERY-R001-treatment-revision-a001/workspace/TASK.md",
+        "sha256": "7ac68541282c89d3fefdfbf840206fd5fa5a776729f5b48729c1293974557a80"
+      },
+      "scientific_prefix_bytes_preserved": true
+    }
+  ],
+  "source_bodies_not_interpreted": true
+}

@@ -1,0 +1,38 @@
+{
+ "check": "A: preview-sample type inference is not proof of a full-dataset property (mirrors duckdb#25824 shape: sampled as INTEGER, really DOUBLE)",
+ "sample_n": 3,
+ "sample_values": [
+  "12",
+  "13",
+  "14"
+ ],
+ "sample_inferred_type": "INTEGER",
+ "full_values": [
+  "12",
+  "13",
+  "14",
+  "1500.5",
+  "007"
+ ],
+ "full_inferred_type": "DOUBLE",
+ "divergent": true,
+ "quarantined_rows": [
+  {
+   "rowid": 5,
+   "row": [
+    "Oslo",
+    "2026-13-45T99:00:00Z",
+    "malformed timestamp string"
+   ],
+   "reasons": [
+    "timestamp column: value not parseable ISO-8601"
+   ]
+  }
+ ],
+ "quarantined_count": 1,
+ "kept_count": 5,
+ "original_row_count": 6,
+ "no_rows_silently_deleted": true,
+ "unicode_preserved": true
+}
+EXIT_OK

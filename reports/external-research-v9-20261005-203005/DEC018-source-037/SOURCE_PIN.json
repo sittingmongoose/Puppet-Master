@@ -1,0 +1,122 @@
+{
+  "contract_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/CONTRACT.json",
+    "sha256": "aa7a43e6999d6bd4278803a1db3ff969b22806fea3ee83d0709a1f7dea4f0d73"
+  },
+  "entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/role_birth.py",
+    "sha256": "abe05ef5b9f34f2fa0a0bc2a586eaa88563c318311c10e1353ca5540aaeb6b7f"
+  },
+  "external_source_choices": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+      "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+      "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_READINESS_V1_READY.json",
+      "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+      "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/SOURCE_PIN.json",
+      "sha256": "04f37c0074e2f98fd1754ef640461e928f2c8be25295f92f035f13d3e1dfa803"
+    }
+  ],
+  "files": {
+    "CONTRACT.json": "aa7a43e6999d6bd4278803a1db3ff969b22806fea3ee83d0709a1f7dea4f0d73",
+    "DONOR_CONTRACT.json": "77db7b67c38b683bf6065cbd2f63c92668491511d8562de6f4fb760c7bddd1bb",
+    "OLD_SOURCE_BYTE_SNAPSHOT.json": "6701b5d8080885bdd1322bef7555d63bac70669cf3150da0586210604f0317e7",
+    "OUTBOX.json": "c1dd160395e784bcb5b6a7f68116a77f7cf519a01016eb9ce8f1a7be932d3cc0",
+    "PAIRED_SOURCE_CLOSURE.json": "8b24d1fa360003866bb122c765c49b7b43e95d9867ca2efee0992aba7e6f9acb",
+    "README.md": "18c6324567daa1535714b1b006667b98da57b360d5fd2489e4fbd5fe2f798b2b",
+    "SOURCE_START.json": "5a94d4f2ddc18026be538aad2bcfe65102a4330988743ff87fffa2937ee09287",
+    "TOPOLOGY_CORRECTION.json": "e95c0eabb273cf6ea8eb20b8637f0da50bdbcec8ad98759c5a5a7acfbf7d2e13",
+    "VERIFICATION.json": "a13aad801711dd2a6e1747c51a28590f0df3bc5e34d94cbce2ec5d7cbdbe7771",
+    "paired_gate.py": "2db287d1bbd1d6aceb4957c423e8b86d8c84ba9e06839c65644363042737a324",
+    "prepare.py": "cc7b0a99f39f39ff458a64b6f1df33c3359f8c7f1328748c1b1b0b7297234799",
+    "registration.json": "51497fb4004844b04067cdb2673d2ea01bd32476de88af14a92c861625125337",
+    "role_birth.py": "abe05ef5b9f34f2fa0a0bc2a586eaa88563c318311c10e1353ca5540aaeb6b7f",
+    "seal.py": "52dd38c7fb9b1511597092d0ea6abca878a1fce8245713c9a189c7a07f17da40",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/clock_fragment.md": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/prepared-stage.json": "911fca87e25fe004ea94b6d694d2ff86132eebb5c2a3cc22487711ce57237ef4",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/TASK.md": "f5500f547a199c2a186d5fefde2ab84cdf172db058d9491fd2c243040ddf52da",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/clock_fragment.md": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/prepared-stage.json": "865099e4cf43f19a800eb28a18c75b24d602e4ada90338d0f5875cfc40acfcce",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/TASK.md": "8c0f3aaaed49a61cd844dff03e13d3923a5517b0fede2e7bdc63f39fc6f75216",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/clock_fragment.md": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/operator-profile/BUNDLE_PROFILE.json": "13d12e6ca55cc05bdd5cd60151dfa42e175cac2d3094dcd1a3bf8eaafef4c49a",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/prepared-stage.json": "f6ea2a3b76ce50514e95d0cf9ad21922b0379997b17a29c7deb9a6f95d47f7f5",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/TASK.md": "b79ec5af6e33f20ee3615dcc8bceab80f3801c6b710ff9635979919a8d708815",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/delivery_role_manifest.json": "5ebcc21bff1579496363364ba24fe43dbc37d7a28cd362875ff4689361d45a9d",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/clock_fragment.md": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/prepared-stage.json": "afb108156e88ef95980b23c587d32af8c0286a6b09d2f03bbe675af9cb1ce9a6",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/TASK.md": "9fc34322cfd27653fb68096aaa4238b0da29ea0f13f2952b3b5e1f24c6affbbd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/clock_fragment.md": "4b6dccee3e68d60566b7dc0ec56a98a740e11a72d7b43e713a81ef977fdabc83",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/operator-profile/BUNDLE_PROFILE.json": "defe914425b666852ae1aff73f99885c1c0c3a8a5353fbc26dd816c2ca6ceb49",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/prepared-stage.json": "0f888192de136af5f6d8dbaac3fca11019749444d6317b8e16a4f19301eb4984",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/TASK.md": "7ad7bda6a02058189eb7bc6b91e84015f91f1c9b7d3919df810fbad74c1c43e5",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/brief.md": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/delivery_objective.md": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/delivery_role_manifest.json": "2fa834b02d4b901dfd65561512be2386c3693f613ef83a0981c41cfa4b98d036",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/output_contract.md": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/source_access.json": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+    "stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/inputs/source_separation.md": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d",
+    "syntax_gate.py": "f6a77c74329956fe913f8b3c97919d890f101d34f158ef09c566390a2c21bbe3",
+    "test_repair.py": "bddc7881fa276f84b73d42977aad0e6a4dfc4fc160c70511ad4a87e05f442dc4"
+  },
+  "frozen_utc": "2026-10-06T11:09:16.592264+00:00",
+  "native_allocation_authorized": false,
+  "native_calls": 0,
+  "paired_gate_entrypoint": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/paired_gate.py",
+    "sha256": "2db287d1bbd1d6aceb4957c423e8b86d8c84ba9e06839c65644363042737a324"
+  },
+  "root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001",
+  "schema": "er9.c04-paired-native-catalog-source-pin.v1",
+  "source_pins": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/paired_gate.py": "2db287d1bbd1d6aceb4957c423e8b86d8c84ba9e06839c65644363042737a324",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/prepare.py": "cc7b0a99f39f39ff458a64b6f1df33c3359f8c7f1328748c1b1b0b7297234799",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/role_birth.py": "abe05ef5b9f34f2fa0a0bc2a586eaa88563c318311c10e1353ca5540aaeb6b7f",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/seal.py": "52dd38c7fb9b1511597092d0ea6abca878a1fce8245713c9a189c7a07f17da40",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/syntax_gate.py": "f6a77c74329956fe913f8b3c97919d890f101d34f158ef09c566390a2c21bbe3",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/test_repair.py": "bddc7881fa276f84b73d42977aad0e6a4dfc4fc160c70511ad4a87e05f442dc4",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/prepare.py": "3b0df6050b5642ac351c8bd49a653203e0f4f4792ea22eecd8cdc3c89b7540ca",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/role_birth.py": "4870654f74d365f06af651e225407746330b3158f5bd478c2c0f0c25163e4d5f",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/prior_index.py": "5c7577a04bb2a2fd98fcb45d127580a2b44d671bb659b0bd4770d61adf95bd96",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py": "ba45f3c3507c10e4339f78f6270dd9b56f5e23bdfb03984475d6f9dca94b9673",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/normalizer.py": "7e5890ce521730b6de72df1ecb14ab8e3bf51ae3894dde56c917aea6602c1234",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/proof-model-normalizer-001/role_birth.py": "7b8de1118a9753225b1ee14da521d281f544ab9b9caf998712120799e806bdc2"
+  },
+  "status": "FEASIBLE_SOURCE_READY_FOR_ROOT_FINITE_ALLOCATION_REVIEW",
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/VERIFICATION.json",
+    "sha256": "a13aad801711dd2a6e1747c51a28590f0df3bc5e34d94cbce2ec5d7cbdbe7771"
+  }
+}

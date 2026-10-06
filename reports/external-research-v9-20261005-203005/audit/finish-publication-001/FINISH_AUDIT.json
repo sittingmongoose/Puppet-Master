@@ -1,0 +1,225 @@
+{
+  "schema": "er9.final-publication-contract-audit.v1",
+  "agent": "codex-er9-publication-audit",
+  "audit_role": "Sol independent helper; never a scored candidate",
+  "instrumented_start_utc": "2026-10-06T12:16:36+00:00",
+  "report_ready_utc": "2026-10-06T12:22:44.050698+00:00",
+  "elapsed_seconds_from_instrumented_start": 368.050698,
+  "max_seconds_inclusive_required_handoffs": 600,
+  "timer_reset": false,
+  "verified_publication_boundary": {
+    "commit": "182ad2e0c10ec460bf6ed2bd55d06489d23ace8b",
+    "positive_files": 4385,
+    "network_verification": "Existing receipt examined and hash verified locally; no new network request or independent remote verification by auditor"
+  },
+  "status": "PENDING_FINAL_CONSOLIDATION_NATIVE_SCOPED_CLEANUP_CLOSE; NOT_CAMPAIGN_COMPLETE",
+  "scope_limit": "Only compact publication selectors/manifests, report entrypoints and scoped current queue metadata. No candidate science regrade, scientist mapping key, raw/native/auth/ModelIO body, native/model/tool experiment, Git or existing-file edit.",
+  "bounded_counts": {
+    "declared_hypotheses": 16,
+    "diagnostic_pairs": 32,
+    "diagnostic_arms": 64,
+    "fresh_integrated_pairs": 12,
+    "fresh_integrated_pipelines": 24,
+    "current_confirmation_pairs": 4,
+    "current_confirmation_pipelines": 8,
+    "finite_logical_arms": 96,
+    "coverage004_slots": 48,
+    "coverage004_slots_with_at_least_one_scoped_match": 47,
+    "coverage004_slots_with_unmatched_role_rows": 18,
+    "coverage004_unmatched_current_role_rows": 69,
+    "unmatched_metadata_role_array_count": 69,
+    "coverage004_runtime_is_dated_not_refreshed": true,
+    "latest_native_checkpoint_live_rows": 1,
+    "methods_executed_configuration_rows": 4,
+    "attempts_published_records": 4
+  },
+  "findings": [
+    {
+      "id": "PUB-F01",
+      "status": "PENDING_FINAL_OBLIGATION",
+      "severity": "required",
+      "claim": "Materialize a finite 96-arm actual prompt/tool/config/output-or-explicit-missing publication inventory. Exact positive whitelists preserve real files but do not establish exhaustive arm-level coverage.",
+      "evidence": [
+        "publication",
+        "queue",
+        "pending_selector059",
+        "coverage004",
+        "unmatched_roles"
+      ],
+      "required_action": "Inventory 64 targeted arms, 24 fresh integrated pipelines, and 8 current confirmation pipelines. Join logical arm to accepted job/version/stage, actual Task and owned tool/config pins, actual output/publication paths and SHA, or explicit missing/not-entered/predecessor-blocked state. Separate retries, historical C03, warm derivatives and engineering source-only work. Never fill absent bytes or science by inference.",
+      "coordination": "Root assigned /root/publication_inventory; audit does not own or write that inventory."
+    },
+    {
+      "id": "PUB-F02",
+      "status": "PENDING_ADDITIVE_CORRECTION",
+      "severity": "required",
+      "claim": "PUBLICATION.json projection descriptions are stale relative to the selected files. It says empty executed configurations and two terminal stages; methods.json actually contains four executed_configuration rows and attempts.jsonl contains four records.",
+      "evidence": [
+        "publication",
+        "methods",
+        "attempts"
+      ],
+      "required_action": "Add a dated correction and current final projection reference while preserving original historical bytes and their cutoff. Do not use the old descriptions as campaign-wide counts."
+    },
+    {
+      "id": "PUB-F03",
+      "status": "PENDING_FINAL_OBLIGATION",
+      "severity": "required",
+      "claim": "The published aggregate whole_pipelines_completed=6 needs an explicit stratum decomposition for final reporting: the dated workload006 says fresh integrated=5 and current confirmation=0, while original C03 treatment history is separate.",
+      "evidence": [
+        "current",
+        "workload006_readme",
+        "comparisons"
+      ],
+      "required_action": "State fresh integrated 5/24 pipelines, two operational integrated pairs plus one unpaired pipeline, current confirmation 0/8, and historical C03 treatment completion separately. These are operational counts; no clean causal comparison or scientific winner follows. Refresh only with pinned later metadata."
+    },
+    {
+      "id": "PUB-F04",
+      "status": "EXACT_COUNT_CORRECTION_REQUIRED",
+      "severity": "required",
+      "claim": "Coverage004 has 47 of 48 logical slots with at least one scoped review match; 18 overlapping logical slots contain 69 unmatched current job-role rows. The phrase 18 unmatched roles is unsupported by those receipts.",
+      "evidence": [
+        "coverage004",
+        "unmatched_roles",
+        "finish_pinset004"
+      ],
+      "required_action": "Publish the counted objects and their dated cutoffs. Scoped source/delivery matches are not full comparisons. Preserve upstream/history remaining semantics UNASSESSED. New P16/P17 closures require additive exact-ID matching; do not infer a refreshed campaign count from reviewer ordinals or filenames."
+    },
+    {
+      "id": "PUB-F05",
+      "status": "PENDING_TERMINAL_CLOSURE",
+      "severity": "required",
+      "claim": "Final campaign completion and cleanup cannot be claimed at the audited 12:14:23 checkpoint: I12 is all terminal with both final revisions failed and empty required final inventories; DEC018 repairs failed and three conditional roles are dependency-blocked; one DEC019 warm critic is live.",
+      "evidence": [
+        "latest_native_checkpoint",
+        "dec018_rejection",
+        "finish_pinset004",
+        "restart"
+      ],
+      "required_action": "After the remaining finite native tail closes, publish dated campaign-owned status/quiet/permit-release and complete output-or-missing reconciliation. Keep native status, operational artifact completeness, local quiet, release and scientific judgment separate. Retain failures, costs and zero-Goal blocked role semantics without new target credit."
+    },
+    {
+      "id": "PUB-F06",
+      "status": "QUALIFIED_BOUNDARY_PRESENT",
+      "severity": "informational",
+      "claim": "Source reproducibility boundary is disclosed: raw public captures and private/native/auth/ModelIO stay external; compact archive references publish actual external manifest paths plus SHA and explicitly partial/overlapping coverage. This is not a self-contained native replay or globally unique complete source corpus.",
+      "evidence": [
+        "readme",
+        "restart",
+        "publication",
+        "archive_boundary",
+        "archive_current_example"
+      ],
+      "required_action": "Final report must retain the boundary, exact external evidence locator+SHA references, unavailable/degraded source scope, and immutable original capture failures. Do not substitute an unexplained hash for an actual locator, or claim content reproducibility beyond accessible published/source metadata and excluded runtime prerequisites. Auditor did not read external archive bodies/manifests or verify network sources."
+    },
+    {
+      "id": "PUB-F07",
+      "status": "PENDING_REQUIRED_QUALIFICATIONS",
+      "severity": "required",
+      "claim": "Final publication must carry the additive C03/C04 required-path prefix correction and literal evaluator clock/closure qualifications.",
+      "evidence": [
+        "prefix_qualification",
+        "finish_pinset004"
+      ],
+      "required_action": "Attach prefix qualification to original dispatch/P1 bytes; out/research versus research-relative paths otherwise overstate missing artifacts. Preserve producer JSON flags as producer metadata distinct from independent syntax/source assessment. Retain report-ready versus actual required-handoff clocks and any overrun/UNKNOWN; no clock reset or regrade."
+    }
+  ],
+  "recommendation": "Finish the already finite tail and reconcile actual inventories before final publication. Retain no demonstrated qualified clean winner and no causal/affordability claim unless final scoped evidence actually supports one. This audit establishes publication-contract obligations, not scientific grades.",
+  "evidence": {
+    "publication": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/PUBLICATION.json",
+      "sha256": "84ccb59f9e4871111fe3868f7ec501a91e748166ec84caf48547552f663432ef",
+      "bytes": 393491
+    },
+    "readme": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/README.md",
+      "sha256": "284d5e6c8b88f72379aa6f78ea7aece0765b872e5ac5695340d4a891994230bf",
+      "bytes": 51686
+    },
+    "current": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/CURRENT.json",
+      "sha256": "1f54d9360371bfa87e9371a444f61d8e54f316e7b4dad25bda04c9d1b86213f2",
+      "bytes": 16819
+    },
+    "queue": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/queue.json",
+      "sha256": "d2bb1aca3cc3fc24f9d39114c3da803f5283db91a4471c6f6a06f92804b82716",
+      "bytes": 13897
+    },
+    "methods": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/methods.json",
+      "sha256": "3a012f281213c961559a0950bfab935fe0eba24e532241a501687bcee0905399",
+      "bytes": 17693
+    },
+    "attempts": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/attempts.jsonl",
+      "sha256": "cf766637caacf0e75173ffe184b48cc319c4c1053a2fa61ecd4fb31ab200bcaa",
+      "bytes": 5590
+    },
+    "comparisons": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/comparisons.json",
+      "sha256": "c8a96387bc3ce6322ceaa306de8e0710ba308e560449337fa599783cf8d7a83f",
+      "bytes": 2541
+    },
+    "restart": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/RESTART.md",
+      "sha256": "7bfac9aabe7600fa16fdfbfbc7aa113c6576506701fb4c1e022e338c614fad16",
+      "bytes": 3930
+    },
+    "workload006_readme": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/consolidation/workload-006/README.md",
+      "sha256": "2f2b3688cc5f08e46eb7dc6400a65af3d29327043f9c1af647e6be5bb43c8f8d",
+      "bytes": 2055
+    },
+    "archive_boundary": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/archive/tool-001/COVERAGE.json",
+      "sha256": "0b9b55b24b83366c51fc44c675c057f89aa0c464e6e83e129a89c0c3780074d4",
+      "bytes": 3181
+    },
+    "archive_current_example": {
+      "path": "/home/sittingmongoose/pm-worktrees/external-research-v9-20261005-203005/reports/external-research-v9-20261005-203005/archive/cohort034/P8_TD20_TD17_ARCHIVE_SUMMARY_001.json",
+      "sha256": "22650a58f670c2314cce5a7df87315c586b361dbc008d132099965143f64f9de",
+      "bytes": 2575
+    },
+    "verification036": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/publication/cohort036-verification.json",
+      "sha256": "94c3a5623ad3182432228e5c623ba9bd37f29080b26f061d8118bf0201faa43a",
+      "bytes": 4148
+    },
+    "latest_native_checkpoint": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/I12_CURRENT_ALL_TERMINAL_DEC018_REJECTED_DEC019_ACTIVE_001.json",
+      "sha256": "b7783fb728bd1276724f2843ab8ce418d735743c80e9d2051fece7adcfddd92e",
+      "bytes": 12484
+    },
+    "dec018_rejection": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/REJECTION.json",
+      "sha256": "10dcfab9e7e8473e820b6fc70da6f5827b46afdda1609ddd6473b8f5dd6bd0d4",
+      "bytes": 6115
+    },
+    "coverage004": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_004.json",
+      "sha256": "b2922945a3bb0c015fad0a29ae252747b8db51c513e11edf2f57a3f14ba573a8",
+      "bytes": 135464
+    },
+    "unmatched_roles": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/assessment-dispatch-001/UNMATCHED_CURRENT_ROLE_METADATA_001.json",
+      "sha256": "94eb2765c1f885f3411d87ab6b9dd903191c3e131e124ea1d1dbab2ef7506c63",
+      "bytes": 122233
+    },
+    "finish_pinset004": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/NEUTRAL_FINISH_CLOCK_PINSET_004.json",
+      "sha256": "8520684d03211cd4a02c52c6de833af1834b2b095bf7ac9c8dbb214fbd926f1f",
+      "bytes": 3502
+    },
+    "prefix_qualification": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/C03_C04_REQUIRED_PATH_PREFIX_QUALIFICATION_001.json",
+      "sha256": "3e304008d3ee1251b52abc3cf2665213fa93f3094142a444178c80cba1e4f139",
+      "bytes": 4252
+    },
+    "pending_selector059": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/PUBLIC_SELECTION_059.json",
+      "sha256": "8531242df1d0d06a05996726df9d244b3384a98c7dc17f8f7b9f9f847ed8e8a8",
+      "bytes": 62631
+    }
+  }
+}

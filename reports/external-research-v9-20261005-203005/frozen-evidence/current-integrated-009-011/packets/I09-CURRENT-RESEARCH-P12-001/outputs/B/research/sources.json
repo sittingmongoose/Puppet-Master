@@ -1,0 +1,156 @@
+{
+  "catalog_version": "research-stage-1",
+  "captured_utc": "2026-10-06",
+  "note": "Every entry: URL, pin, exact locator, capture identity (capture_id / sha256 of exact HTTP response bytes as returned by the admitted capture tool), and applicability. S-numbers are cited from proposal.md. Negative captures (404s) are recorded for honesty.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://api.github.com/repos/napari/napari/releases/latest",
+      "pin": "napari v0.9.2 (tag v0.9.2, release id 399569218, target commit 595639295a153c84bcb127a9e07d801355440a35, published 2026-09-29T22:18:39Z)",
+      "locator": "release body: project description (Qt/vispy/scipy stack, browsing/annotating large multi-dimensional images); EffVer release policy; bug-fix list",
+      "capture_id": "5ebab02c017449d7a842dd23eeb55cf5",
+      "sha256": "8c9646883782c430448e4155eade2742685c935dad57450761fcbc931b852430",
+      "bytes": 29784,
+      "captured_utc": "2026-10-06T08:59:08Z",
+      "applicability": "P1 viewer precedent; V10 napari binding; supports display-state vs data separation inference and release-cadence claim"
+    },
+    {
+      "id": "S2",
+      "url": "https://napari.org/stable/howtos/layers/image.html",
+      "pin": "napari docs 'stable', version marker docsearch:version = 0.9.2 (page captured 2026-10-06)",
+      "locator": "page title 'Image'; meta description lists contrast limits, opacity, colormaps, blending, interpolation; sidebar TOC lists guides: axis-names, units ('Scale and unit-aware rendering'), handedness, performance, threading, events; tutorials: 'Using Dask and napari to process & view large datasets', 'Annotating videos with napari'",
+      "capture_id": "91642acd25e943b2b8c508d6299e4461",
+      "sha256": "49ea710161793617aa7fc21bc2ae08903e1184ce4f1804c98eda3bef0f56a45f",
+      "bytes": 163120,
+      "captured_bytes": 524288,
+      "captured_utc": "2026-10-06T09:00:02Z",
+      "limitation": "HTTP body truncated by capture tool at 524288 of 1701221 bytes; only first 32768 bytes delivered for reading (page chrome + TOC + version marker). Body claims about contrast_limits mechanics rest on the page's own description + TOC at this pin, not on full text.",
+      "applicability": "P1 display-property model; accessibility/keyboard and units/handedness prior art; V10 docs binding (docs track 0.9.2)"
+    },
+    {
+      "id": "S3",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest",
+      "pin": "tifffile v2026.9.20 (published 2026-09-21T04:01:35Z)",
+      "locator": "release body: format list (TIFF, BigTIFF, OME-TIFF, ImageJ hyperstack, Micro-Manager MMStack and NDTiff, ...); 'Image data can be read as NumPy arrays or Zarr arrays/groups from strips, tiles, pages (IFDs), SubIFDs, higher order series, and pyramidal levels'; changes: NDPI delete fix, LSM >4GB offset fix",
+      "capture_id": "db2364f14a6547538143b6f62bcef39a",
+      "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3",
+      "bytes": 6722,
+      "captured_utc": "2026-10-06T08:59:09Z",
+      "applicability": "P2 bounded-access mechanism; import support boundary; V10 tifffile binding (>= v2026.9.15 required by chain B)"
+    },
+    {
+      "id": "S4",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/releases/latest",
+      "pin": "zarr-python v3.4.0 (published 2026-09-15T20:55:52Z)",
+      "locator": "release body 'What's Changed' includes: 'fix: ManagedMemoryStore sync methods must respect the path prefix by @d-v-b in #4204', 'fix(store): retry the LocalStore rename when the destination is busy by @Tomatokeftes in #4358', 'refactor(store): polish the LocalStore rename retry from #4358 by @d-v-b in #4359', 'fix: reject malformed chunk keys in DefaultChunkKeyEncoding by @d-v-b in #4219'; new msgspec>=0.19 dependency",
+      "capture_id": "1827086366f24610bfa0415d97d501df",
+      "sha256": "abc8a6a14660744b3fbd5c66b52e297c2a6c9e1eec94865e9748939803cce08b",
+      "bytes": 12763,
+      "captured_utc": "2026-10-06T08:59:09Z",
+      "applicability": "Chain A release binding (fix present in v3.4.0); V10 zarr binding"
+    },
+    {
+      "id": "S5",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/pulls/4358",
+      "pin": "zarr-python main, PR #4358 merged 2026-09-15T14:57:41Z; merge_commit_sha 6947dd8798925bddf1563e48f1478bb9ffa7e650; head 4bb856d79c2ecc6f9ef695d2fcccb0d80dbe508b; 3 files, +146/-4",
+      "locator": "PR body: v2 retried DirectoryStore rename (#597, fixed by #698); v3 LocalStore atomic writes from #3412 lack retry -> PermissionError [WinError 5] on 'zarr.json' replace (issue #3522); _move_with_retry retries only winerror 5/32; exclusive path ERROR_ALREADY_EXISTS(183) excluded; author-measured 4,000 rewrites: 155-171 failures before, 0 after; retry tail called 'judgement, not measurement'",
+      "capture_id": "6950b8dfcdbf4c35bd70c8ec700b102c",
+      "sha256": "1ad7c2e417c3356f0dde76aa6ec8ea6b828148bc32f12787526b97666cfab3e6",
+      "bytes": 21323,
+      "captured_utc": "2026-10-06T09:00:49Z",
+      "applicability": "Chain A failure + fix narrative + measurement + limits"
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/repos/zarr-developers/zarr-python/pulls/4358/files",
+      "pin": "zarr-python main at PR #4358 head 4bb856d79c2ecc6f9ef695d2fcccb0d80dbe508b",
+      "locator": "3 diffs: changes/3522.bugfix.md (added); src/zarr/storage/_local.py (_TRANSIENT_WINERRORS {5,32}; _RETRY_DELAYS (0.0,0.001,0.005,0.02,0.05,0.2); _move_with_retry; _atomic_write routes both branches through it); tests/test_store/test_local.py (test_move_with_retry_recovers winerror 5/32 x failures 1-3; test_move_with_retry_gives_up; test_move_with_retry_does_not_retry_other_errors winerror 2,3,183,None; test_retry_delays_are_bounded sum<1.0 first==0.0)",
+      "capture_id": "db387f2f805d41c4ba3773f8326b28fb",
+      "sha256": "ffcf8be1c865615b345876c5cb77ccd8cccbbfc86e801f8da7a496ad0145008a",
+      "bytes": 9529,
+      "captured_utc": "2026-10-06T09:00:50Z",
+      "applicability": "Chain A fix code + regression tests (full diff captured; this is the evidence that tests accompany the fix)"
+    },
+    {
+      "id": "S7",
+      "url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+OME+axes&per_page=10",
+      "pin": "search snapshot 2026-10-06; total_count 30; items include #334, #322, #277, #270, #67, #261, #245",
+      "locator": "items[0] = issue #334 (full body: repro, versions 2026.5.2-2026.9.9 fail, <=2026.4.11 ok, series_mmstack coords['Z'] = (0.0, sizez*abs(zstep)) with zstep='2.9033' string, Micro-Manager 1.4 setAcquisitionProperty writes strings, PixelSize_um=0.3625 numeric, sample file attached); items[1] = #322 (TZCYX frame-by-frame -> ImageJ groups 10T x 2Z as 20 Z); items[2] = #277 (axes 'ZYX' volume shown by Fiji as SizeT=32/SizeZ=1); items[3] = #270 (OME shaped-series regression since 2024.8.24, trailing-1 trim, ValueError shape mismatch); items[5] = #261 (OME PhysicalSizeX/Y/Z + PositionX/Y/Z 'um' metadata; Position not saved)",
+      "capture_id": "9772b91e3f134493ad7fdff8dcc7cbf0",
+      "sha256": "8b3d30ee246d7f34731cf226faca3986833e2189477cd2318029b8efe529b64c",
+      "bytes": 50897,
+      "captured_bytes": 50897,
+      "captured_utc": "2026-10-06T09:00:50Z",
+      "limitation": "capture tool truncated read to first 32768 bytes; items[0]-[5] fully within delivered bytes except tail of #245; #334/#322/#277/#270/#261 bodies fully delivered",
+      "applicability": "Chain B issue; axes-order ambiguity evidence (#277,#322); reader-regression evidence (#270); OME calibration metadata vocabulary (#261)"
+    },
+    {
+      "id": "S8",
+      "url": "https://api.github.com/repos/cgohlke/tifffile/issues/334/comments",
+      "pin": "tifffile repo, issue #334 comments (2)",
+      "locator": "comment 5682206053 (owner cgohlke, 2026-09-15T14:41:07Z): 'This will be fixed in the next version of tifffile.'; comment 5684544571 (owner, 2026-09-15T17:04:02Z): 'Fixed in v2026.9.15'",
+      "capture_id": "57e8d030c08546be9f9a4a879ae15da8",
+      "sha256": "dffcfba382e32c8a8a87f25ea973875502672b8f144a1313cfb36d0050f5ab3d",
+      "bytes": 3306,
+      "captured_utc": "2026-10-06T09:02:49Z",
+      "applicability": "Chain B fix/release statement by maintainer. LIMIT: fix commit and regression test NOT verified (no PR; negative captures S12/S13); chain claimed only as far as the owner's release statement"
+    },
+    {
+      "id": "S9",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "pin": "OME-NGFF 0.4, 'Final Community Group Report, 1 October 2026', page revision meta a4c68004fdb8a8d822367205dc12f9574a32ddf8, ETag W/\"a34b4d538e29489772eebf7fe832f7c7\"",
+      "locator": "sec 2 ('Arrays MUST be defined and stored in a hierarchical organization as defined by version 2 of the Zarr specification'; 'OME-NGFF metadata MUST be stored as attributes in the corresponding Zarr groups'); sec 2.1 (multiscale arrays 0..n; labels group; label dims same-or-1, integers only; 2-5D; axis order time before channel before space); sec 3.1 axes ('MUST contain name, unique'; 'SHOULD contain type one of space/time/channel, MAY custom'; 'SHOULD contain unit, UDUNITS-2 valid; micrometer, second ...'; axes length MUST equal ndim); sec 3.2 bioformats2raw.layout transitional (OME/METADATA.ome.xml, MetadataOnly); transitional definition (RFC 2119 keywords)",
+      "capture_id": "c0f1b62a27e54309949b511f985717bb",
+      "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+      "bytes": 163120,
+      "captured_utc": "2026-10-06T09:00:03Z",
+      "limitation": "read via two byte-range reads of the captured body (0-32768 delivered initially; 32768-96768 read from capture); spec sections 2-3.2 verified verbatim; sections 3.3-3.9 (coordinateTransformations, multiscales details, omero) located via TOC but body text not delivered this stage (lead L3)",
+      "applicability": "P3 storage contract; axes vocabulary; export format choice; V10 NGFF binding"
+    },
+    {
+      "id": "S10",
+      "url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+OME+axes&per_page=10 (item #334 version table)",
+      "pin": "same capture as S7",
+      "locator": "#334 body: 'fails on 2026.5.2, 2026.5.15, 2026.6.1, 2026.7.14, 2026.9.9; reads correctly on 2026.4.11 and earlier'",
+      "capture_id": "9772b91e3f134493ad7fdff8dcc7cbf0",
+      "sha256": "8b3d30ee246d7f34731cf226faca3986833e2189477cd2318029b8efe529b64c",
+      "applicability": "evidence that reader releases regress on calibration parsing (version-gating inference)"
+    },
+    {
+      "id": "S11",
+      "url": "https://api.github.com/search/issues?q=repo%3Acgohlke%2Ftifffile+OME+axes&per_page=10 (item #270)",
+      "pin": "same capture as S7",
+      "locator": "#270 body: shaped OME write broke since 2024.8.24 (trailing-1 dim trimming only when self._tifffile); ValueError: shape does not match stored shape",
+      "capture_id": "9772b91e3f134493ad7fdff8dcc7cbf0",
+      "sha256": "8b3d30ee246d7f34731cf226faca3986833e2189477cd2318029b8efe529b64c",
+      "applicability": "second independent reader/writer regression datapoint supporting version pinning"
+    },
+    {
+      "id": "N1",
+      "url": "https://qupath.readthedocs.io/en/stable/docs/starting/projects.html",
+      "pin": "attempted 2026-10-06",
+      "capture_id": "2815479f27bd42619d9e5949fc08b3d1",
+      "sha256": "3866e8501e2ea679d1143ed82b083de6ef1760e63361c1606975f663984644c4",
+      "status": "404 (Read the Docs 'Documentation page not found')",
+      "applicability": "negative capture: QuPath project-docs path invalid; QuPath precedent deferred to lead L2"
+    },
+    {
+      "id": "N2",
+      "url": "https://simpleitk.readthedocs.io/en/master/fundamental_Concepts.html",
+      "pin": "attempted 2026-10-06",
+      "capture_id": "83444ac8b3f5452690c146222e5a6388",
+      "sha256": "4497f3f6a1668646af644382fad537a6823926d7101b9ea4439c3b7208d7e685",
+      "status": "404 (Read the Docs 'Documentation page not found')",
+      "applicability": "negative capture: SimpleITK coordinate-concepts page moved; LPS/RAS precedent deferred to lead L4"
+    },
+    {
+      "id": "N3",
+      "url": "https://raw.githubusercontent.com/cgohlke/tifffile/master/README.md and https://raw.githubusercontent.com/cgohlke/tifffile/v2026.9.20/CHANGES.md",
+      "pin": "attempted 2026-10-06 (both)",
+      "capture_id": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "status": "404: Not Found (both paths)",
+      "applicability": "negative capture: could not verify tifffile #334 fix commit or regression test via CHANGES.md at tag; recorded as the documented limit of Chain B (witness W6 / lead L1)"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "L1",
+    "title": "OSM/ODbL tile-policy and share-alike verification (BLOCKING for any OSM-derived bundling)",
+    "status": "unresolved",
+    "detail": "Three capture attempts failed with transport errors (OSError) on 2026-10-06: operations.osmfoundation.org/policies/tiles/, osmfoundation.org/wiki/Tile_usage_policy, wiki.openstreetmap.org/wiki/Tile_usage_policy. ODbL attribution/share-alike and bulk-download constraints for OSM-derived offline tile bundles are therefore UNVERIFIED in this stage.",
+    "bounded_alternative": "v1 bundles only Natural Earth-derived tiles (public domain, captured terms S7). Any ODbL source requires the license review + a per-bundle license state before adoption."
+  },
+  {
+    "id": "L2",
+    "title": "GeoPackage (or single-file container) as alternative project container",
+    "status": "not-investigated-this-stage",
+    "detail": "A GeoPackage-style container could improve interchange with the GIS ecosystem (including its undefined-CRS registry provisions), but the primary spec was not captured this stage; no GeoPackage-specific claims are made in the proposal.",
+    "bounded_alternative": "Folder bundle (SQLite + manifest.json + blobs/ + tiles/) chosen for v1; container swap isolated behind the storage layer."
+  },
+  {
+    "id": "L3",
+    "title": "Field-tool product precedents (QGIS offline editing plugin / Mergin Maps-class)",
+    "status": "not-investigated-this-stage",
+    "detail": "Would strengthen the offline-edit/merge workflow comparison with existing field products; budget went to the PROJ/GDAL/SQLite/CouchDB mechanism chain instead. Useful for the critique stage to test FieldBook's conflict UX against a shipped product.",
+    "bounded_alternative": "CouchDB conflict model (S6) used as the shipped-system precedent for divergence handling."
+  },
+  {
+    "id": "L4",
+    "title": "Track OSGeo/gdal#15337 (open) for its fix and regression test",
+    "status": "watch",
+    "detail": "Open as of capture (2026-10-04): OpenFileGDB spatial index misses features with PROJ 9.7.1 (axis-order derived index bounds). Confirms the failure class is live; no merged fix assumed. If FieldBook adds any library-derived index path, adopt the reporter's lesson: set explicit axis mapping on every cloned CRS before transforming bounds.",
+    "bounded_alternative": "FieldBook builds its own index coordinates from explicit registry metadata (design §6), independent of that fix."
+  },
+  {
+    "id": "L5",
+    "title": "Vertical-datum transformation as a later capability",
+    "status": "deferred",
+    "detail": "PROJ PR #4708 (merged 2026-03-13, backport-9.8 label, tests in test/unit/test_operationfactory.cpp) chains vertical CRS transforms via intermediate same-datum CRSs and replaces a silent ballpark fallback with registered operations (+proj=geogoffset +dh=28, axisswap 1,2,-3 example). v1 keeps altitude as provenance-labelled attribute without transformation; revisit after pinning PROJ >= 9.8.x and validating accuracy.",
+    "bounded_alternative": "Store datum/units verbatim; refuse transformation rather than ballpark (contract §4)."
+  },
+  {
+    "id": "L6",
+    "title": "Renderer and PROJ license pages not captured",
+    "status": "capture-before-implementation",
+    "detail": "Leaflet-class renderer and PROJ license statements were not captured this stage (time/transport); both are standard permissive licenses by common knowledge but that is NOT source-verified here.",
+    "bounded_alternative": "Capture before shipping any binary; add to license_manifest gate (V7)."
+  },
+  {
+    "id": "L7",
+    "title": "PROJ #4632 backport status to 9.7.x unknown",
+    "status": "uncertain",
+    "detail": "Captured data shows the fix in milestone 9.8.0 and stable 9.8.1 (reporter claim in #4842); a 'backport 9.8' label exists on sibling PR #4708 but no backport evidence for #4632 was captured.",
+    "bounded_alternative": "Version-pin PROJ per project + transform_id revalidation job on upgrade (§4)."
+  },
+  {
+    "id": "L8",
+    "title": "Photo EXIF capture-point provenance verification",
+    "status": "deferred",
+    "detail": "EXIF GPS is displayed as claimed metadata with provenance; forensic verification (sensor vs EXIF consistency) is future work. Automated classification explicitly out of v1 scope.",
+    "bounded_alternative": "Manual review workflow; photos never participate in geometry queries."
+  }
+]

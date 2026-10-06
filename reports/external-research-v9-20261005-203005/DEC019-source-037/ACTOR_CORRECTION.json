@@ -1,0 +1,20 @@
+{
+  "authoritative_family": "Z",
+  "effort": "Max",
+  "initial_luna_inference": "incorrect; not used",
+  "model": "GLM 5.3 Flash",
+  "model_substitution": false,
+  "original_native_actor_source": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/I01_ORIGINAL_T_FAILED_R_AUTHENTIC_DONOR_001/CAPSULES.json",
+    "sha256": "d36670ce67d939ed60bfcc682361c78872fe8b2b2a33d202acc613cfe1562251"
+  },
+  "original_registration": {
+    "family": "Z",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-01-FRESH-DELIVERY-R001/registration.json",
+    "requested_effort": "Max",
+    "requested_model": "GLM 5.3 Flash",
+    "sha256": "a6590ea5e19fe68b02aaa1decb3c03ad8045d477c8ca062d38d462ec944d6d4d"
+  },
+  "output_lane": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001",
+  "schema": "er9.original-actor-correction.v1"
+}

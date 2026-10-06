@@ -1,0 +1,41 @@
+{
+  "schema": "er9.publisher-scientific-report-selector.v1",
+  "evaluation_id": "independent-targeted-27",
+  "pair_id": "D-V05-B",
+  "allowed_scientific_reports": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.json",
+      "sha256": "6cf83fd9268b4ac0ff88fbcb5b20cf16bd383f31e320b1233b95ae68ef3f4242",
+      "bytes": 111636
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-source-review.md",
+      "sha256": "6ec6b44be20888c744b2261e3ae80ce538b59493a8c5ba1e6d5073fe4a0edf98",
+      "bytes": 24701
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/final-safe-summary.json",
+      "sha256": "fe15179295ed5fdb14910132fb1345f036958f2b9b70cfbfb4488e9d844a61fc",
+      "bytes": 8638
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/final-safe-summary.md",
+      "sha256": "a0513b335b1a12676f1489f5d8ef5803d24cf29c4cf217f90ee96574eae5d8bc",
+      "bytes": 2631
+    }
+  ],
+  "supporting_neutral_pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/phase1-freeze.json",
+      "sha256": "00d8ffae57fb98c960b64315228df54b1d038472e5691e12f7f96a4be15a9408",
+      "bytes": 6957
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-27/source-input-pins.json",
+      "sha256": "fc5200625164fd1aa537f2a42388911a8e626cdde14435a212f17f1235063065",
+      "bytes": 5129
+    }
+  ],
+  "excluded": "Private phase2 context report, raw held key/adapter/runtime projection and ModelIO; no prior report/grade substitution.",
+  "no_implicit_pair_winner_or_final_promotion": true
+}

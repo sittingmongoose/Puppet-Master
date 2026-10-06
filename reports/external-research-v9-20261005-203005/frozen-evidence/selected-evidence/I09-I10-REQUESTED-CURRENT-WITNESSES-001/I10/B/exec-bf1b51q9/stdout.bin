@@ -1,0 +1,6 @@
+dict_rows: [{"a": "1", "b": "2"}, {"a": "3", "b": null}, {"a": "4", "b": "5", "null": ["6"]}, {"a": "", "b": "café, NA"}]
+coercion_errors: [(3, "could not convert string to float: 'café, NA'")]
+json_payload: {"v": NaN, "u": "caf\u00e9", "ts": "2026-10-06T00:00:00Z"}
+strict_json_accepted: False
+contract_errors: [(1, 'short_row'), (2, 'extra_fields')]
+W1_OK

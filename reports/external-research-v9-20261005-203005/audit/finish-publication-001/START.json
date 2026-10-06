@@ -1,0 +1,11 @@
+{
+  "schema": "er9.bounded-publication-audit-clock.v1",
+  "agent": "codex-er9-publication-audit",
+  "role": "Sol independent audit helper; never scored candidate",
+  "instrumented_start_utc": "2026-10-06T12:16:36Z",
+  "deadline_utc": "2026-10-06T12:26:36Z",
+  "max_seconds_inclusive_required_handoffs": 600,
+  "timer_reset": false,
+  "start_instrument": "clock__curr_time first audit tool call",
+  "scope": "compact publication selectors/manifests, report entrypoint, scoped current queue proofs; no science regrade/raw/native/auth/key bodies, no model/native experiments"
+}

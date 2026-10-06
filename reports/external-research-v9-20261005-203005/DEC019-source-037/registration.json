@@ -1,0 +1,110 @@
+{
+  "admission_owner": "ops_recovery",
+  "automatic_retry": false,
+  "both_stage_source_choices_frozen_before_first_new_Goal": true,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/CARD.json",
+  "card_sha256": "0f56b0a40b8ba80765e0c3cb2050f93eb93325b2283c414172743a25e9a65867",
+  "clean_matched_causal_fresh_or_original_pipeline_credit": false,
+  "declared_total_new_seconds": 1500,
+  "extra_logical_target_credit": false,
+  "family": "Z",
+  "native_starts": 0,
+  "old_costs_and_failed_Goal_preserved": true,
+  "pair_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001",
+  "request_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-SOURCE001",
+  "requested_effort": "Max",
+  "requested_model": "GLM 5.3 Flash",
+  "schema": "er9.dispatch-registration.v1",
+  "source_owned_failed_parent_exception": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/I01_ORIGINAL_T_FAILED_R_AUTHENTIC_DONOR_001/SELECTION.json",
+    "sha256": "ff0087a716b7935a80b4ed2e88f8195caf02dd9b5c14f0970d8bb8c41eb6f51b"
+  },
+  "source_slot": "I-01",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001"
+      ],
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/RESOURCE_CONTRACT.json",
+          "sha256": "ae5db1d73debfc2fc21f8fb30bb8de695dd172307f82945b497d928a61cbc2e0"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+          "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+        },
+        "version": "glm_complete2304_clock_readiness_v1"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+        "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+      },
+      "stage": "critique",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "38041f11f93873f16c0edcd6fd3320369199b195588854f7d403ac6617b4312d",
+      "status": "SOURCE_FROZEN_REQUIRES_AUTHENTIC_PARENT_BINDING"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001"
+      ],
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/RESOURCE_CONTRACT.json",
+          "sha256": "8163ed0bf561c418a74fff6899fb04b3f3bede899d634a788b0fc56d8050a248"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+          "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+        },
+        "version": "glm_complete2304_bundle_clock_readiness_v1"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+        "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+      },
+      "stage": "revision",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/failed-parent-I01T-warm-continuation-001/packets/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "80416e59356f16ac96b15aa2533510e5e92c6ead4e3998bd047dc9a3b16df314",
+      "status": "SOURCE_FROZEN_REQUIRES_AUTHENTIC_PARENT_BINDING"
+    }
+  ],
+  "status": "SOURCE_READY_PENDING_CONCRETE_ROOT_REVIEW_NO_ADMISSION",
+  "warm_only": true
+}

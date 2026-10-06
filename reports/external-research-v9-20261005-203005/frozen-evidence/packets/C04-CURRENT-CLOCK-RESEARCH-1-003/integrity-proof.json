@@ -1,0 +1,22 @@
+{
+  "schema": "er9.actual-current-research-integrity.v1",
+  "arms": [
+    {
+      "alias": "A",
+      "exact_research_freeze_sha256": "13e92dc259db630b89ac253b5f934bdfac97820850a01465048f1927866f6c36",
+      "native_receipt_sha256": "2d27a35bb2823911122f23b881fbb3c758ecca786d1642b39373276fd2416427",
+      "outer_release_sha256": "c049eb46bc7635a703ec327e570428058c95d2dce6d3156c268067f3b9a602c2",
+      "positive_actual_quiet": "exactnative cleanup/exited/remaininggroupempty andresourcecomponentsquiet +actualouter allprivate-slice descendantsquiet; not wrapperinference",
+      "body_bytes_hash_verified": true
+    },
+    {
+      "alias": "B",
+      "exact_research_freeze_sha256": "4e57fc3921a843b5ae78431d87dffe1c9dda06757f19d83beeb6677e01630788",
+      "native_receipt_sha256": "285753ba2a5aa157df43495c3882a0b548352d110ddff29f9ce02135e0f3734e",
+      "outer_release_sha256": "e11d5bc2eb00c562d034c65e9fcc4702ccae564972d996f565f9ef4866016a58",
+      "positive_actual_quiet": "exactnative cleanup/exited/remaininggroupempty andresourcecomponentsquiet +actualouter allprivate-slice descendantsquiet; not wrapperinference",
+      "body_bytes_hash_verified": true
+    }
+  ],
+  "model/nativeGoal/status/history/cost": "HELD_PHASE2"
+}

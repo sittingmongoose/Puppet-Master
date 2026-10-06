@@ -1,0 +1,60 @@
+[
+  {
+    "id": "W1",
+    "kind": "executed-by-candidate",
+    "title": "Axis-order swap and boundary arithmetic demo",
+    "execution": {"execution_id": "exec-cvrzkozd", "exit_code": 0, "completed_utc": "2026-10-06T08:51:31Z", "code_sha256": "8a5ebd6e4070af89d168c5392cc5c854b8bcbbba143cd3803dde18b1cb3b3b5c", "data_sha256": "9fa9e6c2dcca31ec9f3092af7c79765dcae69b4f63c98ac533665fee7c8a90c3", "stdout_sha256": "3511f0245044e260a106488217d266a9cdffcbd29e1c2be18cf2933f203ddd65", "stderr_empty": true},
+    "input_data": "Three EPSG:4326-style points (Tokyo, Reykjavik, Sydney) as (lat,lon); antimeridian query box lon [179.999, 180.0] against a point stored at -180.0005; float32 narrowing of 179.99995",
+    "code_summary": "Haversine distance (R=6371008.8 m spherical approximation) between true (lat,lon) and axis-swapped reading; naive vs wrap-normalised bounding-box membership; struct-based float32 narrowing",
+    "expected_behavior": "Swapped readings silently displace points by thousands of km (|lat|>90 cases are detectable); naive antimeridian test misses a physically-in-box point; float32 narrowing changes the edge value",
+    "result_stdout_excerpt": "Tokyo: true (35.6762,139.6503) vs swapped (139.6503,35.6762) -> 6471 km displaced, SILENT; Reykjavik -> 12007 km, SILENT; Sydney -> 6988 km, SILENT; W1b: stored as -180.0005 -> naive test False (MISS); wrap-normalised 179.9995 -> True (HIT); W1c: lon 179.99995 -> float32 179.9999542236328",
+    "honest_notes": "A stray literal 'exit_code_placeholder' line was printed at the end of stdout (authoring artifact in the demo code; it does not affect the numeric assertions and is part of the receipted stdout_sha256).",
+    "scope_limits": "Isolated component check in the admitted sandbox; spherical-Earth approximation; pure arithmetic only. Does NOT establish any FieldBook application behavior, nor full transform-engine correctness."
+  },
+  {
+    "id": "W2",
+    "kind": "executed-by-candidate",
+    "title": "Field-level three-way merge vs last-writer-wins demo",
+    "execution": {"execution_id": "exec-pd8aieyw", "exit_code": 0, "completed_utc": "2026-10-06T08:51:33Z", "code_sha256": "2bd72858d32ca7cde071d196da53992b09a02b0527436fa4602cc73ab0aec036", "data_sha256": "9e9b5924c9c3b5f11d20501044e1347890704bc4c41c3d1542c5e8b5a08f63db", "stdout_sha256": "6c014d14a1a0533a1045558cb619ec1c11d77c805ee71cbd37b04756ab4a1622", "stderr_empty": true},
+    "input_data": "Synthetic observation base {taxon 'Fagus sylvatica', height_m 12, note ''}, local {height 15, note 'bark canker seen'}, remote {taxon 'Fagus orientalis', height 14}; plus a delete-vs-edit case",
+    "code_summary": "Deterministic field-level three-way merge (equal -> same; base==one side -> take other; both changed -> conflict record with base/local/remote); LWW baseline comparison",
+    "expected_behavior": "Disjoint edits auto-merge (taxon, note); same-field divergence (height_m 12/15/14) surfaces as an explicit conflict; LWW silently loses the note and one height value; delete-vs-edit flagged",
+    "result_stdout_excerpt": "merged: taxon 'Fagus orientalis', note 'bark canker seen', height_m '<CONFLICT:height_m>'; conflicts: [{field height_m, base 12, local 15, remote 14}]; W2b LWW present? False False; W2c delete-vs-edit explicit conflict required: True",
+    "honest_notes": "Demonstrates the contract's shape, not production code quality (e.g. no delete/restore in the merged payload path).",
+    "scope_limits": "Synthetic JSON toy on three fields; isolated check. Does NOT establish the production merge engine, CRDT/CouchDB-scale behavior, or whole-product merge correctness."
+  },
+  {
+    "id": "W3",
+    "kind": "proposed/UNEXECUTED",
+    "title": "Crash/kill recovery harness (V3)",
+    "design": "Inject SIGKILL at seeded points during save, import and merge in the real app; reopen and assert every record is classified committed/uncommitted/quarantined with no silent loss; verify ops-log chain and commit markers",
+    "scope_limits_if_run": "Would exercise real storage code; still not proof for arbitrary hardware failure modes"
+  },
+  {
+    "id": "W4",
+    "kind": "proposed/UNEXECUTED",
+    "title": "Transform round-trip + known-point suite (V1/V2)",
+    "design": "Forward/inverse round-trip within per-CRS tolerances over the supported CRS list with pinned PROJ; golden-file export byte-stability for identical transform_id; known-point checks against reference coordinates",
+    "scope_limits_if_run": "Covers only the supported CRS list and pinned versions"
+  },
+  {
+    "id": "W5",
+    "kind": "proposed/UNEXECUTED",
+    "title": "Merge property tests (V4)",
+    "design": "Randomized op sequences replicated on two replicas; assert commutativity, idempotence, and no-loss (every non-conflicting change survives; every conflicting change appears in the conflict set)",
+    "scope_limits_if_run": "Field-level model only; clock/HLC skew cases must be included"
+  },
+  {
+    "id": "W6",
+    "kind": "proposed/UNEXECUTED",
+    "title": "250k-observation bounded-access benchmark (V5)",
+    "design": "Synthetic 250k project; measure viewport p95/p99, FTS search p95, streaming export throughput, peak RSS, cancellation latency on a 4-core/8GB-class machine",
+    "scope_limits_if_run": "Engineering target validation, not a product-wide performance claim"
+  },
+  {
+    "id": "W7",
+    "kind": "proposed/UNEXECUTED",
+    "title": "Integrity + license-manifest audit (V6/V7)",
+    "design": "rtreecheck, ops-log chain verification, blob hash sweep after simulated relocation; assert every bundled tile/source has a license-manifest entry with locator"
+  }
+]

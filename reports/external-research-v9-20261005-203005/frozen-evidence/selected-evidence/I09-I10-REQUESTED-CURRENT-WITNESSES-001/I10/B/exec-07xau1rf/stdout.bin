@@ -1,0 +1,4 @@
+rows=100000 sum=4999950000 sq_sum=333328333350000
+source_bytes=1642650 max_rows_held=10000 (chunk bound 10000)
+approx per-chunk buffer bytes=85176 => bounded memory per chunk, not O(file)
+W3_OK

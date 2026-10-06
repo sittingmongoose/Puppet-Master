@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "stage": "research",
+    "labels": {
+      "executed_by_candidate": "check authored and run by the candidate via the admitted isolated Python executor; receipts recorded by the executor",
+      "proposed_unexecuted": "designed but not run in this stage; no receipt exists"
+    },
+    "scope_warning": "Every executed witness below is an isolated component check (pure stdlib reference behavior). None establishes full-application behavior, GUI behavior, or third-party library behavior."
+  },
+  "witnesses": [
+    {
+      "id": "W1",
+      "label": "executed by candidate",
+      "title": "Stored-coordinate precision: JSON binary64 round-trip vs float32 coercion",
+      "claim_tested": "Float64 coordinates serialized as JSON text round-trip exactly; float32 coercion is lossy (~1e-8 relative), so stored coordinates/calibration must be binary64 + round-trippable decimal text.",
+      "execution_id": "exec-x4c6a5fo",
+      "completed_utc": "2026-10-06T09:05:42Z",
+      "code_sha256": "88c0a0eb1b8fe1398dc77b8e25f2c20af8c1193d43ce8ef25c7ffdb292925441",
+      "input": "coords = [123456.123456789, 0.1+0.2, 100000.25, 0.04999999999] (embedded in code; no external data)",
+      "expected_and_why": "Python float repr/parse uses shortest round-trip decimals, so json.loads(json.dumps(x)) == x for finite doubles; struct float32 keeps ~7 significant digits, so relative errors ~1e-8..4e-8 appear. (IEEE-754 binary64 round-trip needs up to 17 significant decimal digits — standard behavior, exercised here rather than cited.)",
+      "observed_stdout_sha256": "17456b2eefa161ee55cee3e514239aa3213526eec9eee9d764a4db72fca8fe8a",
+      "observed": "json_exact_for_all=true; max_float32_rel_err=3.9736429702230673e-08; e.g. 123456.123456789 -> float32 123456.125 (abs err 1.54e-3)",
+      "exit_code": 0,
+      "limits": "Validates only the stdlib json/struct reference path in the isolated executor (no network, 256 MiB, 5 s wall). Does not validate other JSON writers/parsers, disk-level corruption, or any application's persistence code."
+    },
+    {
+      "id": "W2",
+      "label": "executed by candidate",
+      "title": "Affine contract algebra: compose (voxel->physical)->(physical->display) and invert",
+      "claim_tested": "Storing voxel->physical (scale+translation) and deriving physical->display at runtime yields a composed mapping whose inverse recovers voxel coordinates to float64 round-off; display changes cannot silently alter stored coordinates.",
+      "execution_id": "exec-3iboy8ea",
+      "completed_utc": "2026-10-06T09:05:43Z",
+      "code_sha256": "6832bb78bcaca51d8512dc22b7bd1d9d2a29627b7c2a5ed12cccc8a00c4cb7de",
+      "input": "phys = scale 0.65 translation (11.5, 3.25); disp = zoom 2.0, pan (-120.25, -45.5); probe points (0,0),(1023,767),(512.3,300.7),(0.05,4095.95)",
+      "expected_and_why": "Affine maps compose associatively and are invertible for nonzero determinant; pure-Python 2D reference must agree to near machine epsilon.",
+      "observed_stdout_sha256": "df5e4a6f2cb97a26944c5a558a17724e609490bda4b905486b478896c1ebf061",
+      "observed": "max_sequential_vs_composed_err=0.0; max_inverse_roundtrip_err=4.547473508864641e-13; determinant nonzero",
+      "exit_code": 0,
+      "limits": "Pure-Python 2D affine reference only: no GPU path, no 3D/affine-with-rotation case, no resampling, no application code. Establishes contract math, not viewer behavior."
+    },
+    {
+      "id": "W3",
+      "label": "executed by candidate",
+      "title": "Save-integrity mechanics: temp file + os.replace; aborted save leaves previous target",
+      "claim_tested": "The temp-then-rename save mechanism replaces the target wholesale (temp consumed), and an abort before rename leaves the previous manifest intact and loadable.",
+      "execution_id": "exec-kvg4bgso",
+      "completed_utc": "2026-10-06T09:05:43Z",
+      "code_sha256": "bc11247e745282f701067e54ac7df43ab6f5bce0427754ca34d64bc89fad6c02",
+      "input": "project.json / project.json.tmp in the executor's fresh filesystem; staged write/replace/abort sequence",
+      "expected_and_why": "POSIX rename(2) semantics: rename removes the source name and replaces the target atomically with respect to concurrent openers; a writer that never reaches rename leaves the old target.",
+      "observed_stdout_sha256": "7197dbf4dba925b16703abc90dceae99ea296be8092906607853dee3035a0bc4",
+      "observed": "successful_save_version=1; temp_removed_by_rename=true; version_after_aborted_save=1; target_unaffected_by_abort=true",
+      "exit_code": 0,
+      "limits": "Mechanics only. No crash injection (SIGKILL mid-write), no fsync/durability test, no power-loss simulation, no cross-filesystem rename case. Full recovery behavior is P2 (proposed, UNEXECUTED)."
+    },
+    {
+      "id": "P1",
+      "label": "proposed/UNEXECUTED",
+      "title": "3 GB bounded-access benchmark",
+      "design": "Open a >=3 GB source through the image-access layer; scroll all slices, paint annotations; assert peak RSS < ~1.5 GB (no second full copy), tile latency budget met, cancel responds < 500 ms.",
+      "status": "not run; depends on unpinned streaming libraries (see leads L4)."
+    },
+    {
+      "id": "P2",
+      "label": "proposed/UNEXECUTED",
+      "title": "Crash-during-save recovery",
+      "design": "100 trials killing the process between temp-write and rename (and after rename, before backup rotation); assert manifest always parses and is the previous or new version; stale temps cleaned on next open.",
+      "status": "not run; extends W3 beyond mechanics."
+    },
+    {
+      "id": "P3",
+      "label": "proposed/UNEXECUTED",
+      "title": "Two-machine reopen round trip",
+      "design": "Save project on host A, move bundle via shared storage to host B, reopen: coordinates bit-identical, source hashes verify, missing reference renders placeholder with annotations retained.",
+      "status": "not run."
+    },
+    {
+      "id": "P4",
+      "label": "proposed/UNEXECUTED",
+      "title": "Format-boundary fixtures",
+      "design": "For each unsupported class (vendor container, >5D, rotated calibration, ambiguous axes, bad unit string): import must fail with the specified message, write only a staging record, retain verbatim sidecar metadata, and leave the project loadable.",
+      "status": "not run."
+    },
+    {
+      "id": "P5",
+      "label": "proposed/UNEXECUTED",
+      "title": "Undo regression suite incl. closed escape hatch",
+      "design": "Mirror test_labels_undo_redo (fill/undo/redo/history-limit) on the annotation store, plus a test that direct data writes outside the command log are impossible by construction (closing the gap evidenced by napari PR #3155).",
+      "status": "not run."
+    }
+  ]
+}

@@ -1,0 +1,1919 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "DEC018_conditional_blocked_roles": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "birth": {
+                "type": "null"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "status",
+              "native_goal_starts",
+              "birth"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "birth": {
+                "type": "null"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "status",
+              "native_goal_starts",
+              "birth"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "birth": {
+                "type": "null"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "status",
+              "native_goal_starts",
+              "birth"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "DEC018_gate_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "DEC018_paired_gate_status": {
+      "type": "string"
+    },
+    "DEC018_repairs": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "freeze_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "native_quiescent": {
+                "type": "boolean"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "operator_native_status": {
+                "type": "string"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "freeze_pin",
+              "later_join_usage_reference_only",
+              "occupied_seconds_reference_only",
+              "operator_native_status",
+              "operational_complete",
+              "native_quiescent",
+              "missing_required_artifacts",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "billing_dollars",
+              "new_actor_charge_from_reference"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "freeze_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "native_quiescent": {
+                "type": "boolean"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "occupied_seconds_reference_only": {
+                "type": "number"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "operator_native_status": {
+                "type": "string"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "freeze_pin",
+              "later_join_usage_reference_only",
+              "occupied_seconds_reference_only",
+              "operator_native_status",
+              "operational_complete",
+              "native_quiescent",
+              "missing_required_artifacts",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "billing_dollars",
+              "new_actor_charge_from_reference"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "I12_all6_roles": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "arm": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "elapsed_seconds": {
+                "type": "number"
+              },
+              "ended_utc": {
+                "type": "string"
+              },
+              "freeze_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_sha_verified": {
+                "type": "boolean"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "later_join_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "native_receipt_elapsed_reference_only": {
+                "type": "number"
+              },
+              "native_status": {
+                "type": "string"
+              },
+              "new_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "outer_and_native_elapsed_overlap_not_added": {
+                "type": "boolean"
+              },
+              "quiet_release_proof": {
+                "additionalProperties": false,
+                "properties": {
+                  "quiet_release_metadata": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "all_owned_scopes_quiet": {
+                        "type": "string"
+                      },
+                      "all_private_units_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_cgroups_quiet": {
+                        "type": "string"
+                      },
+                      "client_tool_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "execution_units_quiet": {
+                        "type": "string"
+                      },
+                      "held_process_groups_absent": {
+                        "type": "string"
+                      },
+                      "native_quiescent": {
+                        "type": "string"
+                      },
+                      "permit_release_confirmed": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "native_quiescent",
+                      "permit_release_confirmed",
+                      "all_owned_scopes_quiet",
+                      "all_private_units_quiet",
+                      "held_process_groups_absent",
+                      "client_tool_cgroups_quiet",
+                      "client_tool_process_groups_absent",
+                      "execution_units_quiet"
+                    ],
+                    "type": "object"
+                  },
+                  "sha_verified": {
+                    "type": "boolean"
+                  },
+                  "source_pin": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": "string"
+                      },
+                      "sha256": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "source_pin",
+                  "sha_verified",
+                  "quiet_release_metadata"
+                ],
+                "type": "object"
+              },
+              "release_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "job_id",
+              "arm",
+              "stage",
+              "status",
+              "native_goal_starts",
+              "ended_utc",
+              "freeze_ref",
+              "release_ref",
+              "operational_complete",
+              "native_status",
+              "missing_required_artifacts",
+              "elapsed_seconds",
+              "later_join_usage_reference_only",
+              "native_receipt_elapsed_reference_only",
+              "outer_and_native_elapsed_overlap_not_added",
+              "saved_Goal_status_separate",
+              "quiet_release_proof",
+              "freeze_sha_verified",
+              "new_actor_charge_from_reference",
+              "billing_dollars"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "later_native_join_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "live_DEC019_final_conditional_allocation_not_observed_cost": {
+      "additionalProperties": false,
+      "properties": {
+        "active_usage_export": {
+          "type": "string"
+        },
+        "conditional_final_authorized_responses": {
+          "type": "number"
+        },
+        "conditional_final_authorized_seconds": {
+          "type": "number"
+        },
+        "critic_authorized_responses": {
+          "type": "number"
+        },
+        "critic_authorized_seconds": {
+          "type": "number"
+        },
+        "final_native_entry": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "critic_authorized_seconds",
+        "critic_authorized_responses",
+        "conditional_final_authorized_seconds",
+        "conditional_final_authorized_responses",
+        "final_native_entry",
+        "active_usage_export"
+      ],
+      "type": "object"
+    },
+    "live_DEC019_observer_rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "max_responses": {
+                "type": "number"
+              },
+              "max_seconds": {
+                "type": "number"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "original_birth_monotonic_ns": {
+                "type": "number"
+              },
+              "prelaunch_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "stage_ref": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "job_id",
+              "family",
+              "native_goal_starts",
+              "original_birth_monotonic_ns",
+              "max_seconds",
+              "max_responses",
+              "stage_ref",
+              "prelaunch_ref"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "owner_checkpoint_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_observed_utc": {
+      "type": "string"
+    },
+    "primary_capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_checkpoint_pin",
+    "owner_observed_utc",
+    "primary_capture_interval_utc",
+    "later_native_join_pin",
+    "I12_all6_roles",
+    "DEC018_gate_pin",
+    "DEC018_paired_gate_status",
+    "DEC018_repairs",
+    "DEC018_conditional_blocked_roles",
+    "live_DEC019_observer_rows",
+    "live_DEC019_final_conditional_allocation_not_observed_cost",
+    "scope"
+  ],
+  "type": "object"
+}

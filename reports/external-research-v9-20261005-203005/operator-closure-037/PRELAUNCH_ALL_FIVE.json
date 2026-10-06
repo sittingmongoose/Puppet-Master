@@ -1,0 +1,87 @@
+{
+  "observed_utc": "2026-10-06T11:13:45.644958+00:00",
+  "policy_ref": {
+    "path": "LAB_ROOT/supervision/DECISIONS-018-PAIRED-NATIVE-CATALOG-SYNTAX-REPAIR.json",
+    "sha256": "7081edae455d24363f1bfb76f91551158faa4bfbc448c68bfe0841fd2dd1e94c"
+  },
+  "outbox_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/OUTBOX_FINAL.json",
+    "sha256": "efa268aebac6cc542402436cf770cbfb131122d335ecb9ab64cd95a8d6c07b90"
+  },
+  "all5_source_choices_before_ANY_Goal": [
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/prepared-stage.json",
+        "sha256": "911fca87e25fe004ea94b6d694d2ff86132eebb5c2a3cc22487711ce57237ef4"
+      },
+      "runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_READINESS_V1_READY.json",
+        "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+      },
+      "max_seconds": 600,
+      "max_responses": 60,
+      "Task_sha256": "f5500f547a199c2a186d5fefde2ab84cdf172db058d9491fd2c243040ddf52da"
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+      "stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "865099e4cf43f19a800eb28a18c75b24d602e4ada90338d0f5875cfc40acfcce"
+      },
+      "runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_READINESS_V1_READY.json",
+        "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+      },
+      "max_seconds": 900,
+      "max_responses": 90,
+      "Task_sha256": "8c0f3aaaed49a61cd844dff03e13d3923a5517b0fede2e7bdc63f39fc6f75216"
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001",
+      "stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "f6ea2a3b76ce50514e95d0cf9ad21922b0379997b17a29c7deb9a6f95d47f7f5"
+      },
+      "runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+        "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+      },
+      "max_seconds": 600,
+      "max_responses": 60,
+      "Task_sha256": "b79ec5af6e33f20ee3615dcc8bceab80f3801c6b710ff9635979919a8d708815"
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/prepared-stage.json",
+        "sha256": "afb108156e88ef95980b23c587d32af8c0286a6b09d2f03bbe675af9cb1ce9a6"
+      },
+      "runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_READINESS_V1_READY.json",
+        "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+      },
+      "max_seconds": 600,
+      "max_responses": 60,
+      "Task_sha256": "9fc34322cfd27653fb68096aaa4238b0da29ea0f13f2952b3b5e1f24c6affbbd"
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001",
+      "stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "0f888192de136af5f6d8dbaac3fca11019749444d6317b8e16a4f19301eb4984"
+      },
+      "runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_READINESS_V1_READY.json",
+        "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+      },
+      "max_seconds": 1500,
+      "max_responses": 150,
+      "Task_sha256": "7ad7bda6a02058189eb7bc6b91e84015f91f1c9b7d3919df810fbad74c1c43e5"
+    }
+  ],
+  "all5_new0Goal_noIntent": true,
+  "both_strict_native_repairs_gate_before_either_continuation": true,
+  "old_failure_costs_preserved": true,
+  "native_calls": 0
+}

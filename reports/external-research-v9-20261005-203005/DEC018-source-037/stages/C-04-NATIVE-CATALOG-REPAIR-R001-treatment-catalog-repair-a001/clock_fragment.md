@@ -1,0 +1,4 @@
+
+
+## Original stage clock — common prospective overlay
+The original stage allocation is 600 seconds, including the existing cleanup reserve. Read inputs/STAGE_CLOCK.json at the start of this stage for the initial clock snapshot. The original candidate action deadline and remaining candidate action time are separate from the total cleanup stop. Every tool call also returns a separate clock telemetry text block, including errors. Use a current telemetry snapshot when checking remaining action time; the initial file is a birth-time snapshot. UNKNOWN means that the action deadline has no exposed source proof. A zero or expired remaining-action value grants no additional action time. Clock telemetry neither resets the original clock nor changes permissions, native Goal status, stage duties or output requirements.

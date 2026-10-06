@@ -1,0 +1,251 @@
+{
+  "meta": {
+    "stage": "research",
+    "captured_utc_window": "2026-10-06T09:00:57Z .. 2026-10-06T09:04:16Z",
+    "capture_format": "exact-http-response-body-bytes (sha256 of full body recorded per entry)",
+    "note": "Locators are exact section anchors, byte ranges of the captured body, or API record fields; byte-range sha256 values are of the delivered sub-ranges of the full-body captures."
+  },
+  "sources": [
+    {
+      "id": "S1",
+      "title": "Development brief A — local biomedical image review workspace (task input)",
+      "url": "inputs/brief.md (case-owned input)",
+      "pin": "sha256 27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628; 15 lines",
+      "applicability": "Defines all minimum obligations R1-R10 referenced in the proposal; not an external source."
+    },
+    {
+      "id": "S2",
+      "title": "OME-NGFF 0.4 specification (Next-generation file formats, Final Community Group Report, updated 2026-10-01)",
+      "url": "https://ngff.openmicroscopy.org/0.4/index.html",
+      "capture": {
+        "sha256": "ca4780a33f9561cfd2d983651fdcc745dce0d6089f5cf775744a54e8394a5269",
+        "capture_id": "d34314f7dbb84942a93a0b2691ab9335",
+        "captured_utc": "2026-10-06T09:00:57Z",
+        "bytes": 163120,
+        "http_status": 200
+      },
+      "locators": {
+        "status_of_document (0.4 release, migration scripts promise)": "byte range 43000-75768, range sha256 196fdb00c66b76d0631fafcc554215008c1a78baecb27a51550a94bd2968ab41",
+        "section_2_on_disk_layout (Zarr v2 hierarchy; OME-Zarr arrays MUST follow Zarr spec v2; chunk layout)": "anchor #on-disk, #image-layout; text within byte range 43000-100344",
+        "section_3.1_axes (MUST unique name; SHOULD type space/time/channel; SHOULD unit, UDUNITS-2; length MUST equal array dims)": "anchor #axes-md; normative list within byte range 75768-100344, range sha256 94187cc3a042274254b465cdaffab0620e813714783471e1041cf81c631f9d45",
+        "section_3.3_coordinateTransformations (identity/translation/scale, List[float] or path; 'applied sequentially and in order')": "anchor #trafo-md; same byte range as above",
+        "section_3.4_multiscales (2-5 dims; time-first, channel/custom, space ordering; MUST match zarr array dims)": "anchor #multiscale-md; same byte range as above",
+        "section_2.1_labels (label arrays integer-only; dims match image or 1)": "anchor #image-layout layout comments"
+      },
+      "applicability": "Storage-side coordinate contract (axes/units/transforms), multiscale layout, format-version pinning, labels representation. Anchors verified against the rendered TOC captured in the same bytes."
+    },
+    {
+      "id": "S3",
+      "title": "GitHub REST search: napari/napari issues+PRs matching 'undo labels in:title' (returns PR #3155 and PR #533 records)",
+      "url": "https://api.github.com/search/issues?q=repo%3Anapari%2Fnapari+undo+labels+in%3Atitle&per_page=20",
+      "capture": {
+        "sha256": "dd7fdf17ff4d7b8aabfcd9d2b0a1e60dc8e1dcfd09b140ebf65a4ab8b20ca5b1",
+        "capture_id": "43bbe56f4a274fd19adecc0d2ff4719e",
+        "captured_utc": "2026-10-06T09:00:59Z",
+        "bytes": 10401,
+        "http_status": 200
+      },
+      "locators": {
+        "PR_3155_record": "items[0]: number 3155, title 'Proposal: override Labels.data.__setitem__ to support undo', draft true, merged_at null, closed_at 2022-06-28T18:17:23Z, created 2021-08-13 by jni; body describes plugins using layer.data[indices]=... bypassing undo/redo",
+        "PR_533_summary": "items[1]: number 533, title 'add undo/redo to labels layer', merged_at 2019-09-28T04:16:18Z, milestone '0.2'; body: 'the undo/redo stack is reset whenever you change the viewed dimensions'"
+      },
+      "applicability": "Primary evidence for the issue->fix chain and for the documented (never-fixed) undo gap for direct array writes."
+    },
+    {
+      "id": "S4",
+      "title": "GitHub REST record of napari/napari PR #533 'add undo/redo to labels layer'",
+      "url": "https://api.github.com/repos/napari/napari/pulls/533",
+      "capture": {
+        "sha256": "a35bd7c1e3178c52525a3fa0c8d751d984e98bfa511777663e3ea219077b853c",
+        "capture_id": "f6927c7656e241aabdf76adc58fb4e0b",
+        "captured_utc": "2026-10-06T09:01:57Z",
+        "bytes": 19493,
+        "http_status": 200
+      },
+      "locators": {
+        "merge_facts": "merged true; merged_at 2019-09-28T04:16:18Z; merge_commit_sha d09bea9c1b36ef3d78b97b64a159bc36c1b8d9b8; merged_by sofroniewn; base napari:master @ dd48e8e61a6a06539664bbc5fb90afefd8a1e9e5; head kne42:undo-redo-labels @ 9ba94a13eae5c2bbf5b3fd21d67a05c6a07c0cb2; milestone '0.2'; commits 7; additions 116; deletions 15; changed_files 4"
+      },
+      "applicability": "Commit/release applicability of the traced chain."
+    },
+    {
+      "id": "S5",
+      "title": "GitHub REST files of napari/napari PR #533 (patches for 4 files)",
+      "url": "https://api.github.com/repos/napari/napari/pulls/533/files?per_page=100",
+      "capture": {
+        "sha256": "f25e5a78db5c8c1117fcd59fb7369b5708295f72e7e8b0f62932527de15e32a4",
+        "capture_id": "21ffa3498d8b408da9e12d2dcd7f27d4",
+        "captured_utc": "2026-10-06T09:01:57Z",
+        "bytes": 11354,
+        "http_status": 200
+      },
+      "locators": {
+        "mechanism": "napari/layers/labels/labels.py patch: _history_limit=100; _save_history() appends self.data[self.dims.indices].copy(); _block_saving set in on_mouse_press / cleared in on_mouse_release (one stroke = one entry); _set_view_slice() resets _undo_history/_redo_history; undo()/redo() via _load_history; keybindings Control-Z / Control-Shift-Z in napari/layers/labels/keybindings.py",
+        "regression_test": "napari/tests/test_advanced.py patch adds test_labels_undo_redo: fill->undo->redo round trip; history limit 1 -> one undo works, second undo no-op"
+      },
+      "applicability": "Exact fix content and regression test of the traced chain."
+    },
+    {
+      "id": "S6",
+      "title": "napari v0.2.0 tag: raw napari/tests/test_advanced.py",
+      "url": "https://raw.githubusercontent.com/napari/napari/v0.2.0/napari/tests/test_advanced.py",
+      "capture": {
+        "sha256": "b810ad32d222ef953f5d2077698f5b4705480dd812f3453c55c8b64353ef7183",
+        "capture_id": "e8020f49031449febececcfd347473f6",
+        "captured_utc": "2026-10-06T09:02:54Z",
+        "bytes": 7960,
+        "http_status": 200
+      },
+      "locators": {
+        "regression_test_at_release": "final function in file: test_labels_undo_redo (identical assertions to the merged PR patch)"
+      },
+      "applicability": "Release applicability: feature + regression test present at tag v0.2.0 (matching milestone 0.2). Limits: presence verified at v0.2.0 and at the PR patch only; later test-file relocations were not audited."
+    },
+    {
+      "id": "S7",
+      "title": "QuPath repository README",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/README.md",
+      "capture": {
+        "sha256": "db00b2526f7529e55733a4802ce748c9fb68bfeb7efd115d56e38957a593e088",
+        "capture_id": "cc3426331bb54eb080039b5a1f6ce1b5",
+        "captured_utc": "2026-10-06T09:03:35Z",
+        "bytes": 4460,
+        "http_status": 200
+      },
+      "locators": {
+        "positioning": "'QuPath is open source software for bioimage analysis'; 'an academic project intended for research use only'; GPLv3"
+      },
+      "applicability": "Context for precedent P-B (research tool positioning); not load-bearing for mechanisms."
+    },
+    {
+      "id": "S8",
+      "title": "ome/ngff repository root listing (GitHub REST contents)",
+      "url": "https://api.github.com/repos/ome/ngff/contents/",
+      "capture": {
+        "sha256": "aa81ca44f0705970dc519ba6a2555c8f6c82ba7a09555537bb577b2b57f12a24",
+        "capture_id": "cd6c168b461847a290c2d153b1d41021",
+        "captured_utc": "2026-10-06T09:03:37Z",
+        "bytes": 16284,
+        "http_status": 200
+      },
+      "locators": {
+        "specifications_dir": "entry 'specifications' (dir) — normative markdown not fetched; rendered spec S2 used instead"
+      },
+      "applicability": "Discovery record: shows spec source location; documents why raw-markdown probes 404'd (see S13)."
+    },
+    {
+      "id": "S9",
+      "title": "QuPath TECHNICAL_NOTES.md (developer notes)",
+      "url": "https://raw.githubusercontent.com/qupath/qupath/main/TECHNICAL_NOTES.md",
+      "capture": {
+        "sha256": "1b9cd69eefd281a84f3ebc1a270dc4bd81a4e21e43686541f7bfaf8ea41e4564",
+        "capture_id": "c019adb4a2a94121bb24babb7491d297",
+        "captured_utc": "2026-10-06T09:03:36Z",
+        "bytes": 11431,
+        "http_status": 200
+      },
+      "locators": {
+        "module_structure": "section 'Basic structure': qupath-core / qupath-core-processing (no JavaFX/UI dependency); qupath-gui-fx depends on them; 'ImageServer' extensions add support for image types; 'Extensions are all optional; QuPath should be able to launch without them'",
+        "persistence_guidance": "section 'Saving & loading': avoid Java serialization; 'Serialization is currently used for .qpdata files, but ultimately this should be removed'; 'Prefer JSON to other kinds of serialization. Thinking could I read this in Python if I wanted to? can be a good guide'; keep forwards/backwards compatibility",
+        "versioning_principle": "section 'Versioning': 'It is preferable to break a script completely rather than subtly change its behavior'"
+      },
+      "applicability": "Precedent P-B mechanisms: core/UI separation with pluggable format backends; JSON-first persistence; honesty-of-behavior principle."
+    },
+    {
+      "id": "S10",
+      "title": "napari docs — 'Axis names in napari' guide",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/axis-names.md",
+      "capture": {
+        "sha256": "02cf687f7fc598ee03301694e4a2b412216e00c19fb084a1ee7dc65ad5a77328",
+        "capture_id": "d608c308de094177ac5be5b77b75d649",
+        "captured_utc": "2026-10-06T09:03:36Z",
+        "bytes": 3763,
+        "http_status": 200
+      },
+      "locators": {
+        "churn_warning": "front warning block: pre-0.6 Viewer.dims order-based mapping; 0.6.x layers gained axis names/units but napari ignored them; 0.7.x units propagate, names ignored; 0.9.x names propagate",
+        "alignment": "negative (right-aligned) indexing for matching axes across arrays of mixed dimensionality"
+      },
+      "applicability": "Cautionary lesson: axis identity must be an explicit, stable file-format contract from v1."
+    },
+    {
+      "id": "S11",
+      "title": "napari docs — 'Scale and unit-aware rendering' guide",
+      "url": "https://raw.githubusercontent.com/napari/docs/main/docs/guides/units.md",
+      "capture": {
+        "sha256": "ef71dd31092e13041e783e5e17be95d7876c054c2d34ba41436676a36cdd5a11",
+        "capture_id": "0a0d0a0594d346de8c43206979431e6d",
+        "captured_utc": "2026-10-06T09:04:16Z",
+        "bytes": 4294,
+        "http_status": 200
+      },
+      "locators": {
+        "layer_metadata": "'Scale and units are layer metadata'; scale used 'to transform each layer from its data coordinates into rendered world coordinates'; affects vector and raster layers",
+        "units": "Pint unit strings; 'If you do not set units, napari assumes pixels'; units do not rename axes; layers with different units align in the same world space"
+      },
+      "applicability": "Precedent P-A mechanism 1: display mapping and physical calibration as metadata, never as data mutation."
+    },
+    {
+      "id": "S12",
+      "title": "napari/docs repository docs/guides directory listing (GitHub REST contents)",
+      "url": "https://api.github.com/repos/napari/docs/contents/docs/guides",
+      "capture": {
+        "sha256": "1e2603941182e28b09712de6084734a95172405b9e1bfae4df8f8c84de7ec6dc",
+        "capture_id": "070452a236e044859a01f50490a03fb6",
+        "captured_utc": "2026-10-06T09:02:54Z",
+        "bytes": 11084,
+        "http_status": 200
+      },
+      "locators": {
+        "files": "axis-names.md, units.md, performance.md, threading.md, handedness.md, rendering.md, camera.md among others"
+      },
+      "applicability": "Discovery record: locates the napari guide sources used (S10, S11) and shows further leads (performance.md, threading.md — unfetched)."
+    },
+    {
+      "id": "S13",
+      "title": "Failed URL probes (404 responses, captured for honesty)",
+      "capture": [
+        {
+          "url": "https://napari.org/stable/guides/transformations.html",
+          "http_status": 404,
+          "sha256": "b620507312c5e97566a3c6cfaf99144fefc18a0da7d941401dfa0f5f58fb0368",
+          "captured_utc": "2026-10-06T09:00:58Z"
+        },
+        {
+          "url": "https://qupath.readthedocs.io/en/stable/docs/projects/projects.html",
+          "http_status": 404,
+          "sha256": "3c6920c52752e36cd5c593000b9b206ddae10df8df6d08da1d8dc37432cc34ca",
+          "captured_utc": "2026-10-06T09:00:58Z"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/ome/ngff/main/0.4/index.md (and specifications/0.4/index.md)",
+          "http_status": 404,
+          "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+          "captured_utc": "2026-10-06T09:01:56Z / 09:04:15Z"
+        },
+        {
+          "url": "https://api.github.com/repos/ome/ngff/contents/0.4",
+          "http_status": 404,
+          "sha256": "e45906ce02e79f16fb87a838d86bb4e497e37a9591f97608fa013bbcd8b9cbc2",
+          "captured_utc": "2026-10-06T09:02:53Z"
+        }
+      ],
+      "applicability": "Documents that no source-chain claim rests on these URLs; rendered pages / alternate captures were used instead."
+    },
+    {
+      "id": "S14",
+      "title": "qupath/qupath repository root listing (GitHub REST contents)",
+      "url": "https://api.github.com/repos/qupath/qupath/contents/",
+      "capture": {
+        "sha256": "b0e83f3052dbd6192626685266e86281f141d6104b36872859811a95cc6e4d42",
+        "capture_id": "32080a23931d4d23b375783e51dcffe0",
+        "captured_utc": "2026-10-06T09:02:54Z",
+        "bytes": 19738,
+        "http_status": 200
+      },
+      "locators": {
+        "extension_modules": "directories qupath-extension-bioformats, qupath-extension-openslide, qupath-extension-processing, qupath-core, qupath-core-processing, qupath-gui-fx, qupath-app"
+      },
+      "applicability": "Corroborates S9: format support is delivered as separate optional extension modules in the actual tree."
+    }
+  ]
+}

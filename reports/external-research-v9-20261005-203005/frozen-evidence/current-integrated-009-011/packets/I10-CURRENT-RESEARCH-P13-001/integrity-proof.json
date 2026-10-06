@@ -1,0 +1,21 @@
+{
+  "schema": "er9.positive-quiescence-proof.v1",
+  "checks": [
+    {
+      "alias": "A",
+      "freeze_sha256": "31fc7911368ac5e541fb0405804573d4abf83170c2651c8ad42b067caa47b15a",
+      "native_receipt_sha256": "2ff9a25af99f7d10745ec8dc98586b387ca89cf8712500e045c95a1bead5cfcb",
+      "outer_release_sha256": "90dffb6122a4b0b641cc53a34e52a73c3dea36f39d414d5b6008263092d5a48e",
+      "owned_native_components_and_group_quiet": true,
+      "owned_outer_slice_quiet_released": true
+    },
+    {
+      "alias": "B",
+      "freeze_sha256": "4b4cd8ff96886dd4e15dbc4851664f7e28319bf1efea54f5b1cd15ca73701a70",
+      "native_receipt_sha256": "c774efb8b6e5e8ca878734943c5ed8a28a28acac4b8fe3d5e7f9f783022f93a6",
+      "outer_release_sha256": "5b78f664b66410fe9062f2466d48422a0656c699b9b62b3f6603b71e834d609a",
+      "owned_native_components_and_group_quiet": true,
+      "owned_outer_slice_quiet_released": true
+    }
+  ]
+}

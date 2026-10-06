@@ -1,0 +1,301 @@
+{
+  "schema": "er9.independent-output-judgement.v1",
+  "eval_id": "independent-targeted-26",
+  "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+  "phase": "PHASE1_SOURCE_ONLY",
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "current_key_read": false,
+  "prior_grades_or_history_read": false,
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_B_obligations": 12,
+    "common_important_checks": 5,
+    "target_checks": 3
+  },
+  "actual_roles": {
+    "A": "complete proposal+3support catalogs",
+    "B": "strict amendment.diff+3support catalogs; host-owned assembly not evaluated"
+  },
+  "actual_scope_outcomes": {
+    "A": {
+      "outcome": "FAIL_SCREEN",
+      "basis": "current source-preservation claim",
+      "designated_final_assessed": true
+    },
+    "B": {
+      "outcome": "FAIL_SCREEN",
+      "basis": "actual role-required strict amendment format",
+      "available_semantic_scope": "PARTIAL",
+      "designated_final_assessed": false
+    }
+  },
+  "unassessed_scopes": {
+    "final_treatment": "UNASSESSED",
+    "full_pipeline_A": "UNASSESSED",
+    "full_pipeline_B": "UNASSESSED",
+    "matched_causal": "UNASSESSED",
+    "winner": "UNASSESSED",
+    "whole_development_domain_PASS": "UNASSESSED"
+  },
+  "blinding": {
+    "unavoidable_hints": "Role contracts and A proposal stage label reveal mechanism/control hints; no perfect blinding claimed. Native identities/status/model/economics and private key remain unread.",
+    "physical_model": "UNKNOWN"
+  },
+  "dimensions": {
+    "A": {
+      "Q1": "PARTIAL",
+      "Q2": "FAIL_SCREEN",
+      "Q3": "PARTIAL",
+      "Q4": "PARTIAL",
+      "Q5": "COMPLETE",
+      "Q6": "FAIL_SCREEN",
+      "Q7": "PARTIAL",
+      "Q8": "PARTIAL"
+    },
+    "B": {
+      "Q1": "PARTIAL",
+      "Q2": "PARTIAL",
+      "Q3": "PARTIAL",
+      "Q4": "PARTIAL",
+      "Q5": "PARTIAL",
+      "Q6": "PARTIAL",
+      "Q7": "PARTIAL",
+      "Q8": "FAIL_SCREEN"
+    }
+  },
+  "obligations": [
+    {
+      "id": "B01",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "UNASSESSED",
+      "rationale": "A describes the minimum proposed workflow and Python/optional SQL boundary; no assembled B workflow is assessed."
+    },
+    {
+      "id": "B02",
+      "A_coverage": "PARTIAL",
+      "B_current_available_scope_coverage": "UNASSESSED",
+      "rationale": "A specifies contracts and error policy; production encoding and parser integration remain proposed. Untouched B baseline is not promoted."
+    },
+    {
+      "id": "B03",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A repairs lost count history and uses fresh displayed-order replay. B authored edits narrow producer/replay guarantees; full B runtime flow is unassessed."
+    },
+    {
+      "id": "B04",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A specifies the four states and invalidation. B changes successful producer/provenance rules; its bounded W5 and retained rule do not fully agree on environment/restart statuses."
+    },
+    {
+      "id": "B05",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A supplies identities, journal/output associations and manifest; B edits producer/manifest fields only."
+    },
+    {
+      "id": "B06",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A retains bounded paths, explicit targets, cancel/locking/recovery proposals. B explicitly preserves the 5 GB target and independent data opportunity; no whole B plan assessed."
+    },
+    {
+      "id": "B07",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A gives proposed permissions/resource/UI boundary, with platform enforcement untested. B removes the assertion that an unselected product sandbox already blocks undeclared access."
+    },
+    {
+      "id": "B08",
+      "A_coverage": "PARTIAL",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "Independently useful mechanisms are identifiable in supplied sources; neither current stage establishes autonomous discovery."
+    },
+    {
+      "id": "B09",
+      "A_coverage": "PARTIAL",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "Issue/fix/test content is verified. A withdraws a supported narrow ancestry condition; B catalog uses dates as an invalid basis for that otherwise true inclusion conclusion."
+    },
+    {
+      "id": "B10",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A retains the reject-ledger opportunity and marimo alternative. B makes the opportunity explicitly orthogonal and bounds the alternative claim."
+    },
+    {
+      "id": "B11",
+      "A_coverage": "COMPLETE",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A current W5/W7 raw source and receipts support their narrow stated models. B current W5 is receipt-backed; inherited W1-W4 exact code/input remain unassessed."
+    },
+    {
+      "id": "B12",
+      "A_coverage": "PARTIAL",
+      "B_current_available_scope_coverage": "PARTIAL",
+      "rationale": "A standalone delivery exists but source preservation fails and a minor exact-code pin mismatch remains. B delivered its four role-required files; its actual strict diff has three hunk-count defects. B final remains UNASSESSED."
+    }
+  ],
+  "important_and_target_checks": {
+    "A": {
+      "B-P1": "PARTIAL",
+      "B-P2": "PARTIAL",
+      "B-P3": "COMPLETE",
+      "B-P4": "FAIL_SCREEN",
+      "B-P5": "COMPLETE",
+      "D-V06-B-P1": "FAIL_SCREEN",
+      "D-V06-B-P2": "PARTIAL",
+      "D-V06-B-P3": "PARTIAL"
+    },
+    "B": {
+      "B-P1": "PARTIAL",
+      "B-P2": "PARTIAL",
+      "B-P3": "PARTIAL",
+      "B-P4": "PARTIAL",
+      "B-P5": "PARTIAL",
+      "D-V06-B-P1": "PARTIAL",
+      "D-V06-B-P2": "PARTIAL",
+      "D-V06-B-P3": "PARTIAL"
+    }
+  },
+  "target_coverage": {
+    "D-V06-B-01": {
+      "A": "COMPLETE",
+      "B": "PARTIAL"
+    },
+    "D-V06-B-02": {
+      "A": "PARTIAL",
+      "B": "PARTIAL"
+    },
+    "D-V06-B-03": {
+      "A": "PARTIAL",
+      "B": "PARTIAL"
+    }
+  },
+  "defects": [
+    {
+      "id": "TD26-A-PRESERVE-01",
+      "alias": "A",
+      "severity": "consequential source-preservation defect",
+      "scope": "actual current proposal/source/lead claims",
+      "finding": "Withdraws narrow DuckDB v1.1.0 fix-commit ancestry as unestablished, although the supplied authentic critique identifies the exact comparison and the exact current-stage-admitted primary comparison verifies it, corroborated by an independent public fetch. This does not establish first fixed release, 1.0.x applicability, or runtime test success.",
+      "candidate_locators": [
+        "proposal.md:123",
+        "sources.json:S13 applicability",
+        "leads.json:L2"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-CURRENT-SOURCE-BASELINE-EXEC-001/A/baseline/critique.md",
+          "sha256": "faa6e666c9ed084e1905733c6d143478fa2b2353a7cbfdb9bdb6e44bbdbae569",
+          "locator": "paragraph beginning The v1.1.0 applicability is stronger than dates alone"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-ADMITTED-SOURCE-0027-0028-001/A-0027.body",
+          "sha256": "38dd5cb80a5f3e52c33338da1813b9083bc0b3777ab799c1fb5ed26919d9aa95",
+          "locator": "URL exact fix-to-v1.1.0 comparison; base/merge-base SHA2532c30; status ahead; behind_by0 at byte offsets661/5456/10257/10290; tail truncated after relevant fields",
+          "admission_manifest": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-ADMITTED-SOURCE-0027-0028-001/MANIFEST.json",
+          "admission_manifest_sha256": "ca962cb8afffd984c24298a04cd90156fef317bab1c3852e29e1dea2c2921df9"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/public-primary/duckdb-exact-fix-compare.json",
+          "sha256": "4aa712293596457377c15ed2fe0a3e1eb0b72c6514e741c36660b116f0805d8c",
+          "locator": "status ahead; base_commit and merge_base_commit SHA2532c30fa649ac6296c7ab2b55976b4337ff46ce; behind_by0; comparison head fa5c2fe15f3da5f32397b009196c0895fce60820"
+        }
+      ],
+      "original_compare_raw_stage_admission": "CONFIRMED_EXACT_CURRENT_STAGE_INPUT_PINS_BOTH_ALIASES"
+    },
+    {
+      "id": "TD26-A-PIN-01",
+      "alias": "A",
+      "severity": "minor reproducibility metadata defect",
+      "scope": "W5 catalog inline-code binding",
+      "finding": "W5 catalog code string hashes to138bd7b50482a484afe037ffcf0a82d077b95c41acf3c0b5cd735d90642d18a7 while recorded execution code hash is6ef84d5de82e1798ec9fa87279bd8423bd0b8901bf16bbe84a43d57e0d7c14b0. Raw executed code matches the recorded pin; differences are comments and whitespace, so no semantic execution fabrication is inferred.",
+      "candidate_locators": [
+        "witnesses.json:executed_by_candidate/W5/code",
+        "witnesses.json:executed_by_candidate/W5/code_sha256"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-CURRENT-SOURCE-BASELINE-EXEC-001/A/execution/exec-8qnmkm6k/code.py",
+          "sha256": "6ef84d5de82e1798ec9fa87279bd8423bd0b8901bf16bbe84a43d57e0d7c14b0"
+        }
+      ]
+    },
+    {
+      "id": "TD26-B-DIFF-01",
+      "alias": "B",
+      "severity": "role-delivery blocker",
+      "scope": "actual authored amendment.diff, not an assembled final",
+      "finding": "Strict unified-diff hunk counts are inconsistent: line25 declares old5/new6 but carries old5/new7; line47 declares old5/new6 but carries old6/new7; line55 declares old4/new5 but carries old5/new6. This violates the actual strict-diff/zero-fuzz host contract. Evaluator did not apply, render, assemble, or retest the amendment.",
+      "candidate_locators": [
+        "amendment.diff:25",
+        "amendment.diff:47",
+        "amendment.diff:55"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-26-PAIRED-001/outputs/B/amendment.diff",
+          "sha256": "c5eea7313fa0ef75a29b9c833b71a45ff64c88ea313718b3fe816f79518586c0"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/INDEPENDENT-TARGETED-26-PAIRED-001/task/actual_launched_task_B.md",
+          "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4",
+          "locator": "Exact stage output override / strict unified diff / host apply with zero fuzz"
+        }
+      ]
+    },
+    {
+      "id": "TD26-B-SOURCE-01",
+      "alias": "B",
+      "severity": "source-binding defect; not a false release-inclusion conclusion",
+      "scope": "actual support source catalog S13",
+      "finding": "S13 says the tag date establishes inclusion of PR12679. Chronology alone does not establish ancestry. The exact primary comparison does independently establish the fix commit is in the tagged commit ancestry. Preserve that narrow conclusion with the correct locator, while leaving first shipped release and executed runtime behavior unestablished.",
+      "candidate_locators": [
+        "sources.json:S13/locator",
+        "sources.json:S13/applicability"
+      ],
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-CURRENT-SOURCE-BASELINE-EXEC-001/B/sources/0021.body",
+          "sha256": "837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d",
+          "locator": "tag commit metadata/parent list, not full ancestry"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/public-primary/duckdb-exact-fix-compare.json",
+          "sha256": "4aa712293596457377c15ed2fe0a3e1eb0b72c6514e741c36660b116f0805d8c",
+          "locator": "base_commit equals merge_base_commit; status ahead; behind_by0"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/selected-evidence/TD26-REQUESTED-ADMITTED-SOURCE-0027-0028-001/B-0027.body",
+          "sha256": "38dd5cb80a5f3e52c33338da1813b9083bc0b3777ab799c1fb5ed26919d9aa95",
+          "locator": "current-stage-admitted exact compare ancestry fields; no inference from dates"
+        }
+      ]
+    }
+  ],
+  "executed_witness_review": {
+    "A_current_W5": "RECEIPT_AND_SOURCE_CONFIRMED_NARROW_MODEL; inline pin defect noted",
+    "A_current_W7": "RECEIPT_AND_SOURCE_CONFIRMED_NARROW_BATCH_AND_REJECT_MODEL",
+    "B_current_W5": "RECEIPT_AND_SOURCE_CONFIRMED_NARROW_PRODUCER_MODEL; policy consistency limited",
+    "inherited_W1_W4": "UNASSESSED_EXACT_CODE_INPUT; A does not rely on inherited reports, B retains them as inherited"
+  },
+  "evaluator_actions": {
+    "candidate_code_execution": false,
+    "candidate_retest": false,
+    "model_run": false,
+    "native_Goal": false,
+    "assembly_or_render": false,
+    "old_seed_promoted_to_final": false,
+    "bestof_selection": false,
+    "independent_public_source_retrieval": true
+  },
+  "missing_facts": "UNKNOWN",
+  "working_last_updated_monotonic": 114109.696805104
+}

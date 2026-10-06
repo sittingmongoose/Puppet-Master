@@ -1,0 +1,5764 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "later_receipt_read_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "type": "object"
+    },
+    "merged_view_summary_separate_from_primary": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_candidate_attempts_unchanged": {
+          "type": "number"
+        },
+        "later_resolved_known_tokens_increment": {
+          "type": "number"
+        },
+        "merged_known_tokens": {
+          "type": "number"
+        },
+        "merged_occupied_seconds_known": {
+          "type": "number"
+        },
+        "merged_occupied_unknown_rows": {
+          "type": "number"
+        },
+        "merged_usage_unknown_rows": {
+          "type": "number"
+        },
+        "new_actor_or_target_credit": {
+          "type": "number"
+        },
+        "new_native_starts_from_join": {
+          "type": "number"
+        },
+        "new_sdk_provider_record_rows": {
+          "type": "number"
+        },
+        "positive_starts_unchanged": {
+          "type": "number"
+        },
+        "primary_known_tokens_unchanged": {
+          "type": "number"
+        },
+        "proved_zero_rows_unchanged": {
+          "type": "number"
+        },
+        "unknown_start_rows_unchanged": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "actual_candidate_attempts_unchanged",
+        "positive_starts_unchanged",
+        "proved_zero_rows_unchanged",
+        "unknown_start_rows_unchanged",
+        "primary_known_tokens_unchanged",
+        "later_resolved_known_tokens_increment",
+        "merged_known_tokens",
+        "merged_usage_unknown_rows",
+        "new_sdk_provider_record_rows",
+        "new_native_starts_from_join",
+        "new_actor_or_target_credit",
+        "merged_occupied_seconds_known",
+        "merged_occupied_unknown_rows"
+      ],
+      "type": "object"
+    },
+    "owner_locator_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_observed_utc": {
+      "type": "string"
+    },
+    "primary_attempt_table_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "primary_capture_unchanged": {
+      "type": "boolean"
+    },
+    "primary_snapshot_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "actual_provider_HTTP_attempts": {
+                    "type": "string"
+                  },
+                  "billing_dollars": {
+                    "type": "string"
+                  },
+                  "last_usage_delta_by_request_totals": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "cacheWriteTokens": {
+                        "type": "number"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheReadTokens",
+                      "cacheWriteTokens",
+                      "totalTokens"
+                    ],
+                    "type": "object"
+                  },
+                  "native_aggregate": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cacheCreationTokens": {
+                        "type": "number"
+                      },
+                      "cacheReadTokens": {
+                        "type": "number"
+                      },
+                      "inputBaselineBySource": {
+                        "additionalProperties": false,
+                        "properties": {
+                          "main_turn": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "main_turn"
+                        ],
+                        "type": "object"
+                      },
+                      "inputTokens": {
+                        "type": "number"
+                      },
+                      "modelErrorCount": {
+                        "type": "number"
+                      },
+                      "modelRequestCount": {
+                        "type": "number"
+                      },
+                      "outputTokens": {
+                        "type": "number"
+                      },
+                      "reasoningTokens": {
+                        "type": "number"
+                      },
+                      "sessionId": {
+                        "type": "string"
+                      },
+                      "totalTokens": {
+                        "type": "number"
+                      }
+                    },
+                    "required": [
+                      "sessionId",
+                      "totalTokens",
+                      "inputTokens",
+                      "outputTokens",
+                      "reasoningTokens",
+                      "cacheCreationTokens",
+                      "cacheReadTokens",
+                      "modelRequestCount",
+                      "modelErrorCount",
+                      "inputBaselineBySource"
+                    ],
+                    "type": "object"
+                  },
+                  "physical_payload_attestation": {
+                    "type": "string"
+                  },
+                  "provider_usage_projection_reference_not_added_again": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "available": {
+                        "type": "boolean"
+                      },
+                      "database": {
+                        "type": "string"
+                      },
+                      "export_sha256": {
+                        "type": "string"
+                      },
+                      "query_scope": {
+                        "type": "string"
+                      },
+                      "row_count": {
+                        "type": "number"
+                      },
+                      "semantics": {
+                        "type": "string"
+                      },
+                      "session_id": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "available",
+                      "database",
+                      "session_id",
+                      "row_count",
+                      "export_sha256",
+                      "query_scope",
+                      "semantics"
+                    ],
+                    "type": "object"
+                  },
+                  "usage_counter_semantics": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals",
+                  "provider_usage_projection_reference_not_added_again",
+                  "usage_counter_semantics",
+                  "actual_provider_HTTP_attempts",
+                  "physical_payload_attestation",
+                  "billing_dollars"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "number"
+              },
+              "native_Goal_status_last_saved": {
+                "type": "string"
+              },
+              "native_execution_occupied_seconds_reference": {
+                "type": "number"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "observed_family": {
+                "type": "string"
+              },
+              "observed_model_selector": {
+                "type": "string"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "bytes": {
+                    "type": "number"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "bytes"
+                ],
+                "type": "object"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "requested_model": {
+                "type": "string"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "input",
+                  "output",
+                  "cached_input_included",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "native_execution_occupied_seconds_reference",
+              "requested_model",
+              "observed_model_selector",
+              "observed_family",
+              "native_Goal_status_last_saved",
+              "billing_dollars"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "active_missing_export_not_zero": {
+                "type": "boolean"
+              },
+              "attempt_id": {
+                "type": "string"
+              },
+              "billing_dollars": {
+                "type": "string"
+              },
+              "counter_views_separate": {
+                "additionalProperties": false,
+                "properties": {
+                  "last_usage_delta_by_request_totals": {
+                    "type": "null"
+                  },
+                  "native_aggregate": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "native_aggregate",
+                  "last_usage_delta_by_request_totals"
+                ],
+                "type": "object"
+              },
+              "known_tokens_resolved_increment": {
+                "type": "null"
+              },
+              "native_starts_primary_unchanged": {
+                "type": "number"
+              },
+              "owner_status_at_observation": {
+                "type": "string"
+              },
+              "provider_export_pin": {
+                "type": "null"
+              },
+              "receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "receipt_pin_exact_body_not_used_if_active": {
+                "type": "boolean"
+              },
+              "usage_basis": {
+                "type": "string"
+              },
+              "usage_reference": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "owner_status_at_observation",
+              "receipt_pin",
+              "receipt_pin_exact_body_not_used_if_active",
+              "provider_export_pin",
+              "usage_reference",
+              "usage_basis",
+              "known_tokens_resolved_increment",
+              "native_starts_primary_unchanged",
+              "active_missing_export_not_zero",
+              "counter_views_separate",
+              "billing_dollars"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "primary_attempt_table_pin",
+    "primary_snapshot_pin",
+    "owner_locator_pin",
+    "owner_observed_utc",
+    "later_receipt_read_interval_utc",
+    "primary_capture_unchanged",
+    "rows",
+    "merged_view_summary_separate_from_primary",
+    "scope"
+  ],
+  "type": "object"
+}

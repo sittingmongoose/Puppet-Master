@@ -1,0 +1,22 @@
+{
+  "schema": "er9.integrated-source-card-projection.v1",
+  "original_card_sha256": "71255b5237414f7479565faee054473ac667bfac80c3d5a74b4640ebb2ab8223",
+  "retained_exact_fields": {
+    "schema": "er9.integrated_method_card.v1",
+    "case_id": "DEV-A-v1",
+    "domain": "A",
+    "track": "B",
+    "brief_path": "briefs/development-A-biomedical.md",
+    "coverage_path": "coverage/development-A.json",
+    "common_criteria_path": "common_criteria.json",
+    "source_access_path": "source_access.json",
+    "common_output_contract": "prompts/output_contract.md",
+    "important_checks_path": "coverage/important-checks-A.json",
+    "discovery_obligation": {
+      "candidate_selects_sources": true,
+      "independent_implementation_precedents_min": 2,
+      "real_issue_fix_regression_chain_min": 1
+    },
+    "source_pin_rule": "Candidate independently discovers/captures exact public source identities during research. Freeze sources/artifacts between its own fresh stages, never leak discoveries across arms."
+  }
+}

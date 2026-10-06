@@ -1,0 +1,89 @@
+{
+  "schema": "er9.assessment-dispatch-additive-queue-observation.v1",
+  "observed_utc": "2026-10-06T10:58:11.383523+00:00",
+  "base_queue_pin": {
+    "path": "LAB_ROOT/ops/assessment-dispatch-001/QUEUE_SNAPSHOT_018.json",
+    "sha256": "6391cc30729479646fc7d01e2a97e1095bf02fa83f70fd007ff589f15c55d1b2",
+    "bytes": 2246
+  },
+  "no_live_registry_refresh": true,
+  "updates": [
+    {
+      "evaluation_id": "independent-targeted-26",
+      "state": "CLOSED_ACTUAL_FINAL",
+      "actual_scope": "current_B12_Cfinal4_Tamendment_only_no_promotion",
+      "neutral_clock_pin": {
+        "path": "LAB_ROOT/evaluation/independent-targeted-26/handoff-receipt.json",
+        "sha256": "87317e99fe5c1cdfb150b9988bfe7cedb9f141832f87427b2ba7aa6a44b6b066",
+        "bytes": 3545
+      },
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-confirmation-C03-current-research-1",
+      "state": "PHASE2_GATE_RELEASED",
+      "actual_scope": "current_H1TEN_common8_card3_research_available_plus_missing_finalnull",
+      "neutral_clock_pin": {
+        "path": "LAB_ROOT/evaluation/independent-confirmation-C03-current-research-1/phase1-freeze.json",
+        "sha256": "851e05f3c8f26066181cd26258d54dc92d5b5b677631cc616e19127e3dc472f5",
+        "bytes": 10709
+      },
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-confirmation-C04-current-research-1",
+      "state": "SOURCE_ACTIVE",
+      "actual_scope": "current_H2TEN_common8_card3_researchonly_finalnull",
+      "neutral_clock_pin": null,
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-pipeline-12-research-I09",
+      "state": "SOURCE_ACTIVE",
+      "actual_scope": "current_A12_common8_important5_researchonly_finalnull",
+      "neutral_clock_pin": {
+        "path": "LAB_ROOT/evaluation/independent-pipeline-12-research-I09/start_clock.json",
+        "sha256": "3e9ef5bfb3a8bd0f981028da928025a077fc1ccea9a7c506fe96e336c5916e84",
+        "bytes": 326
+      },
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-pipeline-13-research-I10",
+      "state": "SOURCE_ACTIVE",
+      "actual_scope": "current_B12_common8_important5_researchonly_finalnull",
+      "neutral_clock_pin": null,
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-pipeline-14-research-I11",
+      "state": "SOURCE_ACTIVE",
+      "actual_scope": "current_A12_common8_important5_researchonly_finalnull",
+      "neutral_clock_pin": {
+        "path": "LAB_ROOT/evaluation/independent-pipeline-14-research-I11/source_start.json",
+        "sha256": "118c13b7f92742183790e9654efdb818a21b41094cee4a8cc4234618bba164de",
+        "bytes": 448
+      },
+      "source_grades": "HELD_NOT_READ"
+    },
+    {
+      "evaluation_id": "independent-targeted-27",
+      "state": "SOURCE_ACTIVE",
+      "actual_scope": "current_B12_common8_important5_target3_mixedrole_partial",
+      "neutral_clock_pin": {
+        "path": "LAB_ROOT/evaluation/independent-targeted-27/source-start.json",
+        "sha256": "596366bae70e4a7b9ffad229d6085f810b45338b58ba2c299a8242e94960edb2",
+        "bytes": 444
+      },
+      "source_grades": "HELD_NOT_READ"
+    }
+  ],
+  "remaining_frontier": [
+    "TD28 D05A reservation pending beforebody",
+    "I12 current unentered nooutput blocked_source_qualityUNASSESSED",
+    "exactfinite48 currentversioncoverage adjudication pending usingclosedscope notordinal"
+  ],
+  "all_original_32_12_4_slots_retained": true,
+  "source_scope_matches_not_fullcomparisons": true,
+  "no_new_sourcegrade_nativeOP_or_extra_target_credit": true
+}

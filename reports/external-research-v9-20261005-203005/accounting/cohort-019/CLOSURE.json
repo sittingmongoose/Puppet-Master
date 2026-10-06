@@ -1,0 +1,35 @@
+{
+  "all_waits_binding_resolution_and_source_pin_validation_overhead_charged": true,
+  "billing_dollars": "UNKNOWN",
+  "campaign_complete": false,
+  "clock_reset": false,
+  "closed_measured_monotonic_ns": 120674145943114,
+  "closed_measured_utc": "2026-10-06T12:37:35.289108+00:00",
+  "helper_provider_usage": "UNKNOWN",
+  "later_closure_pointer_notices_and_actual_FINAL_delivery": "UNKNOWN_OUTSIDE_THIS_RECEIPT_MEASUREMENT",
+  "later_runtime_source_join_pin": {
+    "path": "accounting/cohort-019/runtime-join.safe.json",
+    "sha256": "352ed3ff91109a182281662081efefab747ea1bf3e02f10f161e9cb4c1d8b402"
+  },
+  "live_native_tail_final_edition": "STILL_REQUIRED_AFTER_ACTUAL_TAIL_CLOSURE_VIA_FOREMAN_NEW_DATED_SOURCE",
+  "new_candidate_Goals_or_provider_invocations_by_accounting": false,
+  "original_primary_capture_bytes_pin": {
+    "path": "accounting/cohort-019/BASE_CAPTURE_SNAPSHOT.safe.json",
+    "sha256": "921b4a04a5cbd1650db6e035c68f9a7100af74ca780db196be663a7559a9480e"
+  },
+  "owner_acknowledgments": "UNKNOWN_NOT_WAITED_FOR",
+  "primary_selection_pin": {
+    "path": "accounting/cohort-019/PUBLIC_SELECTION.json",
+    "sha256": "ef22f24333be26fadef15ccc9761ee397ba14ab27349cd56436548be3139c038"
+  },
+  "report_ready_elapsed_seconds_subset": 907.120193855,
+  "required_primary_notice_tool_returns_observed": true,
+  "schema": "er9.accounting.required-notice-closure.v1",
+  "scope": "Own bounded mechanical accounting work through required primary handoffs; fixed capture and laterdated provider join remain separate, not fulltable sums. Reportready/source/reviewer slices overlap enclosing clocks. No sourcegrade/body/native/query/model/test/Git/jobs work or campaignstop. ImmediateFINAL follows closure pointers, no ACKwait/polling.",
+  "start_pin": {
+    "path": "accounting/cohort-019/START.json",
+    "sha256": "b2dd8d33ac435930d725492ad20da1b64eb34ad2fc4760bf7e970879e4f58676"
+  },
+  "whole_limit_seconds": 1800,
+  "whole_through_required_root_foreman_publisher_keeper_ops_notice_returns_seconds": 1246.959831149
+}

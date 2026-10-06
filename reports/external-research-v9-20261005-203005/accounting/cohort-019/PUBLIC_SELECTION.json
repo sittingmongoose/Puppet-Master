@@ -1,0 +1,114 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-019/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "sha256": "795b83d67837a8541775a4d07cf304a74d7ba1e11f7ece87ffaaec0951a97d2b"
+    },
+    {
+      "path": "accounting/cohort-019/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79"
+    },
+    {
+      "path": "accounting/cohort-019/BASE_CAPTURE_CLOCKS.safe.json",
+      "sha256": "b46829e677ab20182a11348cae3bd689e1c32aa1fe13d84424139349d2f1e78e"
+    },
+    {
+      "path": "accounting/cohort-019/BASE_CAPTURE_SNAPSHOT.safe.json",
+      "sha256": "921b4a04a5cbd1650db6e035c68f9a7100af74ca780db196be663a7559a9480e"
+    },
+    {
+      "path": "accounting/cohort-019/BASE_CAPTURE_SNAPSHOT.safe.schema.json",
+      "sha256": "aeffc7805242bc7955975b7233c4837fe44c5d5daaf7cb60fa4690dce3f8a028"
+    },
+    {
+      "path": "accounting/cohort-019/COST_SNAPSHOT.md",
+      "sha256": "d5e7602bcc5f95ef833dafd6a2ba22fa87e1868e14e9317f96ae341d3f91361d"
+    },
+    {
+      "path": "accounting/cohort-019/KEEPER_RECEIPT.json",
+      "sha256": "cbbf3fe70cd566fd28dc6582d2542561c8800ffe51e71271f041b4a4db1341d2"
+    },
+    {
+      "path": "accounting/cohort-019/KEEPER_RECEIPT.schema.json",
+      "sha256": "d4f7446a72036d7424e1d981bd49d853345b78b14761b1d0d3288722c382d328"
+    },
+    {
+      "path": "accounting/cohort-019/VERIFICATION.json",
+      "sha256": "cb7d7dd038fc26244fad0458109c6c881b407598f9058176ea2d8e863e9dbc40"
+    },
+    {
+      "path": "accounting/cohort-019/attempts.merged-later.safe.json",
+      "sha256": "edd3c026a66c50529d303a2a48fbfc25e0c20b9391808a7b50dda94c4bef384a"
+    },
+    {
+      "path": "accounting/cohort-019/attempts.merged-later.safe.schema.json",
+      "sha256": "006188d60ba83d6732c0bdf13ef69e8a9087799020197fa159c63a308c5bcad3"
+    },
+    {
+      "path": "accounting/cohort-019/attempts.safe.json",
+      "sha256": "f00ad1ef7e8fbbc25cdab67a4c761160b20369e469b591729d04ceae98813573"
+    },
+    {
+      "path": "accounting/cohort-019/attempts.safe.schema.json",
+      "sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c"
+    },
+    {
+      "path": "accounting/cohort-019/evaluator-clocks.safe.json",
+      "sha256": "619da7a96203d09a34f877ea093033b9d26cc65134099853bcf1e1f8e91f176f"
+    },
+    {
+      "path": "accounting/cohort-019/evaluator-clocks.safe.schema.json",
+      "sha256": "028970536a748ae38de27d9a4152f057cc4985d917f9d6997dd02fc4f3114db4"
+    },
+    {
+      "path": "accounting/cohort-019/false-alarm-audit.safe.json",
+      "sha256": "c1149a02c88368f77694aa8672ecb617c8a3e3c2c906de621e497336fba53149"
+    },
+    {
+      "path": "accounting/cohort-019/false-alarm-audit.safe.schema.json",
+      "sha256": "6eca9662621c2fa1b6fd3cf3567ed27dad25a205f855d41a88cea4e9d8ec8b3d"
+    },
+    {
+      "path": "accounting/cohort-019/finite-scope.safe.json",
+      "sha256": "0a2fef0b4f78291e8ba3d0a9fe0cdf136a32fa2f65f150037875be218ce76033"
+    },
+    {
+      "path": "accounting/cohort-019/finite-scope.safe.schema.json",
+      "sha256": "dd5061ca43630d72b1f7bac821477aa3bad0e45dde127ef2f4706f082f13a034"
+    },
+    {
+      "path": "accounting/cohort-019/path-prefix-qualification.safe.json",
+      "sha256": "68fc2460e6dbf1fc07378e0f3e249356dcc7f4e71b4d2fed13a956feba2d480d"
+    },
+    {
+      "path": "accounting/cohort-019/path-prefix-qualification.safe.schema.json",
+      "sha256": "361d6f07434b3e814e75966d41702a43c3f11527e27e8ba33b756eda3eb7a7ff"
+    },
+    {
+      "path": "accounting/cohort-019/runtime-join.safe.json",
+      "sha256": "352ed3ff91109a182281662081efefab747ea1bf3e02f10f161e9cb4c1d8b402"
+    },
+    {
+      "path": "accounting/cohort-019/runtime-join.safe.schema.json",
+      "sha256": "ee5ac64e081ab057f20171ec1999781ac6d33e2a9841e45055981496b92a266f"
+    },
+    {
+      "path": "accounting/cohort-019/snapshot.safe.json",
+      "sha256": "a44b5ce5ddfe137a852f27ce9a1f0fde662d4eddebab481c649702efee04105f"
+    },
+    {
+      "path": "accounting/cohort-019/snapshot.safe.schema.json",
+      "sha256": "63ae40cd78fbab91a1ea05d7f350827615cb683b095b6635bf671381bc969910"
+    },
+    {
+      "path": "accounting/cohort-019/terminal-milestone.safe.json",
+      "sha256": "b6718d6ade4d9515ae7743d94e47e8ac198dc22faae7f094990aafa07f133f50"
+    },
+    {
+      "path": "accounting/cohort-019/terminal-milestone.safe.schema.json",
+      "sha256": "651a2d46067d1c01836cd321430f708fdd72d11743a531bba5acd98bab1482b5"
+    }
+  ],
+  "exclusion": "Only positively selected safe projections; no capture bytes, scripts, unlisted receipts, semantic bodies, evaluator judgments or private state.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

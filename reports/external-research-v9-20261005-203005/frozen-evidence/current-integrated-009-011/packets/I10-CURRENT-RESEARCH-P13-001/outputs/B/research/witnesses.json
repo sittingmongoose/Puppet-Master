@@ -1,0 +1,59 @@
+{
+  "schema": "er9.research.witnesses.v1",
+  "stage": "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+  "role": "research",
+  "labels": {
+    "executed_by_candidate": "run by this stage in the admitted isolated executor (fresh filesystem, no network, cgroup limits, per receipts)",
+    "executed_by_evaluator": "none present",
+    "proposed_unexecuted": "planned validation not run in this stage"
+  },
+  "scope_warning": "Every executed check below is an isolated component check on tiny synthetic data with candidate-authored code. None establishes full application behavior, a real kernel, or large-dataset performance.",
+  "executed": [
+    {
+      "id": "W1",
+      "claim": "Default CSV parsing and default JSON encoding silently mishandle malformed/heterogeneous records, so an explicit data contract (field-count check, quarantine, canonical value encoding) is required rather than naive coercion.",
+      "input": "4-row synthetic CSV 'a,b' with a short row, a long row, an empty-first-field row with Unicode value 'café, NA'; nan-valued dict",
+      "expected_behavior": "DictReader fills missing field with None (restval), parks extra field under None (restkey); naive numeric coercion raises ValueError on 'café, NA'; json.dumps emits non-standard NaN token; strict parse of that token fails; explicit contract check reports [(1,'short_row'), (2,'extra_fields')]. Expectations justified by documented stdlib csv/json defaults, verified in-sandbox.",
+      "stdout": "dict_rows: [{\"a\": \"1\", \"b\": \"2\"}, {\"a\": \"3\", \"b\": null}, {\"a\": \"4\", \"b\": \"5\", \"null\": [\"6\"]}, {\"a\": \"\", \"b\": \"café, NA\"}]\ncoercion_errors: [(3, \"could not convert string to float: 'café, NA'\")]\njson_payload: {\"v\": NaN, \"u\": \"caf\\u00e9\", \"ts\": \"2026-10-06T00:00:00Z\"}\nstrict_json_accepted: False\ncontract_errors: [(1, 'short_row'), (2, 'extra_fields')]\nW1_OK",
+      "stderr": "",
+      "exit_code": 0,
+      "receipt": {"execution_id": "exec-bf1b51q9", "completed_utc": "2026-10-06T09:23:02.464561+00:00", "code_sha256": "fe2476820857555e0c3aef0691fe21dd9521c16f0693a2e9fad99e6c2c389adc", "stdout_sha256": "cf647ca1a75ea8547844f1055ad80734ac69ebc8aeae366051a9007f66a9f49c", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"}},
+      "failed_attempts": [{"execution_id": "exec-bwsluehu", "exit_code": 1, "note": "first draft asserted naive coercion succeeds; ValueError on heterogeneous value showed the draft itself had the hazard the check demonstrates"}],
+      "scope_limits": "stdlib-only, 5-row synthetic file; proves the hazard pattern, not any product behavior."
+    },
+    {
+      "id": "W2",
+      "claim": "The output status model works as specified: displayed cell order differs from execution order; an upstream edit invalidates ALL transitive downstream outputs (stale); a kernel restart makes prior-session outputs unverified (never current); a failed run is labeled failed without touching downstream.",
+      "input": "3-cell chain c0→c1→c2 (hash-addressed sources), session S1 executed in order c2,c0,c1; then c0 edited; then restart to S2; then failed c0 run in S2",
+      "expected_behavior": "S1 all current; after edit {c0,c1,c2} all stale via transitive invalidation through recorded output fingerprints; after restart all unverified; after failed c0 run {c0: failed, c1: unverified, c2: unverified}",
+      "stdout": "display order:        ['c0', 'c1', 'c2']\nS1 execution order:   [('c2', 1, 'S1'), ('c0', 2, 'S1'), ('c1', 3, 'S1')]  (differs from display order c0,c1,c2)\nS1 statuses:          {'c0': 'current', 'c1': 'current', 'c2': 'current'}\nafter editing c0:     {'c0': 'stale', 'c1': 'stale', 'c2': 'stale'}  (transitive invalidation)\nafter kernel restart: {'c0': 'unverified', 'c1': 'unverified', 'c2': 'unverified'}  (restart never marks old outputs current)\nafter failed run c0:  {'c0': 'failed', 'c1': 'unverified', 'c2': 'unverified'}\nW2_OK",
+      "stderr": "",
+      "exit_code": 0,
+      "receipt": {"execution_id": "exec-2otpd3at", "completed_utc": "2026-10-06T09:23:43.002350+00:00", "code_sha256": "e8e210a0054f6bb0e32addf566f1321f8ac8ebf357b89989351c61d24eae21ea", "stdout_sha256": "48bd826dd3e90d0182f10c656945272687eae905c6f40bfacd8422ef15d8b37d", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"}},
+      "failed_attempts": [
+        {"execution_id": "exec-8__ndg7t", "exit_code": 1, "note": "draft 1 compared stored-old-hash to stored-old-hash: downstream stayed 'current' after upstream edit"},
+        {"execution_id": "exec-tkegitnx", "exit_code": 1, "note": "draft 2 checked only direct upstream source hashes: c2 stayed 'current' though its upstream OUTPUT was stale — established the transitivity-through-output-chain requirement now encoded in §6"}
+      ],
+      "scope_limits": "candidate-authored pure-Python simulation with sha256 fingerprints; not a live ipykernel; rule correctness for real kernels is proposed validation P3."
+    },
+    {
+      "id": "W3",
+      "claim": "A bounded chunked streaming path aggregates a CSV with memory proportional to the chunk, not the file, with exact results.",
+      "input": "100,000-row synthetic CSV ('i,square') built in memory (~1.64 MB), chunk bound 10,000 rows",
+      "expected_behavior": "count=100000, sum=4999950000, sq_sum=333328333350000 (verified against closed-form totals); max rows held ≤ chunk bound",
+      "stdout": "rows=100000 sum=4999950000 sq_sum=333328333350000\nsource_bytes=1642650 max_rows_held=10000 (chunk bound 10000)\napprox per-chunk buffer bytes=85176 => bounded memory per chunk, not O(file)\nW3_OK",
+      "stderr": "",
+      "exit_code": 0,
+      "receipt": {"execution_id": "exec-07xau1rf", "completed_utc": "2026-10-06T09:22:27.251779+00:00", "code_sha256": "308200bf7eaf11e50f08d02220c03baef7e849457ece2106a8645a7424543cbf", "stdout_sha256": "7c0aa3ae61a8a9ada3bd0476cc863086c8ab7be7409554e4d4efcbae5d0a4926", "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855", "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "network": "new empty namespace"}},
+      "failed_attempts": [],
+      "scope_limits": "1.6 MB synthetic file vs the brief's 5 GB target; demonstrates the pattern only. The 5 GB throughput/memory claim remains PROPOSED/UNEXECUTED (P1)."
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id": "P1", "claim": "5 GB CSV/NDJSON/Parquet streaming benchmark on 8-core/16 GB: peak RSS, wall time, spill bytes for projection/filter/group-by; explicit different bound (rejection or spill notice) for global sort.", "status": "UNEXECUTED — no 5 GB corpus available in this stage; brief explicitly treats this as a target to investigate."},
+    {"id": "P2", "claim": "Two-machine reopen of an exported bundle re-verifies dataset hashes, rebuilds env from lockfile, marks outputs unverified until re-run.", "status": "UNEXECUTED — no product build exists."},
+    {"id": "P3", "claim": "Replay equivalence: same notebook + pinned env + fresh kernel twice yields identical tabular output digests for deterministic cells.", "status": "UNEXECUTED — requires live ipykernel harness."},
+    {"id": "P4", "claim": "Crash recovery: SIGKILL during save leaves journal-repairable state; affected outputs reopen as unverified, never current.", "status": "UNEXECUTED."},
+    {"id": "P5", "claim": "Regression witness for the §3 bug class in OUR stack: file with escape evidence only near line 100k; full-file validation pass catches the true dialect while any preview-based schema stays labeled non-probative.", "status": "UNEXECUTED — depends on engine pin; upstream fix commit S9 established only on main (lead L3)."}
+  ]
+}

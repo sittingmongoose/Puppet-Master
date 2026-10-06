@@ -1,0 +1,24 @@
+{
+  "schema": "er9.publisher.additive-description-correction.v1",
+  "before_commit": "182ad2e0c10ec460bf6ed2bd55d06489d23ace8b",
+  "old_descriptions": {
+    "methods.json": "method_catalog unchanged plus empty executed configurations",
+    "queue.json": "diagnostic_queue, integration_slots, confirmation_slots unchanged",
+    "CURRENT.json": "Published frozen stage counts, not live scheduler",
+    "comparisons.json": "empty executed comparison projection",
+    "attempts.jsonl": "2 terminal original research stages with failure-inclusive provider pointer",
+    "routes": "essential native lifecycle/configuration/check evidence; original hashes plus transform descriptions in history/cohort002.json"
+  },
+  "actual_methods_configuration_count": 4,
+  "actual_top_level_attempt_records": 4,
+  "scope": "Top-level frozen published/source-reviewed four-research-stage subset, not all campaign attempts; broader accounting separately dated",
+  "operational_decomposition_last_verified": {
+    "current_fresh_pipelines": 5,
+    "current_fresh_arms_target": 24,
+    "current_confirmation_pipelines": 0,
+    "current_confirmation_arms_target": 8,
+    "historical_old_C03_treatment_pipeline": 1,
+    "total": 6
+  },
+  "prior_commit_receipts": "Immutable earlier Git commits retained; no source/grade/cost rewrite"
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "er9.phase1-source-only-allowlist.v1",
+  "files": [
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/dispatch.json",
+      "sha256": "9616a3fbf28ba4e533fe895bcef93ffdb06a430cd07a6807c5330d86290d5779",
+      "bytes": 7916
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/source-card-projection.json",
+      "sha256": "1210aedc2efd36ff43bbb61657214d4a6c8fce0d5dae89c6b1b0e30a734a76be",
+      "bytes": 2360
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/actual_task_B_1.md",
+      "sha256": "27f30150a3c1f88b105e896ac1a4c1f4f21ad7b0ca57d903c121b884398916a0",
+      "bytes": 15230
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/actual_task_A_2.md",
+      "sha256": "ff3c73c811b37d940a31e05e7b61064580fbbbb165ed869ec55c42834a718637",
+      "bytes": 16076
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/actual_task_A_1.md",
+      "sha256": "ba38dfa6c3fed3d565845c019b5140c859a7ac22cf45a63da89885495aeb0535",
+      "bytes": 12148
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/targeted_coverage_map.json",
+      "sha256": "01ec886bc0348e2c3966d894bcf000fa90906d47e0b5626fb63d4c5bf4d74462",
+      "bytes": 2350
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/neutral_targeted_task.md",
+      "sha256": "5ab74ba902944c6b77915da958c5864f8a4b10117e80bba3d5e51e107672bfcd",
+      "bytes": 1487
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/outputs/A/role-1/flash/review.md",
+      "sha256": "19a6db7bfae43b5efc80c97fdec23df19d5c65d727b58c6986fff97dc1ebd94c",
+      "bytes": 10068
+    },
+    {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/independent-targeted-28/outputs/A/role-2/scratch/ngff.map.json",
+      "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+      "bytes": 271895
+    }
+  ],
+  "held_phase2_key": true,
+  "source1200_whole1800_p2inclusive600fromfreeze": true
+}

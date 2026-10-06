@@ -1,0 +1,223 @@
+{
+  "observed_utc": "2026-10-06T11:32:17.375171+00:00",
+  "rows": [
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "research",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T09:46:08.798387+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+        "sha256": "d3e668dc2d3922fbf75489fe25771b292222a79d96d5c3a4c917566e9b1bf1cb"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "0bac9efea39de167fde7be1d818abe552a226343d578b7e3a9a1d12c9688d723"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "elapsed_seconds": 871.2183632640081,
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "cbb2f9d3d093148e33f976912242aa734b7b8acf9f460bb084329bfed923a0f9",
+          "bytes": 6156
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "f8025b08ed6d0d7bbdd99baf7c8b5f31c31787faf41d9e8d5ec8f8ca67250aea",
+          "bytes": 26989
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "7dc26ab65285e396f4950fb683e77783300ced8db5903746850807896df6ab66",
+          "bytes": 12871
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "5e583c8bbce73e917ed8bf942a581cef1309f3ea17cdef235a741353fd56debe",
+          "bytes": 5028
+        }
+      ]
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "critique",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:20:49.936753+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "5b055af083af9626cdfeef8339555d7068dadeb1c38608a022d38e7a5cb37489"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "64c8606cbac1a36ee77f9878175e2be21d07177d084b736275e9b5108e93e138"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "elapsed_seconds": 703.6672155859997,
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001-readiness-v1-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "3c1a4fd11c5f5cda6e50eeba6f710d6efacb59b3fcc9a3f3fcfa8e1958c3c47c",
+          "bytes": 19444
+        }
+      ]
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "arm": "control",
+      "stage": "revision",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:30:42.952404+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "d352f0f0919caec97d5882aa76e5d64b93b42e629ddcde3a696f56e6d139748e"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "06510330588b25ce064b46f3650dd16cd2164dfc6cf94243b1365d04368c2ae3"
+      },
+      "operational_complete": false,
+      "native_status": "execution_error",
+      "elapsed_seconds": 574.2189961989934,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": []
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "research",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T09:44:29.107256+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+        "sha256": "f5c26728815bd48bf6c635f85c7e9ae5cddfa1dd46435e654fb8a849e4527842"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "e992829bc619f13645d1c479f38ce3bff50c80920f1182841f5c6b268b90a12a"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "elapsed_seconds": 828.3718905010028,
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/frozen-output/research/leads.json",
+          "relative_path": "research/leads.json",
+          "sha256": "aa7cc33dd8028323fe4fe538ba6585ad0e9c0325962628cdb140bf3c0abc360d",
+          "bytes": 3983
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/frozen-output/research/ngff04_line_map.txt",
+          "relative_path": "research/ngff04_line_map.txt",
+          "sha256": "7a68bf2d4aa7881eb6623bcbdbd0092ef4714562fdcfd76377ab256ef6305274",
+          "bytes": 276329
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/frozen-output/research/proposal.md",
+          "relative_path": "research/proposal.md",
+          "sha256": "8451f2ce52808b65a42f084a31cbd74cbab8bd150348e7b17b6fdda3161be79c",
+          "bytes": 27936
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/frozen-output/research/sources.json",
+          "relative_path": "research/sources.json",
+          "sha256": "16793628d53de1108e7965e4e50a6c7e85940c35407b41420367eb867f8be53a",
+          "bytes": 9783
+        },
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/frozen-output/research/witnesses.json",
+          "relative_path": "research/witnesses.json",
+          "sha256": "ceed1821e7a5114fb6621ae8a2fdd70dcf2181465f929532e3872f39ee5b8062",
+          "bytes": 4694
+        }
+      ]
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "critique",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:01:08.265446+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/OUTPUT_FREEZE.json",
+        "sha256": "5368c48ffde109bb4fcef88d715fd7c4325fe372093b864b83e6729f005b0e31"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "2b6ff420d8588bc3c3518532010c6c413bf92397e580491f8686cd04d9d46cfe"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "elapsed_seconds": 649.6011463469913,
+      "missing_required_artifacts": [],
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001-readiness-v1-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "aef58ebf49d15f851af3e55b9aa837e592d2d70b7665a6c1b255a5b87a5b8bf5",
+          "bytes": 22818
+        }
+      ]
+    },
+    {
+      "job_id": "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "arm": "treatment",
+      "stage": "revision",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T11:11:09.375743+00:00",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/OUTPUT_FREEZE.json",
+        "sha256": "0f31134fefdf00bf86a68c7ee7eb716e8fa18629eaffd36e76775f3c36ef911d"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001-navigation-index-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "6ad403a57ad0857176b98db59d8e9c1825c9457b656c14dedd297503e52fd653"
+      },
+      "operational_complete": false,
+      "native_status": "cap_seconds",
+      "elapsed_seconds": 573.9645698209933,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "artifact_inventory": []
+    }
+  ],
+  "operational_complete_pipelines": 0,
+  "quality": "UNASSESSED",
+  "automatic_repeat": false,
+  "cursor": {
+    "updated_utc": "2026-10-06T11:32:13.156253+00:00",
+    "running_job_ids": [
+      "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+    ],
+    "scored_native_goal_starts_confirmed": 261,
+    "retained_resource_job_ids": []
+  }
+}

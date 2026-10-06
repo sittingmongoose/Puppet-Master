@@ -1,0 +1,268 @@
+{
+  "schema": "er9.independent-evaluator-phase2-check.v1",
+  "eval_id": "independent-targeted-26",
+  "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+  "phase1_immutable_verified_after_key": true,
+  "phase1_files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/input-pins.json",
+      "sha256": "3636155f1f26d4a9f7dda25bf9da464bff1a89c99293c0e277274309ac78b4c9",
+      "bytes": 39496,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-judgement.json",
+      "sha256": "a0c901bbb645eed7a38a8e6770e52279d278fb15ef14bf110f85992551515806",
+      "bytes": 13969,
+      "mode": "0444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-26/phase1-report.md",
+      "sha256": "aa786b1637b549a5dfd05a8b0a96d908ab1bb6c25f2403054b1deebaa8be0384",
+      "bytes": 9634,
+      "mode": "0444"
+    }
+  ],
+  "phase1_freeze_sha256": "78b2d51edf56030497a6214626c4f67d8c62d929bb9e17da4bf4857521c54240",
+  "phase1_judgement_changed": false,
+  "key_read_utc": "2026-10-06T10:50:05.795907Z",
+  "key_read_monotonic": 114224.652871306,
+  "key_gate_after_freeze": true,
+  "key_wait_and_read_seconds_from_freeze": 75.91953035499319,
+  "semantic_answer_map_present_in_released_key": false,
+  "current_key_scope": "alias/native/resource/input pin metadata only; no semantic truth answer substituted for independent sources",
+  "pins": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/INDEPENDENT-TARGETED-26_PHASE2_KEY_001.json",
+      "sha256": "7c2e973ebb6f5149c0dbf8a23b17ca2afe84aa21c0cc8d56b1eabf7f4a7d89ed",
+      "bytes": 70867,
+      "mode": "0o600"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/TD26_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "sha256": "6060558da0cd207315cb48e8d25cba1dcd17acb568ce5829fd0a2c26511012e9",
+      "bytes": 810,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/INDEPENDENT-TARGETED-26_CURRENT_RUNTIME_001.json",
+      "sha256": "65a5b7ec5a375b33aa4db62f9e7d8b6a785b4d6ce3f00480a2a2dd6b94ed8732",
+      "bytes": 64349,
+      "mode": "0o444"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/TD26_CURRENT_RESOURCE_EXECUTION_001.json",
+      "sha256": "4020fcbc98a6c38a0b62669b039355b6c7370c0b96130efd99d4ee21a2bb57d4",
+      "bytes": 15882,
+      "mode": "0o444"
+    }
+  ],
+  "runtime_rows": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_client_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "native_outcome": "HOLD",
+      "native_goal_before_cleanup": "active",
+      "native_goal_final": "paused",
+      "native_goal_used_seconds": 579,
+      "native_goal_tokens_used": 219520,
+      "original_runtime_elapsed_seconds": 585.670922344,
+      "closed_before_original_total_stop": true,
+      "all_five_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "host_terminal_pins_crossmatched": true,
+      "freeze_native_resource_pins_crossmatched": true,
+      "original_runtime_error": "original native stop reached",
+      "original_runtime_error_class": "TimeoutError",
+      "current_native_turns": {
+        "native_turns_started": 1,
+        "native_turns_completed": 0,
+        "native_turns_interrupted": 1,
+        "native_turns_terminal": 1
+      },
+      "current_goal_starts": 1,
+      "current_goal_replacements": 0,
+      "host_initial_turn_starts": 1,
+      "host_followup_turn_starts": 0,
+      "native_http_attempts": "UNKNOWN",
+      "native_responses": "UNKNOWN",
+      "usage_notification_count": 25,
+      "native_usage_totals": {
+        "cachedInputTokens": 1089792,
+        "inputTokens": 1280614,
+        "outputTokens": 28698,
+        "reasoningOutputTokens": 12188,
+        "totalTokens": 1309312
+      },
+      "billing_dollars": "UNKNOWN",
+      "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "tool_attempt_counts": {
+        "pm_boundary.read_file": 16,
+        "pm_boundary.write_file": 4,
+        "pm_execution.python_execute": 3
+      },
+      "tool_completed_counts": {
+        "pm_boundary.read_file": 16,
+        "pm_boundary.write_file": 4,
+        "pm_execution.python_execute": 3
+      },
+      "tool_failed_counts": {},
+      "current_actual_execution_receipts": [
+        {
+          "execution_id": "exec-2pjfn5tr",
+          "exit_code": 1,
+          "code_sha256": "d2fe8e5114780f04acb3c0d6977fd55e98935cf0be71c1e0fc39cc8beb14cc1d",
+          "original_result_sha256": "5a6178f20fc7c9aa4c7c6e70b9c08aeb2e837c043a40f5dab23e968bffd6f933"
+        },
+        {
+          "execution_id": "exec-8qnmkm6k",
+          "exit_code": 0,
+          "code_sha256": "6ef84d5de82e1798ec9fa87279bd8423bd0b8901bf16bbe84a43d57e0d7c14b0",
+          "original_result_sha256": "948d1cc13755af66db17d3760bc0fb701f71bb5b0856638b45b2565592417a9d"
+        },
+        {
+          "execution_id": "exec-pn8dp9hx",
+          "exit_code": 0,
+          "code_sha256": "bdf83a2d9cb58da7d402fbb4c65a19e809f77395d3288264e904d886c0902e92",
+          "original_result_sha256": "327e1339e290d8b15ea227326fd4b4853fec19480380a68d4fb7e804fac2f476"
+        }
+      ],
+      "memory_cap_bytes": 2415919104,
+      "observed_memory_peak_bytes": 369893376,
+      "swap_cap_bytes": 0,
+      "resource_oom_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "resource_proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "a5cacd12186a02b2c6f12bbd15c4f5fd38397cfc0f1fed6c95684f638a5e1073",
+      "final_native_result_sha256": "d417093e247448dbe38a3113dbd94e9365b595aae228c7551b227bf3cdeb1123",
+      "resource_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "source_quality_inferred_from_native_status": false,
+      "final_pipeline_or_winner_credit": false
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "requested_model": "gpt-6-luna",
+      "requested_effort": "max",
+      "observed_client_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "physical_provider_runtime_attestation": "UNKNOWN",
+      "opaque_nativeGoalID": "UNKNOWN_NOT_EXPOSED; API thread/session is separate",
+      "native_outcome": "HOLD",
+      "native_goal_before_cleanup": "blocked",
+      "native_goal_final": "paused",
+      "native_goal_used_seconds": 456,
+      "native_goal_tokens_used": 205818,
+      "original_runtime_elapsed_seconds": 462.476219044,
+      "closed_before_original_total_stop": true,
+      "all_five_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "host_terminal_pins_crossmatched": true,
+      "freeze_native_resource_pins_crossmatched": true,
+      "original_runtime_error": "native Goal stopped before completion",
+      "original_runtime_error_class": "RuntimeError",
+      "current_native_turns": {
+        "native_turns_started": 3,
+        "native_turns_completed": 2,
+        "native_turns_interrupted": 1,
+        "native_turns_terminal": 3
+      },
+      "current_goal_starts": 1,
+      "current_goal_replacements": 0,
+      "host_initial_turn_starts": 1,
+      "host_followup_turn_starts": 0,
+      "native_http_attempts": "UNKNOWN",
+      "native_responses": "UNKNOWN",
+      "usage_notification_count": 38,
+      "native_usage_totals": {
+        "cachedInputTokens": 2424832,
+        "inputTokens": 2582761,
+        "outputTokens": 47889,
+        "reasoningOutputTokens": 33084,
+        "totalTokens": 2630650
+      },
+      "billing_dollars": "UNKNOWN",
+      "accounting_definitions": "native usage notifications are observed cumulative accounting; cached input included in input; reasoningOutput subset of output; not additive to parent/UI/provider rows; provider requests/cache money/cancelled-unexposed tail UNKNOWN where unexposed",
+      "tool_attempt_counts": {
+        "pm_boundary.mechanical": 3,
+        "pm_boundary.read_file": 23,
+        "pm_boundary.write_file": 5,
+        "pm_execution.python_execute": 1
+      },
+      "tool_completed_counts": {
+        "pm_boundary.mechanical": 2,
+        "pm_boundary.read_file": 22,
+        "pm_boundary.write_file": 3,
+        "pm_execution.python_execute": 1
+      },
+      "tool_failed_counts": {
+        "pm_boundary.mechanical": 1,
+        "pm_boundary.read_file": 1,
+        "pm_boundary.write_file": 2
+      },
+      "current_actual_execution_receipts": [
+        {
+          "execution_id": "exec-ac7brp_l",
+          "exit_code": 0,
+          "code_sha256": "008b02f20901f9028e08fdeb3ce5dc7480e6f158be468757e328bb7d2ad3855d",
+          "original_result_sha256": "54f34a15ca60d6a90491e0add4e59d7654624626a7eaba3595c659a2d06aa461"
+        }
+      ],
+      "memory_cap_bytes": 2415919104,
+      "observed_memory_peak_bytes": 371916800,
+      "swap_cap_bytes": 0,
+      "resource_oom_observed": false,
+      "aggregate_cpu_tasks_scratch_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "resource_proof_reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "4afb90a40b32dfb8b6e249cf1a121a8df4b6a1fe9591574399b151dc54d7a11d",
+      "final_native_result_sha256": "97a5cea3aeb26ec8c08bd1528379e86f0efd9686dcff2c7d74ef42d47a864dd7",
+      "resource_chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash distinct namespace. Exactreader matches actualproof+launchseal. Separately saved preembeddingbytesUNKNOWN; not reconstructed.",
+      "source_quality_inferred_from_native_status": false,
+      "final_pipeline_or_winner_credit": false
+    }
+  ],
+  "postkey_scientific_revision": false,
+  "additional_failed_attempt_scope": "A exec-2pjfn5tr exit1 is preserved as current operational inventory. Its scientific code/input/expectation were not semantically inspected prekey; no source-grade change or diagnosis inferred from exit status.",
+  "unassessed_scopes": [
+    "final_treatment",
+    "full_pipeline_A",
+    "full_pipeline_B",
+    "matched_causal",
+    "winner",
+    "whole_development_domain_PASS"
+  ],
+  "clock": {
+    "start_monotonic": 113093.927152478,
+    "phase1_freeze_monotonic": 114148.733340951,
+    "phase2_deadline_monotonic": 114748.733340951,
+    "whole_deadline_monotonic": 114893.927152478,
+    "phase2_check_written_monotonic": 114415.137981758,
+    "phase2_elapsed_to_check_seconds": 266.40464080699894,
+    "whole_elapsed_to_check_seconds": 1321.2108292799967,
+    "wait_report_handoffs_charged": true,
+    "reset": false
+  },
+  "report_written_utc": "2026-10-06T10:53:16.284909Z"
+}

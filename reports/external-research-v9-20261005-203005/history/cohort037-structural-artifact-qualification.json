@@ -1,0 +1,18 @@
+{
+  "schema": "er9.publisher.frozen-candidate-json-qualification.v1",
+  "positive_source_selector": "ops/frozen-exports/PUBLIC_SELECTION_059.json",
+  "positive_source_selector_sha256": "8531242df1d0d06a05996726df9d244b3384a98c7dc17f8f7b9f9f847ed8e8a8",
+  "rows": [
+    {
+      "path": "frozen-evidence/packets/C04-CURRENT-CLOCK-RESEARCH-1-003/outputs/A/research/sources.json",
+      "sha256": "6eef876f90df763505949b009f56504a587661c4ccf8ce90df81d7eac3328b3a",
+      "bytes": 15066,
+      "structural_parse": "JSONDecodeError",
+      "error": "Invalid control character at",
+      "line": 149,
+      "column": 331,
+      "scope": "Exact frozen candidate output bytes; structural parser only, no scientific grade change or absent-artifact inference"
+    }
+  ],
+  "publication_behavior": "Preserve original candidate bytes; no correction/application or semantic regrading"
+}

@@ -1,0 +1,295 @@
+{
+  "all5_role_source_choices_before_ANY_new_Goal": true,
+  "all_roles": [
+    {
+      "Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/workspace/TASK.md",
+        "sha256": "f5500f547a199c2a186d5fefde2ab84cdf172db058d9491fd2c243040ddf52da"
+      },
+      "arm": "control",
+      "bundle_profile": null,
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/clock_fragment.md",
+        "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+      },
+      "future_actual_clock_config_input_hashes": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "native_worker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+        "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+      },
+      "prepared_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001/prepared-stage.json",
+        "sha256": "911fca87e25fe004ea94b6d694d2ff86132eebb5c2a3cc22487711ce57237ef4"
+      },
+      "runtime_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+        "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+      },
+      "runtime_source_pins": {
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+        "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/profile.py": "0cac76df78e153c5b0f1408b08881d422ace1379ab57f767acaa98aeea8c813b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+        "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+        "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+        "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+      },
+      "stage": "research",
+      "tools_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+        "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+      }
+    },
+    {
+      "Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/workspace/TASK.md",
+        "sha256": "8c0f3aaaed49a61cd844dff03e13d3923a5517b0fede2e7bdc63f39fc6f75216"
+      },
+      "arm": "control",
+      "bundle_profile": null,
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/clock_fragment.md",
+        "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+      },
+      "future_actual_clock_config_input_hashes": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+      "native_worker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+        "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+      },
+      "prepared_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "865099e4cf43f19a800eb28a18c75b24d602e4ada90338d0f5875cfc40acfcce"
+      },
+      "runtime_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+        "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+      },
+      "runtime_source_pins": {
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+        "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/profile.py": "0cac76df78e153c5b0f1408b08881d422ace1379ab57f767acaa98aeea8c813b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+        "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+        "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+        "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+      },
+      "stage": "critique",
+      "tools_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+        "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+      }
+    },
+    {
+      "Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/workspace/TASK.md",
+        "sha256": "b79ec5af6e33f20ee3615dcc8bceab80f3801c6b710ff9635979919a8d708815"
+      },
+      "arm": "control",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/operator-profile/BUNDLE_PROFILE.json",
+        "sha256": "13d12e6ca55cc05bdd5cd60151dfa42e175cac2d3094dcd1a3bf8eaafef4c49a"
+      },
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/clock_fragment.md",
+        "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+      },
+      "future_actual_clock_config_input_hashes": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001",
+      "native_worker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/stage_worker.py",
+        "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+      },
+      "prepared_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "f6ea2a3b76ce50514e95d0cf9ad21922b0379997b17a29c7deb9a6f95d47f7f5"
+      },
+      "runtime_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+        "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+      },
+      "runtime_source_pins": {
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+        "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/profile.py": "324ecc3a5ad555b3aac55835577ed20baf91fc135d4010ce5f6bacc78dc585be",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+        "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+        "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+        "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+      },
+      "stage": "revision",
+      "tools_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+        "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+      }
+    },
+    {
+      "Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/workspace/TASK.md",
+        "sha256": "9fc34322cfd27653fb68096aaa4238b0da29ea0f13f2952b3b5e1f24c6affbbd"
+      },
+      "arm": "treatment",
+      "bundle_profile": null,
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/clock_fragment.md",
+        "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+      },
+      "future_actual_clock_config_input_hashes": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "native_worker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py",
+        "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+      },
+      "prepared_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001/prepared-stage.json",
+        "sha256": "afb108156e88ef95980b23c587d32af8c0286a6b09d2f03bbe675af9cb1ce9a6"
+      },
+      "runtime_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/PIN.json",
+        "sha256": "42107a409938af375d9f8d66a759a5ef51b5fd2fd90dc0d3197bde44be593450"
+      },
+      "runtime_source_pins": {
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+        "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/profile.py": "0cac76df78e153c5b0f1408b08881d422ace1379ab57f767acaa98aeea8c813b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-core-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+        "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+        "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+        "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+      },
+      "stage": "research",
+      "tools_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+        "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+      }
+    },
+    {
+      "Task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/workspace/TASK.md",
+        "sha256": "7ad7bda6a02058189eb7bc6b91e84015f91f1c9b7d3919df810fbad74c1c43e5"
+      },
+      "arm": "treatment",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/operator-profile/BUNDLE_PROFILE.json",
+        "sha256": "defe914425b666852ae1aff73f99885c1c0c3a8a5353fbc26dd816c2ca6ceb49"
+      },
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/clock_fragment.md",
+        "sha256": "4b6dccee3e68d60566b7dc0ec56a98a740e11a72d7b43e713a81ef977fdabc83"
+      },
+      "future_actual_clock_config_input_hashes": null,
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001",
+      "native_worker": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/stage_worker.py",
+        "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+      },
+      "prepared_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/stages/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "0f888192de136af5f6d8dbaac3fca11019749444d6317b8e16a4f19301eb4984"
+      },
+      "runtime_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/PIN.json",
+        "sha256": "ac8c325209966762b0facc70f9ca41ac14d14b9a627ae00412ab87ba22b33763"
+      },
+      "runtime_source_pins": {
+        "/home/sittingmongoose/.local/opt/zcode/app.backup-3.11.2.6792/resources/glm/zcode.cjs": "e9f1868c0fdb863537ed910ee3828b9be96b8c2fd805473f63b439e1113266b8",
+        "/home/sittingmongoose/.zcode/server/node": "8142d37c6f2f372ef040419e7a111a6baf17df89f8078d02447d6c639ae20c1d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/clock_binding.py": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/component_guard.py": "f66c4e33bad2116f3e1dd3eedb8363ec15578dc918919f62ef66a12f20a4c3d2",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/glm_stage.py": "d19eb08e04fd39343660d7b8673904dceb1a368381a3ba6881b602fb9befc489",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/profile.py": "324ecc3a5ad555b3aac55835577ed20baf91fc135d4010ce5f6bacc78dc585be",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/readiness.py": "3510d3a51fb1e6be122958614de921a49751df54f69740019fa2d00511080b07",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/stage_worker.py": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/readiness-failfast-bundle-v1/task_fragment.py": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+        "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+        "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab",
+        "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42"
+      },
+      "stage": "critic_final",
+      "tools_source_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+        "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+      }
+    }
+  ],
+  "native_allocation_authorized": false,
+  "new_allocation_per_arm": 2100,
+  "new_allocation_total": 4200,
+  "original_topology": "control mechanicalR4repair600\u2192critique900\u2192revision600; treatment mechanicalR4repair600\u2192critic_final1500",
+  "pair_id": "C-04-NATIVE-CATALOG-REPAIR-R001",
+  "schema": "er9.c04-paired-native-catalog-repair-source-closure.v1",
+  "semantic_recovery_quality": "UNASSESSED",
+  "source_card": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/card.json",
+    "sha256": "cf94aea647245ea5be2371fd08510e49da8bdc8fcbb741418fe35d04e268b944"
+  },
+  "source_registration": {
+    "family": "Z",
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-04-CONFIRMATION-CLOCK-FRESH-R001/registration.json",
+    "requested_effort": "max",
+    "requested_model": "GLM 5.3 Flash",
+    "sha256": "d5d61822714c068bb390bdb3ec0f0bfb66700a013932d9cd55ce2fe280fdeaae"
+  },
+  "target_credit": 0
+}
