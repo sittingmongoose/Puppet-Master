@@ -1,0 +1,103 @@
+{
+  "schema": "er9.closed-findings-useful-unknowns-and-restart.v2",
+  "useful_unknowns": [
+    {
+      "topic": "Mutable external input provenance",
+      "evidence": [
+        "TD4",
+        "TD6",
+        "P6-current"
+      ],
+      "useful_unknown": "Read-only consumers and endpoint hashes alone do not establish consumed bytes. Snapshot/read-view or writer exclusion, mutation policy and affected output status remain engineering dependencies.",
+      "scope": "Closed source-grounded defects; not a new production design or experiment."
+    },
+    {
+      "topic": "Truth versus catalog delivery",
+      "evidence": [
+        "D14A-original",
+        "P5-current",
+        "P7-current",
+        "Warm2",
+        "Warm3",
+        "Warm5"
+      ],
+      "useful_unknown": "Actual arithmetic can be right while final numbers, code/hash/stdout, JSON or citation mappings are wrong. Complete canonical delivery and exact correspondence need separate evidence.",
+      "scope": "No fabrication inferred from mismatch alone."
+    },
+    {
+      "topic": "Implementation and version conditions",
+      "evidence": [
+        "TD3",
+        "TD6",
+        "Warm4",
+        "C03-original-final"
+      ],
+      "useful_unknown": "Source comments, partial guards, release metadata and API loop contracts have scoped meaning; an issue/merge or component witness does not establish general shipped behavior.",
+      "scope": "No new source checking or candidate answer input."
+    },
+    {
+      "topic": "Discovery and opportunities",
+      "evidence": [
+        "D14A-original",
+        "D14B-original",
+        "D15A-original",
+        "D15B-original",
+        "TD2",
+        "TD3",
+        "TD16"
+      ],
+      "useful_unknown": "Independent mechanisms and genuine issue/fix/test chains are useful even when complete output or a matched effect remains unassessed. Link counts and capture identity do not prove discovery quality.",
+      "scope": "Development evidence only, no fresh answer leakage."
+    },
+    {
+      "topic": "Warm recovery",
+      "evidence": [
+        "Warm1-fresh",
+        "Warm2",
+        "Warm3",
+        "Warm4",
+        "Warm5"
+      ],
+      "useful_unknown": "Preservation access, independent checking, complete canonical assembly and repair costs remain separate. Three source failures plus two missing canonical finals do not qualify blind repair.",
+      "scope": "Five bounded derivatives;0new logical targets."
+    }
+  ],
+  "restart": [
+    {
+      "action": "Continue existing finite queue under current owner",
+      "dependency": "Actual native admissions, stage/final freezes, complete required assessments and cleanup receipts",
+      "claim_until_satisfied": "Campaign remains DRAFT/incomplete; active/reportready scopes pending."
+    },
+    {
+      "action": "Admit only later exact frozen neutral receipts",
+      "dependency": "Dated accounting/publication/admission path+SHA, with unchanged earlier windows",
+      "claim_until_satisfied": "No current-liveness, extra completion, or lower-cost inference."
+    },
+    {
+      "action": "Complete missing canonical-final assessment where an actual final exists",
+      "dependency": "Frozen designated final and declared evaluator coverage; no scratch promotion or premium completion",
+      "claim_until_satisfied": "Scientific UNASSESSED and no qualified product winner."
+    },
+    {
+      "action": "Retain P7 provenance and handoff qualification",
+      "dependency": "Exact retained prior receipt bytes, independently observed inference payload where available, required handoff closure timing",
+      "claim_until_satisfied": "Source-final PASS remains full-provenanceHOLD; no clean causal/economic winner."
+    },
+    {
+      "action": "Keep DEC016 infrastructure continuation distinct",
+      "dependency": "Four paired source choices frozen before any actual newCritic Goal; own authenticated current R only",
+      "claim_until_satisfied": "READY/registered is not native completion; costs additive and no clean unrepaired credit."
+    },
+    {
+      "action": "Report one-account economics only with its actual concurrency",
+      "dependency": "Failure-inclusive candidate/helper/provider counters and accepted complete output evidence, monetary telemetry when exposed",
+      "claim_until_satisfied": "Provider/money/helper inclusionUNKNOWN; affordability unproved."
+    },
+    {
+      "action": "Finish final publication/cleanup as root-owned campaign work",
+      "dependency": "Commit-pinned GitHub entrypoint, finite target outcome denominators, exact owned-job cleanup",
+      "claim_until_satisfied": "This worker creates no Git/main/Plans/WorkNodes edits or additional campaign."
+    }
+  ],
+  "provisional_recommendation": "No qualified clean one-account winner or affordability claim. Retain bounded executable checks, source/version/conditions and complete final/evidence assembly as testable engineering requirements because the closed reports expose concrete defects. P7 treatment is a useful source-final result with explicit provenance HOLD, not an adopted recipe or causal/economic winner. Continue only the already authorized finite queue and assessments."
+}

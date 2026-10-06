@@ -1,0 +1,16 @@
+{
+  "schema": "er9.verified-phase1-key-release.v1",
+  "evaluation_id": "independent-warm-recovery-5",
+  "observed_utc": "2026-10-06T07:58:03.156772+00:00",
+  "freeze_sha256": "5d8c63004548e094d5a875b17647d8a9ebff431be25053092c9e95ab222001fd",
+  "all_primary_sha_readonly_verified": true,
+  "locked_record_count": 45,
+  "readonly_record_count": 45,
+  "all_locked_hashes_and_declared_lengths_verified": true,
+  "records_without_separatelydeclared_length_count": 0,
+  "key_sha256": "ebcdcd4108c4221c4b512857f7a2a24c82f22ab643072e9c77ef54fbf966dbb1",
+  "phase1_frozen_utc": "2026-10-06T07:50:58.707044+00:00",
+  "phase2_deadline_monotonic_ns": 104077564031821,
+  "original_whole_deadline_monotonic_ns": 104829951682002,
+  "no_reset_or_scientific_grade_read": true
+}

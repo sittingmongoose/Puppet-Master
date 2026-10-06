@@ -1,0 +1,33 @@
+{
+  "schema": "er9.draft-consolidation-scope.v2",
+  "status": "DRAFT_INCOMPLETE_CAMPAIGN",
+  "created_utc": "2026-10-06T08:16:10.441828+00:00",
+  "start": {
+    "path": "consolidation/results-draft-002/START.json",
+    "sha256": "b6acf5e112525d99c5c4cb7811d3048aec9b49b43239f7ac3a707cb3e19d30a5",
+    "bytes": 542,
+    "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+  },
+  "bound_seconds": 1800,
+  "all16_32_12_4_mapped": true,
+  "new_candidate_goals": 0,
+  "new_scientific_grades": 0,
+  "prior_normal_consolidation_admission": "Denied per root assignment; this separately authorized task has its own durable actual START; no earlier completion or zero-cost inference",
+  "owned_directory": "consolidation/results-draft-002",
+  "recipients": [
+    "/root",
+    "/root/publisher"
+  ],
+  "neutral_receipts_only_to": [
+    "/root/frozen_exports"
+  ],
+  "exclusions": [
+    "native candidate IO/auth/private state",
+    "raw source/candidate bodies",
+    "roster/sibling summaries",
+    "fresh grading",
+    "Git/main/Plans/WorkNodes edits",
+    "new campaign"
+  ],
+  "input_rule": "Closed source reports and exact reportready/provenance qualifiers, immutable historical draft and dated neutral metadata. Active evaluator17 pending; no active source report read."
+}

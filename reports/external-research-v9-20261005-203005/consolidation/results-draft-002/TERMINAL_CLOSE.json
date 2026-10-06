@@ -1,0 +1,23 @@
+{
+  "schema": "er9.consolidation-terminal-actual-clock.v2",
+  "terminal_utc": "2026-10-06T08:18:45.287415+00:00",
+  "terminal_monotonic_seconds": 105144.144436238,
+  "status": "BOUNDED_DRAFT_SYNTHESIS_COMPLETE; FINITE_CAMPAIGN_INCOMPLETE",
+  "actual_whole_elapsed_including_primary_reports_and_close_receipt_notices_seconds": 918.7753367959958,
+  "primary_report_handoff_elapsed_seconds_subset": 871.7710753469873,
+  "report_ready_elapsed_seconds_subset": 809.3374014679866,
+  "inclusive_original_limit_seconds": 1800,
+  "within_original_limit": true,
+  "root_publisher_courier_primary_and_closure_notice_tool_returns": "ALL_SUCCESS_OBSERVED",
+  "ack_wait": false,
+  "clock_reset": false,
+  "primary_fourteen_positive_files_unchanged": true,
+  "new_candidate_goals": 0,
+  "new_grades": 0,
+  "native_own_goal_created_or_closed": false,
+  "scientific_messages_to_candidates_ops_engineers": 0,
+  "campaign_complete": false,
+  "closure_notice_handoff_tail_after_primary_sample_included": true,
+  "terminal_pointer_final_delivery": "later neutral pointer/final return remains inside original bound; no recursive stopwatch",
+  "provider_or_money_or_own_evaluator_usage": "UNKNOWN; no zero-cost inference"
+}

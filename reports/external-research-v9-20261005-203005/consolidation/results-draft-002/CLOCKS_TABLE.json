@@ -1,0 +1,361 @@
+{
+  "schema": "er9.report-clock-components.v2",
+  "overlapping_times_never_summed": true,
+  "rows": [
+    {
+      "report_id": "TD10-closure",
+      "receipt": {
+        "path": "evaluation/independent-targeted-10/closure-lock.json",
+        "sha256": "ce56b11bcd0c3d82a1d6a87121eda850a3b01031581a623c0c12995b8d034f5e",
+        "bytes": 10894,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "created_utc": "2026-10-06T04:39:32.529237+00:00",
+        "phase2_inclusive_wait_reports_handoffs_preserved": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD11",
+      "receipt": {
+        "path": "evaluation/independent-targeted-11/completion.json",
+        "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+        "bytes": 1851,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "clock_reset": false,
+        "closed_monotonic_ns": 94226338131078,
+        "closed_utc": "2026-10-06T05:16:47.481143+00:00",
+        "cost_clock_receipt_sha256": "c2ab9ca1cc34a7f07e78318c430e054c7cc76e3bba2e3eb828059c8e22ce0b6b",
+        "inclusive_phase2_seconds": 542.868532843,
+        "phase1_frozen_utc": "2026-10-06T05:07:44.612528+00:00",
+        "raw_source_capture_or_private_key_publication_authorized": false,
+        "source_seconds": 320.723477072,
+        "source_started_utc": "2026-10-06T05:02:23.889064+00:00",
+        "terminal_receipt_handoff_budget_headroom_seconds": 57.131467156999975,
+        "whole_includes_post_start_report_handoffs": true,
+        "whole_seconds": 863.592009915
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD12",
+      "receipt": {
+        "path": "evaluation/independent-targeted-12/terminal-closure.json",
+        "sha256": "60c5a7d1bb05fa8f2327c0ec2a580e80adb10b7b2afa1eb60ed24bab147d2aa3",
+        "bytes": 3123,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "checking_anchor_start_utc": "2026-10-06T05:26:55.478293Z",
+        "checking_interval_elapsed_seconds": 363.871735796,
+        "clock_reset": false,
+        "final_parent_handoff_reserved_within_remaining_deadline": true,
+        "literal_inclusive_phase2_elapsed_seconds_conservative_UTC_gap_charged": 402.559490796,
+        "literal_inclusive_phase2_elapsed_seconds_monotonic": 402.559437336,
+        "literal_inclusive_phase2_start_utc": "2026-10-06T05:26:16.790538Z",
+        "literal_phase2_deadline_utc": "2026-10-06T05:36:16.790538Z",
+        "literal_phase2_limit_seconds": 600,
+        "original_source_start_utc": "2026-10-06T05:21:22.268948Z",
+        "remaining_literal_phase2_seconds": 197.44050920400002,
+        "remaining_whole_seconds": 1102.918976806,
+        "root_and_courier_report_and_clock_qualifier_handoffs_completed_before_receipt": true,
+        "terminal_receipt_utc": "2026-10-06T05:32:59.350029Z",
+        "whole_elapsed_seconds": 697.081023194,
+        "whole_limit_seconds": 1800
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD13",
+      "receipt": {
+        "path": "evaluation/independent-targeted-13/handoff-receipt.json",
+        "sha256": "822c1f6048d9dc6758a7beb4f8a7779da15294ef74fdb0cdf1b2ec7f0853d7f0",
+        "bytes": 1427,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "terminal_utc": "2026-10-06T05:35:04.296986+00:00",
+        "terminal_monotonic_seconds": 95323.151362657,
+        "source_elapsed_seconds": 261.25086871501117,
+        "literal_inclusive_phase2_elapsed_through_report_and_neutral_clock_handoffs_seconds": 477.5669747879874,
+        "actual_key_checking_interval_elapsed_seconds": 417.4064503799891,
+        "original_whole_elapsed_through_report_and_neutral_clock_handoffs_seconds": 738.8301206670003,
+        "literal_inclusive_phase2_within_600": true,
+        "original_whole_within_1800": true,
+        "no_clock_reset": true,
+        "old_clock_bytes_and_all_21_phase1_pins_preserved": true,
+        "no_ack_wait": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD14",
+      "receipt": {
+        "path": "evaluation/independent-targeted-14/handoff-complete.json",
+        "sha256": "96337bb4d1ef5865d6b9084ba98c4c5cd4e3d85afadc0f039e8ec966f0055e2a",
+        "bytes": 1601,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "ack_wait": false,
+        "clock_reset": false,
+        "handoff_complete_monotonic_seconds": 95797.04641787,
+        "handoff_complete_utc": "2026-10-06T05:42:58.189431Z",
+        "inclusive_phase2_deadline_monotonic_seconds": 95933.788147391,
+        "inclusive_phase2_elapsed_seconds": 463.2582704790111,
+        "retst_repair_feedback_newcampaign": false,
+        "source_elapsed_seconds": 551.0936105589935,
+        "whole_deadline_monotonic_seconds": 96582.694536832,
+        "whole_elapsed_seconds": 1014.3518810380046
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD15",
+      "receipt": {
+        "path": "evaluation/independent-targeted-15/neutral_closure.json",
+        "sha256": "1a4a2f53185d48c7d77ac10335fe82dacb66a299f2662aa427f6467627771b44",
+        "bytes": 1677,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "closure_utc": "2026-10-06T05:53:10.993820+00:00",
+        "phase2_deadline_monotonic_ns": 96604193440998,
+        "phase2_elapsed_inclusive_seconds": 405.657363942,
+        "phase2_remaining_seconds": 194.342636058,
+        "reset": false,
+        "source_elapsed_seconds": 496.072850714,
+        "whole_deadline_monotonic_ns": 97308120590284,
+        "whole_elapsed_seconds": 901.730214656
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "TD16",
+      "receipt": {
+        "path": "evaluation/independent-targeted-16/completion.json",
+        "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18",
+        "bytes": 1898,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "acks_awaited": false,
+        "clock_reset": false,
+        "inclusive_key_wait_and_prechecking_seconds": 99.31177,
+        "phase1_freeze_utc": "2026-10-06T05:56:32.009733+00:00",
+        "phase2_checking_start_utc": "2026-10-06T05:58:11.321505+00:00",
+        "phase2_deadline_monotonic_ns": 97210866724167,
+        "phase2_inclusive_elapsed_through_reports_and_initial_handoffs_seconds": 507.292233,
+        "phase2_literal_inclusive_budget_seconds": 600,
+        "phase2_remaining_for_completion_selector_and_final_seconds": 92.707767,
+        "reports_and_initial_handoffs_included": true,
+        "source_budget_seconds": 1200,
+        "source_screen_elapsed_seconds": 675.506207,
+        "source_start_utc": "2026-10-06T05:45:16.503468+00:00",
+        "utc": "2026-10-06T06:04:59.301968+00:00",
+        "whole_budget_seconds": 1800,
+        "whole_elapsed_through_reports_and_initial_handoffs_seconds": 1182.79844,
+        "within_phase2_budget": true,
+        "within_source_budget": true,
+        "within_whole_budget": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "P5-current",
+      "receipt": {
+        "path": "evaluation/independent-pipeline-5/handoff-closure.json",
+        "sha256": "7d29cb6b1004d1dccc8510534661e102565cfae989c7acf8c37dd8c40908b1c3",
+        "bytes": 1197,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "before_both_deadlines": true,
+        "clock_reset": false,
+        "handoff_result": "Each collaboration send returned success; no ACK awaited.",
+        "handoffs_completed_monotonic_ns": 96400362233885,
+        "handoffs_completed_utc": "2026-10-06T05:53:01.505245+00:00",
+        "no_scientific_outcomes_in_this_neutral_receipt": true,
+        "phase2_inclusive_elapsed_seconds": 399.948181226,
+        "phase2_literal_deadline_utc": "2026-10-06T05:56:21.557065+00:00",
+        "source_checking_interval_seconds": 613.934399478,
+        "whole_elapsed_seconds": 1013.882580704,
+        "whole_original_deadline_utc": "2026-10-06T06:06:07.622668+00:00"
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "C03-original-final",
+      "receipt": {
+        "path": "evaluation/independent-confirmation-C03-final-1/completion.json",
+        "sha256": "bca3e29bf15afca958a49781e2bc67a04f4bd1283b61cd9e922cd53dbe4ef344",
+        "bytes": 649,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "utc": "2026-10-06T06:53:12.095482+00:00",
+        "inclusive_P2_seconds_after_required_handoffs": 592.118248636,
+        "whole_seconds_after_required_handoffs": 1642.057999064,
+        "no_ack_wait": true,
+        "no_reset": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "Warm1-fresh",
+      "receipt": {
+        "path": "evaluation/independent-warm-recovery-1-fresh/final_reports/closure_receipt.json",
+        "sha256": "aefbdd11398b20e9cb9c7b33533c79277342d829dc59a413dc5ed626e21f910c",
+        "bytes": 5600,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "closure_utc": "2026-10-06T07:21:14.714425+00:00",
+        "source_start_utc": "2026-10-06T06:56:04.683140+00:00",
+        "phase1_freeze_utc": "2026-10-06T07:14:16.912559+00:00",
+        "source_elapsed_seconds": 1092.229368357,
+        "phase2_elapsed_including_wait_check_report_handoffs_seconds": 417.801866489,
+        "whole_elapsed_including_report_handoffs_seconds": 1510.031234846,
+        "phase2_literal_limit_seconds": 600,
+        "phase2_literal_stop_utc": "2026-10-06T07:24:16.912559Z",
+        "whole_stop_utc": "2026-10-06T07:26:04.683140Z",
+        "phase2_deadline_monotonic_ns": 101875769547187,
+        "within_original_bounds": true,
+        "reset": false,
+        "neutral_handoff_route": "/root/frozen_exports",
+        "new_Goal_candidate_execution_retest_repair_feedback": false
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "Warm2",
+      "receipt": {
+        "path": "evaluation/independent-warm-recovery-2/handoff_closure.json",
+        "sha256": "b44f0b73adb72495e5b394a2adfd56691e0f8c8525398b443eb86cfc32369c1d",
+        "bytes": 3389,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "ACK_waited": false,
+        "closure_utc": "2026-10-06T07:35:15.695465+00:00",
+        "immutable_phase1_freeze_utc": "2026-10-06T07:27:49.319934+00:00",
+        "original_clock_reset": false,
+        "original_source_start_utc": "2026-10-06T07:23:30.983988+00:00",
+        "original_whole_1800_seconds_met": true,
+        "original_whole_deadline_monotonic_ns": 103629841076750,
+        "original_whole_elapsed_through_required_handoffs_seconds": 704.711374726,
+        "phase2_deadline_monotonic_ns": 102688176977505,
+        "phase2_inclusive_elapsed_through_required_handoffs_seconds": 446.375473971,
+        "phase2_literal_inclusive_600_seconds_met": true,
+        "source_1200_seconds_met": true,
+        "source_elapsed_seconds": 258.335900755,
+        "supersedes_final_assessment_handoff_receipt_pending": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "Warm3",
+      "receipt": {
+        "path": "evaluation/independent-warm-recovery-3/closure.json",
+        "sha256": "46c1d385eef67f010266687045b792fac2eb4207b7a2b05f5677176857a9572a",
+        "bytes": 4061,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "accountant_handoff": "usage/clocks only; successful preclosure; initial reservation attempt failed thread limit and root was notified",
+        "ack_wait": false,
+        "actual_source_start_utc": "2026-10-06T07:28:07.451650+00:00",
+        "close_monotonic_ns": 102869293364711,
+        "close_utc": "2026-10-06T07:40:50.436377+00:00",
+        "courier_handoff": "neutral pins/clocks/provenance/closure only; completed preclosure",
+        "p1_freeze_utc": "2026-10-06T07:35:24.877865+00:00",
+        "p2_inclusive_cap_seconds": 600,
+        "p2_inclusive_elapsed_seconds": 325.558513158,
+        "reset": false,
+        "scientific_handoff": "root only; completed before closure",
+        "source_cap_seconds": 1200,
+        "source_phase_seconds": 437.426156631,
+        "whole_cap_seconds": 1800,
+        "whole_elapsed_seconds": 762.984669789,
+        "within_all_original_caps": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "Warm4",
+      "receipt": {
+        "path": "evaluation/independent-warm-recovery-4/closure.json",
+        "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+        "bytes": 3780,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "closure_utc": "2026-10-06T07:58:20.790169+00:00",
+        "handoff_ack_waited": false,
+        "literal_inclusive_phase2_elapsed_seconds": 796.266980257,
+        "original_whole_deadline_monotonic_ns": 104512240741448,
+        "original_whole_elapsed_seconds": 1207.406416108,
+        "phase2_deadline_monotonic_ns": 103723380177299,
+        "phase2_overrun_seconds": 196.266980257,
+        "phase2_report_created_before_cap": true,
+        "phase2_required_handoff_completion_within_cap": "UNKNOWN_NOT_TIMESTAMPED",
+        "postdeadline_operations": "terminal timing/closure receipt and neutral required handoffs only",
+        "reset": false,
+        "source_phase_elapsed_seconds": 411.139435851,
+        "within_original_phase2": false,
+        "within_original_whole": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "Warm5",
+      "receipt": {
+        "path": "evaluation/independent-warm-recovery-5/closure.json",
+        "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+        "bytes": 829,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "exact_copied_clock_fields": {
+        "terminal_handoff_closure_utc": "2026-10-06T08:00:50.909355+00:00",
+        "terminal_handoff_closure_monotonic_ns": 104069766340973,
+        "source_elapsed_seconds": 447.612349819,
+        "inclusive_p2_elapsed_seconds": 592.202309152,
+        "actual_whole_elapsed_seconds": 1039.814658971,
+        "inclusive_p2_deadline_monotonic_ns": 104077564031821,
+        "original_whole_deadline_monotonic_ns": 104829951682002,
+        "p2_deadline_met": true,
+        "whole_deadline_met": true,
+        "required_report_and_usage_handoffs_sent_before_this_clock": true,
+        "no_ack_wait": true,
+        "no_reset": true
+      },
+      "reportready_is_not_whole": true
+    },
+    {
+      "report_id": "P7-current",
+      "source_seconds": 774.664498284,
+      "P2_at_FINAL_write_subset_seconds": 589.528698089,
+      "whole_at_FINAL_write_subset_seconds": 1364.193196373,
+      "required_handoff_tail": "UNKNOWN",
+      "no_whole_closure_credit": true
+    },
+    {
+      "report_id": "P3-historical",
+      "reportready_subset_seconds": 1762.552529925,
+      "whole_handoff_seconds": 1850.358101297,
+      "limit_seconds": 1800,
+      "overrun_preserved": true
+    },
+    {
+      "report_id": "P4-historical",
+      "early_whole_component_seconds": 1144.900827376,
+      "later_whole_handoff_root_reported_rounded_seconds": 1370.79,
+      "exact_later_pin": "NOT_VERIFIED_IN_HISTORICAL_ADDENDUM",
+      "component_not_relabelled_final": true
+    }
+  ],
+  "earlier_clocks_remain_in_frozen001": true
+}

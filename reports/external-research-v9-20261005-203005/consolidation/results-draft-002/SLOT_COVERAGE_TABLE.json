@@ -1,0 +1,1975 @@
+{
+  "schema": "er9.versioned-target-map.v2",
+  "targets": {
+    "method_count": 16,
+    "diagnostic_pairs": 32,
+    "diagnostic_arm_executions": 64,
+    "integrated_pairs": 12,
+    "integrated_pipelines": 24,
+    "confirmation_pairs": 4,
+    "confirmation_pipelines": 8,
+    "total_pairs": 48,
+    "total_whole_pipelines": 32
+  },
+  "targets_are_not_passes": true,
+  "all_original_slots_represented": true,
+  "rows": [
+    {
+      "track": "A",
+      "slot_id": "D-V01-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V01-A",
+        "selected_pair_id_at_snapshot": "D-V01-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V01-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V01-B",
+        "selected_pair_id_at_snapshot": "D-V01-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "TD7"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD7"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V02-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V02-A",
+        "selected_pair_id_at_snapshot": "D-V02-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "TD8"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD8"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V02-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V02-B",
+        "selected_pair_id_at_snapshot": "D-V02-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "TD9"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD9"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V03-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V03-A",
+        "selected_pair_id_at_snapshot": "D-V03-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "TD10"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD10",
+        "TD10-closure"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD10-closure",
+          "outcome": "Original TD10 INCOMPLETE/UNASSESSED retained; later closure now pinned",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V03-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V03-B",
+        "selected_pair_id_at_snapshot": "D-V03-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD13"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD13",
+          "outcome": "Both required deliveries INCOMPLETE; missing-final science UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V04-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V04-A",
+        "selected_pair_id_at_snapshot": "D-V04-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V04-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V04-B",
+        "selected_pair_id_at_snapshot": "D-V04-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V05-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V05-A",
+        "selected_pair_id_at_snapshot": "D-V05-A-LUNA-R1-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 2,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V05-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V05-B",
+        "selected_pair_id_at_snapshot": "D-V05-B-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 2,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V06-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V06-A",
+        "selected_pair_id_at_snapshot": "D-V06-A-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V06-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V06-B",
+        "selected_pair_id_at_snapshot": "D-V06-B-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V07-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V07-A",
+        "selected_pair_id_at_snapshot": "D-V07-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD11"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD11",
+          "outcome": "Both INCOMPLETE; scientific quality UNASSESSED outside verified locator scope",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V07-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V07-B",
+        "selected_pair_id_at_snapshot": "D-V07-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD12"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD12",
+          "outcome": "Both current deliveries INCOMPLETE; scientific full scope UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V08-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V08-A",
+        "selected_pair_id_at_snapshot": "D-V08-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "D08-old"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "D08-old"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V08-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V08-B",
+        "selected_pair_id_at_snapshot": "D-V08-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V09-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V09-A",
+        "selected_pair_id_at_snapshot": "D-V09-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 2,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V09-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V09-B",
+        "selected_pair_id_at_snapshot": "D-V09-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 2,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V10-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V10-A",
+        "selected_pair_id_at_snapshot": "D-V10-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": true
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD14"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD14",
+          "outcome": "A/control PARTIAL_SUPPORTED_TARGETED_RESULT; B/treatment UNASSESSED/INCOMPLETE",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V10-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V10-B",
+        "selected_pair_id_at_snapshot": "D-V10-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD15"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD15",
+          "outcome": "Both current deliveries INCOMPLETE; A/treatment UNASSESSED; B/control partial selected claims supported",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V11-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V11-A",
+        "selected_pair_id_at_snapshot": "D-V11-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD16"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "TD16",
+          "outcome": "Canonical final source quality A/B UNASSESSED; both delivery INCOMPLETE",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V11-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V11-B",
+        "selected_pair_id_at_snapshot": "D-V11-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "Independent-targeted-17 active source review is pending, not a closed report. No body/grade imported."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V12-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V12-A",
+        "selected_pair_id_at_snapshot": "D-V12-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V12-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V12-B",
+        "selected_pair_id_at_snapshot": "D-V12-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V13-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V13-A",
+        "selected_pair_id_at_snapshot": "D-V13-A-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V13-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V13-B",
+        "selected_pair_id_at_snapshot": "D-V13-B-DEFERRED-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V14-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V14-A",
+        "selected_pair_id_at_snapshot": "D-V14-A-LUNA-R1",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "D14A-original",
+          "TD2"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "D14A-original",
+        "TD2"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V14-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V14-B",
+        "selected_pair_id_at_snapshot": "D-V14-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "D14B-original",
+          "TD4"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "D14B-original",
+        "TD4"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V15-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V15-A",
+        "selected_pair_id_at_snapshot": "D-V15-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "D15A-original",
+          "TD3"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "D15A-original",
+        "TD3"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V15-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V15-B",
+        "selected_pair_id_at_snapshot": "D-V15-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "D15B-original",
+          "TD6"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "D15B-original",
+        "TD6"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V16-A",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V16-A",
+        "selected_pair_id_at_snapshot": "D-V16-A",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "TD5"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [
+        "TD5"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "A",
+      "slot_id": "D-V16-B",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "D-V16-B",
+        "selected_pair_id_at_snapshot": "D-V16-B",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set."
+    },
+    {
+      "track": "B",
+      "slot_id": "I-01",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-01",
+        "selected_pair_id_at_snapshot": "I-01-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "I01-old-final",
+          "I01-R-research"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V01",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "I01-old-final",
+        "I01-R-research"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-02",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-02",
+        "selected_pair_id_at_snapshot": "I-02-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [
+          "I02-R-research"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V01",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "I02-R-research"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-03",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-03",
+        "selected_pair_id_at_snapshot": "I-03-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 5,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V05",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-04",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-04",
+        "selected_pair_id_at_snapshot": "I-04-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 5,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V05",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-05",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-05",
+        "selected_pair_id_at_snapshot": "I-05-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 3,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "P2",
+          "P3"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V14",
+        "family": "GPT-6 Luna",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "P2",
+        "P3",
+        "P5-current",
+        "Warm4"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "P5-current",
+          "outcome": "Treatment current final FAIL; absent control final UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        },
+        {
+          "report_id": "Warm4",
+          "outcome": "Final scientific quality and whole pipeline UNASSESSED; authored partial defects retained",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives."
+    },
+    {
+      "track": "B",
+      "slot_id": "I-06",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-06",
+        "selected_pair_id_at_snapshot": "I-06-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V14",
+        "family": "GPT-6 Luna",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "P6-current",
+        "Warm1-fresh",
+        "Warm5"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "P6-current",
+          "outcome": "Both current finals source FAIL despite paired operational completion",
+          "scope_status": "SOURCE_JUDGMENT_CLOSED; FINAL_ASSESSMENT_HANDOFF_TAIL_NOT_PINNED"
+        },
+        {
+          "report_id": "Warm1-fresh",
+          "outcome": "FAIL_SCREEN; full pipeline UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        },
+        {
+          "report_id": "Warm5",
+          "outcome": "Final scientific quality and whole pipeline UNASSESSED; useful partial support retained",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives."
+    },
+    {
+      "track": "B",
+      "slot_id": "I-07",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-07",
+        "selected_pair_id_at_snapshot": "I-07-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 3,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V08",
+        "family": "GPT-6 Luna",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "P7-current",
+        "Warm2",
+        "Warm3"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "P7-current",
+          "outcome": "Control source FAIL; treatment PASS_FULL_RESEARCH_PROPOSAL with full-provenance HOLD",
+          "scope_status": "P1_SCIENCE_CLOSED; P2_FINAL_WRITE_SUBSET; REQUIRED_HANDOFF_TAIL_UNKNOWN"
+        },
+        {
+          "report_id": "Warm2",
+          "outcome": "FAIL_SCREEN; full pipeline UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        },
+        {
+          "report_id": "Warm3",
+          "outcome": "Source FAIL; whole pipeline UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives."
+    },
+    {
+      "track": "B",
+      "slot_id": "I-08",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-08",
+        "selected_pair_id_at_snapshot": "I-08-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 3,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [
+          "P4"
+        ],
+        "scientific_scope": "See distinct report versions; no latest/best-of substitution",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V08",
+        "family": "GPT-6 Luna",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [
+        "P4"
+      ],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-09",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-09",
+        "selected_pair_id_at_snapshot": "I-09-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V10",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-10",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-10",
+        "selected_pair_id_at_snapshot": "I-10-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V10",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-11",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-11",
+        "selected_pair_id_at_snapshot": "I-11-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V16",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "B",
+      "slot_id": "I-12",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "I-12",
+        "selected_pair_id_at_snapshot": "I-12-FRESH-DELIVERY-R001",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 0,
+            "remaining_nonterminal_stages": 3,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "method_id": "V16",
+        "family": "GLM 5.3 Flash",
+        "fresh_cohort_source_quality": "UNASSESSED: historical recovery/research observations do not substitute"
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC011/DEC012 current fresh-clock version is distinct from original/resource/delivery recovery and DEC015 warm derivatives.",
+      "current_fresh_scientific_quality": "UNASSESSED; older finals/research/recovery evidence does not substitute"
+    },
+    {
+      "track": "C",
+      "slot_id": "C-01",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "C-01",
+        "selected_pair_id_at_snapshot": "C-01-RESOURCE-R002-BUNDLE",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "locked_recipe": "A",
+        "holdout_label": "H1",
+        "source_quality": "UNASSESSED",
+        "sealed_brief_contents_read": false
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC014 fresh-clock confirmation is distinct from original/resource C03 assessment.",
+      "current_fresh_scientific_quality": "UNASSESSED",
+      "criteria": "H1/H2 ten obligations, common8, card-specific3; no phantom18 score",
+      "neutral_current_metadata": "Old critics uncertain terminal/no freeze and old finals blocked. DEC016 four additive paired C900/F600 repair roles source READY/atomically registered, native0 at08:05:25 receipt; each uses only own current R. No R rerun, clock reset, extra target, clean unrepaired credit, or science claim.",
+      "later_dated_metadata": "DEC016 treatment new critic actually activated at08:13:00.894995, GLM-5.3-Flash/max, original900s;229confirmed campaign starts at08:13:23.466475 is separate from Account016221. Source quality UNASSESSED;0extra logical target."
+    },
+    {
+      "track": "C",
+      "slot_id": "C-02",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "C-02",
+        "selected_pair_id_at_snapshot": "C-02-RESOURCE-R002-BUNDLE",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "locked_recipe": "A",
+        "holdout_label": "H2",
+        "source_quality": "UNASSESSED",
+        "sealed_brief_contents_read": false
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC014 fresh-clock confirmation is distinct from original/resource C03 assessment.",
+      "current_fresh_scientific_quality": "UNASSESSED",
+      "criteria": "H1/H2 ten obligations, common8, card-specific3; no phantom18 score",
+      "neutral_current_metadata": "All six current roles terminal: R/C complete, finals FAILED/empty canonical quartet;0whole operational pipelines; missing-final science UNASSESSED."
+    },
+    {
+      "track": "C",
+      "slot_id": "C-03",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "C-03",
+        "selected_pair_id_at_snapshot": "C-03-RESOURCE-R002-BUNDLE",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 1,
+            "verified_operational_complete": "UNKNOWN"
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "locked_recipe": "B",
+        "holdout_label": "H1",
+        "source_quality": "UNASSESSED",
+        "sealed_brief_contents_read": false
+      },
+      "report_versions": [
+        "C03-original-final"
+      ],
+      "closed_report_outcomes": [
+        {
+          "report_id": "C03-original-final",
+          "outcome": "Original selected treatment source FAIL; missing counterpart UNASSESSED",
+          "scope_status": "CLOSED_SOURCE_JUDGMENT"
+        }
+      ],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "See exact report-version limits; completion, source science and causal/full-provenance qualification remain separate.",
+      "current_version_scope": "DEC014 fresh-clock confirmation is distinct from original/resource C03 assessment.",
+      "current_fresh_scientific_quality": "UNASSESSED",
+      "criteria": "H1/H2 ten obligations, common8, card-specific3; no phantom18 score",
+      "later_dated_metadata": "Same later activation receipt retains C03 current treatment RFAILED with freeze and quiet release; laterC/F blocked by failed predecessor per root neutral supplement. No final science or whole-pipeline completion credit.",
+      "neutral_current_metadata": "Both DEC014 current research roles actually admitted on G2 at07:59:14 checkpoint; later pipeline/final outcome not established by that admission."
+    },
+    {
+      "track": "C",
+      "slot_id": "C-04",
+      "arm_targets": [
+        "control",
+        "treatment"
+      ],
+      "historical_snapshot": {
+        "slot_id": "C-04",
+        "selected_pair_id_at_snapshot": "C-04-RESOURCE-R002-BUNDLE",
+        "metadata_checkpoint_utc": "2026-10-06T04:25:28.479702+00:00",
+        "arm_stage_metadata": [
+          {
+            "arm": "control",
+            "native_started_stages": 2,
+            "remaining_nonterminal_stages": 2,
+            "verified_operational_complete": "UNKNOWN"
+          },
+          {
+            "arm": "treatment",
+            "native_started_stages": 1,
+            "remaining_nonterminal_stages": 0,
+            "verified_operational_complete": false
+          }
+        ],
+        "finished_reports_in_readset": [],
+        "scientific_scope": "UNASSESSED: no finished independent report pointer supplied/read",
+        "fresh_matched_causal_credit": "UNASSESSED",
+        "full_pipeline_quality": "UNASSESSED",
+        "locked_recipe": "B",
+        "holdout_label": "H2",
+        "source_quality": "UNASSESSED",
+        "sealed_brief_contents_read": false
+      },
+      "report_versions": [],
+      "closed_report_outcomes": [],
+      "method_or_whole_pipeline_winner": "NOT_ESTABLISHED",
+      "remaining_gap": "No complete current matched scientific assessment bound to this slot in this frozen read set.",
+      "current_version_scope": "DEC014 fresh-clock confirmation is distinct from original/resource C03 assessment.",
+      "current_fresh_scientific_quality": "UNASSESSED",
+      "criteria": "H1/H2 ten obligations, common8, card-specific3; no phantom18 score",
+      "neutral_current_metadata": "Finite queue continues; no closed current whole-final scientific report admitted in this read set."
+    }
+  ],
+  "current_campaign_completed_counts": "UNKNOWN from this report-only read set; do not sum overlapping report scopes or dated native-state counts",
+  "operational_observation": "Six selected historical/current whole pipelines and two operationally matched pairs are root-reported, not six source passes or queue completion. DEC015 derivatives add0logical targets."
+}

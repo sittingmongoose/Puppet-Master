@@ -1,0 +1,1 @@
+{"accepted":[[1,null],[3,7]],"rejects":[{"line":2,"reason":[["value","missing_field"]],"raw":"{\"id\":2}"},{"line":3,"reason":[["id","cast"]],"raw":"{\"id\":\"bad\",\"value\":4}"},{"line":5,"reason":"parse","raw":"not-json-☃"}],"missing_distinct_from_null":true}

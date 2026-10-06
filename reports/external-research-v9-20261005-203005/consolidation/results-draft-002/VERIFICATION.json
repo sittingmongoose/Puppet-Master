@@ -1,0 +1,31 @@
+{
+  "schema": "er9.mechanical-consolidation-verification.v2",
+  "verified_utc": "2026-10-06T08:16:10.456132+00:00",
+  "checks": {
+    "historical_ten_pins_unchanged": true,
+    "all16hypotheses": true,
+    "all32targeted": true,
+    "all12fresh": true,
+    "all4confirmation": true,
+    "unique48slots": true,
+    "copied20historical_observations": true,
+    "root_expected_pin_matches": {
+      "evaluation/independent-warm-recovery-4/closure.json": true,
+      "evaluation/independent-warm-recovery-5/closure.json": true,
+      "accounting/cohort-016/PUBLIC_SELECTION.json": true,
+      "ops/publication/cohort030-verification.json": true,
+      "ops/evidence-archive/PUBLIC_ARCHIVE_SUMMARY_SELECTION_006.json": true,
+      "state/supervisor_goal_counters.jsonl": true,
+      "ops/dispatcher/DEC016_IMPORT_001/PRELAUNCH.json": true
+    },
+    "all_inputs_still_same_bytes": true,
+    "new_native_candidate_goals": 0,
+    "new_scientific_grades": 0
+  },
+  "semantic_regrading": false,
+  "historical_report_pins_unchanged": true,
+  "pass": true,
+  "selected_output_json_valid": true,
+  "positive_output_content_scan": "PASS; no credential-like values or private native/session paths in authored output set",
+  "late_DEC016_expected_pin_matches": true
+}

@@ -1,0 +1,1 @@
+{"ok":true,"accepted_ids":["r1","r2","r4"],"rejects":[{"line":4,"type":"MISSING_COLUMNS","raw":"r3,8"},{"line":6,"type":"CAST","raw":"r5,bad,broken"}],"preview":{"ids":["r1","r2"],"is_sample":true},"source_unchanged":true,"null_empty_literal_distinct":[true,true,true]}

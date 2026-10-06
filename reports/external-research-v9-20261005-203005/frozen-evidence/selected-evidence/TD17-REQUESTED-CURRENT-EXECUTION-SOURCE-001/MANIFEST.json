@@ -1,0 +1,71 @@
+{
+  "schema": "er9.requested-current-execution-source-positive-files.v1",
+  "evaluation_id": "independent-targeted-17",
+  "files": [
+    {
+      "alias": "A",
+      "execution_id": "exec-brpr5gsv",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/A/code.py",
+      "sha256": "38c3d8ac77ce627590cdfd4c2c5d02f4c9cf107dd63f6b21ef4dd85448d4a1d8",
+      "bytes": 1661,
+      "current_output_freeze_sha256": "6478bd56b4b0e39c564184c04f9b29885b0306f4f11e072d75a064aaafd9eda9"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-brpr5gsv",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/A/data.json",
+      "sha256": "e3c17b35bd0630aa1f0124fdd8c99cdc01c9f6bbea3e97144f190054e0d61f8f",
+      "bytes": 78,
+      "current_output_freeze_sha256": "6478bd56b4b0e39c564184c04f9b29885b0306f4f11e072d75a064aaafd9eda9"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-brpr5gsv",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/A/stdout.bin",
+      "sha256": "f2bfcade60201a11eb147029455ed37e14b5cc28db3c57cfd3474fed897250ae",
+      "bytes": 270,
+      "current_output_freeze_sha256": "6478bd56b4b0e39c564184c04f9b29885b0306f4f11e072d75a064aaafd9eda9"
+    },
+    {
+      "alias": "A",
+      "execution_id": "exec-brpr5gsv",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/A/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "current_output_freeze_sha256": "6478bd56b4b0e39c564184c04f9b29885b0306f4f11e072d75a064aaafd9eda9"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-hti4n4ev",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/B/code.py",
+      "sha256": "e973ae553d8c5034fa9541f5beed9f211277c9fa44c0094efaad4b061861cf35",
+      "bytes": 1708,
+      "current_output_freeze_sha256": "43918c7bfa70310c0259a96b478ddd001fe518409b94b7b38f16faaeaf6b57f3"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-hti4n4ev",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/B/data.json",
+      "sha256": "2f09e34dfdae901aa14aeae4823e02bb3156fe404a3c595ce6c48fa9d3744ad1",
+      "bytes": 127,
+      "current_output_freeze_sha256": "43918c7bfa70310c0259a96b478ddd001fe518409b94b7b38f16faaeaf6b57f3"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-hti4n4ev",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/B/stdout.bin",
+      "sha256": "342ea718953e3b8eb165c17b532f7fa7f141428c6b94b2ddd12a75cf3e567719",
+      "bytes": 265,
+      "current_output_freeze_sha256": "43918c7bfa70310c0259a96b478ddd001fe518409b94b7b38f16faaeaf6b57f3"
+    },
+    {
+      "alias": "B",
+      "execution_id": "exec-hti4n4ev",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD17-REQUESTED-CURRENT-EXECUTION-SOURCE-001/B/stderr.bin",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "current_output_freeze_sha256": "43918c7bfa70310c0259a96b478ddd001fe518409b94b7b38f16faaeaf6b57f3"
+    }
+  ],
+  "scope": "exact requested current candidate code/input/actual streams; operational fields previouslysanitized; no rawrequest/native/ModelIO/auth/history/oldgrade/retest/semanticinterpretation"
+}

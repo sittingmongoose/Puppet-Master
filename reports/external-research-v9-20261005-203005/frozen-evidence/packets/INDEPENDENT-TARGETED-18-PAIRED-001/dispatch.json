@@ -1,0 +1,704 @@
+{
+  "schema": "er9.paired-targeted-source-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "independent-targeted-18",
+  "pair_id": "D-V12-A-BUNDLE-R001",
+  "scope": "two_terminal_current_targeted_diagnostic_output_views_actual_final_absence_explicit",
+  "prepared_utc": "2026-10-06T08:23:03.125108+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-targeted-18/reservation.json",
+    "sha256": "4c73de2c24eb01007263d6e35759c25e304b2a8899b8fdbc831bd953697df20d"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/brief.md",
+      "sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+      "bytes": 5324
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "targeted_coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/targeted_coverage_map.json",
+      "sha256": "6716c66366f5fdb23632160ac4ae50beb5383bf1e9a5086cfd648c099392cf6c",
+      "bytes": 2215
+    },
+    "neutral_targeted_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/neutral_targeted_task.md",
+      "sha256": "ba40e7d61a4f8557aa0419b55a3e8cd1e2cbf6183d042aa7e43194d3b3fb3a98",
+      "bytes": 1448
+    },
+    "full_brief_obligations": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/full_brief_obligations.json",
+      "sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+      "bytes": 4473
+    },
+    "common_important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/common_important_checks.json",
+      "sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+      "bytes": 1937
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "targeted_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/targeted-card.json",
+      "sha256": "0fe136470e8b0680b083aed05bbb927ba36a02351aa4169f562cdb656f7881ed"
+    },
+    "actual_launched_task_A": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/actual_launched_task_A.md",
+      "sha256": "d53f56e27a3de3b393acc921536756ec45e8fc2c6d76690cb081f59a3241649b"
+    },
+    "actual_launched_task_B": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/task/actual_launched_task_B.md",
+      "sha256": "2e0b848eb7db7c364cb58197b2d8f9d176426797ea352ee368f9ce46f77a22bc"
+    }
+  },
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_A_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "actual_stage": "diagnostic",
+      "designated_final": null,
+      "source_catalog": null,
+      "witness_catalog": null,
+      "leads": null,
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0000.json",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "original_relative_path": "scratch/map-0000.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0001.json",
+          "sha256": "48a4e00dd393dae3937356e3568bd6a415b4365a3f8240ed2a98d39b3db5fb2d",
+          "bytes": 11789,
+          "original_relative_path": "scratch/map-0001.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0002.json",
+          "sha256": "44fad28e88fdae1d3581641f07d1ffd120d1399844bc30744b1fe0d185116547",
+          "bytes": 181,
+          "original_relative_path": "scratch/map-0002.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0003.json",
+          "sha256": "a02cd2f39f580cf1298e92db4c502f81fee337cbc5078db98717d5a873888a81",
+          "bytes": 8589,
+          "original_relative_path": "scratch/map-0003.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0004.json",
+          "sha256": "1d1b841f4190dedd2dd976cdc48e2787ae0996d187bb679523426270d2f317f2",
+          "bytes": 181,
+          "original_relative_path": "scratch/map-0004.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0005.json",
+          "sha256": "97b2a983f4ca94bf78ca9ceed593970d6ff7fed6aeeb17778988ea869cc1d178",
+          "bytes": 181,
+          "original_relative_path": "scratch/map-0005.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0006.json",
+          "sha256": "487184cb7287004a2949f447b21f74660a8a8e71017baa2f344ecbfe57bdca44",
+          "bytes": 80463,
+          "original_relative_path": "scratch/map-0006.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0007.json",
+          "sha256": "19025301661b4adbe410fe4cf6cff764ee52fafddd83bbfce8e70d384d77d08f",
+          "bytes": 16524,
+          "original_relative_path": "scratch/map-0007.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0008.json",
+          "sha256": "804f6e3cd7574e3b3450325676c7ca63528da7d3282d4cc566e1b7fca85e6c34",
+          "bytes": 181,
+          "original_relative_path": "scratch/map-0008.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0009.json",
+          "sha256": "f33658b423710a58ed759c37f4b8e144c1135d35923ccc03d2b63475b618237b",
+          "bytes": 5336,
+          "original_relative_path": "scratch/map-0009.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0010.json",
+          "sha256": "8188f3ad999e53c96a799fe553475a5770d8aadc69dbb00ff2cbd3c725a7c18b",
+          "bytes": 4442,
+          "original_relative_path": "scratch/map-0010.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0011.json",
+          "sha256": "239cb2e0ec31ab2f71652c798641da21f1c8185e797e60f6e4c73537a2b8a29e",
+          "bytes": 17631,
+          "original_relative_path": "scratch/map-0011.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0012.json",
+          "sha256": "0bdfb2c212f5c10b340e577fc7a50bdacf898980882e255d2a556ae5f718851f",
+          "bytes": 6517,
+          "original_relative_path": "scratch/map-0012.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0013.json",
+          "sha256": "1392459cd2c2647ea6bd8dc3462764784137c75f92e11f560af91f0509c2b6e4",
+          "bytes": 13995,
+          "original_relative_path": "scratch/map-0013.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0014.json",
+          "sha256": "fed6c13958132c8da32c882f5e6df03ee609f1bffcf9a8e8e4738763de4549d6",
+          "bytes": 6964,
+          "original_relative_path": "scratch/map-0014.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0015.json",
+          "sha256": "0e9fc7d4a6a26b93dad9b29f43f52d46f25784e30d3968cef99683f97f3ed133",
+          "bytes": 6193,
+          "original_relative_path": "scratch/map-0015.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0016.json",
+          "sha256": "c5a4be88d3656151320a4fdf94cb76c8f07e0e58390f0e80fcaecc4d26d4740b",
+          "bytes": 15891,
+          "original_relative_path": "scratch/map-0016.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0017.json",
+          "sha256": "ef46f0ac4956186326f617f36708903aa0ffaa3feaeba6fd0d4b02585e3c55cd",
+          "bytes": 19733,
+          "original_relative_path": "scratch/map-0017.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0018.json",
+          "sha256": "b96919c9e1ad17cc8308bf1eb50672e831e73da0deeb65e0aeb962b7259e885b",
+          "bytes": 181,
+          "original_relative_path": "scratch/map-0018.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0019.json",
+          "sha256": "ff8c6dbdfde5762fac40b95e2f1204f60e87a406ca05f646a064d430f972f351",
+          "bytes": 18437,
+          "original_relative_path": "scratch/map-0019.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0020.json",
+          "sha256": "d3bb39753b44cf59a28d39194f35808745159dcc361c7d3bf6ca730e1edfe39e",
+          "bytes": 33803,
+          "original_relative_path": "scratch/map-0020.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0021.json",
+          "sha256": "c3c0e90f7a37fd4896a09b91150e0d8d28831c56d8434ee92c1c04c7ccbc0a82",
+          "bytes": 11923,
+          "original_relative_path": "scratch/map-0021.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0022.json",
+          "sha256": "9f7d53c449dbe4e8cdf8582207658ba583cf684268c12fa51edf4bcd4f817044",
+          "bytes": 47646,
+          "original_relative_path": "scratch/map-0022.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0023.json",
+          "sha256": "4f49c8869210404e3ad43a9692cd6232435e6a5222152e136aed440a982a83c7",
+          "bytes": 55686,
+          "original_relative_path": "scratch/map-0023.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0024.json",
+          "sha256": "5fd91b588c8d66f9a9d503e552ca258ed0eb3b465a9b513affe28f9a0c7d3edd",
+          "bytes": 5886,
+          "original_relative_path": "scratch/map-0024.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0025.json",
+          "sha256": "34128aea6617313f2a79ba24c85888c2279a87526c9828e123b79a8efd256cc6",
+          "bytes": 5890,
+          "original_relative_path": "scratch/map-0025.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0026.json",
+          "sha256": "d246d3d7e3560e5b141de5534d4a8f955681e4edf2dfe851447d573ef0ec719b",
+          "bytes": 6928,
+          "original_relative_path": "scratch/map-0026.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0027.json",
+          "sha256": "f4fbff50ba3bed0de2854ad6aa49cbb8636f0d71cd374276f31ff9aec8b7eb7e",
+          "bytes": 42175,
+          "original_relative_path": "scratch/map-0027.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0028.json",
+          "sha256": "62f073b4a8998b8a67b6a149f453f059a7af02dff5fd07b487e2a46ad6ad4dbc",
+          "bytes": 21538,
+          "original_relative_path": "scratch/map-0028.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0029.json",
+          "sha256": "7f813cdb538bbb9919997d0586136b9b118942c827993afed0c1986c7a380c22",
+          "bytes": 159481,
+          "original_relative_path": "scratch/map-0029.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0030.json",
+          "sha256": "f1df07908505db35d01b208bb0063a7f98524334d97371be21303212b2ecb9ed",
+          "bytes": 53606,
+          "original_relative_path": "scratch/map-0030.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0031.json",
+          "sha256": "c06d00948d8327ed7a92f026be8b844339ed8b8239e9091eb89ab939d5552a88",
+          "bytes": 18587,
+          "original_relative_path": "scratch/map-0031.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/A/scratch/map-0032.json",
+          "sha256": "eaae4d5c4d56c5b138d392762348ac147a9203bf8ce918dcad61f59431beb849",
+          "bytes": 37179,
+          "original_relative_path": "scratch/map-0032.json",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        }
+      ],
+      "missing_catalogs": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "scratch/map-0000.json",
+          "sha256": "57f486cc7a469b5a79f531d45837ebb70a2fd753f1a26cbd19c572d35ff730c3",
+          "bytes": 271895,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0001.json",
+          "sha256": "48a4e00dd393dae3937356e3568bd6a415b4365a3f8240ed2a98d39b3db5fb2d",
+          "bytes": 11789,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0002.json",
+          "sha256": "44fad28e88fdae1d3581641f07d1ffd120d1399844bc30744b1fe0d185116547",
+          "bytes": 181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0003.json",
+          "sha256": "a02cd2f39f580cf1298e92db4c502f81fee337cbc5078db98717d5a873888a81",
+          "bytes": 8589,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0004.json",
+          "sha256": "1d1b841f4190dedd2dd976cdc48e2787ae0996d187bb679523426270d2f317f2",
+          "bytes": 181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0005.json",
+          "sha256": "97b2a983f4ca94bf78ca9ceed593970d6ff7fed6aeeb17778988ea869cc1d178",
+          "bytes": 181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0006.json",
+          "sha256": "487184cb7287004a2949f447b21f74660a8a8e71017baa2f344ecbfe57bdca44",
+          "bytes": 80463,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0007.json",
+          "sha256": "19025301661b4adbe410fe4cf6cff764ee52fafddd83bbfce8e70d384d77d08f",
+          "bytes": 16524,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0008.json",
+          "sha256": "804f6e3cd7574e3b3450325676c7ca63528da7d3282d4cc566e1b7fca85e6c34",
+          "bytes": 181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0009.json",
+          "sha256": "f33658b423710a58ed759c37f4b8e144c1135d35923ccc03d2b63475b618237b",
+          "bytes": 5336,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0010.json",
+          "sha256": "8188f3ad999e53c96a799fe553475a5770d8aadc69dbb00ff2cbd3c725a7c18b",
+          "bytes": 4442,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0011.json",
+          "sha256": "239cb2e0ec31ab2f71652c798641da21f1c8185e797e60f6e4c73537a2b8a29e",
+          "bytes": 17631,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0012.json",
+          "sha256": "0bdfb2c212f5c10b340e577fc7a50bdacf898980882e255d2a556ae5f718851f",
+          "bytes": 6517,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0013.json",
+          "sha256": "1392459cd2c2647ea6bd8dc3462764784137c75f92e11f560af91f0509c2b6e4",
+          "bytes": 13995,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0014.json",
+          "sha256": "fed6c13958132c8da32c882f5e6df03ee609f1bffcf9a8e8e4738763de4549d6",
+          "bytes": 6964,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0015.json",
+          "sha256": "0e9fc7d4a6a26b93dad9b29f43f52d46f25784e30d3968cef99683f97f3ed133",
+          "bytes": 6193,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0016.json",
+          "sha256": "c5a4be88d3656151320a4fdf94cb76c8f07e0e58390f0e80fcaecc4d26d4740b",
+          "bytes": 15891,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0017.json",
+          "sha256": "ef46f0ac4956186326f617f36708903aa0ffaa3feaeba6fd0d4b02585e3c55cd",
+          "bytes": 19733,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0018.json",
+          "sha256": "b96919c9e1ad17cc8308bf1eb50672e831e73da0deeb65e0aeb962b7259e885b",
+          "bytes": 181,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0019.json",
+          "sha256": "ff8c6dbdfde5762fac40b95e2f1204f60e87a406ca05f646a064d430f972f351",
+          "bytes": 18437,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0020.json",
+          "sha256": "d3bb39753b44cf59a28d39194f35808745159dcc361c7d3bf6ca730e1edfe39e",
+          "bytes": 33803,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0021.json",
+          "sha256": "c3c0e90f7a37fd4896a09b91150e0d8d28831c56d8434ee92c1c04c7ccbc0a82",
+          "bytes": 11923,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0022.json",
+          "sha256": "9f7d53c449dbe4e8cdf8582207658ba583cf684268c12fa51edf4bcd4f817044",
+          "bytes": 47646,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0023.json",
+          "sha256": "4f49c8869210404e3ad43a9692cd6232435e6a5222152e136aed440a982a83c7",
+          "bytes": 55686,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0024.json",
+          "sha256": "5fd91b588c8d66f9a9d503e552ca258ed0eb3b465a9b513affe28f9a0c7d3edd",
+          "bytes": 5886,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0025.json",
+          "sha256": "34128aea6617313f2a79ba24c85888c2279a87526c9828e123b79a8efd256cc6",
+          "bytes": 5890,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0026.json",
+          "sha256": "d246d3d7e3560e5b141de5534d4a8f955681e4edf2dfe851447d573ef0ec719b",
+          "bytes": 6928,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0027.json",
+          "sha256": "f4fbff50ba3bed0de2854ad6aa49cbb8636f0d71cd374276f31ff9aec8b7eb7e",
+          "bytes": 42175,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0028.json",
+          "sha256": "62f073b4a8998b8a67b6a149f453f059a7af02dff5fd07b487e2a46ad6ad4dbc",
+          "bytes": 21538,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0029.json",
+          "sha256": "7f813cdb538bbb9919997d0586136b9b118942c827993afed0c1986c7a380c22",
+          "bytes": 159481,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0030.json",
+          "sha256": "f1df07908505db35d01b208bb0063a7f98524334d97371be21303212b2ecb9ed",
+          "bytes": 53606,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0031.json",
+          "sha256": "c06d00948d8327ed7a92f026be8b844339ed8b8239e9091eb89ab939d5552a88",
+          "bytes": 18587,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/map-0032.json",
+          "sha256": "eaae4d5c4d56c5b138d392762348ac147a9203bf8ce918dcad61f59431beb849",
+          "bytes": 37179,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    },
+    {
+      "alias": "B",
+      "actual_stage": "diagnostic",
+      "designated_final": null,
+      "source_catalog": null,
+      "witness_catalog": null,
+      "leads": null,
+      "partial_artifacts": [
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/B/research/proposal.md",
+          "sha256": "ed7d6c0bba3dea29a22f890bae51fda0e8d4464c9af1c66ddcb5ab62677de76b",
+          "bytes": 20756,
+          "original_relative_path": "research/proposal.md",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/B/scratch/qupath-export-line-map.txt",
+          "sha256": "f1df07908505db35d01b208bb0063a7f98524334d97371be21303212b2ecb9ed",
+          "bytes": 53606,
+          "original_relative_path": "scratch/qupath-export-line-map.txt",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        },
+        {
+          "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/outputs/B/scratch/tifffile-readme-line-map.txt",
+          "sha256": "4f49c8869210404e3ad43a9692cd6232435e6a5222152e136aed440a982a83c7",
+          "bytes": 55686,
+          "original_relative_path": "scratch/tifffile-readme-line-map.txt",
+          "scope": "actual frozen authored partial discovery/research/critique/source locator, not promoted to designated final",
+          "full_final_quality": "UNASSESSED_IF_FINAL_ABSENT"
+        }
+      ],
+      "missing_catalogs": [
+        "source_catalog",
+        "witness_catalog",
+        "lead_inventory"
+      ],
+      "other_frozen_artifact_presence_metadata": [
+        {
+          "relative_path": "research/proposal.md",
+          "sha256": "ed7d6c0bba3dea29a22f890bae51fda0e8d4464c9af1c66ddcb5ab62677de76b",
+          "bytes": 20756,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/qupath-export-line-map.txt",
+          "sha256": "f1df07908505db35d01b208bb0063a7f98524334d97371be21303212b2ecb9ed",
+          "bytes": 53606,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        },
+        {
+          "relative_path": "scratch/tifffile-readme-line-map.txt",
+          "sha256": "4f49c8869210404e3ad43a9692cd6232435e6a5222152e136aed440a982a83c7",
+          "bytes": 55686,
+          "designation": "not substitute forcanonicalfinal; exactauxiliaryselectors only onrequest"
+        }
+      ],
+      "full_pipeline_quality": "UNASSESSED",
+      "source_quality": "NOT_YET_EVALUATED"
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "A-P1",
+      "obligation_ids": [
+        "A07",
+        "A08"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "A-P2",
+      "obligation_ids": [
+        "A02",
+        "A03",
+        "A10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "A-P3",
+      "obligation_ids": [
+        "A11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "A-P4",
+      "obligation_ids": [
+        "A12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "A-P5",
+      "obligation_ids": [
+        "A01",
+        "A04",
+        "A05",
+        "A06",
+        "A09"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "targeted_predeclared_checks": [
+    {
+      "check_id": "D-V12-A-P1",
+      "obligation_ids": [],
+      "neutral_question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?"
+    },
+    {
+      "check_id": "D-V12-A-P2",
+      "obligation_ids": [],
+      "neutral_question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?"
+    },
+    {
+      "check_id": "D-V12-A-P3",
+      "obligation_ids": [],
+      "neutral_question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?"
+    }
+  ],
+  "inherited_target_coverage_source_pair_id": "D-V12-A",
+  "coverage_lineage_rule": "exactinheritedscope map bytes preserved, currentpairedidentity explicit; no truthkey or newrubric",
+  "targeted_scope_boundary": "Targeted diagnostic task only; do not imply full development-domain PASS or autonomous discovery when inputs supplied.",
+  "broader_full_development_proposal_completeness": "UNASSESSED_OUTSIDE_ACTUAL_TARGETED_SCOPE; currentconsequentialclaims still assessed",
+  "integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/INDEPENDENT-TARGETED-18-PAIRED-001/integrity-proof.json",
+    "sha256": "a1542764f7abf4a5d06ba7d0ca2a79d9ddc9122f0502d5526a3a405894bc503e"
+  },
+  "budget": {
+    "source_screen_seconds": 1200,
+    "whole_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "whole_includes_report_handoff": true,
+    "reset": false,
+    "start_rule": "START immediatelybeforefirstpermittedsemantic task/source/candidatebody read"
+  },
+  "blinding": {
+    "known_hints": "Case/role/model labels in rootassignment andexactactualTASKs unavoidable; descriptorcatalogpresence is metadata, no perfectblinding claim",
+    "held": "aliases/nativeGoals/status/history/economics/sourcegrades/privatekey untilimmutablePhase1"
+  },
+  "comparison_boundary": "Actual available current targeted artifacts only; missing final/catalogs remain missing. Missing scientific source quality UNASSESSED, delivery absence explicit, no winner/pipelinecredit. No canonicalvariant/bestof selection, nativecompletion or matchedcausalcredit inferred.",
+  "selection_rule": "rootapproved firstchronologicaleligiblepairedslot; noqualityselection; laterdistinctpair separatelyreserved"
+}

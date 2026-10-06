@@ -1,0 +1,129 @@
+{
+  "schema": "er9.dated-separate-accounting-windows.v2",
+  "account016": {
+    "capture_interval_utc": {
+      "end": "2026-10-06T07:18:35.138389+00:00",
+      "start": "2026-10-06T07:18:34.480107+00:00"
+    },
+    "totals": {
+      "attempts": 239,
+      "known_tokens": 638711141,
+      "native_goal_starts_known": 221,
+      "occupied_seconds_known": 153586.32605369203,
+      "occupied_seconds_unknown_rows": 18,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 19
+    },
+    "candidate_actual_family_counts": {
+      "GLM": {
+        "attempts": 70,
+        "confirmed_native_starts": 70,
+        "known_tokens": 89705425
+      },
+      "Luna": {
+        "attempts": 151,
+        "confirmed_native_starts": 151,
+        "known_tokens": 549005716
+      },
+      "UNKNOWN_PRE_NATIVE": {
+        "attempts": 18,
+        "confirmed_native_starts": 0,
+        "known_tokens": 0
+      }
+    },
+    "status_counts_are_not_liveness": {
+      "UNKNOWN": 81,
+      "active": 5,
+      "complete": 43,
+      "paused": 110
+    },
+    "selector": {
+      "path": "accounting/cohort-016/PUBLIC_SELECTION.json",
+      "sha256": "4d7aa49c0b62e8acf1a0bbb6bdfd8a26fd33ef74fc33a3a03ab81d49cd5f3140",
+      "bytes": 3167,
+      "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+    },
+    "closure": {
+      "path": "accounting/cohort-016/CLOSURE.json",
+      "sha256": "fef7968762745b4549c3db6c282e868f853eccfe8016c8707b1cd12409de367f",
+      "bytes": 1521,
+      "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+    },
+    "own_work_whole_seconds": 424.308640756,
+    "own_reportready_subset_seconds": 238.759857198
+  },
+  "root21_separate": {
+    "observed_utc": "2026-10-06 07:59:12 UTC",
+    "status": "active",
+    "tokensUsed": 30026532,
+    "timeUsedSeconds": 41202,
+    "helper_inclusion": "UNKNOWN",
+    "units_source": "native get_goal tokensUsed/timeUsedSeconds"
+  },
+  "root21_source": {
+    "path": "state/supervisor_goal_counters.jsonl",
+    "sha256": "c5e6096dfb42ed844216439c034fd2ed62058727488c901778107b926d2d8e41",
+    "bytes": 7179,
+    "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+  },
+  "provider": "UNKNOWN",
+  "money": "UNKNOWN",
+  "affordability": "NOT_ESTABLISHED",
+  "counters_are_not_additive_across_scopes": true,
+  "publication030": {
+    "head": "51370f3d6abc8135de91ea637fd3771c1f2302a8",
+    "direct_GitHub_head": "51370f3d6abc8135de91ea637fd3771c1f2302a8",
+    "positive_file_count": 3087,
+    "changed_file_count": 35,
+    "tree_matches_positive_selection": true,
+    "verified_at": "2026-10-06T07:32:33.281185+00:00",
+    "scope": "research branch only; normal hooks; no main/PR/canon changes"
+  },
+  "GitHub_raw_byte_sample_count": 9,
+  "publication_receipt": {
+    "path": "ops/publication/cohort030-verification.json",
+    "sha256": "8686ceb014686cf11c6d22b78cd869aa9829306c15005f4b19feda9c02833a3d",
+    "bytes": 2803,
+    "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+  },
+  "archive006": {
+    "files_count": 172,
+    "selected_bytes": 7218120,
+    "http_status_counts": {
+      "200": 85,
+      "404": 1
+    },
+    "truncated_count": 2,
+    "unlocated_reference_count": 1,
+    "independent_archive_reread": "ALL172_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+    "overlap_policy": "selected file lineages; duplicate SHA and previous cohorts not new unique evidence",
+    "coverage": "PARTIAL_EXACT_P6_002_P7_C03_PUBLIC_BODY_METADATA_ONLY_NOT_QUEUE_RECONCILED",
+    "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/c741d1c7b3477c5cd6b56cebd884103fe038ea9a79ba0f1f1acef3d308ae40aa/MANIFEST.json",
+    "manifest_sha256": "d0bcdbf98379dff2da10666cd9c3dc826d1ac00fb7423fae5f60404ab6cbe508"
+  },
+  "archive_selector": {
+    "path": "ops/evidence-archive/PUBLIC_ARCHIVE_SUMMARY_SELECTION_006.json",
+    "sha256": "25299997562c546c656ca7a639407db6abd1677a37170438d484b73648e699ce",
+    "bytes": 535,
+    "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+  },
+  "later_DEC016_activation": {
+    "receipt": {
+      "path": "ops/dispatcher/DEC016_FIRST_CRITIC_NATIVE_ACTIVATION_001.json",
+      "sha256": "d1ec68a16e85a7f6d06c348305d315fd029c0bfea74ef2fd23c10dfb38b7dd05",
+      "bytes": 22672,
+      "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+    },
+    "activation_utc": "2026-10-06T08:13:00.894995+00:00",
+    "observed_model": "GLM-5.3-Flash",
+    "observed_effort": "max",
+    "original_seconds": 900,
+    "one_new_critic_native_activation": true,
+    "quality": "UNASSESSED",
+    "additional_logical_target_credit": false,
+    "separate_late_cursor_utc": "2026-10-06T08:13:23.466475+00:00",
+    "separate_late_confirmed_native_starts": 229,
+    "C03_previous_treatment_research": "FAILED; freeze and quiet release retained; later descendants blocked per root neutral supplement",
+    "not_account016_window_rewrite": true
+  }
+}

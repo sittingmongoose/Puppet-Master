@@ -1,0 +1,19 @@
+{
+  "schema": "er9.consolidation-terminal-neutral-positive-selection.v2",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/HANDOFF_CLOSE.json",
+      "sha256": "8fbcf6426b3b6fa21ff0d1152c5da7d5d432c6db6baa73ef7cee8eaa627d689d",
+      "bytes": 1289
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/TERMINAL_CLOSE.json",
+      "sha256": "14e0cba5a9d2533ede16942d85e8c13e27ba3d2acc4567e7d0f48c37038a6985",
+      "bytes": 1201
+    }
+  ],
+  "positive_only": true,
+  "neutral_metadata_only": true,
+  "follow_nested_references": false,
+  "frozen_primary_fourteen_unchanged": true
+}

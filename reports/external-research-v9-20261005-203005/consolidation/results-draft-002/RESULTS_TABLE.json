@@ -1,0 +1,1258 @@
+{
+  "schema": "er9.frozen-report-consolidation.v2",
+  "status": "DRAFT_INCOMPLETE_CAMPAIGN",
+  "new_grades": 0,
+  "historical_observations_unchanged": true,
+  "historical_count": 20,
+  "added_report_scopes": 16,
+  "observations": [
+    {
+      "id": "I01-old-final",
+      "slot": "I-01",
+      "version": "Original historical GLM four-stage lineage; not DEC011 fresh/clock lineage",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/REVIEW.md",
+        "sha256": "4f0c9c4cf58f0544a63c302facc89283618f5ad7c99509c81f7a31e5fe850d35"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-review0001/current_output_judgment.json",
+        "sha256": "9a3d2bcbabfca57057131b83a8545e06d933202f79fc950e2e1575881f5c3ff9"
+      },
+      "source_outcome": "B/control FAIL_SCREEN; A/treatment final absent, quality UNASSESSED",
+      "delivery": "B proposal only; three required catalogs absent",
+      "operation": "Neither whole pipeline operational complete; control final capped; treatment research capped",
+      "finding": "Real tifffile #319 fix/test retained; affected interval wrongly includes unaffected baseline; NGFF multiscales types overgeneralized; full TIFF-strip decode allocation omitted; W3 hash subcheck confounded",
+      "execution_scope": "Three actual candidate W1–W3 exit0; evaluator counterfactuals separate; component arithmetic/file simulation only",
+      "limits": "No whole pipeline/winner; fourteen claim groups fully assessed, ten partial/unassessed",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "I01-R-research",
+      "slot": "I-01",
+      "version": "Later historical R001 research view; separate from original final and current fresh",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/REVIEW.md",
+        "sha256": "ad7ce747049bd40789a84877fd2271f6d35c3c20ee92cf1e984f95facbfb3c4c"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I01-R001-research-review0001/current_output_judgment.json",
+        "sha256": "c84de9e7cd789b6012bab35d589e6eab7d712186508b264829d25b776c7416fa"
+      },
+      "source_outcome": "Control research FAIL_SCREEN; treatment research absent/UNASSESSED",
+      "delivery": "Control research leads absent; designated finals UNASSESSED",
+      "operation": "Both research jobs FAILED/quiescent; last saved Goals active/paused, terminal Goal status UNKNOWN",
+      "finding": "Journal short-write/durability/prefix recovery and related-file commit omitted; full-strip allocation bound omitted; genuine tifffile #334 and independent mechanisms retained",
+      "execution_scope": "Five authentic candidate receipts exit0, including retained corrected W4; evaluator illustrations separate; no crash/image/application proof",
+      "limits": "Stage-only, not final or fresh matched effect; 15 complete/4 partial/2 unassessed claim groups",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "I02-R-research",
+      "slot": "I-02",
+      "version": "Historical research-stage view; not current fresh G-clock",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-review0001/REVIEW.md",
+        "sha256": "348e8467413dd2babc3237cf2394d01a011a2fcfdbf67c1f56c2a6868766948f"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/dispatch/I02-research-review0001/current_output_judgment.json",
+        "sha256": "ffb8df5fb93d0dfa751e5d6029f5b6f21921f17f64f112405a6b367395940a54"
+      },
+      "source_outcome": "A/treatment and B/control FAIL_SCREEN on different stage defects",
+      "delivery": "Research outputs/catalogs only; finals/later duties UNASSESSED",
+      "operation": "Typed control FAILED/treatment COMPLETED; both quiet; native Goal terminal status UNKNOWN",
+      "finding": "Unicode characters used as byte offsets; untrusted kernel authority grant; skip-execution retains old outputs despite fresh-output promise; normalized missing/null distinction lost. Real DuckDB #12596→12679 and PyArrow fix/test retained",
+      "execution_scope": "Ten candidate executions, eight exit0/two exit1 retained; successful exits do not erase semantics; no full runtime/5GB/sandbox/crash proof",
+      "limits": "Later-stage contrast cannot be estimated from research-only outputs; erratum discloses scanner guard inspection after P1",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "D08-old",
+      "slot": "D-V08-A",
+      "version": "Available combined critic/final plus shared imported GLM research; descriptive",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/ASSESSMENT_001.md",
+        "sha256": "496f44f596d63d48ec389c3f0bb6f87d85f03ce970e3d3263de49b20553052e3"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+        "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+      },
+      "source_outcome": "Available treatment INCOMPLETE/PARTIAL; absent control critic UNASSESSED",
+      "delivery": "Final leads missing; malformed source/data hashes",
+      "operation": "Both current Luna Goals paused/HOLD and operational false",
+      "finding": "Consistent transforms and real tifffile #319 unit-semantics chain; public fixture link contradicts unsupported private-fixture characterization",
+      "execution_scope": "Actual candidate W4 exit0 authenticated after P1; isolated arithmetic only; no app proof",
+      "limits": "Absent baseline prevents repair/preservation inference; two failures do not imply topology equivalence",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "D14A-original",
+      "slot": "D-V14-A",
+      "version": "D-V14-A-LUNA-R1 original partial discovery; immutable final judgment separate",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/REVIEW.md",
+        "sha256": "a4c75422d81987955de7bb211f677c3fc5d2107e260be7e1060a6f3394917be1"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-A-LUNA-R1/partial-review0001/partial_source_judgment.json",
+        "sha256": "06d2c9b8a14412ff153107a86123351379653800ad02486fd87421b8c5f07a7d"
+      },
+      "source_outcome": "A/treatment partial HOLD; B/control partial FAIL_SCREEN; final quality UNASSESSED",
+      "delivery": "Both designated finals absent; research view only",
+      "operation": "Both one actual Luna/max Goal, quiet, operational incomplete",
+      "finding": "Real napari #8939→8636→63b1239→0.8.0 and #4096→4184→4deba78→0.4.15; bounded mask/plane-placement lessons. Control delivered y11.5 vs declared expected -.25",
+      "execution_scope": "P2 authentic control exec-r01veuh3 produced correct -.25: catalog transcription defect, not bad actual arithmetic/fabrication; component only",
+      "limits": "Breadth time/uptake and complete product scope UNASSESSED; source acquisition is not comprehension",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "D14B-original",
+      "slot": "D-V14-B",
+      "version": "Original single-arm partial discovery",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/REVIEW.md",
+        "sha256": "e2184672b54b26ec5fd883253713e097b4d08ebb68a1c0a6d96b58b086a8a708"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V14-B/partial-review0001/partial_source_judgment.json",
+        "sha256": "2b3c2e69bec308a3766822613d19ad28b245fc2ad99998ad2eb267a24417f71d"
+      },
+      "source_outcome": "A/treatment partial HOLD; B/control empty/UNASSESSED; final quality UNASSESSED",
+      "delivery": "Both original finals absent",
+      "operation": "Both actual Luna/max Goals quiet/operational incomplete",
+      "finding": "Real jupyter_client #922→925→666eab→8.0.2 return-contract lesson; notebook document vs runtime provenance; NDJSON/schema, memory/order, uv and nbdime opportunities",
+      "execution_scope": "Authentic treatment exec-wa1jtbo0 matches code/input/streams, exit0; tiny NDJSON, no DuckDB/notebook/OS/5GB proof",
+      "limits": "8.0.2 provisional floor not modern runtime guarantee; remaining scope/matched effect UNASSESSED",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "D15A-original",
+      "slot": "D-V15-A",
+      "version": "Original actual partial final plus additive same-hash research view",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/REVIEW.md",
+        "sha256": "ef7f6645293f549c47d41f814913aec3894ed22f30440cdd9ffdbc48c43b71bd"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-A/partial-review0001/partial_source_judgment.json",
+        "sha256": "cf16ad3ee5631685d5b443c342a933ed7ef04026f547262f94c09cd359cf69d7"
+      },
+      "source_outcome": "Treatment partial HOLD; control absent; no whole scope PASS",
+      "delivery": "One original actual partial final; missing final catalogs; additive research is not replacement final",
+      "operation": "Both actual Luna/max Goals quiet/operational incomplete",
+      "finding": "Real napari #8901→9394→6d386b1 fractional slice/render-pick tests; correct post-0.9.2 applicability; TIFF/Zarr/NGFF independent mechanisms",
+      "execution_scope": "Separate +600 receipt extension retains failed omitted-X-dimension check plus two successful checks; W01 content correspondence supported, formal W01 ID UNKNOWN",
+      "limits": "Original 1800 closed; extension source judgment unchanged; isolated arithmetic, not upstream/app execution",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "D15B-original",
+      "slot": "D-V15-B",
+      "version": "Original partial source view, clarification, separate late receipt extension",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/REVIEW.md",
+        "sha256": "beed6df0e38629c5f7118b1034678a7cac0d9ceb0c57c6e23c61937d748399af"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/diagnostics/D-V15-B/partial-review0001/partial_source_judgment.json",
+        "sha256": "964afda2bac53991deed012343017a0edc8240d4b29712d88291b27fa39b7520"
+      },
+      "source_outcome": "Both partial HOLD; final quality UNASSESSED",
+      "delivery": "Both designated finals absent; no source/witness catalogs in partial view",
+      "operation": "Both actual Luna/max Goals quiet/operational incomplete",
+      "finding": "Real nbclient #88→90 periodic liveness/Autokill historical boundary and nbclient #48→IPython12301 direct %run raising boundary; larger nested path uncertain",
+      "execution_scope": "Late operational-only extension contains no executed-witness bodies; execution correspondence UNASSESSED",
+      "limits": "Actual misleading/version-mismatched apparent-chain facet explicitly UNASSESSED: rejected assumptions are hypothetical, no modern chosen-stack defect established",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD2",
+      "slot": "D-V14-A",
+      "version": "D-V14-A-LUNA-R1-SCOPE-R002 current resource successor; distinct original history",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/final-review.md",
+        "sha256": "aca403650458e1e10052c3b978080afa6ca9ac631470c3bc68c6ee1a151dde0a"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-2/public/source-judgment.json",
+        "sha256": "740a883f06299f41a88eabac2b0d316c45dda26e059051534562f52fbc2c7d43"
+      },
+      "source_outcome": "Both INCOMPLETE; inspected source subset PARTIAL without decisive semantic defect",
+      "delivery": "A/control 2/4; B/treatment 1/4 required finals",
+      "operation": "Both Luna/max, HOLD/TimeoutError; last direct Goals active/paused; no native COMPLETE",
+      "finding": "Real napari #9247→9059 outline and #8962→8968 hidden-layer chains; pinned reader/metadata/persistence claims; writer changelog vs active code discrepancy honestly qualified",
+      "execution_scope": "Two authentic candidate arithmetic receipts; formal W1 labels UNKNOWN because catalogs absent; no source test reruns",
+      "limits": "No full source PASS, fresh credit, causal benefit or breadth-time uptake guarantee; malformed catalog hash minor",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD3",
+      "slot": "D-V15-A",
+      "version": "D-V15-A-SCOPE-R002 current resource-v13-a002 targeted pair",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/review.md",
+        "sha256": "358bc72a2e6ff94343334ac9413fbb4490cdef5647e58804fe69484fe3353633"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-3/phase1-source-judgment.json",
+        "sha256": "9f42739442a394ab4935a6120584c62d498da01e5c905179c569268812008998"
+      },
+      "source_outcome": "A/control FAIL_SCREEN; B/treatment PASS for complete targeted current-source/content screen ONLY",
+      "delivery": "A 275-byte investigation-in-progress final; B complete scoped 20735-byte proposal; both valid catalogs",
+      "operation": "A HOLD/paused/operational false; B direct Goal COMPLETE and operational true",
+      "finding": "Real Zarr #3422→v3.1.3 chain limited to GET granularity, not CRC/data equality; open napari #8353 and implementation-only tifffile fix limited; tifffile README Zarr>=3.2.0 vs provisional3.1.3 remains adoption qualification",
+      "execution_scope": "Authentic candidate arithmetic receipt; app-level checks proposed/UNEXECUTED",
+      "limits": "Not full development/pipeline PASS, both-arm PASS, generalized benefit, model ranking or causal effect; two capture UUIDs UNLOCATED",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD4",
+      "slot": "D-V14-B",
+      "version": "D-V14-B-SCOPE-R002 sole current control final; partner unstarted/superseded",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/phase1-source-report.md",
+        "sha256": "3f0a8379bd49dda70a13db6a1e44e2fbe53a39bae4ef2a14a106c963c8aa4e06"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-4/phase1-source-judgment.json",
+        "sha256": "beb249873d4386c42ad05ad2933c406326ee52706f36215d45eaa9dd4a3025f7"
+      },
+      "source_outcome": "Sole control FAIL_SCREEN; remainder UNASSESSED",
+      "delivery": "All four current finals present",
+      "operation": "One actual Luna/max Goal COMPLETE; operational complete; no matched partner",
+      "finding": "Mutable external data read-only consumer mounts plus endpoint hashes do not prove consumed recorded bytes; real DuckDB #7789→8253→3b58/test retained",
+      "execution_scope": "Evaluator-only input-epoch counterexample executed; separate authentic candidate W01 matches reproduction; neither tests whole product",
+      "limits": "Immutable snapshot/writer exclusion required condition or unverified status; sole current stage is not matched/fresh full pipeline result",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD5",
+      "slot": "D-V16-A",
+      "version": "Current D-V16-A targeted pair",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/final-report-002.md",
+        "sha256": "8087a72bf687307805e7060840f886dac6b62e5f310082c234cc6575d7afcf50"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-5/phase1-judgment.json",
+        "sha256": "332c1ae52f06a472acc533260d0d42aefad3636650c655f42c0d3faccf16b489"
+      },
+      "source_outcome": "Both delivery FAIL; A/treatment source PARTIAL; B/control UNASSESSED",
+      "delivery": "A proposal/source only; B 0/4",
+      "operation": "Both Luna/max Goals paused/HOLD, interrupted, operational false",
+      "finding": "NGFF, independent napari/tifffile, real #319 chronology, QuPath and rename caveats supported within checked subset",
+      "execution_scope": "Evaluator-only arithmetic/scalar serialization reproduced examples; missing candidate witness catalog remains unverified despite later execution metadata",
+      "limits": "Remaining obligations/current claims and seed-to-final preservation UNASSESSED; source grade immutable",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD6",
+      "slot": "D-V15-B",
+      "version": "D-V15-B-SCOPE-R002 current resource-v13-a002",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/final-report.md",
+        "sha256": "e3dc42ce84621860cdd8eb0fd444036f667476bcc9a6a9fe0ee2743d5b459578"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-6/phase1-judgment.json",
+        "sha256": "31c238783469bc12acea861ac3331d486af3843c7d5719bceb19430d6abf78aa"
+      },
+      "source_outcome": "A/control provenance FAIL_SCREEN; B/treatment proposal absent/UNASSESSED, checked catalog fragments PARTIAL",
+      "delivery": "A proposal only; B three valid catalogs only; both incomplete",
+      "operation": "Both Luna/max paused/HOLD/interrupted; operational false",
+      "finding": "Endpoint-hash mutable-input inference defect; open nbclient311/jupyter_client1145 not merged; DuckDB25232 merge guard present but inspected v1.5.6 guard absent and test404",
+      "execution_scope": "Evaluator-only interleaving counterexample; one authentic candidate exec per arm, B arithmetic pins match; no DuckDB binary/regression executed",
+      "limits": "Exact guard absence does not prove every equivalent fix absent or release defective; planned AST check data-cap stop received no executed credit",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD7",
+      "slot": "D-V01-B",
+      "version": "Current targeted pair; imported seed count separate",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/REPORT.md",
+        "sha256": "0d12902f245f9a8d7f0cde17e1a65086001abae951c5ad01e0d1e9e8df846886"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-7/phase1/judgment.json",
+        "sha256": "432adf352516691aabb9793d6580355685690ffca34dd1c46a0c19eb100b2465"
+      },
+      "source_outcome": "A/control checked source PARTIAL; whole case UNASSESSED; B delivery FAIL_SCREEN/remainder UNASSESSED",
+      "delivery": "A 4/4 valid; B 0/4",
+      "operation": "Both Luna/max paused/HOLD/interrupted, operational false",
+      "finding": "Supported checked source subset; minor Python-policy citation-pointer defect; no autonomous discovery claim",
+      "execution_scope": "A0 candidate executions; B failed then successful candidate checks, successful code matches frozen partial; two evaluator-only synthetic checks distinct",
+      "limits": "Mechanism uptake exists in narrow execution sense; missing final prevents semantic repair/receipt integration benefit; no equivalence/winner",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD8",
+      "slot": "D-V02-A",
+      "version": "D-V02-A-BUNDLE-R001 current targeted pair",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/final_report.md",
+        "sha256": "d477604285e9d1f2dd29bda5c0ec6a9cd17f7bc01b86380ff9bdda75468a699b"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-8/phase1_judgment.json",
+        "sha256": "08b5bcadc8ee564b8c48f7372b488c14b9e52f4fe999357b76c4d228e14b5ea7"
+      },
+      "source_outcome": "Both delivery INCOMPLETE; source quality beyond locator UNASSESSED",
+      "delivery": "A/control scratch changelog map only; B/treatment empty; required finals absent",
+      "operation": "Both Luna/max paused/HOLD/interrupted, operational false",
+      "finding": "Faithful 1349-line/45003-byte capture locator; no authored coordinate analysis, correction, issue chain or applicability argument",
+      "execution_scope": "Execution inventories A2/B1 operational only; no witness scientific credit",
+      "limits": "Source text extraction preservation is not comprehension or V02 success; incidental summaries after P1 disclosed, no regrade",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD9",
+      "slot": "D-V02-B",
+      "version": "D-V02-B-BUNDLE-R001 current targeted pair",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/report.md",
+        "sha256": "062291b201778757654cbe78c7c9916e44ce460b1b339052fc75d79220f9a0f4"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-9/phase1-judgment.json",
+        "sha256": "f263952416846370821e787efcc2073b8d84d12847cbdfca766e423b18d62a9b"
+      },
+      "source_outcome": "Both final delivery INCOMPLETE; scientific remainder UNASSESSED",
+      "delivery": "A/treatment none; B/control exact6616-line CPython types locator only",
+      "operation": "Both Luna/max paused/HOLD/interrupted, one Goal each, operational false",
+      "finding": "Faithful source locator, no task-specific byte/count/version correction or witness expectation",
+      "execution_scope": "One actual candidate receipt per arm exit0/cleanup; unsubmitted scientific expectations not assessed",
+      "limits": "Packet identity follows final report A=treatment/B=control; conservative04:12:37 anchor charges prep wait, no grade/reset",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD10",
+      "slot": "D-V03-A",
+      "version": "D-V03-A-BUNDLE-R001 report ready/frozen P1; closure pending at root pointer",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/REPORT.md",
+        "sha256": "e22652e5193ef115827aafdcb476d7b106528861525fe24564cdfbf9b4b1c4ce"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-10/assessment.json",
+        "sha256": "eb43ec34d0ec102c9e4deacb38d6478855feaaa71de39ca54dd251e1acfc64c5"
+      },
+      "source_outcome": "Both INCOMPLETE delivery and UNASSESSED scientific quality",
+      "delivery": "A/control empty; B/treatment eleven-line task locator; all required finals absent",
+      "operation": "Both Luna/max positive activation then paused/HOLD/interrupted; operational false",
+      "finding": "Faithful supplied-task map; no implementation interpretation or consequential behavior claim",
+      "execution_scope": "Candidate receipts A5/B3; failures/output-cap stops retained; scientific expectation/applicability scope UNASSESSED",
+      "limits": "Ready report is not final closed reservation; execution inventory does not certify V03 method/source correctness",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "P2",
+      "slot": "I-05",
+      "version": "Historical independent delivery recovery final; not DEC011 fresh matched cohort",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/REVIEW.md",
+        "sha256": "43ab1b81598952ed68d6b61dbf83bebd4b0b1ab22c20e701075a8a2192e94f69"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-2/review0001/current_output_judgment.json",
+        "sha256": "1c58b51987bcadeee4bbfb7358cb074bd668c941d80648fd5dd5f1fe1cff1a07"
+      },
+      "source_outcome": "Sole selected final FAIL_SCREEN/PARTIAL",
+      "delivery": "Proposal/source only; witness/lead inventories absent",
+      "operation": "Luna Goal active then paused/HOLD/interrupted; registry FAILED; quiet",
+      "finding": "Real napari7085→8256→v0.6.5 regression and reader/metadata/calibration supported. Corrected same-freeze critique DELETE/EXTRA readback/latest-commit condition omitted by final retaining FULL",
+      "execution_scope": "Authentic candidate exec-62cuo0t6 exit0 verifies one synthetic point; formal W1/W7 mapping UNKNOWN",
+      "limits": "Missing inventory not never-executed claim; no original-to-final complete preservation, whole pipeline/winner or fresh credit",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "P3",
+      "slot": "I-05",
+      "version": "Actual new R002 delivery-recovery final; separate from R001 grade",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipeline-3/review0001/REVIEW.md",
+        "sha256": "2e58a8237ad59314fc46f915ff07d1893fd5ffe16c336184ff130c32008d6c7b"
+      },
+      "judgment": {
+        "path": "UNEXPOSED_IN_READ_REPORT",
+        "sha256": "f541374b0c593e821e41f5f39a634e607bb4e467901896aac3cc0eccbbdbd551"
+      },
+      "source_outcome": "Available final FAIL_SCREEN/PARTIAL; missing designated partner UNASSESSED",
+      "delivery": "Proposal/source; witness/lead inventories absent",
+      "operation": "Luna Goal active then paused/HOLD/interrupted; quiet, no Goal completion",
+      "finding": "Real napari7085→8256→v0.6.5 test; tifffile chunk/whole-page paths; reader metadata0.1 does not establish NGFF0.4; dependency Python intersection not complete lock",
+      "execution_scope": "Authentic new candidate exec-81tq4_c4 exit0 supports fixed arithmetic; injected data and absent formal W1 inventory disclosed; evaluator arithmetic separate",
+      "limits": "Whole handoff1850.358101297 exceeds original1800; report ready1762.552529925; no reset, old grade, missing partner and warm ancestry retained",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "P4",
+      "slot": "I-08",
+      "version": "Existing current I08 R002 treatment combined role; descriptive carried role",
+      "report": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/report.md",
+        "sha256": "3cee77174f8affd8ebca491008f718396288ce6841791ea40a85059b8ecf94c7"
+      },
+      "judgment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/phase1_judgment.json",
+        "sha256": "1c0b626aaa50e2794020dcc17ba024e4ee2a591335ad641109632d0e0b740ae8"
+      },
+      "source_outcome": "FAIL_SCREEN on P4-F01; remainder UNASSESSED",
+      "delivery": "Four canonical finals/review present; source JSON invalid at151:65",
+      "operation": "Luna fresh stage activation; capacity-error failed turn, blocked before/paused after cleanup; FAILED/HOLD retained",
+      "finding": "Unconditional suffix invalidation misses later-cell update to earlier display (tagged nbclient0.10.2 fixture); real DuckDB25164→25232 regression with branch/notwindows limits retained",
+      "execution_scope": "Authentic candidate W02 exec-3zkld739 exit0; tiny standard-library check only; counterexample static source-grounded, no evaluator notebook run",
+      "limits": "Four files, native activation, source fact and causal pipeline credit separate; existing carry adds0 activations; no matched completion",
+      "matched_causal_credit": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "consolidation_origin": "frozen results-draft-001; original observation unchanged",
+      "dated_scope_only": true
+    },
+    {
+      "id": "TD10-closure",
+      "slot": "D-V03-A",
+      "version": "D-V03-A-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-10/assessment.json",
+        "sha256": "eb43ec34d0ec102c9e4deacb38d6478855feaaa71de39ca54dd251e1acfc64c5",
+        "bytes": 2263,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-10/assessment.json",
+        "sha256": "eb43ec34d0ec102c9e4deacb38d6478855feaaa71de39ca54dd251e1acfc64c5",
+        "bytes": 2263,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-10/closure-lock.json",
+        "sha256": "ce56b11bcd0c3d82a1d6a87121eda850a3b01031581a623c0c12995b8d034f5e",
+        "bytes": 10894,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Original TD10 INCOMPLETE/UNASSESSED retained; later closure now pinned",
+      "finding": "The original draft recorded report readiness at its cutoff. Later closure supplements that dated observation without rewriting it.",
+      "copied_grader_verdicts": {},
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD11",
+      "slot": "D-V07-A",
+      "version": "D-V07-A-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-11/report.json",
+        "sha256": "d645a8c76d367028d88b8a32b9f23731fd38ac811e56186647156824e545eb34",
+        "bytes": 47088,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-11/phase1-judgment.json",
+        "sha256": "04f448158240f33311d46bd862d2f99c02a5ddce582ee23198c30486c719a94e",
+        "bytes": 21100,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-11/completion.json",
+        "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+        "bytes": 1851,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Both INCOMPLETE; scientific quality UNASSESSED outside verified locator scope",
+      "finding": "Identical source-locator artifacts establish limited locator preservation, not critical-dependency verification, semantic witness quality, or pipeline success.",
+      "copied_grader_verdicts": {
+        "phase1.arms.0.case_outcome": "INCOMPLETE",
+        "phase1.arms.0.delivery_outcome": "INCOMPLETE",
+        "phase1.arms.0.scientific_outcome": "UNASSESSED_OUTSIDE_VERIFIED_LOCATOR_SCOPE",
+        "phase1.arms.1.case_outcome": "INCOMPLETE",
+        "phase1.arms.1.delivery_outcome": "INCOMPLETE",
+        "phase1.arms.1.scientific_outcome": "UNASSESSED_OUTSIDE_VERIFIED_LOCATOR_SCOPE",
+        "phase1.comparison": {
+          "autonomous_discovery_credit": false,
+          "blank_or_absent_science_pass": false,
+          "difference_in_available_source_locator_quality": "NONE_ESTABLISHED_WITHIN_THIS_IDENTICAL_ARTIFACT_SCOPE",
+          "full_science_pass": false,
+          "method_causal_credit": "UNASSESSED",
+          "pipeline_quality": "UNASSESSED",
+          "same_map_bytes": true,
+          "winner": null
+        }
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD12",
+      "slot": "D-V07-B",
+      "version": "D-V07-B-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-12/report.json",
+        "sha256": "2e189d47a006c798a9486dcf5d17cc02375556fd2cd4ffa57a440ab3b40999dd",
+        "bytes": 38702,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-12/phase1-judgment.json",
+        "sha256": "b0fcf5bafda4e602ae738432ce9f270ddda2f0b8d0eb0ee2d266c677758a89ae",
+        "bytes": 22306,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-12/terminal-closure.json",
+        "sha256": "60c5a7d1bb05fa8f2327c0ec2a580e80adb10b7b2afa1eb60ed24bab147d2aa3",
+        "bytes": 3123,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Both current deliveries INCOMPLETE; scientific full scope UNASSESSED",
+      "finding": "Both native Goals HOLD. Locator scope and original clocks retained; no whole-case PASS or causal credit.",
+      "copied_grader_verdicts": {
+        "phase1": {
+          "delivery": "INCOMPLETE_CURRENT_CONTRACT_BOTH_ARMS",
+          "freeze_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-freeze.json",
+          "freeze_sha256": "95d80ecbaf75ea126e3a3627ce3c9c57f59ef0ca18428a65c11a8a4f5bdfffe9",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-12/phase1-judgment.json",
+          "scientific_full_scope": "UNASSESSED",
+          "sha256": "b0fcf5bafda4e602ae738432ce9f270ddda2f0b8d0eb0ee2d266c677758a89ae",
+          "source_judgment": "UNCHANGED"
+        }
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD13",
+      "slot": "D-V03-B",
+      "version": "D-V03-B-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-13/assessment.json",
+        "sha256": "496c1452b8ac9ba7e3c8ff11ebe2095b08c88834bdb91669daf516d7faa089e3",
+        "bytes": 3142,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-13/phase1.json",
+        "sha256": "817bf1264b43e1494e16e0204147380ec0ccfea111b6a2a73c571aaa9b859d6f",
+        "bytes": 35776,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-13/handoff-receipt.json",
+        "sha256": "822c1f6048d9dc6758a7beb4f8a7779da15294ef74fdb0cdf1b2ec7f0853d7f0",
+        "bytes": 1427,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Both required deliveries INCOMPLETE; missing-final science UNASSESSED",
+      "finding": "Source locators/internal reconstruction preserved. No independent primary authenticity or authored implementation correction/witness interpretation established.",
+      "copied_grader_verdicts": {
+        "scientific_conclusion": {
+          "A_required_delivery": "INCOMPLETE",
+          "B_required_delivery": "INCOMPLETE",
+          "A_missing_final_source_science": "UNASSESSED",
+          "B_missing_final_source_science": "UNASSESSED",
+          "full_final_or_pipeline_quality": "UNASSESSED",
+          "partial_credit": "Source locators preserved; internal reconstruction verified only. No independent primary capture/pin/authenticity or authored correction/witness interpretation established.",
+          "quality_difference": "UNASSESSED",
+          "winner": "NOT_ESTABLISHED",
+          "promoted_final": "NONE",
+          "matched_causal_credit": "NONE"
+        }
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD14",
+      "slot": "D-V10-A",
+      "version": "D-V10-A-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-14/final-report.json",
+        "sha256": "e180d406e4a7e9ee8e418cd00956dbd046dda7fe63b14392b6e40341c4758fd5",
+        "bytes": 4201,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-14/phase1-judgment.json",
+        "sha256": "b12178e5dd5054dc66bce457b5cd7da66b55772e0a87006088e7d2d0af1a358a",
+        "bytes": 29439,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-14/handoff-complete.json",
+        "sha256": "96337bb4d1ef5865d6b9084ba98c4c5cd4e3d85afadc0f039e8ec966f0055e2a",
+        "bytes": 1601,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "A/control PARTIAL_SUPPORTED_TARGETED_RESULT; B/treatment UNASSESSED/INCOMPLETE",
+      "finding": "Control current quartet and native Goal complete; treatment has only two partial source maps and paused Goal. Delivery/lifecycle difference is not a source-quality winner or method effect.",
+      "copied_grader_verdicts": {
+        "conclusion": {
+          "A": {
+            "case_outcome": "UNASSESSED",
+            "delivery": "Current designated quartet present",
+            "full_pipeline_quality": "UNASSESSED",
+            "identity": "ordinary control",
+            "native_Goal": "complete before cleanup",
+            "source_quality": "PARTIAL_SUPPORTED_TARGETED_RESULT",
+            "turn": "interrupted"
+          },
+          "B": {
+            "case_outcome": "INCOMPLETE",
+            "delivery": "No designated current final or catalogs; two exact partial source maps",
+            "full_pipeline_quality": "UNASSESSED",
+            "identity": "earlier coherent binding treatment",
+            "native_Goal": "active before cleanup; paused final",
+            "native_error": "original native stop reached / TimeoutError",
+            "source_quality": "UNASSESSED"
+          },
+          "comparison": "Observed delivery/lifecycle differences only. No winner, matched causal effect, autonomous discovery or full-domain/pipeline grade."
+        }
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD15",
+      "slot": "D-V10-B",
+      "version": "D-V10-B-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-15/final_report.json",
+        "sha256": "7a7813c927d6fa98736269a1dedb0cde3ee5fcb6e3558734dd3ea1bb55cbb8f3",
+        "bytes": 50507,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-15/phase1.json",
+        "sha256": "af9d6cd9056d2ab9b60c7d95e10188e8190d87b05a690dc3d9375442af5cf822",
+        "bytes": 32629,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-15/neutral_closure.json",
+        "sha256": "1a4a2f53185d48c7d77ac10335fe82dacb66a299f2662aa427f6467627771b44",
+        "bytes": 1677,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Both current deliveries INCOMPLETE; A/treatment UNASSESSED; B/control partial selected claims supported",
+      "finding": "Useful control nonfinal partials remain partials. Both Goals HOLD/paused and quiet; no source PASS, autonomous discovery, or full pipeline credit.",
+      "copied_grader_verdicts": {
+        "frozen_phase1.outcomes": {
+          "A": {
+            "case_outcome": "INCOMPLETE",
+            "delivery": "Required current proposal, source, witness and lead catalogs absent; no authored partial offered.",
+            "full_pipeline_quality": "UNASSESSED",
+            "source_quality": "UNASSESSED"
+          },
+          "B": {
+            "case_outcome": "INCOMPLETE",
+            "delivery": "Required current proposal and three catalogs absent. Research proposal, source catalog and scanner map are nonfinal partials only.",
+            "full_pipeline_quality": "UNASSESSED",
+            "source_quality": "PARTIAL_SELECTED_CLAIMS_SUPPORTED; NO_OVERALL_PASS"
+          }
+        },
+        "final_interpretation": "Both required current final deliveries are INCOMPLETE. Treatment A scientific source quality is UNASSESSED. Control B has useful nonfinal partial with supported selected source claims and honest proposed/current-execution boundaries. Both native Goals HOLD/paused after interrupted turns, operational_complete false, owned scopes quiet. No final/source PASS, no winner or causal effect, no autonomous discovery or full pipeline credit."
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "TD16",
+      "slot": "D-V11-A",
+      "version": "D-V11-A-BUNDLE-R001",
+      "report": {
+        "path": "evaluation/independent-targeted-16/final-report.json",
+        "sha256": "a22cb6bc427c0e069bb3154a4610af4f4148a87af55f205325ffd77dbba7d567",
+        "bytes": 2714,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-targeted-16/phase1-judgment.json",
+        "sha256": "0c3446e5ae92dbaf6d17a37b396c0ed0d12fccd95e03bf3f560965a9d36856da",
+        "bytes": 41227,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-targeted-16/completion.json",
+        "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18",
+        "bytes": 1898,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Canonical final source quality A/B UNASSESSED; both delivery INCOMPLETE",
+      "finding": "Five authored A partials provide useful checked distinctions, but falsely attribute a library-wide NDPI/BIF negative to a seed that positively lists reading capability and defers v1 product scope. B has no authored partials.",
+      "copied_grader_verdicts": {
+        "canonical_final_source_quality": {
+          "A": "UNASSESSED",
+          "B": "UNASSESSED"
+        },
+        "partial_source_coverage": {
+          "A": "PARTIAL",
+          "B": "UNASSESSED"
+        },
+        "delivery": {
+          "A": "INCOMPLETE",
+          "B": "INCOMPLETE"
+        },
+        "causal_method_comparison": "UNASSESSED"
+      },
+      "criteria_scope": "development12/common8/important5; target3 only for targeted scope",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "P5-current",
+      "slot": "I-05",
+      "version": "I-05-LUNA-CLOCK-FRESH-R001",
+      "report": {
+        "path": "evaluation/independent-pipeline-5/final-report.json",
+        "sha256": "74df43964b4c894827596621703e7096364fe727d6ced6bb037c5743d3e7f6bb",
+        "bytes": 67251,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-pipeline-5/phase1-judgment.json",
+        "sha256": "e65af2d48a18b8c861c055f95427f0e0bd7f12e6e406770c5d0de127662fde8e",
+        "bytes": 35458,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-pipeline-5/handoff-closure.json",
+        "sha256": "7d29cb6b1004d1dccc8510534661e102565cfae989c7acf8c37dd8c40908b1c3",
+        "bytes": 1197,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Treatment current final FAIL; absent control final UNASSESSED",
+      "finding": "Localized W2 determinant value is wrong in the final/catalog despite authentic correctly scoped execution. Independent mechanisms and #6068/#6317 regression chain remain useful. Treatment operational completion does not repair science.",
+      "copied_grader_verdicts": {
+        "final_readout": "Treatment current pipeline operationally completes, but its independently assessed available final is not scientific PASS (localized W2 determinant error). Control final is absent after its bounded terminal failure; scientific quality UNASSESSED. No matched causal scientific winner or full-pipeline source quality is established."
+      },
+      "criteria_scope": "development A12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "Treatment scientific final FAIL; absent control UNASSESSED; no whole-pair winner",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "P6-current",
+      "slot": "I-06",
+      "version": "I-06-LUNA-CLOCK-FRESH-R001",
+      "report": {
+        "path": "evaluation/independent-pipeline-6/final-assessment.json",
+        "sha256": "1a3d8b120df25921a384887ddac4dc8f1b89f9a2d9eacf74bab7fd1052567898",
+        "bytes": 22293,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-pipeline-6/phase1-judgment.json",
+        "sha256": "59ae589a9fa5794791c1b549ecf4897a0f6eae7af8a59c85799446d4e617e9fd",
+        "bytes": 30351,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": null,
+      "scope_status": "SOURCE_JUDGMENT_CLOSED; FINAL_ASSESSMENT_HANDOFF_TAIL_NOT_PINNED",
+      "source_outcome": "Both current finals source FAIL despite paired operational completion",
+      "finding": "Both designs leave source identity vulnerable to mutable-input races. Treatment loses explicit runtime/input/output, credential, network and resource permissions; both treat supplied critiques as absent. Native completions and quiet scopes remain separately observed.",
+      "copied_grader_verdicts": {
+        "scientific_outcome": {
+          "A": "FAIL",
+          "B": "FAIL",
+          "matched_causal_winner": "UNASSESSED_NOT_ESTABLISHED",
+          "qualification": "Phase1 complete proposal/criteria/source judgment remains immutable; operational labels do not qualify science. Two FAIL outcomes do not imply equal quality.",
+          "winning_arm": "NO_WINNER_CLAIM"
+        }
+      },
+      "criteria_scope": "development B12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "Both scientific current design-obligation outcomes FAIL; paired operational completion separate",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "P7-current",
+      "slot": "I-07",
+      "version": "I-07-LUNA-CLOCK-FRESH-R001",
+      "report": {
+        "path": "evaluation/independent-pipeline-7/FINAL.json",
+        "sha256": "180596df446bc1881e93bc6493372de6bad46839fa4fe17505f2cd25421bf49e",
+        "bytes": 2522,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-pipeline-7/phase1/assessment.json",
+        "sha256": "7aa606aa66c740d86844acc92078343fbb0a3406613bfc5d85f26c367a07560e",
+        "bytes": 27631,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": null,
+      "scope_status": "P1_SCIENCE_CLOSED; P2_FINAL_WRITE_SUBSET; REQUIRED_HANDOFF_TAIL_UNKNOWN",
+      "source_outcome": "Control source FAIL; treatment PASS_FULL_RESEARCH_PROPOSAL with full-provenance HOLD",
+      "finding": "Control source IDs map to unrelated adopted entries. Treatment source-final PASS is narrower than a clean qualified pipeline/winner. Both current final quartets and five native role completions are observed; retained prior receipt bytes and native inference payload remain unknown.",
+      "copied_grader_verdicts": {
+        "effective_source_outcomes": {
+          "control_A": "FAIL",
+          "treatment_B": "PASS_FULL_RESEARCH_PROPOSAL"
+        },
+        "full_pipeline_qualification": {
+          "control": "FAIL_CURRENT_FINAL_REPRODUCIBILITY",
+          "treatment": "SOURCE_FINAL_PASS; HOLD_FULL_PROVENANCE_QUALIFICATION_WITH_EXPLICIT_LIMITS"
+        },
+        "clean_matched_causal_winner": "NOT_ESTABLISHED"
+      },
+      "criteria_scope": "development A12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "Control FAIL_CURRENT_FINAL_REPRODUCIBILITY; treatment SOURCE_FINAL_PASS with HOLD_FULL_PROVENANCE_QUALIFICATION",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "C03-original-final",
+      "slot": "C-03",
+      "version": "C-03-RESOURCE-R002-BUNDLE",
+      "report": {
+        "path": "evaluation/independent-confirmation-C03-final-1/final.json",
+        "sha256": "e61d6b8e67d85347c27da060cf0528b27dd6d4e30ee854c9a88ca431e25cf0ac",
+        "bytes": 3674,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-confirmation-C03-final-1/phase1.json",
+        "sha256": "a5da069e9b2592a82199eabe959e7525d1170a3901b821e6f57cebc38586d28a",
+        "bytes": 77618,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-confirmation-C03-final-1/completion.json",
+        "sha256": "bca3e29bf15afca958a49781e2bc67a04f4bd1283b61cd9e922cd53dbe4ef344",
+        "bytes": 649,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Original selected treatment source FAIL; missing counterpart UNASSESSED",
+      "finding": "Completion is declared before the required cue table; resampler input consumption lacks an output-drain condition. Static design/source defects do not claim an actual application failure. Operational selected delivery is complete, while direct native Goal status is unexported/UNKNOWN. Separate from DEC014 fresh confirmation.",
+      "copied_grader_verdicts": {
+        "scientific_outcome": "FAIL",
+        "separate_truth_axes": {
+          "source_quality": "FAIL_IMMUTABLE_P1",
+          "actual_final4_delivery": "PRESENT_MEANINGFUL_EXACT_FROZEN_FILES",
+          "operational_delivery": "COMPLETE_AND_OWNED_QUIET_IN_SAFE_CURRENT_PROJECTION",
+          "native_driver_enum": "completed for both selected roles; distinct from Goal status",
+          "direct_native_Goal_status_record": "NOT_EXPORTED",
+          "native_Goal_status": "UNKNOWN",
+          "owner_selected_native_Goal_status_claim": "complete for both, claim only",
+          "Goal_activation_submission": "positive direct flags for both fresh selected role sessions",
+          "opaque_native_Goal_ID": "UNKNOWN",
+          "physical_provider": "UNKNOWN",
+          "billed_dollars": "UNKNOWN",
+          "matched_causal_credit": "UNASSESSED_NO_COMPLETED_COUNTERPART_SELECTED",
+          "future_DEC014": "SEPARATE_NO_CREDIT",
+          "complete_resource_fit": "UNKNOWN; finite observed peaks/no OOM do not establish general fit"
+        },
+        "no_matched_winner_or_DEC014_credit": true
+      },
+      "criteria_scope": "H1 ten obligations/common8/card-specific3; no invented development12 or important5",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "Warm1-fresh",
+      "slot": "I-06",
+      "version": "I-06-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "report": {
+        "path": "evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/judgment.json",
+        "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+        "bytes": 14281,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-warm-recovery-1-fresh/final_reports/phase1/judgment.json",
+        "sha256": "433df474bb2077d153716b78c14683f93a0c8bef9c0ee14825319836d0046d7b",
+        "bytes": 14281,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-warm-recovery-1-fresh/final_reports/closure_receipt.json",
+        "sha256": "aefbdd11398b20e9cb9c7b33533c79277342d829dc59a413dc5ed626e21f910c",
+        "bytes": 5600,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "FAIL_SCREEN; full pipeline UNASSESSED",
+      "finding": "Chosen DuckDB in-process writer plus other read-only processes violates the cited concurrency condition. Standalone witness packaging and preservation incomplete. Four final files do not create a fresh independent critique or replace P6.",
+      "copied_grader_verdicts": {
+        "source_quality": "FAIL_SCREEN",
+        "full_pipeline_quality": "UNASSESSED",
+        "source_outcome_basis": "D1 is a decisive current, source-grounded concurrency support-condition error. This stops any whole-case PASS; remaining all-claim/ancestor semantic scope explicitly UNASSESSED. D2/D3 separately describe witness delivery and preservation/coverage gaps."
+      },
+      "criteria_scope": "development B12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "Warm2",
+      "slot": "I-07",
+      "version": "I-07-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "report": {
+        "path": "evaluation/independent-warm-recovery-2/assessment_final.json",
+        "sha256": "225b99cf6f8ab9fb534aa552f46e346de6f8da7a8fac44107473831c18c853c0",
+        "bytes": 2142,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-warm-recovery-2/phase1_assessment.json",
+        "sha256": "9a16266cad6af394dbdb4c393a19145ab11542398681343cfc397fb96b9917a4",
+        "bytes": 12540,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-warm-recovery-2/handoff_closure.json",
+        "sha256": "b44f0b73adb72495e5b394a2adfd56691e0f8c8525398b443eb86cfc32369c1d",
+        "bytes": 3389,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "FAIL_SCREEN; full pipeline UNASSESSED",
+      "finding": "W1 supplied code/hash/stdout mismatch limits reproducibility without implying fabrication. Shapes points overreach and incomplete issue/fix/test mechanism retained. Same-Goal self-review is not independent critique.",
+      "copied_grader_verdicts": {
+        "source_outcome": "FAIL_SCREEN",
+        "full_pipeline_quality": "UNASSESSED",
+        "original_grade_replacement": false
+      },
+      "criteria_scope": "development A12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "Warm3",
+      "slot": "I-07",
+      "version": "I-07-control-BLIND-SOURCE-FIDELITY-R001",
+      "report": {
+        "path": "evaluation/independent-warm-recovery-3/phase1-judgment.json",
+        "sha256": "1350ae02f94ca7116c5dca61d3b932224a8c5502454ed7f2a423c69e00b4e4a4",
+        "bytes": 10842,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-warm-recovery-3/phase1-judgment.json",
+        "sha256": "1350ae02f94ca7116c5dca61d3b932224a8c5502454ed7f2a423c69e00b4e4a4",
+        "bytes": 10842,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-warm-recovery-3/closure.json",
+        "sha256": "46c1d385eef67f010266687045b792fac2eb4207b7a2b05f5677176857a9572a",
+        "bytes": 4061,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Source FAIL; whole pipeline UNASSESSED",
+      "finding": "Required report is a placeholder, source IDs mis-map; condensed witness code differs from executed bytes but exact selected execution supports the arithmetic. No fabrication or new independent critique credit.",
+      "copied_grader_verdicts": {
+        "source_outcome": "FAIL",
+        "full_pipeline_quality": "UNASSESSED",
+        "whole_case_outcome": "FAIL"
+      },
+      "criteria_scope": "development A12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "Warm4",
+      "slot": "I-05",
+      "version": "I-05-treatment-BLIND-SOURCE-FIDELITY-R001",
+      "report": {
+        "path": "evaluation/independent-warm-recovery-4/phase1-judgment.json",
+        "sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+        "bytes": 10165,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-warm-recovery-4/phase1-judgment.json",
+        "sha256": "e8dce0290fe3209a301e8b443ca7b79ff9a208ce9f8aa43f2bdd2ff9dbf973f3",
+        "bytes": 10165,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-warm-recovery-4/closure.json",
+        "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f",
+        "bytes": 3780,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Final scientific quality and whole pipeline UNASSESSED; authored partial defects retained",
+      "finding": "Historical FormatV05 no-writing comment overgeneralized despite same-pin writer/tests; transform composition/reference dependency unresolved; critique source IDs inconsistent. No canonical final promoted. P1 unchanged. Inclusive P2 796.266980257s exceeds600 by196.266980257s; report382.475863119s is a subset and required-handoff timing is UNKNOWN.",
+      "copied_grader_verdicts": {
+        "final_scientific_quality": "UNASSESSED",
+        "whole_pipeline_quality": "UNASSESSED",
+        "partial_source_outcome": "ASSESSED_WITH_IDENTIFIED_DEFECTS_AND_UNKNOWNS",
+        "findings": [
+          {
+            "claim_locations": [
+              "working/proposal.md:9",
+              "working/proposal.md:37",
+              "critique/review.md:14",
+              "critique/review.md:27"
+            ],
+            "dimensions": [
+              "Q2",
+              "Q3",
+              "Q4"
+            ],
+            "evidence": [
+              "omezarr-format.body:368",
+              "omezarr-writer.body:675",
+              "omezarr-writer.body:744",
+              "omezarr-writer-tests.body:57",
+              "omezarr-writer-tests.body:303",
+              "omezarr-writer-tests.body:324"
+            ],
+            "id": "F1",
+            "kind": "SOURCE_INTERPRETATION_FALSE_NEGATIVE",
+            "obligations": [
+              "A07",
+              "A10"
+            ],
+            "severity": "MEDIUM",
+            "summary": "Historical FormatV05 no-writing docstring generalized despite same-pin 0.5 writer code and tests. Read-only product choice remains legitimate."
+          },
+          {
+            "claim_locations": [
+              "working/proposal.md:37",
+              "working/proposal.md:46",
+              "working/proposal.md:50"
+            ],
+            "dimensions": [
+              "Q1",
+              "Q2",
+              "Q3",
+              "Q5",
+              "Q7"
+            ],
+            "evidence": [
+              "ngff-index.body:277",
+              "ngff-index.body:282",
+              "omezarr-reader.body:279",
+              "omezarr-reader.body:293"
+            ],
+            "id": "F2",
+            "kind": "UNRESOLVED_DESIGN_CRITICAL_COORDINATE_DEPENDENCY",
+            "obligations": [
+              "A02",
+              "A03",
+              "A10"
+            ],
+            "severity": "HIGH",
+            "summary": "Define dataset plus multiscales transform composition and annotation reference resolution, or explicitly refuse the unsupported valid input. Static source-derived counterexample is unexecuted; no full-app failure claimed."
+          },
+          {
+            "claim_locations": [
+              "critique/review.md:14",
+              "critique/review.md:15",
+              "critique/review.md:16",
+              "critique/review.md:17"
+            ],
+            "dimensions": [
+              "Q2",
+              "Q8"
+            ],
+            "evidence": [
+              "working/sources.json:21",
+              "working/sources.json:37",
+              "working/sources.json:52",
+              "working/sources.json:85"
+            ],
+            "id": "F3",
+            "kind": "CRITIQUE_CITATION_CATALOG_INCONSISTENCY",
+            "obligations": [
+              "A07",
+              "A08",
+              "A12"
+            ],
+            "severity": "MEDIUM",
+            "summary": "Critique references S11-S17 which do not exist and misassigns existing S3-S10; correct proposal source mapping preserved."
+          }
+        ]
+      },
+      "criteria_scope": "development A12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    },
+    {
+      "id": "Warm5",
+      "slot": "I-06",
+      "version": "I-06-control-BLIND-SOURCE-FIDELITY-R001",
+      "report": {
+        "path": "evaluation/independent-warm-recovery-5/phase1/judgment.json",
+        "sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+        "bytes": 16463,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "judgment": {
+        "path": "evaluation/independent-warm-recovery-5/phase1/judgment.json",
+        "sha256": "4394f5245852a25fc3a4575980f875b2d38a1f7795703244af88825dddb800da",
+        "bytes": 16463,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "closure": {
+        "path": "evaluation/independent-warm-recovery-5/closure.json",
+        "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f",
+        "bytes": 829,
+        "classification": "closed report, historical draft, campaign instruction, or dated neutral metadata; no raw source/candidate/private body"
+      },
+      "scope_status": "CLOSED_SOURCE_JUDGMENT",
+      "source_outcome": "Final scientific quality and whole pipeline UNASSESSED; useful partial support retained",
+      "finding": "Canonical quartet absent and canonical review19-byte placeholder; scratch witness JSON malformed. Exact prior preservation and execution correspondence unknown; opportunities/accessibility and out-of-order invalidation remain partial. Mutable source URL/prefix does not establish historical capture identity. No scratch promotion or best-of bundle.",
+      "copied_grader_verdicts": {
+        "case_outcome": "UNASSESSED",
+        "final_scientific_quality": "UNASSESSED",
+        "whole_pipeline_quality": "UNASSESSED",
+        "canonical_final_four_delivery": "INCOMPLETE",
+        "partial_source_assessment": "PARTIAL_WITH_VERIFIED_USEFUL_SOURCE_CONTENT_AND_TRACEABILITY_COVERAGE_LIMITS",
+        "findings": [
+          {
+            "id": "W5-F01",
+            "class": "traceability",
+            "severity": "material",
+            "subject": "scratch-witnesses.json",
+            "finding": "Not valid JSON: invalid escape at line 9 column 329 (character 3746), in observed_stdout. All other four JSON partials parsed. Do not silently repair the source or infer a canonical inventory.",
+            "effect": "Supporting inventory cannot be consumed as supplied; actual stdout authenticity and execution remain UNKNOWN until a permitted receipt, not never-executed."
+          },
+          {
+            "id": "W5-F02",
+            "class": "mandatory_delivery",
+            "severity": "major_delivery",
+            "finding": "Packet designates no final; proposal/sources/witnesses/leads canonical final entries are null. The required canonical critique report is only Draft in progress. Scratch proposal, two source-register versions, witness inventory, leads and longer scratch review remain partials.",
+            "effect": "Delivery INCOMPLETE; final scientific quality UNASSESSED, without treating absence as a scientific FAIL or PASS."
+          },
+          {
+            "id": "W5-F03",
+            "class": "preservation_limit",
+            "severity": "unassessed",
+            "finding": "Scratch review/proposal/leads explicitly say admitted prior files were not found/read. This packet supplies no authenticated prior bodies.",
+            "effect": "No line-by-line fidelity, correction or preservation assessment; their reported access limitation and allocation were not independently confirmed from native history."
+          },
+          {
+            "id": "W5-F04",
+            "class": "coverage",
+            "severity": "partial",
+            "finding": "The draft sketches Python-only/SQL-only alternatives and optional SQL but does not develop a distinct useful opportunity with evidence/trade-offs; accessible status/provenance views are also thin.",
+            "effect": "B07/B10 and B-P5 remain PARTIAL. This is a coverage judgment, not a verified false external-source assertion."
+          },
+          {
+            "id": "W5-F05",
+            "class": "engineering_dependency",
+            "severity": "partial",
+            "finding": "The draft leaves later/subsequent-cell invalidation and dependency determination underdefined for out-of-order interactive execution. Missing events are admitted, but a conservative fallback for all affected earlier-displayed outputs is not explicit.",
+            "effect": "B04 remains PARTIAL. No analytical example was executed and no actual runtime defect is claimed."
+          },
+          {
+            "id": "W5-F06",
+            "class": "pin_and_version_limit",
+            "severity": "qualification",
+            "finding": "S1 has no complete retained digest and its reported prefix does not match the independently re-fetched body. Its latest URL is mutable, so historical capture identity remains UNKNOWN. Early/final source-register IDs are reassigned; assess each frozen version explicitly and never mix them into an endorsed bundle.",
+            "effect": "New retrieval authenticates current public bytes, not an absent historical receipt or a canonical final association."
+          }
+        ]
+      },
+      "criteria_scope": "development B12/common8/important5; target3 N/A",
+      "new_grade": false,
+      "matched_causal_credit": "NOT_ESTABLISHED",
+      "full_pipeline_quality": "UNASSESSED unless exact copied grader verdict states narrower failure or provenance hold",
+      "consolidation_origin": "frozen report and closure only; no candidate/source body inspection or new grading"
+    }
+  ],
+  "note": "Report scopes are not disjoint logical targets, native starts, whole pipelines, or PASS denominators. Versions never replace one another."
+}

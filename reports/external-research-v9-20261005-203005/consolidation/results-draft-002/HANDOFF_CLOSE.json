@@ -1,0 +1,28 @@
+{
+  "schema": "er9.consolidation-primary-handoff-closure.v2",
+  "status": "DRAFT_SYNTHESIS_CLOSED; CAMPAIGN_INCOMPLETE",
+  "closed_utc": "2026-10-06T08:17:58.283154+00:00",
+  "closed_monotonic_seconds": 105097.140186554,
+  "whole_elapsed_including_required_root_publisher_courier_report_handoffs_seconds": 871.7710753469873,
+  "report_ready_elapsed_seconds_subset": 809.3374014679866,
+  "whole_limit_seconds": 1800,
+  "within_original_bound": true,
+  "required_handoffs": {
+    "/root": "tool returned success",
+    "/root/publisher": "tool returned success",
+    "/root/frozen_exports": "neutral selector/clock tool returned success"
+  },
+  "receipt_notice_forwarding_follows_this_component": "charged under same original bound; terminal sample follows",
+  "ack_waited": false,
+  "clock_reset": false,
+  "campaign_complete": false,
+  "native_candidate_goals_launched": 0,
+  "new_scientific_grades": 0,
+  "scientific_distribution": "root/publisher only",
+  "neutral_content_only": true,
+  "mailbox_end_check": "no unread mail",
+  "positive_selection": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/results-draft-002/PUBLICATION_SELECTION.json",
+    "sha256": "09b12803d89c3030d7f015ed2e3e18a2448605b2b5e532e7eb48f539b9b1d73e"
+  }
+}

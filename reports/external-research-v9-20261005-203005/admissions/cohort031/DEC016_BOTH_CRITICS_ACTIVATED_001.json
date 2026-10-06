@@ -1,0 +1,756 @@
+{
+  "schema": "er9.dec016-paired-critic-activation.v1",
+  "observed_utc": "2026-10-06T08:15:37.715337+00:00",
+  "cursor_observed_utc": "2026-10-06T08:15:30.457701+00:00",
+  "rows": [
+    {
+      "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+      "arm": "control",
+      "native_goal_starts": 1,
+      "activation_utc": "2026-10-06T08:14:53.380795+00:00",
+      "goal_target_id": "target_muwel06b_f430c9cc-060b-413c-8a27-b861925cbbfb",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "original_birth_utc": "2026-10-06T08:14:45.109550+00:00",
+      "max_seconds": 900,
+      "resource_binding_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001-role-birth-r001/RESOURCE_BINDING.json",
+        "sha256": "5a0a44b0467d459f1bd41fecb90462587acde6a1d49f781ae47edbe5c7a13aff"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001-role-birth-r001/native/receipt.json",
+        "sha256": "8a0ac2bebbd49a799ccfdf20c74a0718a2617c34c4994fba1d34e91e1d77ba0b"
+      },
+      "positive_resource_placements_before_goal": {
+        "component_placements": [
+          {
+            "component": "native",
+            "unit": "er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2752333",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+              "MemoryPeak": "427991040",
+              "MemoryMax": "805306368",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "805306368",
+              "memory.swap.max": "0",
+              "memory.current": "425062400",
+              "memory.peak": "427991040",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "518328320",
+              "memory.peak": "519589888",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104910827163910,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_boundary",
+            "unit": "er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2752335",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+              "MemoryPeak": "13008896",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "12861440",
+              "memory.peak": "13008896",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "516567040",
+              "memory.peak": "519639040",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104910860486849,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_execution",
+            "unit": "er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2752334",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+              "MemoryPeak": "12390400",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "12042240",
+              "memory.peak": "12390400",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "496058368",
+              "memory.peak": "519639040",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104910894325395,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          }
+        ],
+        "retained_helper_placements": [
+          {
+            "pid": 2752323,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910827271931
+          },
+          {
+            "pid": 2752332,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910827360721
+          },
+          {
+            "pid": 2752333,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910827446096
+          },
+          {
+            "pid": 2752319,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910860593590
+          },
+          {
+            "pid": 2752330,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910860692307
+          },
+          {
+            "pid": 2752335,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910860783081
+          },
+          {
+            "pid": 2752321,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910894428086
+          },
+          {
+            "pid": 2752331,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910894510304
+          },
+          {
+            "pid": 2752334,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910894591971
+          }
+        ],
+        "all_existing_private_job_pids": [
+          {
+            "pid": 2752333,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910895531261
+          },
+          {
+            "pid": 2752411,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-09a3dd577a6940459ce1c87d61b2b246.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910895633728
+          },
+          {
+            "pid": 2752335,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910895940504
+          },
+          {
+            "pid": 2752342,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896059302
+          },
+          {
+            "pid": 2752349,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-cc40fb102b144b6e86aa72785404a860.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896145079
+          },
+          {
+            "pid": 2752334,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-glm-3ce71a9aa4774b129c6c02ad7f759fe1.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896446604
+          },
+          {
+            "pid": 2752315,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896755727
+          },
+          {
+            "pid": 2752319,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896833984
+          },
+          {
+            "pid": 2752321,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896909181
+          },
+          {
+            "pid": 2752323,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910896986119
+          },
+          {
+            "pid": 2752330,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910897094362
+          },
+          {
+            "pid": 2752331,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910897167680
+          },
+          {
+            "pid": 2752332,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9memc0aa740bdbae4af5a551c7eb6e023625.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-control-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104910897239533
+          }
+        ],
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "verified_before_native_goal": true,
+        "fit": "UNKNOWN"
+      },
+      "strict_validation": {
+        "path": "LAB_ROOT/ops/dispatcher/strict-role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/VALIDATED.json",
+        "sha256": "09ed9ea47911c6c7aa7f5fd8c714fa3e5b643ff93dba10c8262a87188f3b6e1f"
+      },
+      "source_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001/actual-source-bound-dec016-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "733417887bd8ebaeb22c79766fc387cc6e0068c1c072356db4c9f59e0ecc27a3"
+      },
+      "prelaunch_all4": {
+        "path": "LAB_ROOT/ops/dispatcher/DEC016_IMPORT_001/PRELAUNCH.json",
+        "sha256": "1218c3a4a3fdb76859148476a35391c9a7148ab0b4bf0de41f987bf37346de7a"
+      }
+    },
+    {
+      "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+      "arm": "treatment",
+      "native_goal_starts": 1,
+      "activation_utc": "2026-10-06T08:13:00.894995+00:00",
+      "goal_target_id": "target_muweilgh_aaba7766-2b93-4740-bc62-259ad4fe3328",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "observed_effort": "max",
+      "original_birth_utc": "2026-10-06T08:12:52.972403+00:00",
+      "max_seconds": 900,
+      "resource_binding_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001-role-birth-r001/RESOURCE_BINDING.json",
+        "sha256": "472840e07035462341b15818e82ccdaa1d4570f4561a9e3fe6e8f3ee8e78687b"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001-role-birth-r001/native/receipt.json",
+        "sha256": "79241e04e8b355ab0c2937f30cbbb0009711f90f625df503c935e2b9b8119314"
+      },
+      "positive_resource_placements_before_goal": {
+        "component_placements": [
+          {
+            "component": "native",
+            "unit": "er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2751719",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+              "MemoryPeak": "429326336",
+              "MemoryMax": "805306368",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "805306368",
+              "memory.swap.max": "0",
+              "memory.current": "424288256",
+              "memory.peak": "429326336",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "516296704",
+              "memory.peak": "520298496",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104798517820060,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_boundary",
+            "unit": "er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2751722",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+              "MemoryPeak": "13373440",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "13373440",
+              "memory.peak": "13373440",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "515129344",
+              "memory.peak": "520298496",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104798552148259,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          },
+          {
+            "component": "pm_execution",
+            "unit": "er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+            "unit_observation": {
+              "LoadState": "loaded",
+              "ActiveState": "active",
+              "SubState": "running",
+              "MainPID": "2751723",
+              "Result": "success",
+              "ControlGroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+              "MemoryPeak": "12632064",
+              "MemoryMax": "268435456",
+              "MemorySwapMax": "0"
+            },
+            "component_kernel_limits": {
+              "memory.max": "268435456",
+              "memory.swap.max": "0",
+              "memory.current": "12210176",
+              "memory.peak": "12632064",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "aggregate_kernel_limits": {
+              "memory.max": "2415919104",
+              "memory.swap.max": "0",
+              "memory.current": "495009792",
+              "memory.peak": "520298496",
+              "memory.events": {
+                "low": "0",
+                "high": "0",
+                "max": "0",
+                "oom": "0",
+                "oom_kill": "0",
+                "oom_group_kill": "0",
+                "sock_throttled": "0"
+              },
+              "cgroup.events": {
+                "populated": "1",
+                "frozen": "0"
+              }
+            },
+            "verified_monotonic_ns": 104798591537091,
+            "actual_component_under_private_aggregate": true,
+            "actual_limits_match": true
+          }
+        ],
+        "retained_helper_placements": [
+          {
+            "pid": 2751710,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798518029715
+          },
+          {
+            "pid": 2751715,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798518190957
+          },
+          {
+            "pid": 2751719,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798518356258
+          },
+          {
+            "pid": 2751706,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798552266405
+          },
+          {
+            "pid": 2751720,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798552364640
+          },
+          {
+            "pid": 2751722,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798552454999
+          },
+          {
+            "pid": 2751708,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798591646598
+          },
+          {
+            "pid": 2751718,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798591763170
+          },
+          {
+            "pid": 2751723,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798591866469
+          }
+        ],
+        "all_existing_private_job_pids": [
+          {
+            "pid": 2751702,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798592930743
+          },
+          {
+            "pid": 2751706,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593053115
+          },
+          {
+            "pid": 2751708,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593148998
+          },
+          {
+            "pid": 2751710,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593226890
+          },
+          {
+            "pid": 2751715,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593301947
+          },
+          {
+            "pid": 2751718,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593381833
+          },
+          {
+            "pid": 2751720,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-203005-c-01-confirmation-clock-fresh-r001-infra-stage-repair-r001-treatment-critique-a001.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798593493215
+          },
+          {
+            "pid": 2751723,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-db762784fb69429f8f7e3be4e55cc587.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798594064070
+          },
+          {
+            "pid": 2751722,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798594531546
+          },
+          {
+            "pid": 2751730,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798594615502
+          },
+          {
+            "pid": 2751733,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d84753af2f854c85b05d088a67c400ef.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798594695412
+          },
+          {
+            "pid": 2751719,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798595031515
+          },
+          {
+            "pid": 2751808,
+            "actual_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "expected_owned_cgroup": "/user.slice/user-1000.slice/user@1000.service/er9mem398cc31d583b41f9866d377fdc38e818.slice/er9-glm-d4851e42882e493db7de80ac3d345810.service",
+            "actual_owned_placement": true,
+            "verified_monotonic_ns": 104798595134984
+          }
+        ],
+        "aggregate_memory_max_bytes": 2415919104,
+        "swap_max_bytes": 0,
+        "verified_before_native_goal": true,
+        "fit": "UNKNOWN"
+      },
+      "strict_validation": {
+        "path": "LAB_ROOT/ops/dispatcher/strict-role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/VALIDATED.json",
+        "sha256": "9ebcbc7c49e2ad292f3b441b8a766a6eb0a26571292bbd55a9d26697d41797ab"
+      },
+      "source_binding": {
+        "path": "LAB_ROOT/ops/dispatcher/role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/actual-source-bound-dec016-r001/ROLE_BIRTH_RECEIPT.json",
+        "sha256": "71cc0132cc32084c3023bcc23aa01242d953541ba12f8d3e3a037bd8effa7942"
+      },
+      "prelaunch_all4": {
+        "path": "LAB_ROOT/ops/dispatcher/DEC016_IMPORT_001/PRELAUNCH.json",
+        "sha256": "1218c3a4a3fdb76859148476a35391c9a7148ab0b4bf0de41f987bf37346de7a"
+      }
+    }
+  ],
+  "active_by_family": {
+    "M": 0,
+    "Z": 2,
+    "L": 0
+  },
+  "running_job_ids": [
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+    "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001"
+  ],
+  "confirmed_native_starts": 230,
+  "C03_control_research_and_critic_complete_final_sealed_ready": true,
+  "no_complete_pipeline_or_quality_claim": true,
+  "extra_logical_target_credit": false
+}

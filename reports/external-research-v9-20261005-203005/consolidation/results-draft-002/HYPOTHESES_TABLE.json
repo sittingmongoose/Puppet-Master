@@ -1,0 +1,289 @@
+{
+  "schema": "er9.sixteen-hypothesis-frozen-report-map.v2",
+  "status": "DRAFT",
+  "hypothesis_count": 16,
+  "rows": [
+    {
+      "method_id": "V01",
+      "name": "Executable checks instead of prose-only verification",
+      "original_slots": [
+        "D-V01-A",
+        "D-V01-B"
+      ],
+      "declared_measure": "Source-correct corrections, new errors, false rejection, witness discrimination, actual executions, tool overhead and total critic cost. Executing a self-confirming assertion is not success.",
+      "finished_reports_in_readset": [
+        "TD7"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "TD7 authentic failed/successful checks show narrow tool uptake; missing treatment final blocks correction/preservation benefit. Historical I01/I02 show that executed checks can coexist with semantic defects. No matched method estimate.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V02",
+      "name": "Unit-, type- and domain-aware checking",
+      "original_slots": [
+        "D-V02-A",
+        "D-V02-B"
+      ],
+      "declared_measure": "Whether errors in applying otherwise-correct formulas are found; whether irrelevant unit rules or unsupported invariants are invented; cost beyond plain calculation.",
+      "finished_reports_in_readset": [
+        "TD8",
+        "TD9"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "TD8/TD9 provide faithful changelog/types locators, not task-specific unit/type/domain checking. Their scientific target remains UNASSESSED. Historical I02 Unicode byte-offset defect is a cross-cutting lesson, not this V02 contrast result.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V03",
+      "name": "Pinned implementation-path witnesses",
+      "original_slots": [
+        "D-V03-A",
+        "D-V03-B"
+      ],
+      "declared_measure": "Comment-to-code disagreements detected, version correctness, contextual applicability, isolated-test limitations, installation/extraction overhead and source-backed verdicts.",
+      "finished_reports_in_readset": [
+        "TD10"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "TD10 supplies only an exact task locator, with no implementation interpretation. Native execution counts do not establish a pinned-path witness or its scientific correctness.",
+      "new_report_versions": [
+        "TD10-closure",
+        "TD13"
+      ],
+      "current_draft_synthesis": "TD10/TD13 closure supplements locator-only/incomplete science; authentic current executions do not establish implementation-path correctness."
+    },
+    {
+      "method_id": "V04",
+      "name": "Evidence-first checking to reduce agreement bias",
+      "original_slots": [
+        "D-V04-A",
+        "D-V04-B"
+      ],
+      "declared_measure": "Detection and false-rejection rates, supported corrections, added reading/writing, and whether evidence-first answers merely create another unchecked narrative.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "No finished source-grade pointer for either original slot in this read set. UNKNOWN effect; terminal metadata does not supply evidence-first success or agreement-bias measurement.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V05",
+      "name": "Verification of consequential final changes",
+      "original_slots": [
+        "D-V05-A",
+        "D-V05-B"
+      ],
+      "declared_measure": "New-error detection, collateral regressions, remaining critical changes, total latency and usage. Closing a critic ID is not proof that the new text is correct.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "Both original source slots remain deferred in the dated workload projection; downstream exact final checking/repair effects are UNASSESSED. No automatic full-cohort or grade-selected rerun credit.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V06",
+      "name": "Amendment-first repair with complete final assembly",
+      "original_slots": [
+        "D-V06-A",
+        "D-V06-B"
+      ],
+      "declared_measure": "Supported semantic retention, corrected errors, new errors, incomplete patches, writing volume and final usability. Exact retention of a false assertion receives no quality credit.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "Both original slots are deferred in the snapshot. Native amendment plus exact assembly remains the actual intended contrast; no generic complete-final substitution or demonstrated preservation effect.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V07",
+      "name": "Critical-dependency-first verification",
+      "original_slots": [
+        "D-V07-A",
+        "D-V07-B"
+      ],
+      "declared_measure": "Critical errors caught per unit time, missed supposedly low-risk defects, unnecessary refusal, breadth preserved, and final unresolved dependencies.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "No finished original-slot scientific reports read. The journal/decode/source-epoch dependencies in historical reports illustrate relevant risks but do not estimate this method contrast.",
+      "new_report_versions": [
+        "TD11",
+        "TD12"
+      ],
+      "current_draft_synthesis": "Both new targeted pairs remain incomplete and unassessed beyond locator scope. No demonstrated critical-dependency-priority effect."
+    },
+    {
+      "method_id": "V08",
+      "name": "Two-stage versus three-stage completion",
+      "original_slots": [
+        "D-V08-A",
+        "D-V08-B"
+      ],
+      "declared_measure": "Startup/context duplication saved, final defects introduced or missed, preservation, corrections, and full case cost. Independent premium evaluation remains outside both candidate recipes.",
+      "finished_reports_in_readset": [
+        "D08-old"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "D08 combined-role output is useful but incomplete, with absent control critic and imported common research. P4 is one descriptive combined-role recovery. Neither gives fresh matched topology or cost-quality comparison.",
+      "new_report_versions": [
+        "P7-current",
+        "Warm2",
+        "Warm3"
+      ],
+      "current_draft_synthesis": "P7 operational paired2-stage/3-stage delivery is observed: control sourceFAIL, treatment full research proposal sourcePASS with provenanceHOLD. One pair and warm ancestry do not establish clean causal or financial superiority. Warm2/3 sourceFAILs retained."
+    },
+    {
+      "method_id": "V09",
+      "name": "Parallel complementary flash critics",
+      "original_slots": [
+        "D-V09-A",
+        "D-V09-B"
+      ],
+      "declared_measure": "Critical-path latency, aggregate occupied time, duplicate work, disagreement quality, coverage seams and final corrections. No majority-vote truth rule.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "No finished source-grade pointer for either slot; two treatment critic starts in the snapshot are stage counts, not evidence of complementary critiques, interaction or quality improvement.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V10",
+      "name": "Early dependency-release and API-contract binding",
+      "original_slots": [
+        "D-V10-A",
+        "D-V10-B"
+      ],
+      "declared_measure": "Version-mixing defects, needless pin churn, newly blocked good proposals, capture reuse and repeated research cost.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "Snapshot D10A control operational completion is separate from source quality (no finished source report in read set). TD3 incompatible provisional reader/Zarr bounds illustrate why early contracts need qualification, not a V10 effect estimate.",
+      "new_report_versions": [
+        "TD14",
+        "TD15"
+      ],
+      "current_draft_synthesis": "TD14 control has supported partial targeted result and complete delivery; other finals absent. TD15 supported control partial remains nonfinal. No coherent-binding effect estimate."
+    },
+    {
+      "method_id": "V11",
+      "name": "Contradiction-seeking and scoped absence checks",
+      "original_slots": [
+        "D-V11-A",
+        "D-V11-B"
+      ],
+      "declared_measure": "False dismissals corrected, true errors found, false-positive absence alarms, gratuitous uncertainty, breadth and search costs.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "No finished original-slot scientific report read. Open PR and exact guard absence in TD6 are qualified observations; equivalent-path/global absence remains unproved and cannot be credited as this contrast.",
+      "new_report_versions": [
+        "TD16"
+      ],
+      "current_draft_synthesis": "Useful supported partial distinctions coexist with an unsupported attribution to the seed; canonical finals absent. Contradiction search cannot claim a repair the source proposal did not need."
+    },
+    {
+      "method_id": "V12",
+      "name": "Progressive retrieval with reusable exact evidence",
+      "original_slots": [
+        "D-V12-A",
+        "D-V12-B"
+      ],
+      "declared_measure": "Source-correct yield, missed context, delivered bytes/tokens, fetch/read duplication, cold and warm costs, and end-to-end outcome.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "No finished original-slot scientific report read. TD8/TD9 exact maps demonstrate extraction identity only, not progressive retrieval benefit or source comprehension.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V13",
+      "name": "Dependency-aware incremental research reuse",
+      "original_slots": [
+        "D-V13-A",
+        "D-V13-B"
+      ],
+      "declared_measure": "Invalidation recall, unsupported reuse, preserved good findings, cold seed cost, warm marginal cost and total multi-run cost.",
+      "finished_reports_in_readset": [],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "D13A remains deferred; entered D13B both Goal1 FAILED retained/excluded from clock002. Reuse, preservation, dependency-correct incremental savings and semantic result are UNASSESSED.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V14",
+      "name": "Protected breadth and cross-component analogies",
+      "original_slots": [
+        "D-V14-A",
+        "D-V14-B"
+      ],
+      "declared_measure": "Verified useful novelty, distinct mechanism coverage, applicability, false opportunities, required-plan coverage and cost; raw link counts are not quality.",
+      "finished_reports_in_readset": [
+        "D14A-original",
+        "D14B-original",
+        "TD2",
+        "TD4"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "Original D14A/B and TD2/TD4 contain independent useful mechanisms/chains and optional opportunities. TD4 sole control is operational complete but has source-epoch defect; protected 30% discovery timing and matched method benefit not established.",
+      "new_report_versions": [
+        "P5-current",
+        "P6-current",
+        "Warm4",
+        "Warm5"
+      ],
+      "current_draft_synthesis": "Current integrated P5 available finalFAIL, P6 bothFAIL, Warm4/5 canonical finals absent/UNASSESSED. Independent mechanisms remain useful; protected-breadth effect and full clean qualification unestablished."
+    },
+    {
+      "method_id": "V15",
+      "name": "Implementation and issue-to-test investigation",
+      "original_slots": [
+        "D-V15-A",
+        "D-V15-B"
+      ],
+      "declared_measure": "Verified lessons, version/branch applicability, unsupported causal links, executable behavior, novelty, code-reading cost and recommendation impact.",
+      "finished_reports_in_readset": [
+        "D15A-original",
+        "D15B-original",
+        "TD3",
+        "TD6"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "Original D15A/B identify real implementation/failure/test and historical applicability boundaries. TD3 treatment passes only its targeted screen; TD6 control fails provenance inference. Actual misleading-chain facet in original D15B remains UNASSESSED; no generalized method effect.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    },
+    {
+      "method_id": "V16",
+      "name": "Decision-focused delivery without losing breadth",
+      "original_slots": [
+        "D-V16-A",
+        "D-V16-B"
+      ],
+      "declared_measure": "Required meaning in the designated final, false completeness, useful ideas retained, critic reading/writing cost and usability.",
+      "finished_reports_in_readset": [
+        "TD5"
+      ],
+      "matched_causal_outcome": "NOT_ESTABLISHED",
+      "whole_pipeline_quality": "NO_CLEAN_QUALIFIED_WINNER_ESTABLISHED",
+      "historical_evidence_synthesis": "TD5 treatment retains useful research but lacks witness/lead delivery, while control is empty. Decision-focused completeness/breadth and preserved seed-to-final mechanism benefit remain UNASSESSED.",
+      "new_report_versions": [],
+      "current_draft_synthesis": "No additional finished original-slot judgment added in this draft. Historical gaps remain."
+    }
+  ],
+  "cross_cutting_warm_recovery_note": "DEC015 five derivatives are additive same-Goal self-critique/repair/report work, not independent critique or additional logical diagnostic/integrated targets."
+}
