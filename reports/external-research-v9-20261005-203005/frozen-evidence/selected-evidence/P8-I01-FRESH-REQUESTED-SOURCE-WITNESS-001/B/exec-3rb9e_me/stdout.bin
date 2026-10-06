@@ -1,0 +1,5 @@
+float64: phys=[249787.112, -179893.608, 12024.4]
+float64: max voxel error after round-trip = 7.16227e-11 voxels (rel 3.5e-14)
+float32: phys=[249787.109375, -179893.609375, 12024.400390625]
+float32: max voxel error after round-trip = 0.0252686 voxels (rel 1.23e-05)
+threshold: float64 must stay < 1e-9 voxels; float32 shown for contrast

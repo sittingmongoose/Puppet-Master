@@ -1,0 +1,19 @@
+{
+  "schema": "er9.final002-owned-metadata-source-pin.v1",
+  "created_utc": "2026-10-06T08:52:48.329328+00:00",
+  "files": {
+    "project.py": "99d2ed700218106f4ecdf4f8a752ae98e9877d2054494aac572588d49e7e95f9",
+    "DIAGNOSIS.json": "743bc41494dbf5d367e735ce70d52fafa679df991f88fc776227ceda6b3b9e9d",
+    "NATIVE_GOAL_STATUS.json": "b8b7f3187fd3400e30c3c450132a39d427db6da9c8fa2c585b0c8cc65e49fc59",
+    "VERIFICATION.json": "7b8ad2041e8519f2afbcf20e66e0c20eb98d970b62914b583f2cb8f38db8228d",
+    "PEER_METADATA.json": "e6e04292f3a7a820c9daf52f4fbda41856b2b1c1219c1040403d2cbae57180f0",
+    "REPORT.md": "7c6ba66125e279fdfdb89ce1c20fe8c115623d1d5049598184f70bccf17c8ed5",
+    "PATH_CONTRACT_RECOMMENDATION.json": "9af696b2f2b138aded2d0a13a1b74f0d1719746c1a8d2123c12ba068364fa12e",
+    "MANIFEST.json": "e0e1108abed474700efff552874bf1a202c0f378fee948bda145e1e6e07a00fa"
+  },
+  "quiescent": true,
+  "diagnosis_only": true,
+  "no_runtime_patch_or_admission": true,
+  "original_science_model_clock_and_costs_preserved": true,
+  "native_model_Goal_calls": 0
+}

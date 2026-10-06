@@ -1,0 +1,8 @@
+order        single-argsort   double-argsort (identity-preserving)
+(0, 1)       (0, 1)           (0, 1)
+(1, 0)       (1, 0)           (1, 0)
+(2, 1, 0)    (2, 1, 0)        (2, 1, 0)
+(2, 0, 1)    (1, 2, 0)        (2, 0, 1)
+(4, 0, 2)    (1, 2, 0)        (2, 0, 1)
+json round-trip exact float coordinates: True
+canonical sha256 stable: True 33f43898f2dc2862

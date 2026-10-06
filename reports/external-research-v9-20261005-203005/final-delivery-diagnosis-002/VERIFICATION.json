@@ -1,0 +1,16 @@
+{
+  "schema": "er9.final-delivery-metadata-verification.v2",
+  "created_utc": "2026-10-06T08:50:11.357271+00:00",
+  "status": "PASS_METADATA_ONLY",
+  "selected_terminal_jobs": 3,
+  "all_original600_action570_clocks_match": true,
+  "all_actual_outputs_RWMCP_collector_roots_align": true,
+  "all_pristine_imported_prior_pins_hash_match": true,
+  "all_inline_only_manifests_match_profiles_and_zero_entry_intent": true,
+  "all_three_writer_calls_observed": 0,
+  "all_three_protocol_parse_errors": 0,
+  "all_recursive_owned_quiet_and_noOOM": true,
+  "no_candidate_reasoning_or_semantic_fields_selected": true,
+  "no_runtime_or_source_edits": true,
+  "no_model_native_Goal_calls": true
+}

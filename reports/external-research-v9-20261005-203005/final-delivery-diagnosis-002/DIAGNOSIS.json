@@ -1,0 +1,3169 @@
+{
+  "schema": "er9.final-delivery-control-diagnosis.v2",
+  "task_start_utc": "2026-10-06T08:35:52+00:00",
+  "created_utc": "2026-10-06T08:50:11.357271+00:00",
+  "selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/G_FINAL_DELIVERY_DIAGNOSIS_002_METADATA_SELECTOR.json",
+    "sha256": "929f676a2328b6c5c74c137779b088d3ddd5ff34e36e375613421ddd0aab3331"
+  },
+  "jobs": [
+    {
+      "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+      "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+      "arm": "control",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/receipt.json",
+        "sha256": "95fa0dbb6fa1cc5f463e242497db3998e3fa6bf10c1f147ce9cdc6b0c009fb18"
+      },
+      "classification": "ORIGINAL_ACTION_CAP_WITH_NO_OBSERVED_WRITER_DISPATCH_AND_PRIOR_PATH_DISCOVERABILITY_LIMIT",
+      "router_status": "execution_error",
+      "error_class": "ProtocolError",
+      "exposed_error": "ZCode response timeout: session/read",
+      "operational_complete": false,
+      "missing_required_paths": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "direct_native_goal": {
+        "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+        "arm": "control",
+        "stage": "revision",
+        "deployment_kind": "candidate_stage",
+        "registry_operational_status": "FAILED",
+        "native_goal_status": "paused",
+        "goal_id": "target_muwdgyi4_a8774e9f-bc2c-44a3-a67f-83bed6782460",
+        "native_goal_record_update_utc": "2026-10-06T07:53:07.918000+00:00",
+        "source_evidence": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/final-session.redacted.json",
+          "sha256": "031f91099667362f87fdb9338429525c6dd3fb86b4b40c62e7b18b7df7ad1fe8",
+          "source_kind": "saved_final_native_UI_object",
+          "status_selector": "/projection/target/status",
+          "goal_id_selector": "/projection/target/targetId",
+          "event_time_selector": "/projection/target/updatedAt",
+          "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+        },
+        "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+        "router_terminal_status": "execution_error",
+        "router_status_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/receipt.json",
+          "sha256": "95fa0dbb6fa1cc5f463e242497db3998e3fa6bf10c1f147ce9cdc6b0c009fb18",
+          "selector": "/status",
+          "definition": "Driver/router result only; not used to populate native_goal_status"
+        },
+        "native_goal_updated_at_epoch_ms": 1791273187918,
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt"
+      },
+      "clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/RESOURCE_BINDING.json",
+          "sha256": "651c565d72c1ea827a703d15880213f42d31ad53affa777cd3cffd6bdaa9013e"
+        },
+        "allocation_seconds": 600,
+        "response_cap": 60,
+        "router_native_responses": 8,
+        "original_birth_monotonic_ns": 103035980847838,
+        "native_stop_monotonic_ns": 103605980847838,
+        "guard_stop_monotonic_ns": 103630980847838,
+        "original_total_stop_monotonic_ns": 103635980847838,
+        "native_elapsed_seconds": 574.3122935989959,
+        "freeze_elapsed_seconds": 574.3338462579995,
+        "clock_descriptor": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/ORIGINAL_CLOCK_PROFILE.json",
+          "sha256": "d16c4bb4db50ff79fa54ac051d1d25b765535e6dff9964eb764929adc88e1960"
+        },
+        "initial_clock_input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/workspace/inputs/STAGE_CLOCK.json",
+          "sha256": "aa894f19588189bc2c574ad9469cc536194aebf71db06f05d6e390b545cc179a",
+          "bytes": 687,
+          "source": "exact actual builder initial_clock_metadata_utf8",
+          "stage_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+          "captured_before_goal": true
+        },
+        "initial_clock_status": "KNOWN",
+        "definition": "Original600 allocation includes setup/cleanup;570 action,595 component guardian,600 outer. Initial snapshot before Goal, not timer reset; physical native start/end UTC unexposed."
+      },
+      "output_path_contract": {
+        "task_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/workspace/TASK.md",
+          "sha256": "0a5d97448faaf5c01d8e74695850ef9d4464b65723991195e4ee9bee82f2186e"
+        },
+        "literal_static_path_tokens": [
+          "inputs/prior/",
+          "out/final",
+          "out/final/",
+          "out/final/leads.json",
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final_bundle.json"
+        ],
+        "expected_final_paths": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "profile": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-02-CONFIRMATION-CLOCK-FRESH-R001/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001/operator-profile/BUNDLE_PROFILE.json",
+          "sha256": "d62d4638bf781e5f738e45a7f2b485086e2c1425f3aabf1328582f2d5b57fd55"
+        },
+        "carrier_bundle_path": "out/final_bundle.json",
+        "carrier_commit_dir": "out/final",
+        "allowed_outputs": {
+          "leads.json": "out/final/leads.json",
+          "proposal.md": "out/final/proposal.md",
+          "sources.json": "out/final/sources.json",
+          "witnesses.json": "out/final/witnesses.json"
+        },
+        "actual_candidate_RW_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/workspace/out",
+        "MCP_RW_root": "/work/out mounted from that exact workspace/out",
+        "collector_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/workspace/out",
+        "boundary_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+          "sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57"
+        },
+        "collector_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+          "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+        },
+        "path_alignment_supported": true,
+        "writer_permission_or_carrier_rejection_observed": false,
+        "writer_not_attempted": true
+      },
+      "prior_path_contract": {
+        "role_birth_receipt": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/role-birth/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001/actual-source-bound/ROLE_BIRTH_RECEIPT.json",
+          "sha256": "be72178ce36471ccb5e12f2a636d4a389709d281d63b89e1f0627c00bf722b65"
+        },
+        "actual_prior_file_inventory": [
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/research/leads.json",
+            "sha256": "44a2717b66a56b6a9137af81ef088b2c963a8205c69493eee59abc7fc9916673",
+            "bytes": 5953
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/research/witnesses.json",
+            "sha256": "2ec397ee9c16e9cef8c28eaa9c7f1f20099505c9e463dacde4f49a0f6984f88c",
+            "bytes": 6466
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/research/sources.json",
+            "sha256": "a7852faf273b5a1e54dec5aba10bdcca725c6fc6d9ecafc351f66346cf4fbd5c",
+            "bytes": 10350
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001/research/proposal.md",
+            "sha256": "6e9fa7b95874369c6a4342981bfa1be9d279c3d4509c5575b55686392faf2e6a",
+            "bytes": 26669
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001/critique/review.md",
+            "sha256": "88aef7a6001d3985a2ba8c55a287a84daf3a1a48438522541ad98cb36c2ebd4e",
+            "bytes": 29975
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001/critique/review-errata.md",
+            "sha256": "32ca8caf04bd6bcf8e22940ea19aa4eed0cc93ff176279433f4cbc82570cca75",
+            "bytes": 1504
+          }
+        ],
+        "Task_exact_prior_file_locator_tokens": [],
+        "root_prior_index_paths_in_admitted_inputs": [],
+        "candidate_read_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/workspace/inputs/delivery_role_manifest.json",
+          "sha256": "3cae8360aa3790a0575f2916e219b0052a77af624f542a625fb9b01c8c11e44e"
+        },
+        "adoption_entry_count": 0,
+        "INLINE_ONLY_intentional": true,
+        "manifest_definition": "Final transport/adoption manifest intentionally has zero entries. It is not an actual source import inventory, nor proof of lost imports.",
+        "imports_present_and_hash_verified": true,
+        "tool_schema_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+          "sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8"
+        },
+        "source_read_argument_fields": [
+          "path",
+          "line_start",
+          "line_count",
+          "byte_start",
+          "byte_count"
+        ],
+        "supported_mechanical_operations": [
+          "line_map",
+          "render_sections",
+          "cache_source"
+        ],
+        "directory_listing_tool_in_selected_API": false,
+        "native_internal_workspace_or_prompt_inventory": "UNEXPOSED; provider/System/candidate prose was not inspected",
+        "scope": "No exact own prior-file locator in inspected static Task tokens or root input-index contract; cannot make a global model-context absence claim."
+      },
+      "formal_read_controls": [
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 0,
+          "call_id": "call_b85f7b1f004d41588b5e8211",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/STAGE_CLOCK.json",
+          "range_scalars": {},
+          "argument_sha256": "3c35065fa77597b00ed8fa2aa4a1e804632aa7d13c96e25f3f7f3bc4b27b95da",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 2,
+            "is_error": false,
+            "successful_source_path": "inputs/STAGE_CLOCK.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 1,
+          "call_id": "call_50fd165a5ed045e0a6d7d870",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/delivery_role_manifest.json",
+          "range_scalars": {},
+          "argument_sha256": "45ca50b66d80de9b81ca6c5a216ac2ba7e1496c63c44a285280ea71e0ed33316",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 5,
+            "is_error": false,
+            "successful_source_path": "inputs/delivery_role_manifest.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 2,
+          "call_id": "call_64acfdc20ad24b9da337739e",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/INDEX.md",
+          "range_scalars": {},
+          "argument_sha256": "e0fa55b0c7ff175f2911b981b5613ddb018f08e47f6e1252406770174128b7aa",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 8,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 3,
+          "call_id": "call_344a41e570cd4099945dd90d",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/index.json",
+          "range_scalars": {},
+          "argument_sha256": "99860c34af7fb19429ddea5983404dd56a80e484bda3f88e7ea7e904006c5740",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 11,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 0,
+          "call_id": "call_41ff264e580e401287a56f38",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "1bac7adc852e9ab13402aa6e3115ab1b219419f823d2685edf3bbc37fd0ba901",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 14,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 1,
+          "call_id": "call_53dce2ab0ef14179a1317893",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/review.md",
+          "range_scalars": {},
+          "argument_sha256": "c2de078496d072984f5881edec7ed74d8cb72bed8e5c607abe40daebe2260e9e",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 17,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 2,
+          "call_id": "call_b4c87b6762b5491fb4a59921",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/sources.json",
+          "range_scalars": {},
+          "argument_sha256": "8301df39e4f184beb1be6f5115c333d51c1cf6f2a4c5733784ddfcd3249ce91f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 20,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 0,
+          "call_id": "call_70c5304ba8dc427c9e46ba69",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/NAVIGATION.json",
+          "range_scalars": {},
+          "argument_sha256": "3c3e682e918ddc781984d7e59e54d4092df8a5fe4e51ec5577bec7a467a2541b",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 23,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 1,
+          "call_id": "call_105ead2ba8564bfea88a7a98",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/navigation.json",
+          "range_scalars": {},
+          "argument_sha256": "5906a3c55800093592b8b14682393062a54230a0e81242bd4e6ba54d51026f2f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 26,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 2,
+          "call_id": "call_dcf9442a09964dab925bbe04",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/out/research/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "78aa29a2ba7d5c63caaa8ec5a1691fe4d472097810ebc66690858be8ececb3ef",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 29,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 3,
+          "call_id": "call_39fb2873614b4a5c8cc61a53",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/critique/review.md",
+          "range_scalars": {},
+          "argument_sha256": "f264c3b4f83f2e4b04ef1900fdec7d33a004ca222bce0ebf5fe8a3d2ab7f1c6e",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 32,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        }
+      ],
+      "mechanical_control_calls": [],
+      "formal_metadata_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/model-io.redacted.jsonl",
+        "sha256": "ff3d0df4b9366589cecef06da67df121981d8ca472192cbad369ea6a1d0d8db9"
+      },
+      "formal_metadata_selectors": [
+        "/response/toolCalls/*/name",
+        "/response/toolCalls/*/id",
+        "/response/toolCalls/*/input/path",
+        "range scalar keys only",
+        "/request/body/tools names and schema property key names only"
+      ],
+      "advertised_schema_metadata": [
+        {
+          "line_number_1based": 1,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 2,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 3,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 4,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 5,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 6,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 7,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 8,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 9,
+          "tool_names": [],
+          "read_property_names": null,
+          "writer_property_names": null
+        }
+      ],
+      "source_operations": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/operation_receipts/events.jsonl",
+          "sha256": "f16f0f609f69d020e4993ab9d7dfeed2f22b927bb37077be2dc26367563c9835"
+        },
+        "counts": [
+          {
+            "tool": "read_file",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 11
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 9
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 9
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 14
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 12
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 12
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 2
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 2
+          }
+        ],
+        "error_category": "UNEXPOSED in saved operation receipts; source returns boundary failure + exception typename, but no result/error body selected"
+      },
+      "native_control": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/native/protocol.redacted.jsonl",
+          "sha256": "2bd939fef0fac4077ced19f1fe8eee3fc0a85e5ac968581c0454bd1027dcc53a"
+        },
+        "tool_counts": [
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "scheduled",
+            "count": 11
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "started",
+            "count": 11
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "completed",
+            "count": 11
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "scheduled",
+            "count": 14
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "started",
+            "count": 14
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "completed",
+            "count": 14
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "scheduled",
+            "count": 1
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "started",
+            "count": 1
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "completed",
+            "count": 1
+          }
+        ],
+        "writer_count": 0,
+        "host_requests": [
+          {
+            "line_number_1based": 6,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T07:43:41.910313+00:00"
+          },
+          {
+            "line_number_1based": 12,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T07:43:43.744808+00:00"
+          }
+        ],
+        "mcp": [
+          {
+            "line_number_1based": 14,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 15,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 16,
+            "kind": "session_startup",
+            "configuredCount": 2,
+            "connectedCount": 2,
+            "failedCount": 0
+          },
+          {
+            "line_number_1based": 10886,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 10887,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          }
+        ],
+        "turn_terminal_metadata": [
+          {
+            "line_number_1based": 20,
+            "status": "success",
+            "resultType": "success",
+            "durationMs": 0,
+            "errorCode": null
+          },
+          {
+            "line_number_1based": 21133,
+            "status": "interrupted",
+            "resultType": "cancelled",
+            "durationMs": 563614,
+            "errorCode": "USER_INTERRUPT"
+          }
+        ],
+        "parse_errors": 0,
+        "model_status_counts": {
+          "model_request_started": 9,
+          "model_request_completed": 8,
+          "model_request_failed": 1
+        },
+        "attempts_gt1_observed": 0,
+        "RPC_tail": [
+          {
+            "line_number_1based": 21122,
+            "request_id": "research-host-233",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:59.614068+00:00",
+            "reply": {
+              "line_number_1based": 21123,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:00.028223+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21124,
+            "request_id": "research-host-234",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:02.080309+00:00",
+            "reply": {
+              "line_number_1based": 21125,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:02.499236+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21126,
+            "request_id": "research-host-235",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:04.528540+00:00",
+            "reply": {
+              "line_number_1based": 21127,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:04.938129+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21128,
+            "request_id": "research-host-236",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:06.990700+00:00",
+            "reply": {
+              "line_number_1based": 21130,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:08.414116+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21129,
+            "request_id": "research-host-237",
+            "method": "session/goal",
+            "action": "pause",
+            "host_observed_utc": "2026-10-06T07:53:07.126479+00:00",
+            "reply": {
+              "line_number_1based": 21135,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:08.473589+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21136,
+            "request_id": "research-host-238",
+            "method": "session/stop",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:08.511243+00:00",
+            "reply": {
+              "line_number_1based": 21138,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:08.513257+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21139,
+            "request_id": "research-host-239",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:08.513363+00:00",
+            "reply": {
+              "line_number_1based": 21140,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:08.883671+00:00"
+            }
+          },
+          {
+            "line_number_1based": 21143,
+            "request_id": "research-host-241",
+            "method": "session/close",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:53:08.971082+00:00",
+            "reply": {
+              "line_number_1based": 21144,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:53:08.982326+00:00"
+            }
+          }
+        ],
+        "permission_request_or_denial_in_host_callbacks_observed": false
+      },
+      "cleanup": {
+        "native_quiet": true,
+        "components_quiet": true,
+        "oom_observed": false,
+        "recursive_private_quiet": true,
+        "release_ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "ea78323c70ae3a2fb17c8b832a3477a6c864139b3a8572928b718cd2554b03f5"
+        }
+      },
+      "systemic_writer_tool_schema_transport_or_RW_fault_proven": false,
+      "positive_navigation_limit": "Admitted files are nested by origin job. Formal read requests guess absent flat/index paths; source rejects them. Selected API cannot enumerate a directory; inspected static Task/INLINE_ONLY manifest provides no exact prior-file path list.",
+      "causality": "UNKNOWN: cannot infer why model never dispatches writer, effect of index availability, scientific adequacy or global hidden context from these control surfaces.",
+      "costs": "All original charged attempts and inclusive occupied clocks preserved; no dollars/full billing inferred from router counters. Cancelled/provider tails remain accounting UNKNOWN."
+    },
+    {
+      "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+      "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+      "arm": "treatment",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/receipt.json",
+        "sha256": "1b880c2914aef7a683f3177644c6b19e3f5ab1b196284e4f1827f2b6478f6fc0"
+      },
+      "classification": "ORIGINAL_ACTION_CAP_WITH_NO_OBSERVED_WRITER_DISPATCH_AND_PRIOR_PATH_DISCOVERABILITY_LIMIT",
+      "router_status": "cap_seconds",
+      "error_class": null,
+      "exposed_error": null,
+      "operational_complete": false,
+      "missing_required_paths": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "direct_native_goal": {
+        "job_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+        "pair_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001",
+        "arm": "treatment",
+        "stage": "revision",
+        "deployment_kind": "candidate_stage",
+        "registry_operational_status": "FAILED",
+        "native_goal_status": "paused",
+        "goal_id": "target_muwdgc5b_4c55b0dd-1be8-4fb2-951d-d2d314db1c9b",
+        "native_goal_record_update_utc": "2026-10-06T07:52:38.702000+00:00",
+        "source_evidence": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/final-session.redacted.json",
+          "sha256": "a55fb278e7a1d7dfdefb6a981a12b0859d83f1795ffbee9b76e3f878e12e2bf5",
+          "source_kind": "saved_final_native_UI_object",
+          "status_selector": "/projection/target/status",
+          "goal_id_selector": "/projection/target/targetId",
+          "event_time_selector": "/projection/target/updatedAt",
+          "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+        },
+        "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+        "router_terminal_status": "cap_seconds",
+        "router_status_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/receipt.json",
+          "sha256": "1b880c2914aef7a683f3177644c6b19e3f5ab1b196284e4f1827f2b6478f6fc0",
+          "selector": "/status",
+          "definition": "Driver/router result only; not used to populate native_goal_status"
+        },
+        "native_goal_updated_at_epoch_ms": 1791273158702,
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt"
+      },
+      "clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/RESOURCE_BINDING.json",
+          "sha256": "14ab2d6db86c7f099a684211bead1a2f29d9f711372a7ee54b1d326214dcf6d0"
+        },
+        "allocation_seconds": 600,
+        "response_cap": 60,
+        "router_native_responses": 14,
+        "original_birth_monotonic_ns": 103007098765172,
+        "native_stop_monotonic_ns": 103577098765172,
+        "guard_stop_monotonic_ns": 103602098765172,
+        "original_total_stop_monotonic_ns": 103607098765172,
+        "native_elapsed_seconds": 573.9079426639946,
+        "freeze_elapsed_seconds": 573.9245394939935,
+        "clock_descriptor": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/ORIGINAL_CLOCK_PROFILE.json",
+          "sha256": "5808d99ae74440d819166aad5241d462ca3334fd3f56be140c42d07981a82fb5"
+        },
+        "initial_clock_input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/workspace/inputs/STAGE_CLOCK.json",
+          "sha256": "61f5d8fc1b99590f22054e2a4e8ef75c7ee249c37f9d2ed9ec0f2d1b844f5177",
+          "bytes": 689,
+          "source": "exact actual builder initial_clock_metadata_utf8",
+          "stage_id": "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+          "captured_before_goal": true
+        },
+        "initial_clock_status": "KNOWN",
+        "definition": "Original600 allocation includes setup/cleanup;570 action,595 component guardian,600 outer. Initial snapshot before Goal, not timer reset; physical native start/end UTC unexposed."
+      },
+      "output_path_contract": {
+        "task_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/workspace/TASK.md",
+          "sha256": "53df33b17eb58173e602f57910ebef28c07880807acadc1a00d9bb479a5d146c"
+        },
+        "literal_static_path_tokens": [
+          "inputs/prior/",
+          "out/final",
+          "out/final/",
+          "out/final/leads.json",
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final_bundle.json"
+        ],
+        "expected_final_paths": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "profile": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/confirmation-clock-fresh-retest-001/pairs/C-02-CONFIRMATION-CLOCK-FRESH-R001/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001/operator-profile/BUNDLE_PROFILE.json",
+          "sha256": "e2d652dda6c510017a20f9e01ae96cf27ac16a2e344ef15d1f72efe2c73fc942"
+        },
+        "carrier_bundle_path": "out/final_bundle.json",
+        "carrier_commit_dir": "out/final",
+        "allowed_outputs": {
+          "leads.json": "out/final/leads.json",
+          "proposal.md": "out/final/proposal.md",
+          "sources.json": "out/final/sources.json",
+          "witnesses.json": "out/final/witnesses.json"
+        },
+        "actual_candidate_RW_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/workspace/out",
+        "MCP_RW_root": "/work/out mounted from that exact workspace/out",
+        "collector_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/workspace/out",
+        "boundary_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+          "sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57"
+        },
+        "collector_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+          "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+        },
+        "path_alignment_supported": true,
+        "writer_permission_or_carrier_rejection_observed": false,
+        "writer_not_attempted": true
+      },
+      "prior_path_contract": {
+        "role_birth_receipt": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/role-birth/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001/actual-source-bound/ROLE_BIRTH_RECEIPT.json",
+          "sha256": "cb52098b654efdbd3a24b66dc11d18ebcef557d342a2cea76bba7c9f81a958f1"
+        },
+        "actual_prior_file_inventory": [
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/leads.json",
+            "sha256": "c107e070ddea803562d795d12be2b1489e1ec8d16954e986cf0eccbdaeb9945e",
+            "bytes": 6617
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/witnesses.json",
+            "sha256": "4a5dbe2b505c10b0309cd7275930df6ff8b143d6dfd3593dd36fd4e8a2d40a6e",
+            "bytes": 4695
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/sources.json",
+            "sha256": "1c33ffc392a276fdbd093d2723181cc67d186f38725c2ef84b938c5747ca5485",
+            "bytes": 15009
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/proposal.md",
+            "sha256": "2344d5b6c11be80077f22c2c9fff6eec01ed0a4c85610f6f601577fa426b21a9",
+            "bytes": 26619
+          },
+          {
+            "path": "inputs/prior/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001/critique/review.md",
+            "sha256": "70d22db0c240fc81461791ae0381a38e7abe8ab3c72040d7c034830667522aad",
+            "bytes": 23621
+          }
+        ],
+        "Task_exact_prior_file_locator_tokens": [],
+        "root_prior_index_paths_in_admitted_inputs": [],
+        "candidate_read_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/workspace/inputs/delivery_role_manifest.json",
+          "sha256": "3bb85108d6a61b02637e78fece0f2aaa5c7170cf9c8004ee2b5b05e6f61b942f"
+        },
+        "adoption_entry_count": 0,
+        "INLINE_ONLY_intentional": true,
+        "manifest_definition": "Final transport/adoption manifest intentionally has zero entries. It is not an actual source import inventory, nor proof of lost imports.",
+        "imports_present_and_hash_verified": true,
+        "tool_schema_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+          "sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8"
+        },
+        "source_read_argument_fields": [
+          "path",
+          "line_start",
+          "line_count",
+          "byte_start",
+          "byte_count"
+        ],
+        "supported_mechanical_operations": [
+          "line_map",
+          "render_sections",
+          "cache_source"
+        ],
+        "directory_listing_tool_in_selected_API": false,
+        "native_internal_workspace_or_prompt_inventory": "UNEXPOSED; provider/System/candidate prose was not inspected",
+        "scope": "No exact own prior-file locator in inspected static Task tokens or root input-index contract; cannot make a global model-context absence claim."
+      },
+      "formal_read_controls": [
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 0,
+          "call_id": "call_9a73c73165e64fd18c491efa",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/STAGE_CLOCK.json",
+          "range_scalars": {},
+          "argument_sha256": "3c35065fa77597b00ed8fa2aa4a1e804632aa7d13c96e25f3f7f3bc4b27b95da",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 2,
+            "is_error": false,
+            "successful_source_path": "inputs/STAGE_CLOCK.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 1,
+          "call_id": "call_b4a10b16e9304285aace9c62",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/delivery_role_manifest.json",
+          "range_scalars": {},
+          "argument_sha256": "45ca50b66d80de9b81ca6c5a216ac2ba7e1496c63c44a285280ea71e0ed33316",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 5,
+            "is_error": false,
+            "successful_source_path": "inputs/delivery_role_manifest.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 0,
+          "call_id": "call_05a2223c6e59447ba217aa88",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/index.json",
+          "range_scalars": {},
+          "argument_sha256": "99860c34af7fb19429ddea5983404dd56a80e484bda3f88e7ea7e904006c5740",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 8,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 1,
+          "call_id": "call_30bdfcffd271473ba601e04b",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/navigation.json",
+          "range_scalars": {},
+          "argument_sha256": "5906a3c55800093592b8b14682393062a54230a0e81242bd4e6ba54d51026f2f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 11,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 4,
+          "tool_call_index": 0,
+          "call_id": "call_02634f9a209e4f41b0f45c9d",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/research/proposal.md",
+          "range_scalars": {
+            "line_count": 5
+          },
+          "argument_sha256": "ba36ea1e7fe4ef12367e239b8a5c0043904b4523b085aa35e83e67ef6bf3e001",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 17,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 4,
+          "tool_call_index": 1,
+          "call_id": "call_23560fb9a7534f86a16e91b0",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/critique/review.md",
+          "range_scalars": {
+            "line_count": 5
+          },
+          "argument_sha256": "d578d04e9a11779de88d9f566846cef69ba8cef20c7c9aeec366c12e5b0510b5",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 20,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 0,
+          "call_id": "call_45acd3b4a22946d8bcde1f68",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "out/research/proposal.md",
+          "range_scalars": {
+            "line_count": 5
+          },
+          "argument_sha256": "4ee5e77cad54574e255d70a663fac2fc4f4d9c7bdda9b8c69f8ced6086aa6cf7",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 23,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 1,
+          "call_id": "call_2c29bb11393b4c9187300815",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "out/critique/review.md",
+          "range_scalars": {
+            "line_count": 5
+          },
+          "argument_sha256": "e9fc3a295ee4e58a153c78ed1345c4228212baaa198494eee29826e5d3dccccb",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 26,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 0,
+          "call_id": "call_ca3b5acfdc1f4117adf7f04c",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/proposal.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "002f753c8427ae50882b7d902720603d7649b9ae2a64c8a83e9271b4007c5fbd",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 29,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 1,
+          "call_id": "call_4d99986fd18b45b3937b81a2",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/review.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "bf96a8733a92034c8192087ca4ce1286f93c2c0ac90065404a6d0f38b2c1789a",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 32,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 7,
+          "tool_call_index": 0,
+          "call_id": "call_2f66746d0c424f8493c728e4",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/README.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "d5060b32a552f5ed8d2ee992953d2bebb6a296f69bfc99aaa1d8cbaa4f2550b1",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 35,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 7,
+          "tool_call_index": 1,
+          "call_id": "call_dab7df7dc53b46ada551e85d",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/index.json",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "1c429f7ff6ceabb2f7779ba3803469beb47af671c238ba996ca1ad1614fa7e39",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 38,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 9,
+          "tool_call_index": 0,
+          "call_id": "call_491afa00f53f423299d355e5",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior",
+          "range_scalars": {},
+          "argument_sha256": "0655c46c236e4b4c908b5a086e0dab671e5cf58c8e48f6d1b9d2b3439f0d8ffe",
+          "saved_namespace_state": "DIRECTORY",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 47,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 9,
+          "tool_call_index": 1,
+          "call_id": "call_79595a290ebe493b9b01d40b",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs",
+          "range_scalars": {},
+          "argument_sha256": "f688ba5c39752421157dd0e7bf7f6d05f33add325a77b5285d1d534a0d9699f2",
+          "saved_namespace_state": "DIRECTORY",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 50,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 11,
+          "tool_call_index": 0,
+          "call_id": "call_891e2ac60a844b01a1b6276b",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/out/research/proposal.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "4b47f05e52e4ceb22ea672454b5115e25f1fc2fd6fc92ccdfe81a562406e7d10",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 56,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 11,
+          "tool_call_index": 1,
+          "call_id": "call_85a8b24aafc540f69adf7a6b",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/out/critique/review.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "c498f51bf0920e4d86b48869e07242dd23af45c26032e1e52007090b5d09f61f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 59,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 11,
+          "tool_call_index": 2,
+          "call_id": "call_d5c624bcc81c4299bde12a3e",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/final/proposal.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "ccd26b4d953004c2ed313331bcb2c106dbc6e34b9237c70fb7c7f19d9495dbb7",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 62,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 11,
+          "tool_call_index": 3,
+          "call_id": "call_ce59b8e36aa04e1180e44704",
+          "argument_key_names": [
+            "line_count",
+            "path"
+          ],
+          "path": "inputs/prior/research_proposal.md",
+          "range_scalars": {
+            "line_count": 3
+          },
+          "argument_sha256": "7f90d49f7aae6309cce0dce539f51b86250aa820f92c746607a57ce21da0167e",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 65,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        }
+      ],
+      "mechanical_control_calls": [
+        {
+          "model_metadata_line_number_1based": 3,
+          "operation": "line_map",
+          "source_path": "inputs/prior",
+          "argument_key_names": [
+            "operation",
+            "output",
+            "source"
+          ]
+        },
+        {
+          "model_metadata_line_number_1based": 8,
+          "operation": "line_map",
+          "source_path": "inputs/prior/*",
+          "argument_key_names": [
+            "operation",
+            "output",
+            "source"
+          ]
+        },
+        {
+          "model_metadata_line_number_1based": 8,
+          "operation": "line_map",
+          "source_path": "out/*",
+          "argument_key_names": [
+            "operation",
+            "output",
+            "source"
+          ]
+        },
+        {
+          "model_metadata_line_number_1based": 10,
+          "operation": "cache_source",
+          "source_path": "inputs/prior",
+          "argument_key_names": [
+            "operation",
+            "output",
+            "source"
+          ]
+        }
+      ],
+      "formal_metadata_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/model-io.redacted.jsonl",
+        "sha256": "01ac9f3f5f4b8972c2eb40dbbf68fc12e60be5db523c0792eb75f0a76923ea8e"
+      },
+      "formal_metadata_selectors": [
+        "/response/toolCalls/*/name",
+        "/response/toolCalls/*/id",
+        "/response/toolCalls/*/input/path",
+        "range scalar keys only",
+        "/request/body/tools names and schema property key names only"
+      ],
+      "advertised_schema_metadata": [
+        {
+          "line_number_1based": 1,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 2,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 3,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 4,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 5,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 6,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 7,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 8,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 9,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 10,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 11,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 12,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 13,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 14,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 15,
+          "tool_names": [],
+          "read_property_names": null,
+          "writer_property_names": null
+        }
+      ],
+      "source_operations": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/operation_receipts/events.jsonl",
+          "sha256": "8612f534a2d10ba213ddae672399785615d9eb632ebbd3ffafe990789ed92299"
+        },
+        "counts": [
+          {
+            "tool": "read_file",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 18
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 16
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 16
+          },
+          {
+            "tool": "mechanical",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 4
+          },
+          {
+            "tool": "mechanical",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 4
+          },
+          {
+            "tool": "mechanical",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 4
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 6
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 5
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 5
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 1
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 1
+          }
+        ],
+        "error_category": "UNEXPOSED in saved operation receipts; source returns boundary failure + exception typename, but no result/error body selected"
+      },
+      "native_control": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/native/protocol.redacted.jsonl",
+          "sha256": "913f79c0bc73ac2d51c53901d0672d780596c07641f180268848cc63c28a15f6"
+        },
+        "tool_counts": [
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "scheduled",
+            "count": 18
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "started",
+            "count": 18
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "completed",
+            "count": 18
+          },
+          {
+            "tool": "mcp__pm_boundary__mechanical",
+            "phase": "scheduled",
+            "count": 4
+          },
+          {
+            "tool": "mcp__pm_boundary__mechanical",
+            "phase": "started",
+            "count": 4
+          },
+          {
+            "tool": "mcp__pm_boundary__mechanical",
+            "phase": "completed",
+            "count": 4
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "scheduled",
+            "count": 6
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "started",
+            "count": 6
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "completed",
+            "count": 6
+          }
+        ],
+        "writer_count": 0,
+        "host_requests": [
+          {
+            "line_number_1based": 6,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T07:43:12.959075+00:00"
+          },
+          {
+            "line_number_1based": 12,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T07:43:14.777301+00:00"
+          }
+        ],
+        "mcp": [
+          {
+            "line_number_1based": 14,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 15,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 16,
+            "kind": "session_startup",
+            "configuredCount": 2,
+            "connectedCount": 2,
+            "failedCount": 0
+          },
+          {
+            "line_number_1based": 8851,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 8852,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          }
+        ],
+        "turn_terminal_metadata": [
+          {
+            "line_number_1based": 20,
+            "status": "success",
+            "resultType": "success",
+            "durationMs": 0,
+            "errorCode": null
+          },
+          {
+            "line_number_1based": 18237,
+            "status": "interrupted",
+            "resultType": "cancelled",
+            "durationMs": 563380,
+            "errorCode": "USER_INTERRUPT"
+          }
+        ],
+        "parse_errors": 0,
+        "model_status_counts": {
+          "model_request_started": 15,
+          "model_request_completed": 14,
+          "model_request_failed": 1
+        },
+        "attempts_gt1_observed": 0,
+        "RPC_tail": [
+          {
+            "line_number_1based": 18226,
+            "request_id": "research-host-234",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:30.183568+00:00",
+            "reply": {
+              "line_number_1based": 18227,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:30.575458+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18228,
+            "request_id": "research-host-235",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:32.611345+00:00",
+            "reply": {
+              "line_number_1based": 18229,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:33.048572+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18230,
+            "request_id": "research-host-236",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:35.085792+00:00",
+            "reply": {
+              "line_number_1based": 18231,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:35.478379+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18232,
+            "request_id": "research-host-237",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:37.514597+00:00",
+            "reply": {
+              "line_number_1based": 18233,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:37.913629+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18234,
+            "request_id": "research-host-238",
+            "method": "session/goal",
+            "action": "pause",
+            "host_observed_utc": "2026-10-06T07:52:38.243415+00:00",
+            "reply": {
+              "line_number_1based": 18239,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:39.196409+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18241,
+            "request_id": "research-host-239",
+            "method": "session/stop",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:39.232081+00:00",
+            "reply": {
+              "line_number_1based": 18242,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:39.233620+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18243,
+            "request_id": "research-host-240",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:39.233799+00:00",
+            "reply": {
+              "line_number_1based": 18244,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:39.560202+00:00"
+            }
+          },
+          {
+            "line_number_1based": 18247,
+            "request_id": "research-host-242",
+            "method": "session/close",
+            "action": null,
+            "host_observed_utc": "2026-10-06T07:52:39.628557+00:00",
+            "reply": {
+              "line_number_1based": 18248,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T07:52:39.631432+00:00"
+            }
+          }
+        ],
+        "permission_request_or_denial_in_host_callbacks_observed": false
+      },
+      "cleanup": {
+        "native_quiet": true,
+        "components_quiet": true,
+        "oom_observed": false,
+        "recursive_private_quiet": true,
+        "release_ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "60182815c15f58b0c82a5dc61bab8aafbf1d4a1c57417f541993bca1839e7e90"
+        }
+      },
+      "systemic_writer_tool_schema_transport_or_RW_fault_proven": false,
+      "positive_navigation_limit": "Admitted files are nested by origin job. Formal read requests guess absent flat/index paths; source rejects them. Selected API cannot enumerate a directory; inspected static Task/INLINE_ONLY manifest provides no exact prior-file path list.",
+      "causality": "UNKNOWN: cannot infer why model never dispatches writer, effect of index availability, scientific adequacy or global hidden context from these control surfaces.",
+      "costs": "All original charged attempts and inclusive occupied clocks preserved; no dollars/full billing inferred from router counters. Cancelled/provider tails remain accounting UNKNOWN."
+    },
+    {
+      "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+      "pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001",
+      "arm": "treatment",
+      "source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/native/receipt.json",
+        "sha256": "bbdf9349c7b2d97e5dd954a54c2694af5ce32c8683f522e0be8dc555db3cf6ce"
+      },
+      "classification": "ORIGINAL_ACTION_CAP_WITH_NO_OBSERVED_WRITER_DISPATCH_AND_PRIOR_PATH_DISCOVERABILITY_LIMIT",
+      "router_status": "cap_seconds",
+      "error_class": null,
+      "exposed_error": null,
+      "operational_complete": false,
+      "missing_required_paths": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "direct_native_goal": {
+        "job_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001",
+        "arm": "treatment",
+        "stage": "revision",
+        "deployment_kind": "candidate_stage",
+        "registry_operational_status": "FAILED",
+        "native_goal_status": "paused",
+        "goal_id": "target_muwevmkz_1c79bc9c-aa0e-4edd-a184-3044fc40a7ad",
+        "native_goal_record_update_utc": "2026-10-06T08:32:31.354000+00:00",
+        "source_evidence": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/native/final-session.redacted.json",
+          "sha256": "fa01014c917d83e785b076f1cfe744e946dc647ba1098300f05ec7a47228febb",
+          "source_kind": "saved_final_native_UI_object",
+          "status_selector": "/projection/target/status",
+          "goal_id_selector": "/projection/target/targetId",
+          "event_time_selector": "/projection/target/updatedAt",
+          "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+        },
+        "status_definition": "Last directly observed saved native Goal status at the stated source time. Not router outcome, quality grade, current process occupancy or billing.",
+        "router_terminal_status": "cap_seconds",
+        "router_status_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/native/receipt.json",
+          "sha256": "bbdf9349c7b2d97e5dd954a54c2694af5ce32c8683f522e0be8dc555db3cf6ce",
+          "selector": "/status",
+          "definition": "Driver/router result only; not used to populate native_goal_status"
+        },
+        "native_goal_updated_at_epoch_ms": 1791275551354,
+        "status_selector": "/projection/target/status",
+        "goal_id_selector": "/projection/target/targetId",
+        "event_time_selector": "/projection/target/updatedAt"
+      },
+      "clock": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/RESOURCE_BINDING.json",
+          "sha256": "b1402d31fb3c3f89521c659c2f26016329bb2d3feda0efeee2dfd472c12b1364"
+        },
+        "allocation_seconds": 600,
+        "response_cap": 60,
+        "router_native_responses": 8,
+        "original_birth_monotonic_ns": 105399720362042,
+        "native_stop_monotonic_ns": 105969720362042,
+        "guard_stop_monotonic_ns": 105994720362042,
+        "original_total_stop_monotonic_ns": 105999720362042,
+        "native_elapsed_seconds": 573.9054070339917,
+        "freeze_elapsed_seconds": 573.924586025998,
+        "clock_descriptor": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/ORIGINAL_CLOCK_PROFILE.json",
+          "sha256": "939ce401f5d674a650ac0cab529847a897b5aa62846d341d98f47793125baa2f"
+        },
+        "initial_clock_input": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/workspace/inputs/STAGE_CLOCK.json",
+          "sha256": "dd99696b0952def70a8c8e6eaf1209322f5f34d67b994384636a5b5095015280",
+          "bytes": 713,
+          "source": "exact actual builder initial_clock_metadata_utf8",
+          "stage_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+          "captured_before_goal": true
+        },
+        "initial_clock_status": "KNOWN",
+        "definition": "Original600 allocation includes setup/cleanup;570 action,595 component guardian,600 outer. Initial snapshot before Goal, not timer reset; physical native start/end UTC unexposed."
+      },
+      "output_path_contract": {
+        "task_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/workspace/TASK.md",
+          "sha256": "96a233fd836693c55145eb2da1dbdbfcf43edbe2ed8b6f28761037621e39cc83"
+        },
+        "literal_static_path_tokens": [
+          "inputs/prior/",
+          "out/final",
+          "out/final/",
+          "out/final/leads.json",
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final_bundle.json"
+        ],
+        "expected_final_paths": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "profile": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/c01-paired-infrastructure-stage-repair-001/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/operator-profile/BUNDLE_PROFILE.json",
+          "sha256": "d1895e30b01ce55fa34f59a6e9e2120e11c1d4a1b74da132c76df77d4db29e1e"
+        },
+        "carrier_bundle_path": "out/final_bundle.json",
+        "carrier_commit_dir": "out/final",
+        "allowed_outputs": {
+          "leads.json": "out/final/leads.json",
+          "proposal.md": "out/final/proposal.md",
+          "sources.json": "out/final/sources.json",
+          "witnesses.json": "out/final/witnesses.json"
+        },
+        "actual_candidate_RW_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/workspace/out",
+        "MCP_RW_root": "/work/out mounted from that exact workspace/out",
+        "collector_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/workspace/out",
+        "boundary_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+          "sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57"
+        },
+        "collector_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+          "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+        },
+        "path_alignment_supported": true,
+        "writer_permission_or_carrier_rejection_observed": false,
+        "writer_not_attempted": true
+      },
+      "prior_path_contract": {
+        "role_birth_receipt": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/role-birth/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001/actual-source-bound-dec016-r001/ROLE_BIRTH_RECEIPT.json",
+          "sha256": "8c26c808e2aa35d10c4c4a63c3015bcf22363a8d566222aa44b71e673ea66874"
+        },
+        "actual_prior_file_inventory": [
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/leads.json",
+            "sha256": "41b1c21399c0f8a283ef9dfd1579503757aad2bae234d8ec2590dac2a4a20f0a",
+            "bytes": 4692
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/witnesses.json",
+            "sha256": "c1abde36191020aa8bc855ddb0a12c8d7b62b95c2dea4bd1d6945c83e5338be1",
+            "bytes": 5692
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/sources.json",
+            "sha256": "6b6636a5c41fca718bf308f5fbeac11cc6e71b9c2d3cd00bb4ca4721d2fa5850",
+            "bytes": 11989
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001/research/proposal.md",
+            "sha256": "e41c09cd736ee99ae3ce4a578c6170083a4978371f0151da2c7c5a2c5c44a10d",
+            "bytes": 26226
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/critique/leads.json",
+            "sha256": "81ee6ce09d1d2f692e5d847fa3f72e348e96fd8bec574e500c02f1f7a4056141",
+            "bytes": 2441
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/critique/witnesses.json",
+            "sha256": "a2240d17995c0b9b27987177c73213b78413fc69d8b48bceccba9b93ca740c64",
+            "bytes": 2940
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/critique/review.md",
+            "sha256": "fc683a614925c75a141904ea3400e365ce7d9c3b2b56b891e7b626d1476bff7c",
+            "bytes": 21596
+          },
+          {
+            "path": "inputs/prior/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001/critique/sources.json",
+            "sha256": "b09a621b22d48467adf8b7f3277a98c892298da31476919ac59e0f7ce8a299c2",
+            "bytes": 6591
+          }
+        ],
+        "Task_exact_prior_file_locator_tokens": [],
+        "root_prior_index_paths_in_admitted_inputs": [],
+        "candidate_read_manifest": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/workspace/inputs/delivery_role_manifest.json",
+          "sha256": "14bfc8abe03c71a8a1e3f5c6689223f206c8259d6dd7134dfd331cad5ea74fcf"
+        },
+        "adoption_entry_count": 0,
+        "INLINE_ONLY_intentional": true,
+        "manifest_definition": "Final transport/adoption manifest intentionally has zero entries. It is not an actual source import inventory, nor proof of lost imports.",
+        "imports_present_and_hash_verified": true,
+        "tool_schema_source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+          "sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8"
+        },
+        "source_read_argument_fields": [
+          "path",
+          "line_start",
+          "line_count",
+          "byte_start",
+          "byte_count"
+        ],
+        "supported_mechanical_operations": [
+          "line_map",
+          "render_sections",
+          "cache_source"
+        ],
+        "directory_listing_tool_in_selected_API": false,
+        "native_internal_workspace_or_prompt_inventory": "UNEXPOSED; provider/System/candidate prose was not inspected",
+        "scope": "No exact own prior-file locator in inspected static Task tokens or root input-index contract; cannot make a global model-context absence claim."
+      },
+      "formal_read_controls": [
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 0,
+          "call_id": "call_b0a53ea6877f41a8989bb96f",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/STAGE_CLOCK.json",
+          "range_scalars": {},
+          "argument_sha256": "3c35065fa77597b00ed8fa2aa4a1e804632aa7d13c96e25f3f7f3bc4b27b95da",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 2,
+            "is_error": false,
+            "successful_source_path": "inputs/STAGE_CLOCK.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 1,
+          "tool_call_index": 1,
+          "call_id": "call_87756babb643453e8dfcc916",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/delivery_role_manifest.json",
+          "range_scalars": {},
+          "argument_sha256": "45ca50b66d80de9b81ca6c5a216ac2ba7e1496c63c44a285280ea71e0ed33316",
+          "saved_namespace_state": "REGULAR_FILE",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 5,
+            "is_error": false,
+            "successful_source_path": "inputs/delivery_role_manifest.json",
+            "error_class": null
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 0,
+          "call_id": "call_1e77c2662b9b4d76976527fd",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/INDEX.json",
+          "range_scalars": {},
+          "argument_sha256": "118ebb0b94d234500d6246491fa86b297a21339fde35ed043e5a411e2bc527b6",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 8,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 2,
+          "tool_call_index": 1,
+          "call_id": "call_f4de6e758cf54ff48538b1a0",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/manifest.json",
+          "range_scalars": {},
+          "argument_sha256": "854ca77100ff1be77b759378ae3441aceec41a0bbbc89eb8b6f01c082ac37a21",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 11,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 0,
+          "call_id": "call_096ccf469e33487caa67218b",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/research/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "bc5e37d4a2e9b97790f6d5eca7b5cfdca46ac1d0546a177905a83518db201753",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 14,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 3,
+          "tool_call_index": 1,
+          "call_id": "call_7f4aead486104fac86aff6d9",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/critique/review.md",
+          "range_scalars": {},
+          "argument_sha256": "f264c3b4f83f2e4b04ef1900fdec7d33a004ca222bce0ebf5fe8a3d2ab7f1c6e",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 17,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 4,
+          "tool_call_index": 0,
+          "call_id": "call_e823a82ceec0498d9338e9a1",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "out/research/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "7704c8502f1d13d3d7a568efc6bada701648281211e0246b317b16216e8de553",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 20,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 4,
+          "tool_call_index": 1,
+          "call_id": "call_85fca841e03542cca5c339ac",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "out/critique/review.md",
+          "range_scalars": {},
+          "argument_sha256": "4d2df912c736337c890f1972d62b26f30afbc95803626e0b8023f41b80dd99c6",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 23,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 0,
+          "call_id": "call_1ba9fa2b5f20497baf0d5f50",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "1bac7adc852e9ab13402aa6e3115ab1b219419f823d2685edf3bbc37fd0ba901",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 26,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 1,
+          "call_id": "call_198874746ae64ba6927cc7a6",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/review.md",
+          "range_scalars": {},
+          "argument_sha256": "c2de078496d072984f5881edec7ed74d8cb72bed8e5c607abe40daebe2260e9e",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 29,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 2,
+          "call_id": "call_3bacd243e917431489eb46eb",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/critique.md",
+          "range_scalars": {},
+          "argument_sha256": "8d60719adf4ee1ca1a93e38f2d5d1eefbc2cf88f2948e4378a4f4ddc5a209763",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 32,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 5,
+          "tool_call_index": 3,
+          "call_id": "call_c6ac940b6c2047078be67bdf",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/sources.json",
+          "range_scalars": {},
+          "argument_sha256": "8301df39e4f184beb1be6f5115c333d51c1cf6f2a4c5733784ddfcd3249ce91f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 35,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 0,
+          "call_id": "call_e1e7d12e10a54a21be36eb41",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/README.md",
+          "range_scalars": {},
+          "argument_sha256": "55117884b4aa6f796d1fa0db0bae3b8efa6e9bf51cac6408b006df65a3f22d97",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 38,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 1,
+          "call_id": "call_6956b2871ad1421e91ee3114",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/prior/navigation.json",
+          "range_scalars": {},
+          "argument_sha256": "5906a3c55800093592b8b14682393062a54230a0e81242bd4e6ba54d51026f2f",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 41,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 2,
+          "call_id": "call_f568d4f968d4425f9fc490b7",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/research/proposal.md",
+          "range_scalars": {},
+          "argument_sha256": "3c949abc4c26c04467759a7e533ce084f29a17d12936c27314666cf93e681c57",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 44,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        },
+        {
+          "model_metadata_line_number_1based": 6,
+          "tool_call_index": 3,
+          "call_id": "call_f277a9c9f0364a5ea96af425",
+          "argument_key_names": [
+            "path"
+          ],
+          "path": "inputs/critique/review.md",
+          "range_scalars": {},
+          "argument_sha256": "71642d1929f26ae74250588c8df30ba95048d22f9746aef335d54ee40966fd70",
+          "saved_namespace_state": "ABSENT",
+          "exact_declared_prior_file": false,
+          "source_result": {
+            "source_line_number_1based": 47,
+            "is_error": true,
+            "successful_source_path": null,
+            "error_class": "UNEXPOSED_IN_SOURCE_RECEIPT"
+          }
+        }
+      ],
+      "mechanical_control_calls": [],
+      "formal_metadata_source": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/native/model-io.redacted.jsonl",
+        "sha256": "8cbff60befbd30184411656adee04b1ade52f9c019b41fbae17365ed72edcfb2"
+      },
+      "formal_metadata_selectors": [
+        "/response/toolCalls/*/name",
+        "/response/toolCalls/*/id",
+        "/response/toolCalls/*/input/path",
+        "range scalar keys only",
+        "/request/body/tools names and schema property key names only"
+      ],
+      "advertised_schema_metadata": [
+        {
+          "line_number_1based": 1,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 2,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 3,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 4,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 5,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 6,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 7,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 8,
+          "tool_names": [
+            "mcp__pm_boundary__read_file",
+            "mcp__pm_boundary__write_file",
+            "mcp__pm_boundary__mechanical",
+            "mcp__pm_boundary__public_https_get",
+            "mcp__pm_execution__python_execute"
+          ],
+          "read_property_names": [
+            "path",
+            "line_start",
+            "line_count",
+            "byte_start",
+            "byte_count"
+          ],
+          "writer_property_names": [
+            "path",
+            "text"
+          ]
+        },
+        {
+          "line_number_1based": 9,
+          "tool_names": [],
+          "read_property_names": null,
+          "writer_property_names": null
+        }
+      ],
+      "source_operations": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/operation_receipts/events.jsonl",
+          "sha256": "71352144ab8f6b9a3ba46e6e9a6fba75d296c043bbc0f37dfc2f60fa060183e6"
+        },
+        "counts": [
+          {
+            "tool": "read_file",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 16
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 2
+          },
+          {
+            "tool": "read_file",
+            "stage": "prepared-result",
+            "is_error": true,
+            "count": 14
+          },
+          {
+            "tool": "read_file",
+            "stage": "stdout-flushed",
+            "is_error": true,
+            "count": 14
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "operation-started",
+            "is_error": null,
+            "count": 5
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "prepared-result",
+            "is_error": false,
+            "count": 5
+          },
+          {
+            "tool": "public_https_get",
+            "stage": "stdout-flushed",
+            "is_error": false,
+            "count": 5
+          }
+        ],
+        "error_category": "UNEXPOSED in saved operation receipts; source returns boundary failure + exception typename, but no result/error body selected"
+      },
+      "native_control": {
+        "source": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/native/protocol.redacted.jsonl",
+          "sha256": "f311c932ede2c652eda3e498581931e2b1204b5f82e06055ad58b4363543577f"
+        },
+        "tool_counts": [
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "scheduled",
+            "count": 16
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "started",
+            "count": 16
+          },
+          {
+            "tool": "mcp__pm_boundary__read_file",
+            "phase": "completed",
+            "count": 16
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "scheduled",
+            "count": 5
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "started",
+            "count": 5
+          },
+          {
+            "tool": "mcp__pm_boundary__public_https_get",
+            "phase": "completed",
+            "count": 5
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "scheduled",
+            "count": 2
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "started",
+            "count": 2
+          },
+          {
+            "tool": "mcp__pm_execution__python_execute",
+            "phase": "completed",
+            "count": 2
+          }
+        ],
+        "writer_count": 0,
+        "host_requests": [
+          {
+            "line_number_1based": 6,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T08:23:05.856976+00:00"
+          },
+          {
+            "line_number_1based": 12,
+            "method": "session/requestRuntimePreferences",
+            "host_observed_utc": "2026-10-06T08:23:07.747084+00:00"
+          }
+        ],
+        "mcp": [
+          {
+            "line_number_1based": 14,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 15,
+            "kind": "process_start",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 16,
+            "kind": "session_startup",
+            "configuredCount": 2,
+            "connectedCount": 2,
+            "failedCount": 0
+          },
+          {
+            "line_number_1based": 9639,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          },
+          {
+            "line_number_1based": 9640,
+            "kind": "memory",
+            "configuredCount": null,
+            "connectedCount": null,
+            "failedCount": null
+          }
+        ],
+        "turn_terminal_metadata": [
+          {
+            "line_number_1based": 20,
+            "status": "success",
+            "resultType": "success",
+            "durationMs": 0,
+            "errorCode": null
+          },
+          {
+            "line_number_1based": 20229,
+            "status": "interrupted",
+            "resultType": "cancelled",
+            "durationMs": 563053,
+            "errorCode": "USER_INTERRUPT"
+          }
+        ],
+        "parse_errors": 0,
+        "model_status_counts": {
+          "model_request_started": 9,
+          "model_request_completed": 8,
+          "model_request_failed": 1
+        },
+        "attempts_gt1_observed": 0,
+        "RPC_tail": [
+          {
+            "line_number_1based": 19754,
+            "request_id": "research-host-232",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:21.330300+00:00",
+            "reply": {
+              "line_number_1based": 19755,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:21.729235+00:00"
+            }
+          },
+          {
+            "line_number_1based": 19756,
+            "request_id": "research-host-233",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:23.767002+00:00",
+            "reply": {
+              "line_number_1based": 19872,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:24.263442+00:00"
+            }
+          },
+          {
+            "line_number_1based": 19873,
+            "request_id": "research-host-234",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:26.300135+00:00",
+            "reply": {
+              "line_number_1based": 19990,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:26.930458+00:00"
+            }
+          },
+          {
+            "line_number_1based": 20108,
+            "request_id": "research-host-235",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:28.970101+00:00",
+            "reply": {
+              "line_number_1based": 20109,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:29.372395+00:00"
+            }
+          },
+          {
+            "line_number_1based": 20226,
+            "request_id": "research-host-236",
+            "method": "session/goal",
+            "action": "pause",
+            "host_observed_utc": "2026-10-06T08:32:30.864700+00:00",
+            "reply": {
+              "line_number_1based": 20231,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:31.861167+00:00"
+            }
+          },
+          {
+            "line_number_1based": 20232,
+            "request_id": "research-host-237",
+            "method": "session/stop",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:31.899635+00:00",
+            "reply": {
+              "line_number_1based": 20234,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:31.901250+00:00"
+            }
+          },
+          {
+            "line_number_1based": 20235,
+            "request_id": "research-host-238",
+            "method": "session/read",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:31.901469+00:00",
+            "reply": {
+              "line_number_1based": 20236,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:32.311173+00:00"
+            }
+          },
+          {
+            "line_number_1based": 20239,
+            "request_id": "research-host-240",
+            "method": "session/close",
+            "action": null,
+            "host_observed_utc": "2026-10-06T08:32:32.381060+00:00",
+            "reply": {
+              "line_number_1based": 20240,
+              "rpc_error": false,
+              "host_observed_utc": "2026-10-06T08:32:32.384523+00:00"
+            }
+          }
+        ],
+        "permission_request_or_denial_in_host_callbacks_observed": false
+      },
+      "cleanup": {
+        "native_quiet": true,
+        "components_quiet": true,
+        "oom_observed": false,
+        "recursive_private_quiet": true,
+        "release_ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001-role-birth-r001/PRIVATE_SLICE_RELEASE.json",
+          "sha256": "7869ef514b66328f2c498bddc2cbfa2bb4b9d74a0c657e715626498cd1eac145"
+        }
+      },
+      "systemic_writer_tool_schema_transport_or_RW_fault_proven": false,
+      "positive_navigation_limit": "Admitted files are nested by origin job. Formal read requests guess absent flat/index paths; source rejects them. Selected API cannot enumerate a directory; inspected static Task/INLINE_ONLY manifest provides no exact prior-file path list.",
+      "causality": "UNKNOWN: cannot infer why model never dispatches writer, effect of index availability, scientific adequacy or global hidden context from these control surfaces.",
+      "costs": "All original charged attempts and inclusive occupied clocks preserved; no dollars/full billing inferred from router counters. Cancelled/provider tails remain accounting UNKNOWN."
+    }
+  ],
+  "bounded_scope": 3,
+  "intentional_inline_only_counterevidence_preserved": true,
+  "recommendation": "Prospective source-owned mechanical index of only the already authorized own-prior relative file paths, SHA256 and byte lengths (or explicit own-prior paths in a declared neutral fragment). Keep empty INLINE_ONLY adoption manifest separate. No content summaries, source findings, hints, answer repair, broader access or directory tool. Fixed linking rule/serializer and actual input/Task hashes before Goal under a separately pinned symmetric eligible role closure; original clocks/model/factors remain unchanged. Do not implement or retry in this diagnosis.",
+  "confirmed_engineering_fault": "No writer/transport/schema/permission/RW fault proven. A narrow path discoverability contract limitation is directly supported; failed delivery causality remains UNKNOWN.",
+  "no_auto_rerun_candidate_hints_or_current_source_edits": true,
+  "new_model_Goal_provider_account_calls": 0,
+  "candidate_reasoning_science_or_authored_output_selected": 0
+}

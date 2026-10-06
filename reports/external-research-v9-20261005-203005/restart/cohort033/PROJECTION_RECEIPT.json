@@ -1,0 +1,67 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T084605.682647Z/BACKUP_RECEIPT.json",
+    "sha256": "d196f6b8794a11b0ebe913c3e57fd67b43a53c252d9592bd66967c780096351b"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 55,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T08:46:05.682647+00:00",
+  "scope": "031/root22/DEC016+C03terminal0newpipeline/C04researchnative/TD18-19neutralclocks only, no scientificbody or campaignfinish.",
+  "source_observed_utc": "2026-10-06T08:44:56.665444+00:00",
+  "sources": [
+    {
+      "bytes": 3355,
+      "path": "ops/publication/cohort031-verification.json",
+      "sha256": "71902da7dad0c49838823e61d2260bdcae91d8192d67b46fc808d51ee72c5de9"
+    },
+    {
+      "bytes": 7555,
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "76767e30016d0cf8b1b45492700a88b87ffd09e2958dd58634c716dd4658f2b0"
+    },
+    {
+      "bytes": 10718,
+      "path": "ops/dispatcher/DEC016_ALL_FOUR_TERMINAL_CHECKPOINT_001.json",
+      "sha256": "33d1b1b9d9b2828382a80eae455f6b7e75de6b50a688d3cf93ba11bb0e37f4e0"
+    },
+    {
+      "bytes": 8326,
+      "path": "ops/dispatcher/DEC014_C03_ALL_TERMINAL_CHECKPOINT_001.json",
+      "sha256": "1c6be48df13394ec111e23f1336bee4c936ecbd70eb293f03cceb898fb4d808b"
+    },
+    {
+      "bytes": 43661,
+      "path": "ops/dispatcher/DEC014_C04_PAIRED_RESEARCH_ACTIVATIONS_001.json",
+      "sha256": "ebaa0d3c4a5c451dff44787f89fa42452c66ebdbe616f737a4a6d34870b31641"
+    },
+    {
+      "bytes": 4270,
+      "path": "evaluation/independent-targeted-18/closure.json",
+      "sha256": "a2685571a3d68a37c39d2b630c6c9c64038ddc4470409245ba505a32e730da20"
+    },
+    {
+      "bytes": 2156,
+      "path": "evaluation/independent-targeted-19/closure.json",
+      "sha256": "5b0b9938cd85e34a174c3e665a8d6700a657fadc78860121b2c8728f3bef535b"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 212641,
+      "path": "state/current.json",
+      "sha256": "70b1d8bea9373ae488e64881a111b7148938206569a2f9153af54a76638052ff"
+    },
+    {
+      "bytes": 212641,
+      "path": "state/campaign.json",
+      "sha256": "70b1d8bea9373ae488e64881a111b7148938206569a2f9153af54a76638052ff"
+    },
+    {
+      "bytes": 35155,
+      "path": "CURRENT.md",
+      "sha256": "845e353b62304fd6fd3b46b0eb8b28770a29da398382d494b3d47aafc2b12cad"
+    }
+  ]
+}

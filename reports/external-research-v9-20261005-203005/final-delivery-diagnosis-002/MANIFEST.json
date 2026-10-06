@@ -1,0 +1,29 @@
+{
+  "schema": "er9.final002-control-diagnosis-manifest.v1",
+  "created_utc": "2026-10-06T08:52:48.329328+00:00",
+  "diagnosis": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-002/DIAGNOSIS.json",
+    "sha256": "743bc41494dbf5d367e735ce70d52fafa679df991f88fc776227ceda6b3b9e9d"
+  },
+  "native_goal_status": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-002/NATIVE_GOAL_STATUS.json",
+    "sha256": "b8b7f3187fd3400e30c3c450132a39d427db6da9c8fa2c585b0c8cc65e49fc59"
+  },
+  "source_projector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-002/project.py",
+    "sha256": "99d2ed700218106f4ecdf4f8a752ae98e9877d2054494aac572588d49e7e95f9"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/diagnosis/final-delivery-002/VERIFICATION.json",
+    "sha256": "7b8ad2041e8519f2afbcf20e66e0c20eb98d970b62914b583f2cb8f38db8228d"
+  },
+  "exact_input_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/G_FINAL_DELIVERY_DIAGNOSIS_002_METADATA_SELECTOR.json",
+    "sha256": "929f676a2328b6c5c74c137779b088d3ddd5ff34e36e375613421ddd0aab3331"
+  },
+  "safe_metadata_policy": "Only configured/schema names, formal path/range/control fields, SHA/length inventory, timing/Goal/resource and boolean errors. Raw sources remain private and unselected.",
+  "formal_request_metadata_whitelist": "response.toolCalls name/id/input.path + integer range fields; request.body.tools names/schema property names only. No response.text/reasoningText/headers, scientific arguments, execution code, source contents or candidate outputs.",
+  "old_costs_router_outcomes_and_statuses_preserved": true,
+  "no_science_quality_or_causal_grade": true,
+  "new_native_Goal_calls": 0
+}

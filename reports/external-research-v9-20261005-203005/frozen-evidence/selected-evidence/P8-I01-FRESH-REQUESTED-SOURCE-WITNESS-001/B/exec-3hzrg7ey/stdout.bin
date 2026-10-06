@@ -1,0 +1,21 @@
+{
+ "volume_GB": 2.828,
+ "chunk_bytes": 8388608,
+ "chunk_grid": [
+  32,
+  8,
+  2
+ ],
+ "chunks_total": 512,
+ "ram_total_GB": 16,
+ "os_app_reserve_GB": 4,
+ "cache_budget_MB": 512,
+ "annotation_budget_MB": 64,
+ "free_headroom_GB": 11.438,
+ "cache_holds_chunks": 64,
+ "cache_coverage_pct": 12.5,
+ "full_plane_bytes": 1482752,
+ "chunks_touched_per_512x512_zstep": 4,
+ "in_flight_working_set_MB": 33.41
+}
+PASS criterion: free_headroom_GB > 0 and in_flight working set << free headroom
