@@ -1,0 +1,329 @@
+{
+  "accounting_capture_interval_utc": {
+    "end": "2026-10-06T10:12:16.767084+00:00",
+    "start": "2026-10-06T10:12:16.072801+00:00"
+  },
+  "owner_checkpoint_pin": {
+    "path": "ops/dispatcher/DEC017_ALL_FOUR_FINALS_TERMINAL_CHECKPOINT_001.json",
+    "sha256": "8082a466746b2135ccf0f8921d7ebe31f350555984e6ee2eb296f80d312ee3fa"
+  },
+  "owner_observed_utc": "2026-10-06T10:08:49.207062+00:00",
+  "rows": [
+    {
+      "C01C_actual_start_and_billing_UNKNOWN_if_no_positive_proof": true,
+      "actual_family": "UNKNOWN",
+      "actual_native_start_reference": null,
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 572.4218528329948,
+      "ended_utc": "2026-10-06T09:55:58.417038+00:00",
+      "extra_logical_target_credit": false,
+      "extra_native_charge_from_wave_reference": false,
+      "freeze_metadata_sha_verified": true,
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/OUTPUT_FREEZE.json",
+        "sha256": "620a869066474f3b6a7ffb7c7f94c72a04591cfa3592d5071a604e73fe319c33"
+      },
+      "freeze_release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "client_tool_cgroups_quiet": "UNKNOWN",
+        "client_tool_process_groups_absent": "UNKNOWN",
+        "execution_units_quiet": "UNKNOWN",
+        "held_process_groups_absent": "UNKNOWN",
+        "native_quiescent": true,
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "job_id": "C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001",
+      "known_usage_reference_only": null,
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_occupied_and_operator_freeze_elapsed_overlap_not_added": true,
+      "native_quiescent": true,
+      "native_receipt_occupied_seconds_reference": 572.4196541090059,
+      "native_start_proof_basis": "ACTIVATION_NOT_OBSERVED_IS_NOT_ZERO_PROOF",
+      "native_status": "execution_error",
+      "observed_model": "GLM-5.3-Flash",
+      "operational_complete": false,
+      "operator_native_goal_starts": 0,
+      "owner_registration_ref": {
+        "family": "Z",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-01-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+        "requested_effort": "max",
+        "requested_model": "GLM 5.3 Flash",
+        "sha256": "365941fd3fb36f7d5f7d4cf76d917ade0af10faffe88e09baed12debc73a1d2b"
+      },
+      "pair_id": "C-01-OWN-PRIOR-INDEX-FINAL-R001",
+      "release_metadata_sha_verified": true,
+      "release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "all_private_units_quiet": "UNKNOWN",
+        "native_quiescent": "UNKNOWN",
+        "owned_quiet": "UNKNOWN",
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "f881944e765a7325df1704b45ec541496138ca66bb759d8ecd322d49bdae16ba"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "resource_oom_observed": false,
+      "saved_native_Goal_status": "UNKNOWN",
+      "scope": "Operator0 is not actual nativezero/submission proof. Missing Goal activation or empty provider export is notzero. Empty canonical4/quiet/release is operational metadata only, no scientific credit.",
+      "stage": "revision",
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/stage.json",
+        "sha256": "d89903f8efeca061e665244f5a7ed0182e0f7e1325cb22a37b7da809532d9169"
+      },
+      "status": "FAILED",
+      "usage_basis": "EMPTY_PROVIDER_EXPORT_NOT_COMPLETE_ZERO_COST_PROOF"
+    },
+    {
+      "C01C_actual_start_and_billing_UNKNOWN_if_no_positive_proof": false,
+      "actual_family": "GLM",
+      "actual_native_start_reference": 1,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 573.8401073979912,
+      "ended_utc": "2026-10-06T09:54:16.722875+00:00",
+      "extra_logical_target_credit": false,
+      "extra_native_charge_from_wave_reference": false,
+      "freeze_metadata_sha_verified": true,
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+        "sha256": "0c3a98f9a32135015ad5033dae3e3558abd547faff263a5e90063e907e08b9be"
+      },
+      "freeze_release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "client_tool_cgroups_quiet": "UNKNOWN",
+        "client_tool_process_groups_absent": "UNKNOWN",
+        "execution_units_quiet": "UNKNOWN",
+        "held_process_groups_absent": "UNKNOWN",
+        "native_quiescent": true,
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "job_id": "C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001",
+      "known_usage_reference_only": {
+        "cached_input_included": 153536,
+        "input": 211410,
+        "output": 29485,
+        "reasoning_output_subset": 0,
+        "total": 240895
+      },
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_occupied_and_operator_freeze_elapsed_overlap_not_added": true,
+      "native_quiescent": true,
+      "native_receipt_occupied_seconds_reference": 573.8184926549875,
+      "native_start_proof_basis": "POSITIVE_NATIVE_ACTIVATION_RECEIPT",
+      "native_status": "cap_seconds",
+      "observed_model": "GLM-5.3-Flash",
+      "operational_complete": false,
+      "operator_native_goal_starts": 1,
+      "owner_registration_ref": {
+        "family": "Z",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-01-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+        "requested_effort": "max",
+        "requested_model": "GLM 5.3 Flash",
+        "sha256": "365941fd3fb36f7d5f7d4cf76d917ade0af10faffe88e09baed12debc73a1d2b"
+      },
+      "pair_id": "C-01-OWN-PRIOR-INDEX-FINAL-R001",
+      "release_metadata_sha_verified": true,
+      "release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "all_private_units_quiet": "UNKNOWN",
+        "native_quiescent": "UNKNOWN",
+        "owned_quiet": "UNKNOWN",
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "7d86baedf8505379ae7902b513b4138ef8dd620e324f08f1a795c8fb33a81a0e"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "resource_oom_observed": false,
+      "saved_native_Goal_status": "UNKNOWN",
+      "scope": "Operator0 is not actual nativezero/submission proof. Missing Goal activation or empty provider export is notzero. Empty canonical4/quiet/release is operational metadata only, no scientific credit.",
+      "stage": "revision",
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/stage.json",
+        "sha256": "fcbd811c8394623c353f806dc55e74fe9d307b9d8adf4efa855589ad8568ba83"
+      },
+      "status": "FAILED",
+      "usage_basis": "native_provider_request_sum_known_values"
+    },
+    {
+      "C01C_actual_start_and_billing_UNKNOWN_if_no_positive_proof": false,
+      "actual_family": "GLM",
+      "actual_native_start_reference": 1,
+      "arm": "control",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 573.9767311149917,
+      "ended_utc": "2026-10-06T10:05:48.424455+00:00",
+      "extra_logical_target_credit": false,
+      "extra_native_charge_from_wave_reference": false,
+      "freeze_metadata_sha_verified": true,
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/OUTPUT_FREEZE.json",
+        "sha256": "1e25dcfcba5b0a6647eea200a149b5aa1d1be4f0f500a44cdf10d5431fddf71b"
+      },
+      "freeze_release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "client_tool_cgroups_quiet": "UNKNOWN",
+        "client_tool_process_groups_absent": "UNKNOWN",
+        "execution_units_quiet": "UNKNOWN",
+        "held_process_groups_absent": "UNKNOWN",
+        "native_quiescent": true,
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "job_id": "C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001",
+      "known_usage_reference_only": {
+        "cached_input_included": 139584,
+        "input": 210297,
+        "output": 10726,
+        "reasoning_output_subset": 0,
+        "total": 221023
+      },
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_occupied_and_operator_freeze_elapsed_overlap_not_added": true,
+      "native_quiescent": true,
+      "native_receipt_occupied_seconds_reference": 573.9592061479925,
+      "native_start_proof_basis": "POSITIVE_NATIVE_ACTIVATION_RECEIPT",
+      "native_status": "cap_seconds",
+      "observed_model": "GLM-5.3-Flash",
+      "operational_complete": false,
+      "operator_native_goal_starts": 1,
+      "owner_registration_ref": {
+        "family": "Z",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-02-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+        "requested_effort": "max",
+        "requested_model": "GLM 5.3 Flash",
+        "sha256": "68b22b52782116848a6d0336a629b512069737c71cd1358f6004c79f05d01337"
+      },
+      "pair_id": "C-02-OWN-PRIOR-INDEX-FINAL-R001",
+      "release_metadata_sha_verified": true,
+      "release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "all_private_units_quiet": "UNKNOWN",
+        "native_quiescent": "UNKNOWN",
+        "owned_quiet": "UNKNOWN",
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "6567f909427e436fb0c806577ba76583673d5a38dcb033d7cb95f835f2bca840"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "resource_oom_observed": false,
+      "saved_native_Goal_status": "UNKNOWN",
+      "scope": "Operator0 is not actual nativezero/submission proof. Missing Goal activation or empty provider export is notzero. Empty canonical4/quiet/release is operational metadata only, no scientific credit.",
+      "stage": "revision",
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001/stage.json",
+        "sha256": "31f0077f77cd2dd41efd290ada18263e6b23b580c5626ebacea723b7b2af3f66"
+      },
+      "status": "FAILED",
+      "usage_basis": "native_provider_request_sum_known_values"
+    },
+    {
+      "C01C_actual_start_and_billing_UNKNOWN_if_no_positive_proof": false,
+      "actual_family": "GLM",
+      "actual_native_start_reference": 1,
+      "arm": "treatment",
+      "billing_dollars": "UNKNOWN",
+      "elapsed_seconds": 573.8799068770022,
+      "ended_utc": "2026-10-06T10:04:07.115062+00:00",
+      "extra_logical_target_credit": false,
+      "extra_native_charge_from_wave_reference": false,
+      "freeze_metadata_sha_verified": true,
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+        "sha256": "94a5974d49aa6d5b824efdea7f6272bf8486bfc3716aae093cc213255faef6de"
+      },
+      "freeze_release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "client_tool_cgroups_quiet": "UNKNOWN",
+        "client_tool_process_groups_absent": "UNKNOWN",
+        "execution_units_quiet": "UNKNOWN",
+        "held_process_groups_absent": "UNKNOWN",
+        "native_quiescent": true,
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "job_id": "C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001",
+      "known_usage_reference_only": {
+        "cached_input_included": 56192,
+        "input": 99920,
+        "output": 11862,
+        "reasoning_output_subset": 0,
+        "total": 111782
+      },
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "native_occupied_and_operator_freeze_elapsed_overlap_not_added": true,
+      "native_quiescent": true,
+      "native_receipt_occupied_seconds_reference": 573.8624672379956,
+      "native_start_proof_basis": "POSITIVE_NATIVE_ACTIVATION_RECEIPT",
+      "native_status": "cap_seconds",
+      "observed_model": "GLM-5.3-Flash",
+      "operational_complete": false,
+      "operator_native_goal_starts": 1,
+      "owner_registration_ref": {
+        "family": "Z",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/own-prior-navigation-index-001/carrier-qualified-locator-002/four-finals/C-02-OWN-PRIOR-INDEX-FINAL-R001/registration.json",
+        "requested_effort": "max",
+        "requested_model": "GLM 5.3 Flash",
+        "sha256": "68b22b52782116848a6d0336a629b512069737c71cd1358f6004c79f05d01337"
+      },
+      "pair_id": "C-02-OWN-PRIOR-INDEX-FINAL-R001",
+      "release_metadata_sha_verified": true,
+      "release_quiet_metadata": {
+        "all_owned_scopes_quiet": "UNKNOWN",
+        "all_private_units_quiet": "UNKNOWN",
+        "native_quiescent": "UNKNOWN",
+        "owned_quiet": "UNKNOWN",
+        "permit_release_confirmed": "UNKNOWN"
+      },
+      "release_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "34e7422db7a841b04e01472c2e74ef67aadf342054229f118c8fdee9364ca43b"
+      },
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "resource_oom_observed": false,
+      "saved_native_Goal_status": "UNKNOWN",
+      "scope": "Operator0 is not actual nativezero/submission proof. Missing Goal activation or empty provider export is notzero. Empty canonical4/quiet/release is operational metadata only, no scientific credit.",
+      "stage": "revision",
+      "stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001/stage.json",
+        "sha256": "732206d34541a794d817204839a8f70486e1f1e65a1f68db89a6ef248dba0d19"
+      },
+      "status": "FAILED",
+      "usage_basis": "native_provider_request_sum_known_values"
+    }
+  ],
+  "rule": "All four failed/preGoal attempt occupied costs remain global once; knownvalues/cancelled tails/money UNKNOWN where missing. No OP/source/target/pass credit.",
+  "schema": "er9.accounting.dec017-terminal-start-qualification.v1",
+  "summary": {
+    "actual_attempts": 4,
+    "actual_starts_unknown": 1,
+    "extra_logical_targets": 0,
+    "four_final_delivery_complete": false,
+    "operator0_not_actual_zero": true,
+    "positive_native_starts": 3
+  }
+}

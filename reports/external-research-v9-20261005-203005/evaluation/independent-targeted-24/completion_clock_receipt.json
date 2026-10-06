@@ -1,0 +1,27 @@
+{
+  "clock_reset": false,
+  "evaluation_id": "independent-targeted-24",
+  "final_neutral_receipt_delivery_and_final_response_follow_within_remaining_clock": true,
+  "mandatory_neutral_handoffs_dispatched_to": [
+    "/root/cost_accounting",
+    "/root/frozen_exports"
+  ],
+  "mandatory_scientific_handoffs_dispatched_to": [
+    "/root",
+    "/root/publisher"
+  ],
+  "observed_monotonic_ns": 112159893855786,
+  "observed_utc": "2026-10-06T10:15:41.043065+00:00",
+  "p1_pins_rechecked_readonly_unchanged": true,
+  "p2_elapsed_seconds_including_key_wait_reports_mandatory_handoffs": 601.782969944,
+  "p2_remaining_seconds": -1.782969944,
+  "p2_within_600": false,
+  "pair_id": "D-V09-A",
+  "phase2_judgement_sha256": "96f146982b8af37d72f02b4549c72d90192fd43ae6ee4381a9177097c8151cfb",
+  "phase2_report_sha256": "ab8deaaf2413b1ef335c873781f0c091c5268c83cd6e3088d50f50e202f6c80c",
+  "schema": "er9.independent-evaluation-completion-clock.v1",
+  "source_elapsed_seconds_at_p1_freeze": 301.892997997,
+  "source_within_1200": true,
+  "whole_elapsed_seconds_including_all_post_start_work": 903.675967941,
+  "whole_within_1800": true
+}

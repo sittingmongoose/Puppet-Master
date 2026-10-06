@@ -1,0 +1,80 @@
+{
+  "adopt_current_true": true,
+  "argument_top_keys": [
+    "path",
+    "text"
+  ],
+  "argument_unknown_key_count": 0,
+  "artifact_slot_names_exact": true,
+  "call": {
+    "id": "call_d001a5831a9147f68641583f",
+    "line": 6,
+    "name": "mcp__pm_boundary__write_file",
+    "path": "out/final_bundle.json",
+    "selector": "/response/toolCalls/0"
+  },
+  "error_class": "JSONDecodeError",
+  "fixed_bundle_path_matches": true,
+  "json_parse": "PASS",
+  "saved_output_utf8_bytes": 750,
+  "saved_tool_part_selector": "/messages/8/parts/3",
+  "saved_tool_state_status": "completed",
+  "schema_discriminator_matches": true,
+  "slots": {
+    "leads.json": {
+      "known_keys": [
+        "text_utf8"
+      ],
+      "text_utf8_bytes": 11,
+      "type": "dict",
+      "unknown_key_count": 0,
+      "value_types": {
+        "text_utf8": "str"
+      }
+    },
+    "proposal.md": {
+      "known_keys": [
+        "text_utf8"
+      ],
+      "text_utf8_bytes": 29188,
+      "type": "dict",
+      "unknown_key_count": 0,
+      "value_types": {
+        "text_utf8": "str"
+      }
+    },
+    "sources.json": {
+      "known_keys": [
+        "text_utf8"
+      ],
+      "text_utf8_bytes": 4541,
+      "type": "dict",
+      "unknown_key_count": 0,
+      "value_types": {
+        "text_utf8": "str"
+      }
+    },
+    "witnesses.json": {
+      "known_keys": [
+        "text_utf8"
+      ],
+      "text_utf8_bytes": 11,
+      "type": "dict",
+      "unknown_key_count": 0,
+      "value_types": {
+        "text_utf8": "str"
+      }
+    }
+  },
+  "stage_id_matches_current": true,
+  "text_type": "str",
+  "text_utf8_bytes": 34508,
+  "top_known_keys": [
+    "adopt_current",
+    "artifacts",
+    "schema",
+    "stage_id"
+  ],
+  "top_unknown_key_count": 0,
+  "unique_validator_rejection": "UNKNOWN"
+}

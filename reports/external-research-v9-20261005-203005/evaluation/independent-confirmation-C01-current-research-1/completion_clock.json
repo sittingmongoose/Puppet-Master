@@ -1,0 +1,79 @@
+{
+  "all_mandatory_science_and_usage_report_handoffs_completed_before_receipt": true,
+  "closure_receipt_monotonic_ns": 111393242948956,
+  "closure_receipt_utc": "2026-10-06T10:02:54.385938+00:00",
+  "eval_id": "independent-confirmation-C01-current-research-1",
+  "inbox_finish_check_completed": true,
+  "inclusive_phase2_elapsed_seconds_through_mandatory_report_handoffs": 367.421892343,
+  "no_reset": true,
+  "original_deadlines": {
+    "phase2_monotonic_ns": 111625821056613,
+    "phase2_utc": "2026-10-06T10:06:46.964039+00:00",
+    "whole_monotonic_ns": 112185330730471,
+    "whole_utc": "2026-10-06T10:16:06.473681+00:00"
+  },
+  "pair_id": "C-01-CONFIRMATION-CLOCK-FRESH-R001",
+  "pending_only_neutral_receipt_publication_and_FINAL": "charged within remaining original P2/whole headroom; not a clock reset",
+  "phase1_files_unchanged_and_readonly": true,
+  "phase1_freeze_monotonic_ns": 111025821056613,
+  "phase1_freeze_utc": "2026-10-06T09:56:46.964039+00:00",
+  "phase1_source_elapsed_seconds": 640.490326142,
+  "phase2_budget_seconds": 600,
+  "phase2_remaining_seconds_at_receipt": 232.57810765699998,
+  "pins": [
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/reservation.json",
+      "sha256": "baa16c3bee13351e6cf4ec6e7d1bd8e22751e12cb3392de4f1e5aeb65fa2c507"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/source_start.json",
+      "sha256": "32552c444077a5b0f3bead8a89cd46bc6c20a63af965dc07b7eba685f2d9b7a4"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_freeze.json",
+      "sha256": "39e756a2c146989bc5144e78ab21c16bdd4c942438980df273830be7b1bbdd20"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_input_pins.json",
+      "sha256": "6369aead2318e8339d7abdf736ee19dde3fca839b79388dd94890a5cb2441df3"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_judgment.json",
+      "sha256": "e34abd423fcfb4ecf56ccbe7a18ea4adfa591be6fe8104ba4c7f800749072ce3"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase2_key_read_receipt.json",
+      "sha256": "8c12a5e1f6e1f871ee7061b5c7c639b90ec96f63908031c9ebb2418a6f3ded0a"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase2_metadata.json",
+      "sha256": "9215bd98b2573c46c372272b1f9d9928eb35b7a859ff2c386c6e04b92b40de14"
+    },
+    {
+      "mode": "0444",
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-confirmation-C01-current-research-1/phase2_report.md",
+      "sha256": "0165856e7d88689132339a20bd165815f0ecd12f6d2e43d0ce39ceb607d6fd75"
+    }
+  ],
+  "schema": "er9.independent-current-research-completion-clock.v1",
+  "science_scope": "CURRENT_RESEARCH_STAGE_ONLY; final/latercritic/pipeline/effect/winner UNASSESSED",
+  "source_budget_seconds": 1200,
+  "source_start_monotonic_ns": 110385330730471,
+  "source_start_utc": "2026-10-06T09:46:06.473681+00:00",
+  "whole_budget_seconds": 1800,
+  "whole_elapsed_seconds_through_mandatory_report_handoffs": 1007.912218485,
+  "whole_remaining_seconds_at_receipt": 792.087781515,
+  "within_budgets_through_receipt": true
+}

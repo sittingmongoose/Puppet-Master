@@ -1,0 +1,4736 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accepted_dated_runtime_inventory_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "bytes": {
+          "type": "number"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256",
+        "bytes"
+      ],
+      "type": "object"
+    },
+    "logical_counts": {
+      "additionalProperties": false,
+      "properties": {
+        "confirmation": {
+          "type": "number"
+        },
+        "fresh_integrated": {
+          "type": "number"
+        },
+        "targeted": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "targeted",
+        "fresh_integrated",
+        "confirmation"
+      ],
+      "type": "object"
+    },
+    "owner_observed_utc": {
+      "type": "string"
+    },
+    "owner_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "slots": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {},
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              },
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "bytes": {
+                                    "type": "number"
+                                  },
+                                  "path": {
+                                    "type": "string"
+                                  },
+                                  "sha256": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "path",
+                                  "sha256",
+                                  "bytes"
+                                ],
+                                "type": "object"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "evaluation_id": {
+                          "type": "string"
+                        },
+                        "matched_current_job_ids": {
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "type": "array"
+                        },
+                        "neutral_closure_pins": {
+                          "items": {},
+                          "type": "array"
+                        },
+                        "review_state": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "evaluation_id",
+                        "matched_current_job_ids",
+                        "review_state",
+                        "neutral_closure_pins"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "accepted_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "actual_scope_review_matches": {
+                "items": {},
+                "type": "array"
+              },
+              "logical_slot": {
+                "type": "string"
+              },
+              "review_coverage": {
+                "type": "string"
+              },
+              "selection_stratum": {
+                "type": "string"
+              },
+              "track": {
+                "type": "string"
+              },
+              "unmatched_current_job_ids": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "logical_slot",
+              "track",
+              "accepted_current_job_ids",
+              "selection_stratum",
+              "actual_scope_review_matches",
+              "unmatched_current_job_ids",
+              "review_coverage"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_pin",
+    "owner_observed_utc",
+    "accepted_dated_runtime_inventory_pin",
+    "logical_counts",
+    "slots",
+    "scope"
+  ],
+  "type": "object"
+}

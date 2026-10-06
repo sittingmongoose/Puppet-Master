@@ -1,0 +1,323 @@
+{
+  "aggregate_resource_note": "Actual R1/R3 profile and outer-release pins crossmatch the unchanged key. R2 has no aggregate profile/release facility; aggregate caps/peak UNKNOWN without substitution. These are runtime/resource metadata, not source grades or semantic success.",
+  "candidate_feedback_or_retest": false,
+  "clock_at_draft_utc": "2026-10-06T10:13:31.257848+00:00",
+  "clock_note": "Final mandatory handoffs and completion-clock receipt occur after this report within the unchanged P2 deadline; none are excluded from the whole or P2 clock.",
+  "clock_reset": false,
+  "current_mixed_export_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase2_inputs/TD24_CURRENT_MIXED_RESOURCE_EXECUTION_001.json",
+    "sha256": "c9f430d4dddf1edf24dca68542f3dee59bffbcb252fbf081407b29b0c26f7afa"
+  },
+  "engineering_failure_diagnosis": "NONE; exact native outcome/error strings only",
+  "evaluation_id": "independent-targeted-24",
+  "integrity_checks_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase2_integrity_checks.json",
+  "membership": {
+    "control": [
+      "R3"
+    ],
+    "treatment": [
+      "R1",
+      "R2"
+    ]
+  },
+  "native_vs_semantic_separation": "Actual native activation, stop, paused Goal state, tool metadata, usage and quiescence are runtime facts only. R2 has one admitted execution-inventory metadata row, whose source code/input/expected behavior/outputs were not admitted in P1 and are not semantically graded or retested here.",
+  "neutral_usage_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-24/phase2_neutral_usage.json",
+  "old_grades_opened": false,
+  "p1_judgement_immutable_sha256": "570b0d2f0996f1ce4ef133a32286aa61147532409f2ad2acff42323004de0e06",
+  "p2_elapsed_seconds_at_draft": 472.003830767,
+  "p2_elapsed_seconds_at_report": 548.167688314,
+  "p2_remaining_seconds_at_draft": 127.996169233,
+  "p2_remaining_seconds_before_handoffs": 51.832311686,
+  "pair_id": "D-V09-A",
+  "phase2_report_created_utc": "2026-10-06T10:14:47.422923+00:00",
+  "raw_native_conversation_opened": false,
+  "rows": [
+    {
+      "aggregate_resource_metrics": {
+        "after_release_MemoryPeak_bytes": 363413504,
+        "aggregate_memory_max_bytes": 2415919104,
+        "descendants_quiet": true,
+        "fit": "UNKNOWN",
+        "kernel_oom_events": "0",
+        "kernel_oom_kill_events": "0",
+        "measurement_scope": "exact saved aggregate private-slice observations; not physical host total, no instrumentation replacement",
+        "memory_swap_max_bytes": 0,
+        "observed_aggregate_peak_bytes_before_release": 363413504,
+        "outer_release_sha256": "eed967103155b485eb689089c2f78ffaefc03aa379d5ff14d7412c36a830966f",
+        "profile_sha256": "4ad5d8ffe20df795b56ba4c65fbc41468a7105cd4a204253774396a8cebd3a82"
+      },
+      "aggregate_resource_profile_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/RESOURCE_PROFILE.json",
+        "sha256": "4ad5d8ffe20df795b56ba4c65fbc41468a7105cd4a204253774396a8cebd3a82"
+      },
+      "alias": "R1",
+      "all_five_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "critic_quality": "UNASSESSED",
+      "downstream_final_metadata": [
+        {
+          "absence_basis": "No selected native freeze; blocked/assembly/deferred role is not candidate scientific output",
+          "actual_artifact_inventory": [],
+          "actual_stage_ref": null,
+          "arm": "treatment",
+          "blocked_by": "D-V09-A-treatment-implementation_critic-a001",
+          "card_ref": null,
+          "ended_utc": null,
+          "job_id": "D-V09-A-treatment-resolve_final-a001",
+          "native_goal_starts": 0,
+          "owner_registration_ref": null,
+          "pair_id": "D-V09-A",
+          "permit_release_confirmed": null,
+          "prerequisite_job_ids": [
+            "D-V09-A-treatment-source_critic-a001",
+            "D-V09-A-treatment-implementation_critic-a001"
+          ],
+          "private_slice_release": null,
+          "stage": "resolve_final",
+          "status": "BLOCKED_PREDECESSOR_FAILED",
+          "supplemental_permit_release": null
+        }
+      ],
+      "execution_inventory_limit": "Positive metadata is not witness-semantic verification; body/expectation/output applicability remain UNASSESSED",
+      "execution_receipt_positive_metadata": [],
+      "execution_receipt_semantic_quality": "UNASSESSED; positive actor/bootstrap/code/data/stdout/stderr/exit/cleanup metadata is not independent code/expectation/source validation",
+      "first_direct_goal_status": "active",
+      "freeze_wall_seconds": 185.633741908,
+      "job_id": "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+      "last_direct_goal_status": "paused",
+      "native_goal_starts_in_frozen_record": 1,
+      "native_runtime_error_class": "TimeoutError",
+      "native_runtime_error_text": "original native stop reached",
+      "native_runtime_outcome": "HOLD",
+      "native_wall_seconds": 185.560403543,
+      "observable_delivery": "INCOMPLETE",
+      "observed_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "outer_release_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-treatment-source_critic-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "eed967103155b485eb689089c2f78ffaefc03aa379d5ff14d7412c36a830966f"
+      },
+      "physical_provider_attestation": "UNKNOWN",
+      "positive_current_execution_inventory_count": 0,
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "resource_oom_observed_in_freeze": false,
+      "stage_required_report": [
+        "out/critique/source.md"
+      ],
+      "wall_scope_note": "native/runtime and outer frozen-stage wall definitions are distinct; neither is candidate semantic success"
+    },
+    {
+      "aggregate_resource_metrics": {
+        "aggregate_caps": "UNKNOWN",
+        "aggregate_peak": "UNKNOWN",
+        "aggregate_release": "NOT_PRESENT actual legacy facility",
+        "owned_named_component_quiet_retained": true,
+        "profile_substitution": false
+      },
+      "aggregate_resource_profile_pin": null,
+      "alias": "R2",
+      "all_five_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "treatment",
+      "critic_quality": "UNASSESSED",
+      "downstream_final_metadata": [
+        {
+          "absence_basis": "No selected native freeze; blocked/assembly/deferred role is not candidate scientific output",
+          "actual_artifact_inventory": [],
+          "actual_stage_ref": null,
+          "arm": "treatment",
+          "blocked_by": "D-V09-A-treatment-implementation_critic-a001",
+          "card_ref": null,
+          "ended_utc": null,
+          "job_id": "D-V09-A-treatment-resolve_final-a001",
+          "native_goal_starts": 0,
+          "owner_registration_ref": null,
+          "pair_id": "D-V09-A",
+          "permit_release_confirmed": null,
+          "prerequisite_job_ids": [
+            "D-V09-A-treatment-source_critic-a001",
+            "D-V09-A-treatment-implementation_critic-a001"
+          ],
+          "private_slice_release": null,
+          "stage": "resolve_final",
+          "status": "BLOCKED_PREDECESSOR_FAILED",
+          "supplemental_permit_release": null
+        }
+      ],
+      "execution_inventory_limit": "Positive metadata is not witness-semantic verification; body/expectation/output applicability remain UNASSESSED",
+      "execution_receipt_positive_metadata": [
+        {
+          "execution_id": "exec-dfobq6y4",
+          "original_result_sha256": "6d781b3bc346448b6ac89a82e4a4a5a70594f35d274c87c1ee54c78fa5d4d113",
+          "positive_fields": {
+            "actor": "candidate",
+            "bootstrap_marker_sha256": "9d885e31135b80f224de7bfb9ece83e45b7136dc1693354db2976b6a40019937",
+            "bootstrap_started": true,
+            "cleanup_classification": "collected_unit_absent",
+            "cleanup_confirmed": true,
+            "code_sha256": "68988e6c3f3b59bb2197b78c2196f8c0e3b92495cbefc3077708a62f03a7977a",
+            "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+            "exit_code": 0,
+            "exit_scope": "systemd-run propagated service exit; signal/infrastructure exits remain distinguishable in stderr",
+            "limits": {
+              "cpu_seconds": 3,
+              "memory_bytes": 268435456,
+              "network": "new empty namespace",
+              "stream_bytes_each": 32768,
+              "tasks": 16,
+              "wall_seconds": 5
+            },
+            "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdout_sha256": "147fb837aaf663677ca3ad5a0d45354105bec86b3c8053e73566277a59121206",
+            "unit_active_state_after_stop": "inactive",
+            "unit_load_state_after_stop": "not-found"
+          },
+          "scope": "exact current selected closed trusted execution store; no candidate retest"
+        }
+      ],
+      "execution_receipt_semantic_quality": "UNASSESSED; positive actor/bootstrap/code/data/stdout/stderr/exit/cleanup metadata is not independent code/expectation/source validation",
+      "first_direct_goal_status": "active",
+      "freeze_wall_seconds": 185.660676202,
+      "job_id": "D-V09-A-treatment-implementation_critic-a001",
+      "last_direct_goal_status": "paused",
+      "native_goal_starts_in_frozen_record": 1,
+      "native_runtime_error_class": "TimeoutError",
+      "native_runtime_error_text": "original native stop reached",
+      "native_runtime_outcome": "HOLD",
+      "native_wall_seconds": 185.590684188,
+      "observable_delivery": "INCOMPLETE",
+      "observed_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "outer_release_pin": null,
+      "physical_provider_attestation": "UNKNOWN",
+      "positive_current_execution_inventory_count": 1,
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "resource_oom_observed_in_freeze": null,
+      "stage_required_report": [
+        "out/critique/implementation.md"
+      ],
+      "wall_scope_note": "native/runtime and outer frozen-stage wall definitions are distinct; neither is candidate semantic success"
+    },
+    {
+      "aggregate_resource_metrics": {
+        "after_release_MemoryPeak_bytes": 368689152,
+        "aggregate_memory_max_bytes": 2415919104,
+        "descendants_quiet": true,
+        "fit": "UNKNOWN",
+        "kernel_oom_events": "0",
+        "kernel_oom_kill_events": "0",
+        "measurement_scope": "exact saved aggregate private-slice observations; not physical host total, no instrumentation replacement",
+        "memory_swap_max_bytes": 0,
+        "observed_aggregate_peak_bytes_before_release": 368689152,
+        "outer_release_sha256": "d8777f839f937965fe3bf520d6efb5a19390ee6127c3d199f9a4f4d632f7ffbd",
+        "profile_sha256": "0481446b60922c5641c7a07f445a8a99d477198006862ed7be8875bb709a8008"
+      },
+      "aggregate_resource_profile_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/RESOURCE_PROFILE.json",
+        "sha256": "0481446b60922c5641c7a07f445a8a99d477198006862ed7be8875bb709a8008"
+      },
+      "alias": "R3",
+      "all_five_original_quiet_flags": {
+        "client_tool_cgroups_quiet": true,
+        "client_tool_process_groups_absent": true,
+        "execution_units_quiet": true,
+        "held_process_groups_absent": true,
+        "native_cgroup_quiet": true
+      },
+      "all_owned_scopes_quiet": true,
+      "arm": "control",
+      "critic_quality": "UNASSESSED",
+      "downstream_final_metadata": [
+        {
+          "absence_basis": "No selected native freeze; blocked/assembly/deferred role is not candidate scientific output",
+          "actual_artifact_inventory": [],
+          "actual_stage_ref": null,
+          "arm": "control",
+          "blocked_by": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+          "card_ref": null,
+          "ended_utc": null,
+          "job_id": "D-V09-A-control-resolve_final-a001",
+          "native_goal_starts": 0,
+          "owner_registration_ref": null,
+          "pair_id": "D-V09-A",
+          "permit_release_confirmed": null,
+          "prerequisite_job_ids": [
+            "D-V09-A-RESOURCE-R001-control-whole_critic-a001"
+          ],
+          "private_slice_release": null,
+          "stage": "resolve_final",
+          "status": "BLOCKED_PREDECESSOR_FAILED",
+          "supplemental_permit_release": null
+        }
+      ],
+      "execution_inventory_limit": "Positive metadata is not witness-semantic verification; body/expectation/output applicability remain UNASSESSED",
+      "execution_receipt_positive_metadata": [],
+      "execution_receipt_semantic_quality": "UNASSESSED; positive actor/bootstrap/code/data/stdout/stderr/exit/cleanup metadata is not independent code/expectation/source validation",
+      "first_direct_goal_status": "active",
+      "freeze_wall_seconds": 385.651659457,
+      "job_id": "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+      "last_direct_goal_status": "paused",
+      "native_goal_starts_in_frozen_record": 1,
+      "native_runtime_error_class": "TimeoutError",
+      "native_runtime_error_text": "original native stop reached",
+      "native_runtime_outcome": "HOLD",
+      "native_wall_seconds": 385.578290083,
+      "observable_delivery": "INCOMPLETE",
+      "observed_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "outer_release_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/D-V09-A-RESOURCE-R001-control-whole_critic-a001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "d8777f839f937965fe3bf520d6efb5a19390ee6127c3d199f9a4f4d632f7ffbd"
+      },
+      "physical_provider_attestation": "UNKNOWN",
+      "positive_current_execution_inventory_count": 0,
+      "requested_identity": {
+        "effort": "max",
+        "model": "gpt-6-luna"
+      },
+      "resource_oom_observed_in_freeze": false,
+      "stage_required_report": [
+        "out/critique/review.md"
+      ],
+      "wall_scope_note": "native/runtime and outer frozen-stage wall definitions are distinct; neither is candidate semantic success"
+    }
+  ],
+  "schema": "er9.independent-phase2-current-adjudication.v1",
+  "semantic_result": {
+    "critic_quality": "UNASSESSED",
+    "designated_final_quality": "UNASSESSED",
+    "equivalence_claim": false,
+    "full_pipeline_quality": "UNASSESSED",
+    "matched_effect": "UNASSESSED",
+    "matched_winner": "UNASSESSED",
+    "mechanism_scientific_uptake": "UNASSESSED",
+    "reason": "No required critic report, no designated final, no source-grounded candidate correction/preservation verdict; current role metadata cannot substitute for them."
+  },
+  "source_quality_rewrite": false,
+  "whole_elapsed_seconds_at_report": 850.060686311
+}

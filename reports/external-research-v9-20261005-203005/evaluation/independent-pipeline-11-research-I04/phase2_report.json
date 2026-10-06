@@ -1,0 +1,225 @@
+{
+  "assessed_stage": "research",
+  "clock_definition": "All wait/key check/report and mandatory handoffs after immutable P1 freeze are included. Clock remains active through final neutral closure; no ACK wait.",
+  "clock_observed_monotonic_ns": 110628532602558,
+  "clock_observed_utc": "2026-10-06T09:50:09.675624+00:00",
+  "evaluation_id": "independent-pipeline-11-research-I04",
+  "gate_source_grade_read_or_rewritten": false,
+  "gate_verified_file_count": 113,
+  "inclusive_p2_budget_seconds": 600,
+  "inclusive_p2_elapsed_at_report_seconds": 222.416257914,
+  "interpretation": [
+    "Current key confirms A=treatment research, B=control research; there are no selected later stages or designated finals.",
+    "All actual required current research deliverables are present and source hashes agree with P1; artifact existence and driver completed do not qualify source correctness.",
+    "Native activation/submission and fresh-session claims are selected positive evidence, with one declared Goal start each. Direct Goal status and opaque Goal IDs remain UNKNOWN. Driver completed is never substituted for direct Goal status.",
+    "Owned component/group quiet and outer release are separately positive in the safe projection. No OOM was observed; aggregate observed peaks are below the selected complete-job memory cap. This is bounded receipt evidence, not general machine-fit certification; fit remains UNKNOWN.",
+    "Current original stage allocations differ: A 1050s, B 1200s. Elapsed receipt values and separate token scopes are descriptive, not a controlled economic/mechanism effect comparison.",
+    "The primary candidate usage/native UI and last-delta/provider-request scopes differ substantially. Preserve literal scopes; do not add cache tokens to totals, price them, sum the scopes, or infer dollars.",
+    "No later criticism/repair/preservation or whole-pipeline behavior can be inferred from these research-only artifacts. No winner, no equal-quality inference, no final promotion, no candidate feedback or retest."
+  ],
+  "original_clock_reset": false,
+  "p1_current_judgment_sha256": "fba3b846b8bbdb67d9230f119b1f8bf64638fdf2124e501349ec13e87173a309",
+  "p1_freeze_sha256": "adb1d6a30bd6a582a5ebea22b42321d5d6c848933cea0f9888567d967ce767b0",
+  "p1_judgment_unchanged": true,
+  "pair_id": "I-04-FRESH-DELIVERY-R001-CLOCK-R001",
+  "phase2_input_pins": [
+    {
+      "bytes": 5527,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/private/P11_CURRENT_I04_RESEARCH_PHASE2_KEY_001.json",
+      "sha256": "35d9beb34b4e29706324cb9dff1298c6c62fcda90161c4da296c58abbf1632bc"
+    },
+    {
+      "bytes": 15860,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/phase2/P11_CURRENT_RESEARCH_PAIR_NATIVE_RESOURCE_001.json",
+      "sha256": "4b0db6ac41f4b7e43daef7a81c61f50a50d79a2da52ea769436353fe86e8c5b2"
+    },
+    {
+      "bytes": 34363,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/observations/P11_PHASE1_VERIFIED_KEY_RELEASE_001.json",
+      "sha256": "2ec0a68c3b75a45b33532f6c1d61c9b5965088e5948e57cc5f881f5df70aef96"
+    }
+  ],
+  "rows": [
+    {
+      "aggregate_memory_peak_bytes": 869281792,
+      "alias": "A",
+      "arm": "treatment",
+      "assessed_stage": "research",
+      "complete_owned_job_memory_max_bytes": 2415919104,
+      "counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+      "declared_nativeGoal_starts": 1,
+      "direct_nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "elapsed_seconds": 912.330491575005,
+      "fit": "UNKNOWN",
+      "goal_activation_direct": {
+        "activation_utc": "2026-10-06T05:59:15.371736+00:00",
+        "fresh_session": true,
+        "goal_activated": true,
+        "goal_submitted": true,
+        "pre_activation_seconds": 7.814701515002525
+      },
+      "input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "job_id": "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "last_usage_delta_by_request_totals": {
+        "cacheReadTokens": 1187712,
+        "cacheWriteTokens": 0,
+        "inputTokens": 1369806,
+        "outputTokens": 41962,
+        "reasoningTokens": 0,
+        "totalTokens": 1411768
+      },
+      "native_driver_status": "completed",
+      "native_usage_counters": {
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "inputTokens": 367142,
+        "modelErrorCount": 0,
+        "modelRequestCount": 13,
+        "outputTokens": 43208,
+        "reasoningTokens": 0,
+        "totalTokens": 410350
+      },
+      "observed_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "operational_complete": true,
+      "original_max_seconds": 1050,
+      "outer_release_after_active_state": "inactive",
+      "outer_release_descendants_quiet": true,
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "provider_record_metadata": {
+        "available": true,
+        "export_sha256": "f5db9859873a5afac1ea6521cb01d006357206f270fb2fadfd8a5187317bb4ea",
+        "row_count": 13
+      },
+      "remaining_owned_group_members_count": 0,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "required_artifacts_present_in_current_inventory": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false
+    },
+    {
+      "aggregate_memory_peak_bytes": 848187392,
+      "alias": "B",
+      "arm": "control",
+      "assessed_stage": "research",
+      "complete_owned_job_memory_max_bytes": 2415919104,
+      "counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars",
+      "declared_nativeGoal_starts": 1,
+      "direct_nativeGoal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "elapsed_seconds": 798.7117051480018,
+      "fit": "UNKNOWN",
+      "goal_activation_direct": {
+        "activation_utc": "2026-10-06T06:02:41.048577+00:00",
+        "fresh_session": true,
+        "goal_activated": true,
+        "goal_submitted": true,
+        "pre_activation_seconds": 7.624894399996265
+      },
+      "input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "job_id": "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "last_usage_delta_by_request_totals": {
+        "cacheReadTokens": 918016,
+        "cacheWriteTokens": 0,
+        "inputTokens": 1072446,
+        "outputTokens": 39266,
+        "reasoningTokens": 0,
+        "totalTokens": 1111712
+      },
+      "native_driver_status": "completed",
+      "native_usage_counters": {
+        "cacheCreationTokens": 0,
+        "cacheReadTokens": 0,
+        "inputTokens": 312279,
+        "modelErrorCount": 0,
+        "modelRequestCount": 12,
+        "outputTokens": 40327,
+        "reasoningTokens": 0,
+        "totalTokens": 352606
+      },
+      "observed_effort": "max",
+      "observed_model": {
+        "modelId": "GLM-5.3-Flash",
+        "providerId": "builtin:zai-coding-plan"
+      },
+      "opaque_nativeGoalID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "operational_complete": true,
+      "original_max_seconds": 1200,
+      "outer_release_after_active_state": "inactive",
+      "outer_release_descendants_quiet": true,
+      "physical_provider_payload_or_billed_dollars": "UNKNOWN",
+      "provider_record_metadata": {
+        "available": true,
+        "export_sha256": "9b132d4ce8ee1e5406b4fe605effb548560c8e5f504004b71bde830d9f34c7fe",
+        "row_count": 12
+      },
+      "remaining_owned_group_members_count": 0,
+      "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+      "required_artifacts_present_in_current_inventory": true,
+      "resource_components_quiet": true,
+      "resource_oom_observed": false
+    }
+  ],
+  "schema": "er9.independent-phase2-research-only.v1",
+  "source_elapsed_to_freeze_seconds": 593.21646847,
+  "source_outcomes_unchanged": {
+    "A": "FAIL_SCREEN",
+    "B": "FAIL_SCREEN"
+  },
+  "unknowns": [
+    "Direct native Goal status",
+    "Opaque native Goal ID",
+    "Physical provider payload/billed dollars",
+    "Machine fit",
+    "Evaluator actual token usage and monetary cost",
+    "Unselected later-stage history and mechanism effects",
+    "Exact first P2 semantic-exposure clock was not separately recorded; inclusive freeze anchor is exact"
+  ],
+  "whole_budget_seconds": 1800,
+  "whole_elapsed_at_report_seconds": 815.632726384
+}

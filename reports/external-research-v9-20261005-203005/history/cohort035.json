@@ -1,0 +1,330 @@
+{
+  "cohort": "closed-review-qualifications-and-failure-costs-035",
+  "snapshot_at": "2026-10-06T10:18:24.947683+00:00",
+  "sources": [
+    {
+      "source": "accounting/cohort-018/PUBLIC_SELECTION.json",
+      "published": "accounting/cohort-018/PUBLIC_SELECTION.json",
+      "source_sha256": "8ce1ea396221d22399f06e99693dc577bc5a32db62c6cef4357d117072a4d7f9",
+      "public_sha256": "8ce1ea396221d22399f06e99693dc577bc5a32db62c6cef4357d117072a4d7f9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "published": "accounting/cohort-018/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "source_sha256": "4168790df61fe460cfb536a6adefbd94af73709715d663b36c16af8575c62d93",
+      "public_sha256": "4168790df61fe460cfb536a6adefbd94af73709715d663b36c16af8575c62d93",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "published": "accounting/cohort-018/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "source_sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79",
+      "public_sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/COST_SNAPSHOT.md",
+      "published": "accounting/cohort-018/COST_SNAPSHOT.md",
+      "source_sha256": "96c7f596b5a24e407c565151fb46a1f31f41a8ca75358a898620c52d45acaf1d",
+      "public_sha256": "96c7f596b5a24e407c565151fb46a1f31f41a8ca75358a898620c52d45acaf1d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/DEC017-terminal.safe.json",
+      "published": "accounting/cohort-018/DEC017-terminal.safe.json",
+      "source_sha256": "7e1b77383189031ddc57d17f8c17f697168fe3131fa694af5a99a922d7a4bbe2",
+      "public_sha256": "7e1b77383189031ddc57d17f8c17f697168fe3131fa694af5a99a922d7a4bbe2",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/DEC017-terminal.safe.schema.json",
+      "published": "accounting/cohort-018/DEC017-terminal.safe.schema.json",
+      "source_sha256": "2da9ac77509ddf5cc37f49c626ea2b378b67cd550101d104fe042613868d2a29",
+      "public_sha256": "2da9ac77509ddf5cc37f49c626ea2b378b67cd550101d104fe042613868d2a29",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/KEEPER_RECEIPT.json",
+      "published": "accounting/cohort-018/KEEPER_RECEIPT.json",
+      "source_sha256": "7427b6c694a18351d540ea07a5e191e6485f07d123813741886ef95f50853ea6",
+      "public_sha256": "7427b6c694a18351d540ea07a5e191e6485f07d123813741886ef95f50853ea6",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/KEEPER_RECEIPT.schema.json",
+      "published": "accounting/cohort-018/KEEPER_RECEIPT.schema.json",
+      "source_sha256": "4d4124e2a4d47e5d80d30598682cf4ae2a4fc9f7948b8c79230e6861dc47a005",
+      "public_sha256": "4d4124e2a4d47e5d80d30598682cf4ae2a4fc9f7948b8c79230e6861dc47a005",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/VERIFICATION.json",
+      "published": "accounting/cohort-018/VERIFICATION.json",
+      "source_sha256": "6a7d9a824402e2a45e87a5b13fe634eef277d58e9a229582e7db91a3cb992b1a",
+      "public_sha256": "6a7d9a824402e2a45e87a5b13fe634eef277d58e9a229582e7db91a3cb992b1a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/attempts.safe.json",
+      "published": "accounting/cohort-018/attempts.safe.json",
+      "source_sha256": "a75cd8bf135b8cd67878f7fc1768efec1c339988f076d56a93ae46ebc85d9f0e",
+      "public_sha256": "a75cd8bf135b8cd67878f7fc1768efec1c339988f076d56a93ae46ebc85d9f0e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/attempts.safe.schema.json",
+      "published": "accounting/cohort-018/attempts.safe.schema.json",
+      "source_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "public_sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/evaluator-clocks.safe.json",
+      "published": "accounting/cohort-018/evaluator-clocks.safe.json",
+      "source_sha256": "b46829e677ab20182a11348cae3bd689e1c32aa1fe13d84424139349d2f1e78e",
+      "public_sha256": "b46829e677ab20182a11348cae3bd689e1c32aa1fe13d84424139349d2f1e78e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/evaluator-clocks.safe.schema.json",
+      "published": "accounting/cohort-018/evaluator-clocks.safe.schema.json",
+      "source_sha256": "5a38cb6b508eb5c6f84f26c5bf75bc3b5269f01fd4692b5e0c4cc489f54d992e",
+      "public_sha256": "5a38cb6b508eb5c6f84f26c5bf75bc3b5269f01fd4692b5e0c4cc489f54d992e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/finite-scope.safe.json",
+      "published": "accounting/cohort-018/finite-scope.safe.json",
+      "source_sha256": "6df0902ffb095e173f1e92bd6e3e6ed8753909ea9af426ac3c6c1431de8528b9",
+      "public_sha256": "6df0902ffb095e173f1e92bd6e3e6ed8753909ea9af426ac3c6c1431de8528b9",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/finite-scope.safe.schema.json",
+      "published": "accounting/cohort-018/finite-scope.safe.schema.json",
+      "source_sha256": "71528faa85d794008e83d97c1bc77538512a5c27df4e36999cefb916eae2d5ee",
+      "public_sha256": "71528faa85d794008e83d97c1bc77538512a5c27df4e36999cefb916eae2d5ee",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/snapshot.safe.json",
+      "published": "accounting/cohort-018/snapshot.safe.json",
+      "source_sha256": "7199e231f652104425b8c8bd9d7f14639484e285d7c342539be0c426e9590b20",
+      "public_sha256": "7199e231f652104425b8c8bd9d7f14639484e285d7c342539be0c426e9590b20",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "accounting/cohort-018/snapshot.safe.schema.json",
+      "published": "accounting/cohort-018/snapshot.safe.schema.json",
+      "source_sha256": "24b54f7912b4279535f3e03e992249e29e1bdb6bd56b767afe1e5c3c72814cc8",
+      "public_sha256": "24b54f7912b4279535f3e03e992249e29e1bdb6bd56b767afe1e5c3c72814cc8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-006/PUBLICATION_SELECTOR.json",
+      "published": "consolidation/workload-006/PUBLICATION_SELECTOR.json",
+      "source_sha256": "864272f80a3ff203610598a6c215ab73fce1a438f53cc98153f9d818b4b4f6df",
+      "public_sha256": "864272f80a3ff203610598a6c215ab73fce1a438f53cc98153f9d818b4b4f6df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-006/WORKLOAD_SCOREBOARD.json",
+      "published": "consolidation/workload-006/WORKLOAD_SCOREBOARD.json",
+      "source_sha256": "ff9cbac97d9d53c56063df3f186e0292f2788bfffc97f76aceb637620d4bf28e",
+      "public_sha256": "ff9cbac97d9d53c56063df3f186e0292f2788bfffc97f76aceb637620d4bf28e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-006/README.md",
+      "published": "consolidation/workload-006/README.md",
+      "source_sha256": "2f2b3688cc5f08e46eb7dc6400a65af3d29327043f9c1af647e6be5bb43c8f8d",
+      "public_sha256": "2f2b3688cc5f08e46eb7dc6400a65af3d29327043f9c1af647e6be5bb43c8f8d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "consolidation/workload-006/NEUTRAL_CAPTURE_RECEIPT.json",
+      "published": "consolidation/workload-006/NEUTRAL_CAPTURE_RECEIPT.json",
+      "source_sha256": "063575897b9af946eda4634a8e9c35226fc03ca5dd64eae02488e8ca37f1c469",
+      "public_sha256": "063575897b9af946eda4634a8e9c35226fc03ca5dd64eae02488e8ca37f1c469",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/PUBLIC_SELECTION.json",
+      "published": "indexed-final-diagnosis-003/PUBLIC_SELECTION.json",
+      "source_sha256": "17b7a60ae38ff233490ac412d759223613b2a32356ee5e6d482586b59dca202d",
+      "public_sha256": "17b7a60ae38ff233490ac412d759223613b2a32356ee5e6d482586b59dca202d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/project.py",
+      "published": "indexed-final-diagnosis-003/project.py",
+      "source_sha256": "0495b86036e16ac94d7c2473b5ed61b4d2c82affcb399ce388529f53f14d4c36",
+      "public_sha256": "0495b86036e16ac94d7c2473b5ed61b4d2c82affcb399ce388529f53f14d4c36",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/DIAGNOSIS.json",
+      "published": "indexed-final-diagnosis-003/DIAGNOSIS.json",
+      "source_sha256": "c549dcc60b128356411d0aaa06287a0778408ea45383f1c88ac1d85c2e763125",
+      "public_sha256": "c549dcc60b128356411d0aaa06287a0778408ea45383f1c88ac1d85c2e763125",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/NATIVE_GOAL_STATUS.json",
+      "published": "indexed-final-diagnosis-003/NATIVE_GOAL_STATUS.json",
+      "source_sha256": "9f0a0fcf83dc53fece9e88a55ddb2b0128b0ef529ef4433c911fab9e78b2eb53",
+      "public_sha256": "9f0a0fcf83dc53fece9e88a55ddb2b0128b0ef529ef4433c911fab9e78b2eb53",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/WRITER_STRUCTURE.json",
+      "published": "indexed-final-diagnosis-003/WRITER_STRUCTURE.json",
+      "source_sha256": "e5fed27e340df95271bd45f0ebb97f13fe91b3e979de3fa0ebb3a4caac37b2de",
+      "public_sha256": "e5fed27e340df95271bd45f0ebb97f13fe91b3e979de3fa0ebb3a4caac37b2de",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/SOURCE_REFS.json",
+      "published": "indexed-final-diagnosis-003/SOURCE_REFS.json",
+      "source_sha256": "f5744cecbac5ed60b07dcdb1a17e6b13cdc35ddcb1444bd703d6aa8b191e6894",
+      "public_sha256": "f5744cecbac5ed60b07dcdb1a17e6b13cdc35ddcb1444bd703d6aa8b191e6894",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/VERIFICATION.json",
+      "published": "indexed-final-diagnosis-003/VERIFICATION.json",
+      "source_sha256": "82cf0094ffe4924acd3c87ee2bb05f26e64940f14ea129b4d999d073170d5da7",
+      "public_sha256": "82cf0094ffe4924acd3c87ee2bb05f26e64940f14ea129b4d999d073170d5da7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/REPORT.md",
+      "published": "indexed-final-diagnosis-003/REPORT.md",
+      "source_sha256": "5b05d708c776189b266c83e59b358ba62182d25e54b3fcd355f5f76295acc6ef",
+      "public_sha256": "5b05d708c776189b266c83e59b358ba62182d25e54b3fcd355f5f76295acc6ef",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/TIMING.json",
+      "published": "indexed-final-diagnosis-003/TIMING.json",
+      "source_sha256": "1c28c4c8b43d39212bd3ad3b47b6aede4e61168e192a8a95e2caa37657da1952",
+      "public_sha256": "1c28c4c8b43d39212bd3ad3b47b6aede4e61168e192a8a95e2caa37657da1952",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/PIN.json",
+      "published": "indexed-final-diagnosis-003/PIN.json",
+      "source_sha256": "1e6b07f1ac49f36bfccbb679bb6cfb475411e027ab7a133855278915ea658e9f",
+      "public_sha256": "1e6b07f1ac49f36bfccbb679bb6cfb475411e027ab7a133855278915ea658e9f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/phase1_judgement.json",
+      "published": "evaluation/independent-targeted-24/phase1_judgement.json",
+      "source_sha256": "570b0d2f0996f1ce4ef133a32286aa61147532409f2ad2acff42323004de0e06",
+      "public_sha256": "570b0d2f0996f1ce4ef133a32286aa61147532409f2ad2acff42323004de0e06",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/phase1_report.md",
+      "published": "evaluation/independent-targeted-24/phase1_report.md",
+      "source_sha256": "9f6aed1b34f0330be1bb8d3a18b2dcdf64a2a35fe2ad9679a81320cc3f8c8a98",
+      "public_sha256": "9f6aed1b34f0330be1bb8d3a18b2dcdf64a2a35fe2ad9679a81320cc3f8c8a98",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/p1_freeze_receipt.json",
+      "published": "evaluation/independent-targeted-24/p1_freeze_receipt.json",
+      "source_sha256": "179d32c18c11a26cbfd897705b45521f6a27a4e45083db95e0ee98619a397922",
+      "public_sha256": "179d32c18c11a26cbfd897705b45521f6a27a4e45083db95e0ee98619a397922",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/phase2_judgement.json",
+      "published": "evaluation/independent-targeted-24/phase2_judgement.json",
+      "source_sha256": "96f146982b8af37d72f02b4549c72d90192fd43ae6ee4381a9177097c8151cfb",
+      "public_sha256": "96f146982b8af37d72f02b4549c72d90192fd43ae6ee4381a9177097c8151cfb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/phase2_report.md",
+      "published": "evaluation/independent-targeted-24/phase2_report.md",
+      "source_sha256": "ab8deaaf2413b1ef335c873781f0c091c5268c83cd6e3088d50f50e202f6c80c",
+      "public_sha256": "ab8deaaf2413b1ef335c873781f0c091c5268c83cd6e3088d50f50e202f6c80c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-targeted-24/completion_clock_receipt.json",
+      "published": "evaluation/independent-targeted-24/completion_clock_receipt.json",
+      "source_sha256": "183bbb8e8f7108950ca289589d6bf4f69eab81455d3f276fa4c935a080ecd954",
+      "public_sha256": "183bbb8e8f7108950ca289589d6bf4f69eab81455d3f276fa4c935a080ecd954",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "published": "evaluation/independent-confirmation-C01-current-research-1/phase1_report.md",
+      "source_sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c",
+      "public_sha256": "1ca59a21ccc8fc47769f0498389bfbd519e2b057918c134ae8d145c1d7a1175c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-confirmation-C01-current-research-1/phase2_report.md",
+      "published": "evaluation/independent-confirmation-C01-current-research-1/phase2_report.md",
+      "source_sha256": "0165856e7d88689132339a20bd165815f0ecd12f6d2e43d0ce39ceb607d6fd75",
+      "public_sha256": "0165856e7d88689132339a20bd165815f0ecd12f6d2e43d0ce39ceb607d6fd75",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-confirmation-C01-current-research-1/completion_clock.json",
+      "published": "evaluation/independent-confirmation-C01-current-research-1/completion_clock.json",
+      "source_sha256": "8c7a9757760c6cc80eac752051b62580c88973a7f041df7051a7eee68ede914e",
+      "public_sha256": "8c7a9757760c6cc80eac752051b62580c88973a7f041df7051a7eee68ede914e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-11-research-I04/phase2_report.json",
+      "published": "evaluation/independent-pipeline-11-research-I04/phase2_report.json",
+      "source_sha256": "0c835d4b86801d278470848965c06c184bf0e522a1b421839cba01448617af2f",
+      "public_sha256": "0c835d4b86801d278470848965c06c184bf0e522a1b421839cba01448617af2f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-11-research-I04/PHASE2.md",
+      "published": "evaluation/independent-pipeline-11-research-I04/PHASE2.md",
+      "source_sha256": "12b954a7715f65d6586c9ef33621026a48c0e3a799ea6d9ed9c3d1662b548530",
+      "public_sha256": "12b954a7715f65d6586c9ef33621026a48c0e3a799ea6d9ed9c3d1662b548530",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "evaluation/independent-pipeline-11-research-I04/p2_input_pins.json",
+      "published": "evaluation/independent-pipeline-11-research-I04/p2_input_pins.json",
+      "source_sha256": "d2b0a5b990594e6edd22cba8fdb2aa3e292ddebb93ef8ed2011208f825789853",
+      "public_sha256": "d2b0a5b990594e6edd22cba8fdb2aa3e292ddebb93ef8ed2011208f825789853",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/PUBLIC_SELECTION_v2.json",
+      "published": "indexed-final-diagnosis-003/PUBLIC_SELECTION_v2.json",
+      "source_sha256": "f9765f7743c3982e295d518be42f01b9cc33a20fec56292a6732347b115a8966",
+      "public_sha256": "f9765f7743c3982e295d518be42f01b9cc33a20fec56292a6732347b115a8966",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/diagnosis/indexed-final-003/CLOSURE.json",
+      "published": "indexed-final-diagnosis-003/CLOSURE.json",
+      "source_sha256": "1ea20400ba141c8393fb1090ef99976e5dca81fbbc8502874a56c87910ebd10e",
+      "public_sha256": "1ea20400ba141c8393fb1090ef99976e5dca81fbbc8502874a56c87910ebd10e",
+      "transform": "byte-identical"
+    }
+  ],
+  "accounting018": "10:12:16.072801\u2013767084UTC265attempts246confirmed18provedzero1UNKNOWNstart650211080known32usageUNKNOWN; no summedsnapshot/roothelperbillingUNKNOWN",
+  "workload006": "10:12:36.358758\u2013458431UTC stablewindowhashes/nonatomic26scopematchesnotcompletecomparisons",
+  "TD24": "ActualcriticreportsabsentsemanticUNASSESSED/nofinal4rubric/threecurrentrolemechanismeffectUNKNOWN; lateclosureP2601.782969944over1.782969944/source301.892997997/whole903.675967941 noreset/regrade",
+  "C01_research": "CurrentresearchbothFAIL_SCREEN/distinctdefects/no equalityrankinginference/fullH110common8card3/finalsNULL/source640.490326142P2367.421892343whole1007.912218485",
+  "P11I04": "AdditivepostP1currentresearchPhase2 pins/mapping; drivercompletionnotdirectGoal/fitmoneyUNKNOWN/unequalallocation/fullpipelineUNASSESSED",
+  "indexed003": "Indexapplied+used/writer1 sourceJSONDecodeError/specificrejectioncausalityUNKNOWN/no patch/newGoal/qualitycredit/contextexposuredisclosed",
+  "operational_pipelines_prior_verified": 6,
+  "operational_matched_pairs_prior_verified": 2,
+  "causal_winner": null
+}

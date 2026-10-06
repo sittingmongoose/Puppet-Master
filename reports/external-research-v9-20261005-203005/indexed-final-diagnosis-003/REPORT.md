@@ -1,0 +1,7 @@
+The qualified prior-file index was present before Goal activation, matched the pinned neutral locator, and was delivered completely. Ten read_file calls succeeded with no source read errors; eight read exact paths listed in that index. The index tool-result identifier appears in five later provider request metadata records. Semantic comprehension remains UNOBSERVED.
+
+One write_file call targeted out/final_bundle.json and failed at the source boundary. Its known schema, current-stage discriminator, four literal selector types and byte limits match the declared structural contract. The trusted error template exposes JSONDecodeError only; the specific validator or commit rejection remains UNKNOWN. No payload contents or artifact semantics were evaluated. No systemic source defect is established and no code repair, replay or repeat is recommended.
+
+The original allocation remained600 seconds, with action stop570 seconds after original birth and cleanup stop600. Router cap_seconds, saved native Goal paused, OOMfalse and owned quiet remain separate facts. All failed costs and source versions remain intact.
+
+A preliminary diagnostic print exposed the whole saved target object including its objective. Context exposure occurred and efficacy of ignoring it is UNASSESSED. The objective is excluded from this report and publication selector; hash-only comparison to the pinned Task is retained. No candidate/evaluator facts were exported or used for semantic repair. Zero native/model calls were made by this diagnosis.

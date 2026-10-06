@@ -1,0 +1,16 @@
+{
+  "authorized_whole_seconds": 1800,
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "elapsed_seconds": 254.111137752,
+  "helper_provider_usage": "UNKNOWN",
+  "monotonic_ns": 112174371537597,
+  "required_handoffs_follow_this_checkpoint": true,
+  "schema": "er9.accounting.report-ready-clock.v1",
+  "scope": "Ownbounded metadata work report-ready checkpoint, not final requiredhandoff. Whole includes all waits/validation/notice overhead; modeloccupied/candidate billing not inferred.",
+  "start_pin": {
+    "path": "accounting/cohort-018/START.json",
+    "sha256": "f4e0b24d8791595d8b57a37c36d9360eca64912dd94492cd98a55ef90b2407ff"
+  },
+  "utc": "2026-10-06T10:15:55.514649+00:00"
+}
