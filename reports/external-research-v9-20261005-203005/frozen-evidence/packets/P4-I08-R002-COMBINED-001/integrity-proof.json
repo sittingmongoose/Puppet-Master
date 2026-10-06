@@ -1,0 +1,20 @@
+{
+  "schema": "er9.current-combined-role-neutral-integrity.v1",
+  "selection_sha256": "5b8d426aa1d9a063ff62073f1c31e2da1db3666de0167083c45c3d00a76eee00",
+  "source_freeze_sha256": "1bf02180931ea924f0e8a9a49a8f25f482a6277b9ef63bfe7e6a6cebb44b9308",
+  "final_native_source_sha256": "7ef7d5e7149bb96f7f0b213fe74cef4cb0a80fc2a1fa0f27bd39cf5b77b13320",
+  "exact_five_selected_artifacts_verified": true,
+  "canonical_final4_count": 4,
+  "all_actual_quiet_flags": {
+    "native_cgroup_quiet": true,
+    "held_process_groups_absent": true,
+    "client_tool_cgroups_quiet": true,
+    "client_tool_process_groups_absent": true,
+    "execution_units_quiet": true
+  },
+  "all_owned_scopes_quiet_confirmed": true,
+  "exact_owned_host_record_SHA_unit_cgroup_PIDsets_and_execution_request_SHAs_independently_matched": true,
+  "inline_proof_pre_serialization_native_sha256_retained": "a32bbfe8ca4f52051ec80aba257e75b8e7f024625e758a3b2b885255770705ca",
+  "inline_proof_hash_not_claimed_as_final_serialized_native_hash": true,
+  "operational_state_Goal_usage_history": "WITHHELD untilimmutablePhase1; delivery/quiet notsourcegrade"
+}

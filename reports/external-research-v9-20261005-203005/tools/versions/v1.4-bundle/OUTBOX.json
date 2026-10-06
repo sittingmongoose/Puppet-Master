@@ -1,0 +1,51 @@
+{
+  "schema": "er9.tools.delivery-outbox.v1",
+  "created_utc": "2026-10-06T01:50:55.346746+00:00",
+  "recipient_owners": [
+    "root",
+    "execution_engine",
+    "luna_route",
+    "case_resource_successors",
+    "ops_recovery",
+    "publisher"
+  ],
+  "release": {
+    "schema": "er9.tools.release-pin.v1",
+    "version": "v1.4-bundle",
+    "status": "READY_FOR_PROSPECTIVE_ACTUAL_ROUTE_BINDING",
+    "source_pins": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+      "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2"
+    },
+    "verification": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/VERIFICATION.json",
+      "sha256": "b6085e06a92971faf6172c7587e2c1b09a7f60ff1ff1a5b773107f90cadb1499"
+    },
+    "config": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+      "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+    },
+    "scope": "Owned code/tests/neutral metadata only; no active runtime or case seal mutation; V06 both arms excluded",
+    "native_model_calls": 0,
+    "native_goals": 0
+  },
+  "API_SCHEMA": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/API_SCHEMA.json",
+    "sha256": "85234e82f39901a972d6a5575c56cb0ecb8c806ed07c2c401d6ed402197c92d4"
+  },
+  "operator_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/operator_binding.py",
+    "sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791"
+  },
+  "required_next_steps": [
+    "Route owner freezes actual builder-selection successor and no-inference composition; no paper PIN swap",
+    "Case/ops seal actual metadata closure/private profile only for wholly unstarted eligible full-final stages",
+    "References need positive same-job native receipt/count/window proof; missing genuine metadata stays pending or native authors inline",
+    "Keep research/critic/intermediate and both V06 arms on their owner contracts; no auto activation",
+    "Keep native Goal status, structural commit, quiescence and source grade independent"
+  ],
+  "public_output_semantics": "Canonical final4 hashes plus admin manifest; exact selected bytes only. No correctness/winner/recipe fit asserted.",
+  "dispatch_allowed_by_tool_owner": true,
+  "native_runtime_fit": "UNKNOWN",
+  "no_automatic_additional_model_probe": true
+}

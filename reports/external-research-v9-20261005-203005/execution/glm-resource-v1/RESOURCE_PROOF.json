@@ -1,0 +1,74 @@
+{
+  "schema": "er9.glm.complete-resource-proof.v1",
+  "created_utc": "2026-10-06T01:36:16.487757+00:00",
+  "synthetic_only": true,
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "underlying_receipt": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/ACTUAL_PLACEMENT_FINAL.json",
+    "sha256": "5f2ffacf10c184632a5ec3fb5dde83d8b596678aeb429c6414f8712b5200be9e"
+  },
+  "selector": "$.result",
+  "aggregate_memory_max_bytes": 2415919104,
+  "swap_max_bytes": 0,
+  "outer_worker_actual_memory_max_bytes": 805306368,
+  "component_actual_memory_max_bytes": {
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456
+  },
+  "retained_helper_pid_count": 9,
+  "existing_private_job_pid_count": 13,
+  "preactivation_equivalent_kernel_proof": true,
+  "byte_relay_unchanged": true,
+  "simultaneous_sandbox_units": [
+    {
+      "unit": "er9-exec-dec076c6ff0244a2bb1753184810e1d3.service",
+      "memory_max_bytes": 268435456,
+      "swap_max_bytes": 0,
+      "actual_private_parent": true
+    },
+    {
+      "unit": "er9-exec-616153b937264035b52b2dbf513f36b4.service",
+      "memory_max_bytes": 268435456,
+      "swap_max_bytes": 0,
+      "actual_private_parent": true
+    }
+  ],
+  "owner_eof_and_absolute_deadline": [
+    {
+      "mode": "eof",
+      "stop_reason": "owner_eof_or_component_exit",
+      "immutable_stop_monotonic_ns": 80924220640325,
+      "cgroup_quiet": true
+    },
+    {
+      "mode": "deadline",
+      "stop_reason": "original_deadline",
+      "immutable_stop_monotonic_ns": 80888117119641,
+      "cgroup_quiet": true
+    }
+  ],
+  "aggregate_events_after_synthetic_adapter_oom": {
+    "low": "0",
+    "high": "0",
+    "max": "37",
+    "oom": "1",
+    "oom_kill": "1",
+    "oom_group_kill": "0",
+    "sock_throttled": "0"
+  },
+  "sandbox_cleanup_confirmed": [
+    true,
+    true
+  ],
+  "component_settlement_quiet": true,
+  "active_outer_release_rejected": true,
+  "external_release_after_outer_terminal_recursive_quiet": true,
+  "native_research_fit": "UNKNOWN",
+  "initial_test_failure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/INITIAL_TEST_FAILURE.json",
+    "sha256": "4b88a156ab8aa0677f5110de77178a917ea86830ab721d2a2546e9156abde665"
+  },
+  "source_receipt_contains_only_synthetic_process_metadata": true
+}

@@ -1,0 +1,135 @@
+{
+  "catalog_version": "1.1",
+  "scope": "Unresolved implementation dependencies, optional opportunities and alternatives preserved by the critic-final proposal. Leads record uncertainty and proposed evidence; they are not claims of observed product behavior.",
+  "unresolved": [
+    {
+      "id": "L01",
+      "topic": "DuckDB v1.5.6 CSV issue #25164 behavior in shipped artifacts",
+      "status": "open; critical before enabling affected CSV inputs",
+      "evidence": ["S06", "S07", "S08", "S09", "S10", "S11", "S12"],
+      "known": "Issue #25164 reports duplicate rows with parallel CRCRLF scans. PR #25232 merged a scanner guard and regression test on v2.0-cyanoptera. The exact v1.5.6 scanner source lacks that hunk at the inspected path and the exact test path returns 404. The proposed main port remains unmerged in the 2026-10-06 capture. The upstream test source requires notwindows.",
+      "unknown": "No exact v1.5.6 Python wheel, CLI or platform artifact was executed. Source absence and test-path 404 do not prove the binary behavior or exclude another implementation/fix. Other CRCRLF parser issues are outside the one regression shape.",
+      "next_evidence": "Run the issue reproduction and expanded boundary, quoted-newline and tail matrix against each exact distributed artifact and supported platform; record artifact/source build hashes, row counts, identities, reject behavior and architecture. Add a separate Windows test or disable the affected support there.",
+      "proposal_effect": "Keep the streaming CRCRLF preflight rejection until the exact artifact/platform gate passes. If it fails or cannot be verified, defer that file or use a separately qualified reader."
+    },
+    {
+      "id": "L02",
+      "topic": "Complete compatible Python/Jupyter/DuckDB runtime lock",
+      "status": "open; critical for clean replay and cross-machine use",
+      "evidence": ["S01", "S02", "S03", "S06"],
+      "known": "nbformat 5.10.4 and nbclient 0.10.2 are exact starting pins. DuckDB 1.5.6 is an engine source candidate. Jupyter Client protocol documentation capture identifies 8.10.0.",
+      "unknown": "No compatible exact Python minor, jupyter_client, ipykernel, pyzmq, traitlets, DuckDB binding, extensions and transitive artifact hashes were resolved or run together; no immutable runner image digest exists.",
+      "next_evidence": "Build and hash one complete lock/image, then execute strict clean replay twice and verify matching package/image and output association.",
+      "proposal_effect": "The pins are planning inputs only. Block clean replay when a receiving machine cannot obtain the exact locked runtime; preserve saved output as historical/unverified."
+    },
+    {
+      "id": "L03",
+      "topic": "Linux sandbox policy, Jupyter transport and resource enforcement",
+      "status": "open; critical before running untrusted notebooks or SQL",
+      "evidence": ["S17", "S18"],
+      "known": "Bubblewrap constructs mount and namespace layouts but leaves policy to the caller. Jupyter Client 8.10.0 documents local TCP kernel sockets unencrypted by default. Bubblewrap alone supplies no cgroup CPU/memory or disk quota.",
+      "unknown": "Exact invocation, host-visible control path, user-namespace policy, seccomp profile, cgroup/resource-controller support, kernel-port containment, process cleanup and platform usability are untested.",
+      "next_evidence": "Review the exact policy with security engineering; test namespace mounts/network isolation, a private manager/client/kernel transport, cgroup cleanup, quotas, cancellation and fail-closed behavior on each supported Linux distribution.",
+      "proposal_effect": "Limit execution to systems where the full reviewed policy and aggregate limits can be enforced. Keep other platforms edit/open/export-only until a reviewed adapter exists."
+    },
+    {
+      "id": "L04",
+      "topic": "5 GB behavior on the 8-core/16 GB workstation",
+      "status": "open; target, not verified result",
+      "evidence": ["S15", "S16"],
+      "known": "DuckDB describes streaming and operator-specific spill mechanisms, with workload and temp-disk trade-offs.",
+      "unknown": "Peak RSS, spill bytes, wall time, correctness, cancellation and failure behavior for the exact build and operation classes are unmeasured.",
+      "next_evidence": "Generate representative 5 GB data and measure filter/projection, low/high-cardinality aggregation, sort, join, distinct, window and Python materialization with memory and temp quotas.",
+      "proposal_effect": "Advertise only measured operation classes. Resource exhaustion is a visible failed run; no universal 5 GB support claim."
+    },
+    {
+      "id": "L05",
+      "topic": "Mutable external source identity and cache correctness",
+      "status": "open; critical for current-output labels",
+      "evidence": ["S04", "S13", "S14", "S15"],
+      "known": "The proposal uses complete content digests and dependency keys; direct path references avoid an unnecessary import copy. Engine readers operate on files and can scan only selected columns/rows for some requests.",
+      "unknown": "No adapter proves a pre-run path hash represents the exact bytes consumed while a concurrently mutable file is read. Snapshot storage/time costs and verified stable-reader options are unmeasured.",
+      "next_evidence": "Test immutable content-addressed snapshots, full-stream hashing, concurrent source mutation and cache invalidation. Verify that the bytes whose digest enters a run key are the bytes actually consumed.",
+      "proposal_effect": "Keep direct external paths as the no-copy registration default, but require immutable or otherwise verified stable bytes to label a clean output current; otherwise show input stability unverified."
+    },
+    {
+      "id": "L06",
+      "topic": "Transactional save, locking and recovery across local filesystems",
+      "status": "open; critical for durable output associations",
+      "evidence": [],
+      "known": "The proposal defines a manifest pointer as commit point, immutable output blobs and an append-only event log with prepare/commit reconciliation.",
+      "unknown": "Atomic rename, directory sync, fsync durability, lock behavior, stale-lock recovery and crash ordering vary by platform/filesystem and have not been tested.",
+      "next_evidence": "Crash-inject every write/sync/rename boundary on the supported local filesystems; test a second opener, stale writer lock, partial log and folder/zip recovery.",
+      "proposal_effect": "Support only validated local filesystem combinations initially; other filesystems remain outside the save/concurrency guarantee."
+    },
+    {
+      "id": "L07",
+      "topic": "Format adapters, schema evolution and row identity",
+      "status": "open; critical before declaring format subsets supported",
+      "evidence": ["S04", "S05", "S13", "S14"],
+      "known": "DuckDB docs expose inference, explicit parser settings, faulty-line inspection, JSON configuration and Parquet schema reads.",
+      "unknown": "Pinned-engine behavior for missing versus null, heterogeneous JSON, invalid UTF-8, duplicate names, nested Parquet, schema drift, timestamp offsets, reject byte spans and stable record ordinals is untested.",
+      "next_evidence": "Run fixtures for all listed cases against the exact engine artifact; verify every input record is preserved in accepted rows or explicit reject objects, and source digests remain unchanged.",
+      "proposal_effect": "Support only a validated typed subset; strict failure or user-reviewed reject sidecar for unsupported/malformed inputs; no silent migration or row loss."
+    },
+    {
+      "id": "L08",
+      "topic": "Notebook output dependency and status model",
+      "status": "open; critical for user-visible reproducibility claims",
+      "evidence": ["S01", "S02", "S03"],
+      "known": "Notebook files store outputs/counts; nbclient can skip tags, permit tagged errors unless forced strict, and update earlier outputs by display_id; protocol parent headers support event correlation.",
+      "unknown": "No event implementation has been validated for out-of-order runs, cross-cell display updates, kernel restart, interrupted replay or missing message associations.",
+      "next_evidence": "Build a tiny real notebook runtime case matrix for strict tags/errors, interactive order, display_id updates, restart, cancellation, output commit and reopen status.",
+      "proposal_effect": "Configure strict replay explicitly, keep interactive output unverified, link display updates to affected outputs, and preserve attempt status separately from last-good output provenance."
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O01",
+      "idea": "Schema drift review before promoting a new source version",
+      "value": "Compare approved contract with new full-scan schema, sampled values, missing/added fields, lossy casts and quarantined records before dependent work reruns.",
+      "status": "useful product opportunity; proposed, not implemented"
+    },
+    {
+      "id": "O02",
+      "idea": "Dependency-first reproducibility diff",
+      "value": "Group a result change by notebook/cell source, data snapshot/contract, environment/engine and output artifact, then expose a key-based row diff only when identity is defined.",
+      "status": "derived from the brief; accessibility and analyst usability need evaluation"
+    },
+    {
+      "id": "O03",
+      "idea": "Portable content-addressed project bundle",
+      "value": "Bundle the small manifest, run events and selected output/input objects with hashes; let users choose explicitly whether large or private data is included.",
+      "status": "follow-up opportunity; no DVC or external lineage compatibility claim is made"
+    }
+  ],
+  "alternatives_to_keep_visible": [
+    {
+      "id": "A01",
+      "option": "Use JupyterLab/Notebook as the complete front end and add a local provenance manager.",
+      "tradeoff": "Reduces editor work; current/stale state, output association, transactional artifacts, source snapshots and sandbox policy still require integration and validation."
+    },
+    {
+      "id": "A02",
+      "option": "Use a separately qualified CSV reader or a DuckDB artifact that passes the exact regression gate.",
+      "tradeoff": "May allow a broader CSV subset; its parser schema/error behavior and every shipped artifact need independent verification. The v2.0-branch fix alone is not a stable release guarantee."
+    },
+    {
+      "id": "A03",
+      "option": "Use a local VM adapter for execution on macOS/Windows or where Linux namespaces/resource control are unavailable.",
+      "tradeoff": "Can provide a clearer image and file boundary; adds startup, disk, mount and interactive-kernel costs. No VM backend is selected or tested here."
+    },
+    {
+      "id": "A04",
+      "option": "Use an Arrow/Polars-first data stack instead of DuckDB.",
+      "tradeoff": "Could change memory, schema and CSV behavior; SQL fit, streaming/spill, type semantics and issue history must be independently sourced and benchmarked before selection."
+    }
+  ],
+  "deferred_by_scope": [
+    "Real-time collaboration and shared kernel state",
+    "Hosted service, account-backed project sync or shared credentials",
+    "Automatic scheduling/background job service",
+    "Broad notebook language/kernel support",
+    "Private datasets and shared account profiles"
+  ]
+}

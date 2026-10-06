@@ -1,0 +1,97 @@
+{
+  "schema": "er9.tools.source-pins.v1",
+  "version": "v1.4-bundle",
+  "created_utc": "2026-10-06T01:47:35.504343+00:00",
+  "predecessor_source_pins_sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621",
+  "files": {
+    "config.py": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e",
+    "execution_server.py": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+    "test_tools.py": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+    "source_capture/boundary.py": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+    "source_capture/tool_server.py": "70ceac49f4985fad11e36d770d0ee59ed31f5305a69a55a9f161fb835f78a135",
+    "source_capture/test_source_capture.py": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+    "README.md": "f0ce12008688cb1c005793e08fa8f5a8496dfde141ac1b5da5d57ebe2e05cfdc",
+    "test_framing.py": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+    "resource_profile.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+    "resource_gate.py": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+    "test_resource.py": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+    "bundle_carrier.py": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+    "operator_binding.py": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+    "test_bundle.py": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566",
+    "API_SCHEMA.json": "85234e82f39901a972d6a5575c56cb0ecb8c806ed07c2c401d6ed402197c92d4",
+    "PROVENANCE_IMPLEMENTATION.json": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521",
+    "EMPTY_CLOSURE_FIXTURE.json": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1"
+  },
+  "copied_upstream": {
+    "boundary.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "destination": "source_capture/boundary.py",
+      "byte_identical": true
+    },
+    "tool_server.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/tool_server.py",
+      "sha256": "9c25c1faaf7c4557aaeb22b0977061914a9fbba1a04d87d2a3a29851daa29846",
+      "destination": "source_capture/tool_server.py",
+      "byte_identical": false,
+      "modification": "v1.4 source writer opt-in hook/current code pinned; HTTPS capture implementation inherited unchanged"
+    },
+    "test_source_capture.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v8-20261001-2140/dev/source-capture-v1/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "destination": "source_capture/test_source_capture.py",
+      "byte_identical": true
+    },
+    "resource_profile.py": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py",
+      "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "destination": "resource_profile.py",
+      "byte_identical": true
+    }
+  },
+  "runtime_binaries": {
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/bwrap": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab"
+  },
+  "pin_scope": "tool code/config/copied implementation/runtime executables; existing OS standard library is runtime, not newly installed",
+  "changed_files": [
+    "config.py",
+    "source_capture/tool_server.py",
+    "README.md",
+    "bundle_carrier.py",
+    "operator_binding.py",
+    "test_bundle.py",
+    "API_SCHEMA.json",
+    "PROVENANCE_IMPLEMENTATION.json",
+    "EMPTY_CLOSURE_FIXTURE.json"
+  ],
+  "byte_identical_resource_execution_components": [
+    "execution_server.py",
+    "resource_gate.py",
+    "resource_profile.py",
+    "test_framing.py",
+    "test_resource.py",
+    "test_tools.py"
+  ],
+  "policy": {
+    "DEC010": {
+      "path": "supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    "scope": {
+      "path": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    "provenance": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    "clock": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    }
+  },
+  "change_scope": "Opt-in existing source writer DEC010 explicit native four-artifact adoption, SHA-bound neutral closure/provenance, single fresh directory commit; no new tool, privilege, model/source answer or clock/resource expansion."
+}

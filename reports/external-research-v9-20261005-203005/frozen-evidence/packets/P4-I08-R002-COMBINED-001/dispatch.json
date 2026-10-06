@@ -1,0 +1,169 @@
+{
+  "schema": "er9.current-combined-role-source-packet.v1",
+  "protocol_version": "ER9-independent-output-v1",
+  "evaluation_id": "P4-I08-R002",
+  "scope": "one_actual_combined_critic_and_final_role_with_canonical_final4",
+  "actual_stage": "critic_final",
+  "prepared_utc": "2026-10-06T01:39:44.589138+00:00",
+  "reservation_pin": {
+    "path": "LAB_ROOT/evaluation/independent-pipelines/P4-I08-R002/reservation.json",
+    "sha256": "2904f521d7f905f45caaa09ce9d680ed057e1cb40d644d1a907de1af9a6210bc"
+  },
+  "requested_evaluator": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh"
+  },
+  "physical_provider_telemetry": "UNKNOWN",
+  "task": {
+    "brief": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/brief.md",
+      "sha256": "6e6749f350f747baec86f127a6c91ec60c3e9d010329484dadd37bf22877450a",
+      "bytes": 5830
+    },
+    "coverage_map": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/coverage_map.json",
+      "sha256": "7f7cc8f0a02b4757720f9f6cb7270e08da61028b52c20eb37928c8c50151f91f",
+      "bytes": 4577
+    },
+    "common_criteria": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/common_criteria.json",
+      "sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+      "bytes": 2521
+    },
+    "source_access": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/source_access.json",
+      "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+      "bytes": 1751
+    },
+    "output_contract": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/output_contract.md",
+      "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+      "bytes": 2062
+    },
+    "important_checks": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/important_checks.json",
+      "sha256": "543a07fd1de56392b89858999cd6dce73757bdf40de62dd7d16106b0adf4ca60",
+      "bytes": 1952
+    },
+    "actual_launched_task": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/actual_launched_task.md",
+      "sha256": "2008b4ab749e3fd146718e45c3613b0a025e1f626937b3bf08d6222a3f8b6aff",
+      "bytes": 14094
+    },
+    "actual_delivery_objective": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/actual_delivery_objective.md",
+      "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650",
+      "bytes": 2275
+    },
+    "neutral_card": {
+      "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/task/neutral-card.json",
+      "sha256": "d97bac3ac7c8fb57947e4689d61f3030ebcba494cec1c9000cfa472fd82af046"
+    }
+  },
+  "actual_task_counts": {
+    "obligations": 12,
+    "common_dimensions": 8,
+    "important_checks": 5
+  },
+  "anonymous_outputs": [
+    {
+      "alias": "A",
+      "combined_review": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/critique/review.md",
+        "sha256": "c39f7dda4447ae829da97db94f724bd0c349f177c718f513b4ae7163be4944e7",
+        "bytes": 7474,
+        "role_kind": "current_combined_review"
+      },
+      "designated_final": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/proposal.md",
+        "sha256": "475295610eee6a2c0ea585e7c9de883683621b6984f2d7bba74ea31a6e755ece",
+        "bytes": 38006,
+        "role_kind": "actual_canonical_final"
+      },
+      "source_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/sources.json",
+        "sha256": "5987eaa989ca51d386427e470f7ceac69534b1f474e6ffd5fa1043789f2605cc",
+        "bytes": 22798,
+        "role_kind": "actual_canonical_final"
+      },
+      "witness_catalog": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/witnesses.json",
+        "sha256": "922755ac372d92a6839cd549337c26f1054c8f0d6db570e04f638607c775c2f0",
+        "bytes": 7768,
+        "role_kind": "actual_canonical_final"
+      },
+      "leads": {
+        "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/leads.json",
+        "sha256": "5e342e3c0af94c6b3f0216dfc622b6cc05d5cefddefc34d9de058e081d90ac93",
+        "bytes": 11453,
+        "role_kind": "actual_canonical_final"
+      },
+      "missing_canonical_final_files": []
+    }
+  ],
+  "common_predeclared_checks": [
+    {
+      "check_id": "B-P1",
+      "obligation_ids": [
+        "B08",
+        "B09"
+      ],
+      "neutral_question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?"
+    },
+    {
+      "check_id": "B-P2",
+      "obligation_ids": [
+        "B02",
+        "B03",
+        "B04",
+        "B10"
+      ],
+      "neutral_question": "Are the chosen design\u2019s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?"
+    },
+    {
+      "check_id": "B-P3",
+      "obligation_ids": [
+        "B11"
+      ],
+      "neutral_question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?"
+    },
+    {
+      "check_id": "B-P4",
+      "obligation_ids": [
+        "B12"
+      ],
+      "neutral_question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?"
+    },
+    {
+      "check_id": "B-P5",
+      "obligation_ids": [
+        "B01",
+        "B05",
+        "B06",
+        "B07",
+        "B10"
+      ],
+      "neutral_question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?"
+    }
+  ],
+  "artifact_integrity_proof": {
+    "path": "LAB_ROOT/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/integrity-proof.json",
+    "sha256": "47c57050322eeddc25268e45c5e51839b90aebbb7174a18953311e73879545b5"
+  },
+  "assessment_plan": {
+    "screen_max_seconds": 1200,
+    "hard_max_seconds": 1800,
+    "phase2_max_seconds": 600,
+    "budget_frozen_utc": "2026-10-06T01:35:06.785333+00:00",
+    "start_rule": "START receipt immediatelybeforefirstsemantic task/source/candidatebody read; wholehardpriority; noreset"
+  },
+  "comparison_boundary": "One genuine selected combined role only. Fullactualcanonicaldelivery permitsindependent sourceassessment underactualfullbrief; no nativeCOMPLETE/freshmatched causal/effect/winner/pipelinecompletion credit inferred fromfilepresence.",
+  "blinding": {
+    "known_context": [
+      "Parent assignment says full canonical4 delivered plus review",
+      "Parent assignment says runtime FAILED/PAUSED after artifacts"
+    ],
+    "actualtask_model_or_lineage_hints": "unavoidableexacttasklabels disclosed; no perfectblinding claim",
+    "private_key_history_Goal_runtime_usage": "withhelduntilnewimmutablePhase1judgment"
+  }
+}

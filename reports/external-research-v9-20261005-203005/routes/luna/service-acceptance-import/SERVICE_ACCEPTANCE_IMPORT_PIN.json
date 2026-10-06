@@ -1,0 +1,18 @@
+{
+  "schema": "er9.luna.service-acceptance-import-reader-pin.v1",
+  "status": "MECHANICALLY_READY",
+  "files": {
+    "service_acceptance_projection_v1_1.py": "aa5c01ea06eddce5d99973bda5019bdce69264daca0b487f5639f52a5404f09c",
+    "test_service_acceptance_import.py": "92a22310894c53e8ef5c1bc9e326c5befdd319d33f470fa27881c7c0c3303cdc",
+    "SERVICE_ACCEPTANCE_IMPORT_REGRESSION.json": "6338986cf80241529a717780da81e2810b9447efbbf8591f809d0cfb715a4fdb",
+    "SERVICE_ACCEPTANCE_IMPORT_README.md": "789d8f5102a3e64678ea1a656c93846f2cba56f16e2cd91b71081e03b9a34ba5"
+  },
+  "dependencies": {
+    "native_error_projection.py": "8e8994c72f78ede01d791e3c8414d38a9360f8891331bdbff4661e2e81a70d04",
+    "test_service_acceptance_projection.py": "133fd116353e83cd47c849894cdb6c0c055f741d0c71daab3990741a1c993bae"
+  },
+  "original_reader_unchanged_sha256": "6e5c8e6a5c055788ced67fadda72fadfb74c916ba80e424d82daa80327b72a43",
+  "tests_pass": 10,
+  "native_goal_starts": 0,
+  "scope": "import-context successor only; current ops reader fix/live jobs unchanged"
+}

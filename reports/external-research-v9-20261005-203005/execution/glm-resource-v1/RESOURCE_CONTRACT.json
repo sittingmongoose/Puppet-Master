@@ -1,0 +1,71 @@
+{
+  "schema": "er9.glm.complete-resource-contract.v1",
+  "version": "glm_complete2304_v1",
+  "created_utc": "2026-10-06T01:36:16.487757+00:00",
+  "family": "Z",
+  "requested_model": "GLM 5.3 Flash",
+  "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "effort": "max",
+  "native_entry": "official app-server session/goal set",
+  "worker_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/stage_worker.py",
+  "profile_allocator_reader": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py",
+    "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+  },
+  "profile_schema": "er9.luna.private-memory-profile.v1",
+  "tools_version": "v1.3",
+  "tools_config_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/config.py",
+    "sha256": "dc7be2ccaf158a41e716d6df80c9f5e634916fc0ff4d2633132f97f401d22cb3"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.3/SOURCE_PINS.json",
+    "sha256": "c5f30811d2883e430da963cf8cd539f84a267e3ae19127e791e6c19bde0de621"
+  },
+  "aggregate_memory_max_bytes": 2415919104,
+  "memory_swap_max_bytes": 0,
+  "component_memory_max_bytes": {
+    "outer_worker": 805306368,
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "original_clock": {
+    "birth": "ops original monotonic admission birth before private slice allocation",
+    "total_stop": "birth + max_seconds",
+    "native_work_stop": "total_stop - 30 seconds, inherited cleanup reserve",
+    "component_guard_stop": "total_stop - 5 seconds",
+    "outer_runtime_max": "remaining original total allocation",
+    "extra_seconds": 0
+  },
+  "placement_before_goal": [
+    "outer worker and retained guards/service launchers/relay threads in outer_worker768 service",
+    "official native host and native-spawned proxies in native768 service",
+    "source and execution adapter gated sibling services256",
+    "sandbox bootstrap actual parent2304 child256 gate",
+    "all currently existing private job PIDs structurally checked"
+  ],
+  "private_release": {
+    "actor": "sole ops admission owner",
+    "outer_terminal_required": true,
+    "MainPID_required": 0,
+    "recursive_quiet_required": true,
+    "worker_never_releases_parent": true,
+    "no_readmission_on_missing_receipt": true
+  },
+  "adoption_scope": "wholly-unstarted symmetric matched stages or explicit successor lineages, fresh prospective packet/input/tool/engine/prompt seals before Goal/output",
+  "unchanged": [
+    "actual GLM model/max/genuine Goal",
+    "task/source/factor/output contract",
+    "existing tool privilege boundaries and individual sandbox limits",
+    "stage max_seconds/max_responses",
+    "original-clock setup and cleanup accounting",
+    "native cost and actual Goal receipts"
+  ],
+  "oom_policy": "charged failure; no silent enlarged cap, retry, model substitution or best-of",
+  "fit": "UNKNOWN",
+  "host_admission": "ops includes remaining growth of all owned envelopes plus actual 3GiB reserve; cap GLM2; unknown legacy growth holds overlap",
+  "model_calls_for_verification": 0,
+  "native_goal_starts_for_verification": 0
+}

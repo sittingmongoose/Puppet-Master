@@ -1,0 +1,170 @@
+{
+  "schema": "er9.safe-source-evidence-index.v2",
+  "as_of_utc": "2026-10-06T01:41:39.741444+00:00",
+  "refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+      "sha256": "fa8dc707fc0b7dde5cc37a5438b49a246dcc485ce9803bd8e7b75f71376e5dba"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/luna_bind_next.py",
+      "sha256": "6b6cc331f747a13c0cf1e4ce74568237712c70366730955bedeb89f00d9a2c92"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/glm_template_bind.py",
+      "sha256": "8ba1aae80ae07124fb6717e7bce955b05e9b4edff0ad7241ba17d3159b660a56"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/register_resource_outbox.py",
+      "sha256": "9250a8a47fb8b89d481dd2dc7aecbb9a04cfbe22e2b52c0c4661755610488f2a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/resource_admission.py",
+      "sha256": "ce6fc02785137c5eabd598e8e694899f64f89dd38937696f0613025f56e2e93c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/RESOURCE_SUCCESSOR_REQUEST.json",
+      "sha256": "63b93ecaa76edbee919066ca99bfc6fc0ce1247524de3fc49fb5e55be5136bfa"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/RESOURCE_ENTERED_LINEAGE_METADATA.json",
+      "sha256": "3bea72ad2fde3ba285a665c662e5316d617250ade48f8457bc71bf4acc71cf9b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+      "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/DELTA_PROOF.json",
+      "sha256": "fe7bbd54148b8a63d518078d8ede759aee6ac48d8a929fb510effd02a7cebaf2"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/PIN.json",
+      "sha256": "2c84af44ccbe89b0037f2fbf6195f68a5e5fcb55895ea87ab5aebe7b3ef12bb8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/VERIFICATION.json",
+      "sha256": "a15cb754abf9480cc5082846d6b36ee1a69c40dbebbfe2a5b2bc0cb58aefb517"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_successors.py",
+      "sha256": "970faaf5344ccfb71140eaa0584e54323b6071ffffffc7b81ea7c3a4ee5b16c8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_bundle_transport.py",
+      "sha256": "9eab6e78c9c8bbce05eba9f77ac37fa2cb0e506f9f4a1b410ec9308bd5b05b1e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/TRANSPORT_BLUEPRINT.json",
+      "sha256": "cfa5f6b4ac55967ecdd5305f34a5e2c063ff22ddb56365f4ebcfa1f6907f1636"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/LEGACY_FIELD_CLARIFICATION_001.json",
+      "sha256": "701cc3985845e71b6ff8b8f7fec7ba434d0c18146010ab69f1f0651d827f60d9"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/PIN.json",
+      "sha256": "721c86a4d742d821ae05d5d910158372f1beb22e65abcee1565ff9c0e1b54227"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/RESOURCE_CONTRACT.json",
+      "sha256": "903f792c57c654d37dd4d0e290bf3c005dd7a3fc7f8442e05fac12c2cdcb8d3f"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/dynamic_stage_runner.py",
+      "sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/resource_tool_release.py",
+      "sha256": "d97b0a242e0794771c837776236cdd4ccf8c9094e0a2640304cff564ad5e8cae"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+      "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/INTEGRATION_OUTBOX.json",
+      "sha256": "0d8f137168579d7bd334458c33533baa2981240742b2269f733c52f0c803b80b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+      "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/VERIFICATION.json",
+      "sha256": "39b668c90b265a7b89ffe3625dcf07ee6bb1ae585d4a9f3fd1bc21840312b000"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/glm_stage.py",
+      "sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/profile.py",
+      "sha256": "6aaca139bfaae6a1c9fbe34367f7a2d3a0b32429e71bedaee9080bf416dcf03d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/stage_worker.py",
+      "sha256": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+      "sha256": "b492a82e53954e2f72ed1ad442ff5a035a6db8436c415f2efd886f4fc639d206"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/operator_binding.py",
+      "sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+      "sha256": "ee20c6ca8928a23f88d2f475db1b7aef51394e35755bb4acae24d2a3d531517b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/tool_server.py",
+      "sha256": "70ceac49f4985fad11e36d770d0ee59ed31f5305a69a55a9f161fb835f78a135"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+      "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-009-NEUTRAL-TARGETED-SETUP.json",
+      "sha256": "ff6873db3e8cbac67199ff39ae7a3e63a69741ce3ceddc1fe7f0a27e7dcc7e70"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/controls.py",
+      "sha256": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/dynamic_projector.py",
+      "sha256": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/BLUEPRINT.json",
+      "sha256": "8fad3b5690313ef7809ffae28ca76dead0b0091b6825152ac38c666973d494c6"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V06-A.json",
+      "sha256": "7619d8cee37d6c8fd7d9abf3ca64a143e9b10c8df3a708b4742b81907cfc4874"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/corrected-dags/D-V09-A.json",
+      "sha256": "2062935b07841a9b4d96d5472e2bb20d1b01a8d4b55d1022a27338babac89d29"
+    }
+  ]
+}

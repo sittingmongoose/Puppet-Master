@@ -1,0 +1,30 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "cohort": "method-fidelity-002",
+  "source_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002",
+  "destination_hint": "assurance/method-fidelity-002",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/README.md",
+      "relative_path": "README.md",
+      "sha256": "301f8503e25022c44ebf5baf5ea00d708f1bb34296f820e86ff35fc8c9ada441"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/CONCLUSIONS.json",
+      "relative_path": "CONCLUSIONS.json",
+      "sha256": "b70640ac544fb3d8aa136511223ea29c8fc7f5e744ec19ddaa34b2c31082e0be"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/FINITE_QUEUE_METADATA.json",
+      "relative_path": "FINITE_QUEUE_METADATA.json",
+      "sha256": "733d2a2a7b0e66d42b8fb873232908a1afebb3b0f4f5e7bd0f374ff4ccf1f376"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/SOURCE_EVIDENCE.json",
+      "relative_path": "SOURCE_EVIDENCE.json",
+      "sha256": "3b192edcd16da0ccb747fd685dfddd6809bbf6374d7c99cdd9a5c362d0f2362a"
+    }
+  ],
+  "scope": "Metadata-only bounded prospective report; all unlisted paths excluded; no candidate/source/evaluator/auth/raw native IO bodies, sealedholdouts or largerlocal snapshots selected",
+  "no_scientific_result": true
+}

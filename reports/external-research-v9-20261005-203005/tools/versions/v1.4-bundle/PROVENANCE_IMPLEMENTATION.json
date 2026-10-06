@@ -1,0 +1,42 @@
+{
+  "schema": "er9.dec010.provenance-implementation.v1",
+  "created_utc": "2026-10-06T01:46:49.092367+00:00",
+  "policy": {
+    "DEC010": {
+      "path": "supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    "scope": {
+      "path": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    "provenance": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    "clock": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    }
+  },
+  "selector_shape_unchanged": {
+    "input_id": "opaque native selection; SHA/bytes bound in candidate-visible sealed closure"
+  },
+  "positive_proof": "Native activation/freeze metadata receipts are loaded from confined inputs, exact SHA checked; record/count/time JSON selectors are bound to same original job/case/arm/role/family. No session-only, missing positive count, source drift or invented clocks.",
+  "nullable_goal": "Actual distinct Goal ID may be null only with separate actual session ID and explicit non-exposure reason; no alias substitution.",
+  "clock_unknowns": "Unknown exact activation/freeze timestamps remain null with reasons; actual enclosing same-job anchors are exact values from SHA-pinned metadata selectors on comparable clocks and preserve basis/precision. No exact duration or completion claim.",
+  "shared_seed": "Only already-frozen registered authorization capsule covering declared target arms and exact artifact/source IDs/SHA/bytes; original case/arm may remain truthfully unassigned. No new sharing or grade selection.",
+  "V06": "Both arms excluded; existing zero-fuzz/native-amendment pipeline unchanged. Generic proposal references preserve bytes for other eligible fresh final contracts.",
+  "independent_statuses": [
+    "native Goal status",
+    "native/frontend tool call receipt",
+    "source MCP prepared/flushed receipt",
+    "physical complete directory commit",
+    "owned quiescence",
+    "independent source grade"
+  ],
+  "native_model_calls": 0,
+  "native_goals_started": 0,
+  "candidate_case_bodies_or_evaluator_answers_used_to_author_tool": false,
+  "fit_and_semantic_efficacy": "UNKNOWN; mechanical checks do not qualify a research recipe."
+}

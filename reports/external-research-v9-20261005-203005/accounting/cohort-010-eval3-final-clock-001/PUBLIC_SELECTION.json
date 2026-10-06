@@ -1,0 +1,19 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-010-eval3-final-clock-001/eval3-final-clock.safe.json",
+      "sha256": "06309819a8d0309c5a57189ceeb1be4d0d22c6fe68c26209fdced401d3cc7f95"
+    },
+    {
+      "path": "accounting/cohort-010-eval3-final-clock-001/eval3-final-clock.safe.schema.json",
+      "sha256": "11787f6db6384d57de35ee7aba1fbf7160f965039babc8143484df7552ac30c1"
+    },
+    {
+      "path": "accounting/cohort-010-eval3-final-clock-001/EVAL3_FINAL_CLOCK.md",
+      "sha256": "cbe8689fc8caf1a773ede1e4f9efc226e38c6c047dc41a7c9ccf7763a4955f52"
+    }
+  ],
+  "cohort": "010-eval3-final-clock-001",
+  "exclusion": "Exact clock boundary metadata only; no source/evaluator semantic bodies or unlisted artifacts.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

@@ -1,0 +1,33 @@
+{
+  "schema": "er9.luna.engineering-scope-incident.v1",
+  "incident_id": "luna-engineering-search-001",
+  "recorded_at_utc": "2026-10-06 01:35:46 UTC",
+  "search_start_utc": "UNKNOWN: tool return did not capture an absolute start timestamp",
+  "tool_cell_id": "functions.exec result chunk2f3a73",
+  "tool_wall_duration_seconds": 0.301700681,
+  "local_workdir": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005",
+  "command": "rg -n 'DEC010|bundle|v1.4|acceptance.*import' dev/tools dev/diagnostic-runner ops/dispatcher --glob '*.md' --glob '*.json' --glob '*.py'",
+  "search_paths": [
+    "dev/tools",
+    "dev/diagnostic-runner",
+    "ops/dispatcher"
+  ],
+  "pattern": "DEC010|bundle|v1.4|acceptance.*import",
+  "output_truncated": true,
+  "reported_original_token_count": 2047996,
+  "unsolicited_snippet_categories": [
+    "sibling run/publication task prose",
+    "sibling seeded candidate artifact prose"
+  ],
+  "snippets_reproduced_in_incident": false,
+  "interpretation_or_use": "No candidate/evaluator semantic interpretation, code choice, case finding, answer or result claim uses those snippets. Broader search stopped; only exact owned/tool-owner source and case-owner structural contracts used thereafter.",
+  "blindness_statement": "Exposure incident disclosed; do not retroclaim perfect blindness for this engineering observer. Engineering is separate from candidate/evaluator judgments.",
+  "mitigation": [
+    "parent notified promptly",
+    "no re-read of captures/grades",
+    "restrict future reads to exact owner-provided structural code/contracts",
+    "old grades/costs/live runtimes untouched"
+  ],
+  "native_goal_starts": 0,
+  "source_results_or_grades_mutated": false
+}

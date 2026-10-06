@@ -1,0 +1,196 @@
+{
+  "schema": "er9.bounded-successor-conclusions.v2",
+  "as_of_utc": "2026-10-06T01:41:39.741444+00:00",
+  "no_scientific_uptake_pass_or_completion_claims": true,
+  "actual_scope": {
+    "focus_registered_rows": 19,
+    "explicit_resource_owner_rows": 15,
+    "explicit_resource_owner_bound_descriptors": 9,
+    "neutral_r1_bound_descriptors": 4,
+    "explicit_resource_owner_registry_confirmed_native_starts": 3,
+    "current_bundle_bound_descriptors": 0
+  },
+  "checked_results": [
+    {
+      "check": "actual_bound_family_owner_model_effort",
+      "result": "NO_METADATA_DISAGREEMENT",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/SUCCESSOR_BINDING_METADATA.json",
+        "sha256": "21576eba9eba215d29df8b63baba65a2ad1d350ef019889c4ac4f66647fc8fcd"
+      },
+      "limit": "Registered model/Max and actual runtime family match; per-run positive native identity is registry metadata, not reread raw native IO."
+    },
+    {
+      "check": "fresh_standalone_native_Luna",
+      "result": "SOURCE_CONTROL_CONFIRMED",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/dynamic_stage_runner.py",
+          "sha256": "1abc05178a843bf3eb8ae4205a11ba41964cd6fdef9293c687ae54a36bebc0c6"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/dynamic_projector.py",
+          "sha256": "90e955e4038c2ded933bd66a9b9bec0c153493cd09475913cce43678c67ac30b"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/controls.py",
+          "sha256": "31cf8b193b2431d3117758e233fba8c51930cbfb4096c1b956a42ce0a7ffdd34"
+        }
+      ],
+      "meaning": "Actual thread/start requests gpt-6-luna/max, fallback false; acknowledgement rejects nonempty turns/fork ancestry/wrong model/provider/effort; genuine thread/goal/set+initial turn/start, no collaboration subagent or semantic host followup."
+    },
+    {
+      "check": "genuine_native_GLM",
+      "result": "SOURCE_READY_ACTUAL_SUCCESSOR_BINDING_UNKNOWN",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/glm_stage.py",
+          "sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        }
+      ],
+      "meaning": "Fresh session/create selects exact GLM-5.3-Flash/max; session/read identity validated; actual session/goal activation recorded before stricter checks. Current resource successor version not yet bound in focused registry."
+    },
+    {
+      "check": "original_clocks_resources",
+      "result": "NO_CHECKED_METADATA_DIFFERENCE",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/SUCCESSOR_BINDING_METADATA.json",
+        "sha256": "21576eba9eba215d29df8b63baba65a2ad1d350ef019889c4ac4f66647fc8fcd"
+      },
+      "meaning": "Source stage arm/stage/output/caps retained, task hashes retained for resource-only versions; runtime original_birth+max_seconds equals original_total_stop for three started resourceowner jobs. Shared resource uses2304MiB aggregate, swap0 and3GiB host reserve. ResearchfitUNKNOWN; ordinary current max_responsesnull on Luna remains explicitly unsupported."
+    },
+    {
+      "check": "neutral_D02A_D07A",
+      "result": "ACTUAL_BOUND_REPAIR_CONFIRMED",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/contrast-repairs-001/DELTA_PROOF.json",
+          "sha256": "fe7bbd54148b8a63d518078d8ede759aee6ac48d8a929fb510effd02a7cebaf2"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/NEUTRAL_PAIR_REPAIR_ZERO_START_CONFIRMATION.json",
+          "sha256": "d2f4ef00fefb595b33f231b68ce79decc379f6bfd785cf9362927f11bc2f294b"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/SUCCESSOR_BINDING_METADATA.json",
+          "sha256": "21576eba9eba215d29df8b63baba65a2ad1d350ef019889c4ac4f66647fc8fcd"
+        }
+      ],
+      "meaning": "Both bound new arms remove only shared procedural sentence/clause, retain exact arm modifier hashes,600seconds and samev1.3resource runtime; D07 no evaluator ranking clause retained. Allfour remained0starts atcutoff. D07 is neutrality precaution, not proof of erased scheduling factor."
+    },
+    {
+      "check": "native_bundle_actual_runner_acceptance",
+      "result": "UNKNOWN_UNREADY_AT_CUTOFF",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/versions/v1.3/resource_tool_release.py",
+          "sha256": "d97b0a242e0794771c837776236cdd4ccf8c9094e0a2640304cff564ad5e8cae"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/profile.py",
+          "sha256": "6aaca139bfaae6a1c9fbe34367f7a2d3a0b32429e71bedaee9080bf416dcf03d"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/prepare_bundle_transport.py",
+          "sha256": "9eab6e78c9c8bbce05eba9f77ac37fa2cb0e506f9f4a1b410ec9308bd5b05b1e"
+        }
+      ],
+      "meaning": "Current real Luna resource runner hardcodes v1.3 tools; GLM profile explicitly rejects another builder. Owners preparing separatev1.4adapters. Zero actual Bdescriptors; changing a source label/PIN does not establish runtime acceptance. Unrelated current research/critics remain usable."
+    },
+    {
+      "check": "native_bundle_declared_method_scope",
+      "result": "SOURCE_CONTRACT_PRESENT_RUNTIME_APPLICATION_UNKNOWN",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+          "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+          "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/tool_server.py",
+          "sha256": "70ceac49f4985fad11e36d770d0ee59ed31f5305a69a55a9f161fb835f78a135"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+          "sha256": "ee20c6ca8928a23f88d2f475db1b7aef51394e35755bb4acae24d2a3d531517b"
+        }
+      ],
+      "meaning": "Existing writer/path,text schema hook; no new tool. V01 retains four/five generic tools through executionfactor flag. GenericB excludes BOTHV06arms; existing native rewrite versus amendment+zero-fuzz host renderer remains separate. V08 actual combined role still requires critique+final4, optional review not fifthslot. V09 actual three critic stage descriptors preserve400Cvs200+200T; two resolver200contracts deferred, actual DAG/solver materializationUNKNOWN."
+    },
+    {
+      "check": "fresh_pair_and_warm_continuation_labels",
+      "result": "PROSPECTIVE_METADATA_DISTINCTION_PRESENT",
+      "evidence": [
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/BLUEPRINT.json",
+          "sha256": "8fad3b5690313ef7809ffae28ca76dead0b0091b6825152ac38c666973d494c6"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/LEGACY_FIELD_CLARIFICATION_001.json",
+          "sha256": "701cc3985845e71b6ff8b8f7fec7ba434d0c18146010ab69f1f0651d827f60d9"
+        },
+        {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/SUCCESSOR_BINDING_METADATA.json",
+          "sha256": "21576eba9eba215d29df8b63baba65a2ad1d350ef019889c4ac4f66647fc8fcd"
+        }
+      ],
+      "meaning": "Resource wholly_unstarted_pair means zero-start current version, not automatically cold discovery/fresh complete matched quality. I06sourcecard mixedfullfresh/researchconsolidation and freshcreditfalse retained. I10T/I11T/I11C explicitly unpairedwarm delivery continuations. Native samearm artifacts are legitimate inputs; no new Sol answers or evaluator feedback asserted by inspected metadata."
+    },
+    {
+      "check": "locked_confirmation_scope",
+      "result": "LOCK_RETAINED_ACTUAL_RESOURCE_BUNDLE_BINDING_UNKNOWN",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/assurance/method-fidelity-002/FINITE_QUEUE_METADATA.json",
+        "sha256": "733d2a2a7b0e66d42b8fb873232908a1afebb3b0f4f5e7bd0f374ff4ccf1f376"
+      },
+      "meaning": "Four locked Cslots retained; no holdout bodies/feedback read. Fresh wholecomparison needs common runtime/carrier/actual closure freeze before firstresearch. Root clarified this before successor launch; zero-launch owner verification is not yet inspected in this bounded report."
+    }
+  ],
+  "observations": [
+    {
+      "id": "MF002-OBS01",
+      "classification": "DORMANT_BLANKET_REVIEW_BACKLOG_GATE",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/dispatch.py",
+        "sha256": "fa8dc707fc0b7dde5cc37a5438b49a246dcc485ce9803bd8e7b75f71376e5dba"
+      },
+      "meaning": "At inspected code the Luna pending_eval>=6 branch returned before research/critic/final filtering. No actual blocking claimed. Root explicitly directed ops remove arbitrary blanketgate in favor of actualcapacity/reviewassignment; implementation verification pending after cutoff. This auditor changed nothing."
+    },
+    {
+      "id": "MF002-OBS02",
+      "classification": "UNBOUND_LOGICAL_FINAL_ROLE_BINDING_CAUTION",
+      "evidence": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+        "sha256": "ee20c6ca8928a23f88d2f475db1b7aef51394e35755bb4acae24d2a3d531517b"
+      },
+      "meaning": "Profile rejects literal revision as an intermediate role; actual integrated stage label revision may own out/final4 while V05revision owns out/revision. Operator must bind genuinecomplete-final role contract separately from raw stage label, preserving exactstageID/duties. Sentcase/root; no actual profile exists so this is integrationUNKNOWN, not an executed defect."
+    }
+  ],
+  "genuine_unknowns": [
+    "Native candidate uptake or output/source correctness",
+    "Per-run full resource/researchfit and semantic complete coverage",
+    "Actual v1.4Luna/GLMbuilder acceptance and final profile/referenceclosure binding",
+    "D09resolver materialized actualtwo-reviewDAG and final200srun",
+    "GLM complete-envelope queue adoption/actualnative execution",
+    "Postcutoff backloggate removal and freshcomparison zero-launch custodyreceipt",
+    "Any unsupported/null origin GoalID; native session identity is not invented distinct Goalidentity"
+  ],
+  "cost_scope": "Each new native stage and its startup/servicewaits/failure/resourceOOM/cleanup charged in new lineage plus original costs; no retrospective status/grade rewrites, no arbitrary totalstart/token/deadlinecap, no outer5400allocation, no unexposed billing inferred.",
+  "auditor_operations": {
+    "model_calls": 0,
+    "native_Goals": 0,
+    "code_config_queue_or_original_file_edits": 0,
+    "new_tests": 0,
+    "holds": 0,
+    "candidate_source_or_evaluator_bodies_or_summaries_read": false,
+    "auth_or_raw_native_io_read": false,
+    "owned_writes_only": "assurance/method-fidelity-002"
+  }
+}

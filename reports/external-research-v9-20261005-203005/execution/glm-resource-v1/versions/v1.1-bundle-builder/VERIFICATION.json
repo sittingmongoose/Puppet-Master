@@ -1,0 +1,48 @@
+{
+  "schema": "er9.glm.bundle-builder-verification.v1",
+  "created_utc": "2026-10-06T01:50:54.101978+00:00",
+  "status": "PASS",
+  "test_command": "python3 -m unittest -v test_builder.py",
+  "tests": 2,
+  "elapsed_seconds": 4.362,
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "test_names": [
+    "test_exact_actual_bundle_builder_preserves_caps_deadline_and_allowlist",
+    "test_unselected_builder_profile_drift_foreign_stage_and_tool_change_rejected"
+  ],
+  "assertions": [
+    "actual selected builder enables exact native bundle profile",
+    "actual private parent2304MiB",
+    "same original deadline/profileSHA/component guard totalminus5",
+    "same admitted tool allowlist and control execution disabled",
+    "actual wrapped source command contains exact v1.4 carrier",
+    "wrong builder/profile SHA/foreignstage/privilege change rejected"
+  ],
+  "complete_resource_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/VERIFICATION.json",
+    "sha256": "39b668c90b265a7b89ffe3625dcf07ee6bb1ae585d4a9f3fd1bc21840312b000"
+  },
+  "byte_identical_resource_files": {
+    "stage_worker.py": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+    "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+    "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+    "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "pipe_bridge.py": "f9a8bf572f4334151ac4ca087844fdd1e7ebe7437aea4b5cb8b852c2f04209c2",
+    "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+  },
+  "resource_execution_reader_gate_v13_identical": true,
+  "actual_tool_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+    "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+  },
+  "tool_owner_verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/VERIFICATION.json",
+    "sha256": "b6085e06a92971faf6172c7587e2c1b09a7f60ff1ff1a5b773107f90cadb1499"
+  },
+  "native_research_fit": "UNKNOWN",
+  "native_model_canary_required": false
+}

@@ -1,0 +1,414 @@
+{
+  "schema": "er9.independent-source-judgment.v1",
+  "evaluation_id": "P4-I08-R002",
+  "phase": "SOURCE_FROZEN",
+  "freeze_utc": "2026-10-06T01:49:01.304173+00:00",
+  "freeze_monotonic_ns": 81760161197377,
+  "source_elapsed_seconds": 511.314386838,
+  "dispatch_sha256": "43e83870e49403d22c641b683c3782144cf5c677a9d74ba7c340f3974e07eff7",
+  "reservation_sha256": "2904f521d7f905f45caaa09ce9d680ed057e1cb40d644d1a907de1af9a6210bc",
+  "source_grade": "FAIL_SCREEN",
+  "source_grade_basis": [
+    "P4-F01"
+  ],
+  "whole_case_PASS": false,
+  "screen_rule": "Decisive source-grounded screen; all remaining scope explicitly UNASSESSED. No weighted/aggregate/new rubric.",
+  "findings": [
+    {
+      "id": "P4-F01",
+      "axis": "SOURCE",
+      "severity": "consequential",
+      "title": "Clean cell-order suffix omits earlier outputs updated by later cells",
+      "obligations": [
+        "B03",
+        "B04",
+        "B12"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q6"
+      ],
+      "important_checks": [
+        "B-P2",
+        "B-P4"
+      ],
+      "candidate_artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/proposal.md",
+        "sha256": "475295610eee6a2c0ea585e7c9de883683621b6984f2d7bba74ea31a6e755ece",
+        "bytes": 38006,
+        "role_kind": "actual_canonical_final"
+      },
+      "candidate_locators": [
+        "proposal.md line 23: unqualified claim that the suffix rule is sound for clean displayed-order runs",
+        "proposal.md line 48: clean-run invalidation inference",
+        "proposal.md line 123: changed cell plus following clean-run cells",
+        "proposal.md lines 24 and 59: cross-cell display updates acknowledged and recorded"
+      ],
+      "claim_quote": "The execution-order suffix invalidation rule is sound for a clean run in displayed order",
+      "primary_evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/nbclient/client.py",
+          "pin": "v0.10.2",
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S02.body",
+          "sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971",
+          "locator": "lines 706-714, 739-759 and 1103-1110",
+          "meaning": "Ordered execution does not prevent display-ID updates from replacing stored data/metadata at earlier cell indices."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/tests/files/update-display-id.ipynb",
+          "pin": "v0.10.2",
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-update-display-id.body",
+          "sha256": "363f609d83399de2c58c8b871742fcd73e3ef8cedd66394b734b4021293df265",
+          "locator": "cells[4].source/outputs and cells[5].source/outputs",
+          "meaning": "The earlier cell displays result ID; the later cell updates that ID to 10 and has no stored output of its own."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/tests/test_client.py",
+          "pin": "v0.10.2",
+          "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/nbclient-test-client.body",
+          "sha256": "367218c8c240ab44369dbba2c70ef702e0cfb953d08616aab2116f0802c33718",
+          "locator": "lines 346-354",
+          "meaning": "The fixture is included in the tagged notebook execution/comparison test list."
+        }
+      ],
+      "counterexample": "After an ordered clean replay of the pinned fixture, edit the later updater cell from 10 to another value. The visible saved result in earlier cell 4 depends on the edited cell 5. A cell-5-and-later suffix does not include that cell-4 output. Its old output is stale even though its displaying cell source, notebook order, data and environment have not changed.",
+      "scope": "Static derivation from exact upstream code and stored test fixture, not an evaluator-executed notebook or observed product failure.",
+      "qualification": "The proposal already records affected output IDs and has general fingerprint/currentness rules. Those are useful, but it never specifies invalidation traversal across update events or an exception to its explicit clean suffix assertion/table. A reader must invent that missing rule to reconcile them.",
+      "consequence": "A core current/stale output rule is incomplete and contradicts a mechanism the final itself supports. Whole-case PASS is not available under B04 and Q3/Q6.",
+      "repair_requirement": "Invalidate the affected output dependency closure, including earlier display outputs changed by later cells, or conservatively invalidate every clean-run notebook output after a code edit. Preserve update-event provenance."
+    },
+    {
+      "id": "P4-F02",
+      "axis": "STRUCTURAL_FORMAT",
+      "severity": "delivery format defect",
+      "title": "Current sources.json is not valid JSON",
+      "candidate_artifact": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/frozen-exports/packets/P4-I08-R002-COMBINED-001/outputs/A/final/sources.json",
+        "sha256": "5987eaa989ca51d386427e470f7ceac69534b1f474e6ffd5fa1043789f2605cc",
+        "bytes": 22798,
+        "role_kind": "actual_canonical_final"
+      },
+      "locator": "line 151 column 65, offset 15031",
+      "evidence_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/structural_and_witness_static.json",
+      "test": "Python standard-library json.loads on the exact pinned bytes",
+      "observed": "JSONDecodeError: Expecting value; the second locator entry begins with unquoted source lines prose",
+      "scope": "Four canonical final files and review are physically delivered. The human-readable source entries remain inspectable. This is separate from source F01 and native lifecycle."
+    }
+  ],
+  "obligation_coverage": [
+    {
+      "id": "B01",
+      "coverage": "COMPLETE",
+      "assessment": "SUPPORTED_PROPOSED_COVERAGE",
+      "detail": "Minimum workflow and Python/optional SQL boundary are present; no built-product credit."
+    },
+    {
+      "id": "B02",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "detail": "Data-contract choices and strict/reject policies are present; not all adapter/conversion source behavior independently adjudicated."
+    },
+    {
+      "id": "B03",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01",
+      "detail": "Order/session/provenance separation is useful; ordered replay does not rescue the suffix claim."
+    },
+    {
+      "id": "B04",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01",
+      "detail": "Earlier cross-cell updated outputs are omitted by the stated suffix; other transitions remain unassessed for whole-case qualification."
+    },
+    {
+      "id": "B05",
+      "coverage": "COMPLETE",
+      "assessment": "SUPPORTED_PROPOSED_COVERAGE",
+      "detail": "Identity/portable folder, explicit bundle and environment manifest requirements are stated with unresolved runtime-lock gates."
+    },
+    {
+      "id": "B06",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "detail": "5 GB explicitly remains an unexecuted target; streaming, spill, cancel and recovery plans are useful but not all consequential paths independently adjudicated."
+    },
+    {
+      "id": "B07",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "detail": "Execution boundary and fail-closed resource/transport gates are explicit; no implemented policy or UI validation credit."
+    },
+    {
+      "id": "B08",
+      "coverage": "COMPLETE",
+      "assessment": "VERIFIED_SEMANTIC_PRECEDENTS",
+      "detail": "Jupyter/nbclient ordered execution and output-update implementation is independent from DuckDB scanner/analytical mechanisms. Candidate discovery/native origin is held for Phase2."
+    },
+    {
+      "id": "B09",
+      "coverage": "COMPLETE",
+      "assessment": "VERIFIED_QUALIFIED_SOURCE_CHAIN",
+      "detail": "Real #25164 -> #25232 v2.0-cyanoptera merge -> exact commit regression source; notwindows, buffer/reader settings, tag-path absence and no binary proof preserved."
+    },
+    {
+      "id": "B10",
+      "coverage": "COMPLETE",
+      "assessment": "SUPPORTED_PROPOSED_COVERAGE",
+      "detail": "Schema-drift opportunity, JupyterLab/provenance alternative and separately qualified reader/VM options are useful and optional; critical dependency gates are visible."
+    },
+    {
+      "id": "B11",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "detail": "W02 code/input/expected-result/catalog hashes inspected statically; exact native execution authenticity held for Phase2. Proposed checks are labeled UNEXECUTED. No runtime/5 GB credit."
+    },
+    {
+      "id": "B12",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01_FORMAT_DEFECT_F02",
+      "detail": "Current source counterexample and malformed catalog found. Preservation against prior research is UNASSESSED because prior body not supplied/read in Phase1."
+    }
+  ],
+  "important_checks": [
+    {
+      "id": "B-P1",
+      "coverage": "COMPLETE",
+      "result": "QUALIFIED_SOURCE_SUPPORT",
+      "details": "Two independent implementation mechanisms and real issue/fix/pinned regression chain verified. Native candidate discovery attribution held Phase2; no release/binary performance credit."
+    },
+    {
+      "id": "B-P2",
+      "coverage": "PARTIAL",
+      "result": "FAIL_SCREEN",
+      "defect_ids": [
+        "P4-F01"
+      ],
+      "remainder": "UNASSESSED"
+    },
+    {
+      "id": "B-P3",
+      "coverage": "PARTIAL",
+      "result": "NO_SOURCE_MISLABEL_FOUND_IN_REVIEWED_SCOPE",
+      "details": "Catalog consistency/static expected behavior checked; exact execution proof held Phase2; remainder UNASSESSED."
+    },
+    {
+      "id": "B-P4",
+      "coverage": "PARTIAL",
+      "result": "FAIL_SCREEN",
+      "defect_ids": [
+        "P4-F01"
+      ],
+      "details": "Current consequential conflict found; historical semantic preservation UNASSESSED. F02 is separate format evidence."
+    },
+    {
+      "id": "B-P5",
+      "coverage": "PARTIAL",
+      "result": "PROPOSED_COVERAGE_PRESENT",
+      "details": "Required workflow and useful optional lanes present; full source/application qualification remainder UNASSESSED."
+    }
+  ],
+  "common8": [
+    {
+      "id": "Q1",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q2",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q3",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q4",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q5",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q6",
+      "coverage": "PARTIAL",
+      "assessment": "CONSEQUENTIAL_DEFECT_F01",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q7",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "note": "No whole-dimension PASS or numerical weight inferred"
+    },
+    {
+      "id": "Q8",
+      "coverage": "PARTIAL",
+      "assessment": "REMAINDER_UNASSESSED",
+      "note": "Current final format defect F02 separately affects reproducible catalogs"
+    }
+  ],
+  "verified_source_mapping": [
+    {
+      "id": "P4-S01",
+      "claim_scope": "nbclient default skip/error controls and cross-cell display updates",
+      "source_urls": [
+        "https://raw.githubusercontent.com/jupyter/nbclient/v0.10.2/nbclient/client.py"
+      ],
+      "locators": [
+        "164-187",
+        "706-714",
+        "739-759",
+        "909-918",
+        "964-984",
+        "1103-1110"
+      ],
+      "capture_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S02.body",
+      "sha256": "3a30187449d2fea6ce6063e79cbaa0edf1478947099a8b66d8d2fb30a0418971",
+      "assessment": "SUPPORTED within this source tag; not a full compatible runtime or sandbox"
+    },
+    {
+      "id": "P4-S02",
+      "claim_scope": "Real CSV duplicate report and fix association",
+      "source_urls": [
+        "https://github.com/duckdb/duckdb/issues/25164",
+        "https://github.com/duckdb/duckdb/pull/25232"
+      ],
+      "capture_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S07-html.body",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S08-html.body"
+      ],
+      "capture_sha256": [
+        "19b265e0705ffa872d6c301412b43fa6b25d87176cbd9c2e2ac72fb63c876025",
+        "cdc3461011e2f505b7c0a749c0d0e7fe9faeae285962b646d207e8951a6d806d"
+      ],
+      "locators": [
+        "issue reproduction/versions and Closed via #25232",
+        "PR body Fixes #25164, base v2.0-cyanoptera, merged Sep 7 commit 59ae0c6"
+      ],
+      "conditions": "Reproduction uses parallel reads, CRCRLF, strict_mode=false, ignore_errors=true and engineered small buffers. Versions are reported by author, not executed by evaluator."
+    },
+    {
+      "id": "P4-S03",
+      "claim_scope": "Pinned CSV regression and exact v1.5.6 path/source limits",
+      "source_urls": [
+        "https://raw.githubusercontent.com/duckdb/duckdb/59ae0c6fb3f29369cfd0df124c76e9232181ef86/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+        "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/test/sql/copy/csv/parallel/test_rrrn_parallel.test",
+        "https://raw.githubusercontent.com/duckdb/duckdb/v1.5.6/src/execution/operator/csv_scanner/scanner/string_value_scanner.cpp"
+      ],
+      "capture_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S09.body",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S11.body",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S12.body"
+      ],
+      "sha256": [
+        "86a726d34fe71340fad309e9fd33dc62e7859e6a41edadd032521fda1d1cbf5f",
+        "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+        "0a233369a555ddacb55395bd05492b6dd6e1419a0161b55e9158116e7d513e18"
+      ],
+      "locators": [
+        "test lines 4-87",
+        "exact tag test HTTP404",
+        "scanner lines 1410-1449"
+      ],
+      "assessment": "Regression source conditions/notwindows confirmed; tag source lacks corresponding guard at inspected branch; no binary or alternate-fix absence proof."
+    },
+    {
+      "id": "P4-S04",
+      "claim_scope": "Bubblewrap policy/cgroup boundary and Jupyter local transport",
+      "source_urls": [
+        "https://raw.githubusercontent.com/containers/bubblewrap/v0.10.0/README.md",
+        "https://jupyter-client.readthedocs.io/en/stable/security.html"
+      ],
+      "capture_paths": [
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S17.body",
+        "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-pipelines/P4-I08-R002/captures/S18.body"
+      ],
+      "sha256": [
+        "b5d1774fded9ae05cf6f6d9b6fc277cb6b59b138dd6ccada0372390ad89d39f3",
+        "c089922cd87a8b78aa97a9d25a1f6142c4a36f171a07cc4a21f4386121c08642"
+      ],
+      "locators": [
+        "README Sandbox security / Sandboxing / Limitations",
+        "Transport security for kernels / transport_encryption disabled default"
+      ],
+      "assessment": "Mechanism and policy limitations supported; no instantiated sandbox/resource policy credit."
+    }
+  ],
+  "preserved_supported_content": [
+    "Explicit notebook document/runtime/provenance separation and strict tag/error configuration",
+    "Independent DuckDB mechanism and actual qualified branch-specific issue/fix/regression chain",
+    "Conservative CRCRLF gate with source-versus-binary uncertainty",
+    "Immutable source-byte requirement, fail-closed execution/resource gates, honest 5 GB target",
+    "Useful workflow/data contract/portable exchange, schema-drift opportunity and bounded alternatives",
+    "One narrow W02 synthetic check; other validation honestly proposed/UNEXECUTED"
+  ],
+  "structural_delivery": {
+    "canonical_final_files_present": 4,
+    "combined_review_present": true,
+    "all_pinned_bytes_verified": true,
+    "json_catalogs": {
+      "sources": "INVALID_JSON",
+      "witnesses": "VALID_JSON",
+      "leads": "VALID_JSON"
+    },
+    "artifact_presence_is_native_completion": false
+  },
+  "held_axes": {
+    "native_Goal_status": "UNASSESSED_PHASE2_HELD",
+    "owned_quiet": "INTEGRITY_PACKET_ONLY_PENDING_DIRECT_PHASE2_REVIEW",
+    "economics": "UNASSESSED_PHASE2_HELD",
+    "fresh_matched_credit": "NONE_INFERRED_SINGLE_ROLE"
+  },
+  "witness_scope": {
+    "W02": "STATIC_CODE_INPUT_RESULT_HASH_CONSISTENCY_REVIEW_ONLY; native execution proof held for Phase2",
+    "evaluator_executed_notebook_or_DuckDB": false,
+    "upstream_tests_executed_by_evaluator": false,
+    "counterexample": "STATIC_SOURCE_DERIVATION_NOT_EXECUTED"
+  },
+  "retrieval_limits": [
+    "Fresh GitHub API requests for S06/S07/S08/S10 returned HTTP403 rate-limit bodies. Exact primary GitHub HTML pages were freshly captured instead. No API body facts substituted silently.",
+    "Original S15 capture was partial; fresh complete body captured. Not a performance result."
+  ],
+  "blinding": {
+    "perfect_blinding": false,
+    "known_before_source": {
+      "known_context": [
+        "Parent assignment says full canonical4 delivered plus review",
+        "Parent assignment says runtime FAILED/PAUSED after artifacts"
+      ],
+      "actualtask_model_or_lineage_hints": "unavoidableexacttasklabels disclosed; no perfectblinding claim",
+      "private_key_history_Goal_runtime_usage": "withhelduntilnewimmutablePhase1judgment"
+    },
+    "task_identity_leaks": [
+      "Actual launched task explicitly names Luna, treatment and two-stage modifier",
+      "Neutral card reveals two-stage method question"
+    ],
+    "prior_review_bodies_read": false,
+    "other_evaluator_grades_read": false,
+    "private_key_alias_history_native_usage_read": false,
+    "pm_mail_who_inventory_seen": true
+  },
+  "comparison_limits": "One actual role only. No paired quality equivalence, causal method effect, winner, full-pipeline success or matched completion inference.",
+  "model": {
+    "requested": "gpt-6.1-sol",
+    "requested_effort": "xhigh",
+    "physical_provider_telemetry": "UNKNOWN"
+  },
+  "unassessed_remainder": [
+    "All consequential current claims beyond explicitly verified mappings",
+    "Prior research to current semantic preservation and candidate-discovery provenance",
+    "All authentic native execution/accounting/Goal/quiet history pending Phase2",
+    "No exact DuckDB or notebook runtime test; no 5 GB, sandbox, save/recovery or UI execution"
+  ]
+}

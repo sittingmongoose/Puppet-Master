@@ -1,0 +1,42 @@
+{
+  "schema": "er9.glm.complete-resource-verification.v1",
+  "created_utc": "2026-10-06T01:36:16.487757+00:00",
+  "status": "PASS",
+  "test_command": "ER9_RESOURCE_PROOF_PATH=ACTUAL_PLACEMENT_FINAL.json python3 -m unittest -v test_resource.py",
+  "tests": 3,
+  "elapsed_seconds": 8.34,
+  "model_calls": 0,
+  "native_goal_starts": 0,
+  "test_names": [
+    "test_actual_complete_placement_overlap_oom_and_external_release",
+    "test_resource_wrapping_preserves_exact_tool_factor",
+    "test_wrong_actual_placement_and_original_clock_rejected"
+  ],
+  "assertions": [
+    "actual parent and component kernel caps/Swap0",
+    "retained helpers exact parent placement",
+    "byte-only MCP relay",
+    "two simultaneous actual sandbox kernel placements and cleanup",
+    "wrong live cap/placement rejected before component bootstrap",
+    "original birth/stop mismatch rejected; unchanged30/5 second reserves",
+    "owner EOF and absolute deadline recursively quiet",
+    "actual synthetic adapter kernel OOM reflected in parent events",
+    "active outer release rejected; terminal outer release recursively quiet",
+    "exact disabled-control-critic allowlist preserved; privilege change rejected",
+    "missing complete source/runtime pin closure rejected"
+  ],
+  "synthetic_evidence": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_PROOF.json",
+    "sha256": "13743b37850fd251dc882e2108fdb44502407fab6a0c723b63a1a01a75f01898"
+  },
+  "initial_failed_assertion_preserved": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/INITIAL_TEST_FAILURE.json",
+    "sha256": "4b88a156ab8aa0677f5110de77178a917ea86830ab721d2a2546e9156abde665"
+  },
+  "research_fit": "UNKNOWN",
+  "legacy_engine_byte_identity": {
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm_stage.py": "8bc5b63d9235cee7ad038d43102e49182bbba1b4b6f78620b7694afdecc92b6d",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/stage_worker.py": "cb299253506f701d71902a0e7a58aa6ce7105ea731d6c847633f2bfb12d98c44",
+    "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a"
+  }
+}

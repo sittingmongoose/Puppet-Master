@@ -1,0 +1,63 @@
+{
+  "catalog_version": "1.1",
+  "scope": "Checks relevant to the critic-final proposal. Executed receipts are from pm_execution.python_execute, the admitted isolated capability. The check is component-level and candidate-authored; it is not application or engine evidence.",
+  "witnesses": [
+    {
+      "id": "W02",
+      "label": "executed by candidate",
+      "title": "Synthetic NDJSON presence/reject handling and provenance-key component check",
+      "tool": "pm_execution.python_execute",
+      "execution_id": "exec-3zkld739",
+      "code": "import datetime, hashlib, json\n\nraw = data[\"ndjson\"].encode(\"utf-8\")\nsource_digest = hashlib.sha256(raw).hexdigest()\naccepted, rejected = [], []\nfor ordinal, line in enumerate(raw.decode(\"utf-8\").splitlines(), 1):\n    try:\n        row = json.loads(line)\n        if not isinstance(row, dict):\n            raise ValueError(\"record must be an object\")\n        if \"id\" not in row:\n            raise ValueError(\"required id missing\")\n        value = {\"source_digest\": source_digest, \"record_ordinal\": ordinal,\n                 \"id\": row[\"id\"], \"optional_present\": \"optional\" in row,\n                 \"optional\": row.get(\"optional\")}\n        stamp = row.get(\"when\")\n        if stamp is not None:\n            value[\"when_utc\"] = datetime.datetime.fromisoformat(stamp.replace(\"Z\", \"+00:00\")).astimezone(datetime.timezone.utc).isoformat()\n        accepted.append(value)\n    except Exception as exc:\n        rejected.append({\"source_digest\": source_digest, \"record_ordinal\": ordinal,\n                         \"raw\": line, \"error\": str(exc)})\nassert len(accepted) == 2 and len(rejected) == 2\nassert accepted[0][\"optional_present\"] and accepted[0][\"optional\"] is None\nassert not accepted[1][\"optional_present\"]\nassert accepted[0][\"id\"] == \"雪 café ☕\"\nassert rejected[0][\"raw\"] == data[\"ndjson\"].splitlines()[2]\nassert rejected[1][\"raw\"] == data[\"ndjson\"].splitlines()[3]\nassert hashlib.sha256(raw).hexdigest() == source_digest\n\ndef digest(value):\n    blob = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(\",\", \":\")).encode(\"utf-8\")\n    return hashlib.sha256(blob).hexdigest()\nbase = {\"cell\": \"source-v1\", \"data\": source_digest, \"contract\": \"schema-v1\",\n        \"runtime\": \"lock-A\", \"engine\": \"duckdb-artifact-A\", \"parameters\": {\"seed\": 7}}\nkey = digest(base)\nassert digest(dict(base)) == key\nfor field, replacement in ((\"cell\", \"source-v2\"), (\"data\", \"other-sha\"),\n                           (\"contract\", \"schema-v2\"), (\"runtime\", \"lock-B\"),\n                           (\"engine\", \"duckdb-artifact-B\")):\n    changed = dict(base)\n    changed[field] = replacement\n    assert digest(changed) != key\n\nprint(json.dumps({\"accepted\": len(accepted), \"rejected_raw_records_preserved\": len(rejected),\n                  \"missing_distinct_from_null\": True, \"unicode_preserved\": True,\n                  \"source_digest_stable\": True, \"provenance_key_changes_for_dependencies\": True},\n                 ensure_ascii=False, sort_keys=True))",
+      "input": {
+        "ndjson": "{\"id\":\"雪 café ☕\",\"optional\":null,\"when\":\"2025-03-08T12:00:00Z\"}\n{\"id\":\"二\",\"when\":\"2025-03-09T12:00:00+00:00\"}\n{\"id\":\"γ\",\"optional\":\"bad-json\"\nnot-json-at-all\n"
+      },
+      "expected_behavior": {
+        "accepted_records": 2,
+        "rejected_records_preserved_verbatim": 2,
+        "missing_optional_distinct_from_explicit_null": true,
+        "unicode_preserved": true,
+        "source_digest_unchanged": true,
+        "canonical_key_changes_when_cell_data_contract_runtime_or_engine_changes": true
+      },
+      "expectation_basis": "Candidate-authored invariants for a tiny synthetic component fixture; not an external application oracle.",
+      "receipt": {
+        "code_sha256": "7e6f2565ed9dc7d9f569c99f1c0b023d935d2a647b156d58c7b07b69275c6fa4",
+        "data_sha256": "68a4af7b9194e519cf9f7dc87e229b559bca646a9a7bcdc59ad6fae20502806b",
+        "stdout": "{\"accepted\": 2, \"missing_distinct_from_null\": true, \"provenance_key_changes_for_dependencies\": true, \"rejected_raw_records_preserved\": 2, \"source_digest_stable\": true, \"unicode_preserved\": true}\n",
+        "stderr": "",
+        "exit_code": 0,
+        "stdout_sha256": "86d2db58534a29b5737dc58a6d4395e6cc3ea8acd69b9e9a9f0fc6870c92827b",
+        "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdout_bytes": 195,
+        "stderr_bytes": 0,
+        "elapsed_seconds": 0.17821160999301355,
+        "limits": {
+          "wall_seconds": 5,
+          "cpu_seconds": 3,
+          "memory_bytes": 268435456,
+          "tasks": 16,
+          "stream_bytes_each": 32768,
+          "network": "new empty namespace"
+        },
+        "cleanup_confirmed": true,
+        "tool_scope_limitations": [
+          "Isolated component check only; fresh filesystem and no network, credentials or case files.",
+          "Standard-library assertions do not prove product code or DuckDB/nbclient behavior.",
+          "No notebook, DuckDB, CSV parser, sandbox policy, save/recovery path or large file was exercised.",
+          "Clock and randomness remain available; this check does not prove deterministic execution."
+        ]
+      }
+    }
+  ],
+  "proposed_unexecuted": [
+    {"id":"W03","label":"proposed/UNEXECUTED","check":"Resolve a complete hash-pinned Python/Jupyter/DuckDB environment and immutable image; execute the same notebook twice.","reason":"No compatible runtime lock or image was built in this research."},
+    {"id":"W04","label":"proposed/UNEXECUTED","check":"Run nbclient tests for skip-execution and raises-exception tags, strict errors, display_id cross-cell updates, cancellation and last-good output retention.","reason":"Only pinned source was inspected; no notebook runtime was executed."},
+    {"id":"W05","label":"proposed/UNEXECUTED","check":"Run issue #25164 and extended CSV boundary/quoted-newline fixtures on each exact distributed engine artifact; record artifact hashes and platform coverage.","reason":"No DuckDB binary/wheel or upstream test harness was executed; source test excludes Windows."},
+    {"id":"W06","label":"proposed/UNEXECUTED","check":"Run CSV/NDJSON/Parquet contract fixtures covering missing/null, Unicode, timestamps, schema drift, malformed data, conversions, row identity and unchanged originals.","reason":"No parser adapter or product implementation was exercised."},
+    {"id":"W07","label":"proposed/UNEXECUTED","check":"Measure 5 GB streaming and global-operation workloads on 8 cores/16 GB with peak RSS, spill, disk quota, elapsed time, cancellation and correctness.","reason":"The workstation target is not a measured result."},
+    {"id":"W08","label":"proposed/UNEXECUTED","check":"Exercise interactive versus clean output status, invalidation, kernel restart, out-of-order execution, source/environment edits, output diff and cross-machine reopen.","reason":"No notebook product/event ledger was built."},
+    {"id":"W09","label":"proposed/UNEXECUTED","check":"Crash-inject object, prepare-event, manifest replace, directory sync and commit-event writes; test writer locking and folder/zip recovery.","reason":"The proposed durability protocol was not implemented or run."},
+    {"id":"W10","label":"proposed/UNEXECUTED","check":"Review and test exact Bubblewrap mounts, Jupyter transport containment, no-network behavior, cgroup/disk limits, child cleanup and fail-closed paths; keyboard and screen-reader test statuses/errors.","reason":"No host sandbox policy or product UI was run; bubblewrap documentation alone does not validate this policy."}
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "er9.tools.release-pin.v1",
+  "version": "v1.4-bundle",
+  "status": "READY_FOR_PROSPECTIVE_ACTUAL_ROUTE_BINDING",
+  "source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+    "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/VERIFICATION.json",
+    "sha256": "b6085e06a92971faf6172c7587e2c1b09a7f60ff1ff1a5b773107f90cadb1499"
+  },
+  "config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+    "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+  },
+  "scope": "Owned code/tests/neutral metadata only; no active runtime or case seal mutation; V06 both arms excluded",
+  "native_model_calls": 0,
+  "native_goals": 0
+}

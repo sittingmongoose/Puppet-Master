@@ -1,0 +1,144 @@
+{
+  "schema": "er9.positive-publication-selection.v1",
+  "cohort": "tools-v1.4-bundle",
+  "created_utc": "2026-10-06T01:50:55.347130+00:00",
+  "scope": "Exact actual owned tool implementation/tests/neutral profile API/provenance decision bindings/mechanical verification; no candidate findings, raw captures, credentials or private histories",
+  "files": [
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+      "destination": "tools/versions/v1.4-bundle/config.py",
+      "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e",
+      "bytes": 7666
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/execution_server.py",
+      "destination": "tools/versions/v1.4-bundle/execution_server.py",
+      "sha256": "1fc5774bbab9c1a041b7210a00265d0de5575c85372413758f9fd38eb6fc8f83",
+      "bytes": 16737
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/test_tools.py",
+      "destination": "tools/versions/v1.4-bundle/test_tools.py",
+      "sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "bytes": 8721
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/boundary.py",
+      "destination": "tools/versions/v1.4-bundle/source_capture/boundary.py",
+      "sha256": "2a6753253806a8a9fd5a990eef5f367f2ff6d8767f9e5215eb3e79a73d64152b",
+      "bytes": 2648
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/tool_server.py",
+      "destination": "tools/versions/v1.4-bundle/source_capture/tool_server.py",
+      "sha256": "70ceac49f4985fad11e36d770d0ee59ed31f5305a69a55a9f161fb835f78a135",
+      "bytes": 23170
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/source_capture/test_source_capture.py",
+      "destination": "tools/versions/v1.4-bundle/source_capture/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "bytes": 17816
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/README.md",
+      "destination": "tools/versions/v1.4-bundle/README.md",
+      "sha256": "f0ce12008688cb1c005793e08fa8f5a8496dfde141ac1b5da5d57ebe2e05cfdc",
+      "bytes": 17219
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/test_framing.py",
+      "destination": "tools/versions/v1.4-bundle/test_framing.py",
+      "sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "bytes": 6646
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/resource_profile.py",
+      "destination": "tools/versions/v1.4-bundle/resource_profile.py",
+      "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "bytes": 8783
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/resource_gate.py",
+      "destination": "tools/versions/v1.4-bundle/resource_gate.py",
+      "sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+      "bytes": 2194
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/test_resource.py",
+      "destination": "tools/versions/v1.4-bundle/test_resource.py",
+      "sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+      "bytes": 7049
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/bundle_carrier.py",
+      "destination": "tools/versions/v1.4-bundle/bundle_carrier.py",
+      "sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+      "bytes": 24017
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/operator_binding.py",
+      "destination": "tools/versions/v1.4-bundle/operator_binding.py",
+      "sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+      "bytes": 1778
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/test_bundle.py",
+      "destination": "tools/versions/v1.4-bundle/test_bundle.py",
+      "sha256": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566",
+      "bytes": 20867
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/API_SCHEMA.json",
+      "destination": "tools/versions/v1.4-bundle/API_SCHEMA.json",
+      "sha256": "85234e82f39901a972d6a5575c56cb0ecb8c806ed07c2c401d6ed402197c92d4",
+      "bytes": 8502
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/PROVENANCE_IMPLEMENTATION.json",
+      "destination": "tools/versions/v1.4-bundle/PROVENANCE_IMPLEMENTATION.json",
+      "sha256": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521",
+      "bytes": 2520
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/EMPTY_CLOSURE_FIXTURE.json",
+      "destination": "tools/versions/v1.4-bundle/EMPTY_CLOSURE_FIXTURE.json",
+      "sha256": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1",
+      "bytes": 1597
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+      "destination": "tools/versions/v1.4-bundle/SOURCE_PINS.json",
+      "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+      "bytes": 5279
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/VERIFICATION.json",
+      "destination": "tools/versions/v1.4-bundle/VERIFICATION.json",
+      "sha256": "b6085e06a92971faf6172c7587e2c1b09a7f60ff1ff1a5b773107f90cadb1499",
+      "bytes": 2609
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/PIN.json",
+      "destination": "tools/versions/v1.4-bundle/PIN.json",
+      "sha256": "7c8de6299ab871c973abea68d92897772f331499386b459b4a1d9eac35ee9299",
+      "bytes": 1011
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/OUTBOX.json",
+      "destination": "tools/versions/v1.4-bundle/OUTBOX.json",
+      "sha256": "157af042c7ade76c83afd8c1657f753fe714b6806db484d62c9793caaca9b247",
+      "bytes": 2665
+    },
+    {
+      "source": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/LOCAL_RESOURCE_PLACEMENT.json",
+      "destination": "tools/versions/v1.4-bundle/LOCAL_RESOURCE_PLACEMENT.json",
+      "sha256": "4dfcf0d9f3b929a04460ea7c0341a6f9ee12beac736792401c802a2299f28193",
+      "bytes": 12735
+    }
+  ],
+  "source_pins_sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+  "native_model_calls": 0,
+  "semantic_or_native_research_grade": "UNASSESSED",
+  "live_base_files_modified": false
+}

@@ -1,7 +1,7 @@
 {
   "campaign_id": "external-research-v9-20261005-203005",
-  "cohort": "D08-finished-review-and-resource-successors-011",
-  "publication_snapshot_at": "2026-10-06T01:39:36.242983+00:00",
+  "cohort": "bundle-resource-closures-and-accounting-012",
+  "publication_snapshot_at": "2026-10-06T01:54:04.783830+00:00",
   "selection_scope": "Frozen I01/I02/D14/D15 current-phase evidence plus separately labelled receipt extension. Counts describe published scope, not present scheduler.",
   "research_stages_published": 5,
   "operationally_complete_research_stages": 2,
@@ -37,7 +37,7 @@
   "first_d14_native_metered_tokens": 19152242,
   "first_d14_cancelled_tail_usage": "UNKNOWN",
   "first_d14_semantic_assessment": "NOT_PUBLISHED_IN_THIS_COHORT",
-  "campaign_accounting_snapshot": "accounting/cohort-009/snapshot.safe.json",
+  "campaign_accounting_snapshot": "accounting/cohort-010/snapshot.safe.json",
   "accounting_snapshot_is_live_or_final": false,
   "independent_I02_research_verdicts": [
     "FAIL_SCREEN",
@@ -63,7 +63,7 @@
   "research_stage_count_scope": "Four original I01/I02 published artifact sets plus one R001 available research set; missing R001 partner is a separate attempted stage. Not full campaign attempts/occupancy.",
   "research_stage_operational_count_source": "Per-stage frozen evidence; I01 earlier native-status interpretation is corrected by separate direct status source.",
   "I01_scored_stages_observed_in_phase2": 4,
-  "accounting_snapshot_scope": "74deployments/66known candidate Goals/200379027known tokens+2unknown usage at accounting009 capture; not final billing/liveness.",
+  "accounting_snapshot_scope": "92deployments/84positive candidate Goals/266957508known tokens+1unknown at accounting010 capture; live known portions not completion/billing.",
   "DEC006_import_scope": {
     "neutral_locators": 622,
     "unique_contents": 405,
@@ -137,5 +137,8 @@
     "finished_notification_seconds": 1850.358101297,
     "handoff_ceiling_exceeded_seconds": 50.358101297,
     "new_assessment_after_close": false
-  }
+  },
+  "I08_actual_role_packet": "Genuine critic +canonical final4 available; frozen Phase1 FAIL_SCREEN/UNASSESSED remainder; malformed candidate source JSON preserved; Phase2 underway",
+  "actual_bundle_owned_code": "Both GLM and Luna bound implementation source/PIN/local tests published; native researchfit UNKNOWN",
+  "full_pipeline_prospectivity": "Actual both-arm runtime/carrier closure required before fresh research; cumulative zero UNKNOWN pending ops"
 }

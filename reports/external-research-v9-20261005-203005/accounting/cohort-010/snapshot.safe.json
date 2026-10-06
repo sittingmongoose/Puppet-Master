@@ -1,0 +1,730 @@
+{
+  "actual_family_totals": {
+    "GLM": {
+      "attempts": 30,
+      "known_tokens": 43856609,
+      "native_goal_starts_known": 30
+    },
+    "Luna": {
+      "attempts": 61,
+      "known_tokens": 223848265,
+      "native_goal_starts_known": 61
+    },
+    "UNKNOWN": {
+      "attempts": 3,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0
+    },
+    "UNKNOWN_PRE_NATIVE": {
+      "attempts": 13,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0
+    }
+  },
+  "as_of_utc": "2026-10-06T01:39:41.861661+00:00",
+  "billing_dollars": "UNKNOWN",
+  "cleanup_rule": "Occupied seconds include setup/cleanup where receipt says so. Cleanup reserve is a bound, not measured cleanup. Parallel occupied seconds must not be called critical-path time.",
+  "counter_rule": "Cache included in input once; reasoning subset of output; provider request sums separate from baseline-filtered native UI counters, native Goal and supervisor cumulative counters. Unobserved/cancelled tails remain UNKNOWN.",
+  "evaluator_extensions_separate": {
+    "assessment_boundary": "No source judgment, assessment, execution grade, or missing execution evidence is changed or inferred by this cost projection.",
+    "clock_rule": "Original starts/deadlines remain unchanged; separate600s extension clocks retain their own starts/deadlines and actual finished elapsed times.",
+    "counter_rule": "Wall clocks are not model/API occupied time, critical path, provider tokens, or billing. Never add this companion to candidate token totals or root cumulative counters.",
+    "overlap_rule": "Screen and report-write times are subsets/intermediate observations of full review; do not add them to full review. D15B original closure log1951.288343771s is a closure-record delay, not original assessment time beyond its immutable1800s deadline.",
+    "pipeline_eval2_separate": {
+      "assessment_boundary": "Native Goal status, router outcome, job failure and independent quality judgment are different facts. This projection does not assess or alter source coverage or quality.",
+      "billing_dollars": "UNKNOWN",
+      "candidate_physical_provider_and_http_attempts": "UNKNOWN",
+      "candidate_reference_only": {
+        "existing_attempt_id": "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+        "existing_goal_id": "01a10e6d-7d6e-7603-9c16-7e60a1a76acd",
+        "freeze_elapsed_seconds": 585.649430624,
+        "job_status": "FAILED",
+        "native_elapsed_seconds": 585.563808303,
+        "native_goal_status": "paused",
+        "native_receipt_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001/native/result.json",
+          "sha256": "57a34f5b0be56dc8a47b14c08d43f9f353edaa3f4540bbcfdeb3c259eabf6af0"
+        },
+        "new_charge_tokens": 0,
+        "router_terminal_status": "HOLD",
+        "rule": "Reference an existing charged actor/Goal; cached input is included in input and reasoning is a subset of output. Native and freeze elapsed intervals overlap, never add them.",
+        "usage": {
+          "cachedInputTokens": 4887296,
+          "inputTokens": 5203609,
+          "outputTokens": 59681,
+          "reasoningOutputTokens": 31736,
+          "totalTokens": 5263290
+        }
+      },
+      "clock_rule": "Whole review contains phase1, phase2, interphase wait/prep and report-writing. Never add slices to whole again. Wall clocks are not model/API occupied time or critical path.",
+      "evaluation_id": "ER9-EVAL-INDEPENDENT-PIPELINE-2-I05-001",
+      "evaluator_observed_effort": "UNKNOWN",
+      "evaluator_observed_model": "UNKNOWN",
+      "evaluator_provider_tokens": "UNKNOWN",
+      "interphase_wait_and_report_prep_seconds": 565.582755949,
+      "no_clock_reset_or_extension": true,
+      "observed_pre_source_seconds_since_reservation": 1548.893206,
+      "phases": {
+        "phase1": {
+          "elapsed_seconds": 457.105438333,
+          "finished_monotonic_ns": 75647855684662,
+          "finished_utc": "2026-10-06T00:07:08.998665Z",
+          "started_monotonic_ns": 75190750246329,
+          "started_utc": "2026-10-05T23:59:31.893206Z"
+        },
+        "phase2": {
+          "elapsed_seconds": 527.175318055,
+          "finished_monotonic_ns": 76740613758666,
+          "finished_utc": "2026-10-06T00:25:21.756714Z",
+          "started_monotonic_ns": 76213438440611,
+          "started_utc": "2026-10-06T00:16:34.581388Z"
+        },
+        "report_write": {
+          "elapsed_seconds": 193.607181404,
+          "finished_monotonic_ns": 76934220940070,
+          "finished_utc": "2026-10-06T00:28:35.363866Z",
+          "started_monotonic_ns": 76740613758666,
+          "started_utc": "2026-10-06T00:25:21.756714Z"
+        }
+      },
+      "pre_source_scope": "Observed reservation/prep/wait only; unobserved dispatch birth UNKNOWN. Separate from post-source review.",
+      "schema": "er9.accounting.eval2-clocks.v1",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-2/review0001/COST_RECEIPT.json",
+        "sha256": "6351a085c8a7cf87fcd1b627ad92f3f7b2e02fdfa1f8768dcb015bb997a35dcd"
+      },
+      "validation_errors": [],
+      "whole_assessment_elapsed_seconds": 1549.863512337,
+      "whole_review_including_report_seconds": 1743.470693741
+    },
+    "pipeline_eval3_separate": {
+      "billing_dollars": "UNKNOWN",
+      "evaluator_provider_tokens": "UNKNOWN",
+      "existing_candidate_reference_only": {
+        "Goal_id": "01a10eae-151b-71a0-bca3-c3b93c289b50",
+        "attempt_id": "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "global_charge_added_by_reference": 0,
+        "usage": {
+          "cached_input_included": 1927936,
+          "input": 2066729,
+          "output": 28008,
+          "reasoning_output_subset": 15611,
+          "total": 2094737
+        }
+      },
+      "finished_clocks": {
+        "clock_semantics": "Whole includes source, courier wait, Phase2 and review preparation from first semantic body. Clocks close when completed review artifacts are prepared; publication/archival follow-up is separately reported. No reset.",
+        "effective_phase2_available_s": 574.694386358,
+        "evaluation_id": "independent-pipeline-3-review0001",
+        "phase1_budget_s": 1200,
+        "phase1_elapsed_s": 794.3574254,
+        "phase1_freeze_monotonic_ns": 80066062535740,
+        "phase1_freeze_utc": "2026-10-06T01:20:47.209439+00:00",
+        "phase2_budget_s": 600,
+        "phase2_elapsed_s": 403.956776389,
+        "phase2_freeze_monotonic_ns": 80900967500371,
+        "phase2_freeze_utc": "2026-10-06T01:34:42.111335+00:00",
+        "phase2_start_monotonic_ns": 80497010723982,
+        "phase2_start_utc": "2026-10-06T01:27:58.153735+00:00",
+        "physical_model_telemetry": "UNKNOWN",
+        "post_phase2_review_preparation_seconds": 133.290139894,
+        "reset_count": 0,
+        "review_completed_monotonic_ns": 81034257640265,
+        "review_completed_utc": "2026-10-06T01:36:55.400654+00:00",
+        "source_start_monotonic_ns": 79271705110340,
+        "source_start_utc": "2026-10-06T01:07:32.848121+00:00",
+        "wait_and_delivery_overhead_s": 430.948188242,
+        "whole_budget_s": 1800,
+        "whole_elapsed_s": 1762.552529925
+      },
+      "rule": "Whole includes source/Phase2/waits/review preparation; no slice added again, no model-occupied inference, candidate existing reference adds no charge, no quality or source-feedback projection.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+        "sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b"
+      }
+    },
+    "rows": [
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-D-V15-A-RECEIPT-001",
+        "extension_allowance_seconds": 600,
+        "extension_deadline_utc": "2026-10-05T23:03:17.625832Z",
+        "extension_elapsed_seconds": 462.430683741,
+        "extension_finished_utc": "2026-10-05T23:01:00.056572Z",
+        "extension_start_utc": "2026-10-05T22:53:17.625832Z",
+        "full_review_elapsed_seconds": null,
+        "full_review_finished_utc": null,
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": 1769.035593866,
+        "original_closed_utc": "2026-10-05T22:50:40.573654Z",
+        "original_closure_logged_elapsed_seconds": null,
+        "original_deadline_utc": "2026-10-05T22:51:11.537980Z",
+        "original_start_utc": "2026-10-05T22:21:11.537980Z",
+        "report_write_elapsed_seconds_intermediate": null,
+        "requested_effort": null,
+        "requested_model": null,
+        "screen_elapsed_seconds_subset": null,
+        "source_pins": [
+          {
+            "path": "evaluation/diagnostics/D-V15-A/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+            "sha256": "aed77d4662fcb9cda76db2d55364616eba3a19e91de66c346841ea84599baf43"
+          }
+        ]
+      },
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-D-V15-B-RECEIPT-001",
+        "extension_allowance_seconds": 600,
+        "extension_deadline_utc": "2026-10-05T23:36:36.161363Z",
+        "extension_elapsed_seconds": 323.987746408,
+        "extension_finished_utc": "2026-10-05T23:32:00.149098Z",
+        "extension_start_utc": "2026-10-05T23:26:36.161363Z",
+        "full_review_elapsed_seconds": null,
+        "full_review_finished_utc": null,
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": null,
+        "original_closed_utc": "2026-10-05T23:18:51.841260Z",
+        "original_closure_logged_elapsed_seconds": 1951.288343771,
+        "original_deadline_utc": "2026-10-05T23:16:20.550141Z",
+        "original_start_utc": "2026-10-05T22:46:20.550141Z",
+        "report_write_elapsed_seconds_intermediate": null,
+        "requested_effort": null,
+        "requested_model": null,
+        "screen_elapsed_seconds_subset": null,
+        "source_pins": [
+          {
+            "path": "evaluation/diagnostics/D-V15-B/extensions/RECEIPT-001/CLOCK_COST_RECEIPT.json",
+            "sha256": "eb5d1de2a4315061fcbda9b19b5448736ccc3819309337e0bcfb2bb60b38fbd5"
+          },
+          {
+            "path": "evaluation/diagnostics/D-V15-B/partial-review0001/BUDGET_CLOSURE.json",
+            "sha256": "c7c027c39c871c91b87eff12f956a1430a77526ff3928e64f7af5c677b5fea74"
+          }
+        ]
+      },
+      {
+        "billing_dollars": "UNKNOWN",
+        "clock_reset": false,
+        "evaluation_id": "ER9-EVAL-NEXT-003",
+        "extension_allowance_seconds": null,
+        "extension_deadline_utc": null,
+        "extension_elapsed_seconds": null,
+        "extension_finished_utc": null,
+        "extension_start_utc": null,
+        "full_review_elapsed_seconds": 1224.429093,
+        "full_review_finished_utc": "2026-10-05T23:57:36.147813Z",
+        "model_occupied_seconds": null,
+        "native_provider_tokens": "UNKNOWN",
+        "observed_effort": "UNKNOWN",
+        "observed_model": "UNKNOWN",
+        "original_allowance_seconds": 1800,
+        "original_closed_elapsed_seconds": null,
+        "original_closed_utc": null,
+        "original_closure_logged_elapsed_seconds": null,
+        "original_deadline_utc": "2026-10-06T00:07:11.718720Z",
+        "original_start_utc": "2026-10-05T23:37:11.718720Z",
+        "report_write_elapsed_seconds_intermediate": 1094.85785,
+        "requested_effort": "xhigh",
+        "requested_model": "gpt-6.1-sol",
+        "screen_elapsed_seconds_subset": 826.743626,
+        "source_pins": [
+          {
+            "path": "evaluation/dispatch/I01-R001-research-review0001/STARTED.json",
+            "sha256": "79f858cdbae064a7c7f8add53cdbf71860f4cd3457730519779b4a7ee1bc5f3e"
+          },
+          {
+            "path": "evaluation/dispatch/I01-R001-research-review0001/FINISHED.json",
+            "sha256": "588ca68642692bf36544bdd24f6b627b738b1063ff75d43b75ab2b09c109d054"
+          }
+        ]
+      }
+    ],
+    "schema": "er9.accounting.evaluator-clocks.v1",
+    "sum_reported_extension_wall_seconds": 786.418430149,
+    "targeted_D08A_finished_and_cost_references_separate": {
+      "billing_dollars": "UNKNOWN",
+      "cancelled_or_unexposed_tail": "UNKNOWN",
+      "clock_rule": "Whole1163.017374667 contains source690.912547327 and Phase2 472.10482734; do not add subsets to whole or treat wall as model inference.",
+      "exposure_rule": "Input hash linkage is dispatch provenance; does not establish actual source-reading uptake or any warm-cache benefit.",
+      "finished_clock": {
+        "budgets": {
+          "reset_allowed": false,
+          "source_screen_seconds": 1200,
+          "whole_seconds": 1800
+        },
+        "clock_source_pins": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+            "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+            "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+          }
+        ],
+        "evaluator_model_inference_cost": "UNKNOWN",
+        "event": "FINISHED",
+        "finished": {
+          "epoch_ns": 1791248656852110179,
+          "monotonic_ns": 79075709111059,
+          "utc": "2026-10-06T01:04:16.852110+00:00"
+        },
+        "observed_budget_compliance": {
+          "source_within1200": true,
+          "whole_within1800": true
+        },
+        "pair_id": "D-V08-A",
+        "phase1_finished": {
+          "epoch_ns": 1791248184747282534,
+          "monotonic_ns": 78603604283719,
+          "utc": "2026-10-06T00:56:24.747283+00:00"
+        },
+        "phase2_elapsed_seconds": 472.10482734,
+        "physical_provider_telemetry": "UNKNOWN",
+        "quality_findings_in_clock_projection": false,
+        "schema": "er9.neutral-evaluator-finished-clock.v1",
+        "source_is_subset_of_whole": true,
+        "source_screen_elapsed_seconds": 690.912547327,
+        "started": {
+          "epoch_ns": 1791247493834732395,
+          "monotonic_ns": 77912691736392,
+          "utc": "2026-10-06T00:44:53.834732+00:00"
+        },
+        "whole_elapsed_seconds": 1163.017374667
+      },
+      "global_token_charge_added_by_reference": 0,
+      "new_inference_from_role_imports": 0,
+      "per_comparison_apportionment": {
+        "arm_reference_share_each_if_equal_apportionment": 1257846.5,
+        "comparison": "D-V08-A",
+        "fraction_each": "1/2",
+        "scope": "Descriptive allocation for the selected two-arm view, not measured per-arm origin inference. No addition to campaign global costs.",
+        "shared_origin_charge_reference_once": 2515693
+      },
+      "selected_actual_goal_ids": [
+        "01a10e7a-82fb-7781-b98b-fd639ff0e2ab",
+        "01a10e7a-894b-7ed3-8987-ea6daff289ae"
+      ],
+      "selected_plus_shared_origin_totals_reference_only": {
+        "cached_input_included": 4187072,
+        "input": 4899786,
+        "output": 85830,
+        "reasoning_output_subset": 21017,
+        "total": 4985616
+      },
+      "selected_two_stage_usage_reference_only": {
+        "cachedInputTokens": 2189568,
+        "inputTokens": 2431533,
+        "outputTokens": 38390,
+        "reasoningOutputTokens": 21017,
+        "totalTokens": 2469923
+      },
+      "shared_origin_attempt_id": "I-01-control-research-a001",
+      "shared_origin_usage_reference_only": {
+        "cached_input_included": 1997504,
+        "input": 2468253,
+        "output": 47440,
+        "reasoning_output_subset": 0,
+        "total": 2515693
+      },
+      "source_pins": [
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/FINISHED.json",
+          "sha256": "2621b2db03e699c4129a763da6b3dba9c1810575939b274034bd7ff0139d6096"
+        },
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/PHASE2_NATIVE_ECONOMICS_001.json",
+          "sha256": "cffdc26e561a019ee1ec97144c17fa7366ca3aca831a12b5a3d349e4d1180fd2"
+        },
+        {
+          "path": "evaluation/independent-targeted/D-V08-A/PHASE2_LINEAGE_COST_001.json",
+          "sha256": "e36c7cc4d9dca0c11367c64f52a944ef60f4fa1fae360a702dd2637d0507b354"
+        }
+      ],
+      "whole_pipeline_cost": "UNKNOWN"
+    },
+    "targeted_D08A_source_phase_separate": {
+      "neutral_clock": {
+        "authorized_budgets_not_observed_cost": {
+          "pair_elapsed_seconds": 1800,
+          "reset_allowed": false,
+          "source_screen_seconds": 1200
+        },
+        "clock_phase": "source subset; not extra beyond total pair",
+        "model_inference_cost": "UNKNOWN",
+        "pair_id": "D-V08-A",
+        "phase1_finished": {
+          "epoch_ns": 1791248184747282534,
+          "monotonic_ns": 78603604283719,
+          "utc": "2026-10-06T00:56:24.747283+00:00"
+        },
+        "physical_provider_telemetry": "UNKNOWN",
+        "projection_created_utc": "2026-10-06T00:58:15.985995+00:00",
+        "schema": "er9.neutral-evaluator-source-clock.v1",
+        "source_screen_elapsed_seconds": 690.912547327,
+        "source_selectors": [
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/STARTED.json",
+            "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+          },
+          {
+            "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted/D-V08-A/PHASE1_ASSESSMENT_001.json",
+            "sha256": "3a7c34b1ce4f341e08feefc6986385a56be2d7e0cac56aa546002ae071263f0e"
+          }
+        ],
+        "started": {
+          "epoch_ns": 1791247493834732395,
+          "monotonic_ns": 77912691736392,
+          "utc": "2026-10-06T00:44:53.834732+00:00"
+        },
+        "whole_FINISHED": null
+      },
+      "rule": "Source-screen wall interval is a subset of unfinished whole pair; not model/API occupied time or provider cost, not extra budget, no source-quality inference.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted/D-V08-A/CLOCK_PHASE1_001.json",
+        "sha256": "65c8be9e5ffc08b90c7a556309018ce034a761250fc334f06414ade6a9cf92ee"
+      }
+    },
+    "validation_errors": []
+  },
+  "goal_status_rule": "Native Goal status comes only from a Goal receipt; router completed/cap/error status remains in its separate field. Earlier cohorts001..003 GLM native_goal_status erroneously carried router status; treat those values as router statuses and Goal status as UNKNOWN. Luna interrupted turn receipts remain interrupted even when a turn/completed notification exists.",
+  "helper_provider_usage": "UNKNOWN",
+  "model_provenance": {
+    "candidate_identity_rule": "Observed model receipt only; requested names and label suffixes do not establish actual family.",
+    "configured_accountant": "GPT6.1SolMedium",
+    "physical_provider_telemetry": "UNKNOWN"
+  },
+  "quiescence_rule": "Cohorts001..004 quiescent was native-cgroup quiet only. Cohort005+ preserves native, held-group, client-tool and execution-unit flags separately; aggregate is false when any original flag is false, unknown if required flags absent. Supplemented permit-release proof is separate and does not rewrite original failure flags.",
+  "reconciliations": {
+    "I01_full4": {
+      "attempt_ids": [
+        "I-01-control-research-a001",
+        "I-01-control-critique-a001",
+        "I-01-control-revision-a001",
+        "I-01-treatment-research-a001"
+      ],
+      "known_tokens": 7992185
+    },
+    "Luna_D14_first4": {
+      "attempt_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002",
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002",
+        "D-V14-B-control-diagnostic-a002",
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "known_tokens": 19152242
+    }
+  },
+  "role_import_cost_links_reference_only": [
+    {
+      "actual_consumer_exposure": "UNKNOWN_NO_EXECUTED_CONSUMER_RECEIPTS",
+      "candidate_bytes_rewritten": false,
+      "cost_rule": "Reference existing origin costs; do not add these tokens or Goals to global totals.",
+      "known_origin_tokens_reference_only": 2515693,
+      "manifest_pin": {
+        "path": "dev/diagnostic-runner/seed-recovery/bases/I-01-control-research-a001/BASE_MANIFEST.json",
+        "sha256": "feb385d38d66e69d2111a5bef17a5abdad45b55986763f3970459238b62e2c16"
+      },
+      "new_native_goal_starts": 0,
+      "origin_artifact_pins": [
+        {
+          "bytes": 38465,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/proposal.md",
+          "role": "proposal",
+          "sha256": "b50faea240a31cc53b4ec0a291defe944e88b08d57fe72766b341825e5bb0dc7"
+        },
+        {
+          "bytes": 19318,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/sources.json",
+          "role": "source_catalog",
+          "sha256": "b293a7aa16554a5817e15f07aded8e02de150438570f1b3e24658d10dde33f1b"
+        },
+        {
+          "bytes": 7434,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/witnesses.json",
+          "role": "witness_catalog",
+          "sha256": "5b5e0c0d9d8c52c3d8259fcb11bd51a29f1d6d468f953f721f03e38a2e37ca4a"
+        },
+        {
+          "bytes": 4731,
+          "origin_job_id": "I-01-control-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-control-research-a001/frozen-output/research/leads.json",
+          "role": "lead_inventory",
+          "sha256": "e2aa174222501198afb33a30f71d2a0139c63f10e911047379c6e6c700fe7751"
+        }
+      ],
+      "origin_attempt_ids": [
+        "I-01-control-research-a001"
+      ],
+      "per_comparison_apportionment": "UNKNOWN_NO_EXECUTED_CONSUMER_REFERENCE_COUNT",
+      "seed_id": "BASE-A-DEC006"
+    },
+    {
+      "actual_consumer_exposure": "UNKNOWN_NO_EXECUTED_CONSUMER_RECEIPTS",
+      "candidate_bytes_rewritten": false,
+      "cost_rule": "Reference existing origin costs; do not add these tokens or Goals to global totals.",
+      "known_origin_tokens_reference_only": 1489767,
+      "manifest_pin": {
+        "path": "dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027"
+      },
+      "new_native_goal_starts": 0,
+      "origin_artifact_pins": [
+        {
+          "bytes": 28811,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/proposal.md",
+          "role": "proposal",
+          "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df"
+        },
+        {
+          "bytes": 15430,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/sources.json",
+          "role": "source_catalog",
+          "sha256": "99e732e12036f339697bc7a4cf59d439ad142413b3d452f2186957005b9caf7a"
+        },
+        {
+          "bytes": 5777,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/witnesses.json",
+          "role": "witness_catalog",
+          "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d"
+        },
+        {
+          "bytes": 5062,
+          "origin_job_id": "I-02-treatment-research-a001",
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/leads.json",
+          "role": "lead_inventory",
+          "sha256": "193efdef4b6adff977b69af28c090c9d579a6e824c23f1f1a95d306d083a4c5a"
+        }
+      ],
+      "origin_attempt_ids": [
+        "I-02-treatment-research-a001"
+      ],
+      "per_comparison_apportionment": "UNKNOWN_NO_EXECUTED_CONSUMER_REFERENCE_COUNT",
+      "seed_id": "BASE-B-DEC006"
+    }
+  ],
+  "root_counter_timestamp_rule": "Supervisor at fields are source-record timestamps; supplied observation timestamps remain in original records. Counters are cumulative; cache/input/provider/helper inclusion and billing UNKNOWN. Never add root counters to provider or evaluator totals, infer a native budget stop, or interpret an absent/null budget as token cost.",
+  "schema": "er9.accounting.snapshot.v1",
+  "seed_apportionment_rule": "Count unique actual actor attempt once in global totals; shared per-comparison allocation must state reference count and fraction, never erase failed originals.",
+  "seed_unique_actor_artifact_cost": {
+    "actual_attempt_ids": [
+      "SEED-DEV-A-base-s001",
+      "SEED-DEV-B-base-s001",
+      "SEED-DEV-A-FIXED-BASE-enrichment-s002",
+      "SEED-DEV-B-FIXED-BASE-enrichment-s002"
+    ],
+    "comparison_apportionment": "NONE_OBSERVED_STARTED_SEED_DEPENDENCY_CONSUMERS; artifact exposure beyond registry dependencies UNKNOWN",
+    "cost_rule": "Global actual actor-attempt cost once; artifact reuse does not create another inference charge. Failed attempts retained.",
+    "known_cold_seed_tokens": 17725511,
+    "known_seed_role_continuation_tokens": 6407054,
+    "observed_started_seed_dependency_consumers": 0,
+    "registered_jobs": 18
+  },
+  "snapshot_consistency": "Each source captured independently; per-source hash pins identify the exact bytes used. Live receipts may advance after capture; this is not an atomic global state freeze.",
+  "sources": [
+    {
+      "path": "state/jobs.json",
+      "sha256": "35b299416936350c9b02e2ee020bbb7638329862cd2e935d7ea0371ae34b5621"
+    },
+    {
+      "path": "state/attempts.jsonl",
+      "sha256": "0f7be9d944e7b9eb811737884762a0a41f40033b1293734d45fb9dcaf45f84eb"
+    },
+    {
+      "path": "state/queue_cursor.json",
+      "sha256": "e7c317aed7ffd207000fb0bbeabd5ab3dafa12231f57597303aae65d9af192e0"
+    },
+    {
+      "path": "state/supervisor_goal_counters.jsonl",
+      "sha256": "d9ddd25a5f78f2bb92bbce71230d42b5713e8dff9725faf163d609d4ae89a2b7"
+    }
+  ],
+  "supervisor_cumulative_snapshots_separate_never_sum": [
+    {
+      "at": "2026-10-05T21:22:00Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "UNKNOWN",
+      "time_used_seconds": 3177,
+      "tokens_used": 2062875
+    },
+    {
+      "at": "2026-10-05T22:06:02.000Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 5812,
+      "tokens_used": 3177771
+    },
+    {
+      "at": "2026-10-05T22:31:34.519555+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 7323,
+      "tokens_used": 4036585
+    },
+    {
+      "at": "2026-10-05T23:26:23.814654+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 10611,
+      "tokens_used": 5832554
+    },
+    {
+      "at": "2026-10-06T00:02:16.327403+00:00",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 12759,
+      "tokens_used": 7606896
+    },
+    {
+      "at": "2026-10-06T00:34:29Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 14718,
+      "tokens_used": 8633062
+    },
+    {
+      "at": "2026-10-06T00:45:27Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 15377,
+      "tokens_used": 9255770
+    },
+    {
+      "at": "2026-10-06T01:27:35Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 17873,
+      "tokens_used": 11098709
+    },
+    {
+      "at": "2026-10-06T01:33:20Z",
+      "budget": null,
+      "remaining_tokens": null,
+      "status": "active",
+      "time_used_seconds": 18250,
+      "tokens_used": 11397746
+    }
+  ],
+  "supplemental_counter_source_pins": [
+    {
+      "path": "accounting/root_counter_supplements.input.json",
+      "sha256": "acbed4c55ab65d6070c7e69e6306106135906e67ef685c642abda05d1f328dd3"
+    }
+  ],
+  "targeted_evaluator_reservation_separate": {
+    "pair_seconds_observed": null,
+    "recorded_closed_utc": "2026-10-06T00:12:16.860886+00:00",
+    "rule": "Reservation is not assessment elapsed cost or candidate Goal start; budget limits are not observed cost.",
+    "source_FINISHED": null,
+    "source_STARTED": null,
+    "source_pin": {
+      "path": "evaluation/independent-targeted/RESERVATION_RECEIPT_001.json",
+      "sha256": "9f72f9f84211382e84c617a75e82b15d66ee5195bdd6bcfb264f310fd48c2898"
+    },
+    "source_screen_seconds_observed": null,
+    "status": "NOT_RUN"
+  },
+  "targeted_evaluator_started_receipts_separate": [
+    {
+      "FINISHED_receipt_imported": true,
+      "billing_dollars": "UNKNOWN",
+      "finished_elapsed_seconds": 1163.017374667,
+      "pair_authorized_seconds": 1800.0,
+      "pair_id": "D-V08-A",
+      "provider_usage": "UNKNOWN",
+      "receipt_event": "STARTED",
+      "scope": "STARTED source record; finished counterpart, if imported, is separate evaluator-clock metadata. Budget bounds are not observed cost, and no quality inference follows.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted/D-V08-A/STARTED.json",
+        "sha256": "aca8e6d4f85d136c6389cb4e33bccb7f3f7a0626f585cfdb2f28ff461368dc0c"
+      },
+      "source_screen_authorized_seconds": 1200.0,
+      "started_utc": "2026-10-06T00:44:53.834732+00:00"
+    }
+  ],
+  "totals": {
+    "candidate_attempt": {
+      "attempts": 92,
+      "known_tokens": 266957508,
+      "native_goal_starts_known": 84,
+      "occupied_seconds_known": 58985.14427934795,
+      "occupied_seconds_unknown_rows": 7,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 1
+    },
+    "route_canary": {
+      "attempts": 2,
+      "known_tokens": 57240,
+      "native_goal_starts_known": 2,
+      "occupied_seconds_known": 83.74218208000093,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    },
+    "route_canary_or_metadata": {
+      "attempts": 11,
+      "known_tokens": 690126,
+      "native_goal_starts_known": 5,
+      "occupied_seconds_known": 473.934378578,
+      "occupied_seconds_unknown_rows": 0,
+      "starts_unknown_rows": 3,
+      "usage_unknown_rows": 3
+    },
+    "route_probe": {
+      "attempts": 2,
+      "known_tokens": 0,
+      "native_goal_starts_known": 0,
+      "occupied_seconds_known": 8.237438862001,
+      "occupied_seconds_unknown_rows": 1,
+      "starts_unknown_rows": 0,
+      "usage_unknown_rows": 0
+    }
+  },
+  "unstarted_resource_blocked_descriptors_separate": [
+    {
+      "counting": "Unstarted resource-blocked descriptor; not an actual candidate attempt, Goal or provider-cost zero. Helper preparation/billing UNKNOWN.",
+      "full_pipeline_credit": false,
+      "job_id": "I-12-control-critique-a001",
+      "new_native_starts": 0,
+      "recorded_utc": "2026-10-06T00:52:16.410317+00:00",
+      "source_capture_sha256": "0f7be9d944e7b9eb811737884762a0a41f40033b1293734d45fb9dcaf45f84eb",
+      "source_path": "state/attempts.jsonl"
+    },
+    {
+      "counting": "Unstarted resource-blocked descriptor; not an actual candidate attempt, Goal or provider-cost zero. Helper preparation/billing UNKNOWN.",
+      "full_pipeline_credit": false,
+      "job_id": "I-12-control-revision-a001",
+      "new_native_starts": 0,
+      "recorded_utc": "2026-10-06T00:52:16.414191+00:00",
+      "source_capture_sha256": "0f7be9d944e7b9eb811737884762a0a41f40033b1293734d45fb9dcaf45f84eb",
+      "source_path": "state/attempts.jsonl"
+    }
+  ],
+  "validation_errors": [],
+  "wall_critical_path_seconds": "UNKNOWN",
+  "wasted_seconds": "UNKNOWN_FAILURE_IS_NOT_PROOF_ALL_TIME_WASTED"
+}

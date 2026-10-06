@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual_whole_wall_through_handoff_seconds": {
+      "type": "number"
+    },
+    "billing_and_model_occupied_seconds": {
+      "type": "string"
+    },
+    "boundary_rule": {
+      "type": "string"
+    },
+    "clock_reset_count": {
+      "type": "number"
+    },
+    "clock_source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "declared_new_candidate_models_or_Goals": {
+      "type": "number"
+    },
+    "declared_source_execution_reads_after_review_completed": {
+      "type": "number"
+    },
+    "evaluation_id": {
+      "type": "string"
+    },
+    "finished_utc": {
+      "type": "string"
+    },
+    "handoff_inside_original_whole_ceiling": {
+      "type": "boolean"
+    },
+    "handoff_overrun_seconds": {
+      "type": "number"
+    },
+    "original_whole_allowance_seconds": {
+      "type": "number"
+    },
+    "phase2_seconds": {
+      "type": "number"
+    },
+    "post_review_handoff_seconds": {
+      "type": "number"
+    },
+    "review_artifacts_ready_whole_seconds": {
+      "type": "number"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "source_seconds": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "schema",
+    "evaluation_id",
+    "source_pin",
+    "clock_source_pin",
+    "finished_utc",
+    "review_artifacts_ready_whole_seconds",
+    "actual_whole_wall_through_handoff_seconds",
+    "original_whole_allowance_seconds",
+    "handoff_overrun_seconds",
+    "post_review_handoff_seconds",
+    "handoff_inside_original_whole_ceiling",
+    "source_seconds",
+    "phase2_seconds",
+    "clock_reset_count",
+    "declared_new_candidate_models_or_Goals",
+    "declared_source_execution_reads_after_review_completed",
+    "billing_and_model_occupied_seconds",
+    "boundary_rule"
+  ],
+  "type": "object"
+}

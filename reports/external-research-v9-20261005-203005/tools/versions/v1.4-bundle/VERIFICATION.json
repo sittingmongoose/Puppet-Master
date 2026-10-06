@@ -1,0 +1,69 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "version": "v1.4-bundle",
+  "status": "READY_FOR_PROSPECTIVE_NATIVE_BINDING",
+  "verified_utc": "2026-10-06T01:47:35.505166+00:00",
+  "snapshot_sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+  "checks": [
+    {
+      "command": "python3 -B test_bundle.py",
+      "exit_code": 0,
+      "tests": 17,
+      "elapsed_seconds": 0.419,
+      "type": "synthetic mechanical checks including real confined writer inline/reference calls; not native experiment arms"
+    },
+    {
+      "command": "python3 -B source_capture/test_source_capture.py",
+      "exit_code": 0,
+      "tests": 14,
+      "elapsed_seconds": 0.161
+    },
+    {
+      "command": "python3 -B test_resource.py",
+      "exit_code": 0,
+      "tests": 5,
+      "elapsed_seconds": 1.022
+    },
+    {
+      "command": "python3 -B test_framing.py",
+      "exit_code": 0,
+      "tests": 6,
+      "elapsed_seconds": 3.924
+    },
+    {
+      "command": "python3 -B test_tools.py",
+      "exit_code": 0,
+      "tests": 9,
+      "elapsed_seconds": 11.412
+    }
+  ],
+  "actual_api": "Existing writer {path,text}; underlying mcp__pm_boundary__write_file; control4/treatment5 when public_get true and execution access is factor",
+  "positive_resource_placement": {
+    "path": "dev/tools/versions/v1.4-bundle/LOCAL_RESOURCE_PLACEMENT.json",
+    "sha256": "4dfcf0d9f3b929a04460ea7c0341a6f9ee12beac736792401c802a2299f28193"
+  },
+  "policy": {
+    "DEC010": {
+      "path": "supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    "scope": {
+      "path": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    "provenance": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    "clock": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    }
+  },
+  "native_model_calls": 0,
+  "native_goals_started": 0,
+  "current_or_frozen_jobs_changed": false,
+  "source_semantic_grade": "UNASSESSED_BY_TOOL",
+  "native_research_fit": "UNKNOWN",
+  "prospective_binding_required": "Route owners select this actual config.py + full SOURCE_PINS; case/ops seal actual role input/proof manifest and private profile before wholly unstarted final/combined stage. No paper PIN swap. Research/critic v1.3 remains usable."
+}

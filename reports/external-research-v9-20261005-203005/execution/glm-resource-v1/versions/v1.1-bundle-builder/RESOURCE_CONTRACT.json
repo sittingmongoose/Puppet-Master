@@ -1,0 +1,80 @@
+{
+  "schema": "er9.glm.complete-resource-bundle-builder-contract.v1",
+  "version": "glm_complete2304_bundle_v1",
+  "created_utc": "2026-10-06T01:50:54.101978+00:00",
+  "family": "Z",
+  "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "effort": "max",
+  "native_entry": "official app-server session/goal set",
+  "worker_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.1-bundle-builder/stage_worker.py",
+  "complete_resource_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+    "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+  },
+  "complete_resource_source_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+    "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+  },
+  "tools_config_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/config.py",
+    "sha256": "20307293d9a2f7f166034d3fdd0e4f8db2d74027dd5a100bb45f3ab674cbf57e"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/SOURCE_PINS.json",
+    "sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2"
+  },
+  "tools_verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.4-bundle/VERIFICATION.json",
+    "sha256": "b6085e06a92971faf6172c7587e2c1b09a7f60ff1ff1a5b773107f90cadb1499"
+  },
+  "bundle_profile": {
+    "required": true,
+    "format": {
+      "path": "OPS_PRIVATE_OWNED0600_PROFILE",
+      "sha256": "OPS_PROSPECTIVE_SHA"
+    },
+    "stage_id_equals": "stage.json.job_id",
+    "arm_id_equals": "stage.json.arm",
+    "actual_builder_confirmation": [
+      "native_bundle_enabled true",
+      "bundle_profile_sha256 exact selected pin"
+    ]
+  },
+  "unchanged_resource_files": {
+    "stage_worker.py": "3d0aa8d9a2b53fe3f09921b44b2b5333ca19f3e742b601aec7c6ad03d5738c79",
+    "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+    "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+    "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+    "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+    "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+    "pipe_bridge.py": "f9a8bf572f4334151ac4ca087844fdd1e7ebe7437aea4b5cb8b852c2f04209c2",
+    "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+    "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+  },
+  "source_difference": "profile.py only: explicit tool directory/version; full tool pin validation before carrier import; profile pin/stage/arm checks; actual bundle builder argument and result verification",
+  "bundle_validation_owner": "tools-v1.4 exact carrier: explicit complete final role/case/factors/final paths/positive native receipts/import closure/immutable hashes/atomic original bytes",
+  "native_writing_owner": "fresh genuine same-family candidate adopts and writes the bundle through existing confined writer tool names; host engine provides no semantic answers",
+  "aggregate_memory_max_bytes": 2415919104,
+  "memory_swap_max_bytes": 0,
+  "component_memory_max_bytes": {
+    "outer_worker": 805306368,
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "original_clock": "same original ops birth, setup+cleanup counted; native work total\u221230s, component guard total\u22125s, outer totalstop, no+45",
+  "fit": "UNKNOWN",
+  "oom": "charged failure; no hidden retry/enlargement/substitution",
+  "admission_scope": "wholly-unstarted final/combined roles under frozen full symmetric per-role pipeline closure; both arms closure before first fresh research Goal; actual future candidate hashes linked at role birth under fixed admitted linking rules",
+  "no_role_transport_opt_in": [
+    "research",
+    "critic",
+    "intermediate V05 revision",
+    "flash",
+    "both V06 arms"
+  ],
+  "no_added_required_critique_file": true,
+  "model_calls": 0,
+  "native_goal_starts": 0
+}

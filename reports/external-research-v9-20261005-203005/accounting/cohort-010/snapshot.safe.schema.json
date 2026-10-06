@@ -1,0 +1,2899 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual_family_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "GLM": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN_PRE_NATIVE": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "GLM",
+        "Luna",
+        "UNKNOWN",
+        "UNKNOWN_PRE_NATIVE"
+      ],
+      "type": "object"
+    },
+    "as_of_utc": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "billing_dollars": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "cleanup_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "counter_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evaluator_extensions_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "assessment_boundary": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "clock_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "counter_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "overlap_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pipeline_eval2_separate": {
+          "additionalProperties": false,
+          "properties": {
+            "assessment_boundary": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "billing_dollars": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "candidate_physical_provider_and_http_attempts": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "candidate_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "existing_attempt_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "existing_goal_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "freeze_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "job_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "native_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "native_goal_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "native_receipt_pin": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                "new_charge_tokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "router_terminal_status": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "rule": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "usage": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cachedInputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "inputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "outputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "reasoningOutputTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "totalTokens": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "cachedInputTokens",
+                    "inputTokens",
+                    "outputTokens",
+                    "reasoningOutputTokens",
+                    "totalTokens"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "existing_attempt_id",
+                "existing_goal_id",
+                "freeze_elapsed_seconds",
+                "job_status",
+                "native_elapsed_seconds",
+                "native_goal_status",
+                "native_receipt_pin",
+                "new_charge_tokens",
+                "router_terminal_status",
+                "rule",
+                "usage"
+              ],
+              "type": "object"
+            },
+            "clock_rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluation_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_observed_effort": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_observed_model": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_provider_tokens": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "interphase_wait_and_report_prep_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "no_clock_reset_or_extension": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "observed_pre_source_seconds_since_reservation": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "phases": {
+              "additionalProperties": false,
+              "properties": {
+                "phase1": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                },
+                "phase2": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                },
+                "report_write": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "finished_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "started_monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "started_utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "elapsed_seconds",
+                    "finished_monotonic_ns",
+                    "finished_utc",
+                    "started_monotonic_ns",
+                    "started_utc"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "phase1",
+                "phase2",
+                "report_write"
+              ],
+              "type": "object"
+            },
+            "pre_source_scope": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "schema": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_pin": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            },
+            "validation_errors": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "whole_assessment_elapsed_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "whole_review_including_report_seconds": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "assessment_boundary",
+            "billing_dollars",
+            "candidate_physical_provider_and_http_attempts",
+            "candidate_reference_only",
+            "clock_rule",
+            "evaluation_id",
+            "evaluator_observed_effort",
+            "evaluator_observed_model",
+            "evaluator_provider_tokens",
+            "interphase_wait_and_report_prep_seconds",
+            "no_clock_reset_or_extension",
+            "observed_pre_source_seconds_since_reservation",
+            "phases",
+            "pre_source_scope",
+            "schema",
+            "source_pin",
+            "validation_errors",
+            "whole_assessment_elapsed_seconds",
+            "whole_review_including_report_seconds"
+          ],
+          "type": "object"
+        },
+        "pipeline_eval3_separate": {
+          "additionalProperties": false,
+          "properties": {
+            "billing_dollars": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "evaluator_provider_tokens": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "existing_candidate_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "Goal_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "attempt_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "global_charge_added_by_reference": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "usage": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "cached_input_included": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "input": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "output": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "reasoning_output_subset": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "total": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "cached_input_included",
+                    "input",
+                    "output",
+                    "reasoning_output_subset",
+                    "total"
+                  ],
+                  "type": "object"
+                }
+              },
+              "required": [
+                "Goal_id",
+                "attempt_id",
+                "global_charge_added_by_reference",
+                "usage"
+              ],
+              "type": "object"
+            },
+            "finished_clocks": {
+              "additionalProperties": false,
+              "properties": {
+                "clock_semantics": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "effective_phase2_available_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "evaluation_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phase1_budget_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase1_elapsed_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase1_freeze_monotonic_ns": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase1_freeze_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phase2_budget_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase2_elapsed_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase2_freeze_monotonic_ns": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase2_freeze_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phase2_start_monotonic_ns": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "phase2_start_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "physical_model_telemetry": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "post_phase2_review_preparation_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "reset_count": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "review_completed_monotonic_ns": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "review_completed_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "source_start_monotonic_ns": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "source_start_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "wait_and_delivery_overhead_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "whole_budget_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "whole_elapsed_s": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "clock_semantics",
+                "effective_phase2_available_s",
+                "evaluation_id",
+                "phase1_budget_s",
+                "phase1_elapsed_s",
+                "phase1_freeze_monotonic_ns",
+                "phase1_freeze_utc",
+                "phase2_budget_s",
+                "phase2_elapsed_s",
+                "phase2_freeze_monotonic_ns",
+                "phase2_freeze_utc",
+                "phase2_start_monotonic_ns",
+                "phase2_start_utc",
+                "physical_model_telemetry",
+                "post_phase2_review_preparation_seconds",
+                "reset_count",
+                "review_completed_monotonic_ns",
+                "review_completed_utc",
+                "source_start_monotonic_ns",
+                "source_start_utc",
+                "wait_and_delivery_overhead_s",
+                "whole_budget_s",
+                "whole_elapsed_s"
+              ],
+              "type": "object"
+            },
+            "rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_pin": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "billing_dollars",
+            "evaluator_provider_tokens",
+            "existing_candidate_reference_only",
+            "finished_clocks",
+            "rule",
+            "source_pin"
+          ],
+          "type": "object"
+        },
+        "rows": {
+          "items": {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "clock_reset": {
+                "type": [
+                  "boolean",
+                  "null"
+                ]
+              },
+              "evaluation_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_allowance_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "extension_deadline_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_elapsed_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "extension_finished_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "extension_start_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "full_review_elapsed_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "full_review_finished_utc": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "model_occupied_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "native_provider_tokens": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_effort": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "observed_model": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_allowance_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_closed_elapsed_seconds": {
+                "type": [
+                  "number",
+                  "null"
+                ]
+              },
+              "original_closed_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_closure_logged_elapsed_seconds": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "original_deadline_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "original_start_utc": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "report_write_elapsed_seconds_intermediate": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "requested_effort": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "requested_model": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "screen_elapsed_seconds_subset": {
+                "type": [
+                  "string",
+                  "number",
+                  "boolean",
+                  "object",
+                  "null"
+                ]
+              },
+              "source_pins": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "path": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "sha256": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "billing_dollars",
+              "clock_reset",
+              "evaluation_id",
+              "extension_allowance_seconds",
+              "extension_deadline_utc",
+              "extension_elapsed_seconds",
+              "extension_finished_utc",
+              "extension_start_utc",
+              "full_review_elapsed_seconds",
+              "full_review_finished_utc",
+              "model_occupied_seconds",
+              "native_provider_tokens",
+              "observed_effort",
+              "observed_model",
+              "original_allowance_seconds",
+              "original_closed_elapsed_seconds",
+              "original_closed_utc",
+              "original_closure_logged_elapsed_seconds",
+              "original_deadline_utc",
+              "original_start_utc",
+              "report_write_elapsed_seconds_intermediate",
+              "requested_effort",
+              "requested_model",
+              "screen_elapsed_seconds_subset",
+              "source_pins"
+            ],
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "schema": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sum_reported_extension_wall_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "targeted_D08A_finished_and_cost_references_separate": {
+          "additionalProperties": false,
+          "properties": {
+            "billing_dollars": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "cancelled_or_unexposed_tail": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "clock_rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "exposure_rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "finished_clock": {
+              "additionalProperties": false,
+              "properties": {
+                "budgets": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "reset_allowed": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "source_screen_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "whole_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "reset_allowed",
+                    "source_screen_seconds",
+                    "whole_seconds"
+                  ],
+                  "type": "object"
+                },
+                "clock_source_pins": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "evaluator_model_inference_cost": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "event": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "finished": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "epoch_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "epoch_ns",
+                    "monotonic_ns",
+                    "utc"
+                  ],
+                  "type": "object"
+                },
+                "observed_budget_compliance": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "source_within1200": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "whole_within1800": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "source_within1200",
+                    "whole_within1800"
+                  ],
+                  "type": "object"
+                },
+                "pair_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phase1_finished": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "epoch_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "epoch_ns",
+                    "monotonic_ns",
+                    "utc"
+                  ],
+                  "type": "object"
+                },
+                "phase2_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "physical_provider_telemetry": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "quality_findings_in_clock_projection": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "schema": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "source_is_subset_of_whole": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "source_screen_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "started": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "epoch_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "epoch_ns",
+                    "monotonic_ns",
+                    "utc"
+                  ],
+                  "type": "object"
+                },
+                "whole_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "budgets",
+                "clock_source_pins",
+                "evaluator_model_inference_cost",
+                "event",
+                "finished",
+                "observed_budget_compliance",
+                "pair_id",
+                "phase1_finished",
+                "phase2_elapsed_seconds",
+                "physical_provider_telemetry",
+                "quality_findings_in_clock_projection",
+                "schema",
+                "source_is_subset_of_whole",
+                "source_screen_elapsed_seconds",
+                "started",
+                "whole_elapsed_seconds"
+              ],
+              "type": "object"
+            },
+            "global_token_charge_added_by_reference": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "new_inference_from_role_imports": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "per_comparison_apportionment": {
+              "additionalProperties": false,
+              "properties": {
+                "arm_reference_share_each_if_equal_apportionment": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "comparison": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "fraction_each": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "scope": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "shared_origin_charge_reference_once": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "arm_reference_share_each_if_equal_apportionment",
+                "comparison",
+                "fraction_each",
+                "scope",
+                "shared_origin_charge_reference_once"
+              ],
+              "type": "object"
+            },
+            "selected_actual_goal_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "selected_plus_shared_origin_totals_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "cached_input_included": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "input": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "output": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "reasoning_output_subset": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "cached_input_included",
+                "input",
+                "output",
+                "reasoning_output_subset",
+                "total"
+              ],
+              "type": "object"
+            },
+            "selected_two_stage_usage_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "cachedInputTokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "inputTokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "outputTokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "reasoningOutputTokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "totalTokens": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "cachedInputTokens",
+                "inputTokens",
+                "outputTokens",
+                "reasoningOutputTokens",
+                "totalTokens"
+              ],
+              "type": "object"
+            },
+            "shared_origin_attempt_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "shared_origin_usage_reference_only": {
+              "additionalProperties": false,
+              "properties": {
+                "cached_input_included": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "input": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "output": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "reasoning_output_subset": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "total": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "cached_input_included",
+                "input",
+                "output",
+                "reasoning_output_subset",
+                "total"
+              ],
+              "type": "object"
+            },
+            "source_pins": {
+              "items": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  "sha256": {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "whole_pipeline_cost": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "billing_dollars",
+            "cancelled_or_unexposed_tail",
+            "clock_rule",
+            "exposure_rule",
+            "finished_clock",
+            "global_token_charge_added_by_reference",
+            "new_inference_from_role_imports",
+            "per_comparison_apportionment",
+            "selected_actual_goal_ids",
+            "selected_plus_shared_origin_totals_reference_only",
+            "selected_two_stage_usage_reference_only",
+            "shared_origin_attempt_id",
+            "shared_origin_usage_reference_only",
+            "source_pins",
+            "whole_pipeline_cost"
+          ],
+          "type": "object"
+        },
+        "targeted_D08A_source_phase_separate": {
+          "additionalProperties": false,
+          "properties": {
+            "neutral_clock": {
+              "additionalProperties": false,
+              "properties": {
+                "authorized_budgets_not_observed_cost": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "pair_elapsed_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "reset_allowed": {
+                      "type": [
+                        "boolean",
+                        "null"
+                      ]
+                    },
+                    "source_screen_seconds": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "pair_elapsed_seconds",
+                    "reset_allowed",
+                    "source_screen_seconds"
+                  ],
+                  "type": "object"
+                },
+                "clock_phase": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "model_inference_cost": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "pair_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "phase1_finished": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "epoch_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "epoch_ns",
+                    "monotonic_ns",
+                    "utc"
+                  ],
+                  "type": "object"
+                },
+                "physical_provider_telemetry": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "projection_created_utc": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "schema": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "source_screen_elapsed_seconds": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "source_selectors": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "path": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      },
+                      "sha256": {
+                        "type": [
+                          "string",
+                          "null"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "path",
+                      "sha256"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "started": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "epoch_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "monotonic_ns": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "utc": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "epoch_ns",
+                    "monotonic_ns",
+                    "utc"
+                  ],
+                  "type": "object"
+                },
+                "whole_FINISHED": {
+                  "type": [
+                    "string",
+                    "number",
+                    "boolean",
+                    "object",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "authorized_budgets_not_observed_cost",
+                "clock_phase",
+                "model_inference_cost",
+                "pair_id",
+                "phase1_finished",
+                "physical_provider_telemetry",
+                "projection_created_utc",
+                "schema",
+                "source_screen_elapsed_seconds",
+                "source_selectors",
+                "started",
+                "whole_FINISHED"
+              ],
+              "type": "object"
+            },
+            "rule": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "source_pin": {
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "neutral_clock",
+            "rule",
+            "source_pin"
+          ],
+          "type": "object"
+        },
+        "validation_errors": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "assessment_boundary",
+        "clock_rule",
+        "counter_rule",
+        "overlap_rule",
+        "pipeline_eval2_separate",
+        "pipeline_eval3_separate",
+        "rows",
+        "schema",
+        "sum_reported_extension_wall_seconds",
+        "targeted_D08A_finished_and_cost_references_separate",
+        "targeted_D08A_source_phase_separate",
+        "validation_errors"
+      ],
+      "type": "object"
+    },
+    "goal_status_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "helper_provider_usage": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "model_provenance": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_identity_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "configured_accountant": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "physical_provider_telemetry": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "configured_accountant",
+        "physical_provider_telemetry",
+        "candidate_identity_rule"
+      ],
+      "type": "object"
+    },
+    "quiescence_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reconciliations": {
+      "additionalProperties": false,
+      "properties": {
+        "I01_full4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna_D14_first4": {
+          "additionalProperties": false,
+          "properties": {
+            "attempt_ids": {
+              "items": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "type": "array"
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempt_ids",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "I01_full4",
+        "Luna_D14_first4"
+      ],
+      "type": "object"
+    },
+    "role_import_cost_links_reference_only": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "actual_consumer_exposure": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "candidate_bytes_rewritten": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "cost_rule": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "known_origin_tokens_reference_only": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "manifest_pin": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "new_native_goal_starts": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "origin_artifact_pins": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "bytes": {
+                  "type": [
+                    "number",
+                    "null"
+                  ]
+                },
+                "origin_job_id": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "path": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "role": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "sha256": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "role",
+                "origin_job_id",
+                "sha256",
+                "bytes",
+                "path"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "origin_attempt_ids": {
+            "items": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "type": "array"
+          },
+          "per_comparison_apportionment": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "seed_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "seed_id",
+          "manifest_pin",
+          "origin_attempt_ids",
+          "known_origin_tokens_reference_only",
+          "new_native_goal_starts",
+          "candidate_bytes_rewritten",
+          "origin_artifact_pins",
+          "cost_rule",
+          "actual_consumer_exposure",
+          "per_comparison_apportionment"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "root_counter_timestamp_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_apportionment_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "seed_unique_actor_artifact_cost": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_attempt_ids": {
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "type": "array"
+        },
+        "comparison_apportionment": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cost_rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_cold_seed_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "known_seed_role_continuation_tokens": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "observed_started_seed_dependency_consumers": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "registered_jobs": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "registered_jobs",
+        "actual_attempt_ids",
+        "cost_rule",
+        "known_cold_seed_tokens",
+        "known_seed_role_continuation_tokens",
+        "observed_started_seed_dependency_consumers",
+        "comparison_apportionment"
+      ],
+      "type": "object"
+    },
+    "snapshot_consistency": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sources": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "supervisor_cumulative_snapshots_separate_never_sum": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "budget": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "null"
+            ]
+          },
+          "remaining_tokens": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "null"
+            ]
+          },
+          "status": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "time_used_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "tokens_used": {
+            "type": [
+              "number",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "at",
+          "tokens_used",
+          "time_used_seconds",
+          "status",
+          "remaining_tokens",
+          "budget"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "supplemental_counter_source_pins": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "targeted_evaluator_reservation_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "pair_seconds_observed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "recorded_closed_utc": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "rule": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_FINISHED": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "source_STARTED": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "source_pin": {
+          "additionalProperties": false,
+          "properties": {
+            "path": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "sha256": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "type": "object"
+        },
+        "source_screen_seconds_observed": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "object",
+            "null"
+          ]
+        },
+        "status": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "source_pin",
+        "status",
+        "recorded_closed_utc",
+        "source_screen_seconds_observed",
+        "pair_seconds_observed",
+        "source_STARTED",
+        "source_FINISHED",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "targeted_evaluator_started_receipts_separate": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "FINISHED_receipt_imported": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "billing_dollars": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "finished_elapsed_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "pair_authorized_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "pair_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provider_usage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "receipt_event": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "scope": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_pin": {
+            "additionalProperties": false,
+            "properties": {
+              "path": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "sha256": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "type": "object"
+          },
+          "source_screen_authorized_seconds": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "started_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "source_pin",
+          "pair_id",
+          "receipt_event",
+          "started_utc",
+          "source_screen_authorized_seconds",
+          "pair_authorized_seconds",
+          "FINISHED_receipt_imported",
+          "finished_elapsed_seconds",
+          "provider_usage",
+          "billing_dollars",
+          "scope"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "totals": {
+      "additionalProperties": false,
+      "properties": {
+        "candidate_attempt": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_canary_or_metadata": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        },
+        "route_probe": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "known_tokens": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "native_goal_starts_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_known": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "occupied_seconds_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "starts_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usage_unknown_rows": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "attempts",
+            "native_goal_starts_known",
+            "starts_unknown_rows",
+            "known_tokens",
+            "usage_unknown_rows",
+            "occupied_seconds_known",
+            "occupied_seconds_unknown_rows"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "candidate_attempt",
+        "route_canary",
+        "route_canary_or_metadata",
+        "route_probe"
+      ],
+      "type": "object"
+    },
+    "unstarted_resource_blocked_descriptors_separate": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "counting": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "full_pipeline_credit": {
+            "type": [
+              "boolean",
+              "null"
+            ]
+          },
+          "job_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "new_native_starts": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "recorded_utc": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_capture_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "required": [
+          "job_id",
+          "recorded_utc",
+          "new_native_starts",
+          "full_pipeline_credit",
+          "source_path",
+          "source_capture_sha256",
+          "counting"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "validation_errors": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "wall_critical_path_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "wasted_seconds": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema",
+    "as_of_utc",
+    "sources",
+    "totals",
+    "actual_family_totals",
+    "reconciliations",
+    "supervisor_cumulative_snapshots_separate_never_sum",
+    "supplemental_counter_source_pins",
+    "unstarted_resource_blocked_descriptors_separate",
+    "role_import_cost_links_reference_only",
+    "evaluator_extensions_separate",
+    "targeted_evaluator_started_receipts_separate",
+    "targeted_evaluator_reservation_separate",
+    "helper_provider_usage",
+    "root_counter_timestamp_rule",
+    "billing_dollars",
+    "wall_critical_path_seconds",
+    "wasted_seconds",
+    "seed_unique_actor_artifact_cost",
+    "seed_apportionment_rule",
+    "cleanup_rule",
+    "quiescence_rule",
+    "goal_status_rule",
+    "counter_rule",
+    "snapshot_consistency",
+    "model_provenance",
+    "validation_errors"
+  ],
+  "title": "ER9 exact safe snapshot schema",
+  "type": "object"
+}

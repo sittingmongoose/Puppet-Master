@@ -1,0 +1,26 @@
+{
+  "actual_whole_wall_through_handoff_seconds": 1850.358101297,
+  "billing_and_model_occupied_seconds": "UNKNOWN",
+  "boundary_rule": "Cohort010 Eval3 whole1762.552529925 refers to review artifacts ready, not full notification/handoff. Actual finished handoff1850.358101297 exceeded1800 by50.358101297. Whole contains source/Phase2/waits/report slices; never add them again. No source-grade change or duplicated candidate charge.",
+  "clock_reset_count": 0,
+  "clock_source_pin": {
+    "path": "evaluation/independent-pipeline-3/review0001/CLOCKS.json",
+    "sha256": "67725ca5efbb2988d6f5880871686772c13f21148dacabfedfc5b731e48eab0b"
+  },
+  "declared_new_candidate_models_or_Goals": 0,
+  "declared_source_execution_reads_after_review_completed": 0,
+  "evaluation_id": "independent-pipeline-3-review0001",
+  "finished_utc": "2026-10-06T01:38:23.206224+00:00",
+  "handoff_inside_original_whole_ceiling": false,
+  "handoff_overrun_seconds": 50.358101297,
+  "original_whole_allowance_seconds": 1800,
+  "phase2_seconds": 403.956776389,
+  "post_review_handoff_seconds": 87.80557137200003,
+  "review_artifacts_ready_whole_seconds": 1762.552529925,
+  "schema": "er9.accounting.eval3-final-clock.v1",
+  "source_pin": {
+    "path": "evaluation/independent-pipeline-3/review0001/FINISHED.json",
+    "sha256": "db81d32d567a86904f8a20106e69fee464e2bbea27dd65dc76b2c62f00482e37"
+  },
+  "source_seconds": 794.3574254
+}

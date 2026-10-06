@@ -1,0 +1,734 @@
+{
+  "schema": "er9.finite-queue-status-metadata.v2",
+  "as_of_utc": "2026-10-06T01:41:39.741444+00:00",
+  "declared_targets": {
+    "methods": 16,
+    "targeted_pairs": 32,
+    "targeted_arms": 64,
+    "integrated_pairs": 12,
+    "confirmations": 4
+  },
+  "registry_source_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/state/jobs.json",
+    "sha256": "1c782e42be930f1f3b3eb49032d9cd9f38f96bd7f6a8ef2a8bb17a763dfe037f"
+  },
+  "all_registry_job_rows": 306,
+  "all_lane_registry_confirmed_starts": 84,
+  "registry_counts_are_not_target_completion_evidence": true,
+  "targeted_slots": [
+    {
+      "slot": "D-V01-A",
+      "method_id": "V01",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 2,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V01-B",
+      "method_id": "V01",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V02-A",
+      "method_id": "V02",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SUPERSEDED_UNSTARTED_NEUTRAL_REPAIR": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V02-B",
+      "method_id": "V02",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V03-A",
+      "method_id": "V03",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V03-B",
+      "method_id": "V03",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V04-A",
+      "method_id": "V04",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V04-B",
+      "method_id": "V04",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V05-A-LUNA-R1",
+      "method_id": "V05",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V05-B",
+      "method_id": "V05",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V06-A",
+      "method_id": "V06",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V06-B",
+      "method_id": "V06",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V07-A",
+      "method_id": "V07",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SUPERSEDED_UNSTARTED_NEUTRAL_REPAIR": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V07-B",
+      "method_id": "V07",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V08-A",
+      "method_id": "V08",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 2,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V08-B",
+      "method_id": "V08",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 2,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V09-A",
+      "method_id": "V09",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_EXPLICIT_RESOURCE_LINEAGE": 2,
+        "FAILED": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V09-B",
+      "method_id": "V09",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 3,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 3,
+        "RUNNING": 2,
+        "FAILED": 1
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V10-A",
+      "method_id": "V10",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V10-B",
+      "method_id": "V10",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V11-A",
+      "method_id": "V11",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V11-B",
+      "method_id": "V11",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V12-A",
+      "method_id": "V12",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V12-B",
+      "method_id": "V12",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 4,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002",
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V13-A",
+      "method_id": "V13",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V13-B",
+      "method_id": "V13",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 0,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {},
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V14-A-LUNA-R1",
+      "method_id": "V14",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED_PRELAUNCH_CONFIRMED_ZERO_NATIVE": 2,
+        "FAILED": 4
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V14-B",
+      "method_id": "V14",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 8,
+      "confirmed_native_goal_starts": 3,
+      "current_status_counts": {
+        "FAILED_PRELAUNCH_CONFIRMED_ZERO_NATIVE": 2,
+        "FAILED": 2,
+        "COMPLETED": 1,
+        "SUPERSEDED_UNSTARTED_EXPLICIT_RESOURCE_LINEAGE": 1,
+        "SEALED_READY": 2
+      },
+      "pending_unstarted_job_ids": [
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001"
+      ],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V15-A",
+      "method_id": "V15",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 8,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED_PRELAUNCH_CONFIRMED_ZERO_NATIVE": 2,
+        "FAILED": 3,
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2,
+        "COMPLETED": 1
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V15-B",
+      "method_id": "V15",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 8,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED_PRELAUNCH_CONFIRMED_ZERO_NATIVE": 2,
+        "FAILED": 4,
+        "SUPERSEDED_UNSTARTED_RESOURCE_VERSION": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V16-A",
+      "method_id": "V16",
+      "domain": "A",
+      "target": 2,
+      "registered_job_rows": 2,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    },
+    {
+      "slot": "D-V16-B",
+      "method_id": "V16",
+      "domain": "B",
+      "target": 2,
+      "registered_job_rows": 2,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2
+      },
+      "pending_unstarted_job_ids": [],
+      "actual_quality_or_method_uptake": "UNKNOWN in this control audit",
+      "completed_matched_pairs_claimed": 0
+    }
+  ],
+  "integrated_slots": [
+    {
+      "slot": "I-01",
+      "registered_job_rows": 15,
+      "confirmed_native_goal_starts": 7,
+      "current_status_counts": {
+        "COMPLETED": 3,
+        "FAILED": 4,
+        "BLOCKED_PREDECESSOR_FAILED": 6,
+        "SEALED_READY": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-02",
+      "registered_job_rows": 10,
+      "confirmed_native_goal_starts": 3,
+      "current_status_counts": {
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 3,
+        "COMPLETED": 1,
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-03",
+      "registered_job_rows": 16,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 6,
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 6
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-04",
+      "registered_job_rows": 15,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 6,
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 5
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-05",
+      "registered_job_rows": 11,
+      "confirmed_native_goal_starts": 8,
+      "current_status_counts": {
+        "FAILED": 6,
+        "BLOCKED_PREDECESSOR_FAILED": 3,
+        "COMPLETED": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-06",
+      "registered_job_rows": 18,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED": 4,
+        "BLOCKED_PREDECESSOR_FAILED": 8,
+        "SUPERSEDED_UNSTARTED_EXPLICIT_RESOURCE_LINEAGE": 6
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-07",
+      "registered_job_rows": 10,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED": 3,
+        "BLOCKED_PREDECESSOR_FAILED": 5,
+        "COMPLETED": 1,
+        "SEALED_READY": 1
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-08",
+      "registered_job_rows": 8,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "FAILED": 3,
+        "BLOCKED_PREDECESSOR_FAILED": 3,
+        "COMPLETED": 1,
+        "SEALED_READY": 1
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-09",
+      "registered_job_rows": 12,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 4,
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 4
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-10",
+      "registered_job_rows": 9,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 4,
+        "SEALED_READY": 1,
+        "WAITING_RUNTIME_BINDING": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-11",
+      "registered_job_rows": 10,
+      "confirmed_native_goal_starts": 4,
+      "current_status_counts": {
+        "COMPLETED": 2,
+        "FAILED": 2,
+        "BLOCKED_PREDECESSOR_FAILED": 2,
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    },
+    {
+      "slot": "I-12",
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 2,
+      "current_status_counts": {
+        "COMPLETED": 1,
+        "BLOCKED_RESOURCE_FROZEN_UNBOUNDED": 2,
+        "FAILED": 1,
+        "BLOCKED_PREDECESSOR_FAILED": 2
+      },
+      "counts_are_jobs_and_lineages_not_whole_pipeline_credit": true
+    }
+  ],
+  "locked_confirmation_slots": [
+    {
+      "slot": "C-01",
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 4
+      },
+      "recipe_lock_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "no_holdout_or_candidate_bodies_opened": true
+    },
+    {
+      "slot": "C-02",
+      "registered_job_rows": 6,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 4
+      },
+      "recipe_lock_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "no_holdout_or_candidate_bodies_opened": true
+    },
+    {
+      "slot": "C-03",
+      "registered_job_rows": 5,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 3
+      },
+      "recipe_lock_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "no_holdout_or_candidate_bodies_opened": true
+    },
+    {
+      "slot": "C-04",
+      "registered_job_rows": 5,
+      "confirmed_native_goal_starts": 0,
+      "current_status_counts": {
+        "SEALED_READY": 2,
+        "WAITING_RUNTIME_BINDING": 3
+      },
+      "recipe_lock_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+        "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+      },
+      "no_holdout_or_candidate_bodies_opened": true
+    }
+  ],
+  "all_cost_scope": "Original failed/prelaunch/canary/seed/recovery/shared-role/superseded costs and clocks remain retained by immutable source/status references; separately charge each actual new native role and cumulative lineage. No billed-dollar or unexposed cancellation costs inferred. This audit does not aggregate candidate costs."
+}
