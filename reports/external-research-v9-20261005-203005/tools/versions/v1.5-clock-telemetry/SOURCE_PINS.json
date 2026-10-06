@@ -1,0 +1,73 @@
+{
+  "schema": "er9.tools.source-pins.v1",
+  "version": "v1.5-clock-telemetry",
+  "created_utc": "2026-10-06T03:53:08.742559+00:00",
+  "predecessor_source_pins_sha256": "8562c561882e546bb8ecb85c56744c3aae8c81b68cb4897921f851f0515ca7e2",
+  "files": {
+    "config.py": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39",
+    "execution_server.py": "be196d99194350c9a7e5394521499484c7a77036ee95aab1ac57477fd71e228c",
+    "test_tools.py": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+    "source_capture/boundary.py": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57",
+    "source_capture/tool_server.py": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8",
+    "source_capture/test_source_capture.py": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+    "README.md": "5804ddb49e56b81c915d3b56434ac36acc754eae83803e834faf0c9443a77e9d",
+    "test_framing.py": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+    "resource_profile.py": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+    "resource_gate.py": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+    "test_resource.py": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+    "bundle_carrier.py": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+    "operator_binding.py": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+    "test_bundle.py": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566",
+    "API_SCHEMA.json": "d20d9676b72c448cea38a479c798f9b7b7207fa68428504ed00986e29a8f0712",
+    "PROVENANCE_IMPLEMENTATION.json": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521",
+    "EMPTY_CLOSURE_FIXTURE.json": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1",
+    "clock_telemetry.py": "c7a080b191d3cd36d4a6f5e9b5e1f5f912c0536752b91151bdb1977a874aaa48",
+    "clock_binding.py": "217fd8519dd981d7c72a6783580185d83a5ea171d21b7c506d347804eef24317",
+    "test_clock.py": "4a1f59c06f1db0f44546bc7e51217b4a88c0b7af170b5dadbff873d78e0d9f37",
+    "CLOCK_FIELD_CONTRACT.json": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+  },
+  "changed_predecessor_files": [
+    "config.py",
+    "execution_server.py",
+    "source_capture/boundary.py",
+    "source_capture/tool_server.py",
+    "README.md",
+    "API_SCHEMA.json"
+  ],
+  "added_files": [
+    "clock_telemetry.py",
+    "clock_binding.py",
+    "test_clock.py",
+    "CLOCK_FIELD_CONTRACT.json"
+  ],
+  "runtime_binaries": {
+    "/usr/bin/python3": "be9a2a5eada8c89c1c399fdfb8397179e877c20d8db0739c802f726d4d0e69fd",
+    "/usr/bin/bwrap": "a85b0ff8664c52ab923e0daf7e20cbc394272cd3831cc492ab144105d8091361",
+    "/usr/bin/systemd-run": "55ba6ffaebbe831ee903e238c42aa27120543f7e1316c5d2084f7e1461526f42",
+    "/usr/bin/systemctl": "044cb69b902982835d7916423a7efcc4ba3181addc887f0c23941c7c09eacbab"
+  },
+  "policy": {
+    "DEC010": {
+      "path": "supervision/DECISIONS-010.json",
+      "sha256": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1"
+    },
+    "scope": {
+      "path": "supervision/DECISIONS-010-SCOPE-ADDENDUM-001.json",
+      "sha256": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1"
+    },
+    "provenance": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-ADDENDUM-001.json",
+      "sha256": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e"
+    },
+    "clock": {
+      "path": "supervision/DECISIONS-010-PROVENANCE-CLOCK-ADDENDUM-002.json",
+      "sha256": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+    }
+  },
+  "unchanged_core": "execute/cleanup/isolation/bootstrap code and source perform/fetch/path guards AST-identical to v1.4; resource_gate/resource_profile/bundle_carrier/operator_binding byte-identical",
+  "change_scope": "Separate numeric original action clock content.text result block and initial metadata; explicitly common behavioral version; no tool/cardinality/cap/clock/Goal/scientific payload change",
+  "diagnosis": {
+    "path": "dev/tools/diagnosis/budget-visibility-001/PIN.json",
+    "sha256": "6cd5ff9eb55bbf9d4ceb88fa89dafaf9127b1f7b233e0d805ae7ed6dd6e964aa"
+  }
+}

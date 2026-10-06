@@ -1,0 +1,87 @@
+{
+  "schema": "er9.glm.clock-binding-integration-outbox.v1",
+  "created_utc": "2026-10-06T04:00:30.812670+00:00",
+  "status": "READY_FOR_FULL_PROSPECTIVE_CLOSURE_ONLY",
+  "engine_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+    "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+  },
+  "worker_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+  "worker_cli": [
+    "--stage-json",
+    "--stage-sha256",
+    "--birth-monotonic-ns",
+    "--resource-profile",
+    "--resource-profile-sha256"
+  ],
+  "unchanged_worker_budget_origin": "ops original monotonic admission birth, not worker/Goal start",
+  "glm_resource_template": {
+    "version": "glm_complete2304_bundle_clock_v3",
+    "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+    "effort": "max",
+    "source_pins": "copy runtime_source_pins from this exact engine PIN; no arbitrary substitution",
+    "tools_config_builder": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+      "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+    },
+    "capture_dir": "trusted mechanical store selected prospectively",
+    "evidence_dir": "disjoint trusted per-role receipt store",
+    "execution_enabled": "exact frozen arm/stage factor; control V01 critic false",
+    "public_get": "same original frozen policy",
+    "clock_fragment": {
+      "path": "absolute prospectively prepared fragment file",
+      "sha256": "exact task_fragment.render(original role allocation) bytes SHA"
+    },
+    "bundle_profile": "same pinned path/SHA and exact stage/arm/native closure if bundle variant"
+  },
+  "task_constructor": {
+    "source": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/task_fragment.py",
+      "sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+    },
+    "call": "render(original_allocation_seconds)",
+    "CLI": [
+      "python3",
+      "-B",
+      "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/task_fragment.py",
+      "--original-allocation-seconds",
+      "<original integer role allocation>",
+      "--out",
+      "<new fragment path>"
+    ],
+    "append": "case owner prepares original scientific/native transport Task followed by fragment bytes, before role Goal; pin entire Task and suffix",
+    "reserved_input": "inputs/STAGE_CLOCK.json absent before worker; worker seals exact builder snapshot at original role birth"
+  },
+  "role_birth_outputs": [
+    "RESOURCE_BINDING.json",
+    "ORIGINAL_CLOCK_PROFILE.json",
+    "RESOURCE_TOOLS_CONFIG.json",
+    "RESOURCE_CONFIG_BINDING.json",
+    "workspace/inputs/STAGE_CLOCK.json"
+  ],
+  "positive_runtime_proof": "OUTPUT_FREEZE.original_action_clock_binding joins config/descriptor/input/Task/source receipts; native receipt raw_prompt_sha256 and prompt_sha256 precede Goal/set",
+  "tools_field_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+    "sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/VERIFICATION.json",
+    "sha256": "b942c15a71b7369cf5b1f260d6ae32edefe3b6b290b251adf371e4a487b8831e"
+  },
+  "activation_owner": "ops only; engineering created no live bindings",
+  "required_before_use": [
+    "recheck BOTH first research unstarted",
+    "seal actual ALL-role model/engine/tool/carrier/clock constructor/input linking choices for BOTH arms",
+    "seal actual Task/neutral suffix hashes and shared scientific prefix preservation before each Goal",
+    "bind actual mechanical role-birth receipt/clock/input/config hashes before Goal"
+  ],
+  "prohibited": [
+    "entered pair retrofit",
+    "extra jobs/reruns",
+    "deadline reset/extension",
+    "hidden objective/task append",
+    "automatic final generation",
+    "semantic/evaluator repair"
+  ],
+  "zero_native_model_or_goal_calls": 0
+}

@@ -1,0 +1,24 @@
+{
+  "schema": "er9.tools.release-pin.v1",
+  "version": "v1.5-clock-telemetry",
+  "status": "READY_FOR_PROSPECTIVE_ACTUAL_ROUTE_BINDING",
+  "source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/VERIFICATION.json",
+    "sha256": "452f0ebd59933f1b772d2e54c5bb199547ff395a9589cb1b6e070c548a71e1eb"
+  },
+  "config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+    "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+  },
+  "clock_field_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+    "sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+  },
+  "native_model_calls": 0,
+  "native_goals": 0,
+  "scope": "Common clock-awareness behavioral overlay only for both-arm first-research-unstarted prospective versions, after full actual native binding; no new jobs/probes/retrofit authorized"
+}

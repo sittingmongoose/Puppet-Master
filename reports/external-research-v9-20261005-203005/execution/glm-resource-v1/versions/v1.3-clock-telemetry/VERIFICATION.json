@@ -1,0 +1,81 @@
+{
+  "schema": "er9.glm.original-action-clock-verification.v1",
+  "created_utc": "2026-10-06T04:00:30.812670+00:00",
+  "status": "PASS_ZERO_INFERENCE",
+  "test_command": "python3 -B -m unittest test_clock_binding -v",
+  "tests_passed": 4,
+  "elapsed_seconds": 10.773,
+  "actual_production_fixtures": 2,
+  "production_fixture_proof": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/CLOCK_PRODUCTION_PROOF.json",
+    "sha256": "247859b54fc3f2fa9cc1980bbd308b27945ee99ef578f0feb73ddfff1ddb4c32"
+  },
+  "coverage": [
+    "actual dispatcher-shaped private outer -> production stage_worker.run construction, core and bundle",
+    "actual original pre-Goal controller receipt/source/stage/arm/allocation/birth/action/total join",
+    "exact initial builder metadata UTF8 input pin and Task byte identity before synthetic native-unit start",
+    "real MCP source and execution proxy telemetry: five calls per fixture including one admitted error",
+    "actual kernel outer/native/source/adapter/helpers/sandbox placement and aggregate caps",
+    "temporary discovery EOF/reconnect preserved; exact original action/guardian/total stops",
+    "missing action or controller proof UNKNOWN; no cleanup-derived deadline",
+    "stage/arm/source receipt SHA drift rejection; expired remaining zero with original total unchanged",
+    "declared neutral fragment/allocation/hash check; no worker Task/objective append",
+    "owned external release only after outer terminal and recursive quiet"
+  ],
+  "predecessor_byte_identity": [
+    {
+      "predecessor": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+        "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+      },
+      "all_predecessor_pinned_files_unchanged": true,
+      "unchanged_runtime_files": {
+        "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+        "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+        "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+      },
+      "unchanged_profile_functions": {
+        "original_clock": "75e7175ee448dd84de68aab31835ebda2e5c3f8c02d19accd82be7a04192f5e2",
+        "tool_profile": "351efd262fdf37fa56ae761072f28ef20ddec860ff702233e99c95aed8b99107",
+        "preactivation_proof": "fd18c187ddd18c241736a44bcd7608ce3ee0300b3f646f63cebc79474827d1c8",
+        "component_records_quiet": "4ae173464856d1b5dbfe9b3fc2192d91badc03a880e02b4465cb505e9f1e8164",
+        "close_components": "a2ed5c0657197141eb0fb78a4f3aa493a7776c5e5d8ad192ca537ead4d1d406e"
+      }
+    },
+    {
+      "predecessor": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-bundle-connection-lifecycle/PIN.json",
+        "sha256": "1f1c1c1d327f3cbea1fcda86c0276dfa3505493114c394cc000d54c82f2ac0c7"
+      },
+      "all_predecessor_pinned_files_unchanged": true,
+      "unchanged_runtime_files": {
+        "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+        "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+        "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+        "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+        "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+        "pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+        "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+        "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+      },
+      "unchanged_profile_functions": {
+        "original_clock": "75e7175ee448dd84de68aab31835ebda2e5c3f8c02d19accd82be7a04192f5e2",
+        "tool_profile": "351efd262fdf37fa56ae761072f28ef20ddec860ff702233e99c95aed8b99107",
+        "preactivation_proof": "fd18c187ddd18c241736a44bcd7608ce3ee0300b3f646f63cebc79474827d1c8",
+        "component_records_quiet": "4ae173464856d1b5dbfe9b3fc2192d91badc03a880e02b4465cb505e9f1e8164",
+        "close_components": "a2ed5c0657197141eb0fb78a4f3aa493a7776c5e5d8ad192ca537ead4d1d406e"
+      }
+    }
+  ],
+  "native_model_or_goal_calls": 0,
+  "official_native_cli_started": false,
+  "production_g_run_substitution": "test-only synthetic unit client, absent from production worker arguments",
+  "actual_candidate_consumption": "UNEXPOSED until authorized prospective live stage; test proof is synthetic MCP transport only",
+  "fit": "UNKNOWN",
+  "deployment": "NOT_PERFORMED; both first research unstarted/full BOTH all-role closure required"
+}

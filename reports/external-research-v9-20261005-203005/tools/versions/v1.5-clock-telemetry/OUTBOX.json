@@ -1,0 +1,38 @@
+{
+  "schema": "er9.tools.owned-outbox.v1",
+  "status": "READY_FOR_PROSPECTIVE_ACTUAL_ROUTE_BINDING",
+  "release_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/PIN.json",
+    "sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd"
+  },
+  "source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/VERIFICATION.json",
+    "sha256": "452f0ebd59933f1b772d2e54c5bb199547ff395a9589cb1b6e070c548a71e1eb"
+  },
+  "clock_field_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+    "sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+  },
+  "config": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+    "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+  },
+  "constructor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/clock_binding.py",
+    "sha256": "217fd8519dd981d7c72a6783580185d83a5ea171d21b7c506d347804eef24317"
+  },
+  "operator_action": "G/L owners bind separately pinned actual runtime config, genuine original controller receipt/descriptor, exact stage_id, and explicitly recorded initial neutral native text; case/ops close both-arm wholly-unstarted versions before any use. Existing usable queue is not gated.",
+  "api_parameters": [
+    "clock_profile_path",
+    "clock_stage_id"
+  ],
+  "tool_cardinality": "C4/T5 unchanged when public_get true",
+  "initial_native_input_binding": "Use config initial_clock_metadata_utf8 unchanged as separate explicitly declared neutral clock text. Preserve stored scientific TASK prefix/source identity; seal actual initial native message/objective hash and common serialization policy. Tools subsequently sample actual host clock without resetting original birth.",
+  "G_action_field": "pre-Goal RESOURCE_BINDING.json/native_stop_monotonic_ns from profile.original_clock, not generic lifecycle total deadline",
+  "L_action_field": "original native_stop from birth/maxseconds, not relay PM_BOUND or resource totalstop",
+  "deployment_eligibility": "Both arms first research must not have started; recheck fresh eligibility, full source/runtime/tool/case closure. No entered comparison substitution, extra native jobs, reruns or budget extension."
+}

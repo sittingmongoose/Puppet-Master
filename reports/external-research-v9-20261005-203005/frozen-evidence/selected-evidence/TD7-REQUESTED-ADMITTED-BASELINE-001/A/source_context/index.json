@@ -1,0 +1,329 @@
+{
+  "schema": "er9.candidate-source-index.v1",
+  "sources": [
+    {
+      "candidate_path": "inputs/source_context/0000.body",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+null_padding+in:title&per_page=10",
+      "version_or_commit": "sha256:e38b15690edbd1170f96dfc8cd5622fa975c32347916e1942ce92f359322ad12",
+      "sha256": "e38b15690edbd1170f96dfc8cd5622fa975c32347916e1942ce92f359322ad12",
+      "capture_id": "b5fc08bfd24f4ac4b5a01b788534e258",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0001.body",
+      "url": "https://duckdb.org/docs/data/csv/overview",
+      "version_or_commit": "sha256:8322f51a2bba3a3066ef3552b02caa38697296833c5b9618ef73e34e9d3966a1",
+      "sha256": "8322f51a2bba3a3066ef3552b02caa38697296833c5b9618ef73e34e9d3966a1",
+      "capture_id": "f7594766032f468d9b99436c1048d4db",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0002.body",
+      "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/v4",
+      "version_or_commit": "sha256:b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "sha256": "b3385c61115d20914310949041828928f92593cfeaaa74dc6805695818e22012",
+      "capture_id": "3c886bfc0a934957877cd6f0993a3908",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0003.body",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/README.md",
+      "version_or_commit": "sha256:d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca",
+      "sha256": "d017b1b939242ce844b38a20e9d53b7af277c48743cce6bcfca815634e760eca",
+      "capture_id": "b96ca39e9df943c490bd24df071266fa",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0004.body",
+      "url": "https://raw.githubusercontent.com/nteract/papermill/master/README.md",
+      "version_or_commit": "sha256:2eee9aa7da7e9851c7dc7b36273a8cee5a2d3b6dc4d3c5699407d9bb1121621e",
+      "sha256": "2eee9aa7da7e9851c7dc7b36273a8cee5a2d3b6dc4d3c5699407d9bb1121621e",
+      "capture_id": "9db338a5fa0044eda2d02add3c06d0d0",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0005.body",
+      "url": "https://devguide.python.org/versions/",
+      "version_or_commit": "sha256:4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c",
+      "sha256": "4f149cdef9239c62ac9e6067db3cbf1d2a33594149dc1c1c201b2dbf0541748c",
+      "capture_id": "c52027e1151d4c268223130560cfabae",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0006.body",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/main/nbformat/v4/nbformat.v4.5.schema.json",
+      "version_or_commit": "sha256:523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "capture_id": "00fac44f69fa4da68621633d3cab87ec",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0007.body",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+12596+in:body+type:pr&per_page=10",
+      "version_or_commit": "sha256:c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+      "sha256": "c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+      "capture_id": "4c60a819e25e4afb9c61b70f7f618c05",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0008.body",
+      "url": "https://raw.githubusercontent.com/python/devguide/main/versions.rst",
+      "version_or_commit": "sha256:f2fb384bd78bc6667372bc0792ca201ea5c81253c13b50264233c502a937757c",
+      "sha256": "f2fb384bd78bc6667372bc0792ca201ea5c81253c13b50264233c502a937757c",
+      "capture_id": "9530c002c2c948dfab7923546b927128",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0009.body",
+      "url": "https://duckdb.org/docs/current/data/csv/overview",
+      "version_or_commit": "sha256:074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d",
+      "sha256": "074901f1e41294c606c887b1ed25fb28383c243996c0fd3462953ef82ba1cb9d",
+      "capture_id": "9a0f223d1aa94658a5c8ca9617d9e979",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0010.body",
+      "url": "https://api.github.com/search/issues?q=repo:marimo-team/marimo+stale+in:title&per_page=10",
+      "version_or_commit": "sha256:82f775d151d93285a8dba4ffc363e7c9454747d80b2ce609d7a4f4db95e681b6",
+      "sha256": "82f775d151d93285a8dba4ffc363e7c9454747d80b2ce609d7a4f4db95e681b6",
+      "capture_id": "ac8fe25b4f6f4285ae74d0d2653804f2",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0011.body",
+      "url": "https://api.github.com/repos/duckdb/duckdb/issues/12596/timeline?per_page=100",
+      "version_or_commit": "sha256:453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489",
+      "sha256": "453b9bf388aba2aa46189d3e6c6245217e09f126d7c95e78943f7ca649b11489",
+      "capture_id": "ce4cfbafcf9f412791d0fb2b9a770dbd",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0012.body",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/data/csv/reading_faulty_csv_files.md",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "d3dbe22b65d6449bad9c01d58b8d2050",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0013.body",
+      "url": "https://raw.githubusercontent.com/python/devguide/main/include/branches.csv",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "73d90e7b613347ceb1bba9d4cbae636d",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0014.body",
+      "url": "https://raw.githubusercontent.com/python/devguide/main/include/end-of-life.csv",
+      "version_or_commit": "sha256:d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed",
+      "capture_id": "28795e18a5fb43b7a04435321db4ba2e",
+      "capture_limitations": {
+        "status": 404,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0015.body",
+      "url": "https://raw.githubusercontent.com/marimo-team/marimo/main/docs/guides/reactivity.md",
+      "version_or_commit": "sha256:e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f",
+      "sha256": "e75fd96912f666f8213c13c19c96d01f9f80d9d0c4a34dae02d14510d1be9e2f",
+      "capture_id": "b93bf458d9dc41328c75cc3e7262e02b",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0016.body",
+      "url": "https://api.github.com/search/issues?q=repo:duckdb/duckdb+type:pr+12596&per_page=10",
+      "version_or_commit": "sha256:c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+      "sha256": "c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+      "capture_id": "2a9476894a304e25b42460f826510e46",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0017.body",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/12679",
+      "version_or_commit": "sha256:a8070fb9adc318735a76fabec97ce756542dffb69ecd98c8b9e877d5a15eadc3",
+      "sha256": "a8070fb9adc318735a76fabec97ce756542dffb69ecd98c8b9e877d5a15eadc3",
+      "capture_id": "d257f27e8d0a4910ada81712fce86c89",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0018.body",
+      "url": "https://api.github.com/repos/duckdb/duckdb/pulls/12679/files?per_page=100",
+      "version_or_commit": "sha256:31d9efa2ad145366ac537e1e9036e59932b2d8600ae20ab5a18ec0cc51cd5825",
+      "sha256": "31d9efa2ad145366ac537e1e9036e59932b2d8600ae20ab5a18ec0cc51cd5825",
+      "capture_id": "0a0dcc8289a046ab92f2ad65146e2a74",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0019.body",
+      "url": "https://api.github.com/repos/python/devguide/contents/",
+      "version_or_commit": "sha256:bc63622c67a3263b5f2be3ce6ec2668747ee8e1e29858f1690849b7250f09c68",
+      "sha256": "bc63622c67a3263b5f2be3ce6ec2668747ee8e1e29858f1690849b7250f09c68",
+      "capture_id": "801febd1b0a14cff805bd809e9c31168",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0020.body",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/v1.0.0",
+      "version_or_commit": "sha256:695c4faccba61e5a1b2ea492312c2215c729894485362988450a9343629b4f94",
+      "sha256": "695c4faccba61e5a1b2ea492312c2215c729894485362988450a9343629b4f94",
+      "capture_id": "4b8b8f7ee312463784f240d9e902ed09",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0021.body",
+      "url": "https://api.github.com/repos/duckdb/duckdb/commits/v1.1.0",
+      "version_or_commit": "sha256:837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d",
+      "sha256": "837f69fe0145241613bf894e5b1f241ba29a0108d23a08df52b324626779525d",
+      "capture_id": "30a71717ae544c7cbc59c759916acd49",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0022.body",
+      "url": "https://api.github.com/repos/python/devguide/contents/include",
+      "version_or_commit": "sha256:e99161e0638d1909bfabe3c6bd161d5ee1a506421f3e0cfb948c9264859cbe8c",
+      "sha256": "e99161e0638d1909bfabe3c6bd161d5ee1a506421f3e0cfb948c9264859cbe8c",
+      "capture_id": "6b004847f427487abc3abc582ea04bda",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0023.body",
+      "url": "https://endoflife.date/api/python.json",
+      "version_or_commit": "sha256:cad1d97926cff0ce8f110242733f4376c7a7ff65670434c8f204bf6fee4c54e6",
+      "sha256": "cad1d97926cff0ce8f110242733f4376c7a7ff65670434c8f204bf6fee4c54e6",
+      "capture_id": "4df07dc4957f4947b80c1df855504094",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0024.body",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/data/csv/reading_faulty_csv_files.md",
+      "version_or_commit": "sha256:12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+      "sha256": "12897abe4612269153224a487dd74a46c1143b3be1824132a7ee00e1838778ad",
+      "capture_id": "9d16285005d740ba9a34b29ef579d94c",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0025.body",
+      "url": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0723.rst",
+      "version_or_commit": "sha256:17de64ccc1b03003dcd031abb0372c6c946ae9bbdc802ae3af7ede4437507e59",
+      "sha256": "17de64ccc1b03003dcd031abb0372c6c946ae9bbdc802ae3af7ede4437507e59",
+      "capture_id": "3bc3d21d9ad24ba1819a80a3d7393290",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    },
+    {
+      "candidate_path": "inputs/source_context/0026.body",
+      "url": "https://raw.githubusercontent.com/duckdb/duckdb-web/main/docs/current/connect/concurrency.md",
+      "version_or_commit": "sha256:f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f",
+      "sha256": "f76d0f41136ee004fd818888ae226a09300753330a9d67b7752db3cde0338e0f",
+      "capture_id": "c5c3a688a12d4e379d46547e8344112e",
+      "capture_limitations": {
+        "status": 200,
+        "body_complete": true,
+        "truncated": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "schema": "er9.bundle.synthetic-binding-fixture.v1",
+  "native_calls": 0,
+  "native_goals": 0,
+  "scope": "Empty closure for route-builder composition only, all native selectors must be literals",
+  "profile": {
+    "schema": "er9.bundle-carrier.profile.v1",
+    "final_role_enabled": true,
+    "stage_id": "SYNTHETIC-FINAL",
+    "stage_role": "final",
+    "case_id": "SYNTHETIC-CASE",
+    "arm_id": "control",
+    "method_factors": [
+      "V01"
+    ],
+    "bundle_path": "out/final_bundle.json",
+    "commit_dir": "out/final",
+    "allowed_outputs": {
+      "proposal.md": "out/final/proposal.md",
+      "sources.json": "out/final/sources.json",
+      "witnesses.json": "out/final/witnesses.json",
+      "leads.json": "out/final/leads.json"
+    },
+    "import_manifest": {
+      "path": "inputs/delivery_role_manifest.json",
+      "sha256": "8b2a59e35c0a68a61441fb805f6a4a024689f4a3315af620be98b40b70dbe01c"
+    },
+    "actor_binding": {
+      "stage_id": "SYNTHETIC-FINAL",
+      "family": "GLM",
+      "model": "SYNTHETIC_ONLY",
+      "writer_alias": "mcp__pm_boundary__write_file"
+    }
+  },
+  "manifest": {
+    "schema": "er9.native-role-reference-closure.v1",
+    "stage_id": "SYNTHETIC-FINAL",
+    "case_id": "SYNTHETIC-CASE",
+    "arm_id": "control",
+    "entries": []
+  },
+  "manifest_utf8_sha256": "8b2a59e35c0a68a61441fb805f6a4a024689f4a3315af620be98b40b70dbe01c",
+  "materialization": "Use operator_binding.binding to obtain canonical manifest/profile bytes; profile0600, manifest inputs/delivery_role_manifest.json; pass actual original deadline/resource profile into config."
+}

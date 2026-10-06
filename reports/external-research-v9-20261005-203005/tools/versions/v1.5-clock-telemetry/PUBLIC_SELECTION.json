@@ -1,0 +1,110 @@
+{
+  "schema": "er9.tools.public-selection.v1",
+  "version": "v1.5-clock-telemetry",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+      "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/execution_server.py",
+      "sha256": "be196d99194350c9a7e5394521499484c7a77036ee95aab1ac57477fd71e228c"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/test_tools.py",
+      "sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+      "sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+      "sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/source_capture/test_source_capture.py",
+      "sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/README.md",
+      "sha256": "5804ddb49e56b81c915d3b56434ac36acc754eae83803e834faf0c9443a77e9d"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/test_framing.py",
+      "sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/resource_profile.py",
+      "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/resource_gate.py",
+      "sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/test_resource.py",
+      "sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/bundle_carrier.py",
+      "sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/operator_binding.py",
+      "sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/test_bundle.py",
+      "sha256": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/API_SCHEMA.json",
+      "sha256": "d20d9676b72c448cea38a479c798f9b7b7207fa68428504ed00986e29a8f0712"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/PROVENANCE_IMPLEMENTATION.json",
+      "sha256": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/EMPTY_CLOSURE_FIXTURE.json",
+      "sha256": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/clock_telemetry.py",
+      "sha256": "c7a080b191d3cd36d4a6f5e9b5e1f5f912c0536752b91151bdb1977a874aaa48"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/clock_binding.py",
+      "sha256": "217fd8519dd981d7c72a6783580185d83a5ea171d21b7c506d347804eef24317"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/test_clock.py",
+      "sha256": "4a1f59c06f1db0f44546bc7e51217b4a88c0b7af170b5dadbff873d78e0d9f37"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+      "sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+      "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/VERIFICATION.json",
+      "sha256": "452f0ebd59933f1b772d2e54c5bb199547ff395a9589cb1b6e070c548a71e1eb"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/PIN.json",
+      "sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd"
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/OUTBOX.json",
+      "sha256": "cf7262ae7b6936c004c1f0b5aaaca5cac63a43a47bf125cc365ecf31910f631d"
+    }
+  ],
+  "selection_scope": "Owned code/tests/documented neutral clock schemas and positive mechanical verification only; no native conversations, private descriptors/receipts, Task scientific prefixes, candidate outputs or evaluator facts.",
+  "source_root": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry",
+  "native_calls": 0,
+  "native_goals": 0
+}

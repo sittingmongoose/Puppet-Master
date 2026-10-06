@@ -1,0 +1,65 @@
+{
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "recorded_utc": "2026-10-06T04:06:44.044469+00:00",
+  "source_observed_utc": [
+    "2026-10-06T04:03:06.818538+00:00",
+    "2026-10-06T04:01:47.898406+00:00"
+  ],
+  "meaningful_update_count": 24,
+  "owner": "/root/projection_keeper",
+  "sources": [
+    {
+      "path": "ops/assessment-dispatch-001/QUEUE_SNAPSHOT_003.json",
+      "sha256": "7fac371ce1b1560db674446b4e5f038b94e9063ea52d074e9932d1512d0be3b5",
+      "bytes": 114577
+    },
+    {
+      "path": "ops/assessment-dispatch-001/QUEUE_003_OBSERVATION_TIME_ADDENDUM_001.json",
+      "sha256": "fd5f306c037aebe9244ea1ffe53fa9979cbb58e4450d4863ab5fc9bcaea04e22",
+      "bytes": 2461
+    },
+    {
+      "path": "ops/assessment-dispatch-001/QUEUE_SNAPSHOT_004.json",
+      "sha256": "8545792f6f697c004905a6ac18b00b3d0878e38746ee81ceea1a8680d756fa8b",
+      "bytes": 114908
+    },
+    {
+      "path": "ops/dispatcher/QUEUE_TRANSITION_CHECKPOINT_20261006T0402.json",
+      "sha256": "1bb06c5c7897ce80037371561b7286b38a888b0c7582e94f113b411979170b50",
+      "bytes": 25136
+    },
+    {
+      "path": "evaluation/independent-targeted-6/closure-final-receipt.json",
+      "sha256": "c9a99751ad7f26b1163c8ddabf64b44034906c97d933a3f79ebfc4d0b774f182",
+      "bytes": 2528
+    },
+    {
+      "path": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PUBLIC_SELECTION.json",
+      "sha256": "a11ae868aba6440316653d2e59758c910f546aebfbd07cbeab1937f1ff4252b4",
+      "bytes": 10384
+    }
+  ],
+  "backup_receipt": {
+    "path": "state/history/projection-20261006T040644.044469Z/BACKUP_RECEIPT.json",
+    "sha256": "e7a9a89a1bec79d3c8981a0d31b9fe2d5e860d13c3f3381f49cbe215b275d24c",
+    "bytes": 880
+  },
+  "updated_files": [
+    {
+      "path": "state/current.json",
+      "sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+      "bytes": 108001
+    },
+    {
+      "path": "state/campaign.json",
+      "sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+      "bytes": 108001
+    },
+    {
+      "path": "CURRENT.md",
+      "sha256": "9a4bb0b7ac3b669175beafbd58f540e3f4906246883390fa06d437c1c7f57bb4",
+      "bytes": 5535
+    }
+  ],
+  "scope": "Additive003timestampcorrection/004, TD7TD8clockanchors, ops0402actualsource, neutralTD6closure, rootnarrow5/12clockrepair and Gsourcepreparedclosure; no nativeuse/sciencebody inference"
+}

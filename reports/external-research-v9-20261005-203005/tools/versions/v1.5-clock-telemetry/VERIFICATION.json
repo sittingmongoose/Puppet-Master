@@ -1,0 +1,59 @@
+{
+  "schema": "er9.tools.verification.v1",
+  "version": "v1.5-clock-telemetry",
+  "status": "READY_FOR_PROSPECTIVE_ACTUAL_ROUTE_BINDING",
+  "verified_utc": "2026-10-06T03:53:08.744593+00:00",
+  "snapshot_sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+  "checks": [
+    {
+      "command": "python3 -B test_clock.py",
+      "tests": 10,
+      "exit_code": 0,
+      "elapsed_seconds": 0.608,
+      "scope": "zero-inference synthetic/local mechanical"
+    },
+    {
+      "command": "python3 -B test_bundle.py",
+      "tests": 17,
+      "exit_code": 0,
+      "elapsed_seconds": 0.422,
+      "scope": "zero-inference synthetic/local mechanical"
+    },
+    {
+      "command": "python3 -B source_capture/test_source_capture.py",
+      "tests": 14,
+      "exit_code": 0,
+      "elapsed_seconds": 0.171,
+      "scope": "zero-inference synthetic/local mechanical"
+    },
+    {
+      "command": "python3 -B test_framing.py",
+      "tests": 6,
+      "exit_code": 0,
+      "elapsed_seconds": 3.802,
+      "scope": "zero-inference synthetic/local mechanical"
+    },
+    {
+      "command": "python3 -B test_resource.py",
+      "tests": 5,
+      "exit_code": 0,
+      "elapsed_seconds": 0.966,
+      "scope": "zero-inference synthetic/local mechanical"
+    },
+    {
+      "command": "python3 -B test_tools.py",
+      "tests": 9,
+      "exit_code": 0,
+      "elapsed_seconds": 11.096,
+      "scope": "zero-inference synthetic/local mechanical"
+    }
+  ],
+  "tests_total": 61,
+  "native_model_calls": 0,
+  "native_goals_started": 0,
+  "current_or_frozen_jobs_changed": false,
+  "predecessor_frozen_files_rechecked": 17,
+  "source_semantic_grade": "UNASSESSED_BY_TOOL",
+  "native_research_fit": "UNKNOWN",
+  "proof_limits": "Local MCP exercise is zero-inference boundary validation, not proof of native candidate exposure/usability or of past failure cause. Actual route owners must pin initial input plus descriptor propagation before deployment."
+}

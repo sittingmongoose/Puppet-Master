@@ -1,0 +1,99 @@
+{
+  "schema": "er9.clock-field-contract.v1",
+  "version": "v1.5-clock-telemetry",
+  "status": "PROSPECTIVE_COMMON_BEHAVIORAL_OVERLAY",
+  "config_api": {
+    "path": "config.py",
+    "function": "mcp_configs",
+    "new_parameters": {
+      "clock_profile_path": "trusted private original-clock descriptor or None",
+      "clock_stage_id": "actual current stage identity; required exact match when descriptor supplied"
+    },
+    "existing_deadline_parameter": "Unchanged execution/carrier/lifecycle deadline. NOT interpreted as action-clock proof. G currently supplies total cleanup stop; L supplies action stop.",
+    "outputs": [
+      "clock_profile_path",
+      "clock_profile_sha256",
+      "initial_clock_metadata",
+      "initial_clock_metadata_utf8",
+      "clock_overlay_behavioral_version"
+    ],
+    "initial_object_string_identity": "Same single observation, canonical JSON string. Route owner must explicitly deliver initial metadata as neutral native text and seal actual input/advertisement; config alone cannot prove model exposure."
+  },
+  "profile": {
+    "schema": "er9.original-action-clock.profile.v1",
+    "exact_fields": [
+      "schema",
+      "stage_id",
+      "original_birth_monotonic_ns",
+      "original_stage_allocation_seconds",
+      "original_candidate_action_deadline_monotonic_ns",
+      "original_total_cleanup_stop_monotonic_ns",
+      "action_deadline_proof"
+    ],
+    "scalars": "Birth/action/total are original host monotonic integer ns or null; original total allocation integer seconds1..43200 or null. Birth+allocation must match original total if known. Action must fall inside original birth/total. Never compute action from cleanup reserve.",
+    "proof": {
+      "kind": "explicit_original_native_action_deadline",
+      "controller_path": "absolute original controller code path",
+      "controller_sha256": "exact pinned code SHA",
+      "action_field": "actual source variable/metadata field supplying original native action deadline",
+      "receipt": {
+        "path": "absolute trusted pre-Goal original-controller JSON, administrative scalars only",
+        "sha256": "pinned exact receipt SHA",
+        "stage_id_selector": "JSON pointer matching exact profile stage",
+        "birth_selector": "JSON pointer matching original birth",
+        "allocation_selector": "JSON pointer matching original allocation",
+        "action_deadline_selector": "JSON pointer matching actual original action deadline",
+        "total_cleanup_selector": "JSON pointer matching cleanup-only stop"
+      }
+    },
+    "proof_limits": "Controller SHA validates implementation identity; receipt binds saved actual scalar fields, not native activation or model consumption. Caller must originate values in original clock variables and preserve original birth. Runtime reads SHA-bound private descriptor only; external proof files are not mounted into candidate namespace.",
+    "missing_proof": "Action status UNKNOWN and remaining null even if total cleanup stop or an unproven action scalar is supplied."
+  },
+  "constructor": {
+    "path": "clock_binding.py",
+    "function": "binding",
+    "interface": "Keyword-only exact original scalar fields plus receipt_path and optional controller_path/controller_sha256/action_field",
+    "returns": [
+      "profile",
+      "profile_bytes",
+      "receipt",
+      "receipt_bytes"
+    ],
+    "behavior": "Returns bytes/objects only, no filesystem writes. No timer creation, reserve subtraction, source prefix read or Goal. Caller saves private immutable receipt then descriptor before config. Null action or unavailable controller proof yields UNKNOWN."
+  },
+  "result_surface": {
+    "schema": "er9.original-action-clock.telemetry.v1",
+    "transport": "Second content.text JSON block in each tools/call result, including failed admitted calls. Initial metadata has identical schema. No new tool or input argument. MCP top-level _meta/structuredContent not used.",
+    "business_payload": "content[0], isError and original business evidence unchanged. Clock scalar fields are separate; full RPC envelope SHA now includes separate metadata block.",
+    "fields": [
+      "stage_id",
+      "action_deadline_status",
+      "original_stage_allocation_seconds",
+      "original_birth_monotonic_ns",
+      "original_candidate_action_deadline_monotonic_ns",
+      "original_total_cleanup_stop_monotonic_ns",
+      "observation_monotonic_ns",
+      "elapsed_since_original_birth_ms",
+      "remaining_candidate_action_ms"
+    ],
+    "calculation": "Floor ms from exact shared host monotonic_ns. Remaining=max(0,(proven original action deadline\u2212observation)//1e6). Original elapsed only when birth known and observation>=birth. Future-birth observation UNKNOWN. Total cleanup deadline never supplies remaining.",
+    "snapshot_scope": "Sampled at response preparation, may be stale at consumption. Initial builder sample may precede native activation. No deadline reset/extension, artifact generation, Goal transition or token-stop policy."
+  },
+  "actual_writer": {
+    "namespace": "pm_boundary",
+    "name": "write_file",
+    "required_arguments": [
+      "path",
+      "text"
+    ],
+    "logical_write_text": "No actual source alias registered. Existing profile alias metadata remains unchanged."
+  },
+  "inventory": "public_get true => control4/treatment5; source read_file/write_file/mechanical/public_https_get and optional python_execute unchanged schemas/cardinality.",
+  "preserved": "Network capture policy, literal/opaque-ref carrier, V06 both-arm bundle exclusion, source payloads, execution bootstrap/sandbox/cgroup limits, resource reader bytes, original timer enforcement/EOF cleanup.",
+  "G_binding": "Pass pre-Goal RESOURCE_BINDING native_stop_monotonic_ns from pinned original_clock (total\u221230). Current generic deadline argument totalstop cannot be used as action proof. New separately pinned actual engine selector required.",
+  "L_binding": "Pass original native_stop computed from original birth/maxsecs (total\u221215); current explicit deadline argument already carries this. Relay PM_BOUND/profile totalstop remains cleanup-only. New separately pinned actual adapter selector required.",
+  "deployment_scope": "Only wholly unentered comparisons before BOTH arms first research, full common prospective case/runtime/tool/input closure and actual native binding. Entered pairs remain original runtime; no reruns/additional jobs authorized.",
+  "interpretation": "Clock-awareness is a common behavioral intervention, not an invisible neutral causal guarantee or established cause/fix of past non-delivery. Native Goal result, operational cleanup, bundle commit and source grade remain independent.",
+  "native_model_calls": 0,
+  "native_goals": 0
+}

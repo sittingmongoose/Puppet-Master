@@ -1,0 +1,214 @@
+{
+  "schema": "er9.exact-current-resource-profile-projection.v1",
+  "evaluation_id": "independent-targeted-8",
+  "rows": [
+    {
+      "alias": "A",
+      "job_id": "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "resource_profile_sha256": "df91306daafd32ebb17c268bbe1be20c6dcce63808c50894814f9338b50d6892",
+      "private_slice_release_sha256": "a74e40034c235685237e32666f09a2541ba093be2f0cde7e2a491f3d56c756cc",
+      "launch_seal_sha256": "172144a7bbaa1d44f131ceb290fb9ac3a7611f5ace12aef456d0c4ee0a43af91",
+      "native_result_sha256": "2cf4d0f53bda52a908f6054a67d9154dc6bcf7cf8ca41762a45a5378a1d7891e",
+      "profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 85297384158582,
+        "original_total_stop_monotonic_ns": 85897384158582,
+        "allocation_monotonic_ns": 85298072679825,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "19046400",
+          "memory.peak": "365125632",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "365125632",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 85886689411214
+      },
+      "resource_oom_observed": false,
+      "aggregate_kernel_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "55083008",
+        "memory.peak": "365125632",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "99cb3c6b647666f9785ebad170e734ac158dd2c3c1f8b75d83c20f93639e7a12",
+      "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash is distinct namespace. Exact reader matches native prospective source pin and launch seal. Separately saved oldPREbytes UNKNOWN; not reconstructed."
+    },
+    {
+      "alias": "B",
+      "job_id": "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001",
+      "resource_profile_sha256": "130de8de24cf2ee4af9c5f1c07f5551715f7b309914159bdb095c86ad5d5962d",
+      "private_slice_release_sha256": "3080698a6ff09a68a3e74e2ad99cc802751fa3bf0f6fd951e3a1e9ab51206890",
+      "launch_seal_sha256": "46cde1a07ae9847e47df94c91a6e62bcf5c127ba1bf818a1b742043bbd618da1",
+      "native_result_sha256": "1de1e14461ff63261e7ec2957928f8d786b2917932d8b324004ad8b0b3cf0136",
+      "profile": {
+        "schema": "er9.luna.private-memory-profile.v1",
+        "aggregate_memory_max_bytes": 2415919104,
+        "memory_swap_max_bytes": 0,
+        "component_memory_max_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "original_birth_monotonic_ns": 85298776669139,
+        "original_total_stop_monotonic_ns": 85898776669139,
+        "allocation_monotonic_ns": 85299502111266,
+        "aggregate_kernel_limits": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "host_reserve_bytes": 3221225472,
+        "reader_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+      },
+      "release": {
+        "before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "16629760",
+          "memory.peak": "360669184",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "after": {
+          "LoadState": "loaded",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "MemoryPeak": "360669184",
+          "MemoryMax": "2415919104",
+          "MemorySwapMax": "0"
+        },
+        "all_private_slice_descendants_quiet": true,
+        "stop_returncode": 0,
+        "release_monotonic_ns": 85887666520614
+      },
+      "resource_oom_observed": false,
+      "aggregate_kernel_memory_before_worker_exit": {
+        "memory.max": "2415919104",
+        "memory.swap.max": "0",
+        "memory.current": "52342784",
+        "memory.peak": "360669184",
+        "memory.events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "cgroup.events": {
+          "populated": "1",
+          "frozen": "0"
+        }
+      },
+      "cpu_tasks_scratch_aggregate_caps": "UNKNOWN_NOT_EXPOSED_BY_PROFILE",
+      "observed_complete_job_memory_max_bytes": 2415919104,
+      "reader_sha256": "89afbd90b18b43abacaade4402bbe6eaf2fe72145884f1961afded04d44a9cbc",
+      "embedded_pre_enrichment_native_receipt_sha256": "2c10021740ad8aa0e7e0239c8b2f46ed68d75754dfcecd370c3ca2f941322560",
+      "chain_scope": "actual resourceproof reader source line116 hashes then-saved result; enriched final hash is distinct namespace. Exact reader matches native prospective source pin and launch seal. Separately saved oldPREbytes UNKNOWN; not reconstructed."
+    }
+  ],
+  "no_rawmodelio_or_candidatefacts": true,
+  "no_source_judgment_or_clock_rewrite": true
+}

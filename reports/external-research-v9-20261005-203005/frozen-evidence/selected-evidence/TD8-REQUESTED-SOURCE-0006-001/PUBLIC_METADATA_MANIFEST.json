@@ -1,0 +1,29 @@
+{
+  "schema": "er9.public-metadata-only-source-selector.v1",
+  "evaluation_id": "independent-targeted-8",
+  "original_private_body_selector_sha256": "40f8b666fb19282281e731a4063312c9ac7d8734e09f0a95c7dc9b1aad2ba335",
+  "records": [
+    {
+      "alias": "A",
+      "metadata": {
+        "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/A-0006.metadata.json",
+        "sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "bytes": 721
+      },
+      "body_sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "body_bytes": 45003,
+      "rawbody_location": "LAB_ONLY_EXCLUDED_FROM_PUBLICATION"
+    },
+    {
+      "alias": "B",
+      "metadata": {
+        "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/B-0006.metadata.json",
+        "sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "bytes": 721
+      },
+      "body_sha256": "fd4abd6060eb363ebdc6776b6e1958bf9d74dfac6c6fdd360f715a421c92207e",
+      "body_bytes": 45003,
+      "rawbody_location": "LAB_ONLY_EXCLUDED_FROM_PUBLICATION"
+    }
+  ]
+}

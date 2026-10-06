@@ -1,0 +1,228 @@
+{
+  "schema": "er9.bundle-carrier.api-description.v1",
+  "config_api": "mcp_configs(workspace,capture_dir=None,evidence_dir=None,deadline_monotonic_ns=None,execution_enabled=False,public_get=False,resource_profile_path=None,bundle_profile_path=None)",
+  "binding_api": "operator_binding.binding(stage_id,stage_role,case_id,arm_id,method_factors,actor_binding,entries,complete_final_role,manifest_path='inputs/delivery_role_manifest.json')",
+  "writer": {
+    "underlying": "mcp__pm_boundary__write_file",
+    "route_alias": "actual existing alias, e.g. write_text",
+    "arguments": [
+      "path",
+      "text"
+    ],
+    "path": "out/final_bundle.json",
+    "new_tools": 0
+  },
+  "native_bundle": {
+    "exact_keys": [
+      "schema",
+      "stage_id",
+      "adopt_current",
+      "artifacts"
+    ],
+    "schema_value": "er9.native_endorsed_delivery.v1",
+    "adopt_current": true,
+    "artifact_keys": [
+      "proposal.md",
+      "sources.json",
+      "witnesses.json",
+      "leads.json"
+    ],
+    "one_selector_each": [
+      {
+        "text_utf8": "native string"
+      },
+      {
+        "input_id": "explicit native selected opaque ID"
+      }
+    ]
+  },
+  "operator_profile": {
+    "exact_keys": [
+      "schema",
+      "final_role_enabled",
+      "stage_id",
+      "stage_role",
+      "case_id",
+      "arm_id",
+      "bundle_path",
+      "commit_dir",
+      "allowed_outputs",
+      "import_manifest",
+      "actor_binding",
+      "method_factors"
+    ],
+    "schema_value": "er9.bundle-carrier.profile.v1",
+    "final_role_enabled": true,
+    "bundle_path": "out/final_bundle.json",
+    "commit_dir": "out/final",
+    "allowed_outputs": {
+      "proposal.md": "out/final/proposal.md",
+      "sources.json": "out/final/sources.json",
+      "witnesses.json": "out/final/witnesses.json",
+      "leads.json": "out/final/leads.json"
+    },
+    "import_manifest": {
+      "path": "inputs/delivery_role_manifest.json",
+      "sha256": "exact manifest bytes SHA"
+    },
+    "actor_binding": "actual trusted current actor metadata, stage_id required, actual writer_alias if known; no fabricated Goal result",
+    "method_factors": "V01..V16 exact source factors; any V06 rejects both arms",
+    "sha_at_use": "Profile SHA fixed in source command environment and checked on every opted-in writer call; mutation rejects"
+  },
+  "manifest": {
+    "exact_keys": [
+      "schema",
+      "stage_id",
+      "case_id",
+      "arm_id",
+      "entries"
+    ],
+    "schema_value": "er9.native-role-reference-closure.v1",
+    "entries": "Explicit admitted actual rows only; empty permitted for fully inline authorship; pending future rows cannot dispatch"
+  },
+  "reference_row": {
+    "exact_keys": [
+      "input_id",
+      "path",
+      "sha256",
+      "bytes",
+      "artifact_role",
+      "case_id",
+      "arm_id",
+      "origin_case_id",
+      "origin_arm_id",
+      "origin_role",
+      "origin_job_id",
+      "origin_goal_id",
+      "origin_session_id",
+      "origin_actor",
+      "origin_status",
+      "native_proof",
+      "admission_kind",
+      "shared_seed_authorization"
+    ],
+    "path": "canonical relative inputs/...",
+    "artifact_role": "exact canonical filename",
+    "case_id_arm_id": "target admission binding, distinct from actual original origin IDs",
+    "origin_case_id_origin_arm_id": "truthful original string or null when genuinely unassigned; same_arm_role must match target",
+    "origin_goal_id": "actual distinct native ID or null when unexposed, never a thread alias",
+    "origin_session_id": "separate actual session/thread ID, required when Goal ID null",
+    "origin_actor": {
+      "family": "GLM|Muse|Luna or actual observed alias Z|M|L",
+      "model": "actual string or null",
+      "effort": "actual string or null"
+    },
+    "origin_status": {
+      "native_goal_state": "actual original status",
+      "output_freeze_state": "actual original freeze status"
+    },
+    "native_proof": {
+      "path": "inputs-relative neutral proof capsule",
+      "sha256": "exact capsule SHA"
+    },
+    "admission_kind": "same_arm_role|predeclared_shared_seed",
+    "shared_seed_authorization": "null for same_arm_role; pinned {path,sha256} for already-registered shared seed"
+  },
+  "native_proof_capsule": {
+    "schema_value": "er9.native-source-role-proof.v1",
+    "origin_fields": [
+      "origin_job_id",
+      "origin_case_id",
+      "origin_arm_id",
+      "origin_role",
+      "origin_goal_id",
+      "origin_session_id",
+      "origin_actor",
+      "origin_status"
+    ],
+    "additional_exact_keys": [
+      "native_goal_activation_count",
+      "immutable_freeze_observation_count",
+      "activation_receipt",
+      "freeze_receipt",
+      "activation_time",
+      "freeze_time",
+      "activation_time_nonexposure_reason",
+      "freeze_time_nonexposure_reason",
+      "activation_window_start",
+      "freeze_window_end",
+      "goal_id_nonexposure_reason",
+      "activation_time_nonexposure_reason",
+      "freeze_time_nonexposure_reason"
+    ],
+    "positive_receipt": {
+      "path": "inputs-relative actual neutral metadata receipt",
+      "sha256": "exact SHA",
+      "record_selector": "JSON pointer to same origin record, empty for root",
+      "binding_selectors": {
+        "origin_job_id": "JSON pointer within selected actual same-job record",
+        "origin_case_id": "JSON pointer within selected actual same-job record",
+        "origin_arm_id": "JSON pointer within selected actual same-job record",
+        "origin_role": "JSON pointer within selected actual same-job record",
+        "origin_actor_family": "JSON pointer within selected actual same-job record"
+      },
+      "count_selector": "JSON pointer within that same record to actual positive numeric count or observed collection",
+      "observed_count": "matching positive integer"
+    },
+    "clock": {
+      "clock": "utc|monotonic_ns|unix_epoch_seconds",
+      "value": "exact source receipt value",
+      "basis": "truthful label",
+      "receipt": {
+        "path": "inputs-relative actual clock metadata",
+        "sha256": "exact SHA",
+        "record_selector": "same origin record pointer, empty for root",
+        "binding_selectors": {
+          "origin_job_id": "JSON pointer within selected actual same-job record",
+          "origin_case_id": "JSON pointer within selected actual same-job record",
+          "origin_arm_id": "JSON pointer within selected actual same-job record",
+          "origin_role": "JSON pointer within selected actual same-job record",
+          "origin_actor_family": "JSON pointer within selected actual same-job record"
+        }
+      },
+      "selector": "JSON pointer within the selected same-origin record to exact observed time"
+    },
+    "activation_time_freeze_time": "actual bound clock object or null with explicit corresponding non-exposure reason; never inferred from enclosing anchors",
+    "window": "both required on comparable clock; start basis actual_native_start|actual_stage_start|saved_worker_birth; end basis actual_freeze_observation|immutable_freeze_receipt_filesystem_mtime|saved_native_end|saved_worker_elapsed_end; unknown exact times never inferred from these"
+  },
+  "shared_seed_authorization": {
+    "schema_value": "er9.predeclared-shared-seed-imports.v1",
+    "exact_keys": [
+      "schema",
+      "target_case_id",
+      "target_arms",
+      "original_import_manifest_sha256",
+      "selection_basis",
+      "artifacts"
+    ],
+    "selection_basis": "predeclared_first_chronological",
+    "artifact_exact_keys": [
+      "origin_case_id",
+      "origin_arm_id",
+      "origin_job_id",
+      "artifact_role",
+      "sha256",
+      "bytes"
+    ],
+    "scope": "Exact already-frozen authorized seed imports; no new sharing, quality selection or evaluator feedback"
+  },
+  "atomicity": "fresh absent out/final, staged four exact authored files plus administrative manifest, renameat2 NOREPLACE; no overwrite; validate before commit; original deadline checked before publication",
+  "independent_statuses": [
+    "native Goal result",
+    "source tool transport flush",
+    "actual directory commit",
+    "owned quiescence",
+    "independent source grade"
+  ],
+  "policy": {
+    "DEC010": "6d7eb57a0d726a6e26382e45ee9bbdf36b34b33b08149e9f5174214cb94a67a1",
+    "scope": "428e7e2e3466fd6e2a062dd4d08ea903df700e009ae5849a5eb629f890c486f1",
+    "provenance": "a35c7a1a64bac88fec9b9e324ad4c05e240acbf3f3266fc6e48772b8ac77837e",
+    "clock": "d5fc7b0fbb030ba0ad44f4db461296008273f7aa30f5d481ed646979a9a440be"
+  },
+  "clock_telemetry_contract": "CLOCK_FIELD_CONTRACT.json",
+  "prospective_clock_config_parameters": [
+    "clock_profile_path",
+    "clock_stage_id"
+  ]
+}

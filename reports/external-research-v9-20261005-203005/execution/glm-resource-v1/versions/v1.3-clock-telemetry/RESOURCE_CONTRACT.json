@@ -1,0 +1,124 @@
+{
+  "schema": "er9.glm.original-action-clock-runtime-contract.v1",
+  "created_utc": "2026-10-06T04:00:30.812670+00:00",
+  "version": "glm_complete2304_clock_v3",
+  "status": "READY_ZERO_INFERENCE_ENGINEERING_ONLY",
+  "predecessor": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+    "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+  },
+  "family": "Z",
+  "model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+  "effort": "max",
+  "worker_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/stage_worker.py",
+  "tools_config_builder": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/config.py",
+    "sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39"
+  },
+  "tools_source_pins": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+    "sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748"
+  },
+  "tools_release_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/PIN.json",
+    "sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd"
+  },
+  "clock_field_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+    "sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761"
+  },
+  "existing_resource_allocator": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/luna-route/resource_slice.py",
+    "sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790"
+  },
+  "aggregate_memory_max_bytes": 2415919104,
+  "memory_swap_max_bytes": 0,
+  "component_memory_max_bytes": {
+    "outer_worker": 805306368,
+    "native": 805306368,
+    "pm_boundary": 268435456,
+    "pm_execution": 268435456,
+    "sandbox": 268435456
+  },
+  "original_stops": "original ops birth+original allocation; action total\u221230s; guardians total\u22125s; outer total; no reset/extension/+45",
+  "action_proof": {
+    "receipt": "RESOURCE_BINDING.json",
+    "selector": "/native_stop_monotonic_ns",
+    "controller": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/stage_worker.py",
+      "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b"
+    },
+    "stage_selector": "/job_id",
+    "birth_selector": "/original_birth_monotonic_ns",
+    "allocation_selector": "/original_stage_allocation_seconds",
+    "total_cleanup_selector": "/original_total_stop_monotonic_ns",
+    "arm_and_pair_join": "exact current frozen spec, independently validated by engine"
+  },
+  "clock_descriptor": "private ORIGINAL_CLOCK_PROFILE.json; exact tools1.5 schema; missing proof yields UNKNOWN",
+  "lifecycle_deadline_to_tools": "original TOTAL cleanup stop, unchanged; separate clock_profile_path plus exact clock_stage_id carries action proof",
+  "initial_input": {
+    "relative_path": "inputs/STAGE_CLOCK.json",
+    "encoding": "exact builder initial_clock_metadata_utf8, no newline/re-serialization",
+    "private_proof_paths_exposed": false,
+    "input_sha": "created/pinned at original role birth before Goal; reserved path must not preexist",
+    "initial_sample": "birth-time preparation snapshot; live tool telemetry samples response time"
+  },
+  "declared_task_fragment": {
+    "constructor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/task_fragment.py",
+      "sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a"
+    },
+    "function": "render(original_allocation_seconds: int) -> bytes",
+    "append_policy": "case owner prepares original frozen Task bytes followed by exact returned suffix bytes; scientific prefix untouched",
+    "worker_behavior": "verifies declared suffix, numeric allocation, path/SHA and whole original Task pin; never rewrites Task/objective",
+    "required_stage_field": "glm_resource.clock_fragment = {path,sha256}",
+    "behavioral_version": "er9.common-original-action-clock-awareness.v1"
+  },
+  "native_input_hashes": "unchanged native driver seals raw_prompt_sha256/prompt_sha256/tools-config before session/create and Goal/set; no hidden clock append",
+  "config_binding": "separate immutable RESOURCE_CONFIG_BINDING.json seals exact early receipt/config/descriptor/initial input/declared Task hashes before g.run",
+  "freeze_metadata": "OUTPUT_FREEZE.original_action_clock_binding path/SHA plus original_action_deadline_monotonic_ns",
+  "bundle_carrier": {
+    "enabled": false,
+    "profile": "disabled; no bundle_profile passed"
+  },
+  "byte_identity": {
+    "predecessor": {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.2-connection-lifecycle/PIN.json",
+      "sha256": "cf2973923e4938d5ac0bf408c49497e034c70e14caec851fb6990fd749cb99da"
+    },
+    "all_predecessor_pinned_files_unchanged": true,
+    "unchanged_runtime_files": {
+      "glm_stage.py": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "native_support.py": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "component_guard.py": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "component_gate.py": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "native_guard.py": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "pipe_bridge.py": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "pipe_proxy.py": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "external_release.py": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8"
+    },
+    "unchanged_profile_functions": {
+      "original_clock": "75e7175ee448dd84de68aab31835ebda2e5c3f8c02d19accd82be7a04192f5e2",
+      "tool_profile": "351efd262fdf37fa56ae761072f28ef20ddec860ff702233e99c95aed8b99107",
+      "preactivation_proof": "fd18c187ddd18c241736a44bcd7608ce3ee0300b3f646f63cebc79474827d1c8",
+      "component_records_quiet": "4ae173464856d1b5dbfe9b3fc2192d91badc03a880e02b4465cb505e9f1e8164",
+      "close_components": "a2ed5c0657197141eb0fb78a4f3aa493a7776c5e5d8ad192ca537ead4d1d406e"
+    }
+  },
+  "changed_existing_runtime_files": [
+    "profile.py",
+    "stage_worker.py"
+  ],
+  "new_runtime_files": [
+    "clock_binding.py",
+    "task_fragment.py"
+  ],
+  "verification": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/VERIFICATION.json",
+    "sha256": "b942c15a71b7369cf5b1f260d6ae32edefe3b6b290b251adf371e4a487b8831e"
+  },
+  "zero_native_model_or_goal_calls": 0,
+  "prospective_eligibility": "ops independently proves BOTH first research not started and full actual ALL-role engine/tool/task/input/profile/linking choices sealed before either starts",
+  "no_current_adoption": true,
+  "causal_status": "explicit common clock-awareness behavioral version; no proven cause/cure of historical zero writer dispatch"
+}

@@ -1,0 +1,722 @@
+{
+  "cohort": "clock-telemetry-source-and-eligibility-020",
+  "snapshot_at": "2026-10-06T04:05:40.261925+00:00",
+  "sources": [
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PUBLIC_SELECTION.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/PUBLIC_SELECTION.json",
+      "source_sha256": "a11ae868aba6440316653d2e59758c910f546aebfbd07cbeab1937f1ff4252b4",
+      "public_sha256": "a11ae868aba6440316653d2e59758c910f546aebfbd07cbeab1937f1ff4252b4",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/glm_stage.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/glm_stage.py",
+      "source_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "public_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/native_support.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/native_support.py",
+      "source_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "public_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/component_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/component_guard.py",
+      "source_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "public_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/component_gate.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/component_gate.py",
+      "source_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "public_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/native_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/native_guard.py",
+      "source_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "public_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/pipe_bridge.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/pipe_bridge.py",
+      "source_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "public_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/pipe_proxy.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/pipe_proxy.py",
+      "source_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "public_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/external_release.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/external_release.py",
+      "source_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "public_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/profile.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/profile.py",
+      "source_sha256": "7244a39cdc79f6cefe9019901372126dffa3aeb57e1d1f76fee244a5bf23ac05",
+      "public_sha256": "7244a39cdc79f6cefe9019901372126dffa3aeb57e1d1f76fee244a5bf23ac05",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/stage_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/stage_worker.py",
+      "source_sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "public_sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/clock_binding.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/clock_binding.py",
+      "source_sha256": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+      "public_sha256": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/task_fragment.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/task_fragment.py",
+      "source_sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+      "public_sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/README.md",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/README.md",
+      "source_sha256": "595d50aa4ec6d10ca2ea2f6447fd44b94e18cad77c512396ea3772dd9f17ac9f",
+      "public_sha256": "595d50aa4ec6d10ca2ea2f6447fd44b94e18cad77c512396ea3772dd9f17ac9f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+      "source_sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703",
+      "public_sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/fixture_native.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/fixture_native.py",
+      "source_sha256": "01451903c80ea3250d2c446714e1b4fdd46a5c29ea020d9b83e9182cdefb4f4d",
+      "public_sha256": "01451903c80ea3250d2c446714e1b4fdd46a5c29ea020d9b83e9182cdefb4f4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/fixture_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/fixture_worker.py",
+      "source_sha256": "96ddac51eba69768fec53a4fe973b36f098162d19ac085e6e315a786a6a57977",
+      "public_sha256": "96ddac51eba69768fec53a4fe973b36f098162d19ac085e6e315a786a6a57977",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/test_clock_binding.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/test_clock_binding.py",
+      "source_sha256": "cfd52c4f1db51e6ce833e116638cdf2b8ad434b3a6a0bfed0a1dd5f59ee58764",
+      "public_sha256": "cfd52c4f1db51e6ce833e116638cdf2b8ad434b3a6a0bfed0a1dd5f59ee58764",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/CLOCK_PRODUCTION_PROOF.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/CLOCK_PRODUCTION_PROOF.json",
+      "source_sha256": "247859b54fc3f2fa9cc1980bbd308b27945ee99ef578f0feb73ddfff1ddb4c32",
+      "public_sha256": "247859b54fc3f2fa9cc1980bbd308b27945ee99ef578f0feb73ddfff1ddb4c32",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/VERIFICATION.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/VERIFICATION.json",
+      "source_sha256": "b942c15a71b7369cf5b1f260d6ae32edefe3b6b290b251adf371e4a487b8831e",
+      "public_sha256": "b942c15a71b7369cf5b1f260d6ae32edefe3b6b290b251adf371e4a487b8831e",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+      "source_sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57",
+      "public_sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "source_sha256": "b9535522b5d7c3a557412add18d8c08b90bf90e0d616fb90d38d01021601f084",
+      "public_sha256": "b9535522b5d7c3a557412add18d8c08b90bf90e0d616fb90d38d01021601f084",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/glm_stage.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/glm_stage.py",
+      "source_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "public_sha256": "58530a2c76217618414f2ff02150480885829b40f6f8a5333cc2904632304206",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/native_support.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/native_support.py",
+      "source_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "public_sha256": "0cd9943b3618167b6916b16b47cb7800117aae9b2c0d676f27660bab1ed2994a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/component_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/component_guard.py",
+      "source_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "public_sha256": "0324bc63816aa90cad3aedaf39221a130e74bb3f82256c909b0f4bc2de17ec14",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/component_gate.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/component_gate.py",
+      "source_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "public_sha256": "4ae416acd74aadfdc0e0b0d1227f6818800d2ba89abb58b9bdf105d971de02af",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/native_guard.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/native_guard.py",
+      "source_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "public_sha256": "94b1a9cb4de52dc9d6dbed0c213f0ba04d8a9ac7ebfe5b68a076132c9fb220df",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/pipe_bridge.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/pipe_bridge.py",
+      "source_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "public_sha256": "8ba023c810800b898493f6362a631f991d6d3991258944cae67be2ad2c78df4d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/pipe_proxy.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/pipe_proxy.py",
+      "source_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "public_sha256": "1eaa2b3119deb2129eabd3baa02cee1d1e30752092d55df68bf948a771f790e7",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/external_release.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/external_release.py",
+      "source_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "public_sha256": "c0f51b597e14109ae185495719dd66764e9a037998be47189a6baff3be28a1f8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/profile.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/profile.py",
+      "source_sha256": "c3ff440bf2bdd285150fe0b734a9c15789ddf913f7f0c04ba5cf0c681c157a84",
+      "public_sha256": "c3ff440bf2bdd285150fe0b734a9c15789ddf913f7f0c04ba5cf0c681c157a84",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/stage_worker.py",
+      "source_sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "public_sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/clock_binding.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/clock_binding.py",
+      "source_sha256": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+      "public_sha256": "4135668e4fe2036bce38af96b52d66b42e4912ec65815e90eb32318439abf481",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/task_fragment.py",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/task_fragment.py",
+      "source_sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+      "public_sha256": "6428c74bc6cd574d77edd07c1dbe4447cd18f300a2d29404ce6d7499888e527a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/README.md",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/README.md",
+      "source_sha256": "595d50aa4ec6d10ca2ea2f6447fd44b94e18cad77c512396ea3772dd9f17ac9f",
+      "public_sha256": "595d50aa4ec6d10ca2ea2f6447fd44b94e18cad77c512396ea3772dd9f17ac9f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+      "source_sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f",
+      "public_sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+      "source_sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b",
+      "public_sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "published": "execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/INTEGRATION_OUTBOX.json",
+      "source_sha256": "58ec7ffc791ff345155b5fdeca0ee14eb20afc0dc8ff2bdb33dd0a4143d92b49",
+      "public_sha256": "58ec7ffc791ff345155b5fdeca0ee14eb20afc0dc8ff2bdb33dd0a4143d92b49",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/PUBLIC_SELECTION.json",
+      "published": "tools/versions/v1.5-clock-telemetry/PUBLIC_SELECTION.json",
+      "source_sha256": "12fed1aac2dbaa8ae54144aa2f632886b4b499d01c269dd6592b023946f050ba",
+      "public_sha256": "12fed1aac2dbaa8ae54144aa2f632886b4b499d01c269dd6592b023946f050ba",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/config.py",
+      "published": "tools/versions/v1.5-clock-telemetry/config.py",
+      "source_sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39",
+      "public_sha256": "ce1a541599f56669b9788e989b3d5e2c96fea95d695bc9d4011f99bc22750a39",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/execution_server.py",
+      "published": "tools/versions/v1.5-clock-telemetry/execution_server.py",
+      "source_sha256": "be196d99194350c9a7e5394521499484c7a77036ee95aab1ac57477fd71e228c",
+      "public_sha256": "be196d99194350c9a7e5394521499484c7a77036ee95aab1ac57477fd71e228c",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/test_tools.py",
+      "published": "tools/versions/v1.5-clock-telemetry/test_tools.py",
+      "source_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "public_sha256": "840a680de57fba4019ba8a671513085bbdae181c1f1952b00bad0f43e3f7fe0a",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+      "published": "tools/versions/v1.5-clock-telemetry/source_capture/boundary.py",
+      "source_sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57",
+      "public_sha256": "8b13ad8e214a34083d600371276a7f97c6dd353cea317916512c24e212c97e57",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+      "published": "tools/versions/v1.5-clock-telemetry/source_capture/tool_server.py",
+      "source_sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8",
+      "public_sha256": "539e5368206a7948942e45a1eb8c3a29624c6ea8650b03a2f6ecfc02fab241b8",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/source_capture/test_source_capture.py",
+      "published": "tools/versions/v1.5-clock-telemetry/source_capture/test_source_capture.py",
+      "source_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "public_sha256": "a2e661f064dff5efb21c61461106d9473995e76c14133a8ff4abdec5a5aaf808",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/README.md",
+      "published": "tools/versions/v1.5-clock-telemetry/README.md",
+      "source_sha256": "5804ddb49e56b81c915d3b56434ac36acc754eae83803e834faf0c9443a77e9d",
+      "public_sha256": "5804ddb49e56b81c915d3b56434ac36acc754eae83803e834faf0c9443a77e9d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/test_framing.py",
+      "published": "tools/versions/v1.5-clock-telemetry/test_framing.py",
+      "source_sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "public_sha256": "e4122b4c52298aaea4e7a70a6f36a5bcba8fdc9444db4e79760cd40393a03093",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/resource_profile.py",
+      "published": "tools/versions/v1.5-clock-telemetry/resource_profile.py",
+      "source_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "public_sha256": "22d1cac0d12720de9d14ecef1f35e849b80c6f81a523296b023b298abaeee790",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/resource_gate.py",
+      "published": "tools/versions/v1.5-clock-telemetry/resource_gate.py",
+      "source_sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+      "public_sha256": "b4169fe59aed343cef886259340341991b70f88cb298074ce2b298df4a0ecc96",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/test_resource.py",
+      "published": "tools/versions/v1.5-clock-telemetry/test_resource.py",
+      "source_sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+      "public_sha256": "84575fa400f05ccd8dcabfce2bab8db35788b91fe39ba87f802a52ccaea30e67",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/bundle_carrier.py",
+      "published": "tools/versions/v1.5-clock-telemetry/bundle_carrier.py",
+      "source_sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+      "public_sha256": "213accc105429280823ca94f93b3f69f9d54c1dc1218469de9b5525a8a788a69",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/operator_binding.py",
+      "published": "tools/versions/v1.5-clock-telemetry/operator_binding.py",
+      "source_sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+      "public_sha256": "9ca5b9e3db2b31cb2be11fd921e6e266f8289cbd782b546e1ae80bdc1f7dc791",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/test_bundle.py",
+      "published": "tools/versions/v1.5-clock-telemetry/test_bundle.py",
+      "source_sha256": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566",
+      "public_sha256": "057a6215861a053ea552d81085c68afc5830adba1971cafd358713d450020566",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/API_SCHEMA.json",
+      "published": "tools/versions/v1.5-clock-telemetry/API_SCHEMA.json",
+      "source_sha256": "d20d9676b72c448cea38a479c798f9b7b7207fa68428504ed00986e29a8f0712",
+      "public_sha256": "d20d9676b72c448cea38a479c798f9b7b7207fa68428504ed00986e29a8f0712",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/PROVENANCE_IMPLEMENTATION.json",
+      "published": "tools/versions/v1.5-clock-telemetry/PROVENANCE_IMPLEMENTATION.json",
+      "source_sha256": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521",
+      "public_sha256": "c39f72efad4d49caff0c9d400830b0aed23e483ba40c8c8f15cc9dc59a4a1521",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/EMPTY_CLOSURE_FIXTURE.json",
+      "published": "tools/versions/v1.5-clock-telemetry/EMPTY_CLOSURE_FIXTURE.json",
+      "source_sha256": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1",
+      "public_sha256": "5c2623f4dbe4c6e4dc59740c8dc251097452ca59ee62cd3f216de4ead32389a1",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/clock_telemetry.py",
+      "published": "tools/versions/v1.5-clock-telemetry/clock_telemetry.py",
+      "source_sha256": "c7a080b191d3cd36d4a6f5e9b5e1f5f912c0536752b91151bdb1977a874aaa48",
+      "public_sha256": "c7a080b191d3cd36d4a6f5e9b5e1f5f912c0536752b91151bdb1977a874aaa48",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/clock_binding.py",
+      "published": "tools/versions/v1.5-clock-telemetry/clock_binding.py",
+      "source_sha256": "217fd8519dd981d7c72a6783580185d83a5ea171d21b7c506d347804eef24317",
+      "public_sha256": "217fd8519dd981d7c72a6783580185d83a5ea171d21b7c506d347804eef24317",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/test_clock.py",
+      "published": "tools/versions/v1.5-clock-telemetry/test_clock.py",
+      "source_sha256": "4a1f59c06f1db0f44546bc7e51217b4a88c0b7af170b5dadbff873d78e0d9f37",
+      "public_sha256": "4a1f59c06f1db0f44546bc7e51217b4a88c0b7af170b5dadbff873d78e0d9f37",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+      "published": "tools/versions/v1.5-clock-telemetry/CLOCK_FIELD_CONTRACT.json",
+      "source_sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761",
+      "public_sha256": "44e8e481da201be78ff74559f93383d9c58a899ef57ee19d7b88fc6f0f5b1761",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+      "published": "tools/versions/v1.5-clock-telemetry/SOURCE_PINS.json",
+      "source_sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+      "public_sha256": "abe26402b0156639e4c0a207e5a030db012c5f2d4b5af5d507a95f00eadeb748",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/VERIFICATION.json",
+      "published": "tools/versions/v1.5-clock-telemetry/VERIFICATION.json",
+      "source_sha256": "452f0ebd59933f1b772d2e54c5bb199547ff395a9589cb1b6e070c548a71e1eb",
+      "public_sha256": "452f0ebd59933f1b772d2e54c5bb199547ff395a9589cb1b6e070c548a71e1eb",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/PIN.json",
+      "published": "tools/versions/v1.5-clock-telemetry/PIN.json",
+      "source_sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd",
+      "public_sha256": "24a65ca50ecd7af66dc0972f059e55c3bfacc40acc5c2c5ca21e44d5445b53fd",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "dev/tools/versions/v1.5-clock-telemetry/OUTBOX.json",
+      "published": "tools/versions/v1.5-clock-telemetry/OUTBOX.json",
+      "source_sha256": "cf7262ae7b6936c004c1f0b5aaaca5cac63a43a47bf125cc365ecf31910f631d",
+      "public_sha256": "cf7262ae7b6936c004c1f0b5aaaca5cac63a43a47bf125cc365ecf31910f631d",
+      "transform": "byte-identical"
+    },
+    {
+      "source": "ops/dispatcher/QUEUE_TRANSITION_CHECKPOINT_20261006T0402.json",
+      "published": "admissions/cohort020/QUEUE_TRANSITION_CHECKPOINT_20261006T0402.json",
+      "source_sha256": "1bb06c5c7897ce80037371561b7286b38a888b0c7582e94f113b411979170b50",
+      "public_sha256": "0acf7710e754454ba01a356b24f3bedf273e31e4cb8d66ec041374c3923a8a22",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+      "published": "admissions/cohort020/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+      "source_sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682",
+      "public_sha256": "87e56bd984eb2847ae4bfe1a91c2d221ace889aaabd4e50db2e9350a28c8856b",
+      "transform": "LAB_ROOT metadata labels"
+    },
+    {
+      "source": "evaluation/independent-targeted-6/closure-final-receipt.json",
+      "published": "evaluation/independent-targeted-6/closure-final-receipt.json",
+      "source_sha256": "c9a99751ad7f26b1163c8ddabf64b44034906c97d933a3f79ebfc4d0b774f182",
+      "public_sha256": "c9a99751ad7f26b1163c8ddabf64b44034906c97d933a3f79ebfc4d0b774f182",
+      "transform": "byte-identical"
+    }
+  ],
+  "engineering_scope": "Actual owned G binding4tests and tools25files61tests,zeroGoal/model; no deployment or causal guarantee, old modules pins preserved",
+  "clock_repair_eligibility": "D13B oldbothGoal1failed excludes clocksuccessor; fiveother deferredpairsGoal0blocked. Futurefiveprerequisite/12targetstages finite engineeringonly, actualwholeclosurepending",
+  "checkpoint_times": "Use embeddedobserved04:01:47.898406/cursor04:01:43.571897; filename0402not event time",
+  "TD6_clock": "480.520required checking/report,727.776literalinclusive/127.776above600,1255.689wholebelow1800; originalsourcegradeand51filemanifestunchanged",
+  "whole_pipeline_or_winner_claim": false,
+  "TD8_source_packet": {
+    "selector_sha256": "5b16f8034121b606451de28efde34963b25b3704df73b764e18537df43cbeb94",
+    "sources": [
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/dispatch.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/dispatch.json",
+        "source_sha256": "a32bf076514af05d0394aa28ade566fa47e361e6daadde54b363290061cbcc44",
+        "public_sha256": "4ac6f0fcb3423c23636d4c3f94f4356f317bbb530b53a0a5a7f4c47318ee10a4",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/integrity-proof.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/integrity-proof.json",
+        "source_sha256": "1c68d803e7ae0d61ca4ff7329580d6679135ddb9a473cb30732151d1cc407d41",
+        "public_sha256": "1c68d803e7ae0d61ca4ff7329580d6679135ddb9a473cb30732151d1cc407d41",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/outputs/A/scratch/changelog-line-map.txt",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/outputs/A/scratch/changelog-line-map.txt",
+        "source_sha256": "487184cb7287004a2949f447b21f74660a8a8e71017baa2f344ecbfe57bdca44",
+        "public_sha256": "487184cb7287004a2949f447b21f74660a8a8e71017baa2f344ecbfe57bdca44",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_A.md",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_A.md",
+        "source_sha256": "10497db261f5fd5848351857a87daecb40114e880f13d4685b8700dad29a5ed3",
+        "public_sha256": "10497db261f5fd5848351857a87daecb40114e880f13d4685b8700dad29a5ed3",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_B.md",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/actual_launched_task_B.md",
+        "source_sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7",
+        "public_sha256": "0bf9b1c52112d811210662c9084eaff6eb12421a9312314078bce2e3e60f5aa7",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/brief.md",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/brief.md",
+        "source_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+        "public_sha256": "27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_criteria.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_criteria.json",
+        "source_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+        "public_sha256": "344135779883060be49d7e389f9dd160e30267247d90269710cb283877602f44",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_important_checks.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/common_important_checks.json",
+        "source_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+        "public_sha256": "e5eaf37674c7194760d952416f12731a0f91a65b35b05ba949abda460dbc5d75",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/full_brief_obligations.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/full_brief_obligations.json",
+        "source_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+        "public_sha256": "778f716de665f89ebb89f8d786de0e344be370612405c7dfc844c718fdee3d92",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/neutral_targeted_task.md",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/neutral_targeted_task.md",
+        "source_sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+        "public_sha256": "4a6292782aa983e6673680c648170704a5babc588f10efde535fd1a502e59d59",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/output_contract.md",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/output_contract.md",
+        "source_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+        "public_sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/source_access.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/source_access.json",
+        "source_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+        "public_sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted-card.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted-card.json",
+        "source_sha256": "68c5c348dc7b8e29879ed3f9052b9d26b783681ee62abb7ce2ce2b4694ba2574",
+        "public_sha256": "ad401b80aa56482c42027bea57a7dce0ca94b82e04bca0e8a1273265d9d94d96",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "ops/frozen-exports/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted_coverage_map.json",
+        "published": "frozen-evidence/packets/INDEPENDENT-TARGETED-8-PAIRED-001/task/targeted_coverage_map.json",
+        "source_sha256": "937d3bb4f6a41ca2522ea66a43a06b47ea48272f85b0724b5717b5320e2ebba9",
+        "public_sha256": "937d3bb4f6a41ca2522ea66a43a06b47ea48272f85b0724b5717b5320e2ebba9",
+        "transform": "byte-identical"
+      }
+    ],
+    "quality": "No review selected in this cohort; both designatedfinals absent, partialscratchsource map only"
+  },
+  "TD7_TD8_current_metadata": {
+    "selector_sha256": "0723321d8491dc596927038c14525730a39784141509e834699527fe4613548e",
+    "sources": [
+      {
+        "source": "ops/frozen-exports/phase2/INDEPENDENT-TARGETED-8_CURRENT_RUNTIME_001.json",
+        "published": "frozen-evidence/phase2/INDEPENDENT-TARGETED-8_CURRENT_RUNTIME_001.json",
+        "source_sha256": "49e4e5fc1b6d3f9912d0e0fb31fa55c7dfa091ad9a8fe9e9671872d21ba7a670",
+        "public_sha256": "49e4e5fc1b6d3f9912d0e0fb31fa55c7dfa091ad9a8fe9e9671872d21ba7a670",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/phase2/TD8_CURRENT_RESOURCE_PROJECTION_001.json",
+        "published": "frozen-evidence/phase2/TD8_CURRENT_RESOURCE_PROJECTION_001.json",
+        "source_sha256": "dfece437af3824434b0465a62c9df25b0c32a31893275d3bc9cab49101c4be76",
+        "public_sha256": "dfece437af3824434b0465a62c9df25b0c32a31893275d3bc9cab49101c4be76",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/phase2/TD8_FAILED_RESPONSE_AVAILABILITY_001.json",
+        "published": "frozen-evidence/phase2/TD8_FAILED_RESPONSE_AVAILABILITY_001.json",
+        "source_sha256": "c120291d622155bac5c737a58d531c978cf278015ea625b7bff6a5ab8d68f2c0",
+        "public_sha256": "c120291d622155bac5c737a58d531c978cf278015ea625b7bff6a5ab8d68f2c0",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/PUBLIC_METADATA_MANIFEST.json",
+        "published": "frozen-evidence/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/PUBLIC_METADATA_MANIFEST.json",
+        "source_sha256": "7227432e1c52feb04bb46c43aeaa81eba4c7275caf27f9f6f93770dbd2555759",
+        "public_sha256": "3c4c0524fd3762d82b2d03f745d421dcd96abe210312a0bf4d2816f79bc1b229",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/A-0006.metadata.json",
+        "published": "frozen-evidence/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/A-0006.metadata.json",
+        "source_sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "public_sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/B-0006.metadata.json",
+        "published": "frozen-evidence/selected-evidence/TD8-REQUESTED-SOURCE-0006-001/B-0006.metadata.json",
+        "source_sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "public_sha256": "95a12b9c9456dcc9846f435868cb62a64f4068710ea99893b9912c7bfa984a22",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/MANIFEST.json",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/MANIFEST.json",
+        "source_sha256": "44cdc6d4c0f26432f2afd79e0aaeeaa5db1c946920b222ceba24f8f4c1181faa",
+        "public_sha256": "e89f1022414a9a0128e0cf74628d54ebca2956ec430dec32a86046c6365aa1a7",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/proposal.md",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/proposal.md",
+        "source_sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+        "public_sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/witness_catalog.json",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/witness_catalog.json",
+        "source_sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+        "public_sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/source_context/index.json",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/source_context/index.json",
+        "source_sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+        "public_sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/proposal.md",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/proposal.md",
+        "source_sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+        "public_sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/witness_catalog.json",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/witness_catalog.json",
+        "source_sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+        "public_sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+        "transform": "byte-identical"
+      },
+      {
+        "source": "ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/source_context/index.json",
+        "published": "frozen-evidence/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/source_context/index.json",
+        "source_sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+        "public_sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+        "transform": "byte-identical"
+      }
+    ]
+  },
+  "restart_snapshot": {
+    "source_selector": "state/history/projection-20261006T040644.044469Z/PUBLIC_SELECTION.json",
+    "sha256": "2b0594f30f680f97389f6a91a614169a3ffba7e269816d98f1a0fc9ddd5bff60",
+    "recorded_utc": "2026-10-06T04:06:44.044469+00:00",
+    "sources": [
+      {
+        "source": "state/history/projection-20261006T040644.044469Z/frozen-state--current.json",
+        "published": "restart/cohort020/frozen-state--current.json",
+        "source_sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+        "public_sha256": "c6d46323f8969ec6d7489490dde2fd2f0c7c215067b1bbb1e40cb8bfe468000d",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T040644.044469Z/frozen-state--campaign.json",
+        "published": "restart/cohort020/frozen-state--campaign.json",
+        "source_sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+        "public_sha256": "c6d46323f8969ec6d7489490dde2fd2f0c7c215067b1bbb1e40cb8bfe468000d",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T040644.044469Z/frozen-CURRENT.md",
+        "published": "restart/cohort020/frozen-CURRENT.md",
+        "source_sha256": "9a4bb0b7ac3b669175beafbd58f540e3f4906246883390fa06d437c1c7f57bb4",
+        "public_sha256": "9a4bb0b7ac3b669175beafbd58f540e3f4906246883390fa06d437c1c7f57bb4",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T040644.044469Z/PROJECTION_RECEIPT.json",
+        "published": "restart/cohort020/PROJECTION_RECEIPT.json",
+        "source_sha256": "af2af513b59eb64e54f54aadd15f0efaaf00862a361fea6ab16b0fc86d994e20",
+        "public_sha256": "af2af513b59eb64e54f54aadd15f0efaaf00862a361fea6ab16b0fc86d994e20",
+        "transform": "LAB_ROOT metadata labels"
+      },
+      {
+        "source": "state/history/projection-20261006T040644.044469Z/BACKUP_RECEIPT.json",
+        "published": "restart/cohort020/BACKUP_RECEIPT.json",
+        "source_sha256": "e7a9a89a1bec79d3c8981a0d31b9fe2d5e860d13c3f3381f49cbe215b275d24c",
+        "public_sha256": "e7a9a89a1bec79d3c8981a0d31b9fe2d5e860d13c3f3381f49cbe215b275d24c",
+        "transform": "LAB_ROOT metadata labels"
+      }
+    ]
+  }
+}

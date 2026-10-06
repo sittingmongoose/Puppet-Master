@@ -1,0 +1,63 @@
+{
+  "schema": "er9.requested-positive-admitted-baseline.v1",
+  "evaluation_id": "independent-targeted-7",
+  "files": [
+    {
+      "alias": "A",
+      "scope": "exact requested current admitted input preservation baseline",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/proposal.md",
+      "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+      "bytes": 28811,
+      "current_admission_proof_stage_sha256": "34b64671b117ab645b19bd35b94c805bc747e7561483171837cc192575f474a2",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    },
+    {
+      "alias": "A",
+      "scope": "exact requested current admitted input preservation baseline",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/seed/witness_catalog.json",
+      "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+      "bytes": 5777,
+      "current_admission_proof_stage_sha256": "34b64671b117ab645b19bd35b94c805bc747e7561483171837cc192575f474a2",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    },
+    {
+      "alias": "A",
+      "scope": "exact current admitted public capture metadata only",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/A/source_context/index.json",
+      "sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+      "bytes": 14157,
+      "current_admission_proof_stage_sha256": "34b64671b117ab645b19bd35b94c805bc747e7561483171837cc192575f474a2",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    },
+    {
+      "alias": "B",
+      "scope": "exact requested current admitted input preservation baseline",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/proposal.md",
+      "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+      "bytes": 28811,
+      "current_admission_proof_stage_sha256": "20682dce3c73f255c2e0ab9253bb9079901c8e7b2dc70f472ff114662dfe4028",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    },
+    {
+      "alias": "B",
+      "scope": "exact requested current admitted input preservation baseline",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/seed/witness_catalog.json",
+      "sha256": "9f6f4a5e5be704e1d034ad49929c88e934a8452c71675d654ff4233f24b3578d",
+      "bytes": 5777,
+      "current_admission_proof_stage_sha256": "20682dce3c73f255c2e0ab9253bb9079901c8e7b2dc70f472ff114662dfe4028",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    },
+    {
+      "alias": "B",
+      "scope": "exact current admitted public capture metadata only",
+      "path": "LAB_ROOT/ops/frozen-exports/selected-evidence/TD7-REQUESTED-ADMITTED-BASELINE-001/B/source_context/index.json",
+      "sha256": "f8c96886bc43335ef360a6221f2a9528a01cbb20c708a4725599400990d64693",
+      "bytes": 14157,
+      "current_admission_proof_stage_sha256": "20682dce3c73f255c2e0ab9253bb9079901c8e7b2dc70f472ff114662dfe4028",
+      "upstream_provenance": "not reinterpreted as new authorship/execution or semantic answer key"
+    }
+  ],
+  "e526bc_source_index_match": "UNKNOWN_NO_MATCH_IN_CURRENT_PINNED_INDEX",
+  "phase1_scope": "preservation baseline + public index only, no other seed outputs/privatehistory/status/cost/key",
+  "no_source_grade_or_execution_inference": true
+}

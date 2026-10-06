@@ -1,0 +1,30 @@
+{
+  "schema": "er9.narrow-current-failed-response-availability.v1",
+  "rows": [
+    {
+      "alias": "A",
+      "current_failed_call_hashes": [],
+      "selected_trusted_event_metadata": [],
+      "actual_response_error_body_locator": "UNAVAILABLE_IN_SELECTED_POSITIVE_RECEIPTS",
+      "error_text_cause": "UNKNOWN; hashmatch not proof of guessed errorclass/permissiondeny"
+    },
+    {
+      "alias": "B",
+      "current_failed_call_hashes": [
+        {
+          "namespace": "pm_boundary",
+          "tool": "write_file",
+          "call_id": "call_VauthHw9OSKC0rh7cyExOjGo",
+          "argument_sha256": "5c5701bda8610193069e64472846f0c6dbbd89960aae88dbdb827064dd30d359",
+          "response_sha256": "6655a46b65b4ba6a3740b3672f75008ab3abd25583b376c7154942026782a211",
+          "response_bytes": 87,
+          "success": false
+        }
+      ],
+      "selected_trusted_event_metadata": [],
+      "actual_response_error_body_locator": "UNAVAILABLE_IN_SELECTED_POSITIVE_RECEIPTS",
+      "error_text_cause": "UNKNOWN; hashmatch not proof of guessed errorclass/permissiondeny"
+    }
+  ],
+  "no_private_native_modelio_expansion": true
+}

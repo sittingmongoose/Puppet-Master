@@ -1,0 +1,32 @@
+{
+  "schema": "er9.positive-projection-selection.v1",
+  "recorded_utc": "2026-10-06T04:06:44.044469+00:00",
+  "files": [
+    {
+      "path": "state/history/projection-20261006T040644.044469Z/frozen-state--current.json",
+      "sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+      "bytes": 108001
+    },
+    {
+      "path": "state/history/projection-20261006T040644.044469Z/frozen-state--campaign.json",
+      "sha256": "fbd97790b0e3d7a7b920a388b9bda9bc21b16095260e392e0dc4133a4f364c0b",
+      "bytes": 108001
+    },
+    {
+      "path": "state/history/projection-20261006T040644.044469Z/frozen-CURRENT.md",
+      "sha256": "9a4bb0b7ac3b669175beafbd58f540e3f4906246883390fa06d437c1c7f57bb4",
+      "bytes": 5535
+    },
+    {
+      "path": "state/history/projection-20261006T040644.044469Z/PROJECTION_RECEIPT.json",
+      "sha256": "af2af513b59eb64e54f54aadd15f0efaaf00862a361fea6ab16b0fc86d994e20",
+      "bytes": 2383
+    },
+    {
+      "path": "state/history/projection-20261006T040644.044469Z/BACKUP_RECEIPT.json",
+      "sha256": "e7a9a89a1bec79d3c8981a0d31b9fe2d5e860d13c3f3381f49cbe215b275d24c",
+      "bytes": 880
+    }
+  ],
+  "scope": "Exact frozen restart metadata only"
+}
