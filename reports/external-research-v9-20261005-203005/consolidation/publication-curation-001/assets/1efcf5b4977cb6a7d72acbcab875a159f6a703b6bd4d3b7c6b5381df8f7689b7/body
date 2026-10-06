@@ -1,0 +1,78 @@
+{
+  "additional_admission_gate": "Descriptive warm/unpaired continuation; source/critic stages may use exact v1.3 now; no fresh matched full-pipeline credit from later staged transport change",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/card.json",
+  "card_sha256": "1c7deba42c366cade5ea8f579b091764eb5d83f1b0c477a768216d6ef16cb817",
+  "deferred_stages": [],
+  "family": "Z",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "411dae7334f854a8ea31eadca663e7dde9c33e3e996bfe3056bd13a108edef60"
+  },
+  "legitimate_same_arm_native_artifact_handoffs_preserved": true,
+  "native_starts": 0,
+  "no_new_premium_authored_answers_or_evaluator_feedback_supplied": true,
+  "original_attempts_and_costs_preserved": true,
+  "pair_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001",
+  "request_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-r001",
+  "requested_effort": "Max",
+  "requested_model": "GLM 5.3 Flash",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "cab975f4c14fa28bd3b2e61c9922a7e1930b290f406ffc5be5cd7c12e320c032"
+  },
+  "root_scope_required": true,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "unpaired_warm_delivery_continuation",
+  "source_role_imports": [],
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/card.json",
+      "sha256": "57a2adf273e7bd8d6276ee5a963a9a2b75300032eb48296d4c9a83c0e2141ae8"
+    }
+  ],
+  "source_slot": "I-11",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {},
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "6b85d98806d10eabd0ae61cc877004a9046ef736998b8a87243122b79d2685f8",
+      "status": "PREPARED_NOT_ADMITTED",
+      "supplied_frozen_source_job_ids": []
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "track": "DEVELOPMENT_RECOVERY"
+}

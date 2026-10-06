@@ -1,0 +1,439 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V05-B-DEFERRED-R001-r001-CLOCK-R002",
+  "pair_id": "D-V05-B-DEFERRED-R001-CLOCK-R002",
+  "source_slot": "D-V05-B",
+  "family": "L",
+  "candidate_family": "Luna",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/card.json",
+  "card_sha256": "4f8a15ec6a95a9a1a7d7cc43326289368c1c4a138cacfbba1c300b48a11ac193",
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V05-B.json",
+      "sha256": "49daab1b983addab18478a03b05631f38a928eb9eb76207a55ef1051951778b8"
+    }
+  ],
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+    "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+  },
+  "stage_resource_bindings_frozen": true,
+  "stage_jobs": [
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002",
+      "arm": "control",
+      "stage": "final_author",
+      "stage_index": 0,
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "99b9e2879716d3e36d5837920ade84a0c387856860957a4a28d03775e8bc51fe",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "source_job_id": "D-V05-B-DEFERRED-R001-control-final_author-a001",
+      "all_same_arm_prior_job_ids": [],
+      "source_role_binding_required": true,
+      "source_role_bindings": [
+        {
+          "role": "critique",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+          "required_artifact": "seed/critique.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        },
+        {
+          "role": "revision",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+          "required_artifact": "seed/revision.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        }
+      ],
+      "prior_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/FINAL_RESOURCE_BINDING.json",
+        "sha256": "8be6d3a7fad18ae41e18b9a3c60138d1d015fda984163a1b6bde40223463de86"
+      },
+      "inline_only_bundle": true,
+      "both_v06_bundle_excluded": false,
+      "original_source_step": {
+        "job_id": "D-V05-B-control-final_author-a001",
+        "arm": "control",
+        "stage": "final_author",
+        "stage_index": 0,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_seconds": 600,
+        "max_responses": null,
+        "requested_parent_response_cap": 100,
+        "response_cap_enforcement": "UNSUPPORTED; null by prospective root ruling",
+        "prerequisite_job_ids": [],
+        "seed_input_policy": {
+          "candidate_roles": [
+            "proposal",
+            "critique",
+            "revision"
+          ],
+          "full_public_sources": true,
+          "withheld_roles": [
+            "enrichment",
+            "dependencies"
+          ],
+          "optional_enrichment": "May supply genuinely authored relevant material later; absent file is not an invented ordinary-role gate."
+        },
+        "required_artifacts": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "pipeline_final": true,
+        "execution_enabled": true,
+        "public_get": true,
+        "status": "AWAITING_GENUINE_MISSING_ROLE",
+        "prior_output_exposure": "Only listed actual same-arm prerequisite freezes; parallel peer outputs withheld until resolver.",
+        "parallel_group": null,
+        "slot_consumption": 1
+      },
+      "predecessor_aliases": {},
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "9080adc8a08e5083fe66b3751fbbc4637bfb8969683e23a8b4da85c5caddf91e"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "f8ebd0dae0f04b84a507538c843e50c51680ad4d0147e6f2a52779cfb790df8c"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-control-final_author-a001/workspace/TASK.md",
+        "sha256": "f8ebd0dae0f04b84a507538c843e50c51680ad4d0147e6f2a52779cfb790df8c"
+      },
+      "original_authentic_r4_actual_stage_ref": null,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "automatic_retry": false,
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    },
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+      "arm": "treatment",
+      "stage": "flash_check",
+      "stage_index": 0,
+      "max_seconds": 400,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "7b85e348ee665e62258dffdf8cdeedb41923dd0824470ad3e0a4c3cb23e87859",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "required_artifacts": [
+        "out/flash/review.md"
+      ],
+      "source_job_id": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001",
+      "all_same_arm_prior_job_ids": [],
+      "source_role_binding_required": true,
+      "source_role_bindings": [
+        {
+          "role": "critique",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+          "required_artifact": "seed/critique.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        },
+        {
+          "role": "revision",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+          "required_artifact": "seed/revision.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        }
+      ],
+      "prior_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+        "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+      },
+      "inline_only_bundle": false,
+      "both_v06_bundle_excluded": false,
+      "original_source_step": {
+        "job_id": "D-V05-B-treatment-flash_check-a001",
+        "arm": "treatment",
+        "stage": "flash_check",
+        "stage_index": 0,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_seconds": 400,
+        "max_responses": null,
+        "requested_parent_response_cap": 66,
+        "response_cap_enforcement": "UNSUPPORTED; null by prospective root ruling",
+        "prerequisite_job_ids": [],
+        "seed_input_policy": {
+          "candidate_roles": [
+            "proposal",
+            "critique",
+            "revision"
+          ],
+          "full_public_sources": true,
+          "withheld_roles": [
+            "enrichment",
+            "dependencies"
+          ],
+          "optional_enrichment": "May supply genuinely authored relevant material later; absent file is not an invented ordinary-role gate."
+        },
+        "required_artifacts": [
+          "out/flash/review.md"
+        ],
+        "pipeline_final": false,
+        "execution_enabled": true,
+        "public_get": true,
+        "status": "AWAITING_GENUINE_MISSING_ROLE",
+        "prior_output_exposure": "Only listed actual same-arm prerequisite freezes; parallel peer outputs withheld until resolver.",
+        "parallel_group": null,
+        "slot_consumption": 1
+      },
+      "predecessor_aliases": {},
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "e30885130f1d14017dccce94caf8630606d67e3206d84caaeff3deef4ab0dd40"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-flash_check-a001/workspace/TASK.md",
+        "sha256": "c3418ae3278b1ca54ccd06ed97570e144e9bab8dccf85a13a5d8c7d5a5e589cc"
+      },
+      "original_authentic_r4_actual_stage_ref": null,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "automatic_retry": false,
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    },
+    {
+      "job_id": "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002",
+      "arm": "treatment",
+      "stage": "resolve_final",
+      "stage_index": 1,
+      "max_seconds": 200,
+      "max_responses": null,
+      "prerequisite_job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "88ce0962811a5f485acaa326c475fc1b6f617067f778f5ff1cdf89b80c662e8a",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "source_job_id": "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001",
+      "all_same_arm_prior_job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002"
+      ],
+      "source_role_binding_required": true,
+      "source_role_bindings": [
+        {
+          "role": "critique",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+          "required_artifact": "seed/critique.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        },
+        {
+          "role": "revision",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+          "required_artifact": "seed/revision.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        }
+      ],
+      "prior_binding_required": true,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/FINAL_RESOURCE_BINDING.json",
+        "sha256": "8be6d3a7fad18ae41e18b9a3c60138d1d015fda984163a1b6bde40223463de86"
+      },
+      "inline_only_bundle": true,
+      "both_v06_bundle_excluded": false,
+      "original_source_step": {
+        "job_id": "D-V05-B-treatment-resolve_final-a001",
+        "arm": "treatment",
+        "stage": "resolve_final",
+        "stage_index": 1,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_seconds": 200,
+        "max_responses": null,
+        "requested_parent_response_cap": 33,
+        "response_cap_enforcement": "UNSUPPORTED; null by prospective root ruling",
+        "prerequisite_job_ids": [
+          "D-V05-B-treatment-flash_check-a001"
+        ],
+        "seed_input_policy": {
+          "candidate_roles": [
+            "proposal",
+            "critique",
+            "revision"
+          ],
+          "full_public_sources": true,
+          "withheld_roles": [
+            "enrichment",
+            "dependencies"
+          ],
+          "optional_enrichment": "May supply genuinely authored relevant material later; absent file is not an invented ordinary-role gate."
+        },
+        "required_artifacts": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "pipeline_final": true,
+        "execution_enabled": true,
+        "public_get": true,
+        "status": "AWAITING_GENUINE_MISSING_ROLE",
+        "prior_output_exposure": "Only listed actual same-arm prerequisite freezes; parallel peer outputs withheld until resolver.",
+        "parallel_group": null,
+        "slot_consumption": 1
+      },
+      "predecessor_aliases": {
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002": "D-V05-B-DEFERRED-R001-treatment-flash_check-a001"
+      },
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "62d6a80c14313eb2492bb4619e66c128896b5f28cbc8dc8bba94cf8c6270422d"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "5eb8c6ab91da9e5df4402ba64622ca75fd211372629605d49dddb1c2fb883fa5"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/D-V05-B-DEFERRED-R001-treatment-resolve_final-a001/workspace/TASK.md",
+        "sha256": "5eb8c6ab91da9e5df4402ba64622ca75fd211372629605d49dddb1c2fb883fa5"
+      },
+      "original_authentic_r4_actual_stage_ref": null,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "automatic_retry": false,
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    }
+  ],
+  "mechanical_stages": [],
+  "source_role_bindings": [
+    {
+      "role": "critique",
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "required_artifact": "seed/critique.md",
+      "actual_output_freeze_ref": null,
+      "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+    },
+    {
+      "role": "revision",
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "required_artifact": "seed/revision.md",
+      "actual_output_freeze_ref": null,
+      "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+    }
+  ],
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V05-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+    "sha256": "2890dbdc1e8836f5a1610f81581050d8dcee69d37e4ef9b5ce34c6e03c6ed830"
+  },
+  "pair_actual_inputs_required": true,
+  "pair_actual_input_constructor_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+    "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+  },
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "scientific_recovery_mode": "wholly_unstarted_pair",
+  "status": "AWAITING_EXACT_GENUINE_CLOCK_VERSION_SOURCE_ROLES",
+  "original_attempts_and_costs_preserved": true,
+  "no_candidate_answers_or_evaluation_supplied": true,
+  "fixture_suitability": "UNASSESSED_PER_FACET; genuine required roles remain runtime prerequisites",
+  "cold_cost_metadata_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/SEED_ROLE_STATUS_METADATA_20261006T0240.json",
+    "sha256": "cef65177178d7fa452aa2b62a22075cdd082c3a957212e9167afb83fd3a62f8a"
+  },
+  "native_starts": 0,
+  "original_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V05-B-DEFERRED-R001/registration.json",
+    "sha256": "882318b4e718d8bb1aac1c6e1cc7a183571f93ef59f8a5513642682a37a9b30a"
+  },
+  "original_execution_cutoff_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+    "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+  },
+  "clock_behavioral_version": "v1.5-clock-telemetry",
+  "supersedes_wholly_unentered_job_ids": [
+    "D-V05-B-DEFERRED-R001-control-final_author-a001",
+    "D-V05-B-DEFERRED-R001-treatment-flash_check-a001",
+    "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001"
+  ],
+  "no_new_hypothesis_or_extra32_credit": true
+}

@@ -1,0 +1,96 @@
+{
+  "head": "182ad2e0c10ec460bf6ed2bd55d06489d23ace8b",
+  "direct_GitHub_head": "182ad2e0c10ec460bf6ed2bd55d06489d23ace8b",
+  "positive_file_count": 4385,
+  "changed_file_count": 258,
+  "tree_matches_positive_selection": true,
+  "raw_byte_checks": [
+    {
+      "path": "reports/external-research-v9-20261005-203005/README.md",
+      "sha256": "284d5e6c8b88f72379aa6f78ea7aece0765b872e5ac5695340d4a891994230bf",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/readiness-failfast/core-v1/PUBLIC_SELECTION_v2.json",
+      "sha256": "9211a2f9bc98d1965e2eb35ee0b2cb8cf430477bca8eb0199bccacd3e5f53887",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/readiness-failfast/core-v1/stage_worker.py",
+      "sha256": "a24d3504dad5dd23889c9c66606ddcf6f58327c70e23dcb986fdee8e8be11f7b",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/readiness-failfast/bundle-v1/PUBLIC_SELECTION_v2.json",
+      "sha256": "bcc72567f390d49e071961aab7f98ea8075dad0594635adae4fa2294acc90c28",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/operator-closure-036/adopt_readiness_failfast.py",
+      "sha256": "b7680ba0757fdb18f0cb42f002de3de2c566983f7911640945624d2b60e0be22",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/operator-closure-036/own_prior_navigation_cursor.py",
+      "sha256": "59c723a009dce244aa5fe0d919a58b37859b61ee3a4e197d31d4fac1427ddd61",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/admissions/cohort036/READINESS_FAILFAST_FIRST_ACTUAL_NATIVE_ACTIVATION_001.json",
+      "sha256": "b2b1ba0b63b18f2c068a6cf0cb05bcccb7b9bc72a4fd24a1b320c2f0fd8ceae3",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/evaluation/independent-targeted-25/phase2.report.md",
+      "sha256": "88dbf68d627f6bf1e3f11d45e017079cab5a28f5e06fa5b4b61b30f109e323ff",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/evaluation/independent-targeted-25/terminal.receipt.json",
+      "sha256": "49dbf99af243b1940560869fb588b6669542a100ab7c0a7454b959982d2f0de0",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/phase1_report.md",
+      "sha256": "5a620bd9ad86d61ffb2053e085d6f4e52246e3bb416caea52627d0a1e993441b",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/evaluation/independent-confirmation-C02-current-research-1/completion_receipt.json",
+      "sha256": "8155ff05cd695a00326e86b9a0becfcf22f508b265f84bec39657862f879b9b8",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/accounting/cohort-018/TD24-late-clock.safe.json",
+      "sha256": "72305d071a5a31ba5faaad19f3b804ad816b65117344faca12848f8a072d037d",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/frozen-evidence/PUBLIC_SELECTION_058.json",
+      "sha256": "e010b1b602bd1c94dc4296915b8a98588e0dd3cbf4909a1d87d1b95ed8788c93",
+      "http_status": 200,
+      "byte_identical": true
+    },
+    {
+      "path": "reports/external-research-v9-20261005-203005/restart/cohort036/frozen-state--current.json",
+      "sha256": "c3357d7fc1c6a4b36b05cb8c2f65c1771c2389787610ef1936e99facaf8c5616",
+      "http_status": 200,
+      "byte_identical": true
+    }
+  ],
+  "worktree_clean": true,
+  "verified_at": "2026-10-06T10:48:29.837633+00:00",
+  "scope": "research branch only; normal hooks; no main/PR/canon changes"
+}

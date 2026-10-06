@@ -1,0 +1,9 @@
+# Review addendum: W1 receipt transcription
+
+This candidate-authored addendum belongs to the same native combined critique+repair Goal; it is not an evaluator report or independent source assessment.
+
+On readback of the committed `out/final/witnesses.json`, I found that W1's saved `stdout` stops after the `round_trip` field. The actual candidate execution printed the additional field `'3_GiB_over_64_MiB_blocks': 48`; the recorded code contains that print argument and `assert blocks == 48`, with exit code 0. The catalog therefore contains a partial transcription of stdout and does not satisfy the output contract's requirement to record stdout exactly. The 48-block figure follows from the executed assertion and calculation, while the catalog's printed-output field is incomplete.
+
+I attempted to write the corrected bundle to the required `out/final_bundle.json` path. The native writer returned `FileExistsError`; the committed bundle and its four canonical artifacts remain as initially committed. I did not create a second bundle or write directly to a canonical artifact. This receipt defect remains in the delivered `witnesses.json` and should be treated as a candidate-authored artifact limitation.
+
+No new source claim, execution, grade, PASS or quality validation is asserted here.

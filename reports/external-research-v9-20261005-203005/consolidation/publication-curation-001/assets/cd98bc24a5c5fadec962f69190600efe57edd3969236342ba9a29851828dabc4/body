@@ -1,0 +1,57 @@
+import csv, hashlib, io, json
+
+source = data["csv"]
+before = hashlib.sha256(source.encode("utf-8")).hexdigest()
+reader = csv.DictReader(io.StringIO(source, newline=""))
+accepted = []
+rejects = []
+for ordinal, row in enumerate(reader, start=1):
+    if None in row:
+        rejects.append({"ordinal": ordinal, "reason": "too many fields", "raw": row})
+        continue
+    missing = [name for name in reader.fieldnames if row.get(name) is None]
+    if missing:
+        rejects.append({"ordinal": ordinal, "reason": "missing field: " + ", ".join(missing), "raw": row})
+        continue
+    try:
+        converted = {
+            "id": row["id"],
+            "note": None if row["note"] == "NULL" else row["note"],
+            "n": int(row["n"]),
+        }
+    except ValueError as exc:
+        rejects.append({"ordinal": ordinal, "reason": "conversion error: " + str(exc), "raw": row})
+        continue
+    accepted.append({"ordinal": ordinal, **converted})
+
+after = hashlib.sha256(source.encode("utf-8")).hexdigest()
+
+def signature(cell_hashes, data_hash, lock_hash):
+    payload = {"cells": cell_hashes, "data": data_hash, "lock": lock_hash}
+    return hashlib.sha256(json.dumps(payload, sort_keys=True).encode("utf-8")).hexdigest()
+
+lock_hash = "synthetic-lock-hash"
+original_cells = ["upstream-cell-hash", "downstream-cell-hash"]
+stored_sig = signature(original_cells, before, lock_hash)
+changed_cells = ["edited-upstream-cell-hash", "downstream-cell-hash"]
+current_status = "current" if stored_sig == signature(original_cells, before, lock_hash) else "stale"
+edited_status = "current" if stored_sig == signature(changed_cells, before, lock_hash) else "stale"
+
+result = {
+    "source_rows": len(accepted) + len(rejects),
+    "accepted_rows": len(accepted),
+    "rejected_rows": len(rejects),
+    "accepted_notes": ["<NULL>" if row["note"] is None else row["note"] for row in accepted],
+    "reject_ordinals_and_reasons": [{"ordinal": r["ordinal"], "reason": r["reason"]} for r in rejects],
+    "unicode_preserved_in_reject": rejects[0]["raw"]["note"],
+    "source_unchanged": before == after,
+    "status_before_edit": current_status,
+    "status_after_upstream_edit": edited_status,
+}
+assert result["source_rows"] == 4
+assert result["accepted_rows"] == 2 and result["rejected_rows"] == 2
+assert accepted[0]["note"] == "" and accepted[1]["note"] is None
+assert result["unicode_preserved_in_reject"] == "café"
+assert result["source_unchanged"]
+assert current_status == "current" and edited_status == "stale"
+print(json.dumps(result, ensure_ascii=False, sort_keys=True))

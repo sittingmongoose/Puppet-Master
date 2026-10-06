@@ -1,0 +1,16 @@
+{
+  "authorized_whole_seconds": 1800,
+  "billing_dollars": "UNKNOWN",
+  "clock_reset": false,
+  "elapsed_seconds": 970.446657452,
+  "helper_provider_usage": "UNKNOWN",
+  "monotonic_ns": 122164467966247,
+  "required_handoffs_follow_this_checkpoint": true,
+  "schema": "er9.accounting.report-ready-clock.v1",
+  "scope": "Ownreport-ready checkpoint includes exactbinding/counter/cleanup/incident qualification work; requiredhandoffs/closure stillinsideoriginal1800, no waits reset orcandidatebilling.",
+  "start_pin": {
+    "path": "accounting/cohort-020/START.json",
+    "sha256": "255feaadc110fc45c38744f3b0701f491b35da68117a69601d2ed076148c57be"
+  },
+  "utc": "2026-10-06T13:02:25.611115+00:00"
+}

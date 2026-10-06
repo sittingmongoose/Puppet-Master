@@ -1,0 +1,89 @@
+{
+  "observed_utc": "2026-10-06T12:37:29.813275+00:00",
+  "rows": [
+    {
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "stage": "critique",
+      "status": "COMPLETED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T12:23:43.830984+00:00",
+      "elapsed_seconds": 841.304949849,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/OUTPUT_FREEZE.json",
+        "sha256": "9fb2ce2255f72349f1cb4d2443bdd097fc2a98708fc73d84fbdf32f83ead21de"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "293baec5b7a7f71016268e9917cc20bd4d3999ea144a543e9424072a0f13b8af"
+      },
+      "actual_stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/stage.json",
+        "sha256": "6954b3d524baedde171efeda53b490e8f865f881c984e20abcf6e81568135a8e"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/native/receipt.json",
+        "sha256": "c25609ecc693e1b1e5f3eced1b8c22abae2bad26f6a5e181a418efcc6d50dddf"
+      },
+      "operational_complete": true,
+      "native_status": "completed",
+      "artifact_inventory": [
+        {
+          "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/frozen-output/critique/review.md",
+          "relative_path": "critique/review.md",
+          "sha256": "937ada912179d7c82d7c5ab9ca8081c62a58587811dfbbf0f98840dcc707b32e",
+          "bytes": 18185
+        }
+      ],
+      "missing_required_artifacts": [],
+      "invalid_json_artifacts": [],
+      "unit": "er9-203005-i-01-failed-parent-warm-continuation-r001-treatment-critique-a001.service"
+    },
+    {
+      "job_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+      "stage": "revision",
+      "status": "FAILED",
+      "native_goal_starts": 1,
+      "ended_utc": "2026-10-06T12:33:37.742715+00:00",
+      "elapsed_seconds": 574.0037111540005,
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/OUTPUT_FREEZE.json",
+        "sha256": "5fe542da8c2ba04069a3caa9a94f01ae5f7cfad36011a5a701b1eeefcc220be0"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "13c447b9534688bc84eb2200c2de5682678db51a22872ac74893514b7da7bde7"
+      },
+      "actual_stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/stage.json",
+        "sha256": "497a46e64b11893b376cf5b44db236d07266248f26ffaede62a5b461d9f11211"
+      },
+      "native_receipt_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/native/receipt.json",
+        "sha256": "16122a5ed898dd9c010a946312a77842cab18cb8f41e259b16b61edc251acee0"
+      },
+      "operational_complete": false,
+      "native_status": "cap_seconds",
+      "artifact_inventory": [],
+      "missing_required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "invalid_json_artifacts": [],
+      "unit": "er9-203005-i-01-failed-parent-warm-continuation-r001-treatment-revision-a001.service"
+    }
+  ],
+  "direct_goal_capsule_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC019_ALL_TERMINAL_001/CAPSULES.json",
+    "sha256": "31145a8c3f9820463a8e083f14eeb72bb1b8577597c57ed4ef87d9c82728ef3d"
+  },
+  "active_candidate_rows": 0,
+  "retained_resource_rows": 0,
+  "positive_native_starts": 268,
+  "all_new_allowance_used_or_conditional_closed": true,
+  "extra_logical_matched_fresh_causal_or_original_pipeline_credit": 0,
+  "original_failed_research_unchanged": true,
+  "automatic_repeat": false,
+  "scientific_quality": "UNASSESSED"
+}

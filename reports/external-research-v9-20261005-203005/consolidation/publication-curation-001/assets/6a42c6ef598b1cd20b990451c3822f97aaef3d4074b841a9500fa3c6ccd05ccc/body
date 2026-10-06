@@ -1,0 +1,50 @@
+{
+  "schema": "er9.native_witness_inventory.v1",
+  "provenance": "Candidate-authored inventory. Execution receipts are evidence only for the isolated calculation below, not for the proposed application.",
+  "executed_by_candidate": [
+    {
+      "id": "W0",
+      "execution_id": "exec-1zm8pdgo",
+      "status": "FAILED_SETUP_NO_BEHAVIOR_EVIDENCE",
+      "code_sha256": "4cf3511ff62221d864ec4f11c681d93bf125e5db0df9f5bbcc2d033da653766b",
+      "data": null,
+      "data_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "expected": "No numerical expectation assessed because the tool invocation omitted the JSON data object required by the code.",
+      "stdout": "",
+      "stderr": "TypeError: 'NoneType' object is not subscriptable (at axes = data[\"axes\"]).",
+      "exit_code": 1,
+      "elapsed_seconds": 0.40474531799554825,
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "network": "new empty namespace"},
+      "cleanup": {"classification": "collected_unit_absent", "final_load_state": "not-found", "final_active_state": "inactive", "cleanup_stop_returncode": 5, "cleanup_state_returncode": 0},
+      "scope_limit": "Invocation/setup failure only. No source or software behavior is established. Retained as a failure."
+    },
+    {
+      "id": "W1",
+      "execution_id": "exec-e9ctzb3e",
+      "status": "PASS_FOR_STATED_ARITHMETIC_ONLY",
+      "code_sha256": "4cf3511ff62221d864ec4f11c681d93bf125e5db0df9f5bbcc2d033da653766b",
+      "input": {"axes": ["z", "y", "x"], "data_index_coords": [1, 4, 8], "scale": [2, 0.5, 0.25], "translation": [10, -3, 4], "expected_physical": [12, -1, 6]},
+      "input_sha256": "a477df5f567017e0ab03e803c4dae8dddbc73326009c6ec7590b883567e54eef",
+      "code": "import json\n\naxes = data[\"axes\"]\ncoords = data[\"data_index_coords\"]\nscale = data[\"scale\"]\ntranslation = data[\"translation\"]\nassert len(axes) == len(coords) == len(scale) == len(translation) == 3\n# OME-NGFF specifies sequential scale then translation: physical = scale*x + translation.\nphysical = [scale[i] * coords[i] + translation[i] for i in range(3)]\nrecovered = [(physical[i] - translation[i]) / scale[i] for i in range(3)]\nexpected = data[\"expected_physical\"]\nassert physical == expected, (physical, expected)\nassert all(abs(a - b) < 1e-12 for a, b in zip(recovered, coords)), (recovered, coords)\nprint(json.dumps({\"axes\": axes, \"input_index\": coords, \"scale\": scale, \"translation\": translation, \"physical\": physical, \"inverse_roundtrip\": recovered, \"assertions\": \"PASS\"}, sort_keys=True))",
+      "expected": "From S1 sequential transformation semantics: scale [2,0.5,0.25] then translation [10,-3,4] maps index [1,4,8] to [12,-1,6]; inverse arithmetic recovers [1,4,8].",
+      "stdout": "{\"assertions\": \"PASS\", \"axes\": [\"z\", \"y\", \"x\"], \"input_index\": [1, 4, 8], \"inverse_roundtrip\": [1.0, 4.0, 8.0], \"physical\": [12, -1.0, 6.0], \"scale\": [2, 0.5, 0.25], \"translation\": [10, -3, 4]}\n",
+      "stdout_sha256": "455526b5b5ed620d7878895008583cef6705ccce3445c28b5a6d22e3639812c1",
+      "stderr": "",
+      "exit_code": 0,
+      "elapsed_seconds": 0.35810184199362993,
+      "limits": {"wall_seconds": 5, "cpu_seconds": 3, "memory_bytes": 268435456, "tasks": 16, "network": "new empty namespace"},
+      "observed_component_peak_memory_bytes": 12017664,
+      "cleanup": {"classification": "collected_unit_absent", "final_load_state": "not-found", "final_active_state": "inactive", "cleanup_stop_returncode": 5, "cleanup_state_returncode": 0},
+      "scope_limit": "Standard-library scalar arithmetic only. Does not exercise OME-Zarr, Dask, tifffile, napari, image pixels, units, axes parsing, storage, exports, GUI or 3 GB behavior."
+    }
+  ],
+  "observed_public_history_not_candidate_execution": [
+    {"id": "H1", "sources": ["S7", "S8", "S9", "S10"], "finding": "napari issue #9072, merged PR #9389, camera/orientation regression-test patches, and applicability to v0.9.2 release history were inspected. Candidate did not run those upstream tests."}
+  ],
+  "proposed_unexecuted_checks": [
+    {"id": "P1", "status": "PROPOSED/UNEXECUTED", "check": "Open representative 3 GB TIFF/OME-TIFF and OME-Zarr inputs on the brief's 8-core/16 GB workstation; measure memory, selected-plane latency, progress, cancellation and unchanged source identity."},
+    {"id": "P2", "status": "PROPOSED/UNEXECUTED", "check": "Test axis order, units, scales/translations, explicit correction, annotation round-trip and export under flipped display orientations."},
+    {"id": "P3", "status": "PROPOSED/UNEXECUTED", "check": "Inject interruption during annotation generation, manifest commit and export; reopen previous committed project; repeat on supported shared-storage filesystems."},
+    {"id": "P4", "status": "PROPOSED/UNEXECUTED", "check": "Relocate projects to another workstation and verify source identity, scopes, CSV coordinates and derived overlays."}
+  ]
+}

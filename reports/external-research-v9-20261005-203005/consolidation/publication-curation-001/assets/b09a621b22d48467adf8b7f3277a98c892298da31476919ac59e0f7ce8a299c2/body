@@ -1,0 +1,99 @@
+{
+  "stage": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+  "role": "critique",
+  "captured_utc_day": "2026-10-06",
+  "eligibility_note": "Independent third-party primary documentation and repository release histories only. No campaign/evaluator/other-arm material sought or encountered.",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://docs.python.org/3/library/wave.html",
+      "capture_id": "99a954bd498d4cd99ac4ea919437f39c",
+      "sha256": "463a7c29d8da57be1c535b71a3986587b308a0afc19881016e7241aec78bc5ca",
+      "captured_utc": "2026-10-06T08:16:09.204889+00:00",
+      "http_status": 200,
+      "pinned_ip": "151.101.0.223",
+      "document_version": "Python 3.14.8 documentation page",
+      "exact_locator": [
+        "Page text: 'Only uncompressed PCM encoded wave files are supported.'",
+        "Versionchanged note: 'Changed in version 3.12: Support for WAVE_FORMAT_EXTENSIBLE headers was added, provided that the extended format is KSDATAFORMAT_SUBTYPE_PCM.'"
+      ],
+      "used_for": "V-1 stdlib wave I/O boundary; version applicability of extensible-header support",
+      "applicability": "Any proposal choosing a stdlib-only ingest path; interpreter must be >=3.12 for extensible PCM headers; non-PCM subtypes unsupported"
+    },
+    {
+      "id": "S2",
+      "url": "https://libsndfile.github.io/libsndfile/",
+      "capture_id": "91d61ea8101b4b31b26cc913ff4c40a5",
+      "sha256": "edb94f166b988a50907bbae212f0a4d72fb617887d69f8bd071ea92efdd5d527",
+      "captured_utc": "2026-10-06T08:16:09.765197+00:00",
+      "http_status": 200,
+      "pinned_ip": "185.199.108.153",
+      "document_version": "home page, footer 'The libsndfile version: 1.2.2', last-modified 2026-09-01",
+      "exact_locator": [
+        "Features list: 'Ability to read and write a large number of file formats', 'On the fly format conversion'",
+        "Test-suite policy: 'When new bugs are found, new tests are added to the test suite to ensure that these bugs don't creep back into the code.'"
+      ],
+      "used_for": "V-2 libsndfile role as I/O boundary, not universal codec promise; regression-test policy claim (project's own statement)",
+      "applicability": "I/O backbone choice; version pin >=1.2.2"
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/master/CHANGELOG.md",
+      "capture_id": "b7215f9f4e5d420b92b3498582f47c7e",
+      "sha256": "55c4b29cf61a77f192f2a620379249077a1327920474cea2c201bb9a4c1fe91f",
+      "captured_utc": "2026-10-06T08:16:37.536844+00:00",
+      "http_status": 200,
+      "pinned_ip": "185.199.108.133",
+      "document_version": "CHANGELOG.md at master, latest entry [Unreleased] above [1.2.2] - 2023-08-13",
+      "exact_locator": [
+        "'## [1.2.2] - 2023-08-13' (latest release)",
+        "'## [1.2.1] - 2023-08-12' Fixed: '`sf_open_fd`() regression, thanks @brentr (PR #950)'",
+        "'## [1.2.0] - 2022-12-25' Removed: 'Maximum samplerate limit ... In version 1.1.0, an artificial limit of 655350 Hz was created' (issue #850)",
+        "'## [1.1.0] - 2022-03-27' Added: MPEG Encode/Decode Support (Layer III encode; decode incl. seeking)"
+      ],
+      "used_for": "V-2 latest release pin; V-5 samplerate-cap version scoping; V-6 sf_open_fd 1.2.0->1.2.1 regression; MP3 support floor at 1.1.0",
+      "applicability": "Capability claims must be scoped to libsndfile versions"
+    },
+    {
+      "id": "S4",
+      "url": "https://raw.githubusercontent.com/libsndfile/libsndfile/master/NEWS.OLD",
+      "capture_id": "b2298c8936794e1e97cca927307b07c1",
+      "sha256": "3a78bdab732a947946ee707ffd210c537344ae450668045633654cdceab05263",
+      "captured_utc": "2026-10-06T08:17:06.056284+00:00",
+      "http_status": 200,
+      "pinned_ip": "185.199.108.133",
+      "document_version": "NEWS.OLD at master (legacy release notes, newest first)",
+      "exact_locator": [
+        "'Version 1.0.27 (2016-06-19)': 'Fix an SF_INFO seekable flag regression introduced in 1.0.26.'; 'Add handling of CUE chunks.'",
+        "'Version 1.0.26 (2015-11-22)': release where the regression was introduced",
+        "'Version 1.0.29 (2020-08-15)': 'Fix ASAN crash in wavlike_ima_seek().'",
+        "'Version 1.0.30 (2020-09-18)': 'Fix bug when sf_open_fd() function sometimes leaves filehandle open, even if `close_desc` parameter is TRUE'"
+      ],
+      "used_for": "V-3 consequential issue->fix chain with exact release applicability; V-4 CUE-chunk support floor; V-6 descriptor lifecycle",
+      "applicability": "Seekability claims false on 1.0.26, true on >=1.0.27; CUE chunk read/write requires >=1.0.27",
+      "limitation": "Exact fix commit hash and the specific regression test file for the 1.0.27 fix were NOT captured; chain pinned at release granularity only"
+    },
+    {
+      "id": "S5",
+      "url": "https://raw.githubusercontent.com/audacity/audacity/master/README.md",
+      "capture_id": "65608cc1c1df46f0b87eb61585c3f681",
+      "sha256": "c84ab5991133706a2899c20539df624ecaa124b7be9d4aff6d2b20986978d121",
+      "captured_utc": "2026-10-06T08:16:38.283250+00:00",
+      "http_status": 200,
+      "pinned_ip": "185.199.108.133",
+      "document_version": "README.md at master, captured 2026-10-06",
+      "exact_locator": [
+        "'This repository is currently undergoing major structural change.' ... 'working on Audacity 4'",
+        "'It is still possible to submit patches to Audacity 3.x; make sure you branch off `audacity3`'",
+        "Build instructions for 3.x at 'release-3.7.0'"
+      ],
+      "used_for": "V-7 branch-pinning discipline for Audacity-sourced claims; flags a common research failure mode (citing an in-refactor master)",
+      "applicability": "Audacity behavior claims must be pinned to audacity3/release-3.7.x, never master"
+    }
+  ],
+  "missing_predecessor_probes": {
+    "finding": "C-1",
+    "detail": "inputs/prior exists as a directory (ValueError on read) but no predecessor file located; probes: proposal.md, research/proposal.md, out/research/proposal.md, out/final/proposal.md, INDEX.json, index.json, manifest.json, README.md, NAVIGATION.md, navigation.json, prior-manifest.json, sources.json, research-proposal.md, workspace/out/research/proposal.md, inputs/research/proposal.md, inputs/manifest.json, out/research/proposal.md; mechanical line_map/cache_source on the directory return ValueError (no listing capability)",
+    "consequence": "No finding-by-finding review of a frozen proposal was possible; review grounded in inputs/brief.md plus independent verification pack"
+  }
+}

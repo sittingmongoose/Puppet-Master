@@ -1,0 +1,27 @@
+{
+  "actual_start_utc": "2026-10-06T12:38:15+00:00",
+  "after_required_editions001_and002_handoffs_utc": "2026-10-06T13:05:02.753600+00:00",
+  "billing_tokens_or_dollars": "UNEXPOSED; inclusivewallclock is taskcost evidence, candidate/accounting custody remains separate",
+  "campaign_finished": false,
+  "clock_reset": false,
+  "final_addendum_and_terminal_delivery_follow_this_capture_within_original_bound": true,
+  "finite_seconds": 1800,
+  "handoff_recipients": [
+    "/root",
+    "/root/frozen_exports",
+    "/root/publisher",
+    "/root/projection_keeper"
+  ],
+  "inclusive_deadline_utc": "2026-10-06T13:08:15+00:00",
+  "inclusive_elapsed_seconds_through_all_required_edition_handoffs": 1607.7536,
+  "no_new_native_calls_or_scientific_credit": true,
+  "original_inventory_terminal_handoff_clock": {
+    "after_all_deliveries_utc": "2026-10-06T12:38:00+00:00",
+    "finite_seconds": 1200,
+    "inclusive_seconds": 1040,
+    "no_reset": true,
+    "start_utc": "2026-10-06T12:20:40+00:00"
+  },
+  "required_edition_handoffs_completed_before_clock_capture": true,
+  "schema": "er9.curation-inclusive-clock-receipt.v1"
+}

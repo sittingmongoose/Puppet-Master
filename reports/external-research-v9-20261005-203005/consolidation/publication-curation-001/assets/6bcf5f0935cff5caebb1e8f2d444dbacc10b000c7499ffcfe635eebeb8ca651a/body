@@ -1,0 +1,87 @@
+# A practical biomedical image review workspace
+
+## Recommendation
+
+**Product choice.** Build an incremental desktop research tool around napari’s multidimensional viewer and annotation layers, with a small application shell that owns project files, metadata review, recovery, and exports. Keep image readers behind two explicit adapters: `ome-zarr-py` 0.20.1 for read-only OME-Zarr 0.5 and tifffile 2026.9.20 for a validated subset of TIFF/BigTIFF/OME-TIFF. Store annotations and project state in a versioned sidecar project. Never edit the source image in place.
+
+This combines three distinct implementation contributions. Napari supplies a Qt/VisPy desktop viewing and shape/label interaction precedent; `ome-zarr-py` supplies NGFF hierarchy handling and Dask-backed Zarr array access; tifffile supplies TIFF-family metadata and image readers. These are separate repositories with different responsibilities, not evidence that the components interoperate without adapter work. The viewer does not own the project’s durable annotation or source-identity contract.
+
+**Critical qualification.** `ome-zarr-py` 0.20.1 has a `FormatV05` implementation for Zarr v3, but its source says v0.5 writing is not supported. Use it only as an input reader. This proposal writes project/annotation data separately and does not claim to emit a conforming OME-Zarr 0.5 dataset. Pin napari v0.9.2, `ome-zarr-py` v0.20.1, and tifffile v2026.9.20 to the inspected commits in [sources.json](sources.json); resolve and lock all transitive dependencies when implementation begins. [S1–S8]
+
+## Evidence, inference, and product decisions
+
+**External facts.** OME-NGFF 0.5 specifies Zarr v3 storage; multiscale image axes have two through five dimensions; axis order follows the types (time, channel/custom, then spatial); dataset coordinate transformations are applied sequentially; each resolution has one scale and may have a translation after scale. The OME-Zarr label-image convention uses integer arrays. [S1]
+
+At the inspected `ome-zarr-py` pin, `ZarrLocation.load` calls `dask.array.from_zarr`; the reader represents multiscale data as Dask arrays and reads metadata including axes and coordinate transformations. Its `FormatV05` sets Zarr format 3 and comments that writing is not supported yet. This is implementation evidence for a read path, not a performance measurement. [S2]
+
+Tifffile’s inspected documentation describes reading TIFF, BigTIFF and OME-TIFF, and exposing arrays or Zarr arrays/groups from strips, tiles, pages, SubIFDs, series and pyramidal levels. The same documentation describes limitations in its TIFF subset and optional codec dependencies. These statements do not establish that every file layout or codec is bounded-memory or supported on the target workstations. [S3]
+
+Napari 0.9.2 is a multidimensional viewer built on Qt and VisPy. Its versioned Shapes and Labels documentation describes shape editing and pixel-label editing. This is a relevant interactive implementation precedent; napari does not thereby supply this proposal’s project format, source identity rules, save recovery, or export provenance. [S4–S6]
+
+**Engineering inference.** Separate adapters, project persistence and viewer state so a parser or rendering change cannot redefine stored annotation coordinates. Reopen and export should depend on the project contract and pinned reader results, not a live GUI session. A chunked or lazy array path can avoid deliberately allocating a second full image array, but caching, codecs, rendering, file layout and UI integration can still use substantial memory. The 3 GB requirement is therefore an acceptance target to measure, not an established property of these components.
+
+**Product choice.** Keep the initial supported import boundary small and explicit. Accept OME-Zarr 0.5 and selected TIFF-family series only when axes, sample type, calibration and codec are understood by the pinned adapter and covered by fixtures. Do not promise compatibility with every microscopy format or all metadata variants. If a file fails, preserve the original, show the reader error and raw metadata that could be read, and leave a recoverable project record marked unsupported or awaiting axis/calibration review. Require a user choice before applying any axis or calibration correction; preserve the original metadata and record the override separately.
+
+## Component plan and bounded alternatives
+
+### Viewer and annotation interaction
+
+Use napari layers for image display, points/shapes, and mask/label editing. The application shell adds the project/image list, metadata/provenance panel, axis and calibration review, save/recovery status, and export actions. Record the supported napari release and dependency lock with each project’s application version. Do not depend on napari’s session state as the only durable copy of annotations.
+
+A consequential precedent is napari issue #9072, “View direction calculation is wrong.” The report describes a 3D camera direction changing incorrectly when an axis orientation is flipped. PR #9389 says it closes that issue and refactors the calculation to pass view/up directions through the renderer boundary. The merged patch adds tests comparing napari direction math with a real VisPy camera across depth/vertical/horizontal orientations and generated angles, plus direction/quaternion round-trip tests. The merge is in the history before napari v0.9.2, whose release notes list #9389. This is a source-grounded rendering lesson: test display orientation changes against data-coordinate orientation. It does not demonstrate persistence or export correctness. [S7–S10]
+
+**Alternative.** If the team only needs fast 2D slice review, a small Qt slice viewer over the same readers and project contract is plausible and could reduce dependency/rendering complexity. It would require the team to implement and maintain navigation, shapes, masks, 3D behavior, and accessibility itself. Keep the file and annotation contract independent so the team can compare this option after a CPU-only and representative-GPU napari prototype; neither option is proven against the group’s actual machines here.
+
+### Reader boundary
+
+- **OME-Zarr 0.5:** read through pinned `ome-zarr-py` 0.20.1. Require valid hierarchy, dataset paths, shape/axis agreement and understood scale/translation transforms. Start with local stores; evaluate shared-storage access separately. Do not write v0.5 through this library pin.
+- **TIFF family:** use pinned tifffile for conventional TIFF, BigTIFF and OME-TIFF series that the shipped dependencies decode and whose axes and metadata map unambiguously to the project contract. Limit initial support to no more than five dimensions and the required two or three spatial axes, with optional time and channel. This is an application support boundary; tifffile itself documents broader readers, but this proposal does not inherit that entire list as a promise.
+- **Large input:** drive views from selected planes/tiles/chunks or a verified lazy array interface. Never call a whole-series materialization path for the large-image workflow. If a reader cannot produce bounded selections for an input, reject it before annotation or offer a separately confirmed conversion to a new derived file only after that workflow is implemented and validated. No converted copy replaces the source.
+- **Failure and ambiguity:** display original axes, units, shape, reader/parser version, warnings and unparsed metadata. A reviewer can accept a named axis mapping or calibration override, with the raw value and choice logged. Unknown physical units remain unknown; pixel/index annotations can be explicitly selected, but the tool must not manufacture physical units. Keep any project in a `needs_review` state until required ambiguities are resolved.
+
+The OME-NGFF 0.5 axis and transform requirements are the basis for the OME-Zarr checks above. tifffile’s broad format list and TIFF-family exceptions are reasons to use explicit adapters and fixtures, not grounds to claim universal compatibility. [S1–S3]
+
+## Project data and coordinate contract
+
+Use a project directory such as `study.imgproj/` with a versioned `manifest.json`, immutable annotation generations, and optional small derived exports. Each image record contains a stable project image ID; original URI/path; reader and version; file size and modification time as quick hints; full-content digest and its status (`pending`, `complete`, or `unknown`); raw metadata snapshot when readable; array shape/dtype; ordered axes (name, type, unit); and per-resolution transforms. A size/mtime match is not proof of file identity. Hashing a large external file can take time, so run it in a cancellable background task and label incomplete identity honestly. Relocation requires explicit relinking; compare a completed digest before treating the new path as the same source.
+
+Store coordinates in array-axis order with named dimensions, zero-based sample-index coordinates (integer values identify sample centers), and an explicit coordinate-space field. Store polygon vertices without reordering axes. Each annotation has an image ID and source identity, annotation type, coordinates or mask reference, style, author/time provenance, and scope. Scope distinguishes a single slice/time (with fixed non-spatial indices), a volume, and a whole acquisition. For a channel-specific annotation, record the channel index or all-channel scope explicitly. Mask values are integer labels, with their label dictionary in the project sidecar.
+
+When calibration is valid, compute physical coordinates by applying the captured per-resolution scale and optional translation in the spec’s stated order; save axis names and units alongside values. Keep the inverse mapping and exact transform record so reopen/export can be checked. For unknown units or user overrides, retain both the original metadata and the reviewed mapping. Any geometric transform or resampling creates a new derived-image identity, transform record and provenance event. An annotation stays attached to its original image identity unless a recorded transformation explicitly maps it to a derivative.
+
+Store display state separately: visible channels, per-channel colors/windows, selected Z/T, slice orientation, and any view-only contrast mapping. Changing window/level changes only this display state and must never alter source samples. Distinguish this state visibly from a derived image operation.
+
+## Minimum workflow
+
+1. **Create/import:** create a project and open a local image/store read-only. Inspect shape, axes, units, calibration, provenance, reader version and warnings before drawing. Keep the source outside the project by default.
+2. **Review/navigate:** show channel selection, window/level, slice and time controls; show axis names/order and physical units next to navigation. Mark missing or ambiguous calibration clearly and offer a recorded correction choice.
+3. **Annotate:** support points, polygons and integer masks; label the annotation’s image, axes, coordinate space and slice/time/volume/acquisition scope. Include reusable styles, keyboard navigation and undo/redo. Make keyboard focus and error/progress feedback legible and operable.
+4. **Save/reopen:** save the project, close it, and reopen it from another workstation. If an external path moved, offer explicit relinking and identity verification. Preserve annotations when the source is unavailable; mark the image unresolved rather than silently substituting another file.
+5. **Export:** provide a table with annotation ID/type, geometry, axes and units, scope, source identity and transform provenance. Keep polygon geometry as a structured vertex field rather than flattening it ambiguously. Export an overlay and a small derived image for an explicitly selected channel/time/slice; label it derived and record contrast mapping, orientation, resampling and source identity. Explain which geometry, calibration and display settings each format preserved.
+6. **Recover/fail safely:** unsupported input, interrupted save or failed export leaves the original untouched and the last committed project readable. Show progress and permit cancellation of hashing, reads, writes and exports; cancelled output remains temporary and is not presented as complete.
+
+## Persistence, sharing and resource behavior
+
+Write annotation generations into temporary sibling locations, validate them, flush file contents, then make a new manifest/current-generation pointer the commit record using a same-filesystem atomic file replacement where supported. Retain the previous committed manifest for recovery; an interrupted write before the pointer update leaves the previous generation selected and may leave only an orphan temporary generation. Flush and rename guarantees vary across operating systems and shared-storage implementations, so test the exact supported filesystems. Do not claim a local rename provides distributed transactions. Detect a changed base generation before saving and ask the researcher to resolve a conflict; simultaneous editing is outside the minimum workflow.
+
+A reference-based project avoids copying a multi-gigabyte original and is the default. A portable bundle can explicitly include source data, but then needs space for the copy, time to verify it, and a clear progress/cancel path. Verify a copied source before committing the portable bundle. Keep project and source paths relative where possible and retain the original URI plus digest for relocation.
+
+The 8-core/16 GB and 3 GB envelope comes from the brief, not component evidence. The app must use bounded reads and visible cancellation/progress; a measured 3 GB fixture on the target workstation is a release gate. Test both representative local TIFF and OME-Zarr cases, RSS, interaction while reading, cancellation cleanup, and unchanged source digest. Until these checks pass, do not advertise that the workstation target is met.
+
+## Opportunity and deferred alternative
+
+A useful later opportunity is exchanging immutable OME-Zarr datasets and project sidecars through the group’s ordinary shared storage, with each researcher’s annotations remaining separately versioned. OME-NGFF describes local filesets as well as HTTP/object storage layouts, but this does not provide concurrent editing, conflict resolution, or a portable annotation bundle in this proposal. Keep live collaboration and cloud services optional and deferred. [S1]
+
+The custom Qt slice viewer described above is a plausible narrower alternative if napari’s rendering/runtime footprint is unsuitable. Compare it against napari using the same reader fixtures, coordinate contract and annotation/export checks; do not choose it merely from a feature list.
+
+## Proposed validation (all UNEXECUTED unless stated)
+
+- **Axis/calibration fixtures:** valid 2D, 3D and up-to-5-axis NGFF; singleton and optional axes; permuted, duplicate, missing and unknown axes; absent units; multi-resolution scale/translation; and malformed metadata. Check explicit correction records and preserve original values.
+- **Reader contract:** representative TIFF, BigTIFF, OME-TIFF and OME-Zarr files with supported sample types/codecs; compare metadata, selected plane values and shape against independent fixture expectations. Include unsupported compression/layout and malformed input to verify non-destructive refusal.
+- **Large-image target:** 3 GB representative source on 8-core/16 GB workstation with optional GPU; verify no second full in-memory copy, check cancellation/progress during hashing/read/export, and record RSS and responsive-use observations. This is a target, not a present result.
+- **Rendering/coordinates:** reproduce the napari axis-flip view-direction case; place known points/polygons under multiple orientations, save/reopen and compare array-index and physical coordinates. The public #9389 tests motivate this; they are not this application’s tests.
+- **Annotations/exports:** round-trip points, polygon vertex order, masks, styles, and each scope; independently compare CSV fields and overlay pixels/metadata with the selected source plane and saved display transform.
+- **Persistence/recovery:** terminate during annotation-generation write, manifest commit, source hashing and export; verify the previous committed generation, temporary-file cleanup and recovery UI. Repeat on every claimed shared-storage platform and across two workstations with path relocation and changed-source checks.
+- **User operation:** keyboard-only navigation/drawing/save/export; legible missing-calibration/error/progress feedback; undo/redo; close/reopen without loss.
+
+The only candidate execution in this role is the small arithmetic witness W1 in `witnesses.json`. It does not satisfy any full-application acceptance gate above. The camera issue/fix tests described above were read from public primary repository records; they were not executed by this candidate.

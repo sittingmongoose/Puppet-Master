@@ -1,0 +1,162 @@
+{
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/card.json",
+  "card_sha256": "ca0d92907bf59a638b6aa1711f55fe1c40e1c5dfcddb252455ce6604e18a6588",
+  "cohort_id": "ER9-FRESH12-DELIVERY-R001",
+  "family": "L",
+  "first_research_old_candidate_payloads": false,
+  "full_pipeline_closure_before_research": true,
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/source-templates/I-08-FRESH-DELIVERY-R001/PAIR_INPUT_FREEZE.json",
+    "sha256": "c18ed56d812d3d4e6728d1a107050f5066d2d0321168a516d1b16e1f6d8ca8b2"
+  },
+  "native_source_binding_status": "READY_LUNA",
+  "native_starts": 0,
+  "original_attempts_and_costs_preserved": true,
+  "original_failure_costs_and_flags_retained": true,
+  "pair_id": "I-08-FRESH-DELIVERY-R001",
+  "pipeline_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-08-FRESH-DELIVERY-R001/PIPELINE_CLOSURE.json",
+    "sha256": "01e65501d57b0f225a74f4cd51bb7aca13cdf0efb2d19c9af2be09f2f10b1f73"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-011.json",
+    "sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea"
+  },
+  "registration_selection_replaces_request_id": "I-08-FRESH-DELIVERY-R001-DEC011-r001",
+  "request_id": "I-08-FRESH-DELIVERY-R001-DEC011-runtime-r002",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "root_or_max_go_required": false,
+  "root_scope_required": false,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "full_fresh",
+  "selection_condition": "Ops verifies these exact job IDs remain native0; select one descriptor per job, never add duplicate work",
+  "source_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/registration.json",
+    "sha256": "3f43b3523328f65cb665bd4466c12d058ffeb88b9cb0a0452b4aa06ad853940f"
+  },
+  "source_separation_overlay": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/COMMON_SOURCE_SEPARATION_OVERLAY_002.md",
+    "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+  },
+  "source_slot": "I-08",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-research-a001/prepared-stage.json",
+      "stage_sha256": "5c4f992c35d99f504dc2cd0502901c66ecbdde198968d920ad1a1d64ba3416e8",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-control-research-a001"
+      ],
+      "arm": "control",
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-critique-a001",
+      "max_responses": null,
+      "max_seconds": 900,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-control-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "8404f10cb45c55e92e851ba900c540429a8181d0a5df3ce8b3ae9ea7e51bff70",
+      "status": "AWAITING_ACTUAL_SAME_ARM_PREDECESSORS"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-control-research-a001",
+        "I-08-FRESH-DELIVERY-R001-control-critique-a001"
+      ],
+      "arm": "control",
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-control-critique-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "3f5a150333db14668f5bc49663e88cc21f0dc7476dcfce632b25fef66f9f717b",
+      "status": "AWAITING_ACTUAL_SAME_ARM_PREDECESSORS"
+    },
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "treatment",
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "3c92279b8c846ac86f72087f5663e58df14149c83119a9f59c1ff71c64f8568a",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-treatment-research-a001"
+      ],
+      "arm": "treatment",
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001",
+      "max_responses": null,
+      "max_seconds": 1500,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-08-FRESH-DELIVERY-R001-treatment-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "stage": "critic_final",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/I-08-FRESH-DELIVERY-R001/I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001/prepared-stage.json",
+      "stage_sha256": "e74782a9f2043237c5ae71cd27d4f6cef4bfc95af1d02dadaca30050aa62e0f1",
+      "status": "AWAITING_ACTUAL_SAME_ARM_PREDECESSORS"
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "track": "FRESH_DEVELOPMENT_REPAIR"
+}

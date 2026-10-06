@@ -1,0 +1,90 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "I-10-DELIVERY-RECOVERY-R002-DEC007-r001",
+  "pair_id": "I-10-DELIVERY-RECOVERY-R002",
+  "source_slot": "I-10",
+  "family": "Z",
+  "requested_model": "GLM 5.3 Flash",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/card.json",
+  "card_sha256": "c5b6a9fcad7b22008da6c2782bc33c7aa5ad5bad49e28acef39d1bb6b4964cbc",
+  "stage_jobs": [
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "bba8fe8979320a5962ff5d397cf6fe1e936ccd4bb098d0895d14e6e82a2b9f88",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-research-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+      "arm": "treatment",
+      "stage": "critique",
+      "stage_index": 1,
+      "max_seconds": 900,
+      "max_responses": 90,
+      "prerequisite_job_ids": [
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "c94c52462688971b1238f1c4e466f6b73c3a9a017f06c0ac731215a86cc1fd41",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "arm": "treatment",
+      "stage": "revision",
+      "stage_index": 2,
+      "max_seconds": 600,
+      "max_responses": 60,
+      "prerequisite_job_ids": [
+        "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "d6584f5c731d826dd7f37d79e7a620a6fc41387254e403858017b66b9ba62658",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    }
+  ],
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "status": "PREPARED_NOT_ADMITTED",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-10-DELIVERY-RECOVERY-R002/PAIR_INPUT_FREEZE.json",
+    "sha256": "ab984a155468598603857554f87bcc6348d107f431d941a316fe444b068009f0"
+  },
+  "original_attempts_and_costs_preserved": true,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "scientific_recovery_mode": "mixed"
+}

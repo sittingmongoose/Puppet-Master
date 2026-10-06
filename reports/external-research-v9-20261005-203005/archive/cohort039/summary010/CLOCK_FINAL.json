@@ -1,0 +1,17 @@
+{
+  "clock_scope": "START through exact source selection, all NAS copies/rereads, compact receipts and all required pin handoffs; closure written after handoffs",
+  "closed_utc": "2026-10-06T13:09:13.987858+00:00",
+  "inclusive_elapsed_seconds": 156.776849799,
+  "inclusive_max_seconds": 600,
+  "prior_archives": "UNCHANGED",
+  "required_pin_handoffs_completed": [
+    "root",
+    "frozen_exports",
+    "publisher",
+    "publication_inventory"
+  ],
+  "schema": "er9.archive-inclusive-clock.v1",
+  "started_utc": "2026-10-06T13:06:37.210944+00:00",
+  "status": "FINAL_WITHIN_BOUND",
+  "task": "exact16summary010"
+}

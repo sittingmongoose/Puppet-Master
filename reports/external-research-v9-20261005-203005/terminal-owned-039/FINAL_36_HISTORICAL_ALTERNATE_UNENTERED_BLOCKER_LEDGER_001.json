@@ -1,0 +1,1066 @@
+{
+  "observed_utc": "2026-10-06T12:42:47.578223+00:00",
+  "rows": [
+    {
+      "job_id": "I-08-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "pair_id": "I-08-DELIVERY-RECOVERY-R002",
+      "source_slot": "I-08",
+      "family": "L",
+      "stage": "revision",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch001/I-08-DELIVERY-RECOVERY-R002/I-08-DELIVERY-RECOVERY-R002-control-revision-a001/prepared-stage.json",
+        "sha256": "de476c52cb091443b4ba2fffcbba8b1cb187c8e959bdf0cd34a83d6fc51a16d6"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/LUNA_V1_2_READY.json",
+        "sha256": "43f81c6b66a163392e68d215f2c4696ba4d015a1c9f36c962270d0e8922d6976"
+      },
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+      "pair_id": "I-01-DELIVERY-RECOVERY-R002",
+      "source_slot": "I-01",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/I-01-DELIVERY-RECOVERY-R002-control-revision-a001/prepared-stage.json",
+        "sha256": "dfa85eecdd91431cc0107a7861d544e46161148849414fb2c976ca7509f8e3bf"
+      },
+      "source_runtime_ref": null,
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+      "pair_id": "I-01-DELIVERY-RECOVERY-R002",
+      "source_slot": "I-01",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/registration.json",
+        "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch002/I-01-DELIVERY-RECOVERY-R002/I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001/prepared-stage.json",
+        "sha256": "22bc42ff50c8bc31ad86372ea0e05b2d12d9a692eea0754ff406d57e73408c62"
+      },
+      "source_runtime_ref": null,
+      "blockers": [
+        "Frozen legacy whole-job envelope unbounded; no new admissions authorized on this preserved version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001",
+      "pair_id": "I-07-FRESH-DELIVERY-R002",
+      "source_slot": "I-07",
+      "family": "L",
+      "stage": "critic_final",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": null,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/registration.json",
+        "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d",
+        "family": "L",
+        "requested_model": "GPT-6 Luna",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/recovery/prepared-batch004/I-07-FRESH-DELIVERY-R002/I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "d8a0ed5ee39e9164056dbc2bb588dcf1e900f7fe3ff35a12a3bdb51a3e436688"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/LUNA_V1_3_READY.json",
+        "sha256": "534e9ae13e2439c6d8d5298cda6617e19a9c3ef052513cecd888274c4527106e"
+      },
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001",
+      "source_slot": "I-02",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-priority001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "e609699bf24b5e9c918fa5548d3d91798212b2aa7eaa71e581871dc5fa3be3f4",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-priority001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001/I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "78d10fc6899a5dc35d702cf2a272141ca6d81c42057f1594f636946a5defcc84"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-control-research-a001/prepared-stage.json",
+        "sha256": "83c6fa61888bd82c259781019f5119e79ee4ae3b8facb25174756625e9db2c10"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "d8f819cd93c74cc279c73e02670161128a5403b55e5c0684dddd537429ac54d8"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "bc94df8506257d1a838d665870a1e80f35ddcab21af4eb7979251e6dbcd9392f"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+        "sha256": "5c8e8b56553b3c72c0beb72fa55550dfaf788ec724331c0e32f5007766bf97e6"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+        "sha256": "2d1a79140a3dcd72ad4ccc222b18c5c828b8fb78477f2cb2b78e0830a6c869e7"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-01-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "pair_id": "C-01-RESOURCE-R001",
+      "source_slot": "C-01",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/registration.json",
+        "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-01-RESOURCE-R001/C-01-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+        "sha256": "0fd35678c1cdcfa4e570a8c99ae92d0f1c65cf8f1ddb61b9c668ca5d3c4b98b6"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-control-research-a001/prepared-stage.json",
+        "sha256": "bfd457c4ffb94239fc5c9f92eb2a6d925079c2b4177489e7d48a467a040eb0c8"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "11bb140ff6824262833fe18d2986651e847640a793e0dcd691753d8c6afa286c"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "bb31cedc948fbcff799838d81394f8739c408a5435c8707bc527eddc05cddb1f"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+        "sha256": "82139c476a41980195801d4803f4327fd43326846fc12a37c8f09c626fa13542"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+        "sha256": "f000540572f674e538e15da64edd83b14b5b4e0a28f2e73bb7a1365ce02c3046"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-02-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "pair_id": "C-02-RESOURCE-R001",
+      "source_slot": "C-02",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/registration.json",
+        "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-02-RESOURCE-R001/C-02-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+        "sha256": "01821d0fe31e2e8b0fb775316e7f8ddecfa9fef1baba1498fb324bde671165e7"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "pair_id": "C-03-RESOURCE-R001",
+      "source_slot": "C-03",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/registration.json",
+        "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/C-03-RESOURCE-R001-control-research-a001/prepared-stage.json",
+        "sha256": "757facce28240735a7058c05e3b12ba568b878a47b15ee2256475dfa660450ae"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "pair_id": "C-03-RESOURCE-R001",
+      "source_slot": "C-03",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/registration.json",
+        "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/C-03-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "30e00ac0a6446b1ea2d1a3ed1842a239a05ba3a9d892a08db8a31341def473eb"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "C-03-RESOURCE-R001",
+      "source_slot": "C-03",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/registration.json",
+        "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/C-03-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "27fe4b88ccc4290302c29f08cdeeb47c3515dda3e34981ab7bad1cd6a2c9a8aa"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "pair_id": "C-03-RESOURCE-R001",
+      "source_slot": "C-03",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/registration.json",
+        "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/C-03-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+        "sha256": "72c670ba41679fa1b94fefa8a614526d097abe4cfea3dc21ba446b7564e87557"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-03-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+      "pair_id": "C-03-RESOURCE-R001",
+      "source_slot": "C-03",
+      "family": "Z",
+      "stage": "critic_final",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/registration.json",
+        "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-03-RESOURCE-R001/C-03-RESOURCE-R001-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "b51649104255fc1126024ddbddb4e3544aee74012ca413079f7470cb0422e99b"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "pair_id": "C-04-RESOURCE-R001",
+      "source_slot": "C-04",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/registration.json",
+        "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/C-04-RESOURCE-R001-control-research-a001/prepared-stage.json",
+        "sha256": "6171e86d447b29b818560aebafc6d3be1b0ac419243ad6cea5d0617e9a02db90"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "pair_id": "C-04-RESOURCE-R001",
+      "source_slot": "C-04",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/registration.json",
+        "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/C-04-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "a439eb1cd9a673ed81921a471186a7e25e670d089ac3b4dee09d0aa76ff9147d"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "C-04-RESOURCE-R001",
+      "source_slot": "C-04",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/registration.json",
+        "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/C-04-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "33fc1d9a1ea8ccd8740ac3807cbc82efb37fafd6a2de7c12e2abf33e759edf19"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "pair_id": "C-04-RESOURCE-R001",
+      "source_slot": "C-04",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/registration.json",
+        "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/C-04-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+        "sha256": "13d1b28aac2a2d39dbca54a0a25cc826a9b4155267761fa362e7bd37f82c326e"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "C-04-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+      "pair_id": "C-04-RESOURCE-R001",
+      "source_slot": "C-04",
+      "family": "Z",
+      "stage": "critic_final",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/registration.json",
+        "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/C-04-RESOURCE-R001/C-04-RESOURCE-R001-treatment-critic_final-a001/prepared-stage.json",
+        "sha256": "3d544b7bf7d5ad7043baeece475991052446ec88f0ac7a65e5e3f042564db507"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001/prepared-stage.json",
+        "sha256": "7c627adfc73712cd725bc81d01cb258954131cb78517daad0be2fdd62b8acb8f"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+        "sha256": "ac885b1bde1ddc3377308322d7d07b82f5ed770c8980866df5bc270213995787"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "0926ff4de6f3a59d3c57c79a4676f67e5e810e28dd5111b9c6b56f7bb0c889ca"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "research",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+        "sha256": "6f4859356f926a20c8f7fce146b07394edb99fd236e777210e39e032850927f4"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "critique",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+        "sha256": "53cbbfc9b9df95fba954733c007995fa31aa6cd4d93ef28ba56fd14ccbceeb86"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/registration.json",
+        "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+        "sha256": "fa8cdbd6bf0660d3117fb3671bfe69dfbf3bac5c2a466328e6e623fc3b54c09e"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version",
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+      "pair_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001",
+      "source_slot": "I-11",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "SEALED_READY",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/registration.json",
+        "sha256": "1efcf5b4977cb6a7d72acbcab875a159f6a703b6bd4d3b7c6b5381df8f7689b7",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/glm-batch001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001/I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+        "sha256": "6b85d98806d10eabd0ae61cc877004a9046ef736998b8a87243122b79d2685f8"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_COMPLETE_V2_ADMISSION_READY.json",
+        "sha256": "4d312a379e9b1393d568e3473a9781c47990d7fb22733275d98c62fe4b1843be"
+      },
+      "blockers": [
+        "Historical predecessor/transport alternative has no selected authenticated final-carrier birth; current successors already executed separately"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+        "sha256": "333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+        "sha256": "b0ac3e9831b69f8526f7b373194a53040d48e20dda6355552011326dd0151303"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+        "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+      "pair_id": "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001",
+      "source_slot": "I-09",
+      "family": "Z",
+      "stage": "revision",
+      "status_preserved": "WAITING_RUNTIME_BINDING",
+      "native_goal_starts": 0,
+      "original_birth": null,
+      "owner_registration_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/role-bound-registration.json",
+        "sha256": "333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd",
+        "family": "Z",
+        "requested_model": "GLM 5.3 Flash",
+        "requested_effort": "Max"
+      },
+      "prepared_stage_ref": {
+        "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-BUNDLE-R001/I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+        "sha256": "a0f8c9df73246f1a13e934466468fe30853f03f2dbf756647dba901a4ce2a371"
+      },
+      "source_runtime_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/GLM_BUNDLE_V2_READY.json",
+        "sha256": "408ab83655015cd0e619b4e69529f8f3a90a2597fad63bd22e15815a5ed4e320"
+      },
+      "blockers": [
+        "Historical alternate whole-pipeline source/carrier closure never selected/closed; cannot enter unspecified version"
+      ],
+      "not_current_executable_source_selection": true
+    }
+  ],
+  "count": 36,
+  "no_current_executable_native_role_remains": true,
+  "historical_descriptor_bytes_statuses_and_costs_changed": false,
+  "selected_source_history_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/EXPLICIT_ACCEPTED_LOGICAL_SLOT_MAP_001.json",
+    "sha256": "3db2563c0c4e2dc75ae800be14f3e12521ba7f5f5d285c5de43756bf5d090f98"
+  },
+  "original_frontier_audit_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/ORIGINAL_TRACK_B_I01_I08_UNENTERED_FRONTIER_AUDIT_001.json",
+    "sha256": "16e4d629b4edc00a795978c3920c85da6b311332d5be57c1a3dd01142c1faaaf"
+  },
+  "current_selected_and_authorized_tail": "All I12/DEC018/DEC019 roles terminal or genuine prerequisite/gate blocked; no auto-reopening old aliases/new cohort",
+  "scientific_quality_feedback_used": false
+}

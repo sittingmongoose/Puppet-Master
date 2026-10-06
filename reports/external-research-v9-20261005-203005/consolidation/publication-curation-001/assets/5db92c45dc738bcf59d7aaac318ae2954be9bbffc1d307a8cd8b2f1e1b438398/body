@@ -1,0 +1,313 @@
+{
+  "additional_admission_gate": "Original I12 research clocks ended+quiet; original resource-blocked descendants stay terminal. C research is authentic warm4role carry; T starts genuine fresh1200 research. Asymmetric recovered workflow has no fresh matched causal credit",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/card.json",
+  "card_sha256": "3ad98e57c47d04230a723742de3d8f7a70291e62eab99878da223e3257c1af26",
+  "deferred_stages": [],
+  "family": "Z",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/PAIR_RESOURCE_FREEZE.json",
+    "sha256": "c9c2d0012cd377f73e380bae9a133e694e91ddedc114138790baee73350f3d9d"
+  },
+  "legitimate_same_arm_native_artifact_handoffs_preserved": true,
+  "native_starts": 0,
+  "no_new_premium_authored_answers_or_evaluator_feedback_supplied": true,
+  "original_attempts_and_costs_preserved": true,
+  "pair_id": "I-12-RESOURCE-R001",
+  "request_id": "I-12-RESOURCE-R001-r001",
+  "requested_effort": "Max",
+  "requested_model": "GLM 5.3 Flash",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/COMMON_RESOURCE_BINDING.json",
+    "sha256": "cab975f4c14fa28bd3b2e61c9922a7e1930b290f406ffc5be5cd7c12e320c032"
+  },
+  "root_scope_required": true,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "entered_matched_lineage",
+  "source_role_imports": [
+    {
+      "arm": "control",
+      "freeze_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-control-research-a001/OUTPUT_FREEZE.json",
+        "sha256": "e023949068e9be25a881c0966bbfb8eabf9b1065e19366bc64a6696200bba292"
+      },
+      "imported_artifacts": [
+        {
+          "bytes": 6692,
+          "relative_path": "research/leads.json",
+          "sha256": "891e07260a629f748d08a20562ad6c6136cb0b99e433d70a0f791dfa984e7c25"
+        },
+        {
+          "bytes": 30695,
+          "relative_path": "research/proposal.md",
+          "sha256": "fa754951fe9c4e5cae809ad5835a086a782a251af37f5e1ef6b44256cb2615c6"
+        },
+        {
+          "bytes": 15790,
+          "relative_path": "research/sources.json",
+          "sha256": "9033b6f082201e32f2ee073d82155c5e447bb10de6783f6ca0f67f152e499294"
+        },
+        {
+          "bytes": 7607,
+          "relative_path": "research/witnesses.json",
+          "sha256": "0f1cb6b8cf54fe8aa491c4cc5efea54951ef002a2de9773d9ab2f1338551d66b"
+        }
+      ],
+      "job_id": "I-12-control-research-a001",
+      "missing_roles_invented": false,
+      "native_goal_starts": 1,
+      "native_quiescent": true,
+      "native_receipt_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-12-control-research-a001/native/receipt.json",
+        "sha256": "742f41d6347ace4ed8b4f6c2e93f5b6bbaba2d0a05cd74de4b9162d6493a6b39"
+      },
+      "original_elapsed_seconds": 1041.2666081210045,
+      "original_incomplete_or_failure_status_not_reclassified": true,
+      "original_native_status": "completed",
+      "original_operational_complete": true,
+      "role": "research",
+      "selection_rule": "DEC007 first chronological compatible same-arm native role",
+      "source_quality_assessed": false
+    },
+    {
+      "all_original_capture_results_preserved_without_selection": true,
+      "arm": "control",
+      "candidate_index_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/source-contexts/I-12-control-research-a001/SOURCE_CONTEXT_INDEX.json",
+        "sha256": "e392747e9375db83f42b911857fbb7b281068398a1ac81538e15d01feeaabd95"
+      },
+      "closed_context_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/source-contexts/I12-C-RESEARCH.json",
+        "sha256": "1f14552e38032db6ccf71f222f0d54195eaba67b4fe9001571a59868db5f852b"
+      },
+      "job_id": "I-12-control-research-a001",
+      "native_model_io_read": false,
+      "role": "all closed actual native public captures",
+      "source_body_semantics_read": false,
+      "source_claim_correctness_certified": false,
+      "source_count": 28
+    }
+  ],
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/integrated-final-selections/cards/I-12.json",
+      "sha256": "0e48d93b24013f8dc5a6794d33e5214b47e325dabd42bd77298d61f33da4f002"
+    }
+  ],
+  "source_slot": "I-12",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-control-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-RESOURCE-R001-control-critique-a001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "pipeline_final": false,
+      "predecessor_aliases": {},
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-12-control-critique-a001",
+      "source_role_freezes_required": [],
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "b716983ca687debba5c12bc75556184a28bdb96986f1319549c1a3cb75174ea5",
+      "status": "PREPARED_NOT_ADMITTED",
+      "supplied_frozen_source_job_ids": [
+        "I-12-control-research-a001"
+      ]
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-RESOURCE-R001-control-critique-a001"
+      ],
+      "arm": "control",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-control-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-RESOURCE-R001-control-revision-a001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-12-RESOURCE-R001-control-critique-a001": "I-12-control-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-12-RESOURCE-R001-control-critique-a001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-12-control-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "c0e6ff5a8e1341af776538dcbdcdaffc33a4840a2e2915977ce62197b80f432d",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "supplied_frozen_source_job_ids": []
+    },
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-RESOURCE-R001-treatment-research-a001",
+      "max_responses": 120,
+      "max_seconds": 1200,
+      "pipeline_final": false,
+      "predecessor_aliases": {},
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-12-treatment-research-a001",
+      "source_role_freezes_required": [],
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "871eec0b04c561cbf18c220e3c9df53b92e5b6196afd494ead79ecd18da45bb2",
+      "status": "PREPARED_NOT_ADMITTED",
+      "supplied_frozen_source_job_ids": []
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-RESOURCE-R001-treatment-research-a001"
+      ],
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-RESOURCE-R001-treatment-critique-a001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "pipeline_final": false,
+      "predecessor_aliases": {
+        "I-12-RESOURCE-R001-treatment-research-a001": "I-12-treatment-research-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-12-RESOURCE-R001-treatment-research-a001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-12-treatment-critique-a001",
+      "source_role_freezes_required": [],
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "775e09ff182dc091ff748b75853b028ae1ba96561b84b0874d2d52111b3d39e7",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "supplied_frozen_source_job_ids": []
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-RESOURCE-R001-treatment-critique-a001"
+      ],
+      "arm": "treatment",
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-RESOURCE-R001-treatment-revision-a001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-12-RESOURCE-R001-treatment-critique-a001": "I-12-treatment-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-12-RESOURCE-R001-treatment-critique-a001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/RESOURCE_CONTRACT.json",
+          "sha256": "4f2ad215c1c35a1a87c4048532acca0efef8839bc6ef95cd1473581aaa4b7278"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/PIN.json",
+          "sha256": "99d15e4b85cd61f419e70f9e61aa95ddf0765fe84688590eb1a8757896865cf0"
+        },
+        "version": "glm_complete2304_v1"
+      },
+      "runtime_binding_required": true,
+      "source_job_id": "I-12-treatment-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/glm-batch002/I-12-RESOURCE-R001/I-12-RESOURCE-R001-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "76f761a2d344cf705cd6ce774fddf3907eb45a17c0a40262391a486be2d273df",
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "supplied_frozen_source_job_ids": []
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "track": "B"
+}

@@ -1,0 +1,14 @@
+# Addendum to `out/research/proposal.md` — §1b Typical session (workflow contract)
+**Why this is a separate file:** the stage's `write_file` tool refused to overwrite the existing `proposal.md` (boundary `FileExistsError`), so this consolidated workflow section could not be inserted in place. The next stage (critique/final) should merge this section into `proposal.md` as §1b (between §1 Scope and §2 Method). All labels ([FACT]/[INF]/[CHOICE]/[UNCERTAIN]) and source pins (S#) refer to the proposal and `sources.json`.
+
+## 1b. Typical session (workflow contract)
+1. **Load project:** open a `.fieldbook` bundle; `PRAGMA integrity_check` + `rtreecheck()` run as a bounded background job (S1/S2); header shows project id, bundle lineage (which copies were merged in, when), and the offline/online badge.
+2. **Inspect coordinate/reference metadata:** the project page shows the SRS registry — every imported CRS (name, code/WKT, axis order, units, altitude datum, time provenance), each transformation's id and stated accuracy (or "unknown accuracy", S4), and any `stale-transform` badges.
+3. **Search & preview:** keyed search plus paginated table; map preview queries the R-Tree viewport only (bounded reads, proposal §8). A preview is explicitly labeled "preview, not validation" (proposal §5.4).
+4. **Add/edit an observation offline:** tap on the bundled map or type coordinates; the form shows the CRS and axis order in force, flags domain-edge input (proposal §5.4), stores native + display coordinates, and appends an undoable edit-event (proposal §5.2).
+5. **Save:** each save is one WAL commit with `synchronous=FULL` (S2); an interrupted save leaves committed-only state on reopen (proposal §6).
+6. **Reopen on another machine:** same `project_id` bundle opened read-write on the colleague's device; media resolve via the content-addressed manifest; missing photos degrade visibly, never silently (proposal §6).
+7. **Combine a colleague's changed copy (merge):** proposal §6 — auto-merge of disjoint field edits, explicit inspectable conflict cards otherwise, full merge report, resumable journal (executed witness W2 shows why edit-vs-delete must be a forced conflict).
+8. **Export:** table + map overlay (GeoPackage-shaped or CSV+GeoJSON) with the provenance header of proposal §5.2; streaming for large projects; originals in the bundle remain untouched — exports are new artifacts.
+
+Originals remain intact at every step: edits are edit-events; imports keep verbatim source values; merges never rewrite history.

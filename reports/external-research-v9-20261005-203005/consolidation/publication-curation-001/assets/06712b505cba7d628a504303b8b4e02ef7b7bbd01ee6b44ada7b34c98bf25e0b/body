@@ -1,0 +1,18 @@
+{
+  "errata_version": 1,
+  "applies_to": "out/final/sources.json",
+  "status": "supplemental_correction; sources.json could not be overwritten through the admitted write-once boundary",
+  "corrections": [
+    {
+      "source_id": "S11",
+      "field": "capture.sha256",
+      "recorded_value": "f346e10ddff14660b45a68154f93b3d121ed72764ae28cf66941080ac0badb9e",
+      "correct_value": "f3467e10ddff14660b45a68154f93b3d121ed72764ae28cf66941080ac0badb9e",
+      "capture_id": "3deae10ddff14660b45a68154f93a129",
+      "url": "https://sqlite.org/wal.html",
+      "acquired_utc": "2026-10-06T01:24:05.458864Z",
+      "reason": "Transcription error during catalog authoring. The corrected SHA-256 is the public-capture identity recorded in the source receipt notes for this stage."
+    }
+  ],
+  "delivery_note": "The initialized out/final/proposal.md is a three-line draft. pm_boundary.write_file and pm_boundary.mechanical.cache_source both rejected replacement with FileExistsError; no delete/replace capability is available in the admitted tool set. Complete proposal is out/final/proposal.complete.md. This supplemental note does not make the required proposal.md path complete."
+}

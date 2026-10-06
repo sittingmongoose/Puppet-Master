@@ -1,0 +1,63 @@
+{
+  "schema": "er9.critique.capture-catalog.v1",
+  "stage": "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+  "written_utc": "2026-10-06",
+  "note": "Sources executed (captured) by the critique stage. The predecessor research catalog was absent (see out/critique/review.md Finding C-0); these pins are independently re-fetchable public bytes the next candidate may reuse after re-capture.",
+  "captures": [
+    {
+      "id": "S-audacity-projects",
+      "url": "https://manual.audacityteam.org/man/audacity_projects.html",
+      "status": 200,
+      "captured_utc": "2026-10-06T08:11:05.426986+00:00",
+      "sha256": "59c7f2d1620a96cbe81172b57ef012229b3f6d88d5889c91b60beb9cef5ee5f1",
+      "bytes": 37614,
+      "capture_path": "public_captures/59c7f2d1620a96cbe81172b57ef012229b3f6d88d5889c91b60beb9cef5ee5f1.body",
+      "locators": [
+        "intro section: project stored as single .aup3; undo history not saved with project",
+        "section 'Temporary work files': -wal/-shm files, destroying them while open destroys the project",
+        "section 'Closing an Audacity Project - Compaction': compaction with progress dialog on close",
+        "section 'Automatic Crash Recovery': automatic on relaunch, may lose last action",
+        "section 'Permanently delete trimmed audio': trim nondestructive/hidden, project bloat, no purge command",
+        "tip box: AUP3 not openable in versions prior to 3.0.0"
+      ],
+      "applicability": "precedent for project-exchange format tradeoffs, undo persistence, trim/bloat, recovery"
+    },
+    {
+      "id": "S-audacity-unsuitable-drive",
+      "url": "https://manual.audacityteam.org/man/error_unsuitable_drive.html",
+      "status": 200,
+      "captured_utc": "2026-10-06T08:11:23.445492+00:00",
+      "sha256": "8e3697cfd5538151a7372b31254bcfba126cfa8762d73ab00c1a7d6b01e1b1e0",
+      "bytes": 18298,
+      "capture_path": "public_captures/8e3697cfd5538151a7372b31254bcfba126cfa8762d73ab00c1a7d6b01e1b1e0.body",
+      "locators": [
+        "section 'Saving projects': FAT/FAT32 4GB single-file limit ~3h22m stereo at default settings; live projects blocked",
+        "section 'Exporting to a FAT/FAT32 formatted drive': ~6h45m stereo 16-bit WAV cap; clicking OK removes the partially exported file",
+        "section 'WAV and AIFF files': always 4GB max; forecast size accurately calculable in advance",
+        "footer: 'This version created on 2026-09-02'"
+      ],
+      "applicability": "resource sizing anchors; precedent that failed/partial exports are not left labeled complete"
+    },
+    {
+      "id": "S-ffmpeg-resampler",
+      "url": "https://www.ffmpeg.org/ffmpeg-resampler.html",
+      "status": 200,
+      "captured_utc": "2026-10-06T08:11:24.229321+00:00",
+      "sha256": "388a98a22ef074c5463f2c8660c7e53f0478ff3637d4ce291238ec2604533f42",
+      "bytes": 16865,
+      "capture_path": "public_captures/388a98a22ef074c5463f2c8660c7e53f0478ff3637d4ce291238ec2604533f42.body",
+      "locators": [
+        "Description: resampling, channel-layout rematrixing, format/packing conversion",
+        "option rematrix_maxval: 'A value of 1.0 prevents clipping'",
+        "option first_pts: padding/trimming at stream start, unit 1/sample rate",
+        "options exact_rational / phase_shift: phase accuracy of resampling; resampler engines swr and soxr; dither_method values"
+      ],
+      "applicability": "anchors for cue/time-model mapping under rate conversion; declared clipping prevention on downmix"
+    }
+  ],
+  "unexecuted_duties": [
+    "issue->fix->regression chain with exact commit/release applicability (not performed this stage; predecessor catalog absent)",
+    "second implementation precedent verified by capture (only Audacity precedent + FFmpeg component doc pinned)",
+    "any benchmark or component check of the 8GB / two-hour envelope"
+  ]
+}

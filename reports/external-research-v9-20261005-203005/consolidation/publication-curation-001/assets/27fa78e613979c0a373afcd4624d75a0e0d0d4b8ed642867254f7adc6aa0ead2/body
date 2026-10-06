@@ -1,0 +1,26 @@
+{
+  "schema": "er9.source-capture-errata.v1",
+  "stage": "I-05-LUNA-S1-treatment-research-a001",
+  "corrections": [
+    {
+      "id": "E1",
+      "artifact": "out/research/sources.json",
+      "record": "S5",
+      "reason": "The first public-patch capture identity was truncated in the source catalog draft. The commit URL, title, pin, and evidence description remain correct; replace only the S5 capture object with this exact reacquisition record.",
+      "url": "https://github.com/napari/napari/commit/658b080d62bd9c6f478f781163020cdcf5a44139.patch",
+      "pin": "Commit 658b080d62bd9c6f478f781163020cdcf5a44139, 2023-08-25; PR #6112; fixes #6079",
+      "exact_locator": ["Labels update implementation", "index/slice handling", "new tests in napari/_vispy/_tests/test_vispy_labels_layer.py", "texture dtype conversion comment"],
+      "capture": {
+        "capture_id": "c2d454c6e11e4b0a920fe7f46cab5c12",
+        "path": "public_captures/7ebf2abacfc5a1514c96042a66ba79fc4c25eae54d362d34b0d96f4a552c3df6.body",
+        "sha256": "7ebf2abacfc5a1514c96042a66ba79fc4c25eae54d362d34b0d96f4a552c3df6",
+        "bytes": 12661,
+        "body_complete": true,
+        "captured_utc": "2026-10-05T22:28:04.145793+00:00",
+        "etag": "W/\"7ebf2abacfc5a1514c96042a66ba79fc\""
+      },
+      "verified_public_patch_contents": "Fixes #6079. Patch explains that NumPy slices are views while Zarr/TensorStore slices are NumPy copies, adds direct visible-slice update logic for non-NumPy-backed arrays, and adds paint/fill/mouse canvas regression tests parameterized for NumPy, Zarr, and TensorStore. The same patch comment says converting arbitrary integer labels to float32 for VisPy is not lossless.",
+      "scope": "This capture correction repairs the public source identity only. It does not claim that the patch's tests were run by this candidate or that they establish full-application behavior."
+    }
+  ]
+}

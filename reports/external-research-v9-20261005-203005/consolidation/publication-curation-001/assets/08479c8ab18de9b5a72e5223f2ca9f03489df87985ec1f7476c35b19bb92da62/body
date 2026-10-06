@@ -1,0 +1,49 @@
+# Bounded isolation check B: resource budgets, cache sizing, export size,
+# crossfade gain identity. Receipt: exec-__qu4lls,
+# code_sha256 e059635d21a53ec2e5e210cecbc98d763cb81a259cb1110ebef5dcb4a8cc3dc3,
+# stdout_sha256 d6e5e79013acfcd34ed38376bccb580666328acafe7593cc82623155eba1e357,
+# exit_code 0, 11/11 PASS.
+# NOTE: this saved copy is for reading; the receipt hash is over the exact
+# string submitted to the isolated executor (leading newline may differ).
+import math
+
+fails = []
+def check(name, cond, detail=""):
+    if not cond:
+        fails.append(name)
+    print(("PASS " if cond else "FAIL ") + name + ((" | " + str(detail)) if detail else ""))
+
+P = 48000; H = 3600
+
+# 1) full-load of one 2 h source would dominate an 8 GB laptop -> block access required
+b2h_mono_f32 = 2 * H * P * 4
+check("two_hour_mono_f32_bytes", b2h_mono_f32 == 1382400000, "%.2f GB (%.2f GiB)" % (b2h_mono_f32/1e9, b2h_mono_f32/2**30))
+check("six_sources_exceed_budget", 6 * b2h_mono_f32 > 6 * 1024**3)
+
+# 2) multi-resolution waveform pyramid (min,max,rms as float32) stays tiny on disk
+for B in (256, 4096, 65536):
+    bins_per_h_ch = (P * H + B - 1) // B
+    mb = bins_per_h_ch * 3 * 4 / 1e6
+    check("pyramid_level_%d_per_h_ch" % B, mb < 10, "%.2f MB/h/ch (%d bins)" % (mb, bins_per_h_ch))
+fine = ((P*H + 255)//256) * 3 * 4 * 6  # 6 h of source audio, finest level
+check("pyramid_total_6h_finest", fine < 60e6, "%.1f MB" % (fine/1e6))
+
+# 3) bounded block cache: how many seconds fit in 256 MiB (mono float32)
+secs = (256 * 2**20) / (P * 4)
+check("block_cache_seconds", 1000 < secs < 2000, "%.0f s of mono f32" % secs)
+
+# 4) review-mix export sizes vs FAT32 4 GiB boundary
+stereo_f32_2h = 2 * H * P * 4 * 2
+stereo_s16_2h = 2 * H * P * 2 * 2
+check("export_2h_stereo_f32", stereo_f32_2h == 2764800000, "%.2f GiB" % (stereo_f32_2h/2**30))
+max_sec_f32_fat32 = (4 * 2**30) // (P * 4 * 2)
+check("fat32_boundary_hours", 2.9 < max_sec_f32_fat32 / H < 3.2, "%.2f h of stereo f32 fits in 4 GiB" % (max_sec_f32_fat32 / H))
+check("export_2h_stereo_s16", stereo_s16_2h == 1382400000)
+
+# 5) equal-power crossfade gain: sin^2 + cos^2 == 1 across the overlap
+L = 2400
+err = max(abs(math.sin(math.pi * x / (2*L))**2 + math.cos(math.pi * x / (2*L))**2 - 1.0) for x in range(L))
+check("equal_power_sum_unity", err < 1e-12, "max err %.2e" % err)
+
+print("---")
+print("TOTAL_FAILS=%d" % len(fails))

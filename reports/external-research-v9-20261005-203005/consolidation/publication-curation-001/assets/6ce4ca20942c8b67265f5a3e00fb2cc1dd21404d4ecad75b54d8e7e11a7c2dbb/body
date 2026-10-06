@@ -1,0 +1,32 @@
+# Critic and recovery report — delivery correction
+
+## Provenance
+
+**Provenance: candidate-authored native self-critique/repair of the prior authenticated same-arm artifacts.** “Independent critique” denotes my own fresh audit of eligible primary-source evidence. This is not a separate independent evaluator or Sol source assessment. All checks, changes, and unknowns are candidate-authored under the unchanged brief, common criteria, allowed sources, artifact scope, and original 1,500-second allocation. No hidden answer, evaluator grade, or Sol assessment was used. I make no source-grade, evaluator-PASS, quality-validation, or method-superiority claim.
+
+## Checks
+
+The delivery manifest confirms that the native carrier committed the four canonical artifacts from `out/final_bundle.json` together for the exact current stage. It records `native_explicit_adoption: true`, `goal_result: INDEPENDENT_NOT_UPDATED`, and `source_grade: INDEPENDENT_NOT_ASSESSED`. The committed hashes are proposal `38cf380372f4d1c68be500ec7842f7a1a3ebebc383830446d3e391ffffef0974`, sources `cce5e28152d722dca84ae524b80eca57e5b05762ec5d8b52bf9ae0c8b89b40c6`, witnesses `8faf18ad699c6dbe7f1c94a5b3cc4527ab275cf468a9e8c093c1f862d174c5c3`, and leads `3974ae627420c1f9fe3f92e1394980a78b783ad9616aae77493e1aafee012247`. Structural commitment is not semantic validation.
+
+The exact predecessor proposal/catalogs were not readable: the authenticated role manifest has no reference entries (`input_id` unavailable); bounded reads of likely index/manifest and `out/research/proposal.md` paths failed, and the admitted reader cannot list directories. This is an access limit, not proof that predecessors did not exist. All predecessor-claim comparison and preservation remain **UNASSESSED**. The arithmetic witness is isolated and correctly scoped; W2–W7 are proposed and UNEXECUTED. Source findings and complete captures are catalogued in the committed sources artifact.
+
+## Finding and correction crosswalk
+
+After the carrier commit, I compared the proposal's citation IDs to the committed `sources.json`. Several references are misnumbered. The source facts are in the catalog, but the proposal's citations need these corrections:
+
+- Bio-Formats Java, format-support, and OME-TIFF statements cite `[S3–S8]`; the relevant records are `[S3, S5–S7]`. S4 is the napari release and S8 is napari docs.
+- The napari documentation/layer precedent cites `[S9–S10]`; the applicable docs record is `[S8]` and release pin is `[S4]`. S9 redundantly repeats the release source; S10 is issue #8578.
+- Issues #8578 and #9247 cite `[S11–S12]`; the issue records are `[S10–S11]`.
+- The merged #9059 change and regression-test patch cite `[S13–S15]`; the relevant PR, patch, and commit records are `[S12–S14]`. S15 is the #9399 follow-up.
+- PR #9399 cites `[S16]`; its record is `[S15]`. S16 duplicates the #9059 commit endpoint.
+- The compare/release ancestry reference `[S4,S17]` points to the release tag and compare records and is correctly numbered.
+
+Also, source record S9 labels the release publication date (2026-08-25) as `capture.utc`; the captured access time is 2026-10-06T06:24:30.326274Z, already recorded under S4. The duplicate should be removed or corrected. These are candidate-authored audit findings, not external evaluations.
+
+The bounded writer rejects overwrites. My initial short write occupies `out/critique/review.md`; later direct and mechanical replacement attempts returned `FileExistsError` (a normalized alias was rejected). The complete earlier report is at `out/critique/final-review.md`, but its source-ID references predate the compact catalog mapping and should not be relied on for the crosswalk above. This file supplies the corrected crosswalk and report findings; the exact requested `review.md` path remains incomplete.
+
+## Changes and remaining unknowns
+
+The committed proposal itself covers read-only sources, explicit axes/coordinates/transforms, annotation scope, provenance, save recovery, relocation, exchange, exports, accessibility, bounded-access gates, distinct precedents, and the napari failure chain. It properly treats Zarr partial decode as optional, NGFF labels as pixel masks, and application tests/performance as unexecuted. The citation corrections above were discovered after the native commit and could not be applied to the immutable canonical bundle within the create-only boundary. No unsupported prior claim is asserted as repaired, and no predecessor content is claimed preserved.
+
+Still unknown: prior proposal/catalog wording and supported content; all actual version interoperability; real file/codec coverage; 3 GB performance; application-level coordinate/export/save/relocation/accessibility behavior; and shared-storage durability. The requested canonical report path and corrected proposal citations remain outstanding. No PASS/FAIL or source grade is assigned.

@@ -1,0 +1,501 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accounting_method_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "attempts_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "candidate_family_counts": {
+      "additionalProperties": false,
+      "properties": {
+        "GLM": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "Luna": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        },
+        "UNKNOWN_PRE_NATIVE": {
+          "additionalProperties": false,
+          "properties": {
+            "attempts": {
+              "type": "number"
+            },
+            "confirmed_native_starts": {
+              "type": "number"
+            },
+            "known_tokens": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "attempts",
+            "confirmed_native_starts",
+            "known_tokens"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "GLM",
+        "Luna",
+        "UNKNOWN",
+        "UNKNOWN_PRE_NATIVE"
+      ],
+      "type": "object"
+    },
+    "candidate_totals": {
+      "additionalProperties": false,
+      "properties": {
+        "attempts": {
+          "type": "number"
+        },
+        "known_tokens": {
+          "type": "number"
+        },
+        "native_goal_starts_known": {
+          "type": "number"
+        },
+        "occupied_seconds_known": {
+          "type": "number"
+        },
+        "occupied_seconds_unknown_rows": {
+          "type": "number"
+        },
+        "starts_unknown_rows": {
+          "type": "number"
+        },
+        "usage_unknown_rows": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "attempts",
+        "known_tokens",
+        "native_goal_starts_known",
+        "occupied_seconds_known",
+        "occupied_seconds_unknown_rows",
+        "starts_unknown_rows",
+        "usage_unknown_rows"
+      ],
+      "type": "object"
+    },
+    "capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "clock_companion_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "current_source_races": {
+      "items": {},
+      "type": "array"
+    },
+    "dated96_matrix_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "direct_DEC019_Goal_status_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "finite_scope_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "future_pending": {
+      "type": "string"
+    },
+    "inventory_incident_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "later_root31_unknown": {
+      "additionalProperties": false,
+      "properties": {
+        "added_to_provider": {
+          "type": "boolean"
+        },
+        "helper_inclusion": {
+          "type": "string"
+        },
+        "native_seconds": {
+          "type": "string"
+        },
+        "tokens_used": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "added_to_provider",
+        "helper_inclusion",
+        "native_seconds",
+        "tokens_used"
+      ],
+      "type": "object"
+    },
+    "model_counter_provenance_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "prior012_race_flag_preserved": {
+      "additionalProperties": false,
+      "properties": {
+        "capture_interval_utc": {
+          "additionalProperties": false,
+          "properties": {
+            "end": {
+              "type": "string"
+            },
+            "start": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "end",
+            "start"
+          ],
+          "type": "object"
+        },
+        "changed_sources": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "captured_sha256": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "unchanged_at_capture_end": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "captured_sha256",
+                  "path",
+                  "unchanged_at_capture_end"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "rule": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "capture_interval_utc",
+        "changed_sources",
+        "rule"
+      ],
+      "type": "object"
+    },
+    "prior019_later_source_join_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "prior019_selection_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "root_captured_separate": {
+      "additionalProperties": false,
+      "properties": {
+        "helper_inclusion": {
+          "type": "string"
+        },
+        "native_updated_at": {
+          "type": "number"
+        },
+        "observed_utc": {
+          "type": "string"
+        },
+        "provider_counts_combined": {
+          "type": "boolean"
+        },
+        "remainingTokens": {
+          "type": "null"
+        },
+        "status": {
+          "type": "string"
+        },
+        "stop_trigger": {
+          "type": "boolean"
+        },
+        "timeUsedSeconds": {
+          "type": "number"
+        },
+        "tokensUsed": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "helper_inclusion",
+        "native_updated_at",
+        "observed_utc",
+        "provider_counts_combined",
+        "remainingTokens",
+        "status",
+        "stop_trigger",
+        "timeUsedSeconds",
+        "tokensUsed"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "snapshot_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "terminal_cleanup_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "accounting_method_pin",
+    "attempts_pin",
+    "candidate_family_counts",
+    "candidate_totals",
+    "capture_interval_utc",
+    "clock_companion_pin",
+    "current_source_races",
+    "dated96_matrix_pin",
+    "finite_scope_pin",
+    "future_pending",
+    "inventory_incident_pin",
+    "later_root31_unknown",
+    "model_counter_provenance_pin",
+    "prior012_race_flag_preserved",
+    "prior019_later_source_join_pin",
+    "prior019_selection_pin",
+    "root_captured_separate",
+    "schema",
+    "snapshot_pin",
+    "terminal_cleanup_pin",
+    "direct_DEC019_Goal_status_pin"
+  ],
+  "type": "object"
+}

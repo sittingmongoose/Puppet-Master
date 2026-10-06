@@ -1,0 +1,1451 @@
+{
+  "allow_recursive_copy": false,
+  "campaign_finished": false,
+  "edition": "002-owner-resolved",
+  "files": [
+    {
+      "bytes": 5133892,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/CURATION_MANIFEST.json",
+      "relative_path": "editions/002-owner-resolved/CURATION_MANIFEST.json",
+      "sha256": "b560f62e72718f0a932e05ffd0e04d9f5d7cc111ae8dea9104f97f12c65a8b4b"
+    },
+    {
+      "bytes": 3648004,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/SAFE_STAGE_FREEZE_PROJECTIONS.json",
+      "relative_path": "editions/002-owner-resolved/SAFE_STAGE_FREEZE_PROJECTIONS.json",
+      "sha256": "5c14ccea684c0f0f2fdfc0f33e85aa48ccdebfbd278c98b77b13cad12cf9956d"
+    },
+    {
+      "bytes": 2051761,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/QUARANTINE_AND_EXTERNAL_REFS.json",
+      "relative_path": "editions/002-owner-resolved/QUARANTINE_AND_EXTERNAL_REFS.json",
+      "sha256": "0e346126704f2cd55515af45fdf3fe2245f7eedb74c67f54c911c28d65b2918f"
+    },
+    {
+      "bytes": 392148,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/STAGED_ASSETS.json",
+      "relative_path": "editions/002-owner-resolved/STAGED_ASSETS.json",
+      "sha256": "bd5fe59a3bf03be337c3e362a1d7c465eefd737f6039cf3acbe29b5511b3171c"
+    },
+    {
+      "bytes": 2106,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/CHECKS.json",
+      "relative_path": "editions/002-owner-resolved/CHECKS.json",
+      "sha256": "574a6f44ca2d767bdbb9373bcc9262744f746bf4a8d05691e6df94ffb0aac2c0"
+    },
+    {
+      "bytes": 962,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/README.md",
+      "relative_path": "editions/002-owner-resolved/README.md",
+      "sha256": "c1df5f9e549bce96584c10d80cfd7855e3a61ca5c46100809dc0271f59659bc5"
+    },
+    {
+      "bytes": 633,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/ACTUAL_START.json",
+      "relative_path": "editions/002-owner-resolved/ACTUAL_START.json",
+      "sha256": "539647ebbda23b77b12a2c5e420b5f01b9e69ad796b57f7a5f3ada2f9d5bd9f3"
+    },
+    {
+      "bytes": 17030,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/build_curation.py",
+      "relative_path": "editions/002-owner-resolved/build_curation.py",
+      "sha256": "dcf8509783905dbec8e9cdb35eecd6dd5c576ca1092b0ebf46a4e33f067f8af5"
+    },
+    {
+      "bytes": 4632,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/check_curation.py",
+      "relative_path": "editions/002-owner-resolved/check_curation.py",
+      "sha256": "1e9aab917adaf2edd8f490111ff8df19de837c602ee096a785c6e03f1464cedc"
+    },
+    {
+      "bytes": 429,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/OWNER_TOOL_CONFIG_APPROVAL_REF.json",
+      "relative_path": "editions/002-owner-resolved/OWNER_TOOL_CONFIG_APPROVAL_REF.json",
+      "sha256": "8eb7ca83170b39dbbecc6f25ad1bf10ac09413c0f8c91422c8fb309945c70f25"
+    },
+    {
+      "bytes": 410,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/OWNER_ARTIFACT_TYPE_APPROVAL_REF.json",
+      "relative_path": "editions/002-owner-resolved/OWNER_ARTIFACT_TYPE_APPROVAL_REF.json",
+      "sha256": "d1f7c4e0d1e842d64677b71ed7610a50f43f367eb8307251ce2f7bab38e99c20"
+    },
+    {
+      "bytes": 456,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/OWNER_ADDITIONAL_METADATA_APPROVAL_REF.json",
+      "relative_path": "editions/002-owner-resolved/OWNER_ADDITIONAL_METADATA_APPROVAL_REF.json",
+      "sha256": "11557b11c31d8cfc464c19c5342ee130276601a334c1b2793a3b70b64d69f69e"
+    },
+    {
+      "bytes": 7649,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283/body",
+      "relative_path": "assets/e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283/body",
+      "sha256": "e2e79a635aec35e692a1e485975416775b8fd1050e136105cc70fab7dff18283"
+    },
+    {
+      "bytes": 20246,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/2ee5629b63fc72284c4fd120dad579d41477462511e43ae1dd43b7657cf66040/body",
+      "relative_path": "assets/2ee5629b63fc72284c4fd120dad579d41477462511e43ae1dd43b7657cf66040/body",
+      "sha256": "2ee5629b63fc72284c4fd120dad579d41477462511e43ae1dd43b7657cf66040"
+    },
+    {
+      "bytes": 6602,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d/body",
+      "relative_path": "assets/c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d/body",
+      "sha256": "c15dcf98d4ee31a847399b6c4f5bfd5bdee1fb17dc25518c31d69b2da0af950d"
+    },
+    {
+      "bytes": 24397,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9390109f55bbe3c62286ac6e0bdda1aeb24dc052f986d9d46e9c468902097063/body",
+      "relative_path": "assets/9390109f55bbe3c62286ac6e0bdda1aeb24dc052f986d9d46e9c468902097063/body",
+      "sha256": "9390109f55bbe3c62286ac6e0bdda1aeb24dc052f986d9d46e9c468902097063"
+    },
+    {
+      "bytes": 6799,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6dfe85ca92aa2337a79eaff09ae7d3d815888ecde38d2733e4722b580eb82bca/body",
+      "relative_path": "assets/6dfe85ca92aa2337a79eaff09ae7d3d815888ecde38d2733e4722b580eb82bca/body",
+      "sha256": "6dfe85ca92aa2337a79eaff09ae7d3d815888ecde38d2733e4722b580eb82bca"
+    },
+    {
+      "bytes": 12508,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/dfbaab387ead96c1ad849a0a12e65d161f831d582a0444ae0ac8936fb5d10ba3/body",
+      "relative_path": "assets/dfbaab387ead96c1ad849a0a12e65d161f831d582a0444ae0ac8936fb5d10ba3/body",
+      "sha256": "dfbaab387ead96c1ad849a0a12e65d161f831d582a0444ae0ac8936fb5d10ba3"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/23ab1aa5e5ad00d4255604986cc8d1564080a88d3fe2ae5eed0eea9595879cc6/body",
+      "relative_path": "assets/23ab1aa5e5ad00d4255604986cc8d1564080a88d3fe2ae5eed0eea9595879cc6/body",
+      "sha256": "23ab1aa5e5ad00d4255604986cc8d1564080a88d3fe2ae5eed0eea9595879cc6"
+    },
+    {
+      "bytes": 11182,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4b64cad265d27cba2812e5ee1ac1ef56b2aec0ac9393ab31cc884cd6eb1999ee/body",
+      "relative_path": "assets/4b64cad265d27cba2812e5ee1ac1ef56b2aec0ac9393ab31cc884cd6eb1999ee/body",
+      "sha256": "4b64cad265d27cba2812e5ee1ac1ef56b2aec0ac9393ab31cc884cd6eb1999ee"
+    },
+    {
+      "bytes": 1565,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1d211d2010977532cd2b1e12b1a25d275486276f5006dcfe3c8e84856266e84a/body",
+      "relative_path": "assets/1d211d2010977532cd2b1e12b1a25d275486276f5006dcfe3c8e84856266e84a/body",
+      "sha256": "1d211d2010977532cd2b1e12b1a25d275486276f5006dcfe3c8e84856266e84a"
+    },
+    {
+      "bytes": 12648,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/eb1a4be8d81254cb66b05e9d5f75009a766a077a1e36597e124b886980b85341/body",
+      "relative_path": "assets/eb1a4be8d81254cb66b05e9d5f75009a766a077a1e36597e124b886980b85341/body",
+      "sha256": "eb1a4be8d81254cb66b05e9d5f75009a766a077a1e36597e124b886980b85341"
+    },
+    {
+      "bytes": 7325,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/59988f7723b8777218b56a1ddf798d627b146e9e291ef9fe6d43e774618a9b5f/body",
+      "relative_path": "assets/59988f7723b8777218b56a1ddf798d627b146e9e291ef9fe6d43e774618a9b5f/body",
+      "sha256": "59988f7723b8777218b56a1ddf798d627b146e9e291ef9fe6d43e774618a9b5f"
+    },
+    {
+      "bytes": 1667,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7dcba8a6ea98b9c2af984f3f51bccd0ed23c55cb7ac3dd590393d5b51e9a6af0/body",
+      "relative_path": "assets/7dcba8a6ea98b9c2af984f3f51bccd0ed23c55cb7ac3dd590393d5b51e9a6af0/body",
+      "sha256": "7dcba8a6ea98b9c2af984f3f51bccd0ed23c55cb7ac3dd590393d5b51e9a6af0"
+    },
+    {
+      "bytes": 6820,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/41e5a996f1307aea6ff05aeb472d42ec7f2cc45a1f6d87fb0c6a2654f79bf70b/body",
+      "relative_path": "assets/41e5a996f1307aea6ff05aeb472d42ec7f2cc45a1f6d87fb0c6a2654f79bf70b/body",
+      "sha256": "41e5a996f1307aea6ff05aeb472d42ec7f2cc45a1f6d87fb0c6a2654f79bf70b"
+    },
+    {
+      "bytes": 3495,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8417267ed2e7c38818a3e6846fd79f2bee96de27f149464d29ee748afcce3659/body",
+      "relative_path": "assets/8417267ed2e7c38818a3e6846fd79f2bee96de27f149464d29ee748afcce3659/body",
+      "sha256": "8417267ed2e7c38818a3e6846fd79f2bee96de27f149464d29ee748afcce3659"
+    },
+    {
+      "bytes": 14,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009/body",
+      "relative_path": "assets/032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009/body",
+      "sha256": "032edb511d01fa17f3a421d032cb5f9e7156be09f672e0969e06de484a361009"
+    },
+    {
+      "bytes": 6419,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/10ce4c13c438434dd4e7035d8033b1abd9367546bd1e15948f2c9d0322f679a6/body",
+      "relative_path": "assets/10ce4c13c438434dd4e7035d8033b1abd9367546bd1e15948f2c9d0322f679a6/body",
+      "sha256": "10ce4c13c438434dd4e7035d8033b1abd9367546bd1e15948f2c9d0322f679a6"
+    },
+    {
+      "bytes": 3125,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/60418086861cbbe70d8785d55ae11e8874d935b2c8389cc6c97207b0552c6055/body",
+      "relative_path": "assets/60418086861cbbe70d8785d55ae11e8874d935b2c8389cc6c97207b0552c6055/body",
+      "sha256": "60418086861cbbe70d8785d55ae11e8874d935b2c8389cc6c97207b0552c6055"
+    },
+    {
+      "bytes": 15847,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5db92c45dc738bcf59d7aaac318ae2954be9bbffc1d307a8cd8b2f1e1b438398/body",
+      "relative_path": "assets/5db92c45dc738bcf59d7aaac318ae2954be9bbffc1d307a8cd8b2f1e1b438398/body",
+      "sha256": "5db92c45dc738bcf59d7aaac318ae2954be9bbffc1d307a8cd8b2f1e1b438398"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/02c0eadb527d6eb4fcf44296a4efc0dac512b541368623b580d10fbe524772ac/body",
+      "relative_path": "assets/02c0eadb527d6eb4fcf44296a4efc0dac512b541368623b580d10fbe524772ac/body",
+      "sha256": "02c0eadb527d6eb4fcf44296a4efc0dac512b541368623b580d10fbe524772ac"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a/body",
+      "relative_path": "assets/2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a/body",
+      "sha256": "2923ea5617d4ad8c859e4c1a6ab4b70fa95f0f5ea4dec87d5a533b50863ed40a"
+    },
+    {
+      "bytes": 19,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474/body",
+      "relative_path": "assets/6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474/body",
+      "sha256": "6ebd9795ac36c9f304f0307f5c55266c9be1f29aee791883a895ea2ed0e72474"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1a628082f26295d24b4ffa4c74f5ccce154e7e039748acb33833cd4f383d9251/body",
+      "relative_path": "assets/1a628082f26295d24b4ffa4c74f5ccce154e7e039748acb33833cd4f383d9251/body",
+      "sha256": "1a628082f26295d24b4ffa4c74f5ccce154e7e039748acb33833cd4f383d9251"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6cac0cd19a9e5ef8efb8f90a40f279a2adfac5a079e02a20f8f753877f3ef799/body",
+      "relative_path": "assets/6cac0cd19a9e5ef8efb8f90a40f279a2adfac5a079e02a20f8f753877f3ef799/body",
+      "sha256": "6cac0cd19a9e5ef8efb8f90a40f279a2adfac5a079e02a20f8f753877f3ef799"
+    },
+    {
+      "bytes": 1839,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ed58271503652d12506a96448120455bb75cbdc7bb321f683f6fe5d4883138b5/body",
+      "relative_path": "assets/ed58271503652d12506a96448120455bb75cbdc7bb321f683f6fe5d4883138b5/body",
+      "sha256": "ed58271503652d12506a96448120455bb75cbdc7bb321f683f6fe5d4883138b5"
+    },
+    {
+      "bytes": 18493,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4484e2c39f1efb1aeceaed48bbd959a0baeae7d0952de56892b11d875bf83fbb/body",
+      "relative_path": "assets/4484e2c39f1efb1aeceaed48bbd959a0baeae7d0952de56892b11d875bf83fbb/body",
+      "sha256": "4484e2c39f1efb1aeceaed48bbd959a0baeae7d0952de56892b11d875bf83fbb"
+    },
+    {
+      "bytes": 17840,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bf1ab42b00d709d5141be794aa09bbc911fbf2ad1c12a26b9b93ae9a52391e2b/body",
+      "relative_path": "assets/bf1ab42b00d709d5141be794aa09bbc911fbf2ad1c12a26b9b93ae9a52391e2b/body",
+      "sha256": "bf1ab42b00d709d5141be794aa09bbc911fbf2ad1c12a26b9b93ae9a52391e2b"
+    },
+    {
+      "bytes": 4801,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27/body",
+      "relative_path": "assets/7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27/body",
+      "sha256": "7323b50650ae96ca531d83e5becfb8be5af9987a73deacad7c68d8b993e4ef27"
+    },
+    {
+      "bytes": 2570,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cd98bc24a5c5fadec962f69190600efe57edd3969236342ba9a29851828dabc4/body",
+      "relative_path": "assets/cd98bc24a5c5fadec962f69190600efe57edd3969236342ba9a29851828dabc4/body",
+      "sha256": "cd98bc24a5c5fadec962f69190600efe57edd3969236342ba9a29851828dabc4"
+    },
+    {
+      "bytes": 74,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925/body",
+      "relative_path": "assets/5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925/body",
+      "sha256": "5cd6924ce6de5e8ba88dfd90e84275f1e855d813928a1e72df48688011ed4925"
+    },
+    {
+      "bytes": 6591,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b09a621b22d48467adf8b7f3277a98c892298da31476919ac59e0f7ce8a299c2/body",
+      "relative_path": "assets/b09a621b22d48467adf8b7f3277a98c892298da31476919ac59e0f7ce8a299c2/body",
+      "sha256": "b09a621b22d48467adf8b7f3277a98c892298da31476919ac59e0f7ce8a299c2"
+    },
+    {
+      "bytes": 17517,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/009486af0e566e8265f5b9e78132aec8d4a16cc38f586d3fdba83ea2441b9983/body",
+      "relative_path": "assets/009486af0e566e8265f5b9e78132aec8d4a16cc38f586d3fdba83ea2441b9983/body",
+      "sha256": "009486af0e566e8265f5b9e78132aec8d4a16cc38f586d3fdba83ea2441b9983"
+    },
+    {
+      "bytes": 4801,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a/body",
+      "relative_path": "assets/113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a/body",
+      "sha256": "113af2a3a640983f14af3296dde8a909d7b0d840b5494d4c02cc13ceaaac724a"
+    },
+    {
+      "bytes": 6318,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e/body",
+      "relative_path": "assets/812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e/body",
+      "sha256": "812a7161cdc3c330eeb65301548e1c6a651f09365d2f07a2cc2cc8f82f48ae5e"
+    },
+    {
+      "bytes": 4468,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1efcf5b4977cb6a7d72acbcab875a159f6a703b6bd4d3b7c6b5381df8f7689b7/body",
+      "relative_path": "assets/1efcf5b4977cb6a7d72acbcab875a159f6a703b6bd4d3b7c6b5381df8f7689b7/body",
+      "sha256": "1efcf5b4977cb6a7d72acbcab875a159f6a703b6bd4d3b7c6b5381df8f7689b7"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a25ab21911a9215894f067b7f771940cfc01520842555477da00dd2275be86fd/body",
+      "relative_path": "assets/a25ab21911a9215894f067b7f771940cfc01520842555477da00dd2275be86fd/body",
+      "sha256": "a25ab21911a9215894f067b7f771940cfc01520842555477da00dd2275be86fd"
+    },
+    {
+      "bytes": 7186,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bf21588d817930f4a9d80ff608a4cd211b90b9b33e86d6af5eccb68b51ef5d08/body",
+      "relative_path": "assets/bf21588d817930f4a9d80ff608a4cd211b90b9b33e86d6af5eccb68b51ef5d08/body",
+      "sha256": "bf21588d817930f4a9d80ff608a4cd211b90b9b33e86d6af5eccb68b51ef5d08"
+    },
+    {
+      "bytes": 11,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a67d5f46542514f52d658493fc9405829d2922cf1647574c838b6b86f125477a/body",
+      "relative_path": "assets/a67d5f46542514f52d658493fc9405829d2922cf1647574c838b6b86f125477a/body",
+      "sha256": "a67d5f46542514f52d658493fc9405829d2922cf1647574c838b6b86f125477a"
+    },
+    {
+      "bytes": 1504,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/32ca8caf04bd6bcf8e22940ea19aa4eed0cc93ff176279433f4cbc82570cca75/body",
+      "relative_path": "assets/32ca8caf04bd6bcf8e22940ea19aa4eed0cc93ff176279433f4cbc82570cca75/body",
+      "sha256": "32ca8caf04bd6bcf8e22940ea19aa4eed0cc93ff176279433f4cbc82570cca75"
+    },
+    {
+      "bytes": 10749,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/058b4a0e115bc55626524181f8bc3e2d466948b138cebabf25d72ecca7502d1c/body",
+      "relative_path": "assets/058b4a0e115bc55626524181f8bc3e2d466948b138cebabf25d72ecca7502d1c/body",
+      "sha256": "058b4a0e115bc55626524181f8bc3e2d466948b138cebabf25d72ecca7502d1c"
+    },
+    {
+      "bytes": 21035,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d0dab0bd178b97930bd860ec4dd445f6da97022e23803eb69d7ffb527014d391/body",
+      "relative_path": "assets/d0dab0bd178b97930bd860ec4dd445f6da97022e23803eb69d7ffb527014d391/body",
+      "sha256": "d0dab0bd178b97930bd860ec4dd445f6da97022e23803eb69d7ffb527014d391"
+    },
+    {
+      "bytes": 2546,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/2dc94f0e0f731e76b6d766aacb0d4712f16ff78a9e1243303053cd470db5121d/body",
+      "relative_path": "assets/2dc94f0e0f731e76b6d766aacb0d4712f16ff78a9e1243303053cd470db5121d/body",
+      "sha256": "2dc94f0e0f731e76b6d766aacb0d4712f16ff78a9e1243303053cd470db5121d"
+    },
+    {
+      "bytes": 350363,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c10fd214e9623a0a0bcb9d0d39851ee0f110d5916a65720a2e5912a6e94dec05/body",
+      "relative_path": "assets/c10fd214e9623a0a0bcb9d0d39851ee0f110d5916a65720a2e5912a6e94dec05/body",
+      "sha256": "c10fd214e9623a0a0bcb9d0d39851ee0f110d5916a65720a2e5912a6e94dec05"
+    },
+    {
+      "bytes": 12665,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/97e172d3582c9915a6411d6d91ab96e53e8a35dfceac3c42e76e0fddeb5b3e5d/body",
+      "relative_path": "assets/97e172d3582c9915a6411d6d91ab96e53e8a35dfceac3c42e76e0fddeb5b3e5d/body",
+      "sha256": "97e172d3582c9915a6411d6d91ab96e53e8a35dfceac3c42e76e0fddeb5b3e5d"
+    },
+    {
+      "bytes": 5978,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9b8627b70478f896634cb1624fca94eb84d2392185b77adee912081f2493e782/body",
+      "relative_path": "assets/9b8627b70478f896634cb1624fca94eb84d2392185b77adee912081f2493e782/body",
+      "sha256": "9b8627b70478f896634cb1624fca94eb84d2392185b77adee912081f2493e782"
+    },
+    {
+      "bytes": 18158,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e26abc09b7a7b1cb10e87dce56d9b7eebfa0ee21a186b82fde01244dcdc8035a/body",
+      "relative_path": "assets/e26abc09b7a7b1cb10e87dce56d9b7eebfa0ee21a186b82fde01244dcdc8035a/body",
+      "sha256": "e26abc09b7a7b1cb10e87dce56d9b7eebfa0ee21a186b82fde01244dcdc8035a"
+    },
+    {
+      "bytes": 1637,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/63794a3eb6919e2f9b250d891650570f087c4fd82c632326d870b363b3e8497f/body",
+      "relative_path": "assets/63794a3eb6919e2f9b250d891650570f087c4fd82c632326d870b363b3e8497f/body",
+      "sha256": "63794a3eb6919e2f9b250d891650570f087c4fd82c632326d870b363b3e8497f"
+    },
+    {
+      "bytes": 7706,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/291bf0473332e0516457f3c748b215d7867905d53fa7f0af45dc9b938ea5d36e/body",
+      "relative_path": "assets/291bf0473332e0516457f3c748b215d7867905d53fa7f0af45dc9b938ea5d36e/body",
+      "sha256": "291bf0473332e0516457f3c748b215d7867905d53fa7f0af45dc9b938ea5d36e"
+    },
+    {
+      "bytes": 1612,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6c25b77f16714ab89b4b524fddd9ab844d03bc2d3855502bd6481de107eb56dd/body",
+      "relative_path": "assets/6c25b77f16714ab89b4b524fddd9ab844d03bc2d3855502bd6481de107eb56dd/body",
+      "sha256": "6c25b77f16714ab89b4b524fddd9ab844d03bc2d3855502bd6481de107eb56dd"
+    },
+    {
+      "bytes": 7186,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e81087e21874e006f1933c1fbf2d7f00ab3943a5f67307d6445b0bb192aaf206/body",
+      "relative_path": "assets/e81087e21874e006f1933c1fbf2d7f00ab3943a5f67307d6445b0bb192aaf206/body",
+      "sha256": "e81087e21874e006f1933c1fbf2d7f00ab3943a5f67307d6445b0bb192aaf206"
+    },
+    {
+      "bytes": 10338,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/68b834f768ae780dbec79ac3e02877dab9d00a1118de2334cd4ed3418ae1acf4/body",
+      "relative_path": "assets/68b834f768ae780dbec79ac3e02877dab9d00a1118de2334cd4ed3418ae1acf4/body",
+      "sha256": "68b834f768ae780dbec79ac3e02877dab9d00a1118de2334cd4ed3418ae1acf4"
+    },
+    {
+      "bytes": 7836,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bb0b1d5a31161159c34875a0a3bc2ad3e879168ba2f7ee0b3908a8f6434d2c37/body",
+      "relative_path": "assets/bb0b1d5a31161159c34875a0a3bc2ad3e879168ba2f7ee0b3908a8f6434d2c37/body",
+      "sha256": "bb0b1d5a31161159c34875a0a3bc2ad3e879168ba2f7ee0b3908a8f6434d2c37"
+    },
+    {
+      "bytes": 87,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9/body",
+      "relative_path": "assets/0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9/body",
+      "sha256": "0cc6bb4df24293a3ef8f57e60f3fadfdf625da88d852e768b880cc1ad647c1a9"
+    },
+    {
+      "bytes": 1622,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4a8c0130dce97991b844402b42f8060bb1f7767e35c8c86f61883cdbee888b87/body",
+      "relative_path": "assets/4a8c0130dce97991b844402b42f8060bb1f7767e35c8c86f61883cdbee888b87/body",
+      "sha256": "4a8c0130dce97991b844402b42f8060bb1f7767e35c8c86f61883cdbee888b87"
+    },
+    {
+      "bytes": 1677,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a498fa65b7c46aab263bc0f36ef8054c4cb02e79430680a3f0eb55b6001b942e/body",
+      "relative_path": "assets/a498fa65b7c46aab263bc0f36ef8054c4cb02e79430680a3f0eb55b6001b942e/body",
+      "sha256": "a498fa65b7c46aab263bc0f36ef8054c4cb02e79430680a3f0eb55b6001b942e"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7/body",
+      "relative_path": "assets/136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7/body",
+      "sha256": "136b7457d2deef3071b8af75c3d24347f2b06cad05c77af6f7afaf9046ddb0f7"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7bcab0cb632f0490652c1beb02d002141e6ef9562a2bad845a1e86a9c70e6b3d/body",
+      "relative_path": "assets/7bcab0cb632f0490652c1beb02d002141e6ef9562a2bad845a1e86a9c70e6b3d/body",
+      "sha256": "7bcab0cb632f0490652c1beb02d002141e6ef9562a2bad845a1e86a9c70e6b3d"
+    },
+    {
+      "bytes": 12406,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a5d8fe7333bd7f0f877b089fa9ae72c05f78a6db39137dfe6c30a1e78a268faf/body",
+      "relative_path": "assets/a5d8fe7333bd7f0f877b089fa9ae72c05f78a6db39137dfe6c30a1e78a268faf/body",
+      "sha256": "a5d8fe7333bd7f0f877b089fa9ae72c05f78a6db39137dfe6c30a1e78a268faf"
+    },
+    {
+      "bytes": 22916,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/66b4d50b8aee2b7f086b41b90f80319ed972c0afca3d4abe510a7571f9882b9f/body",
+      "relative_path": "assets/66b4d50b8aee2b7f086b41b90f80319ed972c0afca3d4abe510a7571f9882b9f/body",
+      "sha256": "66b4d50b8aee2b7f086b41b90f80319ed972c0afca3d4abe510a7571f9882b9f"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1371298beb3cfc0703357f3e9e95bb47b8d67da6b8f6610d3217323d8fc85c57/body",
+      "relative_path": "assets/1371298beb3cfc0703357f3e9e95bb47b8d67da6b8f6610d3217323d8fc85c57/body",
+      "sha256": "1371298beb3cfc0703357f3e9e95bb47b8d67da6b8f6610d3217323d8fc85c57"
+    },
+    {
+      "bytes": 21035,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d5d61822714c068bb390bdb3ec0f0bfb66700a013932d9cd55ce2fe280fdeaae/body",
+      "relative_path": "assets/d5d61822714c068bb390bdb3ec0f0bfb66700a013932d9cd55ce2fe280fdeaae/body",
+      "sha256": "d5d61822714c068bb390bdb3ec0f0bfb66700a013932d9cd55ce2fe280fdeaae"
+    },
+    {
+      "bytes": 15937,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0c992b36faffea5ca226bf5caedb0164770ba36cc78929f3121c520ac17554a4/body",
+      "relative_path": "assets/0c992b36faffea5ca226bf5caedb0164770ba36cc78929f3121c520ac17554a4/body",
+      "sha256": "0c992b36faffea5ca226bf5caedb0164770ba36cc78929f3121c520ac17554a4"
+    },
+    {
+      "bytes": 6013,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5011f47db4e2642914c70f1d325bad225e20b90382ec31869ff008cfc576dda0/body",
+      "relative_path": "assets/5011f47db4e2642914c70f1d325bad225e20b90382ec31869ff008cfc576dda0/body",
+      "sha256": "5011f47db4e2642914c70f1d325bad225e20b90382ec31869ff008cfc576dda0"
+    },
+    {
+      "bytes": 4594,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a/body",
+      "relative_path": "assets/bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a/body",
+      "sha256": "bb10840ec17f2ddd140df4b327a397799393526474d10c13d53be3b74341f94a"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cfaa28c977714f4dcb7c5694f30af7f80719f3918fcdce2247b19abda2d96a34/body",
+      "relative_path": "assets/cfaa28c977714f4dcb7c5694f30af7f80719f3918fcdce2247b19abda2d96a34/body",
+      "sha256": "cfaa28c977714f4dcb7c5694f30af7f80719f3918fcdce2247b19abda2d96a34"
+    },
+    {
+      "bytes": 9058,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/dfdeed8a199ccafac74d1dcc272cd81e1481c07dc7d7861d5c69c896746137a5/body",
+      "relative_path": "assets/dfdeed8a199ccafac74d1dcc272cd81e1481c07dc7d7861d5c69c896746137a5/body",
+      "sha256": "dfdeed8a199ccafac74d1dcc272cd81e1481c07dc7d7861d5c69c896746137a5"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed/body",
+      "relative_path": "assets/4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed/body",
+      "sha256": "4a319a0c449f55da1cb18f6933d499c7b4d85447e5a7c17bc1855a2e907b01ed"
+    },
+    {
+      "bytes": 15600,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c/body",
+      "relative_path": "assets/a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c/body",
+      "sha256": "a3c06603c46bf6dc499146d70307b036f6bd774d361f402ec8f449feea1fc11c"
+    },
+    {
+      "bytes": 15936,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0a452cea33952a43bae34245a25b6e319b1c318c6a41ec4a2de90e683c2c3d39/body",
+      "relative_path": "assets/0a452cea33952a43bae34245a25b6e319b1c318c6a41ec4a2de90e683c2c3d39/body",
+      "sha256": "0a452cea33952a43bae34245a25b6e319b1c318c6a41ec4a2de90e683c2c3d39"
+    },
+    {
+      "bytes": 16653,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021/body",
+      "relative_path": "assets/fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021/body",
+      "sha256": "fcc08cb542910ba711e1f6b4b3deb290de35ed3f6e5ade8ba47ef4ecead1f021"
+    },
+    {
+      "bytes": 5946,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/f797e141c587ce2988417f93b68024cfe868f1cce3cd5859ef239c391ee86f24/body",
+      "relative_path": "assets/f797e141c587ce2988417f93b68024cfe868f1cce3cd5859ef239c391ee86f24/body",
+      "sha256": "f797e141c587ce2988417f93b68024cfe868f1cce3cd5859ef239c391ee86f24"
+    },
+    {
+      "bytes": 7,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862/body",
+      "relative_path": "assets/015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862/body",
+      "sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+    },
+    {
+      "bytes": 23748,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1/body",
+      "relative_path": "assets/ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1/body",
+      "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+    },
+    {
+      "bytes": 22010,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b/body",
+      "relative_path": "assets/4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b/body",
+      "sha256": "4fca06e981d11c7527b13c3ea18506b99e0b7cc817f85814e9160fdabffa881b"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cc8760eb9e5fc6ea88fa67a1320643853b51f03e3f3d8be2b4334f85b42b57f6/body",
+      "relative_path": "assets/cc8760eb9e5fc6ea88fa67a1320643853b51f03e3f3d8be2b4334f85b42b57f6/body",
+      "sha256": "cc8760eb9e5fc6ea88fa67a1320643853b51f03e3f3d8be2b4334f85b42b57f6"
+    },
+    {
+      "bytes": 9777,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78/body",
+      "relative_path": "assets/d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78/body",
+      "sha256": "d7fca977a7d001701802bfef88a34fb415c989cb6479b3539d6abac369922e78"
+    },
+    {
+      "bytes": 1593,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5d887ef546f06675adf3c208bba5116167f71ef44203ca087713038f98fc9416/body",
+      "relative_path": "assets/5d887ef546f06675adf3c208bba5116167f71ef44203ca087713038f98fc9416/body",
+      "sha256": "5d887ef546f06675adf3c208bba5116167f71ef44203ca087713038f98fc9416"
+    },
+    {
+      "bytes": 3842,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/fe51e39002515cf2abf146dd1a88912f4d4c1f3fc1e1a833fafb25055efac916/body",
+      "relative_path": "assets/fe51e39002515cf2abf146dd1a88912f4d4c1f3fc1e1a833fafb25055efac916/body",
+      "sha256": "fe51e39002515cf2abf146dd1a88912f4d4c1f3fc1e1a833fafb25055efac916"
+    },
+    {
+      "bytes": 4116,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ee298a5986c6e58f2ea07df27e1cfa7a2a19229e3a79a9d32ed62f58f6c6a5b1/body",
+      "relative_path": "assets/ee298a5986c6e58f2ea07df27e1cfa7a2a19229e3a79a9d32ed62f58f6c6a5b1/body",
+      "sha256": "ee298a5986c6e58f2ea07df27e1cfa7a2a19229e3a79a9d32ed62f58f6c6a5b1"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0102b322b8da826f0b1384f63ca98a4a024bdb22ead97b6e3adce012b86adf98/body",
+      "relative_path": "assets/0102b322b8da826f0b1384f63ca98a4a024bdb22ead97b6e3adce012b86adf98/body",
+      "sha256": "0102b322b8da826f0b1384f63ca98a4a024bdb22ead97b6e3adce012b86adf98"
+    },
+    {
+      "bytes": 5056,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/68580e1fa159fc71cb91e2534a54a01b902bcc893dc8b8aa707c49f036fdf553/body",
+      "relative_path": "assets/68580e1fa159fc71cb91e2534a54a01b902bcc893dc8b8aa707c49f036fdf553/body",
+      "sha256": "68580e1fa159fc71cb91e2534a54a01b902bcc893dc8b8aa707c49f036fdf553"
+    },
+    {
+      "bytes": 13229,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3/body",
+      "relative_path": "assets/5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3/body",
+      "sha256": "5a994ae2c9989864f0a4d7278f9f3fbb2ecdb5a701d73583424e2db562faffc3"
+    },
+    {
+      "bytes": 15936,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/70b03bd677eb3d0b7c5e1e4639b4d60625297c7e77bf8600ff61b8d7a134e0a1/body",
+      "relative_path": "assets/70b03bd677eb3d0b7c5e1e4639b4d60625297c7e77bf8600ff61b8d7a134e0a1/body",
+      "sha256": "70b03bd677eb3d0b7c5e1e4639b4d60625297c7e77bf8600ff61b8d7a134e0a1"
+    },
+    {
+      "bytes": 7731,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8f45e376c88c28ba4afd8fe59ba6ba1678e710047b57fd4148103d0ec99fd3b2/body",
+      "relative_path": "assets/8f45e376c88c28ba4afd8fe59ba6ba1678e710047b57fd4148103d0ec99fd3b2/body",
+      "sha256": "8f45e376c88c28ba4afd8fe59ba6ba1678e710047b57fd4148103d0ec99fd3b2"
+    },
+    {
+      "bytes": 26936,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b41d8da7723eb42d5ac648d679c21723a59a8a7a78e35b03bee296c24c8e47cf/body",
+      "relative_path": "assets/b41d8da7723eb42d5ac648d679c21723a59a8a7a78e35b03bee296c24c8e47cf/body",
+      "sha256": "b41d8da7723eb42d5ac648d679c21723a59a8a7a78e35b03bee296c24c8e47cf"
+    },
+    {
+      "bytes": 72643,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cc59f0ab348881063a45ddaa2731d3525ab2c751c374694e622103409cfd6f3c/body",
+      "relative_path": "assets/cc59f0ab348881063a45ddaa2731d3525ab2c751c374694e622103409cfd6f3c/body",
+      "sha256": "cc59f0ab348881063a45ddaa2731d3525ab2c751c374694e622103409cfd6f3c"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9168314dbf713a6da8af014c6f53afa97250c168ba03a0ec6a2d7f66d04e6a56/body",
+      "relative_path": "assets/9168314dbf713a6da8af014c6f53afa97250c168ba03a0ec6a2d7f66d04e6a56/body",
+      "sha256": "9168314dbf713a6da8af014c6f53afa97250c168ba03a0ec6a2d7f66d04e6a56"
+    },
+    {
+      "bytes": 11,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16/body",
+      "relative_path": "assets/197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16/body",
+      "sha256": "197c7c60ef8a8470a38d1a9212bdfde9cfe6fd4be910825fe6ac7880ac765d16"
+    },
+    {
+      "bytes": 29722,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4/body",
+      "relative_path": "assets/a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4/body",
+      "sha256": "a13c4374dad8082a2d36a8a6791f50a5396a100fc11bb9a5899fc6c21cded2b4"
+    },
+    {
+      "bytes": 421,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8a291801db6f54879e4c33a20c3d3623af6816953dbe0205dc5c3d6fc8dd0997/body",
+      "relative_path": "assets/8a291801db6f54879e4c33a20c3d3623af6816953dbe0205dc5c3d6fc8dd0997/body",
+      "sha256": "8a291801db6f54879e4c33a20c3d3623af6816953dbe0205dc5c3d6fc8dd0997"
+    },
+    {
+      "bytes": 5815,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8/body",
+      "relative_path": "assets/82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8/body",
+      "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/94ec729f83687d1cafffae079dea83c62fd4f4285793f25cee80a5120daa1fd2/body",
+      "relative_path": "assets/94ec729f83687d1cafffae079dea83c62fd4f4285793f25cee80a5120daa1fd2/body",
+      "sha256": "94ec729f83687d1cafffae079dea83c62fd4f4285793f25cee80a5120daa1fd2"
+    },
+    {
+      "bytes": 3391,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1362a66fdfb1ab69ff1dc2271210fe916475cf4ad22343866c1f88252d819caa/body",
+      "relative_path": "assets/1362a66fdfb1ab69ff1dc2271210fe916475cf4ad22343866c1f88252d819caa/body",
+      "sha256": "1362a66fdfb1ab69ff1dc2271210fe916475cf4ad22343866c1f88252d819caa"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740/body",
+      "relative_path": "assets/b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740/body",
+      "sha256": "b87bd68c3d95f550ed9d8b4ba3942b4f751a617db0b82219159bff31fd6cd740"
+    },
+    {
+      "bytes": 1653,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3/body",
+      "relative_path": "assets/5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3/body",
+      "sha256": "5c815900a65ab1999d1990cbd4c1b9c70efb6fa04802cd2c834067593b32f5c3"
+    },
+    {
+      "bytes": 5384,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/3fe8547e6f37eaca3fe0d6c5207b011da18b0d4c445402aa463c4c4f5ed482ee/body",
+      "relative_path": "assets/3fe8547e6f37eaca3fe0d6c5207b011da18b0d4c445402aa463c4c4f5ed482ee/body",
+      "sha256": "3fe8547e6f37eaca3fe0d6c5207b011da18b0d4c445402aa463c4c4f5ed482ee"
+    },
+    {
+      "bytes": 2365,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/08479c8ab18de9b5a72e5223f2ca9f03489df87985ec1f7476c35b19bb92da62/body",
+      "relative_path": "assets/08479c8ab18de9b5a72e5223f2ca9f03489df87985ec1f7476c35b19bb92da62/body",
+      "sha256": "08479c8ab18de9b5a72e5223f2ca9f03489df87985ec1f7476c35b19bb92da62"
+    },
+    {
+      "bytes": 20625,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/daf5e1ecfc1e6ceea893cf0a52fc205f7c00683e031f5c5deac9fd620085d595/body",
+      "relative_path": "assets/daf5e1ecfc1e6ceea893cf0a52fc205f7c00683e031f5c5deac9fd620085d595/body",
+      "sha256": "daf5e1ecfc1e6ceea893cf0a52fc205f7c00683e031f5c5deac9fd620085d595"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/579fb643ee4a1f21e7c58aff88390fa466af5224c3604a7a0592bf512f10f795/body",
+      "relative_path": "assets/579fb643ee4a1f21e7c58aff88390fa466af5224c3604a7a0592bf512f10f795/body",
+      "sha256": "579fb643ee4a1f21e7c58aff88390fa466af5224c3604a7a0592bf512f10f795"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/40143f13aee35f96ac0b9abb26c2ae7de248b4eb8a3b9910692896d3fc4da8a7/body",
+      "relative_path": "assets/40143f13aee35f96ac0b9abb26c2ae7de248b4eb8a3b9910692896d3fc4da8a7/body",
+      "sha256": "40143f13aee35f96ac0b9abb26c2ae7de248b4eb8a3b9910692896d3fc4da8a7"
+    },
+    {
+      "bytes": 16039,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bc88c5521b7f82a68624b544065b1d00d0b5662ae7def43c20e8746d6c1dc498/body",
+      "relative_path": "assets/bc88c5521b7f82a68624b544065b1d00d0b5662ae7def43c20e8746d6c1dc498/body",
+      "sha256": "bc88c5521b7f82a68624b544065b1d00d0b5662ae7def43c20e8746d6c1dc498"
+    },
+    {
+      "bytes": 27961,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c2fa859e688fc5c68b046cae9533621cc6907f2d8c041478432b96dd5cb1f959/body",
+      "relative_path": "assets/c2fa859e688fc5c68b046cae9533621cc6907f2d8c041478432b96dd5cb1f959/body",
+      "sha256": "c2fa859e688fc5c68b046cae9533621cc6907f2d8c041478432b96dd5cb1f959"
+    },
+    {
+      "bytes": 1614,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e/body",
+      "relative_path": "assets/072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e/body",
+      "sha256": "072c125ccdc0e24830caabb0d9feb8764c2848322c21a1121e26ae486956a49e"
+    },
+    {
+      "bytes": 22009,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82/body",
+      "relative_path": "assets/32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82/body",
+      "sha256": "32aaa7c07070486e12a753c4f24a471a80cdf8419f2f1668ee0baef3c076bf82"
+    },
+    {
+      "bytes": 8274,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457/body",
+      "relative_path": "assets/ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457/body",
+      "sha256": "ec53c35640ec2329c333169a4239ada1808b836f62c5cf02d499d67779ee3457"
+    },
+    {
+      "bytes": 30,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/abfadf2801193bb2e5b43e4abd1df82a255de04f6e00babb3b3d4a86b059f401/body",
+      "relative_path": "assets/abfadf2801193bb2e5b43e4abd1df82a255de04f6e00babb3b3d4a86b059f401/body",
+      "sha256": "abfadf2801193bb2e5b43e4abd1df82a255de04f6e00babb3b3d4a86b059f401"
+    },
+    {
+      "bytes": 10400,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b55253681fe3e54b19bd9770b3813dd0636d09c07f3a1195911c435329b78353/body",
+      "relative_path": "assets/b55253681fe3e54b19bd9770b3813dd0636d09c07f3a1195911c435329b78353/body",
+      "sha256": "b55253681fe3e54b19bd9770b3813dd0636d09c07f3a1195911c435329b78353"
+    },
+    {
+      "bytes": 1912,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2/body",
+      "relative_path": "assets/27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2/body",
+      "sha256": "27fa78e613979c0a373afcd4624d75a0e0d0d4b8ed642867254f7adc6aa0ead2"
+    },
+    {
+      "bytes": 2441,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/81ee6ce09d1d2f692e5d847fa3f72e348e96fd8bec574e500c02f1f7a4056141/body",
+      "relative_path": "assets/81ee6ce09d1d2f692e5d847fa3f72e348e96fd8bec574e500c02f1f7a4056141/body",
+      "sha256": "81ee6ce09d1d2f692e5d847fa3f72e348e96fd8bec574e500c02f1f7a4056141"
+    },
+    {
+      "bytes": 15567,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/45741058e25c4957af85371f798c3f96e53e470939b3f2dd808c26a534b72115/body",
+      "relative_path": "assets/45741058e25c4957af85371f798c3f96e53e470939b3f2dd808c26a534b72115/body",
+      "sha256": "45741058e25c4957af85371f798c3f96e53e470939b3f2dd808c26a534b72115"
+    },
+    {
+      "bytes": 17075,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7ccb8950fc404d80c2d142b548b4d5314956d7dca36cb892029625d37bf3f80d/body",
+      "relative_path": "assets/7ccb8950fc404d80c2d142b548b4d5314956d7dca36cb892029625d37bf3f80d/body",
+      "sha256": "7ccb8950fc404d80c2d142b548b4d5314956d7dca36cb892029625d37bf3f80d"
+    },
+    {
+      "bytes": 16321,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9aa63878cd3994a3400c534eacfeb2abde2c6decc0a2b340c08b2a4964cdc44b/body",
+      "relative_path": "assets/9aa63878cd3994a3400c534eacfeb2abde2c6decc0a2b340c08b2a4964cdc44b/body",
+      "sha256": "9aa63878cd3994a3400c534eacfeb2abde2c6decc0a2b340c08b2a4964cdc44b"
+    },
+    {
+      "bytes": 22213,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/2e439e34a0c0b731786fe58eca97ed9fc837726caf7f48a89ae2dbe8c9658cb3/body",
+      "relative_path": "assets/2e439e34a0c0b731786fe58eca97ed9fc837726caf7f48a89ae2dbe8c9658cb3/body",
+      "sha256": "2e439e34a0c0b731786fe58eca97ed9fc837726caf7f48a89ae2dbe8c9658cb3"
+    },
+    {
+      "bytes": 15807,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/882318b4e718d8bb1aac1c6e1cc7a183571f93ef59f8a5513642682a37a9b30a/body",
+      "relative_path": "assets/882318b4e718d8bb1aac1c6e1cc7a183571f93ef59f8a5513642682a37a9b30a/body",
+      "sha256": "882318b4e718d8bb1aac1c6e1cc7a183571f93ef59f8a5513642682a37a9b30a"
+    },
+    {
+      "bytes": 1637,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/21ce83acdcadd4e141722cf2453da3f913dbe6aed1addbbd0f7de80c95a38302/body",
+      "relative_path": "assets/21ce83acdcadd4e141722cf2453da3f913dbe6aed1addbbd0f7de80c95a38302/body",
+      "sha256": "21ce83acdcadd4e141722cf2453da3f913dbe6aed1addbbd0f7de80c95a38302"
+    },
+    {
+      "bytes": 9922,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/136efe2553a3831e7551334d1d56de326ca087971fe11aac89da5f874ed75213/body",
+      "relative_path": "assets/136efe2553a3831e7551334d1d56de326ca087971fe11aac89da5f874ed75213/body",
+      "sha256": "136efe2553a3831e7551334d1d56de326ca087971fe11aac89da5f874ed75213"
+    },
+    {
+      "bytes": 16244,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/99fc4751d1cd7a4d595046370981b8ebce0bd28900d2dc8d64ea3db9d3c33237/body",
+      "relative_path": "assets/99fc4751d1cd7a4d595046370981b8ebce0bd28900d2dc8d64ea3db9d3c33237/body",
+      "sha256": "99fc4751d1cd7a4d595046370981b8ebce0bd28900d2dc8d64ea3db9d3c33237"
+    },
+    {
+      "bytes": 1667,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7b52dad2d169a18e793e7178cfd97b0bd47fcfdb3fa4f6f7bbf8c3597f149499/body",
+      "relative_path": "assets/7b52dad2d169a18e793e7178cfd97b0bd47fcfdb3fa4f6f7bbf8c3597f149499/body",
+      "sha256": "7b52dad2d169a18e793e7178cfd97b0bd47fcfdb3fa4f6f7bbf8c3597f149499"
+    },
+    {
+      "bytes": 4862,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d73d7651d1845c734a8d528ab9515f04a66d9580e95b8d713e5aaffa0e4c3984/body",
+      "relative_path": "assets/d73d7651d1845c734a8d528ab9515f04a66d9580e95b8d713e5aaffa0e4c3984/body",
+      "sha256": "d73d7651d1845c734a8d528ab9515f04a66d9580e95b8d713e5aaffa0e4c3984"
+    },
+    {
+      "bytes": 15567,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1ce8d106979c06b250613b51770c60405d8585d8491db8b112e70eec900fde38/body",
+      "relative_path": "assets/1ce8d106979c06b250613b51770c60405d8585d8491db8b112e70eec900fde38/body",
+      "sha256": "1ce8d106979c06b250613b51770c60405d8585d8491db8b112e70eec900fde38"
+    },
+    {
+      "bytes": 36917,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/51497fb4004844b04067cdb2673d2ea01bd32476de88af14a92c861625125337/body",
+      "relative_path": "assets/51497fb4004844b04067cdb2673d2ea01bd32476de88af14a92c861625125337/body",
+      "sha256": "51497fb4004844b04067cdb2673d2ea01bd32476de88af14a92c861625125337"
+    },
+    {
+      "bytes": 23011,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/440ee382a0c1a4965e0305451e5eead1eb7b1f7e7e877c6386695582172c4fb5/body",
+      "relative_path": "assets/440ee382a0c1a4965e0305451e5eead1eb7b1f7e7e877c6386695582172c4fb5/body",
+      "sha256": "440ee382a0c1a4965e0305451e5eead1eb7b1f7e7e877c6386695582172c4fb5"
+    },
+    {
+      "bytes": 6268,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c/body",
+      "relative_path": "assets/c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c/body",
+      "sha256": "c08fd98a38a8e26df5e7ace11c460c6ce7ee00413ab3b1ea85b5702540ae480c"
+    },
+    {
+      "bytes": 11419,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/19c44bdf4e70f325f8f7ff7b4e0b53a4aef2d5d75a62ee67b43fd50acb44d2a1/body",
+      "relative_path": "assets/19c44bdf4e70f325f8f7ff7b4e0b53a4aef2d5d75a62ee67b43fd50acb44d2a1/body",
+      "sha256": "19c44bdf4e70f325f8f7ff7b4e0b53a4aef2d5d75a62ee67b43fd50acb44d2a1"
+    },
+    {
+      "bytes": 46763,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/dceb4016a6101e28e9bfb5ee9b9315e5bee963b62be7348ce82d38da5b3204a9/body",
+      "relative_path": "assets/dceb4016a6101e28e9bfb5ee9b9315e5bee963b62be7348ce82d38da5b3204a9/body",
+      "sha256": "dceb4016a6101e28e9bfb5ee9b9315e5bee963b62be7348ce82d38da5b3204a9"
+    },
+    {
+      "bytes": 13022,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a2f68f9a13ad87303e3ba245915a5a82d9c7d6b1e5a0cb334977fcfd3ff2886d/body",
+      "relative_path": "assets/a2f68f9a13ad87303e3ba245915a5a82d9c7d6b1e5a0cb334977fcfd3ff2886d/body",
+      "sha256": "a2f68f9a13ad87303e3ba245915a5a82d9c7d6b1e5a0cb334977fcfd3ff2886d"
+    },
+    {
+      "bytes": 41,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7/body",
+      "relative_path": "assets/c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7/body",
+      "sha256": "c0b9cd58f68cdeed083e0f9e76138cc42e7e6f65893ef676a89c8ce2c8f551e7"
+    },
+    {
+      "bytes": 45946,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/f76945c3fd9c0a8db014d8d403d6b5e3c81ca8af7cfb4cea4df5e4aec523094d/body",
+      "relative_path": "assets/f76945c3fd9c0a8db014d8d403d6b5e3c81ca8af7cfb4cea4df5e4aec523094d/body",
+      "sha256": "f76945c3fd9c0a8db014d8d403d6b5e3c81ca8af7cfb4cea4df5e4aec523094d"
+    },
+    {
+      "bytes": 15937,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a6590ea5e19fe68b02aaa1decb3c03ad8045d477c8ca062d38d462ec944d6d4d/body",
+      "relative_path": "assets/a6590ea5e19fe68b02aaa1decb3c03ad8045d477c8ca062d38d462ec944d6d4d/body",
+      "sha256": "a6590ea5e19fe68b02aaa1decb3c03ad8045d477c8ca062d38d462ec944d6d4d"
+    },
+    {
+      "bytes": 20710,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/df32bf73e715880c7eeafc6c5b95b46927c41c1ff89c9ad4cf487035dbe35faf/body",
+      "relative_path": "assets/df32bf73e715880c7eeafc6c5b95b46927c41c1ff89c9ad4cf487035dbe35faf/body",
+      "sha256": "df32bf73e715880c7eeafc6c5b95b46927c41c1ff89c9ad4cf487035dbe35faf"
+    },
+    {
+      "bytes": 11115,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/19413482c0999c5f0ab545faec9d87c940d3aea00a714a0ea50b3546b83f3574/body",
+      "relative_path": "assets/19413482c0999c5f0ab545faec9d87c940d3aea00a714a0ea50b3546b83f3574/body",
+      "sha256": "19413482c0999c5f0ab545faec9d87c940d3aea00a714a0ea50b3546b83f3574"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f/body",
+      "relative_path": "assets/436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f/body",
+      "sha256": "436253459c66b4cd89616cb0cdb4d2693b1c7f56b85181ded75c1c80286e244f"
+    },
+    {
+      "bytes": 13229,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8/body",
+      "relative_path": "assets/008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8/body",
+      "sha256": "008e348d1f21463e877f11fb830fa9452fc8030add535a9d0421869aed3636b8"
+    },
+    {
+      "bytes": 16321,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4d8640533d2eb9f6c41131be81480ed897027aa5b0652ab30b305c837eea41a2/body",
+      "relative_path": "assets/4d8640533d2eb9f6c41131be81480ed897027aa5b0652ab30b305c837eea41a2/body",
+      "sha256": "4d8640533d2eb9f6c41131be81480ed897027aa5b0652ab30b305c837eea41a2"
+    },
+    {
+      "bytes": 4915,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6ce4ca20942c8b67265f5a3e00fb2cc1dd21404d4ecad75b54d8e7e11a7c2dbb/body",
+      "relative_path": "assets/6ce4ca20942c8b67265f5a3e00fb2cc1dd21404d4ecad75b54d8e7e11a7c2dbb/body",
+      "sha256": "6ce4ca20942c8b67265f5a3e00fb2cc1dd21404d4ecad75b54d8e7e11a7c2dbb"
+    },
+    {
+      "bytes": 7228,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/168f35e544bc1748a25b75dc366e8d8ef468652aa06680cf94a64e2d6e21b77e/body",
+      "relative_path": "assets/168f35e544bc1748a25b75dc366e8d8ef468652aa06680cf94a64e2d6e21b77e/body",
+      "sha256": "168f35e544bc1748a25b75dc366e8d8ef468652aa06680cf94a64e2d6e21b77e"
+    },
+    {
+      "bytes": 10235,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8e4c05e455a0032e6e59995c8bffad19d79e069bb5447e8b47c2ebc6697886d0/body",
+      "relative_path": "assets/8e4c05e455a0032e6e59995c8bffad19d79e069bb5447e8b47c2ebc6697886d0/body",
+      "sha256": "8e4c05e455a0032e6e59995c8bffad19d79e069bb5447e8b47c2ebc6697886d0"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ca8bb3eaf7ea4e371c0daac0fe7da2fe7bd9bcd524da0d010cb8f25d5b977b20/body",
+      "relative_path": "assets/ca8bb3eaf7ea4e371c0daac0fe7da2fe7bd9bcd524da0d010cb8f25d5b977b20/body",
+      "sha256": "ca8bb3eaf7ea4e371c0daac0fe7da2fe7bd9bcd524da0d010cb8f25d5b977b20"
+    },
+    {
+      "bytes": 10912,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/58cf16394769f9558c595e3b0923a6e8dd91c15e70d54da87ee6442e86425d0b/body",
+      "relative_path": "assets/58cf16394769f9558c595e3b0923a6e8dd91c15e70d54da87ee6442e86425d0b/body",
+      "sha256": "58cf16394769f9558c595e3b0923a6e8dd91c15e70d54da87ee6442e86425d0b"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8043fa3e47ef31236f77b75cab6b245a59bf63fc507657010c74efbe3c673817/body",
+      "relative_path": "assets/8043fa3e47ef31236f77b75cab6b245a59bf63fc507657010c74efbe3c673817/body",
+      "sha256": "8043fa3e47ef31236f77b75cab6b245a59bf63fc507657010c74efbe3c673817"
+    },
+    {
+      "bytes": 5056,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6e1695170eaca3296eb3c5103aebe5a7b021322cd752bbbb22e103cb249f94d9/body",
+      "relative_path": "assets/6e1695170eaca3296eb3c5103aebe5a7b021322cd752bbbb22e103cb249f94d9/body",
+      "sha256": "6e1695170eaca3296eb3c5103aebe5a7b021322cd752bbbb22e103cb249f94d9"
+    },
+    {
+      "bytes": 3137,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cdcdac4137013179ac7f6733746c00b7d2f2fd5705194eb092b58d58c5663585/body",
+      "relative_path": "assets/cdcdac4137013179ac7f6733746c00b7d2f2fd5705194eb092b58d58c5663585/body",
+      "sha256": "cdcdac4137013179ac7f6733746c00b7d2f2fd5705194eb092b58d58c5663585"
+    },
+    {
+      "bytes": 1133,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/25b7f6e5fc2dae1ffbc89aa51207105e63003130550f5923cff292937d3c4691/body",
+      "relative_path": "assets/25b7f6e5fc2dae1ffbc89aa51207105e63003130550f5923cff292937d3c4691/body",
+      "sha256": "25b7f6e5fc2dae1ffbc89aa51207105e63003130550f5923cff292937d3c4691"
+    },
+    {
+      "bytes": 1651,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/3c58277b50e2fe706419b67c7e135680dc2f4cf7685d2cc653c9813eaa0d7fcd/body",
+      "relative_path": "assets/3c58277b50e2fe706419b67c7e135680dc2f4cf7685d2cc653c9813eaa0d7fcd/body",
+      "sha256": "3c58277b50e2fe706419b67c7e135680dc2f4cf7685d2cc653c9813eaa0d7fcd"
+    },
+    {
+      "bytes": 11598,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e609699bf24b5e9c918fa5548d3d91798212b2aa7eaa71e581871dc5fa3be3f4/body",
+      "relative_path": "assets/e609699bf24b5e9c918fa5548d3d91798212b2aa7eaa71e581871dc5fa3be3f4/body",
+      "sha256": "e609699bf24b5e9c918fa5548d3d91798212b2aa7eaa71e581871dc5fa3be3f4"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8d698c7486bb2a4dec8deb56f2e5ba307a29145f16350988e69618603cf734b4/body",
+      "relative_path": "assets/8d698c7486bb2a4dec8deb56f2e5ba307a29145f16350988e69618603cf734b4/body",
+      "sha256": "8d698c7486bb2a4dec8deb56f2e5ba307a29145f16350988e69618603cf734b4"
+    },
+    {
+      "bytes": 10534,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/84509a844f9b8daf5ee3c7c184c5d99c34bae2c365be05835596d771f775d5f9/body",
+      "relative_path": "assets/84509a844f9b8daf5ee3c7c184c5d99c34bae2c365be05835596d771f775d5f9/body",
+      "sha256": "84509a844f9b8daf5ee3c7c184c5d99c34bae2c365be05835596d771f775d5f9"
+    },
+    {
+      "bytes": 9563,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5717d7db12d61801e34a63f8ba5dd7ceb5eea99a18bee8bfa397d126551a8133/body",
+      "relative_path": "assets/5717d7db12d61801e34a63f8ba5dd7ceb5eea99a18bee8bfa397d126551a8133/body",
+      "sha256": "5717d7db12d61801e34a63f8ba5dd7ceb5eea99a18bee8bfa397d126551a8133"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/44922c7cdd42654eca9579b1b903621db1dd438b5fe4f7c9a1e44b0fabb8a02f/body",
+      "relative_path": "assets/44922c7cdd42654eca9579b1b903621db1dd438b5fe4f7c9a1e44b0fabb8a02f/body",
+      "sha256": "44922c7cdd42654eca9579b1b903621db1dd438b5fe4f7c9a1e44b0fabb8a02f"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7c1d3d5f5acbd15f4294252457aad9dfc326da4d20438081e73791c01754fe35/body",
+      "relative_path": "assets/7c1d3d5f5acbd15f4294252457aad9dfc326da4d20438081e73791c01754fe35/body",
+      "sha256": "7c1d3d5f5acbd15f4294252457aad9dfc326da4d20438081e73791c01754fe35"
+    },
+    {
+      "bytes": 15936,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a4c5322196bc346298fea0d89b23fbfa3e31f49bf70ed9b9a54a1f2d12e11e75/body",
+      "relative_path": "assets/a4c5322196bc346298fea0d89b23fbfa3e31f49bf70ed9b9a54a1f2d12e11e75/body",
+      "sha256": "a4c5322196bc346298fea0d89b23fbfa3e31f49bf70ed9b9a54a1f2d12e11e75"
+    },
+    {
+      "bytes": 14217,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1655ddd693e461bb25f5b9a004827257d0ed6b059c4564da0d34be6710e54f85/body",
+      "relative_path": "assets/1655ddd693e461bb25f5b9a004827257d0ed6b059c4564da0d34be6710e54f85/body",
+      "sha256": "1655ddd693e461bb25f5b9a004827257d0ed6b059c4564da0d34be6710e54f85"
+    },
+    {
+      "bytes": 101,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458/body",
+      "relative_path": "assets/75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458/body",
+      "sha256": "75e6152b3d44b458fa5886545e9887adb4b76cbed29a83c9cc02397a8e721458"
+    },
+    {
+      "bytes": 11024,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481/body",
+      "relative_path": "assets/f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481/body",
+      "sha256": "f131fdf973db966292d6b6588ede016c28b1836fbf84846724dca4724799b481"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/91a4819458c7c407ee5eaf913a6f82f27267b42bfca87f6fb98fad1c3497eb43/body",
+      "relative_path": "assets/91a4819458c7c407ee5eaf913a6f82f27267b42bfca87f6fb98fad1c3497eb43/body",
+      "sha256": "91a4819458c7c407ee5eaf913a6f82f27267b42bfca87f6fb98fad1c3497eb43"
+    },
+    {
+      "bytes": 8140,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57/body",
+      "relative_path": "assets/f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57/body",
+      "sha256": "f6d3270454f9eb3141ae8189e4727a245154dcf6d552677e6c8588d6020b9f57"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/207ac630eec15ae8177ddec51ff37f6b9d30e4b912b91d903780fddf21e54478/body",
+      "relative_path": "assets/207ac630eec15ae8177ddec51ff37f6b9d30e4b912b91d903780fddf21e54478/body",
+      "sha256": "207ac630eec15ae8177ddec51ff37f6b9d30e4b912b91d903780fddf21e54478"
+    },
+    {
+      "bytes": 15404,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1d1354579ee55cb5f54adc74031a36cfc97004818123c9009d5ec9086e940c18/body",
+      "relative_path": "assets/1d1354579ee55cb5f54adc74031a36cfc97004818123c9009d5ec9086e940c18/body",
+      "sha256": "1d1354579ee55cb5f54adc74031a36cfc97004818123c9009d5ec9086e940c18"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/84d163abda1f8d0c1d7e91c7eee0139948deed63f26d118394ab076037377076/body",
+      "relative_path": "assets/84d163abda1f8d0c1d7e91c7eee0139948deed63f26d118394ab076037377076/body",
+      "sha256": "84d163abda1f8d0c1d7e91c7eee0139948deed63f26d118394ab076037377076"
+    },
+    {
+      "bytes": 15600,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1/body",
+      "relative_path": "assets/755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1/body",
+      "sha256": "755d96686ab427f38fe50080db679709814b8ac860165bf24583dd9098ead6b1"
+    },
+    {
+      "bytes": 5771,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6/body",
+      "relative_path": "assets/2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6/body",
+      "sha256": "2f0ea50026919704c99af45ff9a4dbb52f2143e7263314d8e7718170ed99e8d6"
+    },
+    {
+      "bytes": 9563,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/8d3961461373e6a39b00ba17fe28e05c2b53f9e8fc2e34cab933b46923f3b82a/body",
+      "relative_path": "assets/8d3961461373e6a39b00ba17fe28e05c2b53f9e8fc2e34cab933b46923f3b82a/body",
+      "sha256": "8d3961461373e6a39b00ba17fe28e05c2b53f9e8fc2e34cab933b46923f3b82a"
+    },
+    {
+      "bytes": 1592,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/86d6d16326721197064aa1b84319b3ba0a0607b15218502b93314351d488ad27/body",
+      "relative_path": "assets/86d6d16326721197064aa1b84319b3ba0a0607b15218502b93314351d488ad27/body",
+      "sha256": "86d6d16326721197064aa1b84319b3ba0a0607b15218502b93314351d488ad27"
+    },
+    {
+      "bytes": 112710,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/058fd27ccbe4b227f80b249d6ae30d19c7df7f71c812c6752d0fc298f6583367/body",
+      "relative_path": "assets/058fd27ccbe4b227f80b249d6ae30d19c7df7f71c812c6752d0fc298f6583367/body",
+      "sha256": "058fd27ccbe4b227f80b249d6ae30d19c7df7f71c812c6752d0fc298f6583367"
+    },
+    {
+      "bytes": 5941,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99/body",
+      "relative_path": "assets/bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99/body",
+      "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+    },
+    {
+      "bytes": 1623,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f/body",
+      "relative_path": "assets/4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f/body",
+      "sha256": "4f5fea18ca09735c9c8ea3fd2a13699851e6e8e626c41427965180c46378717f"
+    },
+    {
+      "bytes": 982,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/363aa847d1d23cf8582249e1d1abab755ea8ff37b49690b83f133c6b25f4ba81/body",
+      "relative_path": "assets/363aa847d1d23cf8582249e1d1abab755ea8ff37b49690b83f133c6b25f4ba81/body",
+      "sha256": "363aa847d1d23cf8582249e1d1abab755ea8ff37b49690b83f133c6b25f4ba81"
+    },
+    {
+      "bytes": 28766,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640/body",
+      "relative_path": "assets/0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640/body",
+      "sha256": "0f0aa50cb9e20c949869b27c1eeb453d5242ba4a9114b978fe9995ba584ac640"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/98db53d888114c3105272c08ca553c7bb29a072f1e7dee6092892fd7aff597d3/body",
+      "relative_path": "assets/98db53d888114c3105272c08ca553c7bb29a072f1e7dee6092892fd7aff597d3/body",
+      "sha256": "98db53d888114c3105272c08ca553c7bb29a072f1e7dee6092892fd7aff597d3"
+    },
+    {
+      "bytes": 12358,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c2abc1ca5d08ca44db17c0d7c617a1f563b8e10ff8908b4fcbb85e39695880a2/body",
+      "relative_path": "assets/c2abc1ca5d08ca44db17c0d7c617a1f563b8e10ff8908b4fcbb85e39695880a2/body",
+      "sha256": "c2abc1ca5d08ca44db17c0d7c617a1f563b8e10ff8908b4fcbb85e39695880a2"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade/body",
+      "relative_path": "assets/304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade/body",
+      "sha256": "304bf9e9e716fa5e4fd7b6c0b02ac6c468cefb0dd45175025856874c09d18ade"
+    },
+    {
+      "bytes": 7731,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee/body",
+      "relative_path": "assets/d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee/body",
+      "sha256": "d019c5e0c6a6b8ac9156105cbe561312316a48f0bc2278457d3e50daa6f35bee"
+    },
+    {
+      "bytes": 6422,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5/body",
+      "relative_path": "assets/b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5/body",
+      "sha256": "b6db2dc1b8c0060efd213ae1f755862d4f957674c60895c5361ab1c1d72323a5"
+    },
+    {
+      "bytes": 4586,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be/body",
+      "relative_path": "assets/14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be/body",
+      "sha256": "14f5c6a6171c16dc9ed8352012026b2dbe8ad892930fd3a210e6261ade90c0be"
+    },
+    {
+      "bytes": 4031,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/6702c80a401cc2905bb9fdb84ecb093e502c405b29e7c59c30a543bb09e4bb1a/body",
+      "relative_path": "assets/6702c80a401cc2905bb9fdb84ecb093e502c405b29e7c59c30a543bb09e4bb1a/body",
+      "sha256": "6702c80a401cc2905bb9fdb84ecb093e502c405b29e7c59c30a543bb09e4bb1a"
+    },
+    {
+      "bytes": 32868,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4e9f4853b2da708dfb7d1a54ff5456f4f20a30d41dfd47f01744f38bd8f4dc7d/body",
+      "relative_path": "assets/4e9f4853b2da708dfb7d1a54ff5456f4f20a30d41dfd47f01744f38bd8f4dc7d/body",
+      "sha256": "4e9f4853b2da708dfb7d1a54ff5456f4f20a30d41dfd47f01744f38bd8f4dc7d"
+    },
+    {
+      "bytes": 6602,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d/body",
+      "relative_path": "assets/5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d/body",
+      "sha256": "5fb044ce4689f323d3a1f25040546c91845b0179dbd192d83fa9273e9f69858d"
+    },
+    {
+      "bytes": 20141,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/53d769adee560bba8f0eec82e834e52c01dc5dc86c6bbb9f9be36da00991b3e6/body",
+      "relative_path": "assets/53d769adee560bba8f0eec82e834e52c01dc5dc86c6bbb9f9be36da00991b3e6/body",
+      "sha256": "53d769adee560bba8f0eec82e834e52c01dc5dc86c6bbb9f9be36da00991b3e6"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e6501a988dd548a64acd7efb6073380c16c630de0267f1df6c5d2cc3d5be2ffd/body",
+      "relative_path": "assets/e6501a988dd548a64acd7efb6073380c16c630de0267f1df6c5d2cc3d5be2ffd/body",
+      "sha256": "e6501a988dd548a64acd7efb6073380c16c630de0267f1df6c5d2cc3d5be2ffd"
+    },
+    {
+      "bytes": 22009,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934/body",
+      "relative_path": "assets/0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934/body",
+      "sha256": "0193361c566373143d49b1c79b1f314d4978ad87722fe5b87c58702686164934"
+    },
+    {
+      "bytes": 1434660,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ece7224917655a7a69cad92d288fd5a0593b2fad7aaee14a9522435ccc4a2608/body",
+      "relative_path": "assets/ece7224917655a7a69cad92d288fd5a0593b2fad7aaee14a9522435ccc4a2608/body",
+      "sha256": "ece7224917655a7a69cad92d288fd5a0593b2fad7aaee14a9522435ccc4a2608"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b13b3146cb5019ee9bcab3171ea532406dbd74ee0730423dc3e4a172698e0505/body",
+      "relative_path": "assets/b13b3146cb5019ee9bcab3171ea532406dbd74ee0730423dc3e4a172698e0505/body",
+      "sha256": "b13b3146cb5019ee9bcab3171ea532406dbd74ee0730423dc3e4a172698e0505"
+    },
+    {
+      "bytes": 2788,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3/body",
+      "relative_path": "assets/18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3/body",
+      "sha256": "18112b71153533b27d1613c3fc67e9efd63b2a5ebb6adf08c8914750f2f276f3"
+    },
+    {
+      "bytes": 1677,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/4f6c274bfa5d07833e9a6ad3d0c3b234a39ea1f61a6814abb6caa7d308cdbec2/body",
+      "relative_path": "assets/4f6c274bfa5d07833e9a6ad3d0c3b234a39ea1f61a6814abb6caa7d308cdbec2/body",
+      "sha256": "4f6c274bfa5d07833e9a6ad3d0c3b234a39ea1f61a6814abb6caa7d308cdbec2"
+    },
+    {
+      "bytes": 26441,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d22556b52375117c81a13276c0cf955ef0b535a60ff9240d5f3a5574eae483c2/body",
+      "relative_path": "assets/d22556b52375117c81a13276c0cf955ef0b535a60ff9240d5f3a5574eae483c2/body",
+      "sha256": "d22556b52375117c81a13276c0cf955ef0b535a60ff9240d5f3a5574eae483c2"
+    },
+    {
+      "bytes": 10310,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/478084c03fa5a3dbc6aa2ed92248ca412061be48d1bc3f2dcaaa3978af2d0e34/body",
+      "relative_path": "assets/478084c03fa5a3dbc6aa2ed92248ca412061be48d1bc3f2dcaaa3978af2d0e34/body",
+      "sha256": "478084c03fa5a3dbc6aa2ed92248ca412061be48d1bc3f2dcaaa3978af2d0e34"
+    },
+    {
+      "bytes": 9371,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b0a6cdc91ef797db446f2ef1c6caf8f3fbe98ee268b2d8aed6c5bfef49099297/body",
+      "relative_path": "assets/b0a6cdc91ef797db446f2ef1c6caf8f3fbe98ee268b2d8aed6c5bfef49099297/body",
+      "sha256": "b0a6cdc91ef797db446f2ef1c6caf8f3fbe98ee268b2d8aed6c5bfef49099297"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0959eff90824ae71e6c8772d840d0272187a1d479ab8dfd85c3a9b4e6872189a/body",
+      "relative_path": "assets/0959eff90824ae71e6c8772d840d0272187a1d479ab8dfd85c3a9b4e6872189a/body",
+      "sha256": "0959eff90824ae71e6c8772d840d0272187a1d479ab8dfd85c3a9b4e6872189a"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/adb5e130bb3fc5fda988d811d860368e13c99131dd87cc7c4e027a170b44141d/body",
+      "relative_path": "assets/adb5e130bb3fc5fda988d811d860368e13c99131dd87cc7c4e027a170b44141d/body",
+      "sha256": "adb5e130bb3fc5fda988d811d860368e13c99131dd87cc7c4e027a170b44141d"
+    },
+    {
+      "bytes": 2777,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34/body",
+      "relative_path": "assets/9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34/body",
+      "sha256": "9b6d877f5caa79bacf3846e7ca3fec6ddbb66de919b416a1a1e38dd28b214b34"
+    },
+    {
+      "bytes": 1297,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/f41713ffe0a72c18257eafbf310093eed5bdd82bdeb4939e79bb98ba6eeea19f/body",
+      "relative_path": "assets/f41713ffe0a72c18257eafbf310093eed5bdd82bdeb4939e79bb98ba6eeea19f/body",
+      "sha256": "f41713ffe0a72c18257eafbf310093eed5bdd82bdeb4939e79bb98ba6eeea19f"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e3f701e2eaf67ecde4c7e17076af1e05933d277337f06766da24249c4bd012ab/body",
+      "relative_path": "assets/e3f701e2eaf67ecde4c7e17076af1e05933d277337f06766da24249c4bd012ab/body",
+      "sha256": "e3f701e2eaf67ecde4c7e17076af1e05933d277337f06766da24249c4bd012ab"
+    },
+    {
+      "bytes": 6244,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/d8bddf3490ce31294725ace80416cbc48a8c853c447cf8397893c4bff2ae6c21/body",
+      "relative_path": "assets/d8bddf3490ce31294725ace80416cbc48a8c853c447cf8397893c4bff2ae6c21/body",
+      "sha256": "d8bddf3490ce31294725ace80416cbc48a8c853c447cf8397893c4bff2ae6c21"
+    },
+    {
+      "bytes": 1667,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1a7c19fb8a361d2193feaf45f245f5acadfd8ad857337e3ee237bf9953f3cf1c/body",
+      "relative_path": "assets/1a7c19fb8a361d2193feaf45f245f5acadfd8ad857337e3ee237bf9953f3cf1c/body",
+      "sha256": "1a7c19fb8a361d2193feaf45f245f5acadfd8ad857337e3ee237bf9953f3cf1c"
+    },
+    {
+      "bytes": 10197,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/daadd7e7dd550c84287157e4889f9cb617be68edda497ecf4e0e856f65cb8954/body",
+      "relative_path": "assets/daadd7e7dd550c84287157e4889f9cb617be68edda497ecf4e0e856f65cb8954/body",
+      "sha256": "daadd7e7dd550c84287157e4889f9cb617be68edda497ecf4e0e856f65cb8954"
+    },
+    {
+      "bytes": 4148,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/94c3a5623ad3182432228e5c623ba9bd37f29080b26f061d8118bf0201faa43a/body",
+      "relative_path": "assets/94c3a5623ad3182432228e5c623ba9bd37f29080b26f061d8118bf0201faa43a/body",
+      "sha256": "94c3a5623ad3182432228e5c623ba9bd37f29080b26f061d8118bf0201faa43a"
+    },
+    {
+      "bytes": 1667,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/e9d660895e698bba3675c738781102850d965e1a686e2cd5c906c2972a52fe88/body",
+      "relative_path": "assets/e9d660895e698bba3675c738781102850d965e1a686e2cd5c906c2972a52fe88/body",
+      "sha256": "e9d660895e698bba3675c738781102850d965e1a686e2cd5c906c2972a52fe88"
+    },
+    {
+      "bytes": 41756,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/808d731d957c5eee57df395c69382fc786a8d8460a5f1c55cb03f08c2b3aac6e/body",
+      "relative_path": "assets/808d731d957c5eee57df395c69382fc786a8d8460a5f1c55cb03f08c2b3aac6e/body",
+      "sha256": "808d731d957c5eee57df395c69382fc786a8d8460a5f1c55cb03f08c2b3aac6e"
+    },
+    {
+      "bytes": 24397,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ce8d01943827ab36d9d15b8d1e7eb08ae12cd4027554208e239bcf804b136d78/body",
+      "relative_path": "assets/ce8d01943827ab36d9d15b8d1e7eb08ae12cd4027554208e239bcf804b136d78/body",
+      "sha256": "ce8d01943827ab36d9d15b8d1e7eb08ae12cd4027554208e239bcf804b136d78"
+    },
+    {
+      "bytes": 4805,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/75c2244fc57e246abcebb8dfd5df7ff073e5a800e052fd7f69788b7ed4e1fde6/body",
+      "relative_path": "assets/75c2244fc57e246abcebb8dfd5df7ff073e5a800e052fd7f69788b7ed4e1fde6/body",
+      "sha256": "75c2244fc57e246abcebb8dfd5df7ff073e5a800e052fd7f69788b7ed4e1fde6"
+    },
+    {
+      "bytes": 6927,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d/body",
+      "relative_path": "assets/87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d/body",
+      "sha256": "87c51819ae8f0ba0e9495d49362bafe43d2cd92cd52ec3cd9c560e59af26cf5d"
+    },
+    {
+      "bytes": 22009,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2/body",
+      "relative_path": "assets/ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2/body",
+      "sha256": "ea9e393acfa224e1834f59a1af7d764e92c7a7d041761b0c1d8291fde6fb06a2"
+    },
+    {
+      "bytes": 1611,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5bbdb289192405f34168da9127c2790fbe47a80b7b50daaa5188e9adb38e161c/body",
+      "relative_path": "assets/5bbdb289192405f34168da9127c2790fbe47a80b7b50daaa5188e9adb38e161c/body",
+      "sha256": "5bbdb289192405f34168da9127c2790fbe47a80b7b50daaa5188e9adb38e161c"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/af4b80f1e254b98d4eb4cf7868085150019dc15f5b75218a4c557ff821c861ec/body",
+      "relative_path": "assets/af4b80f1e254b98d4eb4cf7868085150019dc15f5b75218a4c557ff821c861ec/body",
+      "sha256": "af4b80f1e254b98d4eb4cf7868085150019dc15f5b75218a4c557ff821c861ec"
+    },
+    {
+      "bytes": 14217,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c04125455d274e7f575d17592f0e7c7b5498cc54b2016ba2a490d2ae330c80d9/body",
+      "relative_path": "assets/c04125455d274e7f575d17592f0e7c7b5498cc54b2016ba2a490d2ae330c80d9/body",
+      "sha256": "c04125455d274e7f575d17592f0e7c7b5498cc54b2016ba2a490d2ae330c80d9"
+    },
+    {
+      "bytes": 20710,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/030d51ad0b2c9908a0b35e0614ccb251ab18c2771c40c0887d667c19365fc6d3/body",
+      "relative_path": "assets/030d51ad0b2c9908a0b35e0614ccb251ab18c2771c40c0887d667c19365fc6d3/body",
+      "sha256": "030d51ad0b2c9908a0b35e0614ccb251ab18c2771c40c0887d667c19365fc6d3"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/af1a285ae7e099cde38d6d08d6cb85f76c97e4d1240b153f1e163e4395d41d82/body",
+      "relative_path": "assets/af1a285ae7e099cde38d6d08d6cb85f76c97e4d1240b153f1e163e4395d41d82/body",
+      "sha256": "af1a285ae7e099cde38d6d08d6cb85f76c97e4d1240b153f1e163e4395d41d82"
+    },
+    {
+      "bytes": 1621,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7e095d6e6778f032fa5eb1c4a8fdf522b0eabebc9ade6c38dcb985a4a6c1db26/body",
+      "relative_path": "assets/7e095d6e6778f032fa5eb1c4a8fdf522b0eabebc9ade6c38dcb985a4a6c1db26/body",
+      "sha256": "7e095d6e6778f032fa5eb1c4a8fdf522b0eabebc9ade6c38dcb985a4a6c1db26"
+    },
+    {
+      "bytes": 20149,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9d6ae828678578d2980fd3ef192e2f7d744e11379434d4d7303204b05628ee0b/body",
+      "relative_path": "assets/9d6ae828678578d2980fd3ef192e2f7d744e11379434d4d7303204b05628ee0b/body",
+      "sha256": "9d6ae828678578d2980fd3ef192e2f7d744e11379434d4d7303204b05628ee0b"
+    },
+    {
+      "bytes": 2424,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/25179dbe442a18705861a440027a2f453b0f33208392f2eb3ef7d09fd32a7afb/body",
+      "relative_path": "assets/25179dbe442a18705861a440027a2f453b0f33208392f2eb3ef7d09fd32a7afb/body",
+      "sha256": "25179dbe442a18705861a440027a2f453b0f33208392f2eb3ef7d09fd32a7afb"
+    },
+    {
+      "bytes": 2940,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a2240d17995c0b9b27987177c73213b78413fc69d8b48bceccba9b93ca740c64/body",
+      "relative_path": "assets/a2240d17995c0b9b27987177c73213b78413fc69d8b48bceccba9b93ca740c64/body",
+      "sha256": "a2240d17995c0b9b27987177c73213b78413fc69d8b48bceccba9b93ca740c64"
+    },
+    {
+      "bytes": 10513,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd/body",
+      "relative_path": "assets/333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd/body",
+      "sha256": "333fdd3273b8ee7117862062a6a098fcb1b15d403048b1cc56b9f1185b5c96cd"
+    },
+    {
+      "bytes": 5437,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/9394254772251f4912e5056fd4f46bda4e7da72371ad8e3da89194a5feca6b6d/body",
+      "relative_path": "assets/9394254772251f4912e5056fd4f46bda4e7da72371ad8e3da89194a5feca6b6d/body",
+      "sha256": "9394254772251f4912e5056fd4f46bda4e7da72371ad8e3da89194a5feca6b6d"
+    },
+    {
+      "bytes": 15936,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/a8a1791f3c38feb3d9068db1718cbce1a36133415d56373b6b7812991c900480/body",
+      "relative_path": "assets/a8a1791f3c38feb3d9068db1718cbce1a36133415d56373b6b7812991c900480/body",
+      "sha256": "a8a1791f3c38feb3d9068db1718cbce1a36133415d56373b6b7812991c900480"
+    },
+    {
+      "bytes": 10400,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/90db7805fbfd2dd8f55262a44deb91611076ec7de8f4d8ae385a28bf93785cbc/body",
+      "relative_path": "assets/90db7805fbfd2dd8f55262a44deb91611076ec7de8f4d8ae385a28bf93785cbc/body",
+      "sha256": "90db7805fbfd2dd8f55262a44deb91611076ec7de8f4d8ae385a28bf93785cbc"
+    },
+    {
+      "bytes": 28766,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24/body",
+      "relative_path": "assets/129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24/body",
+      "sha256": "129aaa2a9306d496730191bc56a56a1f6599820c8584df7e263514e319cbaa24"
+    },
+    {
+      "bytes": 18158,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/70c7f0cdaad780cf081fc0fc4418e75422b2caafe046017d16718019d383485f/body",
+      "relative_path": "assets/70c7f0cdaad780cf081fc0fc4418e75422b2caafe046017d16718019d383485f/body",
+      "sha256": "70c7f0cdaad780cf081fc0fc4418e75422b2caafe046017d16718019d383485f"
+    },
+    {
+      "bytes": 1622,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/1ca85f1439aacbdac2f5af51d6614499b01a5edae58e4275b2e30004657f7e14/body",
+      "relative_path": "assets/1ca85f1439aacbdac2f5af51d6614499b01a5edae58e4275b2e30004657f7e14/body",
+      "sha256": "1ca85f1439aacbdac2f5af51d6614499b01a5edae58e4275b2e30004657f7e14"
+    },
+    {
+      "bytes": 44150,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/7daa56ed0a73d7bdeafbab0add606423c898a362b6c67e5272ea0f4d9266c834/body",
+      "relative_path": "assets/7daa56ed0a73d7bdeafbab0add606423c898a362b6c67e5272ea0f4d9266c834/body",
+      "sha256": "7daa56ed0a73d7bdeafbab0add606423c898a362b6c67e5272ea0f4d9266c834"
+    },
+    {
+      "bytes": 22288,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/c5072184257c479d52849fbe37ee40112db2120bfaf86f790acf0f862b350b26/body",
+      "relative_path": "assets/c5072184257c479d52849fbe37ee40112db2120bfaf86f790acf0f862b350b26/body",
+      "sha256": "c5072184257c479d52849fbe37ee40112db2120bfaf86f790acf0f862b350b26"
+    },
+    {
+      "bytes": 22587,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/ff40409ae2d7e24833678ca835f5bf9a8a65cd803d911d755d04cb0d7cc6c778/body",
+      "relative_path": "assets/ff40409ae2d7e24833678ca835f5bf9a8a65cd803d911d755d04cb0d7cc6c778/body",
+      "sha256": "ff40409ae2d7e24833678ca835f5bf9a8a65cd803d911d755d04cb0d7cc6c778"
+    },
+    {
+      "bytes": 9058,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/b4a30835a459b33f9991447b1af42c8cda4094cfd4b2d3eb4223fc021af87a3e/body",
+      "relative_path": "assets/b4a30835a459b33f9991447b1af42c8cda4094cfd4b2d3eb4223fc021af87a3e/body",
+      "sha256": "b4a30835a459b33f9991447b1af42c8cda4094cfd4b2d3eb4223fc021af87a3e"
+    },
+    {
+      "bytes": 23590,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/37d9edc4cc4260851bca2e8bfb04eeeb7b88b390c8159d1765cf9fd5ab77b137/body",
+      "relative_path": "assets/37d9edc4cc4260851bca2e8bfb04eeeb7b88b390c8159d1765cf9fd5ab77b137/body",
+      "sha256": "37d9edc4cc4260851bca2e8bfb04eeeb7b88b390c8159d1765cf9fd5ab77b137"
+    },
+    {
+      "bytes": 22009,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b/body",
+      "relative_path": "assets/cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b/body",
+      "sha256": "cc05c34dae4c715cc7e7f1128c18030ecd9cb68154178040d5c3d906c76ea32b"
+    },
+    {
+      "bytes": 13026,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/5a2d62c81422a47147556877bd0acfc344f99abdec2affc15196af5448e6e092/body",
+      "relative_path": "assets/5a2d62c81422a47147556877bd0acfc344f99abdec2affc15196af5448e6e092/body",
+      "sha256": "5a2d62c81422a47147556877bd0acfc344f99abdec2affc15196af5448e6e092"
+    },
+    {
+      "bytes": 7649,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/assets/0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f/body",
+      "relative_path": "assets/0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f/body",
+      "sha256": "0f3ad54add2f15c8e04006fd60ed0eef3f28dd4d75aa1d226e548bdb3238400f"
+    },
+    {
+      "bytes": 227343,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/owner-proof-history/PUBLICATION128_NONREQUIRED_ARTIFACT_TYPED_CLASSIFICATION_001.json",
+      "relative_path": "owner-proof-history/PUBLICATION128_NONREQUIRED_ARTIFACT_TYPED_CLASSIFICATION_001.json",
+      "sha256": "50ea9c948236c42a4a012a1988c39473a89f878206683cfba2617cb7b636fea2"
+    },
+    {
+      "bytes": 147346,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/owner-proof-history/PUBLICATION168_ADDITIONAL_METADATA_TYPED_CLASSIFICATION_001.json",
+      "relative_path": "owner-proof-history/PUBLICATION168_ADDITIONAL_METADATA_TYPED_CLASSIFICATION_001.json",
+      "sha256": "f1249dd86ff40aebb0b913753882f962c138aeda5a7e6856e9c83fc625948545"
+    },
+    {
+      "bytes": 2552,
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/002-owner-resolved/EDITION.json",
+      "relative_path": "editions/002-owner-resolved/EDITION.json",
+      "sha256": "673af99a4f66c888b6ec5ce2cbb136c329c720e633a69a54a62d2116381d1d11"
+    }
+  ],
+  "includes_prior_001_asset_refs_in_manifest_but_not_duplicate_file_selection": true,
+  "no_scientific_or_native_credit": true,
+  "schema": "er9.curation-positive-selection.v1",
+  "scope": "Additive225exactbodyfiles plusnew safe finalclassification/projection/code/ownerproof metadata; prior001 remainsimmutable; no private/rawsource/unknown bodycopy"
+}

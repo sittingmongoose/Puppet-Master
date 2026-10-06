@@ -1,0 +1,26 @@
+{
+  "actual_start_utc": "2026-10-06 12:38:15 UTC",
+  "candidate_or_native_status_changes": false,
+  "created_utc": "2026-10-06T13:09:51.239983+00:00",
+  "final_selector": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-curation-001/editions/004-final-producer-correction/PUBLICATION_SELECTOR.json",
+    "sha256": "e69882f1d85d3f37bc228240bd26f8bec9640db50e44a0a05fa91cb8a6064739"
+  },
+  "helper_stopped_after_reported_overrun": true,
+  "later_source_refs": "NAS010/011 observations arrived separately; they require new dated owner joins and do not retrospectively alter curation001 original cutoff.",
+  "new_candidate_authorization": false,
+  "original_bound_seconds": 1800,
+  "original_inclusive_deadline_utc": "2026-10-06 13:08:15 UTC",
+  "publication_effect": "Publish exact already sealed safe artifacts and this timing qualification. The campaign has no publication stopwatch or inherited global cutoff; ordinary parent publication, archive and consolidation continue.",
+  "qualification": "Within-bound sealing/report-ready times are subsets, not whole-task closure. Final required notices overran the1800-second helper bound. No reset or claim that all final handoffs met budget. Earlier003 clock and all sealed editions retain their dated scopes.",
+  "reported_final_required_handoffs_returned_utc": "2026-10-06 13:08:34 UTC",
+  "reported_inclusive_elapsed_seconds": 1819,
+  "reported_overrun_seconds": 19,
+  "schema": "er9.root.evidence-qualification.v1",
+  "scientific_grade_changes": false,
+  "selected_bytes_checks": "937 eligible unique assets, exact source SHA/length checks passed; source bytes unchanged; selection sealed before original deadline",
+  "selected_bytes_sealed_elapsed_seconds": 1783.323618,
+  "status": "ACTUAL_HELPER_HANDOFF_OVERRUN_NO_RESET",
+  "task": "publication-curation-001",
+  "timing_precision": "final tool clock reported whole seconds; finer resolution UNKNOWN"
+}

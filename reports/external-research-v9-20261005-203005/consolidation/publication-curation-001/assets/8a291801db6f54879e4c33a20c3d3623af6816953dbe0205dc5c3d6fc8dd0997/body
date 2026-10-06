@@ -1,0 +1,3 @@
+# Correction to citation errata
+
+`citation-errata.md` incorrectly locates the SQLite WAL citation as proposal line 27. Line 27 is the Jupyter citation; the SQLite WAL paragraph is **proposal line 29**. Its intended correction remains `[S10]` → `[S11]`. The other line locations and source-ID corrections in `citation-errata.md` are correct. `leads.json` records the citation corrections without this line-number error.

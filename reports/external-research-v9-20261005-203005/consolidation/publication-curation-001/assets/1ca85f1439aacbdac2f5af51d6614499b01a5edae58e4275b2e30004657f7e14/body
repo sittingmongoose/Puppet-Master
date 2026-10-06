@@ -1,0 +1,36 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V09-B-diagnostic-preparation-control-whole_critic-dec006-r002",
+  "pair_id": "D-V09-B",
+  "source_slot": "D-V09-B",
+  "family": "L",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V09-B.json",
+  "card_sha256": "fb9c5bea2c59d32c33075bff386400357f7568d4cf294b4d09d582a2000255a1",
+  "stage_jobs": [
+    {
+      "job_id": "D-V09-B-control-whole_critic-a001",
+      "arm": "control",
+      "stage": "whole_critic",
+      "stage_index": 0,
+      "max_seconds": 400,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V09-B/D-V09-B-control-whole_critic-a001/prepared-stage.json",
+      "stage_sha256": "7b127d81e2443c88bc546fb98e80c4342474d7951f6825a9a61aea7574318a55",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V09-B/D-V09-B-control-whole_critic-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true
+    }
+  ],
+  "root_scope_required": true,
+  "status": "PREPARED_NOT_ADMITTED",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "runtime_binding_required": true,
+  "created_utc": "2026-10-05T23:32:44.101662+00:00"
+}

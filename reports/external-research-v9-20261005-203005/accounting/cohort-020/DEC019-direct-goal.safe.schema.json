@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "owner_capsule_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": "string"
+              },
+              "direct_evidence_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "event_time_observed_literal": {
+                "type": "number"
+              },
+              "event_time_selector": {
+                "type": "string"
+              },
+              "goal_id": {
+                "type": "string"
+              },
+              "goal_id_selector": {
+                "type": "string"
+              },
+              "native_goal_status": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_kind": {
+                "type": "string"
+              },
+              "status_selector": {
+                "type": "string"
+              },
+              "time_semantics": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "goal_id",
+              "native_goal_status",
+              "direct_evidence_pin",
+              "status_selector",
+              "goal_id_selector",
+              "event_time_selector",
+              "event_time_observed_literal",
+              "time_semantics",
+              "source_kind",
+              "scope"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "attempt_id": {
+                "type": "string"
+              },
+              "direct_evidence_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "event_time_observed_literal": {
+                "type": "number"
+              },
+              "event_time_selector": {
+                "type": "string"
+              },
+              "goal_id": {
+                "type": "string"
+              },
+              "goal_id_selector": {
+                "type": "string"
+              },
+              "native_goal_status": {
+                "type": "string"
+              },
+              "scope": {
+                "type": "string"
+              },
+              "source_kind": {
+                "type": "string"
+              },
+              "status_selector": {
+                "type": "string"
+              },
+              "time_semantics": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "attempt_id",
+              "goal_id",
+              "native_goal_status",
+              "direct_evidence_pin",
+              "status_selector",
+              "goal_id_selector",
+              "event_time_selector",
+              "event_time_observed_literal",
+              "time_semantics",
+              "source_kind",
+              "scope"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "source_query_performed": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_capsule_pin",
+    "rows",
+    "source_query_performed",
+    "scope"
+  ],
+  "type": "object"
+}

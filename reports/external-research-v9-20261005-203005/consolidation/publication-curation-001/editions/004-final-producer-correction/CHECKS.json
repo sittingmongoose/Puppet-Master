@@ -1,0 +1,45 @@
+{
+  "checked_utc": "2026-10-06T13:07:26.607267+00:00",
+  "checks": {
+    "all_asset_paths_in_owned_new_directory": true,
+    "all_original_pin_rows_exactly_accounted": true,
+    "all_source_sha_and_length_pins_preserved": true,
+    "every_staging_copy_sha_length_exact": true,
+    "explicit_type_reason_every_pin": true,
+    "index_matches_manifest_staged_content": true,
+    "no_campaign_native_scientific_credit": true,
+    "no_native_private_excluded_body_staged": true,
+    "no_raw_private_content_inherits_eligibility_by_alias": true,
+    "nonrequired_outputs_need_exact_owner_type": true,
+    "original_matrix_immutable": true,
+    "original_selected_cutoffs_preserved": true,
+    "selected_content_index_unique": true,
+    "staged_rows_have_positive_typed_authority": true,
+    "staged_sources_still_match_pins_at_check": true,
+    "toolconfigs_need_exact_credential_free_ownerproof": true
+  },
+  "copy_errors": [],
+  "counts": {
+    "classes": {
+      "ELIGIBLE_AUTHENTIC_ACTUAL_TASK": 442,
+      "ELIGIBLE_AUTHENTIC_CANDIDATE_OUTPUT_OR_WITNESS": 327,
+      "ELIGIBLE_CREDENTIAL_FREE_ACTUAL_TOOL_CONFIG": 187,
+      "ELIGIBLE_EXACT_OWNER_POSITIVE_NEUTRAL_PROJECTION": 174,
+      "EXCLUDED_PRIVATE_RAW_NATIVE_VENDOR_FOREIGN": 279,
+      "EXISTING_VERIFIED_CONTENT_ALIAS": 502,
+      "EXTERNAL_RAW_PUBLIC_SOURCE_CAPTURE": 53,
+      "QUARANTINED_OWNER_TYPED_PRODUCER_OR_SOURCE_BOUNDARY_UNKNOWN": 8,
+      "SAFE_NEUTRAL_PROJECTION_ONLY_ORIGINAL_FREEZE_QUARANTINED": 277,
+      "SAFE_NEUTRAL_PROJECTION_ONLY_ORIGINAL_STAGE_QUARANTINED": 633
+    },
+    "classified_pins": 2882,
+    "eligible_staged_pin_rows": 1130,
+    "staged_bytes": 12828741,
+    "unique_staged_content_assets": 937
+  },
+  "curation_manifest_sha256": "002a746476ef2b97d6a431dd3024b9cd835a5ef98658d9be8f654d3a3a9f240c",
+  "deterministic_pass": true,
+  "later_source_changes": [],
+  "schema": "er9.curation-checks.v1",
+  "scope": "Cryptographiccopy/typeauthority/originalcutoff metadata only; no semanticreading/execution of transferred outputs, scientificgrade/nativeGoalproof/reproductionexperiment or campaigncompleteness claim."
+}

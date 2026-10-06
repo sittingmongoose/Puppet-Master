@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "accounting_cohort": {
+      "type": "string"
+    },
+    "body_or_grade_values_in_positive_exports": {
+      "type": "string"
+    },
+    "candidate_feedback_or_scientific_grade_changes": {
+      "type": "boolean"
+    },
+    "captured_original_bytes_publication": {
+      "type": "string"
+    },
+    "independent_semantic_memory_exposure_audit": {
+      "type": "string"
+    },
+    "inventory_incident_and_indexed003_Target_print_relation": {
+      "type": "string"
+    },
+    "other_record_fields_could_be_materialized_in_Python_memory": {
+      "type": "boolean"
+    },
+    "perfect_no_body_firewall_claim": {
+      "type": "boolean"
+    },
+    "raw_native_protocol_modelIO_privateDB_accessed": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scientific_source_text_values_inspected_used_in_joins_or_emitted": {
+      "type": "boolean"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "selected_fields_accessed": {
+      "items": {
+        "anyOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          },
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "structured_whole_receipt_result_JSON_parsing_occurred": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "schema",
+    "accounting_cohort",
+    "structured_whole_receipt_result_JSON_parsing_occurred",
+    "selected_fields_accessed",
+    "other_record_fields_could_be_materialized_in_Python_memory",
+    "scientific_source_text_values_inspected_used_in_joins_or_emitted",
+    "perfect_no_body_firewall_claim",
+    "independent_semantic_memory_exposure_audit",
+    "raw_native_protocol_modelIO_privateDB_accessed",
+    "captured_original_bytes_publication",
+    "body_or_grade_values_in_positive_exports",
+    "inventory_incident_and_indexed003_Target_print_relation",
+    "candidate_feedback_or_scientific_grade_changes",
+    "scope"
+  ],
+  "type": "object"
+}

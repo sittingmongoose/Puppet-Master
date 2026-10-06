@@ -1,0 +1,36 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V04-B-diagnostic-preparation-control-proposal_first_record-dec006-r002",
+  "pair_id": "D-V04-B",
+  "source_slot": "D-V04-B",
+  "family": "L",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V04-B.json",
+  "card_sha256": "96fa489879fb762d75f7a99f326d4ddb4e3909ded51c1a4747c7f0587432602a",
+  "stage_jobs": [
+    {
+      "job_id": "D-V04-B-control-proposal_first_record-a001",
+      "arm": "control",
+      "stage": "proposal_first_record",
+      "stage_index": 0,
+      "max_seconds": 300,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V04-B/D-V04-B-control-proposal_first_record-a001/prepared-stage.json",
+      "stage_sha256": "d0e451e385fe6a8c296c0dcc315597d833f4675635a9f5fbc68edea5ccb9e1a1",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/prepared/D-V04-B/D-V04-B-control-proposal_first_record-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true
+    }
+  ],
+  "root_scope_required": true,
+  "status": "PREPARED_NOT_ADMITTED",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "runtime_binding_required": true,
+  "created_utc": "2026-10-05T23:32:43.090696+00:00"
+}

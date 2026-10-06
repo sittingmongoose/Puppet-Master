@@ -1,0 +1,47 @@
+{
+  "stage": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+  "role": "critique",
+  "witnesses": [
+    {
+      "id": "W1",
+      "kind": "executed_by_candidate",
+      "tool": "python_execute (admitted bounded isolation)",
+      "execution_id": "exec-z8lwmo7y",
+      "completed_utc": "2026-10-06T08:18:04.278842+00:00",
+      "exit_code": 0,
+      "code_sha256": "77ebc3f7c7e050748ef827aea3ffa869d2661f78a31d270cc9040795d0cdaa31",
+      "stdout_sha256": "41dcd28462de5e14b13ba5f8068fd2fc073474bbfab97bd32cb63b62b609cdd8",
+      "limits": "5s wall / 3s cpu / 256MiB / no network",
+      "input": "Pure integer/float arithmetic: sample-rate mapping under floor/round/nearest; 48000->44100->48000 cue round-trip; 100-clip per-clip vs one-shot length conversion; float 1.4 -> int16 wrap vs clamp",
+      "expected_behavior_justification": "Given exact rational mapping f_dst = f_src * dst/src, single boundary points can be exact (A,B null results predicted by arithmetic); rounding errors accumulate when applied per-clip (C); int16 cast wraps without explicit clamp (D)",
+      "results": {
+        "A_bound_1s_44100_to_48000": "floor=round=nearest=48000 (NO divergence; exact mapping)",
+        "B_cue_roundtrip": "src 178728000 -> returned 178728000, drift 0 (NO drift)",
+        "C_per_clip_vs_whole": "per-clip total 8820100 vs one-shot 8820092, delta +8 frames (~0.18 ms)",
+        "D_int16_overfull": "wrap -> -19663; clamp -> 32767"
+      },
+      "scope_limits": "Isolated arithmetic demonstration only; no audio library, no files, no editor; does NOT establish any application behavior; null results (A,B) reported faithfully",
+      "use": "Shows per-clip rounding accumulation and unclamped quantization hazards that the timeline/mixdown contract must close"
+    },
+    {
+      "id": "W2",
+      "kind": "executed_by_candidate",
+      "tool": "public_https_get x5",
+      "execution_ids": [
+        "capture 99a954bd498d4cd99ac4ea919437f39c (S1)",
+        "capture 91d61ea8101b4b31b26cc913ff4c40a5 (S2)",
+        "capture b7215f9f4e5d420b92b3498582f47c7e (S3)",
+        "capture b2298c8936794e1e97cca927307b07c1 (S4)",
+        "capture 65608cc1c1df46f0b87eb61585c3f681 (S5)"
+      ],
+      "scope_limits": "Exact HTTP response bodies captured and hashed; pins are transport-level; 'semantic acquisition UNKNOWN' per capture metadata",
+      "use": "Source pack V-1..V-7 in out/critique/review.md"
+    },
+    {
+      "id": "W3",
+      "kind": "proposed_unexecuted",
+      "description": "Successor validation: pin exact commit + regression test for libsndfile 1.0.27 SF_INFO seekable fix; Audacity audacity3/release-3.7.x behavior pins; waveform cache invalidation tests; long-session descriptor-count check; 2h/8GB memory and cancel-safety measurements",
+      "scope_limits": "None of these were run in this stage; must stay labeled proposed/UNEXECUTED until actually executed"
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "actual_input_birth_rule": "Ops binds actual first-chronological structurally eligible same-arm native roles/allcaptures before final launch; never completed/fake missing-role claim",
+  "additional_admission_gate": null,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/card.json",
+  "card_sha256": "3f81d8f8eead6efdb15769376eff066b9235a89609cb35f0780230108f9b2cbf",
+  "deferred_stages": [],
+  "dispatch_selection_rule": "Sole ops verifies old resource-stage native starts0, freezes successor selection and never admits both versions",
+  "duplicate_ordinary_research_critic_stages": 0,
+  "family": "L",
+  "final_reference_policy": "INLINE_ONLY both arms where coupled",
+  "full_fresh_pipeline_or_matched_causal_credit": false,
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/TRANSPORT_PRESERVATION.json",
+    "sha256": "670fcddf27735b14015898074aa34ea22d1b67236cc10015d277cb7e80009dc4"
+  },
+  "native_starts": 0,
+  "no_candidate_answers_or_evaluation_supplied": true,
+  "no_new_premium_authored_answers_or_evaluator_feedback_supplied": true,
+  "original_attempts_and_costs_preserved": true,
+  "pair_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001",
+  "pending_predecessor_inputs": "Original registered DAG/role dependencies remain actual pending; profile readiness is independent",
+  "reference_closure_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/DEFERRED_BINDING_CONTRACT.json",
+    "sha256": "b4e9b4c998cfd91fb778387d82863653458dfe5ee208683f87fba6a170604c66"
+  },
+  "request_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001-r001-inline-r002",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "1f5de5cb40337fd7056d7458015013542b5c39f361b2298a23fce9345c10a427"
+  },
+  "root_or_max_go_required": false,
+  "root_scope_required": false,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "coupled_warm_delivery_version_no_fresh_matched_pipeline_credit",
+  "source_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-batch001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001/registration.json",
+    "sha256": "168e009daceb9b3db9b2ce77dfb450a26198598405c232e6bbc2f7eda7fa75fc"
+  },
+  "source_role_imports": [],
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch005/I-06-DELIVERY-RECOVERY-R002/card.json",
+      "sha256": "750cc279ac1da9cee7e9de6f52eca4c03c6773705a1c0f904c39c69297c78c85"
+    }
+  ],
+  "source_slot": "I-06",
+  "stage_jobs": [
+    {
+      "arm": "control",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/operator-profile/bundle_profile.json",
+        "sha256": "2dd61339aa84361cf1fbd47ec72b1835fc8dbad68808b6af7461bfae98925c31"
+      },
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001": "I-06-DELIVERY-RECOVERY-R002-control-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001"
+      ],
+      "public_get": true,
+      "reference_closure_binding_required": false,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "stage_sha256": "8d5ee837b9420c77b2a9e26fdcb26fde23a508e4ff79a6979fe69de9ae4b6a75",
+      "status": "AWAITING_ACTUAL_SAME_ARM_PREDECESSOR_INPUT_CLOSURE"
+    },
+    {
+      "arm": "treatment",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/operator-profile/bundle_profile.json",
+        "sha256": "7f3bdfe0d18538353d327776b1688254e7288a2848ab31116ff4598a1c707138"
+      },
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "predecessor_aliases": {
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001": "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001"
+      },
+      "prerequisite_job_ids": [
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001"
+      ],
+      "public_get": true,
+      "reference_closure_binding_required": false,
+      "runtime_binding_required": true,
+      "source_job_id": "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+      "source_role_freezes_required": [],
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/warm-bundle001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-BUNDLE-R001/I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001/role-bound-stage.json",
+      "stage_sha256": "1e258e37345738dab84d6e55e2a78f23e7ee6d5ef29c4b19ae200efafd789dc1",
+      "status": "AWAITING_ACTUAL_SAME_ARM_PREDECESSOR_INPUT_CLOSURE"
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "supersedes_pending_stage_job_ids": [
+    "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+    "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001"
+  ]
+}

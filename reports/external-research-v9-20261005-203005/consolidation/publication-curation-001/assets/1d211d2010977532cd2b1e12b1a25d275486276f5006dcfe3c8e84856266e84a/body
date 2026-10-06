@@ -1,0 +1,13 @@
+# Correction record — research stage (2026-10-06)
+
+The artifact boundary is write-once; `out/research/witnesses.json` could not be edited in place after an initial write, so this record documents its one known defect.
+
+**Finding (applies to `out/research/witnesses.json`, witness W-2, field `code_sha256`):**
+- Written value: `fad0c9d2f1a120f3126bffa68010b25edfa232abe51dc417e324e607687e04` — a hand-transcription error (62 hex chars).
+- **Corrected value: `fad0c9d2f1a120f3126bffa68010b25edfa232abe51dc417e324e6076876e042`** (64 hex chars).
+
+**Verification (executed by candidate):** the W-2 code was re-run byte-identically in the admitted isolation; the fresh receipt `exec-da2xbh01` reports `code_sha256 = fad0c9d2f1a120f3126bffa68010b25edfa232abe51dc417e324e6076876e042` with the same `stdout_sha256` (`d294ab8985aec14eb5a765f64b954b32a8c20783c19a4295a533495b0ebffc59`) and exit 0 as the original receipt `exec-mxmqsf3m`, confirming the code text and the corrected hash. An intermediate re-run with a modified leading comment (`exec-_rr0noy6`, code_sha256 `c0ceb492e3153eeb5401e780764efae98dfed33642daf49202895e17180409d6`) was never used as W-2 evidence.
+
+**Scope of the correction:** the hash field only. The intended-expected values, observed stdout, exit code, and scope limits recorded for W-2 in `witnesses.json` match the original receipt verbatim. No other witness, source catalog entry, lead, or proposal section is affected by this correction.
+
+Readers of `out/research/witnesses.json` should apply this replacement to W-2's `code_sha256` field.

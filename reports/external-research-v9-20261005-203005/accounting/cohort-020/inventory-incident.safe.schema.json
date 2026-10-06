@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "current_selected_source_pin_count": {
+      "type": "number"
+    },
+    "owner_incident_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owner_incident_source_inventory_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "qualifications": {
+      "additionalProperties": false,
+      "properties": {
+        "boundary_identified_and_reported_utc": {
+          "type": "string"
+        },
+        "boundary_identified_time_precision": {
+          "type": "string"
+        },
+        "broader_local_draft_access_exposure": {
+          "type": "string"
+        },
+        "candidate_feedback": {
+          "type": "boolean"
+        },
+        "clock_cost": {
+          "type": "string"
+        },
+        "first_task_start_utc": {
+          "type": "string"
+        },
+        "historical_actual_per_file_parse_set": {
+          "type": "string"
+        },
+        "new_native_calls": {
+          "type": "number"
+        },
+        "not_reconstructed": {
+          "type": "string"
+        },
+        "prior_draft_byte_sha256": {
+          "type": "string"
+        },
+        "prior_draft_bytes": {
+          "type": "string"
+        },
+        "scientific_regrade": {
+          "type": "boolean"
+        },
+        "whole_file_parse_memory_exposure": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first_task_start_utc",
+        "boundary_identified_and_reported_utc",
+        "boundary_identified_time_precision",
+        "historical_actual_per_file_parse_set",
+        "whole_file_parse_memory_exposure",
+        "broader_local_draft_access_exposure",
+        "prior_draft_bytes",
+        "prior_draft_byte_sha256",
+        "not_reconstructed",
+        "scientific_regrade",
+        "candidate_feedback",
+        "new_native_calls",
+        "clock_cost"
+      ],
+      "type": "object"
+    },
+    "reconstructed_source_pin_count": {
+      "type": "number"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "schema",
+    "owner_incident_pin",
+    "owner_incident_source_inventory_pin",
+    "reconstructed_source_pin_count",
+    "current_selected_source_pin_count",
+    "qualifications",
+    "scope"
+  ],
+  "type": "object"
+}

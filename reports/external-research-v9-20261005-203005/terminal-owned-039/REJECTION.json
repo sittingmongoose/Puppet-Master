@@ -1,0 +1,124 @@
+{
+  "observed_utc": "2026-10-06T12:13:52.564264+00:00",
+  "source_gate_ref": {
+    "path": "LAB_ROOT/dev/diagnostic-runner/resource-successors-001/c04-paired-native-catalog-repair-001/paired_gate.py",
+    "sha256": "2db287d1bbd1d6aceb4957c423e8b86d8c84ba9e06839c65644363042737a324"
+  },
+  "plan_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/PLAN.json",
+    "sha256": "e41f69fc4a02d8b05f11530a06f9ed0b8c58ee3a771da53e310286bfeaff8571"
+  },
+  "source_gate_status": "REJECT_PAIR",
+  "category": "DIRECT_NATIVE_GOAL_NOT_COMPLETE",
+  "repairs": [
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/OUTPUT_FREEZE.json",
+        "sha256": "bc700a0456a90edcddf56901d8991d55ea81e6cfa323989c3efba9f762fe3e8d"
+      },
+      "actual_stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/stage.json",
+        "sha256": "1ea2fb4a4ff56be548312c675eb7285bdb01d423db8b4cdc4bb5304dacfc2548"
+      },
+      "capsule_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/CAPSULES.json",
+        "sha256": "fd4bb034ce16114313ff15d290435014d4502d7c0dc35b6969b022ec563d53bd"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "e171dca95160369196185b68d3c42d96241560ea82244cd6d8a58ed751213292"
+      }
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "freeze_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/OUTPUT_FREEZE.json",
+        "sha256": "aa07325c083bce697face76aa611415b9a01ff76d8693cb89e5dca8ac8b6ee29"
+      },
+      "actual_stage_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/stage.json",
+        "sha256": "e59f5d3ba071371e46c7cad9f9102ff86dbf4b72301ad67d41f67ae055042702"
+      },
+      "capsule_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/CAPSULES.json",
+        "sha256": "fd4bb034ce16114313ff15d290435014d4502d7c0dc35b6969b022ec563d53bd"
+      },
+      "release_ref": {
+        "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001-dec018-tools-row-r002/PRIVATE_SLICE_RELEASE.json",
+        "sha256": "365e51a4470e9adc8f9b8d7afc105fca651e03f27d2b75959ec25c1bedc82adc"
+      }
+    }
+  ],
+  "direct_native_capsule_ref": {
+    "path": "LAB_ROOT/ops/dispatcher/DEC018_TERMINAL_PAIRED_GATE_REJECTION_001/CAPSULES.json",
+    "sha256": "fd4bb034ce16114313ff15d290435014d4502d7c0dc35b6969b022ec563d53bd"
+  },
+  "repair_structural_inventory": [
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+      "status": "FAILED",
+      "freeze_metadata": {
+        "operational_complete": false,
+        "native_status": "cap_seconds",
+        "native_quiescent": true,
+        "missing_required_artifacts": [
+          "out/research/sources.json",
+          "out/research/witnesses.json",
+          "out/research/leads.json"
+        ],
+        "invalid_json_artifacts": [],
+        "elapsed_seconds": 572.9561531660001,
+        "artifacts": [
+          {
+            "path": "LAB_ROOT/ops/dispatcher/runs/C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001-dec018-tools-row-r002/frozen-output/research/proposal.md",
+            "relative_path": "research/proposal.md",
+            "sha256": "00f0d82790cb0aa1a9c438c4119040e921d13358441d31093c88cff92a5a1913",
+            "bytes": 28827
+          }
+        ]
+      }
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+      "status": "FAILED",
+      "freeze_metadata": {
+        "operational_complete": false,
+        "native_status": "execution_error",
+        "native_quiescent": true,
+        "missing_required_artifacts": [
+          "out/research/proposal.md",
+          "out/research/sources.json",
+          "out/research/witnesses.json",
+          "out/research/leads.json"
+        ],
+        "invalid_json_artifacts": [],
+        "elapsed_seconds": 574.134335212002,
+        "artifacts": []
+      }
+    }
+  ],
+  "conditional_roles_closed": [
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    },
+    {
+      "job_id": "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001",
+      "status": "BLOCKED_PREDECESSOR_FAILED",
+      "native_goal_starts": 0,
+      "birth": null
+    }
+  ],
+  "preservation_or_quality_gate_PASS": false,
+  "source_fidelity_comparison_not_performed_due_native_completion_failure": true,
+  "new_candidate_allocations_or_promotions": false
+}

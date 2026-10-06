@@ -1,0 +1,90 @@
+{
+  "leads_version": "diagnostic-stage/1.1",
+  "basis": "Unresolved leads inherited from the frozen candidate inventory, with the marimo replay-provenance follow-up narrowed for this amendment. Public capture state is only as of each catalogued capture.",
+  "leads": [
+    {
+      "id": "L1",
+      "title": "First DuckDB release containing the #12596 fix",
+      "status": "unresolved",
+      "detail": "Fix merged to main 2024-06-24 [S10]; v1.0.0 tag commit 2024-05-29 predates it, v1.1.0 tag commit 2024-09-08 postdates it [S12, S13]. Whether any 1.0.x bugfix release (e.g. 1.0.1/1.0.2) carried the fix was not established.",
+      "next_step": "diff tags v1.0.x against merge commit 2532c30f or read release notes for the 1.0.x series"
+    },
+    {
+      "id": "L2",
+      "title": "null_padding default value discrepancy",
+      "status": "unresolved",
+      "detail": "PR #6765 body says null_padding 'defaults to true, which mimicks the behavior of Pandas/Polars' [S1]; the current docs' sample error block prints 'null_padding=0' [S2]. Probably a flag-style rendering (0/1) vs prose, but per-version default behavior was not verified.",
+      "next_step": "run read_csv against a short-row CSV on pinned DuckDB versions 0.8/1.0/1.4+ and observe"
+    },
+    {
+      "id": "L3",
+      "title": "devguide branches.csv / end-of-life.csv source location",
+      "status": "unresolved",
+      "detail": "versions.rst references include/branches.csv via csv-table :file:, but include/ on main contains only activate-tab.rst and links.rst; raw fetches 404 [S22]. Exact EOL dates were taken from endoflife.date [S16] instead.",
+      "next_step": "locate the csv-table includes (build-time substitution?) or pin the rendered page's table HTML"
+    },
+    {
+      "id": "L4",
+      "title": "Jupyter kernel-restart output-clearing behavior and settings",
+      "status": "not_investigated",
+      "detail": "Whether Jupyter Notebook/Lab clears or preserves outputs on kernel restart (and under which settings) was not researched; it affects UI defaults for the 'restart marks unverified' rule.",
+      "next_step": "inspect jupyterlab/notebook restart handlers and settings schema"
+    },
+    {
+      "id": "L5",
+      "title": "DuckDB out-of-core behavior for global operators on the 8-core/16 GB envelope",
+      "status": "unverified",
+      "detail": "Buffer-pool eviction under a memory limit is evidenced in tagged source [S13] and bounded CSV reading in docs [S2], but 5 GB sort/distinct behavior (spill vs failure, disk usage) was never measured.",
+      "next_step": "proposed V1/V2; benchmark a generated 5 GB input and report peak RSS, spill use, and explicit failures"
+    },
+    {
+      "id": "L6",
+      "title": "marimo #9881 cached-output provenance after reconnect",
+      "status": "open_as_of_capture",
+      "detail": "The supplied capture reports a stale cached exception shown after reconnect without a live-versus-cached distinction. It is an issue report, not an independently reproduced failure or proof of a released-version behavior [S21].",
+      "next_step": "recheck issue and any fix/release; test reconnect and environment changes against a real runtime before relying on its output-provenance behavior"
+    },
+    {
+      "id": "L10",
+      "title": "marimo PR #10915 (cross-app state staleness, closes #10602)",
+      "status": "unmerged_as_of_capture",
+      "detail": "PR closed 2026-10-05 with merged_at null; whether it was reworked/abandoned is unknown. Evidence value: demonstrates cross-context staleness dispatch is genuinely hard.",
+      "next_step": "recheck issue #10602 state before relying on either approach"
+    },
+    {
+      "id": "L7",
+      "title": "Multi-writer collaboration via Quack protocol or DuckLake",
+      "status": "optional_future",
+      "detail": "Quack remote protocol beta as of DuckDB v1.5.2; DuckLake (Postgres catalog) presented as the stable multi-writer route [S3]. Out of scope for a local-first small team.",
+      "next_step": "revisit only if real-time collaboration becomes a requirement"
+    },
+    {
+      "id": "L8",
+      "title": "ipyflow as a reactive layer over existing Jupyter kernels",
+      "status": "not_investigated",
+      "detail": "Cited by marimo's README as part of the reactive-dataflow lineage [S5]; would be the natural alternative if staleness must be added to unmodified Jupyter kernels rather than a separate status layer.",
+      "next_step": "compare ipyflow's dataflow tracking granularity vs static refs/defs"
+    },
+    {
+      "id": "L9",
+      "title": "nbformat/Jupyter trust model and signed notebooks",
+      "status": "not_investigated",
+      "detail": "The Jupyter 'trusted notebook' mechanism interacts with 'browsing must not execute'; whether to adopt, ignore, or warn on trust flags was left open.",
+      "next_step": "read nbformat trust/signature docs and Jupyter security docs"
+    },
+    {
+      "id": "L11",
+      "title": "Sandbox mechanism selection for the production execution boundary",
+      "status": "unverified",
+      "detail": "The research sandbox (Bubblewrap/systemd namespaces, per-receipt limits) demonstrates the isolated-check pattern, but production mechanism is not selected or benchmarked; Windows support is unresolved.",
+      "next_step": "proposed V7: test the selected OS boundary against escape attempts and define platform scope/fallback before claiming enforcement"
+    },
+    {
+      "id": "L12",
+      "title": "marimo PR #10912 release applicability and freshness scope",
+      "status": "unverified",
+      "detail": "Supplied capture says the merged PR uses generations to avoid a late module-watcher stale mark after rerun, but does not identify a release containing it or establish behavior for persisted notebook outputs/reconnect [S21].",
+      "next_step": "inspect the merged patch and regression test at a pinned commit/release; keep the product's own reconnect and delayed-invalidation tests in V8"
+    }
+  ]
+}

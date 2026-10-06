@@ -1,0 +1,210 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "SEED-DEV-B-DEFERRED-R001-r001-CLOCK-R002",
+  "pair_id": "SEED-DEV-B-DEFERRED-R001",
+  "source_slot": "SEED-DEV-B",
+  "family": "L",
+  "candidate_family": "Luna",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/SOURCE_PREREQUISITE_CARD.json",
+  "card_sha256": "2f7700c5ef8821a2b1d7eb3eefbd5ca09c5070e9b74f8e10e12c0aa381a4d403",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+    "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+  },
+  "stage_jobs": [
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "arm": "seed",
+      "stage": "critique",
+      "stage_index": 0,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "5459a4c72562c94733523447ff224d1cce1ad967cf96397f8c318bd3016f09f4",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "required_artifacts": [
+        "out/seed/critique.md"
+      ],
+      "execution_enabled": true,
+      "public_get": true,
+      "pipeline_final": false,
+      "candidate_seed_development": true,
+      "scored_comparison": false,
+      "count_in_diagnostic_denominator": false,
+      "runtime_binding_required": true,
+      "prior_binding_required": false,
+      "source_role_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "status": "PREPARED_NOT_ADMITTED",
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+        "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+      },
+      "base_manifest_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+        "seed_id": "BASE-B-DEC006",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "original_source_role_lineage": "SEED-DEV-B-FIXED-BASE-critique-s002",
+      "automatic_retry": false,
+      "source_job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001",
+      "predecessor_aliases": {},
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "4ff3c0043f04ac1e29feb224d0005558dd0dc5752ee75e09cc59a62e0eea3888"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/workspace/TASK.md",
+        "sha256": "a4abe437ec90e918409e041d98d290e6399578960256ac7c6f9a443354facd41"
+      },
+      "original_authentic_r4_actual_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/SEED-DEV-B-DEFERRED-R001-seed-critique-a001/stage.json",
+        "sha256": "6f00a385ce68caf96e2f0d07a73943878137307b0380eab17bf5b0119147eceb"
+      },
+      "inline_only_bundle": false,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    },
+    {
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002",
+      "arm": "seed",
+      "stage": "revision",
+      "stage_index": 1,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "max_seconds": 450,
+      "max_responses": null,
+      "prerequisite_job_ids": [
+        "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "9cb50f398f14cfc08a5860028b9166ea1e0a681fd870ea262691aee3dd81b23a",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "required_artifacts": [
+        "out/seed/revision.md",
+        "out/seed/sources.json",
+        "out/seed/witnesses.json",
+        "out/seed/leads.json",
+        "out/seed/dependencies.json"
+      ],
+      "execution_enabled": true,
+      "public_get": true,
+      "pipeline_final": false,
+      "candidate_seed_development": true,
+      "scored_comparison": false,
+      "count_in_diagnostic_denominator": false,
+      "runtime_binding_required": true,
+      "prior_binding_required": true,
+      "source_role_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+        "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+      },
+      "base_manifest_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+        "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+        "seed_id": "BASE-B-DEC006",
+        "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+      },
+      "original_source_role_lineage": "SEED-DEV-B-FIXED-BASE-revision-s002",
+      "automatic_retry": false,
+      "source_job_id": "SEED-DEV-B-DEFERRED-R001-seed-revision-a001",
+      "predecessor_aliases": {
+        "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001"
+      },
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "bc1f6d901d93edd55a2202d746d1ab22d13e23701298d45fbc54fd1a9399d264"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/source-prerequisites/B/SEED-DEV-B-DEFERRED-R001-seed-revision-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "7c0a8adb06f20847fec78aa45a6f3142c7bfc11b3bd172e1296f45314f712980"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/workspace/TASK.md",
+        "sha256": "7c0a8adb06f20847fec78aa45a6f3142c7bfc11b3bd172e1296f45314f712980"
+      },
+      "original_authentic_r4_actual_stage_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/source-prerequisites/SEED-DEV-B-DEFERRED-R001-seed-revision-a001/prepared-stage.json",
+        "sha256": "a29bc1bb552b2de1e51c5905cdd3fcd05479f930f093505655dd93ccf6a4ae70"
+      },
+      "inline_only_bundle": false,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    }
+  ],
+  "candidate_seed_development": true,
+  "scored_comparison": false,
+  "count_in_diagnostic_denominator": false,
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "cold_cost_charged_separately": true,
+  "base_manifest": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/seed-recovery/bases/I-02-treatment-research-a001/BASE_MANIFEST.json",
+    "sha256": "022aa3dc96ff5ea819846be5e22b3059f908251327b725eed88ce093fea80027",
+    "seed_id": "BASE-B-DEC006",
+    "status": "MECHANICALLY_AUTHENTIC_BASE_ONLY"
+  },
+  "old_seed_status_metadata_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/SEED_ROLE_STATUS_METADATA_20261006T0240.json",
+    "sha256": "cef65177178d7fa452aa2b62a22075cdd082c3a957212e9167afb83fd3a62f8a"
+  },
+  "original_failed_status_and_costs_unchanged": true,
+  "status": "PREPARED_NOT_ADMITTED",
+  "native_starts": 0,
+  "clock_behavioral_version": "v1.5-clock-telemetry",
+  "source_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/registration/SEED-DEV-B-DEFERRED-R001-r001.json",
+    "sha256": "168f35e544bc1748a25b75dc366e8d8ef468652aa06680cf94a64e2d6e21b77e"
+  },
+  "source_exception_scope": "Root-authorized shared unscored seed prerequisite role version, finite5/3000s; no clock retrofit or failed native output re-label.",
+  "supersedes_failed_or_blocked_job_ids": [
+    "SEED-DEV-B-DEFERRED-R001-seed-critique-a001",
+    "SEED-DEV-B-DEFERRED-R001-seed-revision-a001"
+  ],
+  "original_execution_cutoff_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+    "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+  },
+  "no_old_candidate_failure_outputs_or_source_answers_supplied": true
+}

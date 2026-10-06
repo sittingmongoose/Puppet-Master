@@ -1,0 +1,9 @@
+# Errata to out/critique/review.md (critique stage, 2026-10-06)
+
+`out/critique/review.md` was written once (sha256 `88aef7a6001d3985a2ba8c55a287a84daf3a1a48438522541ad98cb36c2ebd4e`, 29,975 bytes, 143 lines) and cannot be overwritten by the stage's write tool (FileExistsError). Two defects in it are corrected here; all other content stands as written.
+
+1. **§3 T1 "Failure" bullet and §6 catalog row S8 — corrupted capture-hash string.** The file renders the issue #3824 capture as `6bd6cd6e…098123325a2652bb8c40478838ce0aee6101` (review.md line 87) and `6bd6cd6e…81209f09b98f442a5f83325a2652bb8c40478838ce0aee6101` (line 135). Both splices are malformed. **Correct full sha256 of the S8 capture** (https://api.github.com/repos/OSGeo/PROJ/issues/3824, exact response body): `6bd6cd6e06a51981209f09b98f442a5f83325a2652bb8c40478838ce0aee6101`. The substantive facts cited from that capture (issue title, dates, state_reason "completed", quoted reproduction) are unaffected — only the hash rendering was wrong.
+
+2. **§2 V1 locator precision.** The file cites RFC 7946 sections with approximate text-body line numbers. Treat the locators as the section numbers plus the RFC's own printed page numbers: §3.1.1 (page 7), §3.1.9 (pages 10–11), §3.2 (page 11), §4 (page 12), §5.2 (page 14). All cited passages are within the captured byte range 0–32768 of 49143.
+
+No other corrections. The §5.3 execution inventory, all [FACT]/[INFER]/[UNVERIFIED] labels, and gates G1–G8 are unchanged.

@@ -1,0 +1,47 @@
+{
+  "stage": "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+  "role": "critique",
+  "unresolved": [
+    {
+      "id": "L1",
+      "lead": "Exact fix commit hash and regression-test file for libsndfile 1.0.27 'SF_INFO seekable flag regression introduced in 1.0.26'",
+      "status": "not_captured_this_stage",
+      "why_matters": "Upgrades the V-3 issue->fix chain from release granularity to commit granularity",
+      "how_to_resolve": "Fetch libsndfile git history around 2016-06-19 (1.0.27 tag) and tests/ directory; do not guess hashes"
+    },
+    {
+      "id": "L2",
+      "lead": "Audacity implementation-behavior precedents (nondestructive clip/blockfile model, autosave/recovery) pinned to audacity3 or release-3.7.x with file/line locators",
+      "status": "unexecuted",
+      "why_matters": "Required if a successor uses Audacity as a load-bearing precedent; V-7 shows master is mid-refactor and not citable for 3.x behavior"
+    },
+    {
+      "id": "L3",
+      "lead": "Waveform-cache identity/invalidation and cancel-safety precedent (content-addressed cache naming, partial-artifact states)",
+      "status": "unexecuted",
+      "why_matters": "Brief requires cache invalidation rules and 'cancelled render must not be labeled complete export'; no precedent pinned yet"
+    },
+    {
+      "id": "L4",
+      "lead": "Rounding-rule choice at clip edges (floor half-open vs round) and zero-length/abutting-clip boundary tests",
+      "status": "product_choice_open",
+      "why_matters": "W1 shows per-clip ad-hoc rounding accumulates error (+8 frames/100 clips); one authoritative rule must be chosen and tested"
+    },
+    {
+      "id": "L5",
+      "lead": "Performance evidence for 2-hour project / 8 GB laptop (waveform memory, render throughput, cancel latency)",
+      "status": "no_measurement_exists",
+      "why_matters": "Any numeric performance claim in successor deliverables must remain proposed/UNEXECUTED until measured"
+    }
+  ],
+  "optional_opportunities": [
+    {
+      "id": "O1",
+      "lead": "Cue table as authoritative editorial sidecar artifact, versioned with the edit graph; WAV CUE-chunk round-trip as optional extra (floor: libsndfile >=1.0.27 per S4)"
+    },
+    {
+      "id": "O2",
+      "lead": "Per-source ingest verdicts (accepted / accepted-with-ambiguity / rejected + retained original metadata) surfaced in the timing/provenance inspector"
+    }
+  ]
+}

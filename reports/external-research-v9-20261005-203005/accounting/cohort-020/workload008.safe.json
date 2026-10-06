@@ -1,0 +1,34 @@
+{
+  "neutral_receipt_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/workload-008/NEUTRAL_CAPTURE_RECEIPT.json",
+    "sha256": "d66faf0cb6fbb5cba5a6a654f622748f6f7cc7d52677d1c4af2b729188ddc7ba"
+  },
+  "schema": "er9.accounting.workload008-source-window.v1",
+  "scope": "Earlier workload008 snapshot12:42:40 main is separate from020costcapture/latercleanup/curation scopes; no sourcefacts/grades orretrofit.",
+  "selector_pin": {
+    "path": "consolidation/workload-008/PUBLICATION_SELECTOR.json",
+    "sha256": "420954d0dcacd4820629417a74fb117f5884644262a74aa56917b6f2c3b04b7d"
+  },
+  "source_window": {
+    "actual_task_start_utc": "2026-10-06T12:41:48.872539+00:00",
+    "campaign_complete_claimed": false,
+    "capture_end_utc": "2026-10-06T12:42:40.330871+00:00",
+    "capture_start_utc": "2026-10-06T12:42:40.219318+00:00",
+    "cleanup_proof_window": [
+      {
+        "courier_pin_read_utc": "2026-10-06T12:44:15.542722+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_EXACT_OWNED_CANDIDATE_UNIT_CGROUP_QUIET_OBSERVATION_001.json",
+        "proof_observed_utc": "2026-10-06T12:38:40.915354+00:00",
+        "sha256": "d99810ef002bae7a8ebcabb48a7a06163200f254f0037af8282c467dba594a0d"
+      },
+      {
+        "courier_pin_read_utc": "2026-10-06T12:44:15.543475+00:00",
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/FINAL_36_HISTORICAL_ALTERNATE_UNENTERED_BLOCKER_LEDGER_001.json",
+        "proof_observed_utc": "2026-10-06T12:42:47.578223+00:00",
+        "sha256": "863f18d2188496986d721bc900900f69573e0465cd17bfad08da202583f09a7d"
+      }
+    ],
+    "owner_state_changed": false,
+    "previous_epochs_unchanged": true
+  }
+}

@@ -1,0 +1,52 @@
+# Final-stage source review and resolution
+
+Stage: `I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001`  
+Brief identity: `TASK.md`, SHA-256 `5bf303e776c36c32fee1f4528cd72cdbfa8af757185d64d0b676df8e62bda7c8`.  
+Review basis: the complete frozen same-arm research proposal, catalogs, errata, and critique listed in the stage input contract. This review does not use evaluator material or another arm.
+
+## Preserved findings
+
+- OME-NGFF 0.5.2 is a useful interoperability precedent for named axes, dimension names, coordinate transforms, multiscales, and integer label arrays. It does not supply the application's source identity, transaction, or annotation-provenance contract. The final preserves it as an interchange and adapter target, not as the project's whole persistence model.
+- tifffile is an independently useful TIFF reader precedent. Its pinned 2026.9.20 documentation describes a Zarr-backed read route and series access that can preserve singleton axes. The final treats this as a candidate bounded-access mechanism, not proof of bounded resident memory or 3 GB performance.
+- The napari labels issue chain is consequential and adequately supported at the level of a concrete defect, patch, and test: issue #6079 described edits to non-NumPy-backed labels not appearing in the current view; comments discuss view slices and cache behavior; commit `658b080d62bd9c6f478f781163020cdcf5a44139` updates the visible slice for non-NumPy data and adds tests; the v0.4.19 test source contains the parameterized checks. Its demonstrated scope is small-array painting/filling and rendered current-slice refresh. It does not establish large-file performance, crash recovery, annotation durability, coordinate correctness, or the first release containing the fix. The final preserves the mechanism and those limits.
+- napari shape data and Bio-Formats format documentation remain useful component and later-adapter leads. Their presence does not oblige adopting the complete napari or Bio-Formats stack.
+
+## Corrections and their downstream effects
+
+### C1 — Source capture identity
+
+The prior S5 record's patch-body digest was inaccurate. Its corrected complete capture is SHA-256 `7ebf2abacfc5a1514c96042a66ba79fc4c25eae54d362d34b0d96f4a552c3df6`, 12,661 bytes. A fresh capture has identity `054f5ca4828d4ecaa46e57e495b811ad` and the same complete digest. The tifffile documentation capture is only a 524,288-byte prefix of a 1,139,451-byte response, SHA-256 `1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7`; its corrected capture identity is `e984635273ac4baaaccf671a9723dc46`. The final catalog marks that capture partial and limits claims to the retained API and requirements passages. No claim depends on omitted bytes.
+
+### C2 — Directory asset identity and mutation
+
+A pathname, byte count, timestamp, or basename is not a content identity. The final specifies a canonical sorted tree manifest for directory assets: normalized relative path, byte length, and full SHA-256 for every regular file, including hidden files; reject symbolic links, special files, traversal, and path-normalization collisions. Hash the canonical manifest to form the tree identity. A TIFF file is identified by a streaming whole-file hash. Recheck identity at import commit and before reopen/relink/export, with cancellation and visible progress. If content changes during import, abort publication; if it changes later, pause annotation/export pending explicit verified relink or copy. Equal basename is never enough. Project-owned verified copies offer a stronger handoff guarantee at storage cost; external references can be verified only at recorded checkpoints and do not promise an immutable snapshot. These are proposed application rules, not rules imposed by NGFF.
+
+### C3 — Coordinates, geometry, and rasterization
+
+The final defines a full inverse display path and an explicit affine convention. Canvas positions invert the saved pan/zoom/orientation transform into continuous coordinates on an orthogonal displayed plane. The plane and fixed-axis selectors map to declared array axes; geometry stays in continuous index coordinates until a documented rasterization step. Index coordinates are zero-based and identify sample centers; voxel cells are `[i-0.5, i+0.5)` per axis. Column vectors use `world = A_index_to_world * index_h`, with affine rows in named physical axes and columns in the declared spatial index-axis order. Time and channel remain selectors, not spatial affine components. Crop and resample relationships are recorded as `T_child_from_parent`; `A_child = A_parent * inverse(T_child_from_parent)`.
+
+Version 1 accepts orthogonal XY/XZ/YZ slices, points, simple polygons, and integer masks. Drawing is disabled for projections or views without an exact inverse map. Polygon rings close implicitly; self-intersections and holes are unsupported in v1. The vector is authoritative; a versioned even-odd, pixel-center rasterizer with a specified top-left boundary rule creates derived masks. Masks retain integer labels and a separate label table; color mapping never changes IDs. Plane geometry is `yx` plus explicit z/t/c selectors; volume geometry is `zyx` plus t/c selectors; acquisition-wide records have explicit scope and may have no spatial geometry. These rules extend beyond the cited standards and are proposed product/data-contract choices.
+
+### C4 — TIFF and axis support boundary
+
+The final pins tifffile `2026.9.20`; cites its documented `imread(..., return_as="zarr")` route, `series(squeeze=False)` behavior, requirements `zarr==3.4.0` and `imagecodecs==2026.8.16`, and forbids whole-series `.asarray()` on the large-image path. OME-TIFF plane mapping must follow OME-XML `DimensionOrder` and `TiffData` mappings, not page order alone. The initial format boundary is a tested subset of single-file OME-TIFF and OME-Zarr 0.5.2, with unambiguous axes, supported codec and bounded decode unit. BigTIFF is conditional on the same acceptance tests. Vendor formats, multi-file TIFF, ambiguous metadata, missing codecs, and overlarge decode units fail into retained metadata-only inspection with an actionable reason; they are not partially registered as pixel data.
+
+The NGFF 0.5.2 affine transform subset is deliberately constrained to the standard's supported scale and optional translation ordering. Inputs requiring shear or rotation are retained for inspection and need explicit correction or a separate resampling operation. Neither documentation capture sets a memory ceiling. The complete desktop dependency set, codec matrix, and Zarr-v3 compatibility remain a release-blocking spike. The source claim has therefore narrowed from a suggested implementation to a candidate requiring local fixture and memory tests.
+
+### C5 — Display, raw pixels, and export meaning
+
+The final stores channel visibility, window, gamma, LUT, opacity, and compositing mode as view state. A display mapping clips `(value-low)/(high-low)` to `[0,1]`, applies `s**(1/gamma)`, then rounds `255*s` half up; NaN contributes transparency and infinities clip to the endpoints. The original sample asset is read-only and is never rewritten by display adjustments. A geometric change creates a new asset and operation record with matrix, interpolation, boundary rule, output dtype, software, and provenance.
+
+CSV exports include versioned geometry JSON, frame affine/units, axis selectors, source identity, annotation revision and style; mask data is an independently checksummed linked asset, not hidden in the CSV. A PNG overlay describes rendered appearance, not lossless vector/mask geometry. A derived image reports output axes, dtype, crop, calibration, source ID, baked display settings, color conversion, resampling, and output hash. These are explicit proposal semantics, not claims that the cited readers or viewers already provide them.
+
+### C6 — Recovery, undo, and handoff
+
+The final proposes immutable staged generations: write and checksum assets, write a manifest referencing them, validate, then atomically replace a small current-generation pointer only on filesystems where that behavior is tested. Keep the previous complete generation. Test flush/rename semantics on each supported local filesystem; ordinary shared-storage guarantees are unproven, so uncertain saves use a new copy and preserve conflicting revisions. Import/export outputs remain unpublished until complete. An append-only edit journal plus periodic snapshots supports undo/redo across save, close, and reopen; acceptance tests must inject termination at each publication boundary. Bundle mode includes verified data; reference mode records external dependencies and verifies exact hashes at relocation. Six people exchange serially: a single-writer lease and base-revision check detect stale copies, and conflicts save separately for review. No claim is made that ordinary shared storage is transactional.
+
+## Capture and task traceability
+
+The previous critique's metadata reported a different task digest (`3f812924...`). The actual supplied `TASK.md` digest was independently checked as `5bf303e776c36c32fee1f4528cd72cdbfa8af757185d64d0b676df8e62bda7c8`; this is a traceability correction, not a technical finding. The frozen research issue-search map is a line-map of a GitHub HTML capture, not independent evidence. A separately supplied minified critique issue-map file was truncated on read and is not used to substantiate claims. The final cites source captures directly.
+
+## Remaining uncertainty and review conclusion
+
+The proposal cannot yet certify the 3 GB / 16 GB target, tile decode bounds, end-to-end cancellation latency, atomic saves on shared storage, cross-machine path relocation, or exact interoperability of exported annotations. The chosen architecture remains conditional on a compatibility and fixture spike. This affects whether the proposed readers can ship in v1 and whether external references are adequate for a given project; it does not justify silently accepting ambiguous inputs. The final therefore includes measurable proposed validation criteria and a metadata-only failure route, and labels all such tests UNEXECUTED. No source chain was inferred from a title or PR link alone.

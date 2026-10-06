@@ -1,0 +1,92 @@
+{
+  "stage": "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+  "role": "critique",
+  "captured_utc_range": "2026-10-06T06:18:16Z..2026-10-06T06:20:01Z",
+  "note": "Supporting catalog for out/critique/review.md. Captures are exact HTTP response body bytes via the admitted public_https_get tool; semantic locators are the reviewer's reading of the delivered text windows (first 32 KiB unless marked complete).",
+  "sources": [
+    {
+      "id": "S1",
+      "url": "https://pandas.pydata.org/pandas-docs/version/2.2/reference/api/pandas.read_csv.html",
+      "pin": "pandas 2.2.3 documentation (page title)",
+      "locator": "read_csv signature: on_bad_lines='error' default; iterator/chunksize; encoding_errors='strict'; low_memory=True; error_bad_lines/warn_bad_lines absent",
+      "capture_sha256": "8bb99275d7a13fb5c610b08cdff8f068be2a4c5902f74af5a8ddfad2cd075eb6",
+      "delivered_window_sha256": "38343e1b585d8f2738644469994c4d50455534a703cf688616d734b313e70574",
+      "applicability": "CSV malformed-record default strictness; bounded/streaming read design"
+    },
+    {
+      "id": "S2",
+      "url": "https://peps.python.org/pep-0751/",
+      "pin": "PEP 751 (Final; resolution 31-Mar-2025)",
+      "locator": "Status: Final; File Name: pylock.toml | pylock.<name>.toml; scope 'reproducible installation'; banner: canonical spec at packaging.python.org pylock.toml Specification",
+      "capture_sha256": "a73937a1e942c22f3a4c623dd59d3a7008b7f85f1bbf293c50a966e7a1257ce0",
+      "applicability": "environment binding; install-time lock vs runtime determinism boundary"
+    },
+    {
+      "id": "S3",
+      "url": "https://raw.githubusercontent.com/jupyter/nbformat/v5.10.4/nbformat/v4/nbformat.v4.schema.json",
+      "pin": "tag v5.10.4 (commit 60b6151fedcbdc9f137fb2d223eeb10c935a8378), schema description 'Jupyter Notebook v4.5 JSON schema'",
+      "locator": "code_cell required [id, cell_type, metadata, source, outputs, execution_count]; execution_count 'prompt number... null if not run'; cell id pattern ^[a-zA-Z0-9-_]+$ max 64; kernelspec required [name, display_name]; output types execute_result/display_data/stream/error",
+      "capture_sha256": "523e3578ddbfcad52933d2423dc5951114ef73f48df180b6a601498ba5ca071a",
+      "complete": true,
+      "applicability": "displayed vs execution order; output association; absence of environment pin and kernel state in .ipynb"
+    },
+    {
+      "id": "S3a",
+      "url": "https://api.github.com/repos/jupyter/nbformat/tags?per_page=5",
+      "pin": "GitHub API, repo jupyter/nbformat",
+      "locator": "tags v5.11.1 (commit 75f819f5b60bc6ffc72145c364132efe5b3c4b35), v5.11.0, v5.10.4 (commit 60b6151fedcbdc9f137fb2d223eeb10c935a8378), v5.10.3, v5.10.2",
+      "capture_sha256": "a104c72122b259df97c8a28e6cad59a54a8e01eaf26a5d8c65d4bdb35134e055",
+      "applicability": "tag-pin discipline (v prefix); latest nbformat tag as of capture"
+    },
+    {
+      "id": "S4",
+      "url": "https://nbclient.readthedocs.io/en/latest/client.html",
+      "pin": "nbclient docs, meta docsearch:version 0.11 (RTD 'latest' slug)",
+      "locator": "NotebookClient.execute() populates outputs; error stops execution by default (CellExecutionError); saved notebook 'contains the output up until the failing cell'; allow_errors default False; timeout default 30 s",
+      "capture_sha256": "b3cb019dd5c55e581a62379ed9545ffa8082022192acb6f14a3934fef442466a",
+      "applicability": "clean-replay semantics; partial-run output labeling"
+    },
+    {
+      "id": "S5",
+      "url": "https://duckdb.org/docs/current/configuration/pragmas.html",
+      "pin": "DuckDB docs, version selector 1.5 current (1.4 LTS; 1.3-0.10 archived)",
+      "locator": "PRAGMA/SET 'can alter the internal state of the engine'; nav confirms /docs/current/data/csv/reading_faulty_csv_files and /docs/current/connect/concurrency exist (content NOT captured)",
+      "capture_sha256": "fd0b77f4245988d27a8eac3b77790d6098300c07dc0ae2a43c9a77c64ac9e45d",
+      "delivered_window": "first 32768 of 406380 bytes",
+      "applicability": "optional SQL engine relationship; version pin; memory_limit/temp_directory semantics UNVERIFIED (lead L1)"
+    },
+    {
+      "id": "S5a",
+      "url": "https://duckdb.org/docs/stable/configuration/pragmas",
+      "pin": "redirect stub (308) to canonical current URL",
+      "locator": "canonical link https://duckdb.org/docs/current/configuration/pragmas.html",
+      "capture_sha256": "e881fe7eb01822db392eac31aefec4e00c14415404ae269ac7c3b92b5428ecf2",
+      "applicability": "URL canonicalization evidence"
+    },
+    {
+      "id": "S6",
+      "url": "https://api.github.com/search/issues?q=repo%3Ajupyter%2Fnbformat+atomic+write&per_page=5",
+      "pin": "GitHub search API, captured 2026-10-06T06:18:45Z",
+      "locator": "total_count 0",
+      "capture_sha256": "c9938edecb99d754b2d039ac9eec320a94c769b6a6417921e2dcbef9e2fe01a0",
+      "applicability": "negative evidence: no 'atomic write' issue found in jupyter/nbformat by this query"
+    },
+    {
+      "id": "S6a",
+      "url": "https://api.github.com/repos/jupyter/nbformat/contents/nbformat/json?ref=5.10.4",
+      "pin": "GitHub API 404: 'No commit found for the ref 5.10.4'",
+      "locator": "error body",
+      "capture_sha256": "7f5144e7fa788feb13d39708a6495d58451d298fb9fdeff73574776b77f83f08",
+      "applicability": "pin-discipline example: tag requires v prefix (v5.10.4)"
+    },
+    {
+      "id": "PRCHAIN",
+      "url": "https://api.github.com/search/issues?q=repo%3Apandas-dev%2Fpandas+on_bad_lines+type%3Apr&per_page=5&sort=reactions",
+      "pin": "GitHub search API, captured 2026-10-06T06:19:33Z, total_count 27",
+      "locator": "PR #45146 merged 2022-01-08 milestone 1.4 closes #5686; PR #50311 merged 2023-01-03 milestone 2.0 (milestone closed_at 2023-04-03T21:02:30Z) closes #48020; PR #68946 merged 2026-09-17 no milestone closes #49279; PR #70406 merged 2026-10-05 milestone 3.1 (open); PR #68947 merged 2026-09-17 closes #36827",
+      "capture_sha256": "7e5a310f45ef65ece39acbd9f8a7cf0b2ed33d980b1167b3a05a06ebe8c6626b",
+      "applicability": "issue->fix->regression chain for on_bad_lines silent-skip, silent-disable with index_col=False, and chunked-skip OOM; version applicability pandas main/3.1.0-unreleased vs <=3.0.6/2.2.3",
+      "limits": "PR bodies are self-reported; merged != released; diffs/test files not fetched (U1-U3 in review.md)"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "C-04-DEC007-locked-r001",
+  "pair_id": "C-04",
+  "source_slot": "C-04",
+  "family": "Z",
+  "requested_model": "GLM 5.3 Flash",
+  "requested_effort": "max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/cards/C-04.json",
+  "card_sha256": "8538000cfceb27189eb4c86f6265287ac9f8b3dfe46489e3851927f0c183adfa",
+  "stage_jobs": [
+    {
+      "job_id": "C-04-control-research-a001",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-research-a001/prepared-stage.json",
+      "stage_sha256": "37519c38ef174ca1a0a002e141a46f891f6a31e9a2ef01c3f78049928d896460",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-research-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "QUEUED_EXECUTION_GATE_PENDING",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "C-04-control-critique-a001",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "max_seconds": 900,
+      "max_responses": 90,
+      "prerequisite_job_ids": [
+        "C-04-control-research-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "C-04-control-research-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "324b658cd4f2f3e8d03acc41b5b2ee7d3ba14c355ac48a4217dca572b00ab5df",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-critique-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "QUEUED_EXECUTION_GATE_PENDING",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "C-04-control-revision-a001",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "max_seconds": 600,
+      "max_responses": 60,
+      "prerequisite_job_ids": [
+        "C-04-control-critique-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "C-04-control-research-a001",
+        "C-04-control-critique-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "12a67c9080e071f307468aefd5ff1d5155de9a06241aa19fc3ba5982a6f28d62",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-control-revision-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "QUEUED_EXECUTION_GATE_PENDING",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "C-04-treatment-research-a001",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "95a65af4231c56cc1a4f73875f86e879e8afbb97a289c0d7823b68d6c8b78c7d",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-treatment-research-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "QUEUED_EXECUTION_GATE_PENDING",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "C-04-treatment-critic_final-a001",
+      "arm": "treatment",
+      "stage": "critic_final",
+      "stage_index": 1,
+      "max_seconds": 1500,
+      "max_responses": 150,
+      "prerequisite_job_ids": [
+        "C-04-treatment-research-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "C-04-treatment-research-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-treatment-critic_final-a001/prepared-stage.json",
+      "stage_sha256": "a32048f7547bbc2238e9dd601e153df998bbfbecea54f8a55acef0de21505ee0",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/C-04-treatment-critic_final-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "QUEUED_EXECUTION_GATE_PENDING",
+      "runtime_binding_required": true
+    }
+  ],
+  "root_scope_required": true,
+  "status": "QUEUED_EXECUTION_GATE_PENDING",
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/confirmation-preparation/C-04/PAIR_INPUT_FREEZE.json",
+    "sha256": "c359bc2f2ce3614108a21ea6fa6b7f406dd60f35f3da941a71727d538b3d2461"
+  },
+  "selection_lock_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007-RECIPE-LOCK.json",
+    "sha256": "2e6a79f793474aa238c5d8e896fbb08e19f4e31a6277aa81095a5338671957db"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "execution_gate": "All initial I-01..I-12 slots have terminal development outcomes, verified by sole ops; recovery accounting separate",
+  "confirmation_feedback_forbidden": true,
+  "actual_runtime_model_tools_resource_seal_required_before_outputs": true
+}

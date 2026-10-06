@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actual_helper_FINAL_closed_after_overrun_per_owner": {
+      "type": "boolean"
+    },
+    "clocks": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_start_utc": {
+          "type": "string"
+        },
+        "original_bound_seconds": {
+          "type": "number"
+        },
+        "original_inclusive_deadline_utc": {
+          "type": "string"
+        },
+        "reported_final_required_handoffs_returned_utc": {
+          "type": "string"
+        },
+        "reported_inclusive_elapsed_seconds": {
+          "type": "number"
+        },
+        "reported_overrun_seconds": {
+          "type": "number"
+        },
+        "selected_bytes_sealed_elapsed_seconds": {
+          "type": "number"
+        },
+        "timing_precision": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "actual_start_utc",
+        "original_inclusive_deadline_utc",
+        "original_bound_seconds",
+        "reported_final_required_handoffs_returned_utc",
+        "reported_inclusive_elapsed_seconds",
+        "reported_overrun_seconds",
+        "selected_bytes_sealed_elapsed_seconds",
+        "timing_precision"
+      ],
+      "type": "object"
+    },
+    "finer_clock_precision": {
+      "type": "string"
+    },
+    "helper_actual_provider_tokens_billing": {
+      "type": "string"
+    },
+    "later_source_observation_created_utc": {
+      "type": "string"
+    },
+    "original_primary020_capture_unchanged": {
+      "type": "boolean"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "source_pin",
+    "original_primary020_capture_unchanged",
+    "later_source_observation_created_utc",
+    "clocks",
+    "actual_helper_FINAL_closed_after_overrun_per_owner",
+    "finer_clock_precision",
+    "helper_actual_provider_tokens_billing",
+    "scope"
+  ],
+  "type": "object"
+}

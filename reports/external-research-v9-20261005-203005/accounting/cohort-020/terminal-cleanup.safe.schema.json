@@ -1,0 +1,2635 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "cleanup_owner_metadata": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_active_candidates": {
+          "type": "number"
+        },
+        "current_executable_finite_roles": {
+          "type": "number"
+        },
+        "failed_unit_records_and_native_receipts_not_reset": {
+          "type": "boolean"
+        },
+        "historical_descriptor_statuses_unchanged": {
+          "type": "boolean"
+        },
+        "own_dispatcher_and_monitor_stopped_after_terminal_native_tail": {
+          "type": "boolean"
+        },
+        "retained_candidate_resources": {
+          "type": "number"
+        },
+        "sibling_or_root_services_changed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "actual_active_candidates",
+        "current_executable_finite_roles",
+        "failed_unit_records_and_native_receipts_not_reset",
+        "historical_descriptor_statuses_unchanged",
+        "own_dispatcher_and_monitor_stopped_after_terminal_native_tail",
+        "retained_candidate_resources",
+        "sibling_or_root_services_changed"
+      ],
+      "type": "object"
+    },
+    "direct_goal_status_source_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "helper_cleanup_provider_model_money": {
+      "type": "string"
+    },
+    "historical36_descriptors_reference_only": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "null"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "null"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "null"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "null"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "blockers": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "family": {
+                "type": "string"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "native_goal_starts": {
+                "type": "number"
+              },
+              "not_current_executable_source_selection": {
+                "type": "boolean"
+              },
+              "original_birth": {
+                "type": "null"
+              },
+              "pair_id": {
+                "type": "string"
+              },
+              "source_slot": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              },
+              "status_preserved": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "blockers",
+              "family",
+              "job_id",
+              "native_goal_starts",
+              "not_current_executable_source_selection",
+              "original_birth",
+              "pair_id",
+              "source_slot",
+              "stage",
+              "status_preserved"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "historical36_observed_utc": {
+      "type": "string"
+    },
+    "historical36_unentered_blocker_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "later_cleanup_observed_utc": {
+      "type": "string"
+    },
+    "later_controlplane_cleanup_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "own_controlplane_units": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "ActiveState": {
+                "type": "string"
+              },
+              "ControlGroup": {
+                "type": "string"
+              },
+              "Id": {
+                "type": "string"
+              },
+              "LoadState": {
+                "type": "string"
+              },
+              "MainPID": {
+                "type": "string"
+              },
+              "SubState": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ActiveState",
+              "ControlGroup",
+              "Id",
+              "LoadState",
+              "MainPID",
+              "SubState"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "ActiveState": {
+                "type": "string"
+              },
+              "ControlGroup": {
+                "type": "string"
+              },
+              "Id": {
+                "type": "string"
+              },
+              "LoadState": {
+                "type": "string"
+              },
+              "MainPID": {
+                "type": "string"
+              },
+              "SubState": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "ActiveState",
+              "ControlGroup",
+              "Id",
+              "LoadState",
+              "MainPID",
+              "SubState"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    },
+    "owned_candidate_quiet_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "owned_exact_scope_summary": {
+      "additionalProperties": false,
+      "properties": {
+        "all_owned_worker_MainPID0_and_no_active_unit": {
+          "type": "boolean"
+        },
+        "all_saved_private_slice_populated0_or_absent": {
+          "type": "boolean"
+        },
+        "private_slices": {
+          "type": "number"
+        },
+        "worker_units": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "all_owned_worker_MainPID0_and_no_active_unit",
+        "all_saved_private_slice_populated0_or_absent",
+        "private_slices",
+        "worker_units"
+      ],
+      "type": "object"
+    },
+    "owned_quiet_observed_utc": {
+      "type": "string"
+    },
+    "primary_cost_capture_interval_utc": {
+      "additionalProperties": false,
+      "properties": {
+        "end": {
+          "type": "string"
+        },
+        "start": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "end",
+        "start"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "tail_checkpoint_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "tail_operator_counts": {
+      "additionalProperties": false,
+      "properties": {
+        "active_candidate_rows": {
+          "type": "number"
+        },
+        "positive_native_starts": {
+          "type": "number"
+        },
+        "retained_resource_rows": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "active_candidate_rows",
+        "positive_native_starts",
+        "retained_resource_rows"
+      ],
+      "type": "object"
+    },
+    "tail_owner_observed_utc": {
+      "type": "string"
+    },
+    "tail_rows": {
+      "items": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "freeze_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_release_SHA_verified": {
+                "type": "boolean"
+              },
+              "invalid_json_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "known_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "native_goal_starts_reference": {
+                "type": "number"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "new_token_or_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "occupied_native_receipt_seconds_reference": {
+                "type": "number"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "outer_freeze_seconds_reference": {
+                "type": "number"
+              },
+              "outer_native_clock_overlap_not_added": {
+                "type": "boolean"
+              },
+              "release_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "router_native_status": {
+                "type": "string"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "billing_dollars",
+              "freeze_pin",
+              "freeze_release_SHA_verified",
+              "invalid_json_artifacts",
+              "job_id",
+              "known_usage_reference_only",
+              "missing_required_artifacts",
+              "native_goal_starts_reference",
+              "native_receipt_pin",
+              "new_token_or_actor_charge_from_reference",
+              "occupied_native_receipt_seconds_reference",
+              "operational_complete",
+              "operator_status",
+              "outer_freeze_seconds_reference",
+              "outer_native_clock_overlap_not_added",
+              "release_pin",
+              "router_native_status",
+              "saved_Goal_status_separate",
+              "stage"
+            ],
+            "type": "object"
+          },
+          {
+            "additionalProperties": false,
+            "properties": {
+              "billing_dollars": {
+                "type": "string"
+              },
+              "freeze_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "freeze_release_SHA_verified": {
+                "type": "boolean"
+              },
+              "invalid_json_artifacts": {
+                "items": {},
+                "type": "array"
+              },
+              "job_id": {
+                "type": "string"
+              },
+              "known_usage_reference_only": {
+                "additionalProperties": false,
+                "properties": {
+                  "cached_input_included": {
+                    "type": "number"
+                  },
+                  "input": {
+                    "type": "number"
+                  },
+                  "output": {
+                    "type": "number"
+                  },
+                  "reasoning_output_subset": {
+                    "type": "number"
+                  },
+                  "total": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "cached_input_included",
+                  "input",
+                  "output",
+                  "reasoning_output_subset",
+                  "total"
+                ],
+                "type": "object"
+              },
+              "missing_required_artifacts": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "native_goal_starts_reference": {
+                "type": "number"
+              },
+              "native_receipt_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "new_token_or_actor_charge_from_reference": {
+                "type": "boolean"
+              },
+              "occupied_native_receipt_seconds_reference": {
+                "type": "number"
+              },
+              "operational_complete": {
+                "type": "boolean"
+              },
+              "operator_status": {
+                "type": "string"
+              },
+              "outer_freeze_seconds_reference": {
+                "type": "number"
+              },
+              "outer_native_clock_overlap_not_added": {
+                "type": "boolean"
+              },
+              "release_pin": {
+                "additionalProperties": false,
+                "properties": {
+                  "path": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256"
+                ],
+                "type": "object"
+              },
+              "router_native_status": {
+                "type": "string"
+              },
+              "saved_Goal_status_separate": {
+                "type": "string"
+              },
+              "stage": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "billing_dollars",
+              "freeze_pin",
+              "freeze_release_SHA_verified",
+              "invalid_json_artifacts",
+              "job_id",
+              "known_usage_reference_only",
+              "missing_required_artifacts",
+              "native_goal_starts_reference",
+              "native_receipt_pin",
+              "new_token_or_actor_charge_from_reference",
+              "occupied_native_receipt_seconds_reference",
+              "operational_complete",
+              "operator_status",
+              "outer_freeze_seconds_reference",
+              "outer_native_clock_overlap_not_added",
+              "release_pin",
+              "router_native_status",
+              "saved_Goal_status_separate",
+              "stage"
+            ],
+            "type": "object"
+          }
+        ]
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "cleanup_owner_metadata",
+    "helper_cleanup_provider_model_money",
+    "historical36_descriptors_reference_only",
+    "historical36_observed_utc",
+    "historical36_unentered_blocker_pin",
+    "later_cleanup_observed_utc",
+    "later_controlplane_cleanup_pin",
+    "own_controlplane_units",
+    "owned_candidate_quiet_pin",
+    "owned_exact_scope_summary",
+    "owned_quiet_observed_utc",
+    "primary_cost_capture_interval_utc",
+    "schema",
+    "scope",
+    "tail_checkpoint_pin",
+    "tail_operator_counts",
+    "tail_owner_observed_utc",
+    "tail_rows",
+    "direct_goal_status_source_pin"
+  ],
+  "type": "object"
+}

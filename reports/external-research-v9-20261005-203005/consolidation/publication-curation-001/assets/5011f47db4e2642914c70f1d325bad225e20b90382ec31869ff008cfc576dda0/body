@@ -1,0 +1,35 @@
+# Critic and recovery report
+
+## Provenance
+
+**Provenance: candidate-authored native self-critique/repair of the prior authenticated same-arm artifacts.** “Independent critique” means my own fresh audit of eligible primary sources; this is not a separate independent evaluator or Sol source assessment. All checks, changes, and unknowns are candidate-authored work under the unchanged original brief/common criteria/source access/source separation, allowed artifacts, and 1,500-second allocation. No evaluator reason, grade, hidden correction, or Sol answer was used. I assign no source grade, evaluator PASS, quality validation, or method-superiority claim.
+
+## Access and comparison limit
+
+The authenticated delivery role manifest has `entries: []`; `input_id` is unavailable. Bounded reads of `inputs/prior/index.json`, `inputs/prior/manifest.json`, `inputs/source_context/index.json`, and the expected `out/research/proposal.md` returned `FileNotFoundError`. Reading `inputs/prior` as a file returned `ValueError`; the admitted reader has no directory listing. These results establish an access limit, not that prior artifacts never existed. I therefore could not compare claim wording or catalogs, verify claim-by-claim corrections, or determine which supported predecessor content should be preserved. Prior-artifact audit coverage is **UNASSESSED** throughout. The proposal in the native bundle is a source-backed replacement plan; no defect below is attributed to unseen prior artifacts.
+
+## Checks
+
+- **Authority:** read the unchanged brief (SHA-256 `27311c714607087ce93df4544c37fa3adf871a12ec77e4f9e8896565e0a4e628`), common criteria, source access, source separation, output contract, delivery objective, and stage clock. The telemetry names the current stage and known original deadline; no reset or added time was requested.
+- **OME-NGFF v0.5:** reviewed §§2.1, 2.3–2.4, 2.6 in capture S1. Axes match array dimensions/order; transforms are sequential; multiscale datasets use one scale and may have a translation after it; labels represent integer pixel arrays. This supports the coordinate contract and mask export, not native vector-shape persistence.
+- **Zarr v3:** S2's chunk grid/codec clauses say implementations MAY support partial decoding. Chunking alone does not prove lazy reads or bounded access for a chosen reader. The proposal therefore leaves 3 GB performance unverified and specifies a workload gate.
+- **Independent precedents:** napari 0.9.0 docs/release (S3–S4) support a multidimensional viewer/layer precedent; Bio-Formats 7.3.1 docs (S5–S8) support a Java-dependent, per-format-qualified OME-TIFF reader path. Neither proves compatibility or project persistence in the proposed stack.
+- **Bug/fix/test/release chain:** issue #8578 reports selection loss on display/slice changes; #9247 reports off-slice outlines (S9–S10). PR #9059 merged at `de87bdd0be61a3f63e643865553277ab22a04ac8`; its patch adds selection and off-slice-outline regression tests (S11–S13). PR #9399 records a repair of an incomplete merge (S14). The compare to release target `908b3ed80ccbe73a3393f0207aafc6d7a45e116a` places the fix in the v0.9.0 ancestry and includes the follow-up path (S15). This is a viewer-component lesson, not a test run by this candidate or proof about the proposed app.
+- **Executed witness W1:** isolated standard-library arithmetic, receipt `exec-1bo0kzz7`: with `zyx` index `[3,10,20]`, scale `[0.5,0.2,0.1]`, translation `[1.5,-5,2]`, scale-then-translation gives `[3,-3,4]`; inverse returns the original index. Reversed order gives `[2.25,1,2.2]`. Exit 0. Full code, input, stdout/stderr, hashes, and limits are in `witnesses.json`. It tests arithmetic/order only, not a parser, viewer, or application.
+
+## Changes in the authored recovery
+
+- Qualified bounded-access claims with Zarr's optional partial-decode language and an explicit, proposed 3 GB measurement gate [S2].
+- Separated NGFF integer label masks from application-owned vector annotations [S1].
+- Specified array axis order, coordinate frame, annotation selectors/scope, units, transformation order, view-only display state, and distinct derived resampling [S1, W1].
+- Limited format promises to tested profiles/files; exposed Bio-Formats' Java and per-format conditions; left stack compatibility UNEXECUTED [S5–S8].
+- Traced the napari issue through merged fix, regression-test patch, follow-up merge repair, and release applicability, and translated the lesson into proposed app-level checks [S9–S15].
+- Covered recovery generations, content-verified relocation, closed-project exchange, explicit exports/loss receipts, accessibility, keyboard use, styles, undo/redo, and cancellation/failure paths.
+
+These are changes in the new candidate-authored plan. They must not be interpreted as claims that unseen predecessors contained errors or lacked coverage.
+
+## Coverage and remaining unknowns
+
+The common criteria are prospective, not outcome grades. For the unseen predecessor, Q1–Q8 are **UNASSESSED**. For the replacement, Q1's workflow/data obligations are addressed; Q2's cited external facts have exact locators and capture limits; Q3 remains partial because stack compatibility is unknown; Q4 has independent standards/UI/reader precedents and one public failure chain; Q5 contains W1 plus proposed UNEXECUTED app checks; Q6 preservation from the predecessor is unassessed; Q7 discloses major unknowns; Q8 depends on the native bundle carrier. These are coverage statements, not a score or PASS/FAIL.
+
+Still unknown: predecessor claim wording and source catalog; which predecessor claims were supported and should be preserved; exact dependency interoperability; support for the group's actual files; 3 GB latency, RSS, and I/O; annotation/table/mask/derived-image round-trips; shared-storage rename/flush/locking; relocation on actual workstations; keyboard/screen-reader usability; and all application-level checks. No source grade or evaluator result follows from this report.

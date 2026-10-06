@@ -1,0 +1,56 @@
+{
+  "schema": "er9.critique.witness-inventory.v1",
+  "stage": "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+  "role": "critique",
+  "witnesses": [
+    {
+      "id": "W1-precision",
+      "label": "executed by candidate",
+      "execution_id": "exec-suyktz8b",
+      "completed_utc": "2026-10-06T05:44:33.973998+00:00",
+      "what": "IEEE-754 float64 vs float32 operand storage for a physical coordinate origin + k*dx (12345.6 um, 0.107 um, k=100000)",
+      "code_sha256": "9eee5a45b93163b954a6ea2d76d70645e66f7775de8e39ac1c399828ce3f8aeb",
+      "data_sha256": "ad4d81099f925d5a272e414a96911e6b10bc14826059c9d0b9f428990fb80bfa",
+      "exit_code": 0,
+      "stdout_sha256": "f05e678b7f56083af94bd30a8d57bde3ec0fdbde6a6ffb2ab1ab49985b4c1416",
+      "result_summary": "float32 operand storage yields 23045.599609375 um vs 23045.6 true (abs error ~0.39 nm); float64 exact in this arithmetic",
+      "justified_expectation": "float32 has a 24-bit significand, so rounding operands shifts the stored coordinate by a small but nonzero amount; float64 round-trips these magnitudes exactly",
+      "scope_limits": "Isolated stdlib arithmetic check in a sandbox; validates no library, format, or application behavior; error magnitude is scenario-dependent"
+    },
+    {
+      "id": "W2-transform-representability",
+      "label": "executed by candidate — ADVERSE RESULT",
+      "execution_id": "exec-suyktz8b",
+      "what": "Intended to show diagonal per-axis scale+origin cannot represent flip+axis-swap while a full 2x2 affine can",
+      "code_sha256": "9eee5a45b93163b954a6ea2d76d70645e66f7775de8e39ac1c399828ce3f8aeb",
+      "exit_code": 0,
+      "result_summary": "scalar_matches_manual=true, affine_matches_manual=false — the executed check refuted my own intended demonstration: my affine was mis-specified (encoded no swap) and a diagonal map with negative scale plus output-axis relabeling does express single-axis flips and swaps",
+      "corrected_statement": "Diagonal per-axis maps cannot represent rotation/shear (mixing of two input axes into one output axis); independently, NGFF 0.5 coordinateTransformations admit only identity/translation/scale (sources.json S-ngff-05-spec), so orientation/rotation must live in project-owned metadata",
+      "proposed_followup": "PROPOSED/UNEXECUTED: corrected discriminating check using a rotation or shear case",
+      "scope_limits": "Same isolated-arithmetic scope as W1; does not validate any library or application"
+    },
+    {
+      "id": "W0-first-attempt-failed",
+      "label": "executed by candidate — failed run, recorded honestly",
+      "execution_id": "exec-1dhsi1mt",
+      "completed_utc": "2026-10-06T05:43:26.032503+00:00",
+      "code_sha256": "30baf8fe1b2732b20b93f79d590ba3364255d417792b497831a8129cd1ea4f43",
+      "exit_code": 1,
+      "stderr_summary": "SyntaxError: invalid syntax (walrus operator inside dict literal)",
+      "resolution": "Code corrected and rerun as exec-suyktz8b"
+    },
+    {
+      "id": "W-probe-predecessor-absence",
+      "label": "executed by candidate (boundary read_file probes; no execution receipts exist for boundary tools by design)",
+      "what": "Enumerated probe of expected frozen predecessor artifact paths under inputs/prior/ and alternates",
+      "evidence": "Full path/result table in out/critique/review.md section 1; boundary failures observed: ValueError (interpreted: directory or outside readable roots), FileNotFoundError (interpreted: missing file)",
+      "scope_limits": "No directory-listing tool available; absence is established only for the enumerated filenames; an unnamed file inside inputs/prior/research/ cannot be ruled out"
+    },
+    {
+      "id": "W-proposed-chain-completion",
+      "label": "proposed/UNEXECUTED",
+      "what": "Complete one issue-to-fix-to-regression-test chain (e.g., tifffile #334 named in release notes) for the brief's consequential-lesson requirement",
+      "why_unexecuted": "Stage budget spent on blocker documentation and fact-base verification; no predecessor proposal existed to anchor claim-level chain checks"
+    }
+  ]
+}

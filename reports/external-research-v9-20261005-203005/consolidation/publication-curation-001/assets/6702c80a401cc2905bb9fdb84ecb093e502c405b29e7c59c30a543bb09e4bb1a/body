@@ -1,0 +1,91 @@
+# Bounded isolation check A (first run; superseded by check_a2.py).
+# One FAIL was a fixture error in the author's crossfade test (project-range
+# intersection instead of two source-anchored cues). Preserved unmodified for
+# the record; see witnesses.json W-A. Receipt: exec-bqixs6px,
+# code_sha256 878e435e5b81bcd72e2cceba3b82129bf72da7ccb6b7f2bea9fa2d8323de64a5.
+# NOTE: this saved copy is for reading; the receipt hash is over the exact
+# string submitted to the isolated executor (leading newline may differ).
+from math import gcd
+
+fails = []
+def check(name, cond, detail=""):
+    if not cond:
+        fails.append((name, detail))
+    print(("PASS " if cond else "FAIL ") + name + ((" | " + str(detail)) if detail else ""))
+
+P = 48000  # project rate (samples/second)
+
+def conform_map(s, num, den, D=0):
+    assert s >= 0 and num > 0 and den > 0 and D >= 0
+    return (s * num) // den + D   # floor semantics, documented contract
+
+def clip_project_pos(clip, s):
+    assert clip["in_s"] <= s < clip["out_s"], "anchor outside retained range"
+    return clip["start"] + conform_map(s - clip["in_s"], clip["num"], clip["den"], clip["D"])
+
+def tc(samples, rate=P):
+    total_ms = (samples * 1000) // rate          # floor to ms
+    return "%02d:%02d:%02d.%03d" % (total_ms//3600000, (total_ms//60000)%60, (total_ms//1000)%60, total_ms%1000)
+
+for R in (8000, 11025, 16000, 22050, 32000, 44100, 88200, 96000):
+    g = gcd(P, R); num, den = P // g, R // g
+    check("ratio_exact_%d" % R, conform_map(conform_map(10**6, num, den) if False else 0, 1, 1) == 0 and num * R == P * den, "%d/%d" % (num, den))
+
+clip = dict(start=1000, in_s=2000, out_s=50000, num=1, den=1, D=0)
+check("identity_map", clip_project_pos(clip, 5000) == 1000 + (5000 - 2000))
+
+clip2 = dict(clip, in_s=3000)
+try:
+    clip_project_pos(clip2, 2500); detached = False
+except AssertionError:
+    detached = True
+check("cue_detached_after_trim", detached and 2500 == 2500)
+
+clip3 = dict(clip, start=clip["start"] + 4800)
+check("gap_shifts_project_not_source",
+      clip_project_pos(clip3, 5000) == clip_project_pos(clip, 5000) + 4800)
+
+a = dict(start=96000, in_s=0, out_s=48000, num=1, den=1, D=0)
+b = dict(start=144000 - 2400, in_s=100, out_s=50000, num=1, den=1, D=0)
+overlap = max(a["start"], b["start"]) < min(a["start"] + (a["out_s"]-a["in_s"]), b["start"] + (b["out_s"]-b["in_s"]))
+check("crossfade_overlap_flagged", overlap)
+
+num, den = 160, 147
+seq = [conform_map(s, num, den) for s in range(0, 20000)]
+check("conform_monotone", all(x <= y for x, y in zip(seq, seq[1:])))
+check("conform_zero", seq[0] == 0)
+
+t = 1999999
+s_str = tc(t)
+back = (int(s_str[0:2])*3600000 + int(s_str[3:5])*60000 + int(s_str[6:8])*1000 + int(s_str[9:12])) * P // 1000
+check("tc_format", s_str == "00:00:41.666", s_str)
+check("tc_roundtrip", t <= back + P // 1000 and back <= t, "t=%d back=%d" % (t, back))
+
+A = dict(start=0,     in_s=0,     out_s=96000, num=1, den=1, D=0)
+B = dict(start=96000, in_s=96000, out_s=192000, num=1, den=1, D=0)
+def cue_segments(cue_in, cue_out, clips):
+    rows = []
+    for c in clips:
+        lo = max(cue_in, c["in_s"]); hi = min(cue_out, c["out_s"])
+        if lo < hi:
+            p0 = c["start"] + conform_map(lo - c["in_s"], c["num"], c["den"], c["D"])
+            p1 = c["start"] + conform_map(hi - c["in_s"], c["num"], c["den"], c["D"])
+            rows.append((c["start"], p0, p1))
+    return rows
+rows = cue_segments(90000, 102000, [A, B])
+check("boundary_cue_two_rows", len(rows) == 2, str(rows))
+check("boundary_rows_contiguous", rows[0][2] == rows[1][1], str(rows))
+
+FA = dict(start=0,     in_s=0,     out_s=48240, num=1, den=1, D=0)
+FB = dict(start=45840, in_s=100000, out_s=148240, num=1, den=1, D=0)
+rows = cue_segments(40000, 46000, [FA, FB])
+check("crossfade_cue_two_overlapping_rows",
+      len(rows) == 2 and rows[1][1] < rows[0][2], str(rows))
+
+t2 = 1234567
+sec = (t2 * 1000) // P
+frag = "%d.%03d" % (sec // 1000, sec % 1000)
+check("media_fragment_seconds", frag == "25.720", frag)
+
+print("---")
+print("TOTAL_FAILS=%d" % len(fails))

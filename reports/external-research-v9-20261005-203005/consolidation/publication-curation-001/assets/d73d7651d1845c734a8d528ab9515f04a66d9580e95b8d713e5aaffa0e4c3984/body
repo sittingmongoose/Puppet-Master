@@ -1,0 +1,101 @@
+# Bounded isolation check A2 (corrected run; authoritative).
+# Correction vs check A: crossfade-overlap test now uses two SOURCE-ANCHORED
+# cues (one per contributing clip), which is the contract under test; check A
+# mistakenly intersected one project range against both clips' source ranges.
+# Receipt: exec-u0acphyh,
+# code_sha256 f188b2cd8b5bd6eff936f9d637e8fae39c96c143d4c1cb78678fbb70a55258a8,
+# stdout_sha256 4914e5056fdbfeae50636379348601a818dafb9e56984773b82045347eeefb95,
+# exit_code 0, TOTAL_FAILS=0 (20/20 PASS).
+# NOTE: this saved copy is for reading; the receipt hash is over the exact
+# string submitted to the isolated executor (leading newline may differ).
+import sys
+from math import gcd
+
+fails = []
+def check(name, cond, detail=""):
+    if not cond:
+        fails.append(name)
+    print(("PASS " if cond else "FAIL ") + name + ((" | " + str(detail)) if detail else ""))
+
+P = 48000  # project rate (samples/second)
+
+def conform_map(s, num, den, D=0):
+    assert s >= 0 and num > 0 and den > 0 and D >= 0
+    return (s * num) // den + D   # floor semantics, documented contract
+
+def clip_project_pos(clip, s):
+    assert clip["in_s"] <= s < clip["out_s"], "anchor outside retained range"
+    return clip["start"] + conform_map(s - clip["in_s"], clip["num"], clip["den"], clip["D"])
+
+def tc(samples, rate=P):
+    total_ms = (samples * 1000) // rate          # floor to ms
+    return "%02d:%02d:%02d.%03d" % (total_ms//3600000, (total_ms//60000)%60, (total_ms//1000)%60, total_ms%1000)
+
+# 0) supported source rates map to project rate by exact integer ratios
+for R in (8000, 11025, 16000, 22050, 32000, 44100, 88200, 96000):
+    g = gcd(P, R); num, den = P // g, R // g
+    check("ratio_exact_%d" % R, P * den == num * R, "%d/%d" % (num, den))
+
+# 1) equal-rate identity: project pos = clip start + (s - in)
+clip = dict(start=1000, in_s=2000, out_s=50000, num=1, den=1, D=0)
+check("identity_map", clip_project_pos(clip, 5000) == 1000 + (5000 - 2000))
+
+# 2) trim removes anchor range -> cue becomes detached, source anchor unchanged
+clip2 = dict(clip, in_s=3000)
+try:
+    clip_project_pos(clip2, 2500); detached = False
+except AssertionError:
+    detached = True
+check("cue_detached_after_trim", detached)
+
+# 3) inserted gap shifts project time only, source anchor invariant
+clip3 = dict(clip, start=clip["start"] + 4800)
+check("gap_shifts_project_not_source",
+      clip_project_pos(clip3, 5000) == clip_project_pos(clip, 5000) + 4800)
+
+# 4) 44.1k -> 48k floor mapping: monotone non-decreasing, first sample -> 0
+seq = [ (s * 160) // 147 for s in range(0, 20000) ]
+check("conform_monotone", all(a <= b for a, b in zip(seq, seq[1:])))
+check("conform_zero", seq[0] == 0)
+
+# 5) cue spanning a butted clip boundary -> TWO segment rows, contiguous; never merged silently
+A = dict(start=0,     in_s=0,     out_s=96000, num=1, den=1, D=0)   # proj [0,96000)
+B = dict(start=96000, in_s=96000, out_s=192000, num=1, den=1, D=0)  # proj [96000,192000)
+def cue_rows(cue_in, cue_out, clip):
+    lo = max(cue_in, clip["in_s"]); hi = min(cue_out, clip["out_s"])
+    if lo >= hi:
+        return []
+    p0 = clip["start"] + conform_map(lo - clip["in_s"], clip["num"], clip["den"], clip["D"])
+    p1 = clip["start"] + conform_map(hi - clip["in_s"], clip["num"], clip["den"], clip["D"])
+    return [(clip["start"], p0, p1)]
+rows = cue_rows(90000, 102000, A) + cue_rows(90000, 102000, B)
+check("boundary_cue_two_rows", len(rows) == 2, str(rows))
+check("boundary_rows_contiguous", rows[0][2] == rows[1][1], str(rows))
+
+# 6) crossfade overlap [45840,48240): each contributor keeps its OWN source-anchored cue;
+#    both cues map onto the SAME overlapping project interval -> two rows, flagged overlap.
+FA = dict(start=0,     in_s=0,      out_s=48240,  num=1, den=1, D=0)
+FB = dict(start=45840, in_s=100000, out_s=148240, num=1, den=1, D=0)
+cueA = cue_rows(46000, 46200, FA)     # FA source -> proj [46000,46200)
+cueB = cue_rows(100160, 100360, FB)   # FB source -> proj [46000,46200)
+check("crossfade_two_source_anchored_cues",
+      len(cueA) == 1 and len(cueB) == 1, "cueA=%s cueB=%s" % (cueA, cueB))
+check("crossfade_rows_overlap_same_interval",
+      cueA[0][1] < cueB[0][2] and cueB[0][1] < cueA[0][2], "cueA=%s cueB=%s" % (cueA, cueB))
+
+# 7) displayed timecode: floor to ms; parse-back within one millisecond
+t = 1999999
+s_str = tc(t)
+back = (int(s_str[0:2])*3600000 + int(s_str[3:5])*60000 + int(s_str[6:8])*1000 + int(s_str[9:12])) * P // 1000
+check("tc_floor_format", s_str == "00:00:41.666", s_str)
+check("tc_parse_within_1ms", t - back < P // 1000, "t=%d back=%d" % (t, back))
+
+# 8) media-fragments-style exported seconds: floor to 3 decimals
+t2 = 1234567
+sec = (t2 * 1000) // P
+frag = "%d.%03d" % (sec // 1000, sec % 1000)
+check("media_fragment_seconds", frag == "25.720", frag)
+
+print("---")
+print("TOTAL_FAILS=%d" % len(fails))
+sys.exit(1 if fails else 0)

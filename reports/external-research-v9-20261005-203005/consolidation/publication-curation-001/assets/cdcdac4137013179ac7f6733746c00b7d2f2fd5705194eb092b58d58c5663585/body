@@ -1,0 +1,19 @@
+# Native critique and recovery report
+
+**Provenance:** candidate-authored native self-critique/repair of the prior authenticated same-arm artifacts, written in this same combined critique+repair Goal. “Independent critique” means my fresh audit under the unchanged brief; this is not a separate independent evaluator or Sol source assessment. No source grade, quality validation, evaluator PASS or method-superiority claim is made.
+
+## Checks
+
+Read the named unchanged authority inputs and original 1,500-second allocation with known action deadline. Audited public primary material on notebook format, nbclient execution/error handling, Jupyter Server security, DuckDB CSV/JSON/Parquet and out-of-core limits, package release metadata, and the nbclient startup cleanup issue/fix/test chain. Source locators, capture IDs, hashes where retained, delivery limitations and errors are recorded in `sources.json`. Direct package metadata constraints intersect for the selected Lab/Server and nbclient/nbformat versions; this is not a resolved lock or runtime test. Server 2.22 docs are ahead of the observed 2.21.1 package. One isolated stdlib CSV/key component witness passed; exact code, output, receipt and narrow limits are in `witnesses.json`. The upstream regression test is source evidence of a test added and shipped, not evidence it ran or passed.
+
+## Changes
+
+The replacement proposal distinguishes source facts, engineering inference and product choices; limits package claims to metadata; specifies explicit parsing/schema and malformed-row policy, visible preview limits, execution order/kernel state, conservative staleness, clean replay, cache limits, untrusted-code boundary, recovery and operation-specific 5GB acceptance gates. It adds the nbclient lifecycle precedent without broadening it into product proof. Current source, witness and leads catalogs accompany it. These are newly authored current artifacts, not asserted diffs to unseen files.
+
+## Remaining unknowns and fidelity limit
+
+The admitted `inputs/prior/<origin-job>/` directories could not be listed/read by the available file API (directory reads rejected); guessed manifest/artifact paths were not found, and no origin-job mapping was available. Therefore the current prior proposal/catalogs/predecessors/source-context captures were not read. Every claim in those prior artifacts remains unaudited; preservation or correction relative to them is **unassessed**. The standalone proposal covers the brief but cannot be certified as preserving unseen content.
+
+Also open: full package lock and integration, supported OS and validated sandbox, Server 2.21.1 security setup, actual data/schema needs, representative 5GB performance/spill, crash durability, concurrency and portable external inputs. No evaluator, hidden correction, Sol assessment or independent source assessment was supplied or used. Evidence requests are in `leads.json`.
+
+All checks, changes and unknowns are candidate-authored work under the original brief, criteria, allowed-source rules and allocation. No guessed execution, hidden answer, fallback authoring or extra time is claimed.

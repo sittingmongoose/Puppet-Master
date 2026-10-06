@@ -1,0 +1,45 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-DEC007-r001",
+  "pair_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003",
+  "source_slot": "I-11",
+  "family": "Z",
+  "requested_model": "GLM 5.3 Flash",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/card.json",
+  "card_sha256": "57a2adf273e7bd8d6276ee5a963a9a2b75300032eb48296d4c9a83c0e2141ae8",
+  "stage_jobs": [
+    {
+      "job_id": "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "max_seconds": 600,
+      "max_responses": 60,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "37724020eb4e9d4ee60777a47bfcab45fdac26c8b23be58a77039467a6332bbe",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true
+    }
+  ],
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "status": "PREPARED_NOT_ADMITTED",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/followups/I11-CONTROL/I-11-CONTROL-DELIVERY-RECOVERY-R003/PAIR_INPUT_FREEZE.json",
+    "sha256": "dee81a39f7a4ebd8d3e2a7db9ca0b7fdce0dd6b032fe89ad3fced04696361908"
+  },
+  "original_attempts_and_costs_preserved": true,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "scientific_recovery_mode": "mixed"
+}

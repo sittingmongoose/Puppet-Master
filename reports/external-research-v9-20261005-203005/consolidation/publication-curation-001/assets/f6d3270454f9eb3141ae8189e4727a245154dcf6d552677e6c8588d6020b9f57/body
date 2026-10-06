@@ -1,0 +1,153 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "I-09-FRESH-DELIVERY-R002-DEC007-r001",
+  "pair_id": "I-09-FRESH-DELIVERY-R002",
+  "source_slot": "I-09",
+  "family": "Z",
+  "requested_model": "GLM 5.3 Flash",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/card.json",
+  "card_sha256": "86a0717de81aa1dca622597d3dff81c6dc0dbf17aa75eb2ef0404eabbec52a72",
+  "stage_jobs": [
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-research-a001",
+      "arm": "control",
+      "stage": "research",
+      "stage_index": 0,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-research-a001/prepared-stage.json",
+      "stage_sha256": "a2d0d1133f488fdf364c737581dd61dd20bb19c4c3417c3b7ff37903cd373940",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-research-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-critique-a001",
+      "arm": "control",
+      "stage": "critique",
+      "stage_index": 1,
+      "max_seconds": 900,
+      "max_responses": 90,
+      "prerequisite_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-control-research-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-control-research-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "de1c8241a9c63f4ebb03e9b3e979d78361ab9f1f794509f17e90548c3ef11221",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-critique-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-control-revision-a001",
+      "arm": "control",
+      "stage": "revision",
+      "stage_index": 2,
+      "max_seconds": 600,
+      "max_responses": 60,
+      "prerequisite_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-control-critique-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-control-critique-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "dc4246b0db6ffbd6cd0a63ff6e16e329fe8d56869ec14e477cec9a0b9ed26fe4",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-control-revision-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+      "arm": "treatment",
+      "stage": "research",
+      "stage_index": 0,
+      "max_seconds": 1200,
+      "max_responses": 120,
+      "prerequisite_job_ids": [],
+      "all_same_arm_prior_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "dcb20f36d019641093a47b9199b4804df7e9ddc730f1e4a9dc4813d3e0140669",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-research-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "PREPARED_NOT_ADMITTED",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-critique-a001",
+      "arm": "treatment",
+      "stage": "critique",
+      "stage_index": 1,
+      "max_seconds": 900,
+      "max_responses": 90,
+      "prerequisite_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "1a1808efb36e90417b20c1f7db6959a6a639d1bcc92d814b882147dcd29f98a7",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    },
+    {
+      "job_id": "I-09-FRESH-DELIVERY-R002-treatment-revision-a001",
+      "arm": "treatment",
+      "stage": "revision",
+      "stage_index": 2,
+      "max_seconds": 600,
+      "max_responses": 60,
+      "prerequisite_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-treatment-critique-a001"
+      ],
+      "all_same_arm_prior_job_ids": [
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-critique-a001"
+      ],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "10e549afd3fed262e628e454aec75f684f133f98293515d504bb13775d5d25a6",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/I-09-FRESH-DELIVERY-R002-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "status": "AWAITING_ACTUAL_PREDECESSOR_FREEZES",
+      "runtime_binding_required": true
+    }
+  ],
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "status": "PREPARED_NOT_ADMITTED",
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/recovery/prepared-batch004/I-09-FRESH-DELIVERY-R002/PAIR_INPUT_FREEZE.json",
+    "sha256": "bf91a78a2b618568f01d1ba9ff8830f5fd67a9cfb4235108017971477e01071e"
+  },
+  "original_attempts_and_costs_preserved": true,
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-007.json",
+    "sha256": "3b5e9c649047166970d48cdd262c6d80ea9d1ec014039da031ea9fdf866e9778"
+  },
+  "scientific_recovery_mode": "full_fresh"
+}

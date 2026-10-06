@@ -1,0 +1,23 @@
+{
+  "authority_selector_sha256": "50ea9c948236c42a4a012a1988c39473a89f878206683cfba2617cb7b636fea2",
+  "body_interpretation": "NONE",
+  "coverage": "PARTIAL_EXACT_22_TYPED_EXTERNAL_PUBLIC_LINEAGES_NOT_QUEUE_RECONCILED",
+  "excluded_counts": {
+    "UNKNOWN_quarantine": 45,
+    "candidate_authored_Git_eligible": 61
+  },
+  "independent_archive_reread": "ALL22_NAS_LOCATORS_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/publication128-009/4236bf807e999e962a3e18e6d53af3b20587c263127ebdf8fe394162ff9ad5ae/MANIFEST.json",
+  "manifest_sha256": "0beac5c957457f01b7a2e94be411e26e49978800626432a81467040fc110c885",
+  "new_copied_bytes": 2645449,
+  "new_copied_files_count": 19,
+  "overlap_policy": "aliases retain exact lineage; no unique-evidence inflation",
+  "prior_archives": "UNCHANGED",
+  "restart": "Exact22typedpublicrows complete;45UNKNOWNand61candidateauthoredrows excluded; furtherpositiveevidence separatepins; finalqueue reconciliation pending",
+  "reused_prior_NAS_alias_count": 3,
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_files_count": 22,
+  "selected_lineage_bytes": 3548612,
+  "selection_sha256": "4236bf807e999e962a3e18e6d53af3b20587c263127ebdf8fe394162ff9ad5ae",
+  "semantic_assessment": "NONE_OPAQUE_TRANSFER_ONLY"
+}

@@ -1,0 +1,705 @@
+{
+  "counter_rule": "Elapsed wall is not model occupied cost. Candidate rows already accounted once; no extra inference charge from review. Unimported reviewer costs and all evaluator token/billing/helper usage UNKNOWN absent frozen receipts.",
+  "prior_overrun_qualifications_reference_only": [
+    {
+      "path": "accounting/cohort-018/TD24-late-clock.safe.json",
+      "sha256": "72305d071a5a31ba5faaad19f3b804ad816b65117344faca12848f8a072d037d"
+    },
+    {
+      "path": "accounting/cohort-017/Warm4-clock-qualifier.safe.json",
+      "sha256": "d608c066ae49dc686413a54cdc2c026e53eb8982a2fb254777183ccd1d6d6489"
+    }
+  ],
+  "rows": [
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "final_closure_whole_seconds": 1478.79504665,
+        "measured_utc": "2026-10-06T03:02:55.705849+00:00",
+        "original_whole_deadline_utc": "2026-10-06T03:08:16.910800+00:00",
+        "phase2_checking_seconds": 401.588477843,
+        "report_ready_whole_seconds": 1209.864674521,
+        "required_handoff_whole_seconds": 1355.298821009,
+        "source_elapsed_seconds": 681.905497813
+      },
+      "evaluator": "TD2",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-2/public/FINAL_CLOSURE_CLOCK.json",
+        "sha256": "cb7db178cb6ba7dd56698c5a38f02b9e9016507c28b2233021cac44f753621a9"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T03:01:53.332862+00:00",
+        "original_whole_deadline_utc": "2026-10-06T03:08:42.777982+00:00",
+        "phase2_checking_seconds": 303.878679353,
+        "phase2_inclusive_required_handoff_over600_seconds": 6.407076389,
+        "phase2_inclusive_required_handoff_seconds": 606.407076389,
+        "report_ready_whole_seconds": 1216.054470201,
+        "required_handoff_whole_seconds": 1390.554860877,
+        "source_elapsed_seconds": 613.484033444
+      },
+      "evaluator": "TD3",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-3/FINAL-OWNER-HANDOFF.json",
+        "sha256": "8384912d79c19a6ff1dd075ae00a9f10cd56680bf64d5ca40aa05455bf11154e"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:16:03.624403+00:00",
+        "phase2_checking_through_closure_span_seconds": 484.740795335,
+        "phase2_literal_inclusive_seconds": 561.235772228,
+        "source_elapsed_seconds": 624.291697865,
+        "whole_through_closure_seconds": 1185.527470093
+      },
+      "evaluator": "TD7",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-7/CLOSURE.json",
+        "sha256": "fd519383d78e62eb8afcd780520846779f5eda1a483b89ecea1d12a34a2f96e7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:10:57.111051Z",
+        "phase2_checking_seconds": 357.21801953400427,
+        "phase2_freeze_to_check_end_seconds": 389.0246095860057,
+        "phase2_literal_inclusive_seconds": 535.2117356160015,
+        "report_ready_whole_seconds": 722.9931575549999,
+        "source_elapsed_seconds": 240.9548613599909,
+        "whole_through_closure_seconds": 807.9731870279938
+      },
+      "evaluator": "TD8",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-8/FINAL_CLOSURE.json",
+        "sha256": "047555eac33040be0269d52d641e89fbf7c182fdb9247a806f8af517cc29d20d"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T04:39:32.523662+00:00",
+        "phase2_literal_inclusive_through_root_report_inbox_seconds": 428.743553179,
+        "source_elapsed_seconds": 188.766063869,
+        "whole_through_root_report_inbox_seconds": 617.511126125
+      },
+      "evaluator": "TD10",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-10/clock-close.json",
+        "sha256": "e9c50736611c83da0c23464d71dc7e08b3b0ad14436ed14997491a134cbc7ff7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:01:56.171403+00:00",
+        "original_whole_deadline_utc": "2026-10-06T05:09:14.560057Z",
+        "report_ready_whole_seconds": 1361.611299181
+      },
+      "evaluator": "DRAFT_READY",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/RECEIPT.json",
+        "sha256": "b8324ecef3e1d5b5c575cb1bb00584ee25a5d58433f955366955025239c53793"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:03:20.798569+00:00",
+        "original_whole_deadline_utc": "2026-10-06T05:09:14.560057Z",
+        "whole_through_handoff_seconds": 1446.238473089
+      },
+      "evaluator": "DRAFT_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/HANDOFF_CLOSE.json",
+        "sha256": "0bbd02736db87610d2928b764d6c4f9c85097828536c95493b794831646cd324"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:06:19.414763+00:00",
+        "separate_mechanical_wall_seconds": 117.218514133,
+        "started_utc": "2026-10-06T05:04:22.196255+00:00"
+      },
+      "evaluator": "DRAFT_SEPARATE_ADDENDUM",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "consolidation/results-draft-001/ADDENDUM_001_CLOSE.json",
+        "sha256": "40d9ac714bf837cf0425df5592be2e8afee732f1c75e7c7cae4b2cc1c7b1a73f"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:53:01.505245+00:00",
+        "phase2_literal_inclusive_seconds": 399.948181226,
+        "source_elapsed_seconds": 613.934399478,
+        "whole_through_handoffs_seconds": 1013.882580704
+      },
+      "evaluator": "P5_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-5/handoff-closure.json",
+        "sha256": "7d29cb6b1004d1dccc8510534661e102565cfae989c7acf8c37dd8c40908b1c3"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:53:10.993820+00:00",
+        "phase2_literal_inclusive_seconds": 405.657363942,
+        "source_elapsed_seconds": 496.072850714,
+        "whole_through_required_handoffs_seconds": 901.730214656
+      },
+      "evaluator": "TD15_CLOSURE",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-15/neutral_closure.json",
+        "sha256": "1a4a2f53185d48c7d77ac10335fe82dacb66a299f2662aa427f6467627771b44"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T06:04:59.301968+00:00",
+        "phase2_literal_inclusive_initial_handoffs_seconds": 507.292233,
+        "source_elapsed_seconds": 675.506207,
+        "whole_through_initial_handoffs_seconds": 1182.79844
+      },
+      "evaluator": "TD16_INITIAL_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested enclosing checkpoints, never added. Checking-only<=600 and inclusive checking/report/handoff intervals separately preserved. Whole includes reports/handoffs; no clock reset or source-grade implication. Owner acknowledgments/final harness delivery UNKNOWN.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-16/completion.json",
+        "sha256": "b41776c9d80bc5fb0603c211ad0d361f88c4bc10f55ba8d1a6c620fc090d2e18"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:32:17.213918Z",
+        "phase2_checking_elapsed_seconds": 321.735641077,
+        "phase2_conservative_inclusive_elapsed_seconds": 360.423396077,
+        "whole_elapsed_seconds": 654.944928475
+      },
+      "evaluator": "TD12_QUALIFIER",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested checking, inclusive and whole owner-clock scopes preserved; qualifier/terminal/handoff overlap, never sum. Final unobserved receiver/final-channel delivery UNKNOWN; no source-grade implication.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-12/clock-qualification.json",
+        "sha256": "1c851a3e18a851d3d940f9d3fd43745336169e84a1a8b53fd91fda9aeea2b565"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:32:59.350029Z",
+        "phase2_checking_elapsed_seconds": 363.871735796,
+        "phase2_conservative_inclusive_elapsed_seconds": 402.559490796,
+        "whole_elapsed_seconds": 697.081023194
+      },
+      "evaluator": "TD12_TERMINAL",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested checking, inclusive and whole owner-clock scopes preserved; qualifier/terminal/handoff overlap, never sum. Final unobserved receiver/final-channel delivery UNKNOWN; no source-grade implication.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-12/terminal-closure.json",
+        "sha256": "60c5a7d1bb05fa8f2327c0ec2a580e80adb10b7b2afa1eb60ed24bab147d2aa3"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:35:04.296986+00:00",
+        "phase2_checking_elapsed_seconds": 417.4064503799891,
+        "phase2_inclusive_elapsed_seconds": 477.5669747879874,
+        "source_elapsed_seconds": 261.25086871501117,
+        "whole_elapsed_seconds": 738.8301206670003
+      },
+      "evaluator": "TD13_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested checking, inclusive and whole owner-clock scopes preserved; qualifier/terminal/handoff overlap, never sum. Final unobserved receiver/final-channel delivery UNKNOWN; no source-grade implication.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-13/handoff-receipt.json",
+        "sha256": "822c1f6048d9dc6758a7beb4f8a7779da15294ef74fdb0cdf1b2ec7f0853d7f0"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:42:03.846826Z",
+        "phase2_inclusive_elapsed_seconds": 408.9156650040095,
+        "source_elapsed_seconds": 551.0936105589935,
+        "whole_elapsed_seconds": 960.009275563003
+      },
+      "evaluator": "TD14_CLOSURE",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested checking, inclusive and whole owner-clock scopes preserved; qualifier/terminal/handoff overlap, never sum. Final unobserved receiver/final-channel delivery UNKNOWN; no source-grade implication.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-14/neutral-closure.json",
+        "sha256": "4e483cfd52bd8802cff6697244f180f853d99cb2bdfe1f925c7b49a38276118b"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T05:42:58.189431Z",
+        "phase2_inclusive_elapsed_seconds": 463.2582704790111,
+        "source_elapsed_seconds": 551.0936105589935,
+        "whole_elapsed_seconds": 1014.3518810380046
+      },
+      "evaluator": "TD14_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Nested checking, inclusive and whole owner-clock scopes preserved; qualifier/terminal/handoff overlap, never sum. Final unobserved receiver/final-channel delivery UNKNOWN; no source-grade implication.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-14/handoff-complete.json",
+        "sha256": "96337bb4d1ef5865d6b9084ba98c4c5cd4e3d85afadc0f039e8ec966f0055e2a"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T06:52:28.787924+00:00",
+        "phase2_literal_inclusive_seconds": 548.811099204,
+        "source_elapsed_seconds": 1049.939750428,
+        "whole_through_report_handoffs_seconds": 1598.750849632
+      },
+      "evaluator": "C03_FINAL_REVIEW_HANDOFF",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact neutral source/clock metadata only. Reservation prep436.175775784 is sunk elapsed work, not candidate inference/billing; full prep UNKNOWN. Report-ready/checking/handoff scopes overlap enclosing whole; never sum. Fresh warm final/P2 completion UNKNOWN at this source freeze. ENOSPC does not reset clocks.",
+      "source_pin": {
+        "path": "evaluation/independent-confirmation-C03-final-1/closure_clock.json",
+        "sha256": "cfad38842afabca0299eecfd68b193c0b080f465c34e1128730e76b719a58093"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "full_actual_prep_seconds": "UNKNOWN",
+        "measured_utc": "2026-10-06T06:47:46.635202+00:00",
+        "phase2": "NOT_STARTED",
+        "reservation_anchored_prep_through_handoffs_seconds": 436.175775784,
+        "source_phase": "NOT_STARTED"
+      },
+      "evaluator": "WARM_RESERVATION_SOURCE_NOT_STARTED",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact neutral source/clock metadata only. Reservation prep436.175775784 is sunk elapsed work, not candidate inference/billing; full prep UNKNOWN. Report-ready/checking/handoff scopes overlap enclosing whole; never sum. Fresh warm final/P2 completion UNKNOWN at this source freeze. ENOSPC does not reset clocks.",
+      "source_pin": {
+        "path": "evaluation/independent-warm-recovery-1/final-neutral-closure.json",
+        "sha256": "f2ac4ae30eb8355f524b98e579411f98884ac23f6fd2bdfcb47ee442c1bf04a4"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "phase2_literal_authorized_seconds": 600,
+        "source_phase_authorized_seconds": 1200,
+        "started_utc": "2026-10-06T06:56:04.683140+00:00",
+        "whole_authorized_seconds": 1800
+      },
+      "evaluator": "FRESH_WARM_SOURCE_START",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact neutral source/clock metadata only. Reservation prep436.175775784 is sunk elapsed work, not candidate inference/billing; full prep UNKNOWN. Report-ready/checking/handoff scopes overlap enclosing whole; never sum. Fresh warm final/P2 completion UNKNOWN at this source freeze. ENOSPC does not reset clocks.",
+      "source_pin": {
+        "path": "evaluation/independent-warm-recovery-1-fresh/source_start.json",
+        "sha256": "795827f1cb64810272012f6dbb029d7c2df092af240e08b86d4949221fa68957"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T07:14:16.912559+00:00",
+        "phase2_literal_deadline_monotonic_ns": 101875769547187,
+        "source_elapsed_seconds": 1092.229368357,
+        "source_started_utc": "2026-10-06T06:56:04.683140+00:00"
+      },
+      "evaluator": "FRESH_WARM_SOURCE_FREEZE_TMP_ENOSPC",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact neutral source/clock metadata only. Reservation prep436.175775784 is sunk elapsed work, not candidate inference/billing; full prep UNKNOWN. Report-ready/checking/handoff scopes overlap enclosing whole; never sum. Fresh warm final/P2 completion UNKNOWN at this source freeze. ENOSPC does not reset clocks.",
+      "source_pin": {
+        "path": "/tmp/er9-independent-warm-recovery-1-fresh/phase1_freeze.json",
+        "sha256": "cf3616248889f0dec176be5264fa881a0a9407d7fb4d77d63499564248918147"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T07:21:14.714425+00:00",
+        "phase2_literal_inclusive_through_report_handoffs_seconds": 417.801866489,
+        "phase2_stop_utc": "2026-10-06T07:24:16.912559Z",
+        "source_elapsed_seconds": 1092.229368357,
+        "whole_stop_utc": "2026-10-06T07:26:04.683140Z",
+        "whole_through_report_handoffs_seconds": 1510.031234846
+      },
+      "evaluator": "FRESH_WARM_FINAL_TMP_ENOSPC",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Received later neutral clock closure at07:21:14.714425 after usage capture07:18:34\u201335, source windows distinct. Report/handoff clock1510.031234846 encloses source1092.229368357+literalP2417.801866489; no reset or double addition. Final delivery/ACKs/helper usage UNKNOWN. Derivative single-output review, no fresh/matched/logical target credit.",
+      "source_pin": {
+        "path": "/tmp/er9-independent-warm-recovery-1-fresh/closure_receipt.json",
+        "sha256": "aefbdd11398b20e9cb9c7b33533c79277342d829dc59a413dc5ed626e21f910c"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T07:58:20.790169+00:00",
+        "phase2_literal_inclusive_seconds": 796.266980257,
+        "phase2_overrun_seconds": 196.266980257,
+        "source_elapsed_seconds": 411.139435851,
+        "whole_through_closure_seconds": 1207.406416108
+      },
+      "evaluator": "WARM4",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact inclusive clock includes wait/check/report/required-handoff per owner scope; source/checkpoint/report subsets not added again. Physical/helpers/tokens/billing/final harness/ACK UNKNOWN. Existing native usage already global; no evaluator/candidate replacement or target/pass credit.",
+      "source_pin": {
+        "path": "evaluation/independent-warm-recovery-4/closure.json",
+        "sha256": "f6ac09edd139c423b28260bfd76555b665a954e9810f1dd60f5e48c82604e27f"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T08:00:50.909355+00:00",
+        "phase2_literal_inclusive_seconds": 592.202309152,
+        "source_elapsed_seconds": 447.612349819,
+        "whole_through_closure_seconds": 1039.814658971
+      },
+      "evaluator": "WARM5",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact inclusive clock includes wait/check/report/required-handoff per owner scope; source/checkpoint/report subsets not added again. Physical/helpers/tokens/billing/final harness/ACK UNKNOWN. Existing native usage already global; no evaluator/candidate replacement or target/pass credit.",
+      "source_pin": {
+        "path": "evaluation/independent-warm-recovery-5/closure.json",
+        "sha256": "830180b2e9bac54c94b1d22cf91c5cbf2b06e0e74d12c6ad57fb96e12c419b0f"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T08:19:48.582709+00:00",
+        "phase2_literal_inclusive_seconds": 442.37601125999936,
+        "source_elapsed_seconds": 588.7225491019926,
+        "whole_through_closure_seconds": 1031.098560361992
+      },
+      "evaluator": "TD17",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact inclusive clock includes wait/check/report/required-handoff per owner scope; source/checkpoint/report subsets not added again. Physical/helpers/tokens/billing/final harness/ACK UNKNOWN. Existing native usage already global; no evaluator/candidate replacement or target/pass credit.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-17/closure.json",
+        "sha256": "7745eb8d75234ab1e4ab4fff2f0f4c9f515a60d1d735e48a1aa2a0bccac6bd39"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T08:40:44.006207+00:00",
+        "phase2_literal_inclusive_seconds": 490.945471984,
+        "source_elapsed_seconds": 528.103672305,
+        "whole_through_closure_seconds": 1019.049144289
+      },
+      "evaluator": "TD18",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact inclusive clock includes wait/check/report/required-handoff per owner scope; source/checkpoint/report subsets not added again. Physical/helpers/tokens/billing/final harness/ACK UNKNOWN. Existing native usage already global; no evaluator/candidate replacement or target/pass credit.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-18/closure.json",
+        "sha256": "a2685571a3d68a37c39d2b630c6c9c64038ddc4470409245ba505a32e730da20"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T08:42:24.914096+00:00",
+        "phase2_literal_inclusive_seconds": 489.916894559,
+        "pre_phase2_elapsed_seconds_derived_monotonic": 292.124481672,
+        "whole_through_closure_seconds": 782.041376231
+      },
+      "evaluator": "TD19",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact inclusive clock includes wait/check/report/required-handoff per owner scope; source/checkpoint/report subsets not added again. Physical/helpers/tokens/billing/final harness/ACK UNKNOWN. Existing native usage already global; no evaluator/candidate replacement or target/pass credit.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-19/closure.json",
+        "sha256": "5b0b9938cd85e34a174c3e665a8d6700a657fadc78860121b2c8728f3bef535b"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:32:45.843847+00:00",
+        "phase2_literal_inclusive_seconds": 504.77691044,
+        "source_elapsed_seconds": 535.304666,
+        "whole_through_handoffs_seconds": 1040.081576366
+      },
+      "evaluator": "independent-pipeline-9-research-I02",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-9-research-I02/TERMINAL_CLOCK_RECEIPT.json",
+        "sha256": "fd29eb5096b9b2d239933f05128c074273f0ce7ca60622f66a9b011783bbcaeb"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:39:11.167813+00:00",
+        "phase2_literal_inclusive_seconds": 564.296058,
+        "source_elapsed_seconds": 630.51781486,
+        "whole_through_handoffs_seconds": 1194.81387286
+      },
+      "evaluator": "independent-pipeline-10-research-I03",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-10-research-I03/TERMINAL_CLOCK.json",
+        "sha256": "85256dacc1908b26b83b518069ab459d0f6f962c32a01b48d4dcdc182b3a99a7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:33:55.725323+00:00",
+        "phase2_literal_inclusive_seconds": 526.78607385,
+        "source_elapsed_seconds": 179.01038917,
+        "whole_through_handoffs_seconds": 705.79646302
+      },
+      "evaluator": "independent-targeted-21",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-21/final_clock.json",
+        "sha256": "b181266acfeebd7e7f56504a0cb88164e27fe66fca8d0bf8453fac69e37ea35d"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:39:02.363277+00:00",
+        "phase2_literal_inclusive_seconds": 344.6686744040053,
+        "source_elapsed_seconds": 253.8095380559971,
+        "whole_through_handoffs_seconds": 837.309774016001
+      },
+      "evaluator": "independent-targeted-22",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-22/completion.json",
+        "sha256": "00d7090b203a6d4c8eab17e686ae6d8488a46becb0b44bf56ebf22967fd4ed21"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:46:50.401158+00:00",
+        "phase2_literal_inclusive_seconds": 591.70281153,
+        "source_elapsed_seconds": 185.258814715,
+        "whole_through_handoffs_seconds": 776.961626245
+      },
+      "evaluator": "independent-targeted-23",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-targeted-23/completion.json",
+        "sha256": "55b93d44c4b683c784b54e41db5f1beb4ac58726cf456cfa0c48db3d4ec3dbc3"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T09:51:12.940661+00:00",
+        "phase2_literal_inclusive_seconds": 285.6813023,
+        "source_elapsed_seconds": 593.21646847,
+        "whole_through_handoffs_seconds": 878.89777077
+      },
+      "evaluator": "independent-pipeline-11-research-I04",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact closed neutral timestamped phase/handoff scopes only. Source/report/checkpoint slices overlap enclosingwhole; never add them to candidate/provider/SDK/UI/Goal/root/helper counters. Research/intermediate criterion/reviewer ordinal not wholecomparison or successful-source credit. Actualfinaldelivery/ACK/physical/money unknown.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-11-research-I04/phase2_complete.json",
+        "sha256": "2c49de292a8eb16fbf41f48814d9c7b4d370b64b82c9b10646f89b607b9e909a"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "measured_utc": "2026-10-06T10:02:54.385938+00:00",
+        "phase2_literal_inclusive_seconds": 367.421892343,
+        "source_elapsed_seconds": 640.490326142,
+        "whole_through_handoffs_seconds": 1007.912218485
+      },
+      "evaluator": "C01_CURRENT_RESEARCH_ONLY",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Current research-only H1 TEN/common8/card3 scope from owner; current final/pipeline UNASSESSED. No wholepair/final pass credit; originalclock/enclosing timestamps preserved/no sum.",
+      "source_pin": {
+        "path": "evaluation/independent-confirmation-C01-current-research-1/completion_clock.json",
+        "sha256": "8c7a9757760c6cc80eac752051b62580c88973a7f041df7051a7eee68ede914e"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "observed_utc": "2026-10-06T11:36:26.117731Z",
+        "phase2_literal_inclusive_seconds": 392.846198049,
+        "source_elapsed_seconds": 352.948752688,
+        "whole_through_handoffs_seconds": 745.794950737
+      },
+      "evaluator": "independent-pipeline-15-research-I08",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact dated neutral scope only, source/report/checkpoint slices nested not summed. P16 handoff-prepared record is not automatically actualFINAL/harness closure. P17 research-only completion after earliercoverage date does not retroactively complete logical comparisons. No grade/source body read, no newcandidate/pass/target credit.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-15-research-I08/completion-receipt.json",
+        "sha256": "a188318ab08b71dc253702dd3e89ab1f28771cf5d8f242225385f166937d56d7"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "observed_utc": "2026-10-06T11:26:55.837345+00:00",
+        "phase2_literal_inclusive_seconds": 258.704058839,
+        "source_elapsed_seconds": 160.054173135,
+        "whole_elapsed_seconds": 418.758231974
+      },
+      "evaluator": "independent-empty-delivery-current-2",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact dated neutral scope only, source/report/checkpoint slices nested not summed. P16 handoff-prepared record is not automatically actualFINAL/harness closure. P17 research-only completion after earliercoverage date does not retroactively complete logical comparisons. No grade/source body read, no newcandidate/pass/target credit.",
+      "source_pin": {
+        "path": "evaluation/independent-empty-delivery-current-2/COMPLETION_RECEIPT.json",
+        "sha256": "fa3d77c313464289401d61b449956cea0c985283d879580a74758ebe9d89a2f6"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "handoff_prepared_monotonic": 118740.57833985,
+        "handoff_prepared_utc": "2026-10-06T12:05:21.721330+00:00",
+        "phase1_freeze_utc": "2026-10-06T11:56:14.756349+00:00",
+        "phase2_deadline_monotonic": 118793.613375494,
+        "required_final_handoff_elapsed_seconds": "UNKNOWN_HANDOFF_PREPARED_IS_NOT_AUTOMATIC_HARNESS_CLOSURE",
+        "source_start_utc": "2026-10-06T11:48:45.225239+00:00",
+        "whole_deadline_monotonic": 119544.082281863
+      },
+      "evaluator": "independent-pipeline-16-I08-current-roles",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact dated neutral scope only, source/report/checkpoint slices nested not summed. P16 handoff-prepared record is not automatically actualFINAL/harness closure. P17 research-only completion after earliercoverage date does not retroactively complete logical comparisons. No grade/source body read, no newcandidate/pass/target credit.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-16-I08-current-roles/completion-receipt.json",
+        "sha256": "60ef0da4be0785763e3118d69d2223162d09aefd31559b73ea55922eb887af5a"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "observed_utc": "2026-10-06T12:07:43.634472Z",
+        "phase2_literal_inclusive_seconds": 289.543222619,
+        "source_elapsed_seconds": 643.55444012,
+        "whole_through_handoffs_seconds": 933.097662739
+      },
+      "evaluator": "independent-pipeline-17-research-I12",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Exact dated neutral scope only, source/report/checkpoint slices nested not summed. P16 handoff-prepared record is not automatically actualFINAL/harness closure. P17 research-only completion after earliercoverage date does not retroactively complete logical comparisons. No grade/source body read, no newcandidate/pass/target credit.",
+      "source_pin": {
+        "path": "evaluation/independent-pipeline-17-research-I12/completion_clock_receipt.json",
+        "sha256": "d8389c462b676bbe74a380390ba5aac1c011ea067ed95c1dd180ae6c8de914b9"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "actual_start_utc": "2026-10-06T12:20:40+00:00",
+        "after_required_matrix_handoffs_utc": "2026-10-06T12:37:19.399275+00:00",
+        "clock_reset": false,
+        "finite_seconds": 1200,
+        "inclusive_deadline_utc": "2026-10-06T12:40:40+00:00",
+        "inclusive_elapsed_seconds_through_required_matrix_handoffs": 999.399275
+      },
+      "evaluator": "INVENTORY17_ENGINEERING_FINAL",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Inventoryengineering whole999.399275s includesfailedbuild/recovery/handoffs, earlierdraftlostqualification retained. No summation with root/provider/helper counters; actual modeltoken/dollars unexposed, finaldeliveryoutsidecheckpointUNKNOWN.",
+      "source_pin": {
+        "bytes": 2271,
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/consolidation/publication-inventory-001/FINAL.json",
+        "relative_path": "FINAL.json",
+        "sha256": "7c227e4aede119c14bf7b68d6cbf401be3303e97d4909c777620aea02b86b64d"
+      }
+    },
+    {
+      "billing_dollars": "UNKNOWN",
+      "clocks": {
+        "no_clock_reset": true,
+        "original_phase2_limit_seconds": 600,
+        "original_phase2_stop_utc": "2026-10-06T13:00:42.288480+00:00",
+        "original_source_limit_seconds": 1200,
+        "original_whole_limit_seconds": 1800,
+        "original_whole_stop_utc": "2026-10-06T13:15:44.677830+00:00",
+        "phase2_literal_inclusive_elapsed_seconds": 375.074766276,
+        "source_elapsed_seconds": 297.61059879,
+        "tail_sample_utc": "2026-10-06T12:56:57.363246+00:00",
+        "whole_inclusive_elapsed_seconds": 672.685365066
+      },
+      "evaluator": "SCOPED_DEC019_WARM_REVIEW_FINAL_TAIL",
+      "new_candidate_charge": false,
+      "provider_usage": "UNKNOWN",
+      "scope": "Actualscoped reviewer closure afterprimary020costcapture,672.685365066whole encloses297.61059879source+375.074766276inclusiveP2; no extra nativecandidate charge ororiginalpipeline/logical/passcredit. NoP1body/grade read; finalassetcuration may remainpending.",
+      "source_pin": {
+        "path": "evaluation/independent-DEC019-warm-1/publication/FINAL_CLOCK_TAIL.json",
+        "sha256": "2799b0a1d6795c593ea1cf412ab5cfb77957b4b5eeca788b2b87363781f9cdd9"
+      }
+    }
+  ],
+  "schema": "er9.accounting.neutral-evaluator-clock-companion.v1"
+}

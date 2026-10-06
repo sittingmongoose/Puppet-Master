@@ -1,0 +1,122 @@
+{
+  "backup_receipt": {
+    "bytes": 769,
+    "path": "state/history/projection-20261006T124950.872146Z/BACKUP_RECEIPT.json",
+    "sha256": "d5b24fbfcf7dfc954d061ceeb1721de62b4a83a1f78e8bef4debe575da9d3f7f"
+  },
+  "kind": "MECHANICAL_RESTART_PROJECTION",
+  "meaningful_update_count": 59,
+  "owner": "/root/projection_keeper",
+  "recorded_utc": "2026-10-06T12:49:50.872146+00:00",
+  "scope": "037/account019base-vs-laterjoin/workload008terminal/48anyscope-notfullcomparison/inventoryqualification/ownedquietnothelpercleanup/newwarmreview/root30dated; no sciencebody/campaignfinish.",
+  "source_observed_utc": "2026-10-06T12:45:44.677830+00:00",
+  "sources": [
+    {
+      "bytes": 4957,
+      "path": "ops/publication/cohort037-verification.json",
+      "sha256": "62aa5940388219279b0f18d521b07955c9572098f9789c1c2afeb5d8f2e0f3e8"
+    },
+    {
+      "bytes": 4772,
+      "path": "accounting/cohort-019/KEEPER_RECEIPT.json",
+      "sha256": "cbbf3fe70cd566fd28dc6582d2542561c8800ffe51e71271f041b4a4db1341d2"
+    },
+    {
+      "bytes": 4686,
+      "path": "accounting/cohort-019/PUBLIC_SELECTION.json",
+      "sha256": "ef22f24333be26fadef15ccc9761ee397ba14ab27349cd56436548be3139c038"
+    },
+    {
+      "bytes": 511,
+      "path": "accounting/cohort-019/CLOSURE_PUBLIC_SELECTION.json",
+      "sha256": "707f645ff1c08204909db75679f11b4743ac407d840194cf84ece34973464f13"
+    },
+    {
+      "bytes": 2031,
+      "path": "accounting/cohort-019/CLOSURE.json",
+      "sha256": "23da1d378aaf5c7ddb321bb51c4151e2d01ce23eef167dfbf0485b9d1251bcae"
+    },
+    {
+      "bytes": 926,
+      "path": "consolidation/workload-007/PUBLICATION_SELECTOR.json",
+      "sha256": "346cb5a523d172a74cc234da1d1bff42ca82951d87e564be4203355ef4fd2669"
+    },
+    {
+      "bytes": 920,
+      "path": "consolidation/workload-007/FINAL.json",
+      "sha256": "819dc2d11074c63059939ee7eb84fcf57b068cba316265bf14848649fbc69edd"
+    },
+    {
+      "bytes": 926,
+      "path": "consolidation/workload-008/PUBLICATION_SELECTOR.json",
+      "sha256": "420954d0dcacd4820629417a74fb117f5884644262a74aa56917b6f2c3b04b7d"
+    },
+    {
+      "bytes": 1466,
+      "path": "consolidation/workload-008/NEUTRAL_CAPTURE_RECEIPT.json",
+      "sha256": "d66faf0cb6fbb5cba5a6a654f622748f6f7cc7d52677d1c4af2b729188ddc7ba"
+    },
+    {
+      "bytes": 982,
+      "path": "consolidation/workload-008/FINAL.json",
+      "sha256": "b13f4d6895df472e4f462558c316de2b3831ecbcb284d305e8f2d15b78188b4a"
+    },
+    {
+      "bytes": 137119,
+      "path": "ops/assessment-dispatch-001/FINITE_LOGICAL_COVERAGE_005.json",
+      "sha256": "19b759814c5a9d93a2783e9c65c825beaac7a37f934eab6e274bd36e30db1e60"
+    },
+    {
+      "bytes": 4988,
+      "path": "ops/dispatcher/DEC019_ALL_TERMINAL_001/CHECKPOINT.json",
+      "sha256": "0267f5fb3f54965848597de66190f08679383db773430dcd44b1cf737a5e99bc"
+    },
+    {
+      "bytes": 207,
+      "path": "evaluation/independent-DEC019-warm-1/START.json",
+      "sha256": "b991c866997d74765eccc7a82e4dc68af660749d0c23d5ffdde12b18d03f2057"
+    },
+    {
+      "bytes": 6049,
+      "path": "consolidation/publication-inventory-001/PUBLICATION_SELECTOR.json",
+      "sha256": "a288dd3a22fc95801f19bed8079bf13c991c9c65a32c80514234f18878bd21ef"
+    },
+    {
+      "bytes": 2271,
+      "path": "consolidation/publication-inventory-001/FINAL.json",
+      "sha256": "7c227e4aede119c14bf7b68d6cbf401be3303e97d4909c777620aea02b86b64d"
+    },
+    {
+      "bytes": 230586,
+      "path": "ops/dispatcher/FINAL_EXACT_OWNED_CANDIDATE_UNIT_CGROUP_QUIET_OBSERVATION_001.json",
+      "sha256": "d99810ef002bae7a8ebcabb48a7a06163200f254f0037af8282c467dba594a0d"
+    },
+    {
+      "bytes": 3502,
+      "path": "ops/frozen-exports/observations/NEUTRAL_FINISH_CLOCK_PINSET_004.json",
+      "sha256": "8520684d03211cd4a02c52c6de833af1834b2b095bf7ac9c8dbb214fbd926f1f"
+    },
+    {
+      "bytes": 2677,
+      "path": "ops/assessment-dispatch-001/FINAL_CONSOLIDATION_PROSPECTIVE_ADMISSION_001.json",
+      "sha256": "c08f6583a7a8912e303f30d7192b8120aacd2874109d8625ee4e7a1bf90942e4"
+    }
+  ],
+  "updated_files": [
+    {
+      "bytes": 250393,
+      "path": "state/current.json",
+      "sha256": "4713ab471d408171f97ad93c842858a5a730dc5a70b816b2fea0b7d772a47628"
+    },
+    {
+      "bytes": 250393,
+      "path": "state/campaign.json",
+      "sha256": "4713ab471d408171f97ad93c842858a5a730dc5a70b816b2fea0b7d772a47628"
+    },
+    {
+      "bytes": 43155,
+      "path": "CURRENT.md",
+      "sha256": "fdfbada4be685519ad4a1a5e4d438349d56b908df290ff35d24e75b6cc0cdd89"
+    }
+  ]
+}

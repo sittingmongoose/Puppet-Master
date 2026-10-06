@@ -1,0 +1,29 @@
+{
+  "current_selected_source_pin_count": 86,
+  "owner_incident_pin": {
+    "path": "consolidation/publication-inventory-001/BOUNDARY_INCIDENT.json",
+    "sha256": "b28d8d7154c62298967e809cee331cfcb938ff1b7be6494f982be088012da430"
+  },
+  "owner_incident_source_inventory_pin": {
+    "path": "consolidation/publication-inventory-001/INCIDENT_SOURCE_PINS.json",
+    "sha256": "027cd454c897081e441d35dd4d49020c3c742e96d377d2d93d0a15c45934a930"
+  },
+  "qualifications": {
+    "boundary_identified_and_reported_utc": "2026-10-06T12:30:00+00:00",
+    "boundary_identified_time_precision": "minute approximate; tool observation before narrowing capture12:30:39.713832",
+    "broader_local_draft_access_exposure": "UNKNOWN; no independent local-access audit",
+    "candidate_feedback": false,
+    "clock_cost": "All work and failure recovery remains inside one inclusive clock starting12:20:40, deadline12:40:40; no reset. Inventory actual inference tokens, dollars, and physical provider billing are unexposed. Final inclusive wall clock recorded in FINAL.json.",
+    "first_task_start_utc": "2026-10-06T12:20:40+00:00",
+    "historical_actual_per_file_parse_set": "UNKNOWN if sources moved; original implementation lacked per-file extraction logs",
+    "new_native_calls": 0,
+    "not_reconstructed": "No prior draft bytes, payload fields, source values, or exact historic hash invented",
+    "prior_draft_byte_sha256": "UNKNOWN; no prior backup or digest was captured",
+    "prior_draft_bytes": "UNRECOVERABLE_DRAFT_LOSS: repeated draft regeneration overwrote earlier ARM_INVENTORY.json and PENDING_PUBLICATION_REFS.json before backups were added",
+    "scientific_regrade": false,
+    "whole_file_parse_memory_exposure": "Occurred; JSON parser materialized the whole record, so this is not a perfect no-body-read/firewall claim."
+  },
+  "reconstructed_source_pin_count": 151,
+  "schema": "er9.accounting.inventory-incident-qualification.v1",
+  "scope": "Separate engineering inventory incident:151reconstructedsource pins86current do not reconstruct original historicalread/exposure sets. Earlier draft overwritten/no exactbackupSHA irrecoverable; no frozen scientistgrader rewrite. Metadata-only qualification, no scientific snippets/rawsource bodies reproduced; correctedgenerator opaqueSHA/safe capsules rather than guaranteed retrospectiveno-exposure."
+}

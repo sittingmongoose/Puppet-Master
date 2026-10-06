@@ -1,0 +1,25 @@
+# Native critic and recovery report
+
+## Provenance
+
+**Provenance: candidate-authored native self-critique/repair of the prior authenticated same-arm artifacts.** Independent critique means my fresh audit of eligible primary-source evidence. This is not a separate independent evaluator or Sol source assessment. All checks, changes, and unknowns are candidate-authored under the unchanged brief, common criteria, source access/separation, artifact scope, and original 1,500-second allocation. No evaluator reason, grade, hidden correction, or Sol answer was used. No source grade, evaluator PASS, quality validation, or method-superiority claim is made.
+
+## Checks
+
+The native bundle carrier accepted `out/final_bundle.json` for the exact stage and committed the four canonical paths together. `DELIVERY_MANIFEST.json` confirms explicit native adoption and reports no independent source grade. Hashes: proposal `38cf380372f4d1c68be500ec7842f7a1a3ebebc383830446d3e391ffffef0974`; sources `cce5e28152d722dca84ae524b80eca57e5b05762ec5d8b52bf9ae0c8b89b40c6`; witnesses `8faf18ad699c6dbe7f1c94a5b3cc4527ab275cf468a9e8c093c1f862d174c5c3`; leads `3974ae627420c1f9fe3f92e1394980a78b783ad9616aae77493e1aafee012247`. This proves selected-byte commitment only.
+
+Primary-source checks support: NGFF 0.5 axis/transform/multiscale rules and integer pixel labels (S1); Zarr v3 partial decode being optional (S2); Bio-Formats Java 8+ and format-qualified reader scope (S3, S5–S7); napari multidimensional UI precedent (S8); and the #8578/#9247 → merged #9059 plus tests → #9399 repair → v0.9.0 ancestry chain (S10–S17, S4). The component checks do not validate proposed application behavior.
+
+The admitted same-arm predecessor artifacts were not exposed by bounded reads. The delivery role manifest has no entries (`input_id` unavailable); attempted prior/index/manifest and expected research-proposal reads failed, and the reader cannot list directories. Thus the predecessor claim comparison, predecessor citations, and preservation of its supported content are **UNASSESSED**. This does not establish the prior artifacts never existed.
+
+## Defects found in the committed artifacts
+
+1. Proposal citation IDs drift from the source catalog. Correct mapping: Bio-Formats claims `[S3,S5–S7]` (proposal says `[S3–S8]`); napari docs `[S8]` (proposal says `[S9–S10]`); issues #8578/#9247 `[S10–S11]` (proposal says `[S11–S12]`); PR #9059/patch/commits `[S12–S14]` (proposal says `[S13–S15]`); PR #9399 `[S15]` (proposal says `[S16]`). The release/compare ancestry `[S4,S17]` is correctly cited. S9 duplicates the v0.9.0 release record and labels its publication date as capture UTC; the capture access time is 2026-10-06T06:24:30.326274Z, recorded under S4.
+2. `witnesses.json` labels W1 executed and includes the real receipt IDs/hashes, but its embedded `code` and `input` are not byte-identical to the code/data represented by those hashes. The embedded abbreviated code is mathematically equivalent to the executed arithmetic, but the receipt cannot reproduce that exact text or input digest. The underlying isolated execution did return the reported values; the delivered witness record has a provenance mismatch and should not be treated as a hash-verified reproduction.
+3. I initially created `out/critique/review.md` with a 15-byte placeholder. The bounded writer and mechanical cache operation reject overwrites; the exact required report path therefore remains incomplete. Complete candidate-authored reports/corrections are at the neighboring critique files, including this one; the required path cannot be repaired through the admitted create-only writer in this run.
+
+## Changes and unknowns
+
+The committed proposal itself specifies a read-only source boundary; axes/coordinates/transforms and annotation scope; separate view/derived state; recoverable generations and identity-checked relocation; export limits; accessibility; bounded-access gates; independent standards/viewer/reader precedents; and proposed application regression checks. It correctly says partial decode is optional, NGFF labels are pixel masks rather than vector serialization, and all application/performance validations are unexecuted.
+
+The citation crosswalk and W1 provenance mismatch were found after the bundle commit and are documented here; the canonical bundle cannot be amended with the admitted create-only writer. No claim about an unseen predecessor is attributed or marked repaired. Remaining unknowns include predecessor content and claim validity; real dependency interoperability and file variants; 3 GB performance; application-level coordinate/save/export/relocation/accessibility results; and actual shared-storage durability. W2–W7 remain UNEXECUTED. No PASS/FAIL or quality grade is assigned.

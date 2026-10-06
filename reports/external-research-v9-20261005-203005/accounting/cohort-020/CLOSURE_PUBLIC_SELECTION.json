@@ -1,0 +1,22 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-020/CLOSURE.json",
+      "sha256": "d158f0025ab14c5c75a4a60a1bd7622bf4b69f07efd5e82de50a49a7f2482d33"
+    },
+    {
+      "path": "accounting/cohort-020/CLOSURE.schema.json",
+      "sha256": "908bfd86d99c3b1051929fe0f862fb0c1983cfe36fd6d974c98420b32fcba83c"
+    },
+    {
+      "path": "accounting/cohort-020/CURATION-late-clock.safe.json",
+      "sha256": "08a50594630ec09c15da118a9aa171ca47fad40cc643e92d38e5ac75eda60db1"
+    },
+    {
+      "path": "accounting/cohort-020/CURATION-late-clock.safe.schema.json",
+      "sha256": "059d781f7771e3ef39f23d86f4691c6baaee2d9205980a5bd0a5596562154412"
+    }
+  ],
+  "exclusion": "020neutral ownclosure/latecurationclock qualifiers+schemas only; primary020unchanged, raw/semantic/unlisted originals excluded.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

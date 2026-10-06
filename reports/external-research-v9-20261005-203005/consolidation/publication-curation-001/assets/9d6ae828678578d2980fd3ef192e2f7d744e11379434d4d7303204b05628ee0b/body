@@ -1,0 +1,397 @@
+{
+  "schema": "er9.dispatch-registration.v1",
+  "request_id": "D-V06-B-DEFERRED-R001-r001-CLOCK-R002",
+  "pair_id": "D-V06-B-DEFERRED-R001-CLOCK-R002",
+  "source_slot": "D-V06-B",
+  "family": "L",
+  "candidate_family": "Luna",
+  "requested_family": "Luna",
+  "requested_model": "GPT-6 Luna",
+  "requested_effort": "Max",
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/card.json",
+  "card_sha256": "1ad27d35b71b805432c1b54c68f0a899f6e4d8ca26fd463daacfb322468a438f",
+  "source_scientific_card_refs": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/cases/diagnostics/D-V06-B.json",
+      "sha256": "8b2d6a2837bc6335c1e2c1457681c51630a263b6e93f082e59581008ddb4bf62"
+    }
+  ],
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+    "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+  },
+  "stage_resource_bindings_frozen": true,
+  "stage_jobs": [
+    {
+      "job_id": "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002",
+      "arm": "control",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "52a6ea541b6c70b329928b678d083862dc60c73aa262606cb8b601fc568bf017",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "pipeline_final": true,
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "required_artifacts": [
+        "out/final/proposal.md",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "source_job_id": "D-V06-B-DEFERRED-R001-control-diagnostic-a001",
+      "all_same_arm_prior_job_ids": [],
+      "source_role_binding_required": true,
+      "source_role_bindings": [
+        {
+          "role": "critique",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+          "required_artifact": "seed/critique.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        }
+      ],
+      "prior_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+        "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+      },
+      "inline_only_bundle": false,
+      "both_v06_bundle_excluded": true,
+      "original_source_step": {
+        "job_id": "D-V06-B-control-diagnostic-a001",
+        "arm": "control",
+        "stage": "diagnostic",
+        "stage_index": 0,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_seconds": 600,
+        "max_responses": null,
+        "requested_parent_response_cap": 100,
+        "response_cap_enforcement": "UNSUPPORTED; null by prospective root ruling",
+        "prerequisite_job_ids": [],
+        "seed_input_policy": {
+          "candidate_roles": [
+            "proposal",
+            "critique"
+          ],
+          "full_public_sources": true,
+          "withheld_roles": [
+            "revision",
+            "enrichment",
+            "dependencies"
+          ],
+          "optional_enrichment": "May supply genuinely authored relevant material later; absent file is not an invented ordinary-role gate."
+        },
+        "required_artifacts": [
+          "out/final/proposal.md",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "pipeline_final": true,
+        "execution_enabled": true,
+        "public_get": true,
+        "status": "AWAITING_GENUINE_MISSING_ROLE",
+        "prior_output_exposure": "Only listed actual same-arm prerequisite freezes; parallel peer outputs withheld until resolver.",
+        "parallel_group": null,
+        "slot_consumption": 1
+      },
+      "predecessor_aliases": {},
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "36efc1e52c5c45b5693b6e09ce5a87ecfcfba1dc4f518fe1ce1ff9884e9a8433"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-control-diagnostic-a001/workspace/TASK.md",
+        "sha256": "40d38b042733d741618d641e9375d26553fd0d2d72fc0e7d84b10bcb81cdcc80"
+      },
+      "original_authentic_r4_actual_stage_ref": null,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "automatic_retry": false,
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    },
+    {
+      "job_id": "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002",
+      "arm": "treatment",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "max_seconds": 600,
+      "max_responses": null,
+      "prerequisite_job_ids": [],
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/prepared-stage.json",
+      "stage_sha256": "3766c602ac63c9948623062998025a3e193176a4a3e31750d295af3ebf094cdf",
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/OUTPUT_FREEZE.json",
+      "pipeline_final": false,
+      "status": "AWAITING_GENUINE_CURRENT_NATIVE_INPUTS",
+      "runtime_binding_required": true,
+      "execution_enabled": true,
+      "public_get": true,
+      "native_goal": true,
+      "fresh_standalone_thread": true,
+      "candidate_family": "Luna",
+      "requested_family": "Luna",
+      "requested_model": "GPT-6 Luna",
+      "requested_effort": "Max",
+      "required_artifacts": [
+        "out/amendment.diff",
+        "out/final/sources.json",
+        "out/final/witnesses.json",
+        "out/final/leads.json"
+      ],
+      "source_job_id": "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001",
+      "all_same_arm_prior_job_ids": [],
+      "source_role_binding_required": true,
+      "source_role_bindings": [
+        {
+          "role": "critique",
+          "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+          "required_artifact": "seed/critique.md",
+          "actual_output_freeze_ref": null,
+          "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+        }
+      ],
+      "prior_binding_required": false,
+      "birth_binding_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+        "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+      },
+      "resource_binding": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/CORE_RESOURCE_BINDING.json",
+        "sha256": "0ff06025cef9aedbd6a0494c9849d1fc38d162c478f0e7b2a1aa0d1291a61e36"
+      },
+      "inline_only_bundle": false,
+      "both_v06_bundle_excluded": true,
+      "original_source_step": {
+        "job_id": "D-V06-B-treatment-diagnostic-a001",
+        "arm": "treatment",
+        "stage": "diagnostic",
+        "stage_index": 0,
+        "native_goal": true,
+        "fresh_same_family": true,
+        "max_seconds": 600,
+        "max_responses": null,
+        "requested_parent_response_cap": 100,
+        "response_cap_enforcement": "UNSUPPORTED; null by prospective root ruling",
+        "prerequisite_job_ids": [],
+        "seed_input_policy": {
+          "candidate_roles": [
+            "proposal",
+            "critique"
+          ],
+          "full_public_sources": true,
+          "withheld_roles": [
+            "revision",
+            "enrichment",
+            "dependencies"
+          ],
+          "optional_enrichment": "May supply genuinely authored relevant material later; absent file is not an invented ordinary-role gate."
+        },
+        "required_artifacts": [
+          "out/amendment.diff",
+          "out/final/sources.json",
+          "out/final/witnesses.json",
+          "out/final/leads.json"
+        ],
+        "pipeline_final": false,
+        "execution_enabled": true,
+        "public_get": true,
+        "status": "AWAITING_GENUINE_MISSING_ROLE",
+        "prior_output_exposure": "Only listed actual same-arm prerequisite freezes; parallel peer outputs withheld until resolver.",
+        "parallel_group": null,
+        "slot_consumption": 1
+      },
+      "predecessor_aliases": {},
+      "clock_declaration_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/clock_declaration.json",
+        "sha256": "b4bf4a9b455483971741ee81743a9315f6b95c3de026d174fa7d98961dc25dff"
+      },
+      "scientific_task_prefix_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002/workspace/TASK.scientific.md",
+        "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4"
+      },
+      "original_scientific_task_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/D-V06-B-DEFERRED-R001-treatment-diagnostic-a001/workspace/TASK.md",
+        "sha256": "8f2b96a72f79f9972e947bea7cf51962df66290c7d88f15fcb8e591b3d4547c4"
+      },
+      "original_authentic_r4_actual_stage_ref": null,
+      "clock_behavioral_version": "v1.5-clock-telemetry",
+      "original_execution_cutoff_metadata_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+        "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+      },
+      "automatic_retry": false,
+      "old_failed_goal_or_blocked_attempt_rewritten": false
+    }
+  ],
+  "mechanical_stages": [
+    {
+      "job_id": "D-V06-B-DEFERRED-R001-treatment-exact-assembly-m001-CLOCK-R002",
+      "arm": "treatment",
+      "stage": "mechanical_exact_assembly",
+      "stage_index": 1,
+      "native_goal": false,
+      "native_starts": 0,
+      "prerequisite_job_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "operation": "Generic strict zero-fuzz unified-diff assembly against frozen original; no source interpretation.",
+      "required_artifacts": [
+        "out/final/proposal.md"
+      ],
+      "pipeline_final": true,
+      "status": "PENDING_EXACT_ACTUAL_NATIVE_AMENDMENT",
+      "tool_boundary_review": "Only exact declared target and patch bytes; no arbitrary path or premium semantic repair.",
+      "original_source_step": {
+        "job_id": "D-V06-B-treatment-exact-assembly-m001",
+        "arm": "treatment",
+        "stage": "mechanical_exact_assembly",
+        "stage_index": 1,
+        "native_goal": false,
+        "native_starts": 0,
+        "prerequisite_job_ids": [
+          "D-V06-B-treatment-diagnostic-a001"
+        ],
+        "operation": "Generic strict zero-fuzz unified-diff assembly against frozen original; no source interpretation.",
+        "required_artifacts": [
+          "out/final/proposal.md"
+        ],
+        "pipeline_final": true,
+        "status": "GENERIC_ASSEMBLY_PREREQUISITE",
+        "tool_boundary_review": "Only exact declared target and patch bytes; no arbitrary path or premium semantic repair."
+      },
+      "mechanical_constructor_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/exact_assembly.py",
+        "sha256": "3af2177da77b483fccb43ec355501a1319e95c238cf29431e2c51592dd476721"
+      },
+      "original_seed_proposal_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/proposal.md",
+        "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+        "origin_job_id": "I-02-treatment-research-a001",
+        "original_relative_path": "research/proposal.md",
+        "bytes": 28811
+      },
+      "native_amendment_authorship_required": true,
+      "zero_fuzz": true,
+      "premium_semantic_rewrite": false,
+      "original_mechanical_stage": {
+        "job_id": "D-V06-B-DEFERRED-R001-treatment-exact-assembly-m001",
+        "arm": "treatment",
+        "stage": "mechanical_exact_assembly",
+        "stage_index": 1,
+        "native_goal": false,
+        "native_starts": 0,
+        "prerequisite_job_ids": [
+          "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001"
+        ],
+        "operation": "Generic strict zero-fuzz unified-diff assembly against frozen original; no source interpretation.",
+        "required_artifacts": [
+          "out/final/proposal.md"
+        ],
+        "pipeline_final": true,
+        "status": "PENDING_EXACT_ACTUAL_NATIVE_AMENDMENT",
+        "tool_boundary_review": "Only exact declared target and patch bytes; no arbitrary path or premium semantic repair.",
+        "original_source_step": {
+          "job_id": "D-V06-B-treatment-exact-assembly-m001",
+          "arm": "treatment",
+          "stage": "mechanical_exact_assembly",
+          "stage_index": 1,
+          "native_goal": false,
+          "native_starts": 0,
+          "prerequisite_job_ids": [
+            "D-V06-B-treatment-diagnostic-a001"
+          ],
+          "operation": "Generic strict zero-fuzz unified-diff assembly against frozen original; no source interpretation.",
+          "required_artifacts": [
+            "out/final/proposal.md"
+          ],
+          "pipeline_final": true,
+          "status": "GENERIC_ASSEMBLY_PREREQUISITE",
+          "tool_boundary_review": "Only exact declared target and patch bytes; no arbitrary path or premium semantic repair."
+        },
+        "mechanical_constructor_ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/exact_assembly.py",
+          "sha256": "3af2177da77b483fccb43ec355501a1319e95c238cf29431e2c51592dd476721"
+        },
+        "original_seed_proposal_ref": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-02-treatment-research-a001/frozen-output/research/proposal.md",
+          "sha256": "63a0055fcb753a1f231ce0f202f693d961e5fd486c79175170a6fe57a5fae8df",
+          "origin_job_id": "I-02-treatment-research-a001",
+          "original_relative_path": "research/proposal.md",
+          "bytes": 28811
+        },
+        "native_amendment_authorship_required": true,
+        "zero_fuzz": true,
+        "premium_semantic_rewrite": false
+      }
+    }
+  ],
+  "source_role_bindings": [
+    {
+      "role": "critique",
+      "job_id": "SEED-DEV-B-DEFERRED-R001-seed-critique-a001-CLOCK-R002",
+      "required_artifact": "seed/critique.md",
+      "actual_output_freeze_ref": null,
+      "status": "PENDING_GENUINE_NATIVE_COMPLETE_QUIET_PROVENANCE"
+    }
+  ],
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/pairs/D-V06-B-DEFERRED-R001-CLOCK-R002/PAIR_PROSPECTIVE_FREEZE.json",
+    "sha256": "96e5edaa40dc865620c9601dc9e9ee8fc24d09b3555e8122c365fcbd50294864"
+  },
+  "pair_actual_inputs_required": true,
+  "pair_actual_input_constructor_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/clock-repair-002/input_binding.py",
+    "sha256": "2581b5df83b6fdb930324061fe5a0dddc39690adecd924c51ecdb2ea5c3e2cc3"
+  },
+  "root_scope_required": true,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "scientific_recovery_mode": "wholly_unstarted_pair",
+  "status": "AWAITING_EXACT_GENUINE_CLOCK_VERSION_SOURCE_ROLES",
+  "original_attempts_and_costs_preserved": true,
+  "no_candidate_answers_or_evaluation_supplied": true,
+  "fixture_suitability": "UNASSESSED_PER_FACET; genuine required roles remain runtime prerequisites",
+  "cold_cost_metadata_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/SEED_ROLE_STATUS_METADATA_20261006T0240.json",
+    "sha256": "cef65177178d7fa452aa2b62a22075cdd082c3a957212e9167afb83fd3a62f8a"
+  },
+  "native_starts": 0,
+  "original_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/deferred-targets-001/pairs/D-V06-B-DEFERRED-R001/registration.json",
+    "sha256": "5a2d62c81422a47147556877bd0acfc344f99abdec2affc15196af5448e6e092"
+  },
+  "original_execution_cutoff_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEFERRED_CLOCK_REPAIR_ELIGIBILITY_001.json",
+    "sha256": "41f4057bc7f1b3067070453dca3b702e195c2e4340759525969ae7ac6f941682"
+  },
+  "clock_behavioral_version": "v1.5-clock-telemetry",
+  "supersedes_wholly_unentered_job_ids": [
+    "D-V06-B-DEFERRED-R001-control-diagnostic-a001",
+    "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001"
+  ],
+  "no_new_hypothesis_or_extra32_credit": true
+}

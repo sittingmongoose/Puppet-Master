@@ -1,0 +1,52 @@
+# W1 execution source and receipt detail
+
+Supplement to `witnesses.json`, W1. The bounded writer refuses to replace an existing file, so this file records the exact candidate-authored check source and a second admitted execution receipt; the original catalog remains unchanged.
+
+- Status: executed by candidate in admitted isolated `pm_execution.python_execute`
+- Execution ID: `exec-ecqtwu6d`
+- Code SHA-256: `b630ada8ea964c728c536a43a89b85a3ca788d9ab624e027d1682ee88ac9c9e2`
+- Input: no tool JSON data; code defines its tiny synthetic input as UTF-8 source text `id,name\n1,Ada\n2,Zoë\n`, two candidate-authored cells (`load`, `summary`), one dependency edge (`summary` depends on `load`), and environment string `python=3.12; duckdb=1.5.6`.
+- Expected behavior: unchanged fingerprints match; modifying the upstream cell, source bytes, or environment changes the downstream fingerprint.
+- stdout: `{"environment_edit_invalidates_downstream": true, "same_inputs_reuse_fingerprint": true, "scope": "candidate-authored in-memory fingerprint component only; no notebook, DuckDB, filesystem, sandbox, or application execution", "source_edit_invalidates_downstream": true, "upstream_edit_invalidates_downstream": true}`
+- stderr: empty
+- Exit: 0
+- Elapsed: 0.3640052359987749 seconds; limit 5 seconds, 3 CPU seconds, 256 MiB, 16 tasks; empty network namespace.
+- Scope limit: isolated in-memory fingerprint function only. No application, notebook, DuckDB, filesystem, persistence, large-file, or product sandbox behavior was checked.
+
+```python
+import hashlib, json
+
+def digest(value):
+    payload = json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+def cell_fingerprint(cell_id, cells, dependencies, source_hashes, env, memo=None):
+    if memo is None:
+        memo = {}
+    if cell_id in memo:
+        return memo[cell_id]
+    payload = {
+        "cell_id": cell_id,
+        "source": cells[cell_id],
+        "depends_on": {d: cell_fingerprint(d, cells, dependencies, source_hashes, env, memo) for d in dependencies[cell_id]},
+        "sources": source_hashes if cell_id == "load" else {},
+        "environment": env,
+    }
+    memo[cell_id] = digest(payload)
+    return memo[cell_id]
+
+raw = "id,name\n1,Ada\n2,Zoë\n"
+cells = {"load": "rows = read_registered_source()", "summary": "count = len(rows)"}
+deps = {"load": [], "summary": ["load"]}
+env = "python=3.12; duckdb=1.5.6"
+source_hashes = {"people.csv": hashlib.sha256(raw.encode("utf-8")).hexdigest()}
+saved = cell_fingerprint("summary", cells, deps, source_hashes, env)
+assert saved == cell_fingerprint("summary", cells, deps, source_hashes, env)
+
+cells_changed = dict(cells, load="rows = read_registered_source(); normalize_names()")
+assert saved != cell_fingerprint("summary", cells_changed, deps, source_hashes, env)
+source_changed = {"people.csv": hashlib.sha256((raw + "3,李\n").encode("utf-8")).hexdigest()}
+assert saved != cell_fingerprint("summary", cells, deps, source_changed, env)
+assert saved != cell_fingerprint("summary", cells, deps, source_hashes, "python=3.12; duckdb=1.5.7")
+print(json.dumps({"same_inputs_reuse_fingerprint": True, "upstream_edit_invalidates_downstream": True, "source_edit_invalidates_downstream": True, "environment_edit_invalidates_downstream": True, "scope": "candidate-authored in-memory fingerprint component only; no notebook, DuckDB, filesystem, sandbox, or application execution"}, sort_keys=True))
+```

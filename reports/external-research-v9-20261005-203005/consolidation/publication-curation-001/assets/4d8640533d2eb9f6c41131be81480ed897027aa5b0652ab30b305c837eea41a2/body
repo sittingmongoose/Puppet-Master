@@ -1,0 +1,259 @@
+{
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/card.json",
+  "card_sha256": "cb521277f83272537ce676faf61e71088b709fe66fb88bfc842a409c398e14cf",
+  "cohort_id": "DEC012-LUNA-CLOCK-FRESH-R001",
+  "extra_logical_target_matched_credit": false,
+  "family": "L",
+  "first_research_old_candidate_payloads": false,
+  "full_pipeline_closure_before_research": true,
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/PIPELINE_CLOSURE.json",
+    "sha256": "549aad412c18a86a620fefaab4769370673bb0b453b7d82c7da4bdd05887d825"
+  },
+  "native_source_binding_status": "READY_LUNA_CLOCK_FULL_FRESH_PENDING_OPS_BIRTH",
+  "native_starts": 0,
+  "old_terminal_ownedquiet_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/ORIGINAL_FRESH_LUNA_FOUR_TERMINAL_001.json",
+    "sha256": "767eb882b9f81073ed8420ff7aad4294ef43890de4ea63a6bd62e7ff4d09eff1"
+  },
+  "ordinary_birth_source_donor_policy_override": "DEC012strict operational+nativecomplete; no oldwarm DEC007 partialdonor carry",
+  "original_attempts_and_costs_preserved": true,
+  "original_failure_costs_and_flags_retained": true,
+  "pair_id": "I-05-LUNA-CLOCK-FRESH-R001",
+  "pipeline_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/PIPELINE_CLOSURE_FINAL.json",
+    "sha256": "c502bc72ad5e65ede368daaadf10b097a5d48d2fbde623fe29688e87a8c6aa2a"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-012-LUNA-CLOCK-FRESH.json",
+    "sha256": "666f0daee123eb96fb58f41a76d3b1a0584120c74f9de73a966a32ce4977ebf5"
+  },
+  "prior_lineages_costs_failures_grades_retained": true,
+  "registration_selection_replaces_request_id": "I-05-FRESH-DELIVERY-R001-DEC011-r001",
+  "request_id": "I-05-LUNA-CLOCK-FRESH-R001-r001-strict-r002",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "root_or_max_go_required": false,
+  "root_scope_required": false,
+  "routine_new_phase_approval_required": false,
+  "runtime_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+    "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+  },
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "full_fresh",
+  "selection_condition": "Ops verifies these exact job IDs remain native0; select one descriptor per job, never add duplicate work",
+  "source_pair_id": "I-05-FRESH-DELIVERY-R001",
+  "source_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-05-FRESH-DELIVERY-R001/registration.json",
+    "sha256": "b55253681fe3e54b19bd9770b3813dd0636d09c07f3a1195911c435329b78353"
+  },
+  "source_scientific_grade_feedback_supplied": false,
+  "source_separation_overlay": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/COMMON_SOURCE_SEPARATION_OVERLAY_002.md",
+    "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+  },
+  "source_slot": "I-05",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/CLOCK_DECLARATION.json",
+        "sha256": "b63c79f708e67c52b3872d7b4683de613bcbacc040c07f4540d8e2d9d3fd3bf2"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-control-research-a001",
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-research-a001/prepared-stage.json",
+      "stage_sha256": "9af42fb0d725c9b3ff06dc62f6b4136a0049fef4c205e9123115cdb9cad1ad80",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "arm": "control",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/CLOCK_DECLARATION.json",
+        "sha256": "61c0a51077542d8ea04a48e5ce7ba6da142dba274a691e92e83d66d6ac7da72c"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+      "max_responses": null,
+      "max_seconds": 900,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-control-critique-a001",
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001/prepared-stage.json",
+      "stage_sha256": "650f952895ed64202ca9e094e16006c549f8cacabeb446aeaad146689f49ab6b",
+      "status": "AWAITING_NEW_AUTHENTIC_SAME_ARM_ROLES"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+      ],
+      "arm": "control",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001/CLOCK_DECLARATION.json",
+        "sha256": "99127868a9a8b492a863062b5c11b369856057a9bcec2b835809e27bcb2fa4d2"
+      },
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-control-revision-a001",
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001/prepared-stage.json",
+      "stage_sha256": "9627d49f82f0477b419461dee22aa9747197e2d2603677594a41824ff9727b96",
+      "status": "AWAITING_NEW_AUTHENTIC_SAME_ARM_ROLES"
+    },
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "treatment",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/CLOCK_DECLARATION.json",
+        "sha256": "0e541126c2212cfc3a9d02dc729a4ba57ca3635e75b827841066c2d0a6889886"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+      "max_responses": null,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001/prepared-stage.json",
+      "stage_sha256": "d73ba4dfd9516488b00d1b07fc352b4f80827a989912184121ad0280cc390888",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "arm": "treatment",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/CLOCK_DECLARATION.json",
+        "sha256": "e0ce4fbb626b54d29c6917cd9cc196869a09d5d4b2fec48c74906acb65cea5b4"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+      "max_responses": null,
+      "max_seconds": 900,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001/prepared-stage.json",
+      "stage_sha256": "fa8d568fe5f39491119bc654a4241cc70af8b15bb593d337c4839bd01c407a02",
+      "status": "AWAITING_NEW_AUTHENTIC_SAME_ARM_ROLES"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001"
+      ],
+      "arm": "treatment",
+      "clock_declaration": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/CLOCK_DECLARATION.json",
+        "sha256": "e0a561003c2b2e7c740fa4b83d9f57b92305d328afa5dcdd7b478a0710fb37bd"
+      },
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/OUTPUT_FREEZE.json",
+      "job_id": "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "native_source_binding_status": "READY_LUNA",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001"
+      ],
+      "public_get": true,
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/LUNA_V1_5_READY.json",
+        "sha256": "ee3abb06177c3d4f3955805fa370abe848062e86c47422e91dd33f3302ef74c1"
+      },
+      "source_job_id": "I-05-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/pairs/I-05-LUNA-CLOCK-FRESH-R001/I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001/prepared-stage.json",
+      "stage_sha256": "ca31e35780e50b83a6739394f550ab073ecda43f329c1a5ed2f7c5d589815051",
+      "status": "AWAITING_NEW_AUTHENTIC_SAME_ARM_ROLES"
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "strict_new_role_birth_contract": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/luna-clock-fresh-retest-001/STRICT_ROLE_BIRTH_CONTRACT.json",
+    "sha256": "47baf4b229c84d4058128aa28a6a439e343996d08a6b00e1e0a8503cc286cbfc"
+  },
+  "track": "FINITE_LUNA_CLOCK_FULL_FRESH_ENGINEERING_RETEST"
+}

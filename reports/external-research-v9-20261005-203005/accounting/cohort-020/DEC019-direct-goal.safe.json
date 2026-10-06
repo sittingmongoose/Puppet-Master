@@ -1,0 +1,43 @@
+{
+  "owner_capsule_pin": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/DEC019_ALL_TERMINAL_001/CAPSULES.json",
+    "sha256": "31145a8c3f9820463a8e083f14eeb72bb1b8577597c57ed4ef87d9c82728ef3d"
+  },
+  "rows": [
+    {
+      "attempt_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+      "direct_evidence_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001-dec019-r001/native/final-session.redacted.json",
+        "sha256": "003c4b672b94829916740e6f9b457e342a8305aa41be5fe7ab89cf6332615c52"
+      },
+      "event_time_observed_literal": 1791289410693,
+      "event_time_selector": "/projection/target/updatedAt",
+      "goal_id": "target_muwmyyx5_f0d084e5-8914-4e59-b27a-2e478ccac933",
+      "goal_id_selector": "/projection/target/targetId",
+      "native_goal_status": "complete",
+      "scope": "Actualsavednative target object, not driver/routerenum orfilesystemmtime. Lastobserved at statedsource time, not currentliveoccupancy orscientific/pipelinecredit; no extraGoal/cost.",
+      "source_kind": "saved_final_native_UI_object",
+      "status_selector": "/projection/target/status",
+      "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+    },
+    {
+      "attempt_id": "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001",
+      "direct_evidence_pin": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/runs/I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001-dec019-r001/native/final-session.redacted.json",
+        "sha256": "808c127d014ee0ddb8ebe95ebdf264a7c0f6932c432e51abd3e064740ab89740"
+      },
+      "event_time_observed_literal": 1791290008870,
+      "event_time_selector": "/projection/target/updatedAt",
+      "goal_id": "target_muwnhiia_8bfa22c2-e5f4-42aa-9209-8ba28c1a4993",
+      "goal_id_selector": "/projection/target/targetId",
+      "native_goal_status": "paused",
+      "scope": "Actualsavednative target object, not driver/routerenum orfilesystemmtime. Lastobserved at statedsource time, not currentliveoccupancy orscientific/pipelinecredit; no extraGoal/cost.",
+      "source_kind": "saved_final_native_UI_object",
+      "status_selector": "/projection/target/status",
+      "time_semantics": "Native target.updatedAt is its last record-update time; not necessarily an independently observed transition event."
+    }
+  ],
+  "schema": "er9.accounting.direct-goal-status-qualified.v1",
+  "scope": "Two exactretainednativeGoal statuses Ccomplete/Fpaused independently verified againstsource hashes/selectors andledger IDs. No objective/body fields inspected, no livequery/modeltest, no newcountercharge.",
+  "source_query_performed": false
+}

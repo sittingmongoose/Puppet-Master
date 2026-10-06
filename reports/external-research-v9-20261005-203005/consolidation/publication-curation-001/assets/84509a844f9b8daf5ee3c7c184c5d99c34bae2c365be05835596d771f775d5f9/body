@@ -1,0 +1,53 @@
+# Local-first reproducible notebook workspace
+
+**Status:** candidate-authored design proposal; implementation/integration unverified. Package pins are starting points, not a resolved lock. See `sources.json`, `witnesses.json`, `leads.json`, and `out/critique/review.md`.
+
+## User and outcome
+
+Serve three Python notebook users and a SQL colleague doing exploratory analysis over CSV, JSON/NDJSON and Parquet sources, some larger than RAM. Support import and identification, schema-aware bounded preview, interactive analysis, clean replay, provenance comparison, portable save/reopen and export. Preserve standard notebook and data interchange files. A preview never proves a property of the complete source.
+
+The target host is 8 CPU cores / 16 GB RAM; 5 GB is a target input size for named streaming or spill-capable operations, not a benchmark or promise for arbitrary queries. Fail visibly when an operation exceeds a resource or format boundary.
+
+## Platform choice and compatibility
+
+Use JupyterLab as the UI, Jupyter Server locally, `.ipynb`/nbformat as notebook representation, nbclient for clean execution, Python as the supported kernel, and DuckDB as an optional embedded SQL engine. Defer arbitrary kernels and third-party extensions until reviewed. Candidate direct pins from captured package metadata: Python 3.12 (patch/build TBD), `jupyterlab==4.6.4`, `jupyter-server==2.21.1`, `nbclient==0.11.0`, `nbformat==5.11.1`, `duckdb==1.5.0`; resolve `ipykernel` and every transitive dependency in a platform-specific lock. JupyterLab 4.6.4 declares `jupyter-server>=2.19,<3`, and nbclient 0.11.0 declares `nbformat>=5.2`, so these pairs fit metadata constraints. This does not establish a successful install or runtime integration. Captured Jupyter Server v2.22 docs are ahead of observed PyPI release 2.21.1; validate security configuration on the pinned server.
+
+`.ipynb` gives a standard document with cells and outputs, not a complete execution history, environment, source identity, or proof that outputs are current [S1]. Keep the format and add a project/run manifest. Python-only materialization is easy for small data but risks whole-input memory growth. SQL-only excludes Python exploration. Use Python and optional SQL, with explicit resource policy for both. Server authentication protects access to the service; it is not a kernel sandbox [S3].
+
+## Project and evidence model
+
+A project is an ordinary portable folder containing notebooks, scripts, configuration, environment lock, source references, and append-only run records. Store data sources externally and read-only by default; bundles must state which external inputs are omitted. On open, verify expected input identities and flag missing or changed sources. Record locator, format/options, byte length, full-source SHA-256 when readable, import time, schema revision, and access mode. A digest identifies bytes, not publisher truth. Never rewrite source files.
+
+For each run record run ID, immutable notebook revision digest, input digests, environment-lock digest, engine/runtime versions, parameters, timing, observed cell order/status/source hashes, output digests, and diagnostic references. Separate document order, supervisor-observed execution order, and live kernel state. Missing events or direct execution outside the supervisor make provenance incomplete. Saved notebook outputs are snapshots, not proof of provenance.
+
+Use source digest plus logical record ordinal (and source file identity for multi-file input) for diagnostics; do not claim it is a stable semantic row key across arbitrary exports. Derived artifacts carry schema, producing run and source references. Export creates a new artifact and does not overwrite original data.
+
+## Data contracts and preview
+
+DuckDB documents CSV schema/type inference and strict/error options [S4], JSON readers with inference or declared columns [S7], and Parquet readers/writers and pushdown [S8]. Treat inference as a suggestion. Persist parser, encoding, null markers, schema, cast policy, timestamp/timezone interpretation and malformed-record policy. Show row- and byte-bounded previews with explicit truncation, inferred schema/ambiguity, and labels that counts describe the preview only. Offer a separate complete scan/profile operation with progress and cancellation.
+
+Preserve identifiers such as `001` as text unless the user explicitly casts. Distinguish empty string, configured null marker and null; preserve Unicode; make timestamp/timezone rules explicit. Schema drift creates a new version and requires a visible decision. Malformed row or cast errors fail with a source locator where possible; never silently drop rows. An opt-in reject artifact may preserve raw record and reason; the input stays untouched. DuckDB CSV docs describe strict mode as true and ignore_errors as false by default; do not disable them invisibly [S4]. Parquet multi-file `union_by_name` is an explicit option documented as false by default [S8]. JSON reader support does not promise arbitrary nested documents map to a stable flat schema [S7].
+
+## Interactive work, replay, freshness
+
+Supervise execution in an isolated worker. Record observed cell start/end, cell ID, source digest, order, kernel epoch, status and run/input/environment references. Label displayed output current, stale, failed, interrupted or unverified. Editing a cell stales its result and conservatively makes subsequent cells unverified because notebooks can depend on hidden state. Source, schema or environment changes stale dependent results; reordering invalidates order assumptions. Restart begins a new kernel epoch. Historical outputs remain available but unverified until a new replay.
+
+Clean replay uses an immutable notebook revision, clears outputs in the replay copy, starts a fresh kernel, executes cells sequentially in document order through nbclient, then writes a separate output revision and run ledger. nbclient documents programmatic execution and stop-on-error behavior; continuation can be configured [S2]. Default fail-fast; continuing requires explicit opt-in and per-cell failure markers. Never mark partial/failed output current. Cancel by interrupt, then terminate worker after a bounded interval and record outcome. A nbclient PR fixed kernel cleanup when client startup failed and added a regression test present in v0.7.0 source [S9–S11]. This is a lifecycle precedent, not evidence this proposed supervisor works.
+
+Cache only with complete keys including code, upstream outputs, input digests, parameters, environment and engine settings. Hidden notebook state makes cell-level dependency inference unsafe. First version should cache whole clean runs or conservatively invalidate all later cells; disable caching for interactive or undeclared side-effect runs. A cache reuse links to its immutable original run and exact key.
+
+Replay means re-running declared code/inputs/environment in a fresh worker and comparing results. It cannot promise bit identity for randomness, clocks, nondeterministic concurrency, undeclared I/O/network, external services or platform-sensitive native libraries. Default worker network is disabled; any exception must be declared.
+
+## Security, limits, durability
+
+Notebook code is untrusted. Use a disposable container/VM under an unprivileged identity on each supported host OS. Mount input data read-only; provide separate bounded scratch/output; expose no home directories, credentials, unrelated projects or container socket. Disable network by default; enforce CPU, memory, process count, disk, file size and wall time; supervise/kill process trees; clean temporary state. Import blacklists are not a security boundary. Jupyter Server warns that authorized access permits arbitrary code execution [S3]. Sandbox implementation, host configuration, escape resistance and cleanup are not implemented or tested. Do not run user notebooks until a supported isolation boundary has been validated.
+
+Cap previews by rows and bytes, explain truncation, and make full export deliberate. Put DuckDB spill data in a private bounded directory. DuckDB documents out-of-core processing but warns some combinations of blocking operators and some list/string aggregation/sorting workloads can still exhaust memory; turning insertion-order preservation off may save memory and change ordering [S5]. Thus the 5 GB target requires operation-specific benchmarks. Record relevant settings; results needing order require explicit `ORDER BY` with deterministic tie-breaker. Source scan order does not ensure transformed query order.
+
+Initial persistence is single-writer per project plus read snapshots. Compare revision on concurrent save and require conflict resolution. Save via same-volume temporary file, flush, validate and atomic replace where supported; journal/recover interrupted writes. State weaker guarantees on network/removable filesystems. No multi-host locking guarantee. Keep large results in explicit artifacts, not unbounded notebook output. Store artifact digest/schema/run links and provide CSV/JSON/Parquet export with visible schema/null/order behavior.
+
+## Acceptance plan (proposed, not run)
+
+Resolve full lock; test install/kernel startup/restart/cancel/failure cleanup; test that notebooks cannot read host secrets/unrelated files or reach network; exercise crash recovery and revision conflicts. Cover malformed CSV/JSON/Parquet, schema drift, Unicode, nulls, leading-zero IDs, timestamps, multi-file schema mismatch, stale propagation and clean replay. On the target host profile a representative 5 GB set for scans, filters/projections, joins and blocking aggregates; record peak RSS, spill, time, ordering and failure. Establish operation-specific support limits from results. These are gates, not results.
+
+**Facts:** format structure, documented engine interfaces/limits, package requirements and the nbclient fix are source-backed [S1–S16]. **Inferences:** provenance ledger, stale propagation, isolation and write recovery are proposed mechanisms, not properties established by cited software. **Choices:** target users, direct pins, Python-plus-optional-SQL, one heavy writer, fail-fast replay and offline workers are design choices. **Unknown:** the admitted prior proposal/catalogs could not be resolved in this role; consequently this document cannot claim line-by-line preservation or correction of them. Integrated lock, supported OS, sandbox behavior, data contracts, 5 GB workload envelope and durability are open; see report and leads.

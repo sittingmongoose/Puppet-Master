@@ -1,0 +1,11 @@
+# Citation errata for `proposal.md`
+
+The required proposal was written before its source-number cross-reference pass. Its source catalog is present and uses these IDs: **S9** DuckDB compare, **S10** SQLite atomic-commit docs, **S11** SQLite WAL docs, **S12** Bubblewrap README, **S13** uv sync docs. Correct the following citations when reading the proposal:
+
+- Line 13: `[S9–S11]` → `[S10–S12]` (SQLite sources and Bubblewrap).
+- Line 27: `[S10]` → `[S11]` (SQLite WAL).
+- Line 66: `[S2, S3, S12]` → `[S2, S3, S13]` (uv lock/sync docs).
+- Line 70: `[S11]` → `[S12]` (Bubblewrap).
+- Line 80: `[S9, S10]` → `[S10, S11]` (SQLite atomic commit and WAL).
+
+The parser-fix citations `[S7–S9]` on lines 17 and 86 correctly cover PR metadata, changed files/tests, and release ancestry. This errata exists because the bounded write capability rejected replacing the already-created proposal (`FileExistsError`); it is a citation correction only and adds no new source claim.

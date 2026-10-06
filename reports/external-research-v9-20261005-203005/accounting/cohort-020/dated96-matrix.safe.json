@@ -1,0 +1,3650 @@
+{
+  "current_selected_arms": [
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V01-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V01-A-control-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V01-A-control-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V01-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V01-A-treatment-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V01-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V01-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V01-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V01-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V02-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V02-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V02-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V02-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V03-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V03-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V03-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V03-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V04-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V04-A-control-compare_final-a001",
+        "D-V04-A-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V04-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V04-A-treatment-compare_final-a001",
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V04-A-treatment-compare_final-a001",
+        "D-V04-A-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V04-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V04-B-control-compare_final-a001",
+        "D-V04-B-control-proposal_first_record-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V04-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V04-B-treatment-compare_final-a001",
+        "D-V04-B-treatment-source_first_record-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V05-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V05-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V05-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V05-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001-CLOCK-R002",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "D-V06-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V06-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V06-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V06-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V07-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V07-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V07-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V07-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V08-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V08-A-control-critic-a001",
+        "D-V08-A-control-final_author-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V08-A-control-critic-a001",
+        "D-V08-A-control-final_author-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V08-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V08-A-treatment-critic_and_final-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V08-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V08-B-control-critic-a001",
+        "D-V08-B-control-final_author-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V08-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V08-B-treatment-critic_and_final-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V09-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-control-resolve_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V09-A-RESOURCE-R001-control-whole_critic-a001",
+        "D-V09-A-control-resolve_final-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V09-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V09-A-RESOURCE-R001-treatment-source_critic-a001",
+        "D-V09-A-treatment-implementation_critic-a001",
+        "D-V09-A-treatment-resolve_final-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V09-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V09-B-control-resolve_final-a001",
+        "D-V09-B-control-whole_critic-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V09-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V09-B-treatment-implementation_critic-a001-resource-v13-a002",
+        "D-V09-B-treatment-resolve_final-a001",
+        "D-V09-B-treatment-source_critic-a001-resource-v13-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "D-V10-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V10-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V10-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V10-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V11-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V11-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V11-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V11-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V12-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V12-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V12-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V12-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V13-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V13-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "selection_stratum": "accepted_five_deferred_targets_and_shared_prerequisites",
+      "stage_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001-CLOCK-R002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V13-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V13-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V13-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V13-B-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V14-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V14-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V14-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V14-B-control-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V14-B-control-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V14-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V14-B-treatment-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V15-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V15-A-control-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V15-A-control-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V15-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V15-A-treatment-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V15-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V15-B-control-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V15-B-control-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V15-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V15-B-treatment-diagnostic-a002"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V16-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V16-A-control-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V16-A-control-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V16-A",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V16-A-treatment-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V16-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V16-B-control-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V16-B-control-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "D-V16-B",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "D-V16-B-treatment-diagnostic-a001"
+      ],
+      "track": "targeted"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-01",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "I-01-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-control-research-a001",
+        "I-01-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-01",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "BASE_WORKLOAD003_SELECTION",
+      "stage_ids": [
+        "I-01-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-01-FRESH-DELIVERY-R001-treatment-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-02",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-02",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-03",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-03",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-04",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-04",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-05",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "I-05",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-05-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "I-06",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "I-06",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-critique-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-research-a001",
+        "I-06-LUNA-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "I-07",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": true,
+      "pair": "I-07",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-07-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-08",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-control-critique-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-research-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-08",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC012_four_fresh_Luna",
+      "stage_ids": [
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "I-08-LUNA-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-09",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-09",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-10",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-10",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-11",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-11",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-12",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "I-12",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "selection_stratum": "accepted_seven_unentered_G_clock_versions",
+      "stage_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+      ],
+      "track": "fresh_integrated"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-01",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-01",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-INFRA-STAGE-REPAIR-R001-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-02",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-02",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001",
+        "C-02-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-03",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-03",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-03-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "control",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-04",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-research-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001"
+      ],
+      "track": "confirmation"
+    },
+    {
+      "arm": "treatment",
+      "lineage": "CURRENT_SELECTED_AT_WORKLOAD007_CUTOFF",
+      "operational_complete_at_workload007": false,
+      "pair": "C-04",
+      "review_scope_is_not_full_pipeline_comparison": true,
+      "selected_job_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "selection_stratum": "DEC014_four_confirmation",
+      "stage_ids": [
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-critic_final-a001",
+        "C-04-CONFIRMATION-CLOCK-FRESH-R001-treatment-research-a001"
+      ],
+      "track": "confirmation"
+    }
+  ],
+  "logical_arm_count": 96,
+  "matrix_capture_end_utc": "2026-10-06T12:33:53.694459+00:00",
+  "owner_inventory_pin": {
+    "path": "consolidation/publication-inventory-001/ARM_INVENTORY.json",
+    "sha256": "0ca13bd84503b1e138f5d9b0b22a677b30254abf6c38ad1fdb8d259ca3612cb5"
+  },
+  "owner_inventory_selector_pin": {
+    "path": "consolidation/publication-inventory-001/PUBLICATION_SELECTOR.json",
+    "sha256": "a288dd3a22fc95801f19bed8079bf13c991c9c65a32c80514234f18878bd21ef"
+  },
+  "retained_history_arms": [
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V01-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V01-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V01-B-control-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V01-B",
+      "stage_ids": [
+        "D-V01-B-control-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V01-B-treatment-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V01-B",
+      "stage_ids": [
+        "D-V01-B-treatment-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V02-A-control-diagnostic-a001",
+        "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V02-A",
+      "stage_ids": [
+        "D-V02-A-control-diagnostic-a001",
+        "D-V02-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V02-A-control-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V02-A-treatment-diagnostic-a001",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-a002",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V02-A",
+      "stage_ids": [
+        "D-V02-A-treatment-diagnostic-a001",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-a002",
+        "D-V02-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V02-B-control-diagnostic-a001",
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V02-B",
+      "stage_ids": [
+        "D-V02-B-control-diagnostic-a001",
+        "D-V02-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V02-B-treatment-diagnostic-a001",
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V02-B",
+      "stage_ids": [
+        "D-V02-B-treatment-diagnostic-a001",
+        "D-V02-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V03-A-control-diagnostic-a001",
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V03-A",
+      "stage_ids": [
+        "D-V03-A-control-diagnostic-a001",
+        "D-V03-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V03-A-treatment-diagnostic-a001",
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V03-A",
+      "stage_ids": [
+        "D-V03-A-treatment-diagnostic-a001",
+        "D-V03-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V03-B-control-diagnostic-a001",
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V03-B",
+      "stage_ids": [
+        "D-V03-B-control-diagnostic-a001",
+        "D-V03-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V03-B-treatment-diagnostic-a001",
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V03-B",
+      "stage_ids": [
+        "D-V03-B-treatment-diagnostic-a001",
+        "D-V03-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V04-A-control-proposal_first_record-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V04-A",
+      "stage_ids": [
+        "D-V04-A-control-proposal_first_record-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V04-A-treatment-source_first_record-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V04-A",
+      "stage_ids": [
+        "D-V04-A-treatment-source_first_record-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V04-B-control-proposal_first_record-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V04-B",
+      "stage_ids": [
+        "D-V04-B-control-proposal_first_record-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V04-B-treatment-source_first_record-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V04-B",
+      "stage_ids": [
+        "D-V04-B-treatment-source_first_record-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V05-A",
+      "stage_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-control-final_author-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V05-A",
+      "stage_ids": [
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-A-LUNA-R1-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V05-B",
+      "stage_ids": [
+        "D-V05-B-DEFERRED-R001-control-final_author-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V05-B",
+      "stage_ids": [
+        "D-V05-B-DEFERRED-R001-treatment-flash_check-a001",
+        "D-V05-B-DEFERRED-R001-treatment-resolve_final-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V06-A",
+      "stage_ids": [
+        "D-V06-A-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001",
+        "D-V06-A-DEFERRED-R001-treatment-exact-assembly-m001-CLOCK-R002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V06-A",
+      "stage_ids": [
+        "D-V06-A-DEFERRED-R001-treatment-diagnostic-a001",
+        "D-V06-A-DEFERRED-R001-treatment-exact-assembly-m001-CLOCK-R002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V06-B",
+      "stage_ids": [
+        "D-V06-B-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001",
+        "D-V06-B-DEFERRED-R001-treatment-exact-assembly-m001-CLOCK-R002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V06-B",
+      "stage_ids": [
+        "D-V06-B-DEFERRED-R001-treatment-diagnostic-a001",
+        "D-V06-B-DEFERRED-R001-treatment-exact-assembly-m001-CLOCK-R002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V07-A-control-diagnostic-a001",
+        "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V07-A",
+      "stage_ids": [
+        "D-V07-A-control-diagnostic-a001",
+        "D-V07-A-control-diagnostic-a001-resource-v13-a002",
+        "D-V07-A-control-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V07-A-treatment-diagnostic-a001",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-a002",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V07-A",
+      "stage_ids": [
+        "D-V07-A-treatment-diagnostic-a001",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-a002",
+        "D-V07-A-treatment-diagnostic-a001-resource-v13-neutral-r1-a003"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V07-B-control-diagnostic-a001",
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V07-B",
+      "stage_ids": [
+        "D-V07-B-control-diagnostic-a001",
+        "D-V07-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V07-B-treatment-diagnostic-a001",
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V07-B",
+      "stage_ids": [
+        "D-V07-B-treatment-diagnostic-a001",
+        "D-V07-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V08-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V08-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V08-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V08-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V09-A-control-whole_critic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V09-A",
+      "stage_ids": [
+        "D-V09-A-control-whole_critic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V09-A-treatment-source_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V09-A",
+      "stage_ids": [
+        "D-V09-A-treatment-source_critic-a001",
+        "D-V09-A-RESOURCE-R001-treatment-implementation_critic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V09-B-control-whole_critic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V09-B",
+      "stage_ids": [
+        "D-V09-B-control-whole_critic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V09-B-treatment-source_critic-a001",
+        "D-V09-B-treatment-implementation_critic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V09-B",
+      "stage_ids": [
+        "D-V09-B-treatment-source_critic-a001",
+        "D-V09-B-treatment-implementation_critic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V10-A-control-diagnostic-a001",
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V10-A",
+      "stage_ids": [
+        "D-V10-A-control-diagnostic-a001",
+        "D-V10-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V10-A-treatment-diagnostic-a001",
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V10-A",
+      "stage_ids": [
+        "D-V10-A-treatment-diagnostic-a001",
+        "D-V10-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V10-B-control-diagnostic-a001",
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V10-B",
+      "stage_ids": [
+        "D-V10-B-control-diagnostic-a001",
+        "D-V10-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V10-B-treatment-diagnostic-a001",
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V10-B",
+      "stage_ids": [
+        "D-V10-B-treatment-diagnostic-a001",
+        "D-V10-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V11-A-control-diagnostic-a001",
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V11-A",
+      "stage_ids": [
+        "D-V11-A-control-diagnostic-a001",
+        "D-V11-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V11-A-treatment-diagnostic-a001",
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V11-A",
+      "stage_ids": [
+        "D-V11-A-treatment-diagnostic-a001",
+        "D-V11-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V11-B-control-diagnostic-a001",
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V11-B",
+      "stage_ids": [
+        "D-V11-B-control-diagnostic-a001",
+        "D-V11-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V11-B-treatment-diagnostic-a001",
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V11-B",
+      "stage_ids": [
+        "D-V11-B-treatment-diagnostic-a001",
+        "D-V11-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V12-A-control-diagnostic-a001",
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V12-A",
+      "stage_ids": [
+        "D-V12-A-control-diagnostic-a001",
+        "D-V12-A-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V12-A-treatment-diagnostic-a001",
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V12-A",
+      "stage_ids": [
+        "D-V12-A-treatment-diagnostic-a001",
+        "D-V12-A-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V12-B-control-diagnostic-a001",
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V12-B",
+      "stage_ids": [
+        "D-V12-B-control-diagnostic-a001",
+        "D-V12-B-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V12-B-treatment-diagnostic-a001",
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V12-B",
+      "stage_ids": [
+        "D-V12-B-treatment-diagnostic-a001",
+        "D-V12-B-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V13-A",
+      "stage_ids": [
+        "D-V13-A-DEFERRED-R001-control-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V13-A",
+      "stage_ids": [
+        "D-V13-A-DEFERRED-R001-treatment-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V13-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V13-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a001",
+        "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V14-A",
+      "stage_ids": [
+        "D-V14-A-LUNA-R1-control-diagnostic-a001",
+        "D-V14-A-LUNA-R1-SCOPE-R002-control-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a001",
+        "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V14-A",
+      "stage_ids": [
+        "D-V14-A-LUNA-R1-treatment-diagnostic-a001",
+        "D-V14-A-LUNA-R1-SCOPE-R002-treatment-diagnostic-a001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V14-B-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V14-B",
+      "stage_ids": [
+        "D-V14-B-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-control-diagnostic-a001-BUNDLE-R001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V14-B-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V14-B",
+      "stage_ids": [
+        "D-V14-B-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001",
+        "D-V14-B-SCOPE-R002-RESOURCE-R001-treatment-diagnostic-a001-BUNDLE-R001"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V15-A-control-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-control-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V15-A",
+      "stage_ids": [
+        "D-V15-A-control-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-control-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V15-A-treatment-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V15-A",
+      "stage_ids": [
+        "D-V15-A-treatment-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V15-A-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V15-B-control-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-control-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V15-B",
+      "stage_ids": [
+        "D-V15-B-control-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-control-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-control-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "D-V15-B-treatment-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V15-B",
+      "stage_ids": [
+        "D-V15-B-treatment-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-treatment-diagnostic-a001",
+        "D-V15-B-SCOPE-R002-treatment-diagnostic-a001-resource-v13-a002"
+      ],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V16-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V16-A",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V16-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "D-V16-B",
+      "stage_ids": [],
+      "track": "A"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-01-control-research-a001",
+        "I-01-control-critique-a001",
+        "I-01-control-revision-a001",
+        "I-01-R001-control-research-a001",
+        "I-01-R001-control-critique-a001",
+        "I-01-R001-control-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-01",
+      "stage_ids": [
+        "I-01-control-research-a001",
+        "I-01-control-critique-a001",
+        "I-01-control-revision-a001",
+        "I-01-R001-control-research-a001",
+        "I-01-R001-control-critique-a001",
+        "I-01-R001-control-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-01-treatment-research-a001",
+        "I-01-treatment-critique-a001",
+        "I-01-treatment-revision-a001",
+        "I-01-R001-treatment-research-a001",
+        "I-01-R001-treatment-critique-a001",
+        "I-01-R001-treatment-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-01",
+      "stage_ids": [
+        "I-01-treatment-research-a001",
+        "I-01-treatment-critique-a001",
+        "I-01-treatment-revision-a001",
+        "I-01-R001-treatment-research-a001",
+        "I-01-R001-treatment-critique-a001",
+        "I-01-R001-treatment-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-01-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-01-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-critique-a001",
+        "I-01-FAILED-PARENT-WARM-CONTINUATION-R001-treatment-revision-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-02-control-research-a001",
+        "I-02-control-critique-a001",
+        "I-02-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001",
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-02",
+      "stage_ids": [
+        "I-02-control-research-a001",
+        "I-02-control-critique-a001",
+        "I-02-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-02-FRESH-DELIVERY-R001-control-research-a001",
+        "I-02-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-02-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-02-treatment-research-a001",
+        "I-02-treatment-critique-a001",
+        "I-02-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-02",
+      "stage_ids": [
+        "I-02-treatment-research-a001",
+        "I-02-treatment-critique-a001",
+        "I-02-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-02-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-02-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-02-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-02-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-03-control-research-a001",
+        "I-03-control-critique-a001",
+        "I-03-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001",
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-03",
+      "stage_ids": [
+        "I-03-control-research-a001",
+        "I-03-control-critique-a001",
+        "I-03-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-03-FRESH-DELIVERY-R001-control-research-a001",
+        "I-03-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-03-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-03-treatment-research-a001",
+        "I-03-treatment-critique-a001",
+        "I-03-treatment-revision-a001",
+        "I-03-treatment-flash_check-a001",
+        "I-03-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-connection-v2-a002",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-03",
+      "stage_ids": [
+        "I-03-treatment-research-a001",
+        "I-03-treatment-critique-a001",
+        "I-03-treatment-revision-a001",
+        "I-03-treatment-flash_check-a001",
+        "I-03-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+        "I-03-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001-connection-v2-a002",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-connection-v2-a002",
+        "I-03-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+        "I-03-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+        "I-03-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-04-control-research-a001",
+        "I-04-control-critique-a001",
+        "I-04-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001",
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-04",
+      "stage_ids": [
+        "I-04-control-research-a001",
+        "I-04-control-critique-a001",
+        "I-04-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-04-FRESH-DELIVERY-R001-control-research-a001",
+        "I-04-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-04-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-04-treatment-research-a001",
+        "I-04-treatment-critique-a001",
+        "I-04-treatment-revision-a001",
+        "I-04-treatment-flash_check-a001",
+        "I-04-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-connection-v2-a002",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-04",
+      "stage_ids": [
+        "I-04-treatment-research-a001",
+        "I-04-treatment-critique-a001",
+        "I-04-treatment-revision-a001",
+        "I-04-treatment-flash_check-a001",
+        "I-04-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-flash_check-a001",
+        "I-04-DELIVERY-RECOVERY-R002-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-flash_check-a001-connection-v2-a002",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-connection-v2-a002",
+        "I-04-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-flash_check-a001",
+        "I-04-FRESH-DELIVERY-R001-treatment-final_resolution-a001",
+        "I-04-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-final_resolution-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-05-LUNA-S1-control-research-a001",
+        "I-05-LUNA-S1-control-critique-a001",
+        "I-05-LUNA-S1-control-revision-a001",
+        "I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001",
+        "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+        "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-05-FRESH-DELIVERY-R001-control-research-a001",
+        "I-05-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-05-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-05",
+      "stage_ids": [
+        "I-05-LUNA-S1-control-research-a001",
+        "I-05-LUNA-S1-control-critique-a001",
+        "I-05-LUNA-S1-control-revision-a001",
+        "I-05-CONTROL-ARTIFACT-RECOVERY-R001-critique-a001",
+        "I-05-CONTROL-ARTIFACT-RECOVERY-R001-revision-a001",
+        "I-05-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-05-FRESH-DELIVERY-R001-control-research-a001",
+        "I-05-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-05-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-05-LUNA-S1-treatment-research-a001",
+        "I-05-LUNA-S1-treatment-critique-a001",
+        "I-05-LUNA-S1-treatment-revision-a001",
+        "I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001",
+        "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-05",
+      "stage_ids": [
+        "I-05-LUNA-S1-treatment-research-a001",
+        "I-05-LUNA-S1-treatment-critique-a001",
+        "I-05-LUNA-S1-treatment-revision-a001",
+        "I-05-TREATMENT-ARTIFACT-RECOVERY-R001-revision-a001",
+        "I-05-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-05-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-05-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-06-LUNA-S1-control-research-a001",
+        "I-06-LUNA-S1-control-critique-a001",
+        "I-06-LUNA-S1-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-06-FRESH-DELIVERY-R001-control-research-a001",
+        "I-06-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-06-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+        "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-06",
+      "stage_ids": [
+        "I-06-LUNA-S1-control-research-a001",
+        "I-06-LUNA-S1-control-critique-a001",
+        "I-06-LUNA-S1-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-06-FRESH-DELIVERY-R001-control-research-a001",
+        "I-06-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-06-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001",
+        "I-06-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-06-LUNA-S1-treatment-research-a001",
+        "I-06-LUNA-S1-treatment-critique-a001",
+        "I-06-LUNA-S1-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+        "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-06",
+      "stage_ids": [
+        "I-06-LUNA-S1-treatment-research-a001",
+        "I-06-LUNA-S1-treatment-critique-a001",
+        "I-06-LUNA-S1-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-06-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-06-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001",
+        "I-06-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-07-LUNA-S1-control-research-a001",
+        "I-07-LUNA-S1-control-critique-a001",
+        "I-07-LUNA-S1-control-revision-a001",
+        "I-07-FRESH-DELIVERY-R002-control-research-a001",
+        "I-07-FRESH-DELIVERY-R002-control-critique-a001",
+        "I-07-FRESH-DELIVERY-R002-control-revision-a001",
+        "I-07-FRESH-DELIVERY-R001-control-research-a001",
+        "I-07-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-07",
+      "stage_ids": [
+        "I-07-LUNA-S1-control-research-a001",
+        "I-07-LUNA-S1-control-critique-a001",
+        "I-07-LUNA-S1-control-revision-a001",
+        "I-07-FRESH-DELIVERY-R002-control-research-a001",
+        "I-07-FRESH-DELIVERY-R002-control-critique-a001",
+        "I-07-FRESH-DELIVERY-R002-control-revision-a001",
+        "I-07-FRESH-DELIVERY-R001-control-research-a001",
+        "I-07-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-07-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-07-control-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-07-LUNA-S1-treatment-research-a001",
+        "I-07-LUNA-S1-treatment-critic_final-a001",
+        "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001",
+        "I-07-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-07-FRESH-DELIVERY-R001-treatment-critic_final-a001",
+        "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-07",
+      "stage_ids": [
+        "I-07-LUNA-S1-treatment-research-a001",
+        "I-07-LUNA-S1-treatment-critic_final-a001",
+        "I-07-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-07-FRESH-DELIVERY-R002-treatment-critic_final-a001",
+        "I-07-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-07-FRESH-DELIVERY-R001-treatment-critic_final-a001",
+        "I-07-treatment-BLIND-SOURCE-FIDELITY-R001-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-08-LUNA-S1-control-research-a001",
+        "I-08-LUNA-S1-control-critique-a001",
+        "I-08-LUNA-S1-control-revision-a001",
+        "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-08-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-08-FRESH-DELIVERY-R001-control-research-a001",
+        "I-08-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-08",
+      "stage_ids": [
+        "I-08-LUNA-S1-control-research-a001",
+        "I-08-LUNA-S1-control-critique-a001",
+        "I-08-LUNA-S1-control-revision-a001",
+        "I-08-DELIVERY-RECOVERY-R002-control-critique-a001",
+        "I-08-DELIVERY-RECOVERY-R002-control-revision-a001",
+        "I-08-FRESH-DELIVERY-R001-control-research-a001",
+        "I-08-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-08-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-08-DELIVERY-RECOVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-08-LUNA-S1-treatment-research-a001",
+        "I-08-LUNA-S1-treatment-critic_final-a001",
+        "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+        "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-08",
+      "stage_ids": [
+        "I-08-LUNA-S1-treatment-research-a001",
+        "I-08-LUNA-S1-treatment-critic_final-a001",
+        "I-08-DELIVERY-RECOVERY-R002-treatment-critic_final-a001",
+        "I-08-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-08-FRESH-DELIVERY-R001-treatment-critic_final-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-09-control-research-a001",
+        "I-09-control-critique-a001",
+        "I-09-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001",
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-09",
+      "stage_ids": [
+        "I-09-control-research-a001",
+        "I-09-control-critique-a001",
+        "I-09-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R001-control-research-a001",
+        "I-09-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-09-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-09-treatment-research-a001",
+        "I-09-treatment-critique-a001",
+        "I-09-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-09",
+      "stage_ids": [
+        "I-09-treatment-research-a001",
+        "I-09-treatment-critique-a001",
+        "I-09-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-09-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-09-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-09-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-09-FRESH-DELIVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-10-control-research-a001",
+        "I-10-control-critique-a001",
+        "I-10-control-revision-a001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001",
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-10",
+      "stage_ids": [
+        "I-10-control-research-a001",
+        "I-10-control-critique-a001",
+        "I-10-control-revision-a001",
+        "I-10-FRESH-DELIVERY-R001-control-research-a001",
+        "I-10-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-10-FRESH-DELIVERY-R001-control-revision-a001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-10-treatment-research-a001",
+        "I-10-treatment-critique-a001",
+        "I-10-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-10",
+      "stage_ids": [
+        "I-10-treatment-research-a001",
+        "I-10-treatment-critique-a001",
+        "I-10-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-10-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-10-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-10-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-10-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-10-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-11-control-research-a001",
+        "I-11-control-critique-a001",
+        "I-11-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001",
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-11",
+      "stage_ids": [
+        "I-11-control-research-a001",
+        "I-11-control-critique-a001",
+        "I-11-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-11-FRESH-DELIVERY-R001-control-research-a001",
+        "I-11-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-11-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-11-CONTROL-DELIVERY-RECOVERY-R003-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-11-treatment-research-a001",
+        "I-11-treatment-critique-a001",
+        "I-11-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-11",
+      "stage_ids": [
+        "I-11-treatment-research-a001",
+        "I-11-treatment-critique-a001",
+        "I-11-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-research-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-critique-a001",
+        "I-11-DELIVERY-RECOVERY-R002-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-research-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-11-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-11-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-11-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-11-DELIVERY-RECOVERY-R002-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-12-control-research-a001",
+        "I-12-control-critique-a001",
+        "I-12-control-revision-a001",
+        "I-12-RESOURCE-R001-control-critique-a001",
+        "I-12-RESOURCE-R001-control-revision-a001",
+        "I-12-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001",
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-12",
+      "stage_ids": [
+        "I-12-control-research-a001",
+        "I-12-control-critique-a001",
+        "I-12-control-revision-a001",
+        "I-12-RESOURCE-R001-control-critique-a001",
+        "I-12-RESOURCE-R001-control-revision-a001",
+        "I-12-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "I-12-FRESH-DELIVERY-R001-control-research-a001",
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001",
+        "I-12-FRESH-DELIVERY-R001-control-revision-a001",
+        "I-12-RESOURCE-R001-control-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "I-12-treatment-research-a001",
+        "I-12-treatment-critique-a001",
+        "I-12-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-research-a001",
+        "I-12-RESOURCE-R001-treatment-critique-a001",
+        "I-12-RESOURCE-R001-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-12-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "I-12",
+      "stage_ids": [
+        "I-12-treatment-research-a001",
+        "I-12-treatment-critique-a001",
+        "I-12-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-research-a001",
+        "I-12-RESOURCE-R001-treatment-critique-a001",
+        "I-12-RESOURCE-R001-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "I-12-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001",
+        "I-12-FRESH-DELIVERY-R001-treatment-revision-a001",
+        "I-12-RESOURCE-R001-treatment-revision-a001-BUNDLE-R001"
+      ],
+      "track": "B"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-01-control-research-a001",
+        "C-01-control-critique-a001",
+        "C-01-control-revision-a001",
+        "C-01-RESOURCE-R001-control-research-a001",
+        "C-01-RESOURCE-R001-control-critique-a001",
+        "C-01-RESOURCE-R001-control-revision-a001",
+        "C-01-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-01",
+      "stage_ids": [
+        "C-01-control-research-a001",
+        "C-01-control-critique-a001",
+        "C-01-control-revision-a001",
+        "C-01-RESOURCE-R001-control-research-a001",
+        "C-01-RESOURCE-R001-control-critique-a001",
+        "C-01-RESOURCE-R001-control-revision-a001",
+        "C-01-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-01-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-01-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-01-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-control-revision-a001",
+        "C-01-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-01-treatment-research-a001",
+        "C-01-treatment-critique-a001",
+        "C-01-treatment-revision-a001",
+        "C-01-RESOURCE-R001-treatment-research-a001",
+        "C-01-RESOURCE-R001-treatment-critique-a001",
+        "C-01-RESOURCE-R001-treatment-revision-a001",
+        "C-01-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+        "C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-01",
+      "stage_ids": [
+        "C-01-treatment-research-a001",
+        "C-01-treatment-critique-a001",
+        "C-01-treatment-revision-a001",
+        "C-01-RESOURCE-R001-treatment-research-a001",
+        "C-01-RESOURCE-R001-treatment-critique-a001",
+        "C-01-RESOURCE-R001-treatment-revision-a001",
+        "C-01-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "C-01-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+        "C-01-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-critique-a001",
+        "C-01-CONFIRMATION-CLOCK-FRESH-R001-treatment-revision-a001",
+        "C-01-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-02-control-research-a001",
+        "C-02-control-critique-a001",
+        "C-02-control-revision-a001",
+        "C-02-RESOURCE-R001-control-research-a001",
+        "C-02-RESOURCE-R001-control-critique-a001",
+        "C-02-RESOURCE-R001-control-revision-a001",
+        "C-02-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-02-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-02-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-02",
+      "stage_ids": [
+        "C-02-control-research-a001",
+        "C-02-control-critique-a001",
+        "C-02-control-revision-a001",
+        "C-02-RESOURCE-R001-control-research-a001",
+        "C-02-RESOURCE-R001-control-critique-a001",
+        "C-02-RESOURCE-R001-control-revision-a001",
+        "C-02-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-02-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-02-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-02-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-02-OWN-PRIOR-INDEX-FINAL-R001-control-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-02-treatment-research-a001",
+        "C-02-treatment-critique-a001",
+        "C-02-treatment-revision-a001",
+        "C-02-RESOURCE-R001-treatment-research-a001",
+        "C-02-RESOURCE-R001-treatment-critique-a001",
+        "C-02-RESOURCE-R001-treatment-revision-a001",
+        "C-02-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+        "C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-02",
+      "stage_ids": [
+        "C-02-treatment-research-a001",
+        "C-02-treatment-critique-a001",
+        "C-02-treatment-revision-a001",
+        "C-02-RESOURCE-R001-treatment-research-a001",
+        "C-02-RESOURCE-R001-treatment-critique-a001",
+        "C-02-RESOURCE-R001-treatment-revision-a001",
+        "C-02-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-treatment-critique-a001-connection-v2-a002",
+        "C-02-RESOURCE-R001-treatment-revision-a001-connection-v2-a002",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-critique-a001",
+        "C-02-RESOURCE-R002-BUNDLE-treatment-revision-a001",
+        "C-02-OWN-PRIOR-INDEX-FINAL-R001-treatment-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-03-control-research-a001",
+        "C-03-control-critique-a001",
+        "C-03-control-revision-a001",
+        "C-03-RESOURCE-R001-control-research-a001",
+        "C-03-RESOURCE-R001-control-critique-a001",
+        "C-03-RESOURCE-R001-control-revision-a001",
+        "C-03-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-03-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-03-RESOURCE-R002-BUNDLE-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-03",
+      "stage_ids": [
+        "C-03-control-research-a001",
+        "C-03-control-critique-a001",
+        "C-03-control-revision-a001",
+        "C-03-RESOURCE-R001-control-research-a001",
+        "C-03-RESOURCE-R001-control-critique-a001",
+        "C-03-RESOURCE-R001-control-revision-a001",
+        "C-03-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-03-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-03-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-03-RESOURCE-R002-BUNDLE-control-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-03-treatment-research-a001",
+        "C-03-treatment-critic_final-a001",
+        "C-03-RESOURCE-R001-treatment-research-a001",
+        "C-03-RESOURCE-R001-treatment-critic_final-a001",
+        "C-03-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+        "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-03",
+      "stage_ids": [
+        "C-03-treatment-research-a001",
+        "C-03-treatment-critic_final-a001",
+        "C-03-RESOURCE-R001-treatment-research-a001",
+        "C-03-RESOURCE-R001-treatment-critic_final-a001",
+        "C-03-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-03-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+        "C-03-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-03-RESOURCE-R002-BUNDLE-treatment-critic_final-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "control",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-04-control-research-a001",
+        "C-04-control-critique-a001",
+        "C-04-control-revision-a001",
+        "C-04-RESOURCE-R001-control-research-a001",
+        "C-04-RESOURCE-R001-control-critique-a001",
+        "C-04-RESOURCE-R001-control-revision-a001",
+        "C-04-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-04-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-04",
+      "stage_ids": [
+        "C-04-control-research-a001",
+        "C-04-control-critique-a001",
+        "C-04-control-revision-a001",
+        "C-04-RESOURCE-R001-control-research-a001",
+        "C-04-RESOURCE-R001-control-critique-a001",
+        "C-04-RESOURCE-R001-control-revision-a001",
+        "C-04-RESOURCE-R001-control-research-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-control-critique-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-control-revision-a001-connection-v2-a002",
+        "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+        "C-04-RESOURCE-R002-BUNDLE-control-critique-a001",
+        "C-04-RESOURCE-R002-BUNDLE-control-revision-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-catalog-repair-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-critique-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-control-revision-a001"
+      ],
+      "track": "C"
+    },
+    {
+      "arm": "treatment",
+      "current_fresh_or_confirmation_credit": 0,
+      "job_ids": [
+        "C-04-treatment-research-a001",
+        "C-04-treatment-critic_final-a001",
+        "C-04-RESOURCE-R001-treatment-research-a001",
+        "C-04-RESOURCE-R001-treatment-critic_final-a001",
+        "C-04-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+        "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001"
+      ],
+      "lineage": "RETAINED_NONSELECTED_HISTORY_AND_REPAIR",
+      "pair": "C-04",
+      "stage_ids": [
+        "C-04-treatment-research-a001",
+        "C-04-treatment-critic_final-a001",
+        "C-04-RESOURCE-R001-treatment-research-a001",
+        "C-04-RESOURCE-R001-treatment-critic_final-a001",
+        "C-04-RESOURCE-R001-treatment-research-a001-connection-v2-a002",
+        "C-04-RESOURCE-R001-treatment-critic_final-a001-connection-v2-a002",
+        "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+        "C-04-RESOURCE-R002-BUNDLE-treatment-critic_final-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-catalog-repair-a001",
+        "C-04-NATIVE-CATALOG-REPAIR-R001-treatment-critic_final-a001"
+      ],
+      "track": "C"
+    }
+  ],
+  "schema": "er9.accounting.dated96-arm-matrix-metadata.v1",
+  "scope": "Dated actual96 logical-arm matrix linkage only; scientific_grade, full stages/rawresult metadata and scientific/report bodies not selected. Later asseteligibility/curation resolution is additive; arm/stage/file counts not nativeStarts or fullsuccessful comparisons."
+}

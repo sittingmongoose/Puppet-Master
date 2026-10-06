@@ -1,0 +1,118 @@
+{
+  "allowed_artifacts": [
+    {
+      "path": "accounting/cohort-020/ACCOUNTING_REPORT_READY_CLOCK.json",
+      "sha256": "ec5f9152dcc94fe0c322c0b6e3a57fd50eafd65090ceafbea157d002c50ae4b2"
+    },
+    {
+      "path": "accounting/cohort-020/ACCOUNTING_REPORT_READY_CLOCK.schema.json",
+      "sha256": "73cfdffd9ccd66e50a2e9a7117540ffa1a9a3f30aca865374f6eef5d1749db79"
+    },
+    {
+      "path": "accounting/cohort-020/COST_SNAPSHOT.md",
+      "sha256": "adfcdce267d2b452d92e83d843a5c26c542cf58cf767a4d081935e85a7c8c68a"
+    },
+    {
+      "path": "accounting/cohort-020/DEC019-direct-goal.safe.json",
+      "sha256": "6a5d94e4ae69ebbf7a47ca51d171017c0f053daae440bb7ca776cb987ee8430c"
+    },
+    {
+      "path": "accounting/cohort-020/DEC019-direct-goal.safe.schema.json",
+      "sha256": "172d48413a15a23c7ebfbfb68bd58392869fd8bc9d37342c34654630be253cf1"
+    },
+    {
+      "path": "accounting/cohort-020/KEEPER_RECEIPT.json",
+      "sha256": "424eba2db0b3f967d87c4a181fe14304bfd985f34a2beda724a4d7d7b21f44f6"
+    },
+    {
+      "path": "accounting/cohort-020/KEEPER_RECEIPT.schema.json",
+      "sha256": "e53368f9970d4d484146e8473150cdca8a4b94e1790a1ccd7a86b3d683007272"
+    },
+    {
+      "path": "accounting/cohort-020/VERIFICATION.json",
+      "sha256": "5d7e6aa9879fca1fe3570aa3900802bd1eaca9692fb63f1d3ead703c7f659b7d"
+    },
+    {
+      "path": "accounting/cohort-020/accounting-method-qualification.safe.json",
+      "sha256": "ad413f5df960197832d5c114f5d366c517fd74827dc113146e1abf030e792eeb"
+    },
+    {
+      "path": "accounting/cohort-020/accounting-method-qualification.safe.schema.json",
+      "sha256": "913a44eee29d98d44b05b4af110e955c88839c6197dc7cd3581191570a1dff98"
+    },
+    {
+      "path": "accounting/cohort-020/attempts.safe.json",
+      "sha256": "2558c54407df7438a637de78476010eda55f4a883c1706d68d8029f69c3fe2d9"
+    },
+    {
+      "path": "accounting/cohort-020/attempts.safe.schema.json",
+      "sha256": "9ae617f920a5baab2c4683eacab135d784f21b6b274e6e9cc522ddc2d4ad180c"
+    },
+    {
+      "path": "accounting/cohort-020/dated96-matrix.safe.json",
+      "sha256": "3b0bcc2c569ff875c028b531cadcd42f3a086b58ce7852e7fd0461773ee74f7c"
+    },
+    {
+      "path": "accounting/cohort-020/dated96-matrix.safe.schema.json",
+      "sha256": "bfd53eb08f4413f2e31e2012b6311c2f207c8759d56551046af866688e48b1dd"
+    },
+    {
+      "path": "accounting/cohort-020/evaluator-clocks.safe.json",
+      "sha256": "26c034ad129dd6fd2cb076c40529b0b089eb897d6b011669a7f517bff5c83f6e"
+    },
+    {
+      "path": "accounting/cohort-020/evaluator-clocks.safe.schema.json",
+      "sha256": "b69b4321f0ac3c2c1d376110134136bcb0bba302710328094a61c6f806ee6e87"
+    },
+    {
+      "path": "accounting/cohort-020/finite-scope.safe.json",
+      "sha256": "3ac46d918b930c7dbb2880cfc751954367fd4199f6538c41b0079abc93026380"
+    },
+    {
+      "path": "accounting/cohort-020/finite-scope.safe.schema.json",
+      "sha256": "cb5b3c30d3485c9f2e061ea3de12453d22ae6595cd903c38863b8db35793f0b0"
+    },
+    {
+      "path": "accounting/cohort-020/inventory-incident.safe.json",
+      "sha256": "b700d957ea1571462faf7bab145cbfece793bbc917e03ed3ff0102ea831ae3e7"
+    },
+    {
+      "path": "accounting/cohort-020/inventory-incident.safe.schema.json",
+      "sha256": "d29c86f68ba37f83b2c3aba775ecb19311624ffc8d5672c156c67c68bb60028d"
+    },
+    {
+      "path": "accounting/cohort-020/model-counter-provenance.safe.json",
+      "sha256": "483adad3bc58bcdc17d9ca58060a77988ee56459be1e026788f0eb5110ebecf0"
+    },
+    {
+      "path": "accounting/cohort-020/model-counter-provenance.safe.schema.json",
+      "sha256": "4a1276199b08544249525c104ceaf2b1b74ee396aa14b9ebe6c8a28162c6c20d"
+    },
+    {
+      "path": "accounting/cohort-020/snapshot.safe.json",
+      "sha256": "be3ccd58d7e5e4d2ed4896a812bea8f6d6d156851a1374bc7098346390f3848c"
+    },
+    {
+      "path": "accounting/cohort-020/snapshot.safe.schema.json",
+      "sha256": "a96dbaf19b1de3b75c0399136b0e1573968f620e78b561c0d1730ed213b8b98b"
+    },
+    {
+      "path": "accounting/cohort-020/terminal-cleanup.safe.json",
+      "sha256": "154b1bbd582104f7d4bca60606e588400adb0e4c058f2c90273570f0475b12b5"
+    },
+    {
+      "path": "accounting/cohort-020/terminal-cleanup.safe.schema.json",
+      "sha256": "10417439b3eab8770d482c30aae479520cc5754b485a1c8cab6cd82fe4d85f29"
+    },
+    {
+      "path": "accounting/cohort-020/workload008.safe.json",
+      "sha256": "7ab6aaa2dabc2e2650d46dcad01d124764258076df66ea7dff3d73a2440f0e5f"
+    },
+    {
+      "path": "accounting/cohort-020/workload008.safe.schema.json",
+      "sha256": "25d573dfb50094e6cd06c465a2e6fa907a5c5a92f0137fb1c721f0b7e18ad147"
+    }
+  ],
+  "exclusion": "Only positively selected safe projections; no capture bytes, scripts, unlisted receipts, semantic bodies, evaluator judgments or private state.",
+  "schema": "er9.accounting.positive-selection.v1"
+}

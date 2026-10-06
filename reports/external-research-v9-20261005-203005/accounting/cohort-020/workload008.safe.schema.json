@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "neutral_receipt_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schema": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string"
+    },
+    "selector_pin": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "source_window": {
+      "additionalProperties": false,
+      "properties": {
+        "actual_task_start_utc": {
+          "type": "string"
+        },
+        "campaign_complete_claimed": {
+          "type": "boolean"
+        },
+        "capture_end_utc": {
+          "type": "string"
+        },
+        "capture_start_utc": {
+          "type": "string"
+        },
+        "cleanup_proof_window": {
+          "items": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "courier_pin_read_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "proof_observed_utc": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "proof_observed_utc",
+                  "courier_pin_read_utc"
+                ],
+                "type": "object"
+              },
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "courier_pin_read_utc": {
+                    "type": "string"
+                  },
+                  "path": {
+                    "type": "string"
+                  },
+                  "proof_observed_utc": {
+                    "type": "string"
+                  },
+                  "sha256": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "path",
+                  "sha256",
+                  "proof_observed_utc",
+                  "courier_pin_read_utc"
+                ],
+                "type": "object"
+              }
+            ]
+          },
+          "type": "array"
+        },
+        "owner_state_changed": {
+          "type": "boolean"
+        },
+        "previous_epochs_unchanged": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "actual_task_start_utc",
+        "capture_start_utc",
+        "capture_end_utc",
+        "cleanup_proof_window",
+        "owner_state_changed",
+        "previous_epochs_unchanged",
+        "campaign_complete_claimed"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema",
+    "selector_pin",
+    "neutral_receipt_pin",
+    "source_window",
+    "scope"
+  ],
+  "type": "object"
+}

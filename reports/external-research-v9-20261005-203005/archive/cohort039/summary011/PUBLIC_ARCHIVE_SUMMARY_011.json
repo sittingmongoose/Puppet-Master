@@ -1,0 +1,28 @@
+{
+  "authority_classification003_sha256": "3d7c8169f4dadb5bca4dd33061f61d8e5f4edeaa5936cafbda9e1de3b25e1aa1",
+  "blocker_count": 0,
+  "coverage": "PARTIAL_EXACT15_NEW_PUBLIC_DERIVATIVE_LINEAGES_NOT_CAMPAIGN_COMPLETION",
+  "elapsed_through_archive_seconds": 58.549895837,
+  "excluded_scope": [
+    "8UNKNOWNquarantine",
+    "83candidateassets",
+    "native/auth/ModelIO/private",
+    "newnetwork/sourceunlink/bodyinterpretation"
+  ],
+  "inclusive_max_seconds": 600,
+  "independent_archive_reread": "ALL_RESOLVED_NAS_LOCATORS_SHA_AND_LENGTH_MATCH",
+  "lineage_counts": "22archive009 +16archive010 +15archive011 =53lineage rows; not53unique sources",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/newpublic15-011/6437457abc881854f817c5994860bbab1943522b8f983b45e3320fc5e832a189/MANIFEST.json",
+  "manifest_sha256": "5a24825f1f7bab9858f84131a7bd0575ecdc9ab2156f9f709be75b1020ec4e53",
+  "new_copied_bytes": 3426992,
+  "new_copied_files_count": 15,
+  "prior009_010_and_sourcebytes": "UNCHANGED",
+  "resolved_NAS_files_count": 15,
+  "reused_prior_NAS_alias_count": 0,
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_files_count": 15,
+  "selected_lineage_bytes": 3426992,
+  "selection_sha256": "6437457abc881854f817c5994860bbab1943522b8f983b45e3320fc5e832a189",
+  "semantic_assessment": "NONE_OPAQUE_TRANSFER_ONLY",
+  "started_utc": "2026-10-06T13:09:32.488587+00:00"
+}

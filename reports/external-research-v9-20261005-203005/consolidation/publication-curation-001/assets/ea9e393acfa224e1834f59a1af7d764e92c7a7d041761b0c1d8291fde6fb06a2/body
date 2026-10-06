@@ -1,0 +1,357 @@
+{
+  "actual_adoption_requires_full_proof_ordinary_Root_contract_review": true,
+  "actual_ops_registry_mutation_or_deployment_authorized": false,
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/card.json",
+  "card_sha256": "5cfb23c671cfc896aaa43c449ae8458c79693b41e454feb12707bff2752968ce",
+  "clock_behavior_version": "er9.common-original-action-clock-awareness.v1",
+  "cohort_id": "ER9-FRESH12-DELIVERY-R001",
+  "family": "Z",
+  "first_research_old_candidate_payloads": false,
+  "full_pipeline_closure_before_research": true,
+  "immutable_pair_input_freeze": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort001/source-templates/I-12-FRESH-DELIVERY-R001/PAIR_INPUT_FREEZE.json",
+    "sha256": "2a777ed3ba026d36653884570ad255787802cd00a88d811e43dd8d8a50194aa9"
+  },
+  "native_source_binding_status": "READY_GLM_COHERENT_V2",
+  "native_starts": 0,
+  "original_attempts_and_costs_preserved": true,
+  "original_failure_costs_and_flags_retained": true,
+  "pair_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001",
+  "pipeline_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/PIPELINE_CLOSURE.json",
+    "sha256": "bf290d017549e3f1088b08c9464714757289bb8b08031aeb8fe152520f76d975"
+  },
+  "policy_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/supervision/DECISIONS-011.json",
+    "sha256": "6148679524f512108dd689f4c73012995217fb2cca5a4b9d24e145e9b80510ea"
+  },
+  "prospective_new_selected_job_ids": [
+    "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+    "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+    "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+    "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+    "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+    "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001"
+  ],
+  "registration_selection_replaces_request_id": "I-12-FRESH-DELIVERY-R001-DEC011-r001",
+  "request_id": "I-12-FRESH-DELIVERY-R001-CLOCK-R001-engineering-r001",
+  "requested_effort": "Max",
+  "requested_model": "GLM 5.3 Flash",
+  "root_or_max_go_required": false,
+  "root_scope_required": false,
+  "runtime_binding_required": true,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "full_fresh",
+  "selection_condition": "Ops verifies these exact job IDs remain native0; select one descriptor per job, never add duplicate work",
+  "source_registration_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/fresh-cohort002/I-12-FRESH-DELIVERY-R001/registration.json",
+    "sha256": "0a452cea33952a43bae34245a25b6e319b1c318c6a41ec4a2de90e683c2c3d39"
+  },
+  "source_separation_overlay": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/COMMON_SOURCE_SEPARATION_OVERLAY_002.md",
+    "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+  },
+  "source_slot": "I-12",
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+      "max_responses": 120,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "version": "glm_complete2304_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-control-research-a001",
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "18565f34edbc7c31cb297ec14d4f6bc6ec70005f9e293d3ee5beed64710ab900",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+      ],
+      "arm": "control",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "version": "glm_complete2304_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-control-critique-a001",
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "49e3f93403bbcc81d3ff0d33c52c22197fd806c3bc165d77072c18cd16498153",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+      ],
+      "arm": "control",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+      },
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-control-critique-a001-CLOCK-R001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "version": "glm_complete2304_bundle_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-control-revision-a001",
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-control-revision-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "e8bc4fd04498b9413849647ee46e2f36fe6a2e155a99b44a336987cf8f2b7a44",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "treatment",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "081cf05918197063679afcc6775c10342e203d537ea4df2f1704ebe886c90d51"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+      "max_responses": 120,
+      "max_seconds": 1200,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "version": "glm_complete2304_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-treatment-research-a001",
+      "stage": "research",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "36f77f0ff0922fb3939f608770b0b7b6a4f408d447c6792fe579b8c49d32dcdc",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+      ],
+      "arm": "treatment",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "0533d4afedeb0c630f087e57a904c143d0bb913639802257bbd86037ba4b06ad"
+      },
+      "complete_final_owner_role": false,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001",
+      "max_responses": 90,
+      "max_seconds": 900,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": false,
+      "prerequisite_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "cf0187a1d6d1eb581473e795a25df43f29fe1a589113d75c94f69c32c702a703"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-clock-telemetry/PIN.json",
+          "sha256": "2c3f23cc9b29ad4c1b49218be34c60de53fce84fe253d2a9e326c76a07c74c57"
+        },
+        "version": "glm_complete2304_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_CLOCK_V3_READY.json",
+        "sha256": "82157cb323cf55563794b27150f8e51a3d138fa13f9774bb307f86e08d57a1b8"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-treatment-critique-a001",
+      "stage": "critique",
+      "stage_index": 1,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "5669fa4a0864d323804c652b080d5183c63a69fbe4ca925863175ff9b4b3d051",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-research-a001-CLOCK-R001",
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+      ],
+      "arm": "treatment",
+      "clock_fragment": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/clock_fragment.md",
+        "sha256": "23268d93388cdbcdcfcee0f966cc9c56a653947d9b0d33d8e4f891d306e71b86"
+      },
+      "complete_final_owner_role": true,
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/OUTPUT_FREEZE.json",
+      "job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001",
+      "max_responses": 60,
+      "max_seconds": 600,
+      "native_source_binding_status": "READY_GLM_COHERENT_V2",
+      "pipeline_final": true,
+      "prerequisite_job_ids": [
+        "I-12-FRESH-DELIVERY-R001-treatment-critique-a001-CLOCK-R001"
+      ],
+      "public_get": true,
+      "resource_definition": {
+        "aggregate_memory_max_bytes": 2415919104,
+        "declared_complete_bound_kb": 2359296,
+        "fit": "UNKNOWN",
+        "memory_swap_max_bytes": 0,
+        "resource_contract": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/RESOURCE_CONTRACT.json",
+          "sha256": "b6ecb8bd9427099d1cbdc7b1e1e31116fe27489c839df978974bc5fb7c176b1f"
+        },
+        "schema": "er9.glm.complete-resource-definition.v1",
+        "source_pin": {
+          "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/execution/glm-resource-v1/versions/v1.3-bundle-clock-telemetry/PIN.json",
+          "sha256": "57a8470b12a85f9d252f6670fc2a06395c5637d5e968dce8d2acee2f5eea324b"
+        },
+        "version": "glm_complete2304_bundle_clock_v3"
+      },
+      "runtime_binding_required": true,
+      "runtime_ref": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/GLM_BUNDLE_CLOCK_V3_READY.json",
+        "sha256": "bb4c9a62092efaee7576cf778cf97edb3dd7f5912046e4080a10df1d878fbd99"
+      },
+      "source_job_id": "I-12-FRESH-DELIVERY-R001-treatment-revision-a001",
+      "stage": "revision",
+      "stage_index": 2,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/clock-telemetry-001/versions/I-12-FRESH-DELIVERY-R001-CLOCK-R001/I-12-FRESH-DELIVERY-R001-treatment-revision-a001-CLOCK-R001/prepared-stage.json",
+      "stage_sha256": "e1fd18b1f452c3e56d7ada969e9b13937635356a5722c068e1e535cbd9f4bd18",
+      "status": "ENGINEERING_ONLY_NOT_REGISTERED"
+    }
+  ],
+  "status": "ENGINEERING_ONLY_NOT_REGISTERED",
+  "supersedes_pending_stage_job_ids": [
+    "I-12-FRESH-DELIVERY-R001-control-research-a001",
+    "I-12-FRESH-DELIVERY-R001-control-critique-a001",
+    "I-12-FRESH-DELIVERY-R001-control-revision-a001",
+    "I-12-FRESH-DELIVERY-R001-treatment-research-a001",
+    "I-12-FRESH-DELIVERY-R001-treatment-critique-a001",
+    "I-12-FRESH-DELIVERY-R001-treatment-revision-a001"
+  ],
+  "track": "FRESH_DEVELOPMENT_REPAIR"
+}

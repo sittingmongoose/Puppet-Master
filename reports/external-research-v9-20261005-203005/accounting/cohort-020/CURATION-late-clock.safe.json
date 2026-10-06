@@ -1,0 +1,23 @@
+{
+  "actual_helper_FINAL_closed_after_overrun_per_owner": true,
+  "clocks": {
+    "actual_start_utc": "2026-10-06 12:38:15 UTC",
+    "original_bound_seconds": 1800,
+    "original_inclusive_deadline_utc": "2026-10-06 13:08:15 UTC",
+    "reported_final_required_handoffs_returned_utc": "2026-10-06 13:08:34 UTC",
+    "reported_inclusive_elapsed_seconds": 1819,
+    "reported_overrun_seconds": 19,
+    "selected_bytes_sealed_elapsed_seconds": 1783.323618,
+    "timing_precision": "final tool clock reported whole seconds; finer resolution UNKNOWN"
+  },
+  "finer_clock_precision": "UNKNOWN",
+  "helper_actual_provider_tokens_billing": "UNKNOWN",
+  "later_source_observation_created_utc": "2026-10-06T13:09:51.239983+00:00",
+  "original_primary020_capture_unchanged": true,
+  "schema": "er9.accounting.late-curation-handoff-clock-qualification.v1",
+  "scope": "Latercurationqualifier after020costcapture, notcapture/snapshotrewrite. Requiredhandoffwhole1819s exceeds1800by19s atwhole-secondprecision; sealed1783.323618 is nestedsubset, not evidenceactualfinalhandoff metcap. Earlierselectedbytes/checks/native/sourcegrading unchanged perowner, no addedcandidate/provider/helper charges orscientificgrade fields read. Separate fromaccountingmethod/inventorydraftincident/indexedTargetprint; no counter/Goal/stop inference.",
+  "source_pin": {
+    "path": "supervision/CURATION-001-FINAL-HANDOFF-CLOCK-QUALIFICATION.json",
+    "sha256": "93944ce797291566b7a86e5d74f623aabe1a4ee2bd4a09ff151ae7ec724dc385"
+  }
+}

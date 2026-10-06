@@ -1,0 +1,88 @@
+{
+  "admission_owner": "codex-er9-ops",
+  "automatic_retry": false,
+  "card_path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/card.json",
+  "card_sha256": "02a332297267b5dbaa0d014b13a861f6da985f22e2b7d5b84cb1c509f2633f87",
+  "dispatch_selection_rule": "Exact source requested rows native0/noLaunchIntent, one BOTH-arm B lineage; do not admit superseded v1.3 finals",
+  "explicit_INLINE_ONLY_all_four_native_authorship": true,
+  "family": "L",
+  "native_starts": 0,
+  "no_new_premium_authored_answers_or_evaluator_feedback_supplied": true,
+  "original_clocks_costs_failure_flags_preserved": true,
+  "pair_id": "D-V11-B-BUNDLE-R001",
+  "pipeline_closure": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/PIPELINE_CLOSURE.json",
+    "sha256": "13fc155ec256c55e238e3507437340c9da297cb07161d6b22bfa804d31a1c925"
+  },
+  "request_id": "D-V11-B-BUNDLE-R001-r001",
+  "requested_effort": "Max",
+  "requested_model": "GPT-6 Luna",
+  "resource_binding": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/COMMON_RESOURCE_BINDING.json",
+    "sha256": "cd9260fedca43cead46aade812440c8ddac4fc1f395f952311947f47bc3e86ca"
+  },
+  "root_or_max_go_required": false,
+  "root_scope_required": false,
+  "schema": "er9.dispatch-registration.v1",
+  "scientific_recovery_mode": "coupled_targeted_diagnostic_transport_version",
+  "source_slot": "D-V11-B",
+  "source_successor_request_ref": {
+    "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/ops/dispatcher/ORDINARY_DIAGNOSTIC_BUNDLE_SUCCESSOR_REQUEST_001.json",
+    "sha256": "21cc3a4dbb91bf384aff411e5475a1a9cd0f80b70c1ccc494cd392231ec68e3e"
+  },
+  "stage_jobs": [
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "control",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/operator-profile/bundle_profile.json",
+        "sha256": "efe52f398067741d7acde248e399e6a9929a2892afbe3fd75fbe14ef89fe9c13"
+      },
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/OUTPUT_FREEZE.json",
+      "job_id": "D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "reference_closure_binding_required": false,
+      "runtime_binding_required": true,
+      "source_job_id": "D-V11-B-control-diagnostic-a001-resource-v13-a002",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-control-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "stage_sha256": "72e4b1a348298229bb688b3af558951c08a9c664ba96026b7fe348ab82b4b927",
+      "status": "PREPARED_NOT_ADMITTED"
+    },
+    {
+      "all_same_arm_prior_job_ids": [],
+      "arm": "treatment",
+      "bundle_profile": {
+        "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/operator-profile/bundle_profile.json",
+        "sha256": "0b77b63c16810ba4421314ff2a5dc53c8b00b61facdbc649d4069fef86d0754a"
+      },
+      "execution_enabled": true,
+      "expected_freeze": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/OUTPUT_FREEZE.json",
+      "job_id": "D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001",
+      "max_responses": null,
+      "max_seconds": 600,
+      "pipeline_final": true,
+      "prerequisite_job_ids": [],
+      "public_get": true,
+      "reference_closure_binding_required": false,
+      "runtime_binding_required": true,
+      "source_job_id": "D-V11-B-treatment-diagnostic-a001-resource-v13-a002",
+      "stage": "diagnostic",
+      "stage_index": 0,
+      "stage_json": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/dev/diagnostic-runner/resource-successors-001/ordinary-bundle001/D-V11-B-BUNDLE-R001/D-V11-B-treatment-diagnostic-a001-resource-v13-a002-BUNDLE-R001/prepared-stage.json",
+      "stage_sha256": "52558df424578e9ead4a8471bead3895880ee7b3e0bd3d35aa27775003594d46",
+      "status": "PREPARED_NOT_ADMITTED"
+    }
+  ],
+  "status": "PREPARED_NOT_ADMITTED",
+  "supersedes_pending_stage_job_ids": [
+    "D-V11-B-control-diagnostic-a001-resource-v13-a002",
+    "D-V11-B-treatment-diagnostic-a001-resource-v13-a002"
+  ]
+}

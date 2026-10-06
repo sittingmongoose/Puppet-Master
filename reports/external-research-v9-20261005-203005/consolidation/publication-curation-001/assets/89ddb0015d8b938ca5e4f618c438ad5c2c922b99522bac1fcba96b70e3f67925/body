@@ -1,0 +1,130 @@
+{
+  "schema": "er9.native_source_catalog.v1",
+  "provenance": "Candidate-authored catalog for this native critique+repair role; independently selected public primary sources. Captures and hashes establish byte identity, not semantic validity.",
+  "retrieved_date_utc": "2026-10-06",
+  "sources": [
+    {
+      "id": "S1",
+      "title": "OME-Zarr specification 0.5.0",
+      "kind": "official specification source",
+      "url": "https://raw.githubusercontent.com/ome/ngff/8a0f886aac791060e329874b624126d3530c2b6f/0.5/index.bs",
+      "pin": {"tag": "0.5.0", "commit": "8a0f886aac791060e329874b624126d3530c2b6f", "tag_object": "ada54360c7107b56b94efd59b568cbc76b1a2ae8"},
+      "locators": ["Storage format", "axes metadata", "coordinateTransformations metadata", "multiscales metadata", "labels metadata"],
+      "capture": {"capture_id": "2a52e2c21140428f89ae822f3efa7941", "path": "public_captures/eb1db17835a6b01cfce3f23479575c63a300d7ee9ee4d3b0fb3ae55a4fe9a6a0.body", "sha256": "eb1db17835a6b01cfce3f23479575c63a300d7ee9ee4d3b0fb3ae55a4fe9a6a0", "bytes": 36473, "captured_utc": "2026-10-06T06:24:14.962074Z", "response_body_complete": true, "delivered_to_candidate_bytes": 32768, "delivery_limit": "The relevant named sections were in the delivered range; final 3705 captured bytes were not delivered in the tool response."},
+      "pin_evidence": [
+        {"url": "https://api.github.com/repos/ome/ngff/git/ref/tags/0.5.0", "capture_id": "f7383946869a48c8b554a97d069df4d9", "sha256": "1e5eb2199cbd48472462214d002d5591bf3d5764f5ed7e3ded60bfbf2619e4db", "bytes": 317},
+        {"url": "https://api.github.com/repos/ome/ngff/git/tags/ada54360c7107b56b94efd59b568cbc76b1a2ae8", "capture_id": "4e3d01b175fb40a29fc3286d334a6544", "sha256": "c80bc2a42b5c72d0da65ec6cfc1101d46ad4243a5c8fcee664ca87e86b35cbc7", "bytes": 1412, "tag_signature_reported_verified": true}
+      ],
+      "applicability_and_limit": "Supports specification statements about Zarr v3, 2–5 axes, axis order/types, per-resolution scale and optional translation sequencing, and integer label arrays. Does not establish any candidate application's support or performance."
+    },
+    {
+      "id": "S2",
+      "title": "ome-zarr-py 0.20.1 implementation",
+      "kind": "official implementation source and release pin",
+      "url": "https://github.com/ome/ome-zarr-py/tree/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7",
+      "pin": {"tag": "v0.20.1", "commit": "0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7"},
+      "locators": ["README.rst", "ome_zarr/reader.py: Node, Multiscales, Reader", "ome_zarr/io.py: ZarrLocation.load", "ome_zarr/format.py: FormatV05"],
+      "captures": [
+        {"url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/README.rst", "capture_id": "93b8ce9978b74873be25a013a165afba", "sha256": "fa65523bc91d5493709bc9bc8a8e79fdb8a7588665deed39c6fd98e72c3ffa08", "bytes": 1841, "captured_utc": "2026-10-06T06:24:57.203606Z"},
+        {"url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/ome_zarr/reader.py", "capture_id": "497fa595839a4f4dbe9ccd6c21942221", "sha256": "c46ba936598885a0119bb23452d9ed74f87258a5169daee615d028373c6a88f4", "bytes": 22327, "captured_utc": "2026-10-06T06:25:04.446585Z"},
+        {"url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/ome_zarr/io.py", "capture_id": "47019a82b4544e9fa3fd181ed815c0fd", "sha256": "1634671130537678bf72da5d8aab1ad2e32b540e53ee25b0ab7b3320c97cec22", "bytes": 7826, "captured_utc": "2026-10-06T06:26:42.702239Z"},
+        {"url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/ome_zarr/format.py", "capture_id": "23c3a1898efc41f5ac7cd16217e78c30", "sha256": "82b61d30f62d6eddd81ff63b43146fd4f7be93be767ae5561b74a99951c24eca", "bytes": 12703, "captured_utc": "2026-10-06T06:25:10.146461Z"},
+        {"url": "https://api.github.com/repos/ome/ome-zarr-py/git/ref/tags/v0.20.1", "capture_id": "fc107bf93e66408dbb6789a1ed4b838a", "sha256": "b971656b2cf5dee1984f6e1d61b468c859d32e9603d2b45580eae523e277adac", "bytes": 341}
+      ],
+      "applicability_and_limit": "The inspected code represents loaded arrays as Dask arrays and calls dask.array.from_zarr. FormatV05 declares Zarr format 3 and comments that writing is not supported yet. Candidate did not run the package or validate installed-dependency interoperability."
+    },
+    {
+      "id": "S3",
+      "title": "tifffile 2026.9.20 documentation and release",
+      "kind": "official implementation documentation and release pin",
+      "url": "https://www.cgohlke.com/docs/tifffile/",
+      "pin": {"tag": "v2026.9.20", "commit": "a14e516c4fa3c0c9ede980ebb3111260347dd213", "tag_object": "8ea8841bbbbc3676b2b126b5ca09713407c95d63"},
+      "locators": ["Overview", "Notes: TIFF subset", "Notes: BigTIFF", "Notes: OME-TIFF", "Revisions"],
+      "captures": [
+        {"url": "https://www.cgohlke.com/docs/tifffile/", "capture_id": "832b8ed4a1d24b2ea4d8bfd43a4d3419", "sha256": "1bfbc01a104be143ec755a079a5b8b3f8c0bd8d7f90519adfb26ac3cd4da55a7", "captured_bytes": 524288, "source_content_length": 1139451, "captured_utc": "2026-10-06T06:28:33.787117Z", "truncated": true, "candidate_delivery_bytes": 32768},
+        {"url": "https://api.github.com/repos/cgohlke/tifffile/releases/latest", "capture_id": "0a00f6a9bcfd440b9568741bbc8d9ae3", "sha256": "387aa3381eb5ba1685ae8886d31d5c4491c34f81676d490208444f760fe0e1e3", "bytes": 6722, "captured_utc": "2026-10-06T06:27:17.985489Z"},
+        {"url": "https://api.github.com/repos/cgohlke/tifffile/git/ref/tags/v2026.9.20", "capture_id": "1f02a76ce13b460faafb046fd6edef98", "sha256": "bf05262abe04bf89c6c95cf0853a3298fbdb9ce6675a671c062b3bc353d3613b", "bytes": 347},
+        {"url": "https://api.github.com/repos/cgohlke/tifffile/git/tags/8ea8841bbbbc3676b2b126b5ca09713407c95d63", "capture_id": "6045e9f9580e44bf9f787685377421f0", "sha256": "06935a96e5d81ff6298d3411b2f777dabcaaa40fa513973ace898137820e9d66", "bytes": 682, "tag_signature_reported_verified": false}
+      ],
+      "applicability_and_limit": "Supports a carefully limited TIFF reader proposal. Documentation itself says it implements a large subset rather than all TIFF 6.0 behavior, notes unsupported cases, and lists dependencies for some codecs. The large documentation response was truncated; only delivered content was interpreted. No 3 GB TIFF was executed."
+    },
+    {
+      "id": "S4",
+      "title": "napari 0.9.2 release and source pin",
+      "kind": "official release record and implementation pin",
+      "url": "https://github.com/napari/napari/releases/tag/v0.9.2",
+      "pin": {"tag": "v0.9.2", "commit": "595639295a153c84bcb127a9e07d801355440a35"},
+      "locators": ["Release description and components", "Bug fixes: PR #9389"],
+      "captures": [
+        {"url": "https://api.github.com/repos/napari/napari/releases/latest", "capture_id": "751214c6ea314904870c668a1a175361", "sha256": "d414e7acb716d6e6afe766a895a62297b26e04e6850ed06b115a37767cee685b", "bytes": 29784, "captured_utc": "2026-10-06T06:24:22.901436Z"},
+        {"url": "https://api.github.com/repos/napari/napari/git/ref/tags/v0.9.2", "capture_id": "05bc12e199864b94b6e3bd776602ff2a", "sha256": "257308eadcf06687dee4021149635f92b52bd98188d938064a6b81794364a4d5", "bytes": 335}
+      ],
+      "applicability_and_limit": "Release record calls napari a multidimensional image viewer, names Qt and VisPy, and lists PR #9389. It does not establish integration, hardware envelope, project persistence, or this application's performance."
+    },
+    {
+      "id": "S5",
+      "title": "napari Shapes layer documentation (version 0.9.2)",
+      "kind": "official versioned component documentation",
+      "url": "https://napari.org/stable/howtos/layers/shapes.html",
+      "pin": {"documentation_version_marker": "0.9.2"},
+      "locators": ["Page title/description: editable rectangles, ellipses, polygons, paths and lines"],
+      "capture": {"capture_id": "5fb4e953692f40daa1ee2c2555def635", "path": "public_captures/aff906f79e9825d228316e14ab783e41fd200cf42025e49bb2568ddbf0933fae.body", "sha256": "aff906f79e9825d228316e14ab783e41fd200cf42025e49bb2568ddbf0933fae", "captured_bytes": 524288, "response_truncated": true, "captured_utc": "2026-10-06T06:26:53.402984Z", "candidate_delivery_bytes": 32768},
+      "applicability_and_limit": "Used only for the page description and visible 0.9.2 version marker. Full page body was not delivered or semantically inspected."
+    },
+    {
+      "id": "S6",
+      "title": "napari Labels layer documentation (version 0.9.2)",
+      "kind": "official versioned component documentation",
+      "url": "https://napari.org/stable/howtos/layers/labels.html",
+      "pin": {"documentation_version_marker": "0.9.2"},
+      "locators": ["Page title/description: segmentation labels and GUI paintbrush/fill editing"],
+      "capture": {"capture_id": "6c5bf9772f4b4fea8013df62e0bb37eb", "path": "public_captures/1d611fdbf840b7d321488a995900c2f17c375271d32f6fa03f0d5a732af100d2.body", "sha256": "1d611fdbf840b7d321488a995900c2f17c375271d32f6fa03f0d5a732af100d2", "captured_bytes": 524288, "response_truncated": true, "captured_utc": "2026-10-06T06:26:58.858620Z", "candidate_delivery_bytes": 32768},
+      "applicability_and_limit": "Used only for the page description and visible 0.9.2 version marker. Full page body was not delivered or semantically inspected."
+    },
+    {
+      "id": "S7",
+      "title": "napari issue #9072: View direction calculation is wrong",
+      "kind": "official issue and observed failure report",
+      "url": "https://github.com/napari/napari/issues/9072",
+      "pin": {"issue": 9072, "closed_utc": "2026-09-15T10:03:22Z"},
+      "locators": ["Description: changed depth-axis orientation and reported view-direction components"],
+      "capture": {"capture_id": "eeff7a52477a40b1b60bdd6f5e5cf6f9", "path": "public_captures/d5667c7055df935d3ed011b4a4854a469406c7f4df89ebeebc114ef382df466a.body", "sha256": "d5667c7055df935d3ed011b4a4854a469406c7f4df89ebeebc114ef382df466a", "bytes": 5613, "captured_utc": "2026-10-06T06:24:31.351958Z"},
+      "applicability_and_limit": "A concrete 3D rendering direction failure under axis orientation changes. The report is an issue, not independently executed reproduction evidence for this candidate."
+    },
+    {
+      "id": "S8",
+      "title": "napari PR #9389: Fix view direction and refactor camera logic into vispy module",
+      "kind": "official pull request and merged fix",
+      "url": "https://github.com/napari/napari/pull/9389",
+      "pin": {"pull_request": 9389, "head": "0f4738ad480ff9c4ff2e4506a9e05973609837ee", "merge_commit": "40177be0e6279fbbd68cefe6562bc50e15cf1290", "merged_utc": "2026-09-15T10:03:20Z"},
+      "locators": ["PR body: closes issue #9072; refactors direction handling; adds Hypothesis tests"],
+      "capture": {"capture_id": "15c6bcacc62e452591c2b8d234627a00", "path": "public_captures/b7621dd90d8f0b6fe59205830bdf4af5f3aa36783b765cc47c491a5e3ee0c977.body", "sha256": "b7621dd90d8f0b6fe59205830bdf4af5f3aa36783b765cc47c491a5e3ee0c977", "bytes": 19536, "captured_utc": "2026-10-06T06:24:28.896362Z"},
+      "applicability_and_limit": "The fix author states the rendering/view-up mechanism and links the issue. PR completion alone is insufficient; regression-test patches and release applicability are separately catalogued."
+    },
+    {
+      "id": "S9",
+      "title": "napari PR #9389 changed files and regression-test patches",
+      "kind": "official code/test diff",
+      "url": "https://api.github.com/repos/napari/napari/pulls/9389/files?per_page=100",
+      "pin": {"merge_commit": "40177be0e6279fbbd68cefe6562bc50e15cf1290"},
+      "locators": ["src/napari/_vispy/_tests/test_vispy_camera.py", "src/napari/components/_tests/test_camera.py", "src/napari/utils/_tests/test_camera_orientations.py", "src/napari/_vispy/camera.py"],
+      "capture": {"capture_id": "429d462643c84dac94c251f4c49ca34f", "path": "public_captures/ce9d1a8587d00cfc2b0a0bf23d6817b06f0a23c96e35a2c75d415fa9349ae1bf.body", "sha256": "ce9d1a8587d00cfc2b0a0bf23d6817b06f0a23c96e35a2c75d415fa9349ae1bf", "captured_bytes": 36641, "candidate_delivery_bytes": 32768, "captured_utc": "2026-10-06T06:24:34.328673Z"},
+      "applicability_and_limit": "Delivered diff includes the camera comparison and orientation/angle property-test changes. Tests are public predecessor tests, not tests run by this candidate and not full-app coordinate persistence tests."
+    },
+    {
+      "id": "S10",
+      "title": "napari merge-to-release applicability comparison",
+      "kind": "official commit comparison",
+      "url": "https://api.github.com/repos/napari/napari/compare/40177be0e6279fbbd68cefe6562bc50e15cf1290...595639295a153c84bcb127a9e07d801355440a35",
+      "pin": {"base_merge_commit": "40177be0e6279fbbd68cefe6562bc50e15cf1290", "release_commit": "595639295a153c84bcb127a9e07d801355440a35"},
+      "locators": ["Comparison summary: merge base equals #9389 merge commit; v0.9.2 release is ahead, not behind"],
+      "capture": {"capture_id": "b3d303e8d040442fb445015733e8874a", "path": "public_captures/be903774fee87f06c2ea71c3a79af93c7f5d42f2da2de74d88ebe8551ec04a13.body", "sha256": "be903774fee87f06c2ea71c3a79af93c7f5d42f2da2de74d88ebe8551ec04a13", "captured_bytes": 524288, "response_truncated": true, "captured_utc": "2026-10-06T06:29:18.147974Z", "candidate_delivery_bytes": 32768},
+      "applicability_and_limit": "The comparison header is present in the delivered content and supports inclusion of the merge in the selected release history. It does not imply that the release fixes unrelated viewer or application behavior."
+    }
+  ],
+  "failed_or_limited_retrievals": [
+    {"url": "https://raw.githubusercontent.com/ome/ngff/0.5.0/spec.md", "status": 404, "capture_id": "4b2ea181ac604de5a21865ed27898d79", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "use": "Not used; correct tag-pinned 0.5/index.bs source retrieved."},
+    {"url": "https://raw.githubusercontent.com/ome/ome-zarr-py/0ac3207b12c6a5eb60b9fa4cab0b31bc2d1d35a7/README.md", "status": 404, "capture_id": "cecb1f7e57554db1ac0f8d41b52ccbb8", "sha256": "d5558cd419c8d46bdc958064cb97f963d1ea793866414c025906ec15033512ed", "use": "Not used; README.rst retrieved."},
+    {"url": "https://ngff.openmicroscopy.org/0.5/", "status": 200, "capture_id": "bab9488b346a437a8f672c7de2404765", "sha256": "a57e3bf8b0708a2bfe2892662d59a9d2c1b457743184f364f9198dd3b28e9c8b", "captured_bytes": 158591, "candidate_delivery_bytes": 32768, "use": "Not relied on for a claim; the tag-pinned source file provides the exact locators."}
+  ]
+}
