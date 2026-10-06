@@ -1,0 +1,419 @@
+{
+  "schema": "er9.independent-phase2-assessment.v1",
+  "evaluation_id": "independent-confirmation-C04-research-1",
+  "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+  "assessed_stage": "research",
+  "written_utc": "2026-10-06T05:14:00+00:00",
+  "P1_immutable": true,
+  "P2_current_evidence_addendum": "This supersedes pending-only facet labels in P2.current-evidence.json where the new exact projection exposes them; original bytes retained.",
+  "key_sha256": "8a1b6313d76cd007e2b1782f649e14f87b960851fd79bbe15fd2fae12929ab02",
+  "projection_sha256": "9905b26e446269edbb54ad1216fba61e48cd577df4092afd0c3e8b3cd91ffdeb",
+  "all_relational_pins_matched": true,
+  "rows": [
+    {
+      "alias": "A",
+      "arm": "control",
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-control-research-a001",
+      "assessed_stage": "research",
+      "native_driver_status": "completed",
+      "native_Goal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "opaque_native_Goal_ID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "session_target_distinction": "Key exposes session/target handles; neither substituted for an opaque Goal ID. Direct Goal activation is attested, direct completion status is unavailable.",
+      "goal_activation_direct": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T04:01:21.988896+00:00",
+        "pre_activation_seconds": 8.393529758002842
+      },
+      "declared_Goal_starts": 1,
+      "model_and_effort": {
+        "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+        "requested_effort": "max",
+        "observed_model_label": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "observed_effort_label": "max",
+        "physical_provider": "UNKNOWN"
+      },
+      "native_elapsed_seconds": 1131.884340546996,
+      "outer_freeze_elapsed_seconds": 1131.9181536120013,
+      "elapsed_scope": "Preserve native and outer-freeze counters separately; no averaging or retrospective clock rewriting.",
+      "reported_start_utc": "2026-10-06T04:01:16.049126+00:00",
+      "reported_end_utc": "2026-10-06T04:20:05.479714+00:00",
+      "original_birth_monotonic": 89692.452381825,
+      "original_deadline_monotonic": 90892.452381825,
+      "declared_bounds": {
+        "max_seconds": 1200,
+        "max_responses": 120
+      },
+      "operational_complete": true,
+      "actual_research_artifact_paths": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "scientific_judgment_source": "Immutable P1 only, unchanged after unblinding",
+      "owned_quiet": {
+        "native_cleanup": {
+          "process_exited": true,
+          "exit_code": 0,
+          "native_quiescent": true
+        },
+        "remaining_owned_group_members_count": 0,
+        "resource_components_quiet": true,
+        "exact_outer_all_private_slice_descendants_quiet": true,
+        "outer_release_stop_returncode": 0,
+        "scope": "Exact selected research-owned native/outer slices; does not claim later/current whole pipeline quiet."
+      },
+      "memory": {
+        "aggregate_cap_bytes": 2415919104,
+        "swap_cap_bytes": 0,
+        "component_caps_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "pre_exit_current_bytes": "386256896",
+        "pre_exit_peak_bytes": "1005142016",
+        "pre_exit_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "outer_release_before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "32370688",
+          "memory.peak": "1005142016",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "profile_allocation_initial_sample": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "host_reserve_bytes": 3221225472,
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "no_post_release_limit_inference": true
+      },
+      "CPU_usage": "UNKNOWN",
+      "GPU_usage": "UNKNOWN",
+      "usage": {
+        "native_usage": {
+          "totalTokens": 523034,
+          "inputTokens": 467358,
+          "outputTokens": 55676,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 14,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 14
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 2009428,
+          "outputTokens": 53716,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 1777280,
+          "cacheWriteTokens": 0,
+          "totalTokens": 2063144
+        },
+        "native_responses": 14,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 14,
+          "export_sha256": "237808f234f1b92a0a99d672c619e820e01a9abbcc63ac535bb860986b4506ea"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "cache_scope": "literal scopes distinct; do not sum/reprice/assume cache inclusion",
+      "billing_dollars": "UNKNOWN_NOT_REPRICED",
+      "all_attempt_recovery_costs": "UNKNOWN_NOT_ZERO; current request counts retained with their own scope",
+      "error": {
+        "driver_status": "completed",
+        "error_cause": "UNKNOWN_NOT_EXPOSED_BY_SAFE_RECEIPT; execution_error router label is separate",
+        "native_usage_modelErrorCount": 0,
+        "OOM_observed": false,
+        "scope": "Driver execution_error, request completion counts, modelErrorCount and OOM counters are distinct; zero in one is not zero errors everywhere."
+      },
+      "source_version": "root-selected actualold1.4 not later1.5",
+      "source_input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "authorship_provenance": "Current admitted native Goal activation/fresh-session projection plus eight current candidate/bootstrap witness receipts; exact Tasks/source packet pinned. General native conversation was not inspected.",
+      "physical_or_billing_payload_inspected": false,
+      "later_active_critic_selected": false
+    },
+    {
+      "alias": "B",
+      "arm": "treatment",
+      "job_id": "C-04-RESOURCE-R002-BUNDLE-treatment-research-a001",
+      "assessed_stage": "research",
+      "native_driver_status": "execution_error",
+      "native_Goal_status": "UNKNOWN_NO_DIRECT_GET_STATUS_RECORD_EXPORTED",
+      "opaque_native_Goal_ID": "UNKNOWN_NOT_SUBSTITUTED_BY_TARGET_OR_SESSION",
+      "session_target_distinction": "Key exposes session/target handles; neither substituted for an opaque Goal ID. Direct Goal activation is attested, direct completion status is unavailable.",
+      "goal_activation_direct": {
+        "goal_activated": true,
+        "goal_submitted": true,
+        "fresh_session": true,
+        "activation_utc": "2026-10-06T03:45:18.571433+00:00",
+        "pre_activation_seconds": 7.876941180991707
+      },
+      "declared_Goal_starts": 1,
+      "model_and_effort": {
+        "requested_model": "builtin:zai-coding-plan/GLM-5.3-Flash",
+        "requested_effort": "max",
+        "observed_model_label": {
+          "modelId": "GLM-5.3-Flash",
+          "providerId": "builtin:zai-coding-plan"
+        },
+        "observed_effort_label": "max",
+        "physical_provider": "UNKNOWN"
+      },
+      "native_elapsed_seconds": 1175.2896995240008,
+      "outer_freeze_elapsed_seconds": 1175.3189243660017,
+      "elapsed_scope": "Preserve native and outer-freeze counters separately; no averaging or retrospective clock rewriting.",
+      "reported_start_utc": "2026-10-06T03:45:12.825990+00:00",
+      "reported_end_utc": "2026-10-06T04:04:45.984205+00:00",
+      "original_birth_monotonic": 88729.551516224,
+      "original_deadline_monotonic": 89929.551516224,
+      "declared_bounds": {
+        "max_seconds": 1200,
+        "max_responses": 120
+      },
+      "operational_complete": false,
+      "actual_research_artifact_paths": [
+        "out/research/proposal.md",
+        "out/research/sources.json",
+        "out/research/witnesses.json",
+        "out/research/leads.json"
+      ],
+      "scientific_judgment_source": "Immutable P1 only, unchanged after unblinding",
+      "owned_quiet": {
+        "native_cleanup": {
+          "process_exited": true,
+          "exit_code": 0,
+          "native_quiescent": true
+        },
+        "remaining_owned_group_members_count": 0,
+        "resource_components_quiet": true,
+        "exact_outer_all_private_slice_descendants_quiet": true,
+        "outer_release_stop_returncode": 0,
+        "scope": "Exact selected research-owned native/outer slices; does not claim later/current whole pipeline quiet."
+      },
+      "memory": {
+        "aggregate_cap_bytes": 2415919104,
+        "swap_cap_bytes": 0,
+        "component_caps_bytes": {
+          "outer_worker": 805306368,
+          "native": 805306368,
+          "pm_boundary": 268435456,
+          "pm_execution": 268435456,
+          "sandbox": 268435456
+        },
+        "pre_exit_current_bytes": "250494976",
+        "pre_exit_peak_bytes": "817635328",
+        "pre_exit_events": {
+          "low": "0",
+          "high": "0",
+          "max": "0",
+          "oom": "0",
+          "oom_kill": "0",
+          "oom_group_kill": "0",
+          "sock_throttled": "0"
+        },
+        "outer_release_before_kernel": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "18726912",
+          "memory.peak": "817635328",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "profile_allocation_initial_sample": {
+          "memory.max": "2415919104",
+          "memory.swap.max": "0",
+          "memory.current": "0",
+          "memory.peak": "0",
+          "memory.events": {
+            "low": "0",
+            "high": "0",
+            "max": "0",
+            "oom": "0",
+            "oom_kill": "0",
+            "oom_group_kill": "0",
+            "sock_throttled": "0"
+          },
+          "cgroup.events": {
+            "populated": "0",
+            "frozen": "0"
+          }
+        },
+        "fit": "UNKNOWN",
+        "host_reserve_bytes": 3221225472,
+        "scope": "complete owned job including controller/guards, sibling services and all execution overlap",
+        "no_post_release_limit_inference": true
+      },
+      "CPU_usage": "UNKNOWN",
+      "GPU_usage": "UNKNOWN",
+      "usage": {
+        "native_usage": {
+          "totalTokens": 216912,
+          "inputTokens": 168706,
+          "outputTokens": 48206,
+          "reasoningTokens": 0,
+          "cacheCreationTokens": 0,
+          "cacheReadTokens": 0,
+          "modelRequestCount": 8,
+          "modelErrorCount": 0
+        },
+        "request_status_counts": {
+          "model_request_completed": 7,
+          "model_request_started": 1
+        },
+        "last_usage_delta_by_request_totals": {
+          "inputTokens": 733963,
+          "outputTokens": 48206,
+          "reasoningTokens": 0,
+          "cacheReadTokens": 565056,
+          "cacheWriteTokens": 0,
+          "totalTokens": 782169
+        },
+        "native_responses": 7,
+        "provider_record_metadata": {
+          "available": true,
+          "row_count": 8,
+          "export_sha256": "1ade2fc555a1455460359205f9778ce026340188973821d643f21debb99bd25d"
+        },
+        "literal_usage_counter_semantics": "last observed usage.delta per request only, not asserted inclusive usage; all raw redacted usage.delta events preserved in protocol; exact provider attempt export preferred; cache fields not added to total; not dollars"
+      },
+      "cache_scope": "literal scopes distinct; do not sum/reprice/assume cache inclusion",
+      "billing_dollars": "UNKNOWN_NOT_REPRICED",
+      "all_attempt_recovery_costs": "UNKNOWN_NOT_ZERO; current request counts retained with their own scope",
+      "error": {
+        "driver_status": "execution_error",
+        "error_cause": "UNKNOWN_NOT_EXPOSED_BY_SAFE_RECEIPT; execution_error router label is separate",
+        "native_usage_modelErrorCount": 0,
+        "OOM_observed": false,
+        "scope": "Driver execution_error, request completion counts, modelErrorCount and OOM counters are distinct; zero in one is not zero errors everywhere."
+      },
+      "source_version": "root-selected actualold1.4 not later1.5",
+      "source_input_hashes": [
+        {
+          "filename": "source_separation.md",
+          "sha256": "3e6220e815b2a0435fd03d6a68dd2d30bccb1f299fc95b2d3cf0cccb0e4b282d"
+        },
+        {
+          "filename": "brief.md",
+          "sha256": "e112b0d75472c9489293d1e91c90ad002f31f985a1f5da6b16d36fd544e3cefd"
+        },
+        {
+          "filename": "delivery_objective.md",
+          "sha256": "1aed159a7da630b2b6d12f9ecec4f3bd45db3187cbb0b07389ab1fac39366650"
+        },
+        {
+          "filename": "output_contract.md",
+          "sha256": "233c7ea2b016982c4de336ea691992161b2b0ee4a185222da9028eefcbcaff22"
+        },
+        {
+          "filename": "source_access.json",
+          "sha256": "eedc2d9cd33d51b75bdea060cadca98460a854401069455f8de43e3cbb6ad592"
+        }
+      ],
+      "authorship_provenance": "Current admitted native Goal activation/fresh-session projection plus eight current candidate/bootstrap witness receipts; exact Tasks/source packet pinned. General native conversation was not inspected.",
+      "physical_or_billing_payload_inspected": false,
+      "later_active_critic_selected": false
+    }
+  ],
+  "reviewer": {
+    "accepted_selector": {
+      "model": "gpt-6.1-sol",
+      "effort": "xhigh",
+      "fork_turns": "none"
+    },
+    "actual_physical_provider": "UNKNOWN",
+    "new_Goals": 0,
+    "new_candidate_retests": 0,
+    "source_clock_monotonic": "UNKNOWN_NOT_CAPTURED",
+    "literal_first_semantic_byte_time": "UNKNOWN_AFTER_REVIEWER_BUDGET_START",
+    "prior_spawn_thread_limit_denial": "Retained separate; actual receipt and cost detail not supplied",
+    "prep_seconds": 727,
+    "prep_money": "UNKNOWN_NOT_ZERO_CLAIMED",
+    "source_P1_inclusive_seconds_to_freeze": 656,
+    "P2_inclusive_start_utc": "2026-10-06T05:04:19+00:00",
+    "P2_inclusive_deadline_utc": "2026-10-06T05:14:19+00:00",
+    "whole_start_utc": "2026-10-06T04:53:23+00:00",
+    "whole_deadline_utc": "2026-10-06T05:23:23+00:00",
+    "P2_scope": "Includes release requests, waiting, context read/checks, reports, handoffs and closure; no checking-only reset."
+  },
+  "causal_or_economics_comparison": "UNASSESSED; no score/summed usage/repricing/GoalComplete/pipeline promotion"
+}

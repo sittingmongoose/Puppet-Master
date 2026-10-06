@@ -1,0 +1,268 @@
+{
+  "schema": "er9.independent-source-judgment.v1",
+  "evaluation_id": "independent-confirmation-C04-research-1",
+  "pair_id": "C-04-RESOURCE-R002-BUNDLE",
+  "assessed_stage": "research",
+  "written_utc": "2026-10-06T05:04:19+00:00",
+  "phase": "P1_PRE_KEY",
+  "scope": "Exact current research-stage proposal/sources/witnesses/leads; designated final NULL for both",
+  "outcomes": {
+    "A": "FAIL_SCREEN",
+    "B": "FAIL_SCREEN"
+  },
+  "decisive_screen_findings": {
+    "A": [
+      "C04R-A-001",
+      "C04R-A-002"
+    ],
+    "B": [
+      "C04R-B-001",
+      "C04R-B-002"
+    ]
+  },
+  "full_pipeline": "UNASSESSED",
+  "designated_final": {
+    "A": null,
+    "B": null
+  },
+  "actual_final4_delivery": "UNASSESSED_NOT_THIS_STAGE",
+  "remaining_consequential_claims": "UNASSESSED_AFTER_BOUNDED_SCREEN",
+  "comparison": "Two FAIL_SCREEN labels do not establish equal quality, relative superiority, treatment effect or native completion credit.",
+  "criteria": {
+    "actual_H2_obligations": 10,
+    "common_dimensions": 8,
+    "A_B_12": "NOT_THIS_HOLDOUT",
+    "important5": "NOT_DECLARED_FOR_H2",
+    "diagnostic_target3": "NOT_APPLICABLE",
+    "no_weighted_or_aggregate_score": true
+  },
+  "coverage": [
+    {
+      "id": "H2-01",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Workflow text inspected; recovery/export source qualification is incomplete."
+    },
+    {
+      "id": "H2-02",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Coordinate contracts inspected and authority-axis facts checked. All operation/grid/epoch and export claims not fully assessed."
+    },
+    {
+      "id": "H2-03",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Revision/merge contracts and toy witness code inspected; full histories, identifiers, and merge correctness not assessed."
+    },
+    {
+      "id": "H2-04",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "A chosen staging/commit recovery mechanism has a consequential inconsistency. B staging contract inspected without product execution."
+    },
+    {
+      "id": "H2-05",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "R-tree types, rounding and witness limits checked; target hardware, media, renderer and whole-project limits unassessed."
+    },
+    {
+      "id": "H2-06",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Accessible/offline/reversible UI choices present; conformance and implementation remain unassessed."
+    },
+    {
+      "id": "H2-07",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "At least two useful component mechanisms independently checked. Complete breadth, discovery/authorship provenance and all source consequences unassessed in P1."
+    },
+    {
+      "id": "H2-08",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Real associated issue/fix/test mechanisms and selected historical release code checked; complete current-release applicability and all claimed lessons not assessed."
+    },
+    {
+      "id": "H2-09",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Architecture, opportunities and alternatives inspected; their full dependency qualification remains unassessed."
+    },
+    {
+      "id": "H2-10",
+      "A": "PARTIAL",
+      "B": "PARTIAL",
+      "note": "Current research4 files present and witness source interpretation assessed in part. Designated final is NULL; actual final4, later preservation and full pipeline UNASSESSED."
+    }
+  ],
+  "findings": [
+    {
+      "id": "C04R-A-001",
+      "alias": "A",
+      "severity": "CONSEQUENTIAL",
+      "type": "invalid recovery inference/chosen contract",
+      "obligations": [
+        "H2-04",
+        "H2-09",
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q5",
+        "Q7"
+      ],
+      "output_locator": "proposal.md lines292-305 (\u00a76.4); witnesses.json W4; supplemental A/exec-h3g2pzcj/code.py lines10-18",
+      "claim": "Staging rows and merge_commit are written inside one transaction; absent marker after interruption leaves all staging rows available to quarantine.",
+      "evidence": "A W4 code/observed output demonstrates the uncommitted row disappears on close. SQLite WAL \u00a72 describes commit by append of a commit record; SQLite atomic-commit introduction states all-or-none while expressly limiting that article to rollback mode. No separate durable staging transaction/journal is specified in the selected contract.",
+      "reasoning": "If new staging changes and the marker share the one transaction, rollback of that transaction also removes its staging changes. Therefore the proposed marker-absent/quarantine recovery branch cannot recover those rows as described. Precreated empty staging tables do not retain the rolled-back work.",
+      "scope": "Static source/contract inference, not a retest or claim that SQLite loses committed data. Restoring last committed state remains supported; separate persistent staging could be a legitimate future alternative but is not the frozen A contract."
+    },
+    {
+      "id": "C04R-A-002",
+      "alias": "A",
+      "severity": "CONSEQUENTIAL",
+      "type": "merge identity and deletion contract gap",
+      "obligations": [
+        "H2-03",
+        "H2-09"
+      ],
+      "dimensions": [
+        "Q1",
+        "Q3",
+        "Q5",
+        "Q7"
+      ],
+      "output_locator": "proposal.md lines145-152 and268-275; supplemental A/exec-f4dz4zwa/code.py lines5-7",
+      "claim": "Edit identity is (record_uuid, rev_no); identical changes collapse and revision-based three-way merge keeps safe semantics.",
+      "evidence": "Two independently edited copies of the same record can choose the same next rev_no; author_device is stored but omitted from the declared edit identity. Toy function branch m==t returns base when both are None.",
+      "reasoning": "The declared edit identity does not distinguish concurrent next revisions. Static code inspection also shows that simultaneous removal of a previously populated field returns the base value, instead of preserving the identical deletion. That case was not executed in the three presented examples.",
+      "scope": "The exact three executed examples remain valid. This is a static counterexample/incomplete chosen merge contract, not an assertion that an implemented Fieldbook merger was tested."
+    },
+    {
+      "id": "C04R-A-003",
+      "alias": "A",
+      "severity": "SOURCE_SCOPE_ERROR",
+      "type": "witness attribution overclaim",
+      "obligations": [
+        "H2-05",
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q5"
+      ],
+      "output_locator": "proposal.md lines224-226; supplemental A/exec-wcj7u11_/code.py lines24-28",
+      "claim": "R-tree contained-within expansion is applied in W2 design.",
+      "evidence": "The actual witness queries minX>=lower AND maxX<=upper and analogous Y bounds using unexpanded lon0\u00b1dx/lat0\u00b1dy. No rounding expansion appears.",
+      "reasoning": "The cited SQLite rounding rule is sound, but attributing its application to this executed witness is false. Equal hit counts on one random viewport do not verify boundary preservation.",
+      "scope": "Retain the index availability/query-plan/performance sample and the proposed expansion rule; no whole-app benchmark credit."
+    },
+    {
+      "id": "C04R-B-001",
+      "alias": "B",
+      "severity": "CONSEQUENTIAL",
+      "type": "false executed-witness interpretation",
+      "obligations": [
+        "H2-02",
+        "H2-05",
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q2",
+        "Q3",
+        "Q5",
+        "Q6"
+      ],
+      "output_locator": "proposal.md lines133 and211; witnesses.json W3 corrected_finding; supplemental B/exec-n16mal6k/code.py lines12-20",
+      "claim": "NULL R-tree bounds remain NULL and never satisfy bbox constraints through SQL NULL comparison semantics.",
+      "evidence": "Witness inserts the NULL-bbox row, counts two index rows, and prints the exclusion explanation as a literal; it performs no bbox query or coordinate readback. SQLite exact version-3.46.1 rtree.c lines3013-3027/3130-3138 converts bounds through sqlite3_value_double; vdbeapi.c lines202-204 calls sqlite3VdbeRealValue; vdbemem.c lines658-672 returns 0 for NULL. Current R-tree documentation says nonconforming values are silently converted.",
+      "reasoning": "The all-NULL bounds convert to numeric zero; they are not stored SQL NULLs excluded by NULL comparison. A zero-containing viewport can match this row absent the application gate. The printed explanation is not an observed query result and contradicts the applicable versioned implementation.",
+      "scope": "No evaluator code execution/retest. Acceptance of the insert and rtreecheck ok are genuine recorded observations. Preserve the explicit has_geometry gate and visible count: these mitigate the product hazard but do not make the false source claim true."
+    },
+    {
+      "id": "C04R-B-002",
+      "alias": "B",
+      "severity": "CONSEQUENTIAL",
+      "type": "asserted classification presented as exercised merge evidence",
+      "obligations": [
+        "H2-03",
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q3",
+        "Q5",
+        "Q6",
+        "Q8"
+      ],
+      "output_locator": "proposal.md lines151 and212; witnesses.json W4; supplemental B/exec-aopek96i/code.py lines2-4/18-23",
+      "claim": "Explicit three-way classification surfaces all three conflicts; W4 exercises edit-vs-delete.",
+      "evidence": "The LWW state is computed, but the three-way conflict list is a literal, not derived by a classifier. A has no update of R2; B alone deletes unchanged R2, yet the literal labels it edit-vs-delete.",
+      "reasoning": "The execution demonstrates one LWW example and prints an authored taxonomy, not tested three-way classification. Calling the unchanged-vs-delete case edit-vs-delete is incorrect for the shown operations. The record does not justify promoting the literal list to executed classification behavior.",
+      "scope": "Keep legitimate explicit-conflict design and proposed P6 matrix; this does not prove an implemented merge engine fails."
+    },
+    {
+      "id": "C04R-B-003",
+      "alias": "B",
+      "severity": "REPRODUCIBILITY_DEFECT",
+      "type": "incorrect catalog code pin",
+      "obligations": [
+        "H2-10"
+      ],
+      "dimensions": [
+        "Q5",
+        "Q8"
+      ],
+      "output_locator": "witnesses.json W4 code_sha256/code_sha256_verbatim/execution_receipt_note",
+      "claim": "W4 code hash is reproduced verbatim from the receipt or corrected by reference to it.",
+      "evidence": "Actual frozen W4 code and execution-facts pin d76fc8304d57be67162363ed39a0d3e810ce589b56398e3acfcb5cfaf7d00769; catalog supplies a different placeholder-like string and repeated contradictory correction note.",
+      "reasoning": "The catalog does not provide the correct exact code pin. The source-only supplement resolves which current code was run, but that supplement does not repair the frozen candidate catalog.",
+      "scope": "No conclusion about intent or fabricated execution; actual code/streams exist and are pinned separately."
+    }
+  ],
+  "preserved_supported_content": [
+    "Both: explicit axis/provenance metadata, originals, offline/table-first editing, inspectable conflicts, reversible revisions, optional adoption and proposed product validation.",
+    "Both: PROJ authority-axis/WKT2 lessons, SQLite R-tree filtering/rounding constraints, Syncthing visible propagating conflict-copy precedent. These component facts do not prove the application contract.",
+    "A: genuine GDAL #1974 subsequent ExportToJson complaint -> PR3311 -> six-case regression; v3.3.0 contains the test, v3.2.1 does not. Maintainer comment explicitly limits it to3.3. A direct-blob uncertainty was honest; no false release finding.",
+    "B: genuine Turf #737 -> PR741 changes/test additions; v4.3.0 source contains corrected winding mechanism. Current7.x behavior and claims that old tests passed were not independently established.",
+    "A arithmetic W1, synthetic R-tree W2, three specific W3 examples and clean-close W4 retain their narrow observations.",
+    "B arithmetic W1/W2, W3 NULL insertion acceptance/count/rtreecheck and computed LWW portion of W4 retain narrow observations; literal explanations/classifications do not gain test credit.",
+    "At least one useful opportunity and plausible architecture alternative are present in each; most optional lead mechanisms remain explicitly uninvestigated."
+  ],
+  "witness_review": {
+    "candidate_code_read": 8,
+    "candidate_code_executed_by_evaluator": 0,
+    "new_goals_or_retests": 0,
+    "all_supplied_code_input_streams_match_manifest_and_receipt_hashes": true,
+    "receipt_provenance_operational_fields": "P2_ONLY_OR_UNKNOWN; code/input/streams/exit limits inspected from source-only projection",
+    "executed_product_transform_index_merge_validation": "NONE_ESTABLISHED",
+    "full_product_validation": "PROPOSED_UNEXECUTED"
+  },
+  "blinding": {
+    "held_before_freeze": [
+      "private arm key",
+      "Goal/model identity",
+      "native status/general history",
+      "economics"
+    ],
+    "unavoidable_hints": [
+      "root/current case labels",
+      "actual launched Task B explicitly contains V14/V10 modifiers; therefore no perfect treatment blinding claim"
+    ],
+    "prior_reviews_answers_candidate_feedback_read": false
+  },
+  "clock": {
+    "reviewer_budget_start_utc": "2026-10-06T04:53:23+00:00",
+    "literal_first_semantic_byte_time": "UNKNOWN; occurred after measured reviewer START and before first dispatch read returned",
+    "start_monotonic": "UNKNOWN_NOT_CAPTURED",
+    "source_deadline_utc": "2026-10-06T05:13:23+00:00",
+    "whole_deadline_utc": "2026-10-06T05:23:23+00:00",
+    "prep_only_seconds": 727,
+    "prep_cost": "UNKNOWN_NOT_ZERO_CLAIMED",
+    "original_conservative_clause": "SUPERSEDED_ADDITIVELY; original bytes preserved",
+    "no_budget_reset": true
+  }
+}

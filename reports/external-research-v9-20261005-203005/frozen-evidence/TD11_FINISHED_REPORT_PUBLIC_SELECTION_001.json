@@ -1,0 +1,27 @@
+{
+  "schema": "er9.courier-positive-public-selection.v1",
+  "selection_id": "TD11_FINISHED_REPORT_AND_NEUTRAL_CLOSURE_001",
+  "files": [
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/report.md",
+      "sha256": "f2e096a46baaf65cdc277b14c81630fcd62f2eff0a2318054e14a73558a3793a",
+      "bytes": 7152
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/report.json",
+      "sha256": "d645a8c76d367028d88b8a32b9f23731fd38ac811e56186647156824e545eb34",
+      "bytes": 47088
+    },
+    {
+      "path": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-11/completion.json",
+      "sha256": "27e425ed7c9973f3e32a238cdbbfe08e120a5262c2d18ee604b14dca3cfb2611",
+      "bytes": 1851
+    }
+  ],
+  "authorization": "root explicit two reports and neutral completion only",
+  "exclusions": [
+    "all raw native/tool history/auth",
+    "private key",
+    "general source/capture selectors"
+  ]
+}

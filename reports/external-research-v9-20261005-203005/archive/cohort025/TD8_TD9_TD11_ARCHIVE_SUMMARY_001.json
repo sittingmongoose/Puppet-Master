@@ -1,0 +1,28 @@
+{
+  "authority_selector_sha256s": [
+    "40f8b666fb19282281e731a4063312c9ac7d8734e09f0a95c7dc9b1aad2ba335",
+    "4d2eb1c0c89ecb773747758ad7f642b15064d5b1eb0740f05fa6c17061e544ed",
+    "913230d48337e94bbb4a7fbab800f77b6c0bdfff247e1ff2783a5ba4f1073604"
+  ],
+  "body_bytes": 655389,
+  "body_count": 5,
+  "coverage": "PARTIAL_EXACT_TD8_TD9_TD11_TEN_REQUESTED_BODY_METADATA_INDEX_FILES_NOT_QUEUE_RECONCILED",
+  "exclusions": [
+    "unlisted sourcecontext",
+    "private/auth/native/model IO/account metadata",
+    "recursive discovery/newnetwork/semantic feedback"
+  ],
+  "files_count": 10,
+  "independent_archive_reread": "ALL10_NAS_SELECTED_SHA_AND_LENGTH_MATCH",
+  "manifest_path": "/mnt/Cursor/PuppetMaster-Evidence/tests/external-research-v9-20261005-203005/positive-archive/supplemental/78e94ee667a8bf5bffcf53e5ffc3d025d6f080275497acc832ca4dce7e631cf9/MANIFEST.json",
+  "manifest_sha256": "df88d6095ff666f64a15564fa6f7abff8892402828797d356c8efd23d6abf29e",
+  "metadata_index_bytes": 37339,
+  "metadata_index_count": 5,
+  "overlap_policy": "cohort selected files; duplicate alias bytes and earlier-cohort overlap not new unique evidence",
+  "prior_archives": "UNCHANGED",
+  "raw_repository_policy": "bodies/index/raw locators external only; compact external manifest reference only",
+  "restart": "ExactTD8/TD9/TD11listedsubset complete; separately pinned later evidence appends; wholequeue reconciliation pending",
+  "schema": "er9.compact-public-archive-followup.v1",
+  "selected_bytes": 692728,
+  "selection_sha256": "78e94ee667a8bf5bffcf53e5ffc3d025d6f080275497acc832ca4dce7e631cf9"
+}

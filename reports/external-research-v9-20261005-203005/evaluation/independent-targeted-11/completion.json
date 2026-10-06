@@ -1,0 +1,43 @@
+{
+  "accounting_handoff": {
+    "attempted_target": "/root/cost_accounting",
+    "direct_send_error": "agent thread limit reached",
+    "exact_target_live_agents": 0,
+    "relay_status": "PENDING_ROOT_ROUTING",
+    "root_and_parent_notified": true
+  },
+  "all_27_p1_file_pins_unchanged_and_readonly": true,
+  "budgets_seconds": {
+    "inclusive_phase2": 600,
+    "source": 1200,
+    "whole": 1800
+  },
+  "clock_reset": false,
+  "closed_monotonic_ns": 94226338131078,
+  "closed_utc": "2026-10-06T05:16:47.481143+00:00",
+  "closure_status": "ASSESSMENT_CLOSED_ACCOUNTING_RELAY_PENDING",
+  "cost_clock_receipt_sha256": "c2ab9ca1cc34a7f07e78318c430e054c7cc76e3bba2e3eb828059c8e22ce0b6b",
+  "evaluation_id": "independent-targeted-11",
+  "inclusive_phase2_seconds": 542.868532843,
+  "pair_id": "D-V07-A-BUNDLE-R001",
+  "permitted_public_scientific_selectors": [
+    "report.md",
+    "report.json"
+  ],
+  "phase1_frozen_utc": "2026-10-06T05:07:44.612528+00:00",
+  "phase1_pin_lock_sha256": "a377a434916a881c76d73a74a62711d968892e85eba035f39e2d281b5dce69a5",
+  "raw_source_capture_or_private_key_publication_authorized": false,
+  "report_handoffs_completed_before_this_sample": [
+    "parent_courier_neutral_receipt_and_public_positive_selectors",
+    "root_public_reports_and_neutral_accounting_relay_request"
+  ],
+  "report_json_sha256": "d645a8c76d367028d88b8a32b9f23731fd38ac811e56186647156824e545eb34",
+  "report_md_sha256": "f2e096a46baaf65cdc277b14c81630fcd62f2eff0a2318054e14a73558a3793a",
+  "schema": "er9.independent-evaluator-completion-receipt.v1",
+  "scientific_findings_included": false,
+  "source_seconds": 320.723477072,
+  "source_started_utc": "2026-10-06T05:02:23.889064+00:00",
+  "terminal_receipt_handoff_budget_headroom_seconds": 57.131467156999975,
+  "whole_includes_post_start_report_handoffs": true,
+  "whole_seconds": 863.592009915
+}

@@ -1,0 +1,570 @@
+{
+  "schema": "er9.independent-output-phase1.v1",
+  "evaluation_id": "independent-targeted-13",
+  "pair_id": "D-V03-B-BUNDLE-R001",
+  "phase": "SOURCE_JUDGMENT_BEFORE_KEY",
+  "assigned_selector": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "xhigh",
+    "fork_turns": "none"
+  },
+  "physical_provider": "UNKNOWN",
+  "physical_runtime": "UNKNOWN",
+  "source_start_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source_start.json",
+  "source_freeze_receipt": "/home/sittingmongoose/PM-Experiments/external-research-v9-20261005-203005/evaluation/independent-targeted-13/source-freeze.json",
+  "scope": "Actual frozen authored partial scanner-locator artifacts only; missing canonical final/catalog scientific quality UNKNOWN/UNASSESSED. No final substitution, winner, native completion, pipeline or matched causal credit.",
+  "actual_criteria_counts": {
+    "common_dimensions": 8,
+    "full_B_brief_obligations": 12,
+    "common_important_checks": 5,
+    "target_scope_checks": 3
+  },
+  "task_comparability": "Both actual task bodies match before the V03 modifier. A asks ordinary source interpretation; B asks entry/predicate/default/mutation/version tracing and practical isolated execution when possible. Same required final roles; launch stage IDs disclose arm hints. Actual resource/budget adoption and receipts remain held until Phase2.",
+  "blinding_limit": "Actual launched task arm text/stage IDs reveal control/treatment hints; reservation and assignment reveal case/model selector. No perfect blinding claim. Key, native status/history, candidate identity/provider/economics and prior grades were not read.",
+  "source_screen_elapsed_seconds": 261.25086871501117,
+  "source_screen_within_budget": true,
+  "source_closed": true,
+  "independent_primary_capture_result": "UNLOCATED_IN_EXACT_ADMITTED_INDEX for both requested raw source SHAs; no external authenticity/version finding can be made.",
+  "arms": [
+    {
+      "alias": "A",
+      "actual_available_stage": "diagnostic",
+      "partial_artifact_count": 1,
+      "required_delivery_outcome": "INCOMPLETE",
+      "final_source_quality": "UNASSESSED",
+      "partial_source_authenticity_and_version_applicability": "UNASSESSED",
+      "partial_internal_integrity": "VERIFIED_INTERNAL_RECONSTRUCTION_ONLY",
+      "full_final_quality": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "autonomous_discovery": "UNASSESSED_NOT_ALLOWED_BY_TARGET_CARD",
+      "identified_source_grounded_semantic_defects": [],
+      "semantic_defect_count_interpretation": "No assessed authored consequential claim, not proof of zero scientific defects. Missing final is delivery absence, not a fabricated semantic error.",
+      "observations": [
+        {
+          "id": "A-OBS-LOCATOR",
+          "kind": "SUPPORTED_ARTIFACT_FACT",
+          "text": "The sole artifact is JSON with exactly source, source_sha256 and lines. Lines are consecutively numbered 1..1573. Joining text with LF and terminal LF reconstructs its declared body SHA exactly. This is internal self-consistency only.",
+          "artifact_sha256": "6268c5e136417d7bcfea0bc445a5f11519b2a265ef4eadbd93730eca2dc1d5e5",
+          "original_relative_path": "scratch/duckdb-string-scanner-lines.txt",
+          "source_reference": "public_captures/e526bcad1dc679b0f42858644e9d1c655a1df9bd7dcb6325d29b9797cb120a0b.body",
+          "source_sha256": "e526bcad1dc679b0f42858644e9d1c655a1df9bd7dcb6325d29b9797cb120a0b",
+          "reconstructed_sha256": "e526bcad1dc679b0f42858644e9d1c655a1df9bd7dcb6325d29b9797cb120a0b"
+        },
+        {
+          "id": "A-OBS-SCOPE",
+          "kind": "SOURCE_LOCATOR_PRESERVED",
+          "text": "Artifact A lines 57-69 include an ICU flag, a JSON-type mutation via reference, and direct/fallback parse-type selection; lines 1422-1448 contain CanDirectlyCast with a TIMESTAMP_TZ branch conditioned on icu_loaded. These are raw artifact locators, not verified release behavior."
+        },
+        {
+          "id": "A-OBS-ABSENCE",
+          "kind": "DELIVERY_ABSENCE",
+          "text": "Required proposal.md, sources.json, witnesses.json and leads.json are absent in the exact current freeze. A line map is not adopted/promoted to any missing role."
+        }
+      ],
+      "common_dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "coverage_state": "PARTIAL",
+          "assessment": "A complete relevant scanner line map is present; the required current task-scoped authored result is absent."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "coverage_state": "PARTIAL",
+          "assessment": "Internal line ordering and declared-hash reconstruction were checked; primary identity, version applicability and authored interpretation remain UNASSESSED."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No current authored inference, component choice, applicability argument or plan consequence was delivered."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "coverage_state": "PARTIAL",
+          "assessment": "One scanner source locator per arm is preserved as useful partial work. Independent discovery, a second precedent, novelty and issue/fix/test chain are not established."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No candidate-authored witness code, expected behavior, execution claim, result or proposed validation appears in the available maps."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No current correction or preservation judgment was authored. Seed/source input bytes were not available for a semantic comparison."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No authored uncertainty/dependency/refusal account was delivered; absent claims cannot earn honesty or correctness credit."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "coverage_state": "PARTIAL",
+          "assessment": "Exact available maps are frozen and reproducible. The proposal and three required catalogs are absent; final scientific quality remains UNASSESSED. Execution/economics are held for Phase2."
+        }
+      ],
+      "full_B_brief_obligations": [
+        {
+          "id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "coverage_state": "UNASSESSED",
+          "assessment": "The scanner map is a partial locator relevant to conversion/null behavior, but a project data contract and applicable source interpretation are UNASSESSED; no final is available."
+        },
+        {
+          "id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No witness claim is present in the available artifact; witness correctness/execution remains UNASSESSED, not vacuous PASS."
+        },
+        {
+          "id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "coverage_state": "UNASSESSED",
+          "assessment": "Current proposal/catalog delivery is absent. Required delivery is INCOMPLETE; absent final science remains UNASSESSED."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "check_id": "B-P1",
+          "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+          "obligation_ids": [
+            "B08",
+            "B09"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P2",
+          "question": "Are the chosen design’s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+          "obligation_ids": [
+            "B02",
+            "B03",
+            "B04",
+            "B10"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P3",
+          "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+          "obligation_ids": [
+            "B11"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "No claimed executed or proposed witness in the map; no execution receipt was inferred or requested as though a claim existed. Scientific witness support UNASSESSED."
+        },
+        {
+          "check_id": "B-P4",
+          "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+          "obligation_ids": [
+            "B12"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P5",
+          "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+          "obligation_ids": [
+            "B01",
+            "B05",
+            "B06",
+            "B07",
+            "B10"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        }
+      ],
+      "targeted_obligations": [
+        {
+          "id": "D-V03-B-01",
+          "text": "Investigate a candidate-selected data/notebook component’s copy/view, conditional conversion, mutation or output update path. Check the draft’s applicability to one pinned environment.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL: relevant constructor, conditional conversion and mutation/error paths are line-addressable. No source URL/version pin or pinned-environment applicability account is authored; independent primary provenance was UNLOCATED."
+        },
+        {
+          "id": "D-V03-B-02",
+          "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL artifact inspection only: internally contiguous code map, with no authored consequential behavior assertion to correct/preserve. Source/version authenticity, supplied draft comparison and unsupported-critical-dependency analysis UNASSESSED."
+        },
+        {
+          "id": "D-V03-B-03",
+          "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL source locator exists, but complete current proposal/source/witness/lead delivery is absent. Delivery INCOMPLETE; correction quality, false rejection and validation scope UNASSESSED."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "check_id": "D-V03-B-P1",
+          "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No authored current correction/preservation judgment or final; source-specific consequential errors, repairs and false rejection are UNASSESSED."
+        },
+        {
+          "check_id": "D-V03-B-P2",
+          "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?",
+          "coverage_state": "UNASSESSED",
+          "assessment": "The raw map is useful retained partial evidence; absent final means retained authored useful content/uncertainty and completeness remain UNASSESSED, with delivery explicitly INCOMPLETE."
+        },
+        {
+          "check_id": "D-V03-B-P3",
+          "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?",
+          "coverage_state": "PARTIAL",
+          "assessment": "A source line-extraction artifact is visible. This establishes limited preparatory uptake only; a complete implementation trace, practical pinned witness, repair, honest claimed execution and matched causal effect are not established."
+        }
+      ]
+    },
+    {
+      "alias": "B",
+      "actual_available_stage": "diagnostic",
+      "partial_artifact_count": 1,
+      "required_delivery_outcome": "INCOMPLETE",
+      "final_source_quality": "UNASSESSED",
+      "partial_source_authenticity_and_version_applicability": "UNASSESSED",
+      "partial_internal_integrity": "VERIFIED_INTERNAL_RECONSTRUCTION_ONLY",
+      "full_final_quality": "UNASSESSED",
+      "full_pipeline_quality": "UNASSESSED",
+      "autonomous_discovery": "UNASSESSED_NOT_ALLOWED_BY_TARGET_CARD",
+      "identified_source_grounded_semantic_defects": [],
+      "semantic_defect_count_interpretation": "No assessed authored consequential claim, not proof of zero scientific defects. Missing final is delivery absence, not a fabricated semantic error.",
+      "observations": [
+        {
+          "id": "B-OBS-LOCATOR",
+          "kind": "SUPPORTED_ARTIFACT_FACT",
+          "text": "The sole artifact is JSON with exactly source, source_sha256 and lines. Lines are consecutively numbered 1..1414. Joining text with LF and terminal LF reconstructs its declared body SHA exactly. This is internal self-consistency only.",
+          "artifact_sha256": "8a73eaee3865f8311c54a3734748c4c8a8d3caca281b7b226e3e877d25a0d1e4",
+          "original_relative_path": "scratch/string_value_scanner.lines",
+          "source_reference": "public_captures/53a11a9837bb9cea30913bb13bc238b1cb5e67d50d9754bdd0d68727220ac411.body",
+          "source_sha256": "53a11a9837bb9cea30913bb13bc238b1cb5e67d50d9754bdd0d68727220ac411",
+          "reconstructed_sha256": "53a11a9837bb9cea30913bb13bc238b1cb5e67d50d9754bdd0d68727220ac411"
+        },
+        {
+          "id": "B-OBS-SCOPE",
+          "kind": "SOURCE_LOCATOR_PRESERVED",
+          "text": "Artifact B lines 59-68 contain direct/fallback parse-type selection; lines 1274-1296 contain CanDirectlyCast without an icu_loaded parameter or explicit TIMESTAMP_TZ case. These are raw artifact locators, not verified release behavior."
+        },
+        {
+          "id": "B-OBS-ABSENCE",
+          "kind": "DELIVERY_ABSENCE",
+          "text": "Required proposal.md, sources.json, witnesses.json and leads.json are absent in the exact current freeze. A line map is not adopted/promoted to any missing role."
+        }
+      ],
+      "common_dimensions": [
+        {
+          "id": "Q1",
+          "name": "Required question and plan-obligation coverage",
+          "coverage_state": "PARTIAL",
+          "assessment": "A complete relevant scanner line map is present; the required current task-scoped authored result is absent."
+        },
+        {
+          "id": "Q2",
+          "name": "Correct source interpretation, version, conditions, normative force and applicability",
+          "coverage_state": "PARTIAL",
+          "assessment": "Internal line ordering and declared-hash reconstruction were checked; primary identity, version applicability and authored interpretation remain UNASSESSED."
+        },
+        {
+          "id": "Q3",
+          "name": "Justified inference, component choice and plan consequences",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No current authored inference, component choice, applicability argument or plan consequence was delivered."
+        },
+        {
+          "id": "Q4",
+          "name": "Verified useful discovery, alternatives, failures and breadth",
+          "coverage_state": "PARTIAL",
+          "assessment": "One scanner source locator per arm is preserved as useful partial work. Independent discovery, a second precedent, novelty and issue/fix/test chain are not established."
+        },
+        {
+          "id": "Q5",
+          "name": "Correctness and scope of executed witnesses and proposed validation",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No candidate-authored witness code, expected behavior, execution claim, result or proposed validation appears in the available maps."
+        },
+        {
+          "id": "Q6",
+          "name": "Supported semantic preservation and no new consequential errors",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No current correction or preservation judgment was authored. Seed/source input bytes were not available for a semantic comparison."
+        },
+        {
+          "id": "Q7",
+          "name": "Honest uncertainty, scope/refusal and critical dependencies",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No authored uncertainty/dependency/refusal account was delivered; absent claims cannot earn honesty or correctness credit."
+        },
+        {
+          "id": "Q8",
+          "name": "Reproducible final delivery; economics and execution evidence reported separately",
+          "coverage_state": "PARTIAL",
+          "assessment": "Exact available maps are frozen and reproducible. The proposal and three required catalogs are absent; final scientific quality remains UNASSESSED. Execution/economics are held for Phase2."
+        }
+      ],
+      "full_B_brief_obligations": [
+        {
+          "id": "B01",
+          "text": "Minimum create/import/preview/author/interactive-run/clean-replay/save/reopen/export workflow and bounded language support",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B02",
+          "text": "Schema/type/null/Unicode/timestamp/row-order contract, conversion and malformed-input behavior; originals retained",
+          "coverage_state": "UNASSESSED",
+          "assessment": "The scanner map is a partial locator relevant to conversion/null behavior, but a project data contract and applicable source interpretation are UNASSESSED; no final is available."
+        },
+        {
+          "id": "B03",
+          "text": "Separate cell order, execution order, kernel state and saved output provenance; guarantees and limits of clean replay",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B04",
+          "text": "Defined invalidation/current/stale/failed/unverified states after code, dataset or environment changes, restart and interrupted execution",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B05",
+          "text": "Project/source/environment/execution/output identity and portable exchange/reproducibility manifest",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B06",
+          "text": "Bounded/streaming large-data path, preview limits, caching/ordering/concurrency/cancel, and interrupted-save recovery without unsupported performance claims",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B07",
+          "text": "Untrusted code execution permissions/isolation/resource boundary and usable error/status/dependency/provenance presentation",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B08",
+          "text": "Candidate-discovered >=2 independently useful implementation precedents with source/pins and concrete plan implications",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B09",
+          "text": "Candidate-discovered real issue/failure -> associated fix -> regression test chain with applicability and causal limits",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B10",
+          "text": "At least one useful opportunity and one plausible alternative, with coherent design/critical dependencies and optional adoption distinguished from requirements",
+          "coverage_state": "UNASSESSED",
+          "assessment": "UNASSESSED outside the actual targeted diagnostic scope; no standalone current final is available. This is not a full-domain failure or PASS."
+        },
+        {
+          "id": "B11",
+          "text": "Consequential replay/data/invalidation witnesses discriminate behavior; executed/proposed labels and synthetic/full-runtime scope honest",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No witness claim is present in the available artifact; witness correctness/execution remains UNASSESSED, not vacuous PASS."
+        },
+        {
+          "id": "B12",
+          "text": "Standalone current final preserves supported findings/conditions, fixes actual errors, cites exact evidence and exposes unresolved leads",
+          "coverage_state": "UNASSESSED",
+          "assessment": "Current proposal/catalog delivery is absent. Required delivery is INCOMPLETE; absent final science remains UNASSESSED."
+        }
+      ],
+      "common_important_checks": [
+        {
+          "check_id": "B-P1",
+          "question": "Does the designated current final establish two independently useful candidate-discovered implementation precedents and a real issue/fix/regression-test chain, with source pins and applicability rather than only links?",
+          "obligation_ids": [
+            "B08",
+            "B09"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P2",
+          "question": "Are the chosen design’s consequential behavior/data-contract claims supported under the actual source versions, conditions and implementation paths, and are critical unresolved dependencies explicit?",
+          "obligation_ids": [
+            "B02",
+            "B03",
+            "B04",
+            "B10"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P3",
+          "question": "For every claimed executed consequential witness, do actual candidate code/input/results support an independently justified expectation and the stated scope; are non-executed checks labeled honestly?",
+          "obligation_ids": [
+            "B11"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "No claimed executed or proposed witness in the map; no execution receipt was inferred or requested as though a claim existed. Scientific witness support UNASSESSED."
+        },
+        {
+          "check_id": "B-P4",
+          "question": "Does the current final preserve supported conditions and findings while correcting verified errors, and avoid new consequential assertions or false completeness?",
+          "obligation_ids": [
+            "B12"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        },
+        {
+          "check_id": "B-P5",
+          "question": "Does the final cover the same actual minimum workflow, portability/recovery/resources/usability requirements and useful opportunity/alternative lane without turning optional adoption into a required fact?",
+          "obligation_ids": [
+            "B01",
+            "B05",
+            "B06",
+            "B07",
+            "B10"
+          ],
+          "coverage_state": "UNASSESSED",
+          "assessment": "The designated current final is absent; the scientific question is UNASSESSED. Available artifact is a raw source line map only."
+        }
+      ],
+      "targeted_obligations": [
+        {
+          "id": "D-V03-B-01",
+          "text": "Investigate a candidate-selected data/notebook component’s copy/view, conditional conversion, mutation or output update path. Check the draft’s applicability to one pinned environment.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL: relevant constructor, conditional conversion and mutation/error paths are line-addressable. No source URL/version pin or pinned-environment applicability account is authored; independent primary provenance was UNLOCATED."
+        },
+        {
+          "id": "D-V03-B-02",
+          "text": "Assess consequential source/version/condition and behavior claims under the actual supplied/discovered full source context; preserve supported content and identify unsupported critical dependencies.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL artifact inspection only: internally contiguous code map, with no authored consequential behavior assertion to correct/preserve. Source/version authenticity, supplied draft comparison and unsupported-critical-dependency analysis UNASSESSED."
+        },
+        {
+          "id": "D-V03-B-03",
+          "text": "Deliver a complete current task-scoped result with source locators and honest executed/proposed validation; no new consequential error or false rejection.",
+          "coverage_state": "PARTIAL",
+          "assessment": "PARTIAL source locator exists, but complete current proposal/source/witness/lead delivery is absent. Delivery INCOMPLETE; correction quality, false rejection and validation scope UNASSESSED."
+        }
+      ],
+      "targeted_important_checks": [
+        {
+          "check_id": "D-V03-B-P1",
+          "question": "Do the same predeclared consequential source/behavior claims receive correct supported correction or preservation under this method, without a new consequential error?",
+          "coverage_state": "UNASSESSED",
+          "assessment": "No authored current correction/preservation judgment or final; source-specific consequential errors, repairs and false rejection are UNASSESSED."
+        },
+        {
+          "check_id": "D-V03-B-P2",
+          "question": "Does the final retain supported conditions, legitimate uncertainty and required useful content rather than blanket rejection or incomplete delivery?",
+          "coverage_state": "UNASSESSED",
+          "assessment": "The raw map is useful retained partial evidence; absent final means retained authored useful content/uncertainty and completeness remain UNASSESSED, with delivery explicitly INCOMPLETE."
+        },
+        {
+          "check_id": "D-V03-B-P3",
+          "question": "Was the declared mechanism actually taken up with honest source/execution scope, and what critical/false-rejection/repair differences appear under matched budgets?",
+          "coverage_state": "PARTIAL",
+          "assessment": "A source line-extraction artifact is visible. This establishes limited preparatory uptake only; a complete implementation trace, practical pinned witness, repair, honest claimed execution and matched causal effect are not established."
+        }
+      ]
+    }
+  ],
+  "paired_conclusion": {
+    "delivery": "Both required current deliveries are INCOMPLETE. This does not imply equal scientific quality.",
+    "supported_partial_difference": "A and B contain different raw scanner maps (1573 vs 1414 source lines and different declared body hashes), including visibly different conditional-path locators. Without independent provenance/applicability or authored interpretation, no direction of source quality, repair correctness or method effect is established.",
+    "scientific_comparison": "UNASSESSED",
+    "winner": "NONE_NOT_ESTABLISHED",
+    "pipeline_credit": "NONE",
+    "matched_causal_credit": "NONE",
+    "future_action_boundary": "No candidate rerun, test, repair, new prompt, native Goal or source-body substitution performed."
+  },
+  "execution_claim_inventory": {
+    "A": [],
+    "B": [],
+    "absence_rule": "No code/input/results or witness catalog supplied; absent witness claims are not promoted to executed evidence."
+  },
+  "errors_and_limits": [
+    {
+      "kind": "TOOL_OUTPUT_TRUNCATION",
+      "scope": "An initial large task batch and an initial one-line JSON artifact display truncated. All exact bytes were preserved; omitted criteria/card were read in a bounded follow-up, and artifact JSON was parsed into bounded source-line views. No external source was invented."
+    },
+    {
+      "kind": "PRIMARY_CAPTURE_UNLOCATED",
+      "scope": "Exact current admitted-index courier lookup did not locate either declared raw body SHA; original primary URLs/pins/acquisition remain UNKNOWN."
+    }
+  ],
+  "phase2": "NOT_STARTED_KEY_HELD",
+  "not_read": [
+    "old reviews/grades/evaluator contexts",
+    "unallowlisted candidate files",
+    "candidate runtime/status/history/economics/identity key"
+  ]
+}
